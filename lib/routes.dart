@@ -1,0 +1,14 @@
+import 'package:get/get.dart';
+import 'pages/main/view.dart';
+
+class Routes {
+  static const String routeInitial = "/";
+  static const String routeScan = "/scan";
+  static const String routeTransform = "/transform";
+
+  static List<GetPage> getRoutes() {
+    return [
+      GetPage(name: Routes.routeInitial, page: () => MainPage()),
+    ];
+  }
+}
