@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -44,17 +42,19 @@ class MyApp extends StatelessWidget {
       designSize: const Size(Const.uiWidth, Const.uiHeight),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: () => GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          enableLog: true,
-          defaultTransition: Transition.fade,
-          theme: isDark ? ThemeData.dark() : ThemeData.light(),
-          initialRoute: Routes.routeInitial,
-          getPages: Routes.getRoutes(),
-          locale: Translation.locale,
-          fallbackLocale: Translation.fallbackLocale,
-          translations: Translation(),
-          builder: FlutterSmartDialog.init()),
+      builder: () {
+        return GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            enableLog: true,
+            defaultTransition: Transition.fade,
+            theme: isDark ? ThemeData.dark() : ThemeData.light(),
+            initialRoute: Routes.routeInitial,
+            getPages: Routes.getRoutes(),
+            locale: Translation.locale,
+            fallbackLocale: Translation.fallbackLocale,
+            translations: Translation(),
+            builder: FlutterSmartDialog.init());
+      },
     );
   }
 }

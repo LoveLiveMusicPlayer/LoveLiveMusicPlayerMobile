@@ -2,11 +2,11 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
 const List<String> images = [
-  "images/home/list_item1.png",
-  "images/home/list_item2.png",
-  "images/home/list_item3.png",
-  "images/home/list_item2.png",
-  "images/home/list_item1.png",
+  "assets/home/list_item1.png",
+  "assets/home/list_item2.png",
+  "assets/home/list_item3.png",
+  "assets/home/list_item2.png",
+  "assets/home/list_item1.png",
 ];
 
 class ExampleHorizontal extends StatelessWidget {

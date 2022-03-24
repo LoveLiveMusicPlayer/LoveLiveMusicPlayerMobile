@@ -21,7 +21,7 @@ class _DrawerPageState extends State<DrawerPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Image(image: AssetImage("images/drawer/logo.png")),
+              const Image(image: AssetImage("assets/drawer/logo.png")),
               const SizedBox(height: 12),
               const Text("LoveLiveMusicPlayer",
                   style: TextStyle(fontSize: 20, color: Colors.red)),
@@ -31,11 +31,11 @@ class _DrawerPageState extends State<DrawerPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: const [
                   Image(
-                      image: AssetImage("images/drawer/logo_lovelive.png"),
+                      image: AssetImage("assets/drawer/logo_lovelive.png"),
                       width: 130,
                       height: 40),
                   Image(
-                      image: AssetImage("images/drawer/logo_allstars.png"),
+                      image: AssetImage("assets/drawer/logo_allstars.png"),
                       width: 130,
                       height: 40)
                 ],
@@ -54,12 +54,12 @@ class _DrawerPageState extends State<DrawerPage> {
                       }
                     },
                     child: const Image(
-                        image: AssetImage("images/drawer/logo_us.png"),
+                        image: AssetImage("assets/drawer/logo_us.png"),
                         width: 130,
                         height: 40),
                   ),
                   const Image(
-                      image: AssetImage("images/drawer/logo_aqours.png"),
+                      image: AssetImage("assets/drawer/logo_aqours.png"),
                       width: 130,
                       height: 40)
                 ],
@@ -69,11 +69,11 @@ class _DrawerPageState extends State<DrawerPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: const [
                   Image(
-                      image: AssetImage("images/drawer/logo_nijigasaki.png"),
+                      image: AssetImage("assets/drawer/logo_nijigasaki.png"),
                       width: 130,
                       height: 40),
                   Image(
-                      image: AssetImage("images/drawer/logo_liella.png"),
+                      image: AssetImage("assets/drawer/logo_liella.png"),
                       width: 130,
                       height: 40)
                 ],

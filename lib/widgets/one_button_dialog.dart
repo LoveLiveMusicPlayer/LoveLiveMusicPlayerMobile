@@ -11,7 +11,7 @@ class OneButtonDialog extends StatelessWidget {
   Callback? _onBackListener;
 
   OneButtonDialog(
-      {String imgAsset = "images/ic_err.png",
+      {String imgAsset = "assets/ic_err.png",
       String title = "标题",
       String msg = "网络异常!",
       bool isShowTitle = true,

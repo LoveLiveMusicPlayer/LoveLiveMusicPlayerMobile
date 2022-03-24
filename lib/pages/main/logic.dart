@@ -1,5 +1,6 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/routes.dart';
 import '/network/http_request.dart';
 
 import 'state.dart';
@@ -15,5 +16,11 @@ class MainLogic extends GetxController {
         }
       }
     });
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    Get.toNamed(Routes.routeTest);
   }
 }
