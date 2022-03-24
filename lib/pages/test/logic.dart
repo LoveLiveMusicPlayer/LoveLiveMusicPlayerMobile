@@ -25,9 +25,9 @@ class TestLogic extends GetxController {
   @override
   Future<void> onReady() async {
     await getFlac();
-    musicList.add(Music(name: "START!! True dreams", cover: picPath));
-    musicList.add(Music(name: "START!! True dreams1212121212", cover: picPath));
-    musicList.add(Music(name: "START!!", cover: picPath));
+    musicList.add(Music(name: "START!! True dreams", cover: picPath, singer: "Liella!"));
+    musicList.add(Music(name: "START!! True dreams1212121212", cover: picPath, singer: "Liella!"));
+    musicList.add(Music(name: "START!!", cover: picPath, singer: "Liella!"));
     super.onReady();
   }
 }
