@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 
 import '../logic.dart';
 
-class ListViewItem extends StatefulWidget {
+class ListViewItemSong extends StatefulWidget {
   Function(bool) onItemTap;
   Function() onPlayTap;
   Function() onMoreTap;
@@ -17,19 +18,20 @@ class ListViewItem extends StatefulWidget {
   ///全选
   bool isSelect;
 
-  ListViewItem({Key? key,
-    required this.onItemTap,
-    required this.onPlayTap,
-    required this.onMoreTap,
-    this.isSelect = false,
-    required this.index})
+  ListViewItemSong(
+      {Key? key,
+      required this.onItemTap,
+      required this.onPlayTap,
+      required this.onMoreTap,
+      this.isSelect = false,
+      required this.index})
       : super(key: key);
 
   @override
-  State<ListViewItem> createState() => _ListViewItemState();
+  State<ListViewItemSong> createState() => _ListViewItemSongState();
 }
 
-class _ListViewItemState extends State<ListViewItem> {
+class _ListViewItemSongState extends State<ListViewItemSong> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MainLogic>(
@@ -76,14 +78,16 @@ class _ListViewItemState extends State<ListViewItem> {
   ///缩列图
   Widget _buildIcon() {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(10.w),
-      child: Image.file(
-        SdUtils.getImgFile("ic_head.jpg"),
-        width: 48.w,
-        height: 48.w,
-        fit: BoxFit.cover,
-      ),
-    );
+        borderRadius: BorderRadius.circular(10.w),
+        child: showImg(SdUtils.getImgPath("ic_head.jpg"), width: 48.w, height: 48.w)
+
+        // Image.file(
+        //   SdUtils.getImgFile("ic_head.jpg"),
+        //   width: 48.w,
+        //   height: 48.w,
+        //   fit: BoxFit.cover,
+        // ),
+        );
   }
 
   ///勾选按钮

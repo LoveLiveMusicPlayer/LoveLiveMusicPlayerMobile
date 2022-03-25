@@ -9,7 +9,11 @@ class SdUtils{
     path = appDocDir.path + "/";
   }
   ///获取图片文件
-  static getImgFile(String fileName){
+  static File getImgFile(String fileName){
     return File(path+fileName);
+  }
+  ///获取图片文件
+  static String getImgPath(String fileName){
+    return path+fileName;
   }
 }
