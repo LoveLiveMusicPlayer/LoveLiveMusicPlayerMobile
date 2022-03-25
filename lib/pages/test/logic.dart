@@ -11,6 +11,7 @@ class TestLogic extends GetxController {
   var image = "".obs;
   var currentIndex = 0.obs;
   var musicList = <Music>[].obs;
+  var currentMusic = Music().obs ;
 
   var picPath = "";
 
@@ -25,9 +26,11 @@ class TestLogic extends GetxController {
   @override
   Future<void> onReady() async {
     await getFlac();
-    musicList.add(Music(name: "START!! True dreams", cover: picPath, singer: "Liella!"));
-    musicList.add(Music(name: "START!! True dreams1212121212", cover: picPath, singer: "Liella!"));
-    musicList.add(Music(name: "START!!", cover: picPath, singer: "Liella!"));
+    musicList.add(Music(name: "START!! True dreams", cover: picPath, singer: "Liella!", time: "03:42"));
+    musicList.add(Music(name: "START!! True dreams1212121212", cover: picPath, singer: "Liella!", time: "03:42"));
+    musicList.add(Music(name: "START!!", cover: picPath, singer: "Liella!", time: "03:42"));
+
+    currentMusic.value = musicList.value[0];
     super.onReady();
   }
 }

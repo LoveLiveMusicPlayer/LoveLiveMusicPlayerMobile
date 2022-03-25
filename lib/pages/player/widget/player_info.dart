@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import '../../../models/Music.dart';
 import '../../test/logic.dart';
 
 class PlayerInfo extends StatelessWidget {
@@ -11,21 +10,24 @@ class PlayerInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-      const EdgeInsets.symmetric(horizontal: 24.0),
-      child: Row(
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      child: Obx(() => Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          Expanded(
-            child: Column(
-              crossAxisAlignment:
-              CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(height: 5),
-              ],
-            ),
-          ),
+          recentlyLrc(logic.currentMusic.value.preJPLrc),
+          SizedBox(height: 8.h),
+          recentlyLrc(logic.currentMusic.value.currentJPLrc, color: const Color(0xFF333333)),
+          SizedBox(height: 8.h),
+          recentlyLrc(logic.currentMusic.value.nextJPLrc)
         ],
-      ),
+      )),
     );
+  }
+
+  Widget recentlyLrc(String? text, {Color color = const Color(0xFF999999)}) {
+    if (text == null) {
+      return Text("", style: TextStyle(color: color, fontSize: 15.sp));
+    }
+    return Text(text, style: TextStyle(color: color, fontSize: 15.sp));
   }
 }

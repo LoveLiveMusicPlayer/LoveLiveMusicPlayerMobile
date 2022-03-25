@@ -6,9 +6,10 @@ String musicToJson(Music data) => json.encode(data.toJson());
 
 class Music {
   Music({
-    required this.name,
-    required this.cover,
-    required this.singer,
+    this.name,
+    this.cover,
+    this.singer,
+    this.time,
     this.jpLrc,
     this.zhLrc,
     this.romaLrc,
@@ -17,9 +18,10 @@ class Music {
     this.nextJPLrc = "だか鳴ららはすんだ！",
   });
 
-  String name;
-  String cover;
-  String singer;
+  String? name;
+  String? cover;
+  String? singer;
+  String? time;
 
   String? jpLrc;
   String? zhLrc;
@@ -33,6 +35,7 @@ class Music {
     name: json["name"],
     cover: json["cover"],
     singer: json["singer"],
+    time: json["time"],
 
     jpLrc: json["jpLrc"],
     zhLrc: json["zhLrc"],
@@ -47,6 +50,7 @@ class Music {
     "name": name,
     "cover": cover,
     "singer": singer,
+    "time": time,
 
     "jpLrc": jpLrc,
     "zhLrc": zhLrc,

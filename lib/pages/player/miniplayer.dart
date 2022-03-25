@@ -110,10 +110,10 @@ class _MiniPlayerState extends State<MiniPlayer> {
   }
 
   Widget getCover(List<Music> musicList, int index) {
-    if (musicList.isEmpty) {
+    if (musicList.isEmpty || musicList[index].cover == null) {
       return showImg("assets/thumb/XVztg3oXmX4.jpg", radius: 50, width: 50.h, height: 50.h, hasShadow: false);
     } else {
-      return showImg(logic.musicList[logic.currentIndex.value].cover,
+      return showImg(musicList[index].cover!,
           radius: 50, width: 50.h, height: 50.h, hasShadow: false);
     }
   }

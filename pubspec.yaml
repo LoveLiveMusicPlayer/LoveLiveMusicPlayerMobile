@@ -57,6 +57,7 @@ dependencies:
   flutter_native_splash: ^2.1.1 # 启动页
   carousel_slider: ^4.0.0
   marquee_text: ^2.5.0+1
+  flutter_lyric: ^2.0.2+3
 
 dependency_overrides:
   path: ^1.8.1
