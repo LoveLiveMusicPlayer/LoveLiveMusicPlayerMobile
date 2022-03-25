@@ -130,15 +130,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
     sliderController.jumpToPage(index);
   }
 
-  Widget getCover(Music? music) {
-
-    if (music == null || music.cover == null) {
-      return showImg("assets/thumb/XVztg3oXmX4.jpg",
-          radius: 50, width: 50.h, height: 50.h, hasShadow: false);
-    } else {
-      LogUtil.e(music.cover);
-      return showImg(music.cover!,
-          radius: 50, width: 50.h, height: 50.h, hasShadow: false);
-    }
+  Widget getCover(Music music) {
+    return showImg(music.cover, radius: 50, width: 50.w, height: 50.w, hasShadow: false);
   }
 }

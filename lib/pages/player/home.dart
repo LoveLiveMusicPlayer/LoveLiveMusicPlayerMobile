@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
     final colorTheme = Theme.of(context).colorScheme;
     return Container(
       width: size.width,
-      height: size.height,
+      height: size.height + 100,
       color: colorTheme.background,
       child: Stack(
         children: [

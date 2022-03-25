@@ -67,12 +67,9 @@ class Song_libraryTop extends StatelessWidget {
                 ],
               ),
               borderRadius: BorderRadius.circular(12.w),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
-                    color: Color(0xffcccccc),
-                    spreadRadius: 1,
-                    offset: Offset.fromDirection(18.w, -1.w),
-                    blurRadius: 1)
+                    color: Color(0xFFD3E0EC), blurRadius: 6, offset: Offset(5, 3)),
               ]),
           child: Icon(
             Icons.play_arrow_rounded,

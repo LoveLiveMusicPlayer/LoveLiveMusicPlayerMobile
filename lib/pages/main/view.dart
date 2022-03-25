@@ -50,6 +50,8 @@ class _MainPageState extends State<MainPage>
       body: _getTabBarView(),
       blurColor: const Color(0xFFF2F8FF),
       overlayColor: const Color(0xFFF2F8FF),
+      panelBorderRadiusBegin: 10,
+      panelBorderRadiusEnd: 10,
       panelHeader: MiniPlayer(
           onTap: _controller.show,
           onChangeMusic: (index, reason) => {logic.playingIndex.value = index}),
@@ -62,6 +64,12 @@ class _MainPageState extends State<MainPage>
       parallax: true,
       transformScale: true,
       blurSigma: 5.0,
+      fadeSequence: [
+        TweenSequenceItem<double>(
+            weight: 1.0, tween: Tween(begin: 1, end: 0)),
+        TweenSequenceItem<double>(
+            weight: 8.0, tween: Tween(begin: 0, end: 0)),
+      ],
     );
   }
 
@@ -72,8 +80,8 @@ class _MainPageState extends State<MainPage>
       indicatorColor: const Color(0xFFF940A7),
       labelPadding: EdgeInsets.only(left: 4.w, right: 4.w),
       indicator: CustomUnderlineTabIndicator(
-          insets: EdgeInsets.only(top: 0.w, bottom: 4.w),
-          borderSide: BorderSide(width: 16.w, color: Colors.red),
+          insets: EdgeInsets.only(top: 0.w, bottom: 8.h),
+          borderSide: BorderSide(width: 16.w, color: const Color(0xFFF940A7)),
           indicatorWeight: 4.w),
       isScrollable: true,
       labelColor: const Color(0xFFF940A7),
@@ -105,12 +113,11 @@ class _MainPageState extends State<MainPage>
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(18.w),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
-                      color: Color(0xffcccccc),
-                      spreadRadius: 0.1,
-                      offset: Offset.fromDirection(18.w, -5.w),
-                      blurRadius: 10)
+                      color: Color(0xFFD3E0EC),
+                      blurRadius: 10,
+                      offset: Offset(5, 3)),
                 ]),
             child: showImg(SdUtils.getImgPath("ic_head.jpg"),
                 radius: 18.w, hasShadow: false)),
@@ -124,6 +131,7 @@ class _MainPageState extends State<MainPage>
         AppBar(
           toolbarHeight: 54.w,
           elevation: 0,
+          centerTitle: false,
           backgroundColor: const Color(0xFFF2F8FF),
           title: _getTabBar(),
           actions: [_getTopHead()],

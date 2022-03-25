@@ -77,17 +77,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
 
   ///缩列图
   Widget _buildIcon() {
-    return ClipRRect(
-        borderRadius: BorderRadius.circular(10.w),
-        child: showImg(SdUtils.getImgPath("ic_head.jpg"), width: 48.w, height: 48.w)
-
-        // Image.file(
-        //   SdUtils.getImgFile("ic_head.jpg"),
-        //   width: 48.w,
-        //   height: 48.w,
-        //   fit: BoxFit.cover,
-        // ),
-        );
+    return showImg(SdUtils.getImgPath("ic_head.jpg"), width: 48.w, height: 48.w, hasShadow: false, radius: 8.w);
   }
 
   ///勾选按钮

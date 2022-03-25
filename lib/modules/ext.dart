@@ -10,7 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 /// [height] 显示的高度
 /// [radius] 圆角度数
 /// [hasShadow] 是否有阴影效果
-Widget showImg(String path,
+Widget showImg(String? path,
     {double width = 100,
     double height = 100,
     double radius = 20,
@@ -19,7 +19,9 @@ Widget showImg(String path,
   Widget noShadowImage;
   ImageProvider<Object> shadowImage;
   if (hasShadow) {
-    if (path.startsWith("assets")) {
+    if (path == null) {
+      shadowImage = AssetImage(defPhoto);
+    } else if (path.startsWith("assets")) {
       shadowImage = AssetImage(path);
     } else if (path.startsWith("http")) {
       shadowImage = NetworkImage(path);
@@ -45,7 +47,9 @@ Widget showImg(String path,
       ),
     );
   } else {
-    if (path.startsWith("assets")) {
+    if (path == null) {
+      noShadowImage = Image.asset(defPhoto, width: width, height: height);
+    } else if (path.startsWith("assets")) {
       noShadowImage = Image.asset(path, width: width, height: height);
     } else if (path.startsWith("http")) {
       noShadowImage = Image.network(path, width: width, height: height);
