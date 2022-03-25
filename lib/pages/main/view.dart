@@ -35,19 +35,36 @@ class _MainPageState extends State<MainPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF2F8FF),
-      appBar: AppBar(
-        toolbarHeight: 54.w,
-        elevation: 0,
-        backgroundColor: const Color(0xFFF2F8FF),
-        title: _getTabBar(),
-        actions: [_getTopHead()],
+    return Container(
+      color: const Color(0xFFF2F8FF),
+      child: Column(
+        children: [
+          AppBar(
+            toolbarHeight: 54.w,
+            elevation: 0,
+            backgroundColor: const Color(0xFFF2F8FF),
+            title: _getTabBar(),
+            actions: [_getTopHead()],
+          ),
+          Expanded(child: _buildWeSlide(context)),
+        ],
       ),
-      // body: _getTabBarView(),
-      body: _buildWeSlide(context),
     );
+    // return Scaffold(
+    //   backgroundColor: const Color(0xFFF2F8FF),
+    //   appBar: AppBar(
+    //     toolbarHeight: 54.w,
+    //     elevation: 0,
+    //     backgroundColor: const Color(0xFFF2F8FF),
+    //     title: _getTabBar(),
+    //     actions: [_getTopHead()],
+    //   ),
+    //   body: _buildWeSlide(context),
+    // );
   }
+
+
+
 
   Widget _buildWeSlide(BuildContext context) {
     final WeSlideController _controller = WeSlideController();
