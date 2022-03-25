@@ -14,7 +14,8 @@ Widget showImg(String path,
     {double width = 100,
     double height = 100,
     double radius = 20,
-    bool hasShadow = true}) {
+    bool hasShadow = true,
+    String defPhoto = "assets/thumb/XVztg3oXmX4.jpg"}) {
   Widget noShadowImage;
   ImageProvider<Object> shadowImage;
   if (hasShadow) {
@@ -23,8 +24,14 @@ Widget showImg(String path,
     } else if (path.startsWith("http")) {
       shadowImage = NetworkImage(path);
     } else {
-      shadowImage = FileImage(File(path));
+      final file = File(path);
+      if (file.existsSync()) {
+        shadowImage = FileImage(File(path));
+      } else {
+        shadowImage = AssetImage(defPhoto);
+      }
     }
+
     return Container(
       width: width,
       height: height,
@@ -43,7 +50,12 @@ Widget showImg(String path,
     } else if (path.startsWith("http")) {
       noShadowImage = Image.network(path, width: width, height: height);
     } else {
-      noShadowImage = Image.file(File(path), width: width, height: height);
+      final file = File(path);
+      if (file.existsSync()) {
+        noShadowImage = Image.file(File(path), width: width, height: height);
+      } else {
+        noShadowImage = Image.asset(defPhoto, width: width, height: height);
+      }
     }
     return ClipRRect(
         borderRadius: BorderRadius.circular(radius), child: noShadowImage);
