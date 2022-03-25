@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/models/music_Item.dart';
 
 import 'state.dart';
 
@@ -9,9 +10,30 @@ class Song_libraryLogic extends GetxController {
     state.isSelect = !state.isSelect;
     refresh();
   }
-  addItem(List<String> data){
+  addItem(List<MusicItem> data){
     state.items.addAll(data);
     refresh();
+  }
+
+  selectAll(bool checked){
+    for (var element in state.items) {
+      element.checked = checked;
+    }
+    refresh();
+  }
+  selectItem(int index,bool checked){
+    state.items[index].checked = checked;
+    refresh();
+  }
+
+  int getCheckedSong(){
+    int num = 0;
+    for (var element in state.items) {
+      if(element.checked){
+        num++;
+      }
+    }
+    return num;
   }
 
 }

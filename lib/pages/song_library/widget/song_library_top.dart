@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/pages/song_library/state.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../models/music_Item.dart';
 import '../../../widgets/circular_check_box.dart';
 import '../logic.dart';
 
 class Song_libraryTop extends StatelessWidget {
-  Song_libraryState state;
   final Function onPlayTap;
   final Function onScreenTap;
   final Function(bool) onSelectAllTap;
@@ -16,7 +16,6 @@ class Song_libraryTop extends StatelessWidget {
 
   Song_libraryTop({
     Key? key,
-    required this.state,
     required this.onPlayTap,
     required this.onScreenTap,
     required this.onSelectAllTap,
@@ -25,7 +24,10 @@ class Song_libraryTop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return state.isSelect ? _buildSelectSong() : _buildPlaySong();
+    return GetBuilder<Song_libraryLogic>(builder: (logic) {
+      return logic.state.isSelect ? _buildSelectSong() : _buildPlaySong();
+    });
+    //
   }
 
   ///播放歌曲条目
@@ -86,15 +88,17 @@ class Song_libraryTop extends StatelessWidget {
   ///歌曲总数
   Widget _buildSongNumText() {
     return Expanded(
-      child: Text(
-        "${state.songNum}首歌曲",
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(
-            color: Color(0xFF333333),
-            fontSize: 14.w,
-            fontWeight: FontWeight.bold),
-      ),
+      child: GetBuilder<Song_libraryLogic>(builder: (logic) {
+        return Text(
+          "${logic.state.items.length}首歌曲",
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+              color: Color(0xFF333333),
+              fontSize: 14.w,
+              fontWeight: FontWeight.bold),
+        );
+      }),
     );
   }
 
@@ -126,20 +130,22 @@ class Song_libraryTop extends StatelessWidget {
           SizedBox(
             width: 16.w,
           ),
-          CircularCheckBox(
-            checkd: state.selectAll,
-            checkIconColor: const Color(0xFFF940A7),
-            uncheckedIconColor: const Color(0xFF999999),
-            spacing: 10.w,
-            iconSize: 25,
-            title: "选择全部/已选${state.selectSongNum}首",
-            titleColor: Color(0xFF333333),
-            titleSize: 15.sp,
-            onCheckd: (value) {
-              state.selectAll = value;
-              onSelectAllTap(value);
-            },
-          ),
+          GetBuilder<Song_libraryLogic>(builder: (logic) {
+            return CircularCheckBox(
+              checkd: logic.state.selectAll,
+              checkIconColor: const Color(0xFFF940A7),
+              uncheckedIconColor: const Color(0xFF999999),
+              spacing: 10.w,
+              iconSize: 25,
+              title: "选择全部/已选${logic.getCheckedSong()}首",
+              titleColor: Color(0xFF333333),
+              titleSize: 15.sp,
+              onCheckd: (value) {
+                logic.state.selectAll = value;
+                onSelectAllTap(value);
+              },
+            );
+          }),
           Expanded(child: Container()),
           GestureDetector(
             onTap: () {
@@ -158,4 +164,6 @@ class Song_libraryTop extends StatelessWidget {
       ),
     );
   }
+
+
 }

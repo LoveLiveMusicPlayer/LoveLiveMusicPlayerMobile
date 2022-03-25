@@ -1,10 +1,10 @@
+import 'package:lovelivemusicplayer/models/music_Item.dart';
+
 class Song_libraryState {
   Song_libraryState() {
     ///Initialize variables
   }
 
-  ///歌曲条数
-  int songNum = 0;
 
   ///选择条目模式
   bool isSelect = false;
@@ -16,5 +16,10 @@ class Song_libraryState {
   int selectSongNum = 0;
 
   ///列表数据
-  List<String> items = ["xxx","xxx","xx"];
+  List<MusicItem> items = [MusicItem(titlle: "",checked: false),
+    MusicItem(titlle: "",checked: false),
+    MusicItem(titlle: "",checked: false),
+    MusicItem(titlle: "",checked: false),
+    MusicItem(titlle: "",checked: false),
+    MusicItem(titlle: "",checked: false)];
 }

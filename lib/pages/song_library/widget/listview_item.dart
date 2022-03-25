@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/models/music_Item.dart';
+import 'package:lovelivemusicplayer/pages/song_library/logic.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
@@ -8,11 +11,18 @@ class ListViewItem extends StatefulWidget {
   Function() onPlayTap;
   Function() onMoreTap;
 
-  ListViewItem(
-      {Key? key,
-      required this.onItemTap,
-      required this.onPlayTap,
-      required this.onMoreTap})
+  ///条目数据
+  int index;
+
+  ///全选
+  bool isSelect;
+
+  ListViewItem({Key? key,
+    required this.onItemTap,
+    required this.onPlayTap,
+    required this.onMoreTap,
+    this.isSelect = false,
+    required this.index})
       : super(key: key);
 
   @override
@@ -20,42 +30,51 @@ class ListViewItem extends StatefulWidget {
 }
 
 class _ListViewItemState extends State<ListViewItem> {
-  bool checked = false;
+  var item;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        widget.onItemTap(checked);
+    return GetBuilder<Song_libraryLogic>(
+      assignId: true,
+      builder: (logic) {
+        item = logic.state.items[widget.index];
+        return GestureDetector(
+          onTap: () {
+            item.checked = !item.checked;
+            logic.selectItem(widget.index, item.checked);
+            widget.onItemTap(item.checked);
+          },
+          child: Container(
+            color: const Color(0xFFF2F8FF),
+            height: 68.w,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 10.w,
+                ),
+
+                ///勾选按钮
+                _buildCheckBox(),
+                SizedBox(
+                  width: 6.w,
+                ),
+
+                ///缩列图
+                _buildIcon(),
+                SizedBox(
+                  width: 10.w,
+                ),
+
+                ///中间标题部分
+                _buildContent(),
+
+                ///右侧操作按钮
+                _buildAction(),
+              ],
+            ),
+          ),
+        );
       },
-      child: SizedBox(
-        height: 68.w,
-        child: Row(
-          children: [
-            SizedBox(
-              width: 10.w,
-            ),
-
-            ///勾选按钮
-            _buildCheckBox(),
-            SizedBox(
-              width: 6.w,
-            ),
-
-            ///缩列图
-            _buildIcon(),
-            SizedBox(
-              width: 10.w,
-            ),
-
-            ///中间标题部分
-            _buildContent(),
-
-            ///右侧操作按钮
-            _buildAction(),
-          ],
-        ),
-      ),
     );
   }
 
@@ -74,17 +93,23 @@ class _ListViewItemState extends State<ListViewItem> {
 
   ///勾选按钮
   Widget _buildCheckBox() {
-    return Padding(
-      padding: EdgeInsets.only(left: 6.w, right: 4.w),
-      child: CircularCheckBox(
-        onCheckd: (value) {
-          checked = value;
-          widget.onItemTap(checked);
-        },
-        checkIconColor: Color(0xFFF940A7),
-        uncheckedIconColor: Color(0xFF999999),
-      ),
-    );
+    return GetBuilder<Song_libraryLogic>(builder: (logic) {
+      return Visibility(
+        visible: logic.state.isSelect,
+        child: Padding(
+          padding: EdgeInsets.only(left: 6.w, right: 4.w),
+          child: CircularCheckBox(
+            checkd: item.checked,
+            onCheckd: (value) {
+              logic.selectItem(widget.index, value);
+              widget.onItemTap(item.checked);
+            },
+            checkIconColor: Color(0xFFF940A7),
+            uncheckedIconColor: Color(0xFF999999),
+          ),
+        ),
+      );
+    });
   }
 
   ///中间标题部分
@@ -125,39 +150,44 @@ class _ListViewItemState extends State<ListViewItem> {
 
   ///右侧操作按钮
   Widget _buildAction() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        GestureDetector(
-          onTap: () {
-            widget.onPlayTap();
-          },
-          child: Padding(
-            padding: EdgeInsets.all(5.w),
-            child: Image.asset(
-              "assets/main/ic_play.jpg",
-              width: 20.w,
-              height: 20.w,
+    return GetBuilder<Song_libraryLogic>(builder: (logic) {
+      return Visibility(
+        visible: !logic.state.isSelect,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GestureDetector(
+              onTap: () {
+                widget.onPlayTap();
+              },
+              child: Padding(
+                padding: EdgeInsets.all(5.w),
+                child: Image.asset(
+                  "assets/main/ic_play.jpg",
+                  width: 20.w,
+                  height: 20.w,
+                ),
+              ),
             ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            widget.onMoreTap();
-          },
-          child: Padding(
-            padding: EdgeInsets.all(5.w),
-            child: Image.asset(
-              "assets/main/ic_more.jpg",
-              width: 20.w,
-              height: 20.w,
+            GestureDetector(
+              onTap: () {
+                widget.onMoreTap();
+              },
+              child: Padding(
+                padding: EdgeInsets.all(5.w),
+                child: Image.asset(
+                  "assets/main/ic_more.jpg",
+                  width: 20.w,
+                  height: 20.w,
+                ),
+              ),
             ),
-          ),
+            SizedBox(
+              width: 4.w,
+            )
+          ],
         ),
-        SizedBox(
-          width: 4.w,
-        )
-      ],
-    );
+      );
+    });
   }
 }
