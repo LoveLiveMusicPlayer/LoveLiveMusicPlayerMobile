@@ -63,7 +63,7 @@ Widget showImg(String path,
 /// [iconSize] 内部图标的大小
 /// [iconColor] 内部图标的颜色
 /// [offset] 内部图标的偏移量
-Widget materialButton(IconData icon, Function onTap,
+Widget materialButton(IconData icon, GestureTapCallback? onTap,
     {double width = 80,
     double height = 80,
     double radius = 20,
@@ -94,7 +94,7 @@ Widget materialButton(IconData icon, Function onTap,
         child: InkWell(
           splashColor: const Color(0xFFD3E0EC),
           highlightColor: const Color(0xFFD3E0EC),
-          onTap: () => onTap,
+          onTap: onTap,
           child: Stack(
             children: [
               Center(

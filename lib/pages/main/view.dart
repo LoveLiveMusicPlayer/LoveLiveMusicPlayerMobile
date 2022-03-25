@@ -70,7 +70,7 @@ class _MainPageState extends State<MainPage>
     final WeSlideController _controller = WeSlideController();
     const double _panelMinSize = 150;
     final double _panelMaxSize = ScreenUtil().screenHeight;
-    final colorTheme = Theme.of(context).colorScheme;
+
     return WeSlide(
       controller: _controller,
       panelMinSize: _panelMinSize.h,
