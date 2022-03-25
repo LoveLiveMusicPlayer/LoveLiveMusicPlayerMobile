@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/pages/song_library/state.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../models/music_Item.dart';
 import '../../../widgets/circular_check_box.dart';
-import '../../song_library/logic.dart';
 import '../logic.dart';
 
 class Song_libraryTop extends StatelessWidget {
