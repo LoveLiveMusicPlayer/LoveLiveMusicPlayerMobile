@@ -8,18 +8,22 @@ class Music {
   Music({
     required this.name,
     required this.cover,
+    required this.singer,
   });
 
   String name;
   String cover;
+  String singer;
 
   factory Music.fromJson(Map<String, dynamic> json) => Music(
     name: json["name"],
     cover: json["cover"],
+    singer: json["singer"],
   );
 
   Map<String, dynamic> toJson() => {
     "name": name,
     "cover": cover,
+    "singer": singer,
   };
 }
