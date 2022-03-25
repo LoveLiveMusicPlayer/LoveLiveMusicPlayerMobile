@@ -23,4 +23,10 @@ class MainLogic extends GetxController {
     super.onReady();
     Get.toNamed(Routes.routeTest);
   }
+
+  selectSongLibrary(bool value){
+    state.isSelectSongLibrary = value;
+    refresh();
+  }
+
 }

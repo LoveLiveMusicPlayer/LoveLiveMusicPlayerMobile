@@ -11,6 +11,7 @@ import 'i18n/translation.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'network/http_request.dart';
+import 'utils/sd_utils.dart';
 import 'utils/sp_util.dart';
 
 var isDark = false;
@@ -19,7 +20,6 @@ void main() async {
   // 启动屏开启
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-
   // 初始化
   await initServices();
   isDark = await SpUtil.getBoolean(Const.spDark);
@@ -71,6 +71,7 @@ initServices() async {
   await GetStorage.init();
   await SpUtil.getInstance();
   Network.getInstance();
+  SdUtils.init();
   LogUtil.init(tag: "iLab", isDebug: kDebugMode);
   LogUtil.d('All services started...');
 }
