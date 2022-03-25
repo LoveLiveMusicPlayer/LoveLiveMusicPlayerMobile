@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../models/music_Item.dart';
 import '../../../widgets/circular_check_box.dart';
+import '../../song_library/logic.dart';
 import '../logic.dart';
 
 class Song_libraryTop extends StatelessWidget {
@@ -24,7 +25,7 @@ class Song_libraryTop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<Song_libraryLogic>(builder: (logic) {
+    return GetBuilder<MainLogic>(builder: (logic) {
       return logic.state.isSelect ? _buildSelectSong() : _buildPlaySong();
     });
     //
@@ -88,7 +89,7 @@ class Song_libraryTop extends StatelessWidget {
   ///歌曲总数
   Widget _buildSongNumText() {
     return Expanded(
-      child: GetBuilder<Song_libraryLogic>(builder: (logic) {
+      child: GetBuilder<MainLogic>(builder: (logic) {
         return Text(
           "${logic.state.items.length}首歌曲",
           maxLines: 1,
@@ -130,7 +131,7 @@ class Song_libraryTop extends StatelessWidget {
           SizedBox(
             width: 16.w,
           ),
-          GetBuilder<Song_libraryLogic>(builder: (logic) {
+          GetBuilder<MainLogic>(builder: (logic) {
             return CircularCheckBox(
               checkd: logic.state.selectAll,
               checkIconColor: const Color(0xFFF940A7),

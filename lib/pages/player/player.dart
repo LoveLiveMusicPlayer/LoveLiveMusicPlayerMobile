@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_header.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_info.dart';
-import 'package:lovelivemusicplayer/pages/test/logic.dart';
 import '../../modules/ext.dart';
+import '../main/logic.dart';
 
 class Player extends StatefulWidget {
   final Function onTap;
@@ -18,7 +18,7 @@ class Player extends StatefulWidget {
 
 class _PlayerState extends State<Player> {
   final bottomHeight = 280.0;
-  var logic = Get.find<TestLogic>();
+  var logic = Get.find<MainLogic>();
 
   @override
   Widget build(BuildContext context) {

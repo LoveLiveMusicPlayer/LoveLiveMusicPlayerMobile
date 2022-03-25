@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import '../../models/music_Item.dart';
 import '../../widgets/refresher_widget.dart';
 import 'logic.dart';
-import 'widget/listview_item.dart';
-import 'widget/song_library_top.dart';
+import '../main/widget/listview_item.dart';
+import '../main/widget/song_library_top.dart';
 
 class Song_libraryPage extends StatelessWidget {
   final logic = Get.put(Song_libraryLogic());
@@ -46,6 +46,7 @@ class Song_libraryPage extends StatelessWidget {
           itemCount: logic.state.items.length,
           enablePullDown: logic.state.items.isNotEmpty,
           listItem: (cxt, index) {
+            print(index);
             return ListViewItem(
               index: index,
               onItemTap: (valut) {},

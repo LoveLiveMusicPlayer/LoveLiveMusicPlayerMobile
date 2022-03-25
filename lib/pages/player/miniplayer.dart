@@ -2,11 +2,12 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/pages/test/logic.dart';
 import 'package:marquee_text/marquee_text.dart';
 import '../../models/Music.dart';
 import '../../modules/ext.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+
+import '../main/logic.dart';
 
 class MiniPlayer extends StatefulWidget {
   MiniPlayer({Key? key, required this.onTap, required this.onChangeMusic})
@@ -20,7 +21,7 @@ class MiniPlayer extends StatefulWidget {
 
 class _MiniPlayerState extends State<MiniPlayer> {
   final scrollList = <Widget>[];
-  var logic = Get.find<TestLogic>();
+  var logic = Get.find<MainLogic>();
 
   CarouselController sliderController = CarouselController();
 
@@ -37,7 +38,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
       child: Column(
         children: [
           Container(
-            height: 60.h,
+            // height: 60.h,
             margin: EdgeInsets.only(left: 16.w, right: 16.w),
             decoration: BoxDecoration(
                 color: const Color(0xFFEBF3FE),

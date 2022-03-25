@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/models/music_Item.dart';
 import 'package:lovelivemusicplayer/pages/song_library/logic.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
+
+import '../logic.dart';
 
 class ListViewItem extends StatefulWidget {
   Function(bool) onItemTap;
@@ -30,19 +31,14 @@ class ListViewItem extends StatefulWidget {
 }
 
 class _ListViewItemState extends State<ListViewItem> {
-  var item;
-
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<Song_libraryLogic>(
-      assignId: true,
+    return GetBuilder<MainLogic>(
       builder: (logic) {
-        item = logic.state.items[widget.index];
         return GestureDetector(
           onTap: () {
-            item.checked = !item.checked;
-            logic.selectItem(widget.index, item.checked);
-            widget.onItemTap(item.checked);
+            logic.selectItem(widget.index, !logic.isItemChecked(widget.index));
+            widget.onItemTap(logic.isItemChecked(widget.index));
           },
           child: Container(
             color: const Color(0xFFF2F8FF),
@@ -93,16 +89,16 @@ class _ListViewItemState extends State<ListViewItem> {
 
   ///勾选按钮
   Widget _buildCheckBox() {
-    return GetBuilder<Song_libraryLogic>(builder: (logic) {
+    return GetBuilder<MainLogic>(builder: (logic) {
       return Visibility(
         visible: logic.state.isSelect,
         child: Padding(
           padding: EdgeInsets.only(left: 6.w, right: 4.w),
           child: CircularCheckBox(
-            checkd: item.checked,
+            checkd: logic.isItemChecked(widget.index),
             onCheckd: (value) {
               logic.selectItem(widget.index, value);
-              widget.onItemTap(item.checked);
+              widget.onItemTap(logic.isItemChecked(widget.index));
             },
             checkIconColor: Color(0xFFF940A7),
             uncheckedIconColor: Color(0xFF999999),
@@ -150,7 +146,7 @@ class _ListViewItemState extends State<ListViewItem> {
 
   ///右侧操作按钮
   Widget _buildAction() {
-    return GetBuilder<Song_libraryLogic>(builder: (logic) {
+    return GetBuilder<MainLogic>(builder: (logic) {
       return Visibility(
         visible: !logic.state.isSelect,
         child: Row(
