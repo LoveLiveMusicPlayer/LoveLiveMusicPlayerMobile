@@ -8,7 +8,7 @@ import '../../modules/ext.dart';
 import '../main/logic.dart';
 
 class Player extends StatefulWidget {
-  final Function onTap;
+  final GestureTapCallback onTap;
 
   Player({required this.onTap});
 

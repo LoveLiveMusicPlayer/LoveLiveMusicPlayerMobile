@@ -1,3 +1,4 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -7,7 +8,7 @@ import '../../../modules/ext.dart';
 import '../../test/logic.dart';
 
 class PlayerHeader extends StatelessWidget {
-  final Function onTap;
+  final GestureTapCallback onTap;
   var logic = Get.find<MainLogic>();
 
   PlayerHeader({Key? key, required this.onTap}) : super(key: key);
@@ -19,7 +20,7 @@ class PlayerHeader extends StatelessWidget {
       child: Row(
         children: <Widget>[
           /// 折叠向下箭头
-          materialButton(Icons.keyboard_arrow_down, () => onTap,
+          materialButton(Icons.keyboard_arrow_down, onTap,
               width: 32,
               height: 32,
               iconSize: 20,

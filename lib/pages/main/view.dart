@@ -39,13 +39,13 @@ class _MainPageState extends State<MainPage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF2F8FF),
-      appBar: AppBar(
-        toolbarHeight: 54.w,
-        elevation: 0,
-        backgroundColor: const Color(0xFFF2F8FF),
-        title: _getTabBar(),
-        actions: [_getTopHead()],
-      ),
+      // appBar: AppBar(
+      //   toolbarHeight: 54.w,
+      //   elevation: 0,
+      //   backgroundColor: const Color(0xFFF2F8FF),
+      //   title: _getTabBar(),
+      //   actions: [_getTopHead()],
+      // ),
       // body: _getTabBarView(),
       body: _buildWeSlide(context),
     );
@@ -55,7 +55,7 @@ class _MainPageState extends State<MainPage>
     final WeSlideController _controller = WeSlideController();
     const double _panelMinSize = 150;
     final double _panelMaxSize = ScreenUtil().screenHeight;
-    final colorTheme = Theme.of(context).colorScheme;
+
     return WeSlide(
       controller: _controller,
       panelMinSize: _panelMinSize.h,
