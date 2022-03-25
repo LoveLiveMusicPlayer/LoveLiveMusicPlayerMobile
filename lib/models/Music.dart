@@ -9,21 +9,51 @@ class Music {
     required this.name,
     required this.cover,
     required this.singer,
+    this.jpLrc,
+    this.zhLrc,
+    this.romaLrc,
+    this.preJPLrc = "はすんだ！",
+    this.currentJPLrc = "だから僕らは鳴らすんだ！",
+    this.nextJPLrc = "だか鳴ららはすんだ！",
   });
 
   String name;
   String cover;
   String singer;
 
+  String? jpLrc;
+  String? zhLrc;
+  String? romaLrc;
+
+  String? preJPLrc;
+  String? currentJPLrc;
+  String? nextJPLrc;
+
   factory Music.fromJson(Map<String, dynamic> json) => Music(
     name: json["name"],
     cover: json["cover"],
     singer: json["singer"],
+
+    jpLrc: json["jpLrc"],
+    zhLrc: json["zhLrc"],
+    romaLrc: json["romaLrc"],
+
+    preJPLrc: json["preJPLrc"],
+    currentJPLrc: json["currentJPLrc"],
+    nextJPLrc: json["nextJPLrc"],
   );
 
   Map<String, dynamic> toJson() => {
     "name": name,
     "cover": cover,
     "singer": singer,
+
+    "jpLrc": jpLrc,
+    "zhLrc": zhLrc,
+    "romaLrc": romaLrc,
+
+    "preJPLrc": preJPLrc,
+    "currentJPLrc": currentJPLrc,
+    "nextJPLrc": nextJPLrc,
   };
 }

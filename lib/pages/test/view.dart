@@ -35,7 +35,7 @@ class TestPage extends StatelessWidget {
           onChangeMusic: (index, reason) => {
                 LogUtil.e("选择了第$index首")
               }),
-      panel: Player(onTap: _controller.hide),
+      panel: Player(onTap: _controller.hide, avoidBottomHeight: _panelMinSize),
       footer: Obx(() {
         return BottomBar(logic.currentIndex.value, onSelect: (index) {
           logic.currentIndex.value = index;

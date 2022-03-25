@@ -1,17 +1,17 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
+import 'package:lovelivemusicplayer/pages/player/widget/player_header.dart';
+import 'package:lovelivemusicplayer/pages/player/widget/player_info.dart';
 import 'package:lovelivemusicplayer/pages/test/logic.dart';
-
 import '../../modules/ext.dart';
 
 class Player extends StatefulWidget {
   final Function onTap;
+  final double avoidBottomHeight;
 
-  Player({required this.onTap});
+  Player({required this.onTap, required this.avoidBottomHeight});
 
   @override
   _PlayerState createState() => _PlayerState();
@@ -20,7 +20,6 @@ class Player extends StatefulWidget {
 class _PlayerState extends State<Player> {
 
   var logic = Get.find<TestLogic>();
-
 
   @override
   Widget build(BuildContext context) {
@@ -31,103 +30,20 @@ class _PlayerState extends State<Player> {
         physics: const BouncingScrollPhysics(),
         child: Stack(
           children: <Widget>[
-            Container(
-              height: MediaQuery.of(context).size.height,
-              decoration: BoxDecoration(
-                  color: const Color(0xFFF2F8FF),
-                  borderRadius: BorderRadius.circular(34)),
-            ),
-            // Container(
-            //   height: MediaQuery.of(context).size.height,
-            //   decoration: BoxDecoration(
-            //     gradient: LinearGradient(
-            //       colors: [
-            //         const Color(0xFF0B1220).withOpacity(0.0),
-            //         const Color(0xFF0B1220).withOpacity(0.9)
-            //       ],
-            //       begin: Alignment.topCenter,
-            //       end: Alignment.bottomCenter,
-            //       stops: const [0.0, 1.0],
-            //     ),
-            //   ),
-            // ),
+            coverBg(),
             Column(
               children: <Widget>[
                 SizedBox(
-                  height: MediaQuery.of(context).size.height - 150,
-                  child: Stack(
+                  height: ScreenUtil().screenHeight - widget.avoidBottomHeight,
+                  child: Column(
                     children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          SizedBox(height: MediaQuery.of(context).padding.top),
-                          // Header
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            child: Row(
-                              children: <Widget>[
-                                IconButton(
-                                  onPressed: () => widget.onTap(),
-                                  iconSize: 32,
-                                  icon: const Icon(
-                                    Icons.arrow_drop_down,
-                                    color: Color(0xFF999999),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    children: <Widget>[
-                                      Obx(() => getTitle(logic.musicList.value, logic.currentIndex.value)),
-                                      Obx(() => getSinger(logic.musicList.value, logic.currentIndex.value)),
-                                    ],
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.more_horiz,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Obx(() => getCover(logic.musicList.value, logic.currentIndex.value)),
-                          // Music info
-                          Padding(
-                            padding:
-                            const EdgeInsets.symmetric(horizontal: 24.0),
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        "Wurkit (Original Mix)",
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: textTheme.headline5!.apply(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 5),
-                                      Text(
-                                        "Kyle Watson",
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: textTheme.headline6!.apply(
-                                            color: Colors.white
-                                                .withOpacity(0.5)),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      )
+                      SizedBox(height: MediaQuery.of(context).padding.top),
+                      /// 头部
+                      PlayerHeader(onTap: widget.onTap),
+                      /// 封面
+                      Obx(() => getCover(logic.musicList.value, logic.currentIndex.value)),
+                      /// 信息
+                      PlayerInfo(),
                     ],
                   ),
                 ),
@@ -224,36 +140,6 @@ class _PlayerState extends State<Player> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget getTitle(List<Music> musicList, int index) {
-    if (musicList.isEmpty) {
-      return const Text(
-        "暂无歌曲",
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(color: Color(0xFF333333), fontSize: 15),
-      );
-    }
-    return Text(
-      musicList[index].name,
-      overflow: TextOverflow.ellipsis,
-      style: const TextStyle(color: Color(0xFF333333), fontSize: 15),
-    );
-  }
-
-  Widget getSinger(List<Music> musicList, int index) {
-    if (musicList.isEmpty) {
-      return const Text(
-        "",
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(color: Color(0xFF333333), fontSize: 12),
-      );
-    }
-    return Text(
-      musicList[index].singer,
-      overflow: TextOverflow.ellipsis,
-      style: const TextStyle(color: Color(0xFF999999), fontSize: 12),
     );
   }
 
