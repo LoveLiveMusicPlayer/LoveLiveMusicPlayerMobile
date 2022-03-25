@@ -67,7 +67,7 @@ class _PlayerState extends State<Player> {
                       progress(),
 
                       /// 播放器控制组件
-                      playButton(),
+                      Obx(() => playButton(logic.musicList.value, logic.playingIndex.value)),
                     ],
                   ),
                 ),
@@ -155,17 +155,17 @@ class _PlayerState extends State<Player> {
     );
   }
 
-  Widget playButton() {
+  Widget playButton(List<Music> musicList, int index) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          materialButton(Icons.skip_previous, () => {},
+          materialButton(Icons.skip_previous, () => logic.playPrevMusic(musicList, index),
               width: 60, height: 60, radius: 40),
-          materialButton(Icons.play_arrow, () => {},
+          materialButton(Icons.play_arrow, () => logic.togglePlay(),
               width: 80, height: 80, radius: 40, iconSize: 50),
-          materialButton(Icons.skip_next, () => {},
+          materialButton(Icons.skip_next, () => logic.playNextMusic(musicList, index),
               width: 60, height: 60, radius: 40),
         ],
       ),

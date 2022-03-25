@@ -1,11 +1,9 @@
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/pages/main/logic.dart';
 import '../../../models/Music.dart';
 import '../../../modules/ext.dart';
-import '../../test/logic.dart';
 
 class PlayerHeader extends StatelessWidget {
   final GestureTapCallback onTap;

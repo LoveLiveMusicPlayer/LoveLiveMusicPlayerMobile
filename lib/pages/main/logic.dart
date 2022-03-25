@@ -66,6 +66,34 @@ class MainLogic extends GetxController {
     return num;
   }
 
+  playPrevMusic(List<Music> musicList, int index) {
+    if (musicList.isEmpty) {
+      return;
+    }
+    if (index == 0) {
+      playingIndex.value = musicList.length - 1;
+    } else {
+      playingIndex.value = index - 1;
+    }
+  }
+
+  playNextMusic(List<Music> musicList, int index) {
+    if (musicList.isEmpty) {
+      return;
+    }
+    if (index == musicList.length - 1) {
+      playingIndex.value = 0;
+      playingMusic.value = musicList[0];
+    } else {
+      playingIndex.value = index + 1;
+      playingMusic.value = musicList[0];
+    }
+  }
+
+  togglePlay() {
+
+  }
+
   ///-------------------------------
   var image = "".obs;
   var currentIndex = 0.obs;

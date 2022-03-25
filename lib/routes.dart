@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'pages/test/view.dart';
 import 'pages/main/view.dart';
 
 class Routes {
@@ -11,7 +10,6 @@ class Routes {
   static List<GetPage> getRoutes() {
     return [
       GetPage(name: Routes.routeInitial, page: () => MainPage()),
-      GetPage(name: Routes.routeTest, page: () => TestPage()),
     ];
   }
 }

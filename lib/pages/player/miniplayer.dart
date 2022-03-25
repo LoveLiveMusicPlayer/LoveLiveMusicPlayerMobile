@@ -27,18 +27,17 @@ class _MiniPlayerState extends State<MiniPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    final colorTheme = Theme.of(context).colorScheme;
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       decoration: BoxDecoration(
-        color: colorTheme.background,
+        color: const Color(0xFFF2F8FF),
         borderRadius: BorderRadius.circular(34),
       ),
       child: Column(
         children: [
           Container(
-            // height: 60.h,
+            height: 60.h,
             margin: EdgeInsets.only(left: 16.w, right: 16.w),
             decoration: BoxDecoration(
                 color: const Color(0xFFEBF3FE),
