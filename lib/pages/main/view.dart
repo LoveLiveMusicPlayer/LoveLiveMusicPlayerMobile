@@ -35,28 +35,9 @@ class _MainPageState extends State<MainPage>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: const Color(0xFFF2F8FF),
-      child: Column(
-        children: [
-          AppBar(
-            toolbarHeight: 54.w,
-            elevation: 0,
-            backgroundColor: const Color(0xFFF2F8FF),
-            title: _getTabBar(),
-            actions: [_getTopHead()],
-          ),
-          Expanded(child: _buildWeSlide(context)),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildWeSlide(BuildContext context) {
     final WeSlideController _controller = WeSlideController();
     const double _panelMinSize = 150;
     final double _panelMaxSize = ScreenUtil().screenHeight;
-
     return WeSlide(
       controller: _controller,
       panelMinSize: _panelMinSize.h,
@@ -142,14 +123,19 @@ class _MainPageState extends State<MainPage>
   Widget _getTabBarView() {
     return Column(
       children: [
+        AppBar(
+          toolbarHeight: 54.w,
+          elevation: 0,
+          backgroundColor: const Color(0xFFF2F8FF),
+          title: _getTabBar(),
+          actions: [_getTopHead()],
+        ),
+
         ///顶部歌曲总数栏
         _buildListTop(),
 
         ///列表数据
         _buildList(),
-
-        ///底部滑动导航
-        // _buildTabBarView()
       ],
     );
   }
