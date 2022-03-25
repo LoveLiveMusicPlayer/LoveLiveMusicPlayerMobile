@@ -6,6 +6,8 @@ String musicToJson(Music data) => json.encode(data.toJson());
 
 class Music {
   Music({
+    this.uid,
+    this.id,
     this.name,
     this.cover,
     this.singer,
@@ -17,6 +19,9 @@ class Music {
     this.currentJPLrc = "だから僕らは鳴らすんだ！",
     this.nextJPLrc = "だか鳴ららはすんだ！",
   });
+
+  String? uid;
+  int? id;
 
   String? name;
   String? cover;
@@ -32,6 +37,8 @@ class Music {
   String? nextJPLrc;
 
   factory Music.fromJson(Map<String, dynamic> json) => Music(
+    uid: json["uid"],
+    id: json["id"],
     name: json["name"],
     cover: json["cover"],
     singer: json["singer"],
@@ -47,6 +54,8 @@ class Music {
   );
 
   Map<String, dynamic> toJson() => {
+    "uid": uid,
+    "id": id,
     "name": name,
     "cover": cover,
     "singer": singer,

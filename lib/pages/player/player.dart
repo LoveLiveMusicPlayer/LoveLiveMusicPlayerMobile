@@ -43,7 +43,7 @@ class _PlayerState extends State<Player> {
 
                       /// 封面
                       Obx(() => cover(
-                          logic.musicList.value, logic.currentIndex.value)),
+                          logic.musicList.value, logic.playingIndex.value)),
 
                       /// 信息
                       SizedBox(height: 20.h),
@@ -135,8 +135,8 @@ class _PlayerState extends State<Player> {
       child: Obx(() => Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              getProgressText(logic.musicList.value, logic.currentIndex.value),
-              getProgressText(logic.musicList.value, logic.currentIndex.value)
+              getProgressText(logic.musicList.value, logic.playingIndex.value),
+              getProgressText(logic.musicList.value, logic.playingIndex.value)
             ],
           )),
     );

@@ -29,8 +29,8 @@ class PlayerHeader extends StatelessWidget {
           Expanded(
             child: Obx(() => Column(
                   children: <Widget>[
-                    getTitle(logic.musicList.value, logic.currentIndex.value),
-                    getSinger(logic.musicList.value, logic.currentIndex.value),
+                    getTitle(logic.musicList.value, logic.playingIndex.value),
+                    getSinger(logic.musicList.value, logic.playingIndex.value),
                   ],
                 )),
           ),

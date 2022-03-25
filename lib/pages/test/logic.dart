@@ -11,7 +11,9 @@ class TestLogic extends GetxController {
   var image = "".obs;
   var currentIndex = 0.obs;
   var musicList = <Music>[].obs;
-  var currentMusic = Music().obs ;
+
+  var playingIndex = 0.obs;
+  var playingMusic = Music().obs ;
 
   var picPath = "";
 
@@ -30,7 +32,7 @@ class TestLogic extends GetxController {
     musicList.add(Music(name: "START!! True dreams1212121212", cover: picPath, singer: "Liella!", time: "03:42"));
     musicList.add(Music(name: "START!!", cover: picPath, singer: "Liella!", time: "03:42"));
 
-    currentMusic.value = musicList.value[0];
+    playingMusic.value = musicList.value[0];
     super.onReady();
   }
 }

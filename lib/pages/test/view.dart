@@ -32,9 +32,7 @@ class TestPage extends StatelessWidget {
       body: Home(),
       panelHeader: MiniPlayer(
           onTap: _controller.show,
-          onChangeMusic: (index, reason) => {
-                LogUtil.e("选择了第$index首")
-              }),
+          onChangeMusic: (index, reason) => {logic.playingIndex.value = index}),
       panel: Player(onTap: _controller.hide),
       footer: Obx(() {
         return BottomBar(logic.currentIndex.value, onSelect: (index) {

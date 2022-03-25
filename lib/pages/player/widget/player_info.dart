@@ -14,11 +14,11 @@ class PlayerInfo extends StatelessWidget {
       child: Obx(() => Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          recentlyLrc(logic.currentMusic.value.preJPLrc),
+          recentlyLrc(logic.playingMusic.value.preJPLrc),
           SizedBox(height: 8.h),
-          recentlyLrc(logic.currentMusic.value.currentJPLrc, color: const Color(0xFF333333)),
+          recentlyLrc(logic.playingMusic.value.currentJPLrc, color: const Color(0xFF333333)),
           SizedBox(height: 8.h),
-          recentlyLrc(logic.currentMusic.value.nextJPLrc)
+          recentlyLrc(logic.playingMusic.value.nextJPLrc)
         ],
       )),
     );

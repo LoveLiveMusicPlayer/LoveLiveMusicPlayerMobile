@@ -63,16 +63,15 @@ Widget showImg(String path,
 /// [iconSize] 内部图标的大小
 /// [iconColor] 内部图标的颜色
 /// [offset] 内部图标的偏移量
-Widget materialButton(IconData icon, Function onTap, {
-  double width = 80,
-  double height = 80,
-  double radius = 20,
-  Color innerColor = const Color(0xFFF2F8FF),
-  Color outerColor = const Color(0xFFD3E0EC),
-  double iconSize = 30,
-  Color iconColor = Colors.black,
-  EdgeInsets offset = const EdgeInsets.all(0)
-}) {
+Widget materialButton(IconData icon, Function onTap,
+    {double width = 80,
+    double height = 80,
+    double radius = 20,
+    Color innerColor = const Color(0xFFF2F8FF),
+    Color outerColor = const Color(0xFFD3E0EC),
+    double iconSize = 30,
+    Color iconColor = Colors.black,
+    EdgeInsets offset = const EdgeInsets.all(0)}) {
   return Container(
     width: width.w,
     height: height.h,
@@ -80,7 +79,11 @@ Widget materialButton(IconData icon, Function onTap, {
       color: innerColor,
       borderRadius: BorderRadius.circular(radius.w),
       boxShadow: [
-        const BoxShadow(color: Colors.white, offset: Offset(-3, -3), blurStyle: BlurStyle.inner, blurRadius: 6),
+        const BoxShadow(
+            color: Colors.white,
+            offset: Offset(-3, -3),
+            blurStyle: BlurStyle.inner,
+            blurRadius: 6),
         BoxShadow(color: outerColor, offset: const Offset(5, 3), blurRadius: 6),
       ],
     ),
@@ -88,16 +91,32 @@ Widget materialButton(IconData icon, Function onTap, {
       borderRadius: BorderRadius.circular(radius.w),
       child: Material(
         color: const Color(0xFFF2F8FF),
-        child: IconButton(
-          iconSize: iconSize.w,
-          padding: offset,
+        child: InkWell(
           splashColor: const Color(0xFFD3E0EC),
           highlightColor: const Color(0xFFD3E0EC),
-          onPressed: () => onTap,
-          icon: Icon(icon, color: iconColor),
+          onTap: () => onTap,
+          child: Stack(
+            children: [
+              Center(
+                child: Icon(icon, color: iconColor, size: iconSize.w),
+              ),
+              Container(
+                width: width.w,
+                height: height.h,
+                alignment: const Alignment(0, 0),
+              )
+            ],
+          ),
         ),
       ),
     ),
+  );
+}
+
+Widget touchIcon(IconData icon, Function onTap, {Color color = const Color(0xff333333), double? size}) {
+  return GestureDetector(
+    onTap: () => onTap,
+    child: Icon(icon, color: color, size: size),
   );
 }
 
