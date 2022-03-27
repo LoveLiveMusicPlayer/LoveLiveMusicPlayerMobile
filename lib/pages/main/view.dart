@@ -52,13 +52,9 @@ class _MainPageState extends State<MainPage>
       overlayColor: const Color(0xFFF2F8FF),
       panelBorderRadiusBegin: 10,
       panelBorderRadiusEnd: 10,
-      panelHeader: MiniPlayer(
-          onTap: _controller.show,
-          onChangeMusic: (index, reason) => {logic.playingIndex.value = index}),
+      panelHeader: MiniPlayer(onTap: _controller.show),
       panel: Player(onTap: _controller.hide),
-      footer: Obx(() {
-        return _buildTabBarView();
-      }),
+      footer: _buildTabBarView(),
       footerHeight: 84.h,
       blur: true,
       parallax: true,

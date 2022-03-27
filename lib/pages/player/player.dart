@@ -35,15 +35,21 @@ class _PlayerState extends State<Player> {
                   height: ScreenUtil().screenHeight - bottomHeight,
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: MediaQuery.of(context).padding.top),
+                      SizedBox(height: MediaQuery
+                          .of(context)
+                          .padding
+                          .top),
 
                       /// 头部
                       PlayerHeader(onTap: widget.onTap),
                       SizedBox(height: 20.h),
 
                       /// 封面
-                      Obx(() => cover(
-                          logic.musicList.value, logic.playingIndex.value)),
+                      GetBuilder<MainLogic>(
+                        builder: (logic) {
+                          return showImg(logic.state.playingMusic.cover, radius: 50, width: 300.w, height: 300.h);
+                        },
+                      ),
 
                       /// 信息
                       SizedBox(height: 20.h),
@@ -56,6 +62,7 @@ class _PlayerState extends State<Player> {
                   height: bottomHeight,
                   child: Column(
                     children: <Widget>[
+
                       /// 功能栏
                       funcButton(),
                       SizedBox(height: 34.h),
@@ -67,7 +74,7 @@ class _PlayerState extends State<Player> {
                       progress(),
 
                       /// 播放器控制组件
-                      Obx(() => playButton(logic.musicList.value, logic.playingIndex.value)),
+                      playButton(),
                     ],
                   ),
                 ),
@@ -77,15 +84,6 @@ class _PlayerState extends State<Player> {
         ),
       ),
     );
-  }
-
-  Widget cover(List<Music> musicList, int index) {
-    if (musicList.isEmpty || musicList[index].cover == null) {
-      return showImg("assets/thumb/XVztg3oXmX4.jpg",
-          radius: 50, width: 300.w, height: 300.h);
-    }
-    return showImg(musicList[index].cover!,
-        radius: 50, width: 300.w, height: 300.h);
   }
 
   Widget funcButton() {
@@ -132,40 +130,37 @@ class _PlayerState extends State<Player> {
   Widget progress() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: Obx(() => Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              getProgressText(logic.musicList.value, logic.playingIndex.value),
-              getProgressText(logic.musicList.value, logic.playingIndex.value)
-            ],
-          )),
+      child: GetBuilder<MainLogic>(builder: (logic) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              logic.state.playingMusic.playedTime ?? "00:00",
+              style: TextStyle(fontSize: 12.sp, color: const Color(0xFF999999)),
+            ),
+            Text(
+              logic.state.playingMusic.totalTime ?? "00:00",
+              style: TextStyle(fontSize: 12.sp, color: const Color(0xFF999999)),
+            )
+          ],
+        );
+      }),
     );
   }
 
-  Widget getProgressText(List<Music> musicList, int index) {
-    if (musicList.isEmpty || musicList[index].time == null) {
-      return Text(
-        "00:00",
-        style: TextStyle(fontSize: 12.sp, color: const Color(0xFF999999)),
-      );
-    }
-    return Text(
-      musicList[index].time!,
-      style: TextStyle(fontSize: 12.sp, color: const Color(0xFF999999)),
-    );
-  }
-
-  Widget playButton(List<Music> musicList, int index) {
+  Widget playButton() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          materialButton(Icons.skip_previous, () => logic.playPrevMusic(musicList, index),
+          materialButton(
+              Icons.skip_previous, () => logic.playPrevMusic(),
               width: 60, height: 60, radius: 40),
           materialButton(Icons.play_arrow, () => logic.togglePlay(),
               width: 80, height: 80, radius: 40, iconSize: 50),
-          materialButton(Icons.skip_next, () => logic.playNextMusic(musicList, index),
+          materialButton(
+              Icons.skip_next, () => logic.playNextMusic(),
               width: 60, height: 60, radius: 40),
         ],
       ),

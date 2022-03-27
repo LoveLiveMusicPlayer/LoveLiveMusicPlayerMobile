@@ -19,7 +19,7 @@ Widget showImg(String? path,
   Widget noShadowImage;
   ImageProvider<Object> shadowImage;
   if (hasShadow) {
-    if (path == null) {
+    if (path == null || path.isEmpty) {
       shadowImage = AssetImage(defPhoto);
     } else if (path.startsWith("assets")) {
       shadowImage = AssetImage(path);
@@ -47,7 +47,7 @@ Widget showImg(String? path,
       ),
     );
   } else {
-    if (path == null) {
+    if (path == null || path.isEmpty) {
       noShadowImage = Image.asset(defPhoto, width: width, height: height);
     } else if (path.startsWith("assets")) {
       noShadowImage = Image.asset(path, width: width, height: height);

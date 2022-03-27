@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/pages/main/logic.dart';
-import '../../../models/Music.dart';
 import '../../../modules/ext.dart';
 
 class PlayerHeader extends StatelessWidget {
@@ -27,12 +26,26 @@ class PlayerHeader extends StatelessWidget {
 
           /// 曲名 + 歌手
           Expanded(
-            child: Obx(() => Column(
-                  children: <Widget>[
-                    getTitle(logic.musicList.value, logic.playingIndex.value),
-                    getSinger(logic.musicList.value, logic.playingIndex.value),
-                  ],
-                )),
+            child: GetBuilder<MainLogic>(builder: (logic) {
+              return Column(
+                children: <Widget>[
+                  Text(
+                    logic.state.playingMusic.name ?? "暂无歌曲",
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: const Color(0xFF333333), fontSize: 15.sp),
+                    maxLines: 1,
+                  ),
+                  Text(
+                    logic.state.playingMusic.singer ?? "",
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: const Color(0xFF999999), fontSize: 12.sp),
+                    maxLines: 1,
+                  )
+                ],
+              );
+            }),
           ),
 
           /// 更多功能
@@ -44,40 +57,6 @@ class PlayerHeader extends StatelessWidget {
               iconColor: const Color(0xFF999999)),
         ],
       ),
-    );
-  }
-
-  Widget getTitle(List<Music> musicList, int index) {
-    if (musicList.isEmpty || musicList[index].name == null) {
-      return Text(
-        "暂无歌曲",
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(color: const Color(0xFF333333), fontSize: 15.sp),
-        maxLines: 1,
-      );
-    }
-    return Text(
-      musicList[index].name!,
-      overflow: TextOverflow.ellipsis,
-      style: TextStyle(color: const Color(0xFF333333), fontSize: 15.sp),
-      maxLines: 1,
-    );
-  }
-
-  Widget getSinger(List<Music> musicList, int index) {
-    if (musicList.isEmpty || musicList[index].singer == null) {
-      return Text(
-        "",
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(color: const Color(0xFF333333), fontSize: 12.sp),
-        maxLines: 1,
-      );
-    }
-    return Text(
-      musicList[index].singer!,
-      overflow: TextOverflow.ellipsis,
-      style: TextStyle(color: const Color(0xFF999999), fontSize: 12.sp),
-      maxLines: 1,
     );
   }
 }

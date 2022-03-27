@@ -11,16 +11,19 @@ class PlayerInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: Obx(() => Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          recentlyLrc(logic.playingMusic.value.preJPLrc),
-          SizedBox(height: 8.h),
-          recentlyLrc(logic.playingMusic.value.currentJPLrc, color: const Color(0xFF333333)),
-          SizedBox(height: 8.h),
-          recentlyLrc(logic.playingMusic.value.nextJPLrc)
-        ],
-      )),
+      child: GetBuilder<MainLogic>(builder: (logic) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            recentlyLrc(logic.state.playingMusic.preJPLrc),
+            SizedBox(height: 8.h),
+            recentlyLrc(logic.state.playingMusic.currentJPLrc,
+                color: const Color(0xFF333333)),
+            SizedBox(height: 8.h),
+            recentlyLrc(logic.state.playingMusic.nextJPLrc)
+          ],
+        );
+      }),
     );
   }
 

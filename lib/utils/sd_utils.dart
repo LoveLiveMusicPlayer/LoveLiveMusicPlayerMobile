@@ -7,7 +7,7 @@ class SdUtils {
 
   static init() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
-    path = appDocDir.path + "/";
+    path = appDocDir.path + Platform.pathSeparator;
   }
 
   ///获取图片文件

@@ -10,10 +10,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import '../main/logic.dart';
 
 class MiniPlayer extends StatefulWidget {
-  MiniPlayer({Key? key, required this.onTap, required this.onChangeMusic})
+  MiniPlayer({Key? key, required this.onTap})
       : super(key: key);
   final Function onTap;
-  final Function(int index, CarouselPageChangedReason reason) onChangeMusic;
 
   @override
   _MiniPlayerState createState() => _MiniPlayerState();
@@ -27,52 +26,54 @@ class _MiniPlayerState extends State<MiniPlayer> {
 
   @override
   Widget build(BuildContext context) {
-
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
-      decoration: BoxDecoration(
-        color: const Color(0xFFF2F8FF),
-        borderRadius: BorderRadius.circular(34),
-      ),
-      child: Column(
-        children: [
-          Container(
-            height: 60.h,
-            margin: EdgeInsets.only(left: 16.w, right: 16.w),
-            decoration: BoxDecoration(
-                color: const Color(0xFFEBF3FE),
-                borderRadius: BorderRadius.circular(34)),
-            child: Row(
-              children: [
-                /// 迷你封面
-                miniCover(),
-                SizedBox(width: 6.w),
-                /// 滚动歌名
-                marqueeMusicName(),
-                SizedBox(width: 10.w),
-                /// 播放按钮
-                touchIcon(Icons.play_arrow, () => {}, size: 30.w),
-                SizedBox(width: 20.w),
-                /// 播放列表按钮
-                touchIcon(Icons.music_note, () => {}),
-                SizedBox(width: 20.w),
-              ],
+        duration: const Duration(milliseconds: 200),
+        decoration: BoxDecoration(
+          color: const Color(0xFFF2F8FF),
+          borderRadius: BorderRadius.circular(34),
+        ),
+        child: Column(
+          children: [
+            Container(
+              height: 60.h,
+              margin: EdgeInsets.only(left: 16.w, right: 16.w),
+              decoration: BoxDecoration(
+                  color: const Color(0xFFEBF3FE),
+                  borderRadius: BorderRadius.circular(34)),
+              child: Row(
+                children: [
+
+                  /// 迷你封面
+                  miniCover(),
+                  SizedBox(width: 6.w),
+
+                  /// 滚动歌名
+                  marqueeMusicName(),
+                  SizedBox(width: 10.w),
+
+                  /// 播放按钮
+                  touchIcon(Icons.play_arrow, () => {}, size: 30.w),
+                  SizedBox(width: 20.w),
+
+                  /// 播放列表按钮
+                  touchIcon(Icons.music_note, () => {}),
+                  SizedBox(width: 20.w),
+                ],
+              ),
             ),
-          ),
-        ],
-      )
-    );
+          ],
+        ));
   }
 
   Widget miniCover() {
     return GestureDetector(
       onTap: () => widget.onTap(),
-      child: Row(
-        children: [
-          SizedBox(width: 6.w),
-          Obx(() => getCover(logic.playingMusic.value))
-        ],
-      ),
+      child: GetBuilder<MainLogic>(builder: (logic) {
+        LogUtil.e(logic.state.playingMusic.cover);
+        return Row(
+          children: [SizedBox(width: 6.w), showImg(logic.state.playingMusic.cover, radius: 50, width: 50.w, height: 50.w, hasShadow: false)],
+        );
+      }),
     );
   }
 
@@ -82,19 +83,29 @@ class _MiniPlayerState extends State<MiniPlayer> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Obx(() => CarouselSlider(
-              items:
-                  refreshList(logic.musicList.value, logic.playingMusic.value),
-              carouselController: sliderController,
-              options: CarouselOptions(
-                  height: 20.h,
-                  viewportFraction: 1.0,
-                  enlargeCenterPage: false,
-                  initialPage: 0,
-                  enableInfiniteScroll: false,
-                  onPageChanged: (index, reason) =>
-                      {widget.onChangeMusic(index, reason)},
-                  scrollDirection: Axis.horizontal)))
+          GetBuilder<MainLogic>(
+            id: "miniPlayer",
+            builder: (logic) {
+              final musicList = logic.state.playList;
+              final playingMusic = logic.state.playingMusic;
+              final isCanScroll = logic.state.isCanMiniPlayerScroll;
+              return CarouselSlider(
+                  items: refreshList(musicList, playingMusic),
+                  carouselController: sliderController,
+                  options: CarouselOptions(
+                      height: 20.h,
+                      viewportFraction: 1.0,
+                      scrollPhysics: isCanScroll
+                          ? const PageScrollPhysics()
+                          : const NeverScrollableScrollPhysics(),
+                      enableInfiniteScroll: false,
+                      onPageChanged: (index, reason) {
+                        if (isCanScroll) {
+                          logic.changeMusic(index);
+                        }
+                      }));
+            },
+          )
         ],
       ),
     );
@@ -109,7 +120,6 @@ class _MiniPlayerState extends State<MiniPlayer> {
           speed: 15));
       return scrollList;
     }
-    LogUtil.e(currentMusic.name);
     int count = -1;
     musicList.forEach((element) {
       count++;
@@ -119,18 +129,9 @@ class _MiniPlayerState extends State<MiniPlayer> {
               fontSize: 15, color: Color(0xFF333333), height: 1.3),
           speed: 15));
       if (element.uid == currentMusic.uid) {
-        setPlayedName(count);
+        sliderController.jumpToPage(count);
       }
     });
     return scrollList;
-  }
-
-  setPlayedName(int index) async {
-    await Future.delayed(const Duration(milliseconds: 1000));
-    sliderController.jumpToPage(index);
-  }
-
-  Widget getCover(Music music) {
-    return showImg(music.cover, radius: 50, width: 50.w, height: 50.w, hasShadow: false);
   }
 }

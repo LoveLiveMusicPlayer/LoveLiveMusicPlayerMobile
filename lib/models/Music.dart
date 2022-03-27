@@ -11,13 +11,15 @@ class Music {
     this.name,
     this.cover,
     this.singer,
-    this.time,
+    this.playedTime,
+    this.totalTime,
     this.jpLrc,
     this.zhLrc,
     this.romaLrc,
     this.preJPLrc = "はすんだ！",
     this.currentJPLrc = "だから僕らは鳴らすんだ！",
     this.nextJPLrc = "だか鳴ららはすんだ！",
+    this.isPlaying = false
   });
 
   String? uid;
@@ -26,7 +28,8 @@ class Music {
   String? name;
   String? cover;
   String? singer;
-  String? time;
+  String? playedTime;
+  String? totalTime;
 
   String? jpLrc;
   String? zhLrc;
@@ -36,13 +39,17 @@ class Music {
   String? currentJPLrc;
   String? nextJPLrc;
 
+  bool isPlaying;
+
+
   factory Music.fromJson(Map<String, dynamic> json) => Music(
     uid: json["uid"],
     id: json["id"],
     name: json["name"],
     cover: json["cover"],
     singer: json["singer"],
-    time: json["time"],
+    playedTime: json["playedTime"],
+    totalTime: json["totalTime"],
 
     jpLrc: json["jpLrc"],
     zhLrc: json["zhLrc"],
@@ -51,6 +58,8 @@ class Music {
     preJPLrc: json["preJPLrc"],
     currentJPLrc: json["currentJPLrc"],
     nextJPLrc: json["nextJPLrc"],
+
+    isPlaying: json["isPlaying"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -59,7 +68,8 @@ class Music {
     "name": name,
     "cover": cover,
     "singer": singer,
-    "time": time,
+    "playedTime": playedTime,
+    "totalTime": totalTime,
 
     "jpLrc": jpLrc,
     "zhLrc": zhLrc,
@@ -68,5 +78,7 @@ class Music {
     "preJPLrc": preJPLrc,
     "currentJPLrc": currentJPLrc,
     "nextJPLrc": nextJPLrc,
+
+    "isPlaying": isPlaying,
   };
 }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:common_utils/common_utils.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/routes.dart';
+import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:path_provider/path_provider.dart';
 import '../../models/Music.dart';
 import '../../models/music_Item.dart';
@@ -66,60 +67,72 @@ class MainLogic extends GetxController {
     return num;
   }
 
-  playPrevMusic(List<Music> musicList, int index) {
-    if (musicList.isEmpty) {
+  playPrevMusic() {
+    final tempList = state.playList;
+    if (tempList.isEmpty) {
       return;
     }
-    if (index == 0) {
-      playingIndex.value = musicList.length - 1;
-    } else {
-      playingIndex.value = index - 1;
-    }
+    int playIndex = checkNowPlaying();
+    LogUtil.e(playIndex);
+    tempList[playIndex].isPlaying = false;
+
+    final music = playIndex == 0
+        ? tempList[tempList.length - 1]
+        : tempList[playIndex - 1];
+    music.isPlaying = true;
+    state.playingMusic = music;
+    refresh();
   }
 
-  playNextMusic(List<Music> musicList, int index) {
-    if (musicList.isEmpty) {
+  playNextMusic() {
+    final tempList = state.playList;
+    if (tempList.isEmpty) {
       return;
     }
-    if (index == musicList.length - 1) {
-      playingIndex.value = 0;
-      playingMusic.value = musicList[0];
-    } else {
-      playingIndex.value = index + 1;
-      playingMusic.value = musicList[0];
-    }
+    int playIndex = checkNowPlaying();
+    tempList[playIndex].isPlaying = false;
+
+    final music = playIndex == tempList.length - 1
+        ? tempList[0]
+        : tempList[playIndex + 1];
+    music.isPlaying = true;
+    state.playingMusic = music;
+    refresh();
   }
 
-  togglePlay() {
+  togglePlay() {}
 
+  changeMusic(int index) {
+    final tempList = state.playList;
+    if (tempList.isEmpty) {
+      return;
+    }
+    int playIndex = checkNowPlaying();
+    tempList[playIndex].isPlaying = false;
+    tempList[index].isPlaying = true;
+    state.playingMusic = tempList[index];
+    update();
+    refresh();
+  }
+
+  int checkNowPlaying() {
+    int playIndex = 0;
+    for (var element in state.playList) {
+      if (element.isPlaying) {
+        break;
+      } else {
+        playIndex++;
+      }
+    }
+    return playIndex;
   }
 
   ///-------------------------------
-  var image = "".obs;
   var currentIndex = 0.obs;
-  var musicList = <Music>[].obs;
-
-  var playingIndex = 0.obs;
-  var playingMusic = Music().obs ;
-
-  var picPath = "";
-
-  Future<void> getFlac() async {
-    const filePath = "LoveLive/Cover_1.jpg";
-    Directory appDocDir = await getApplicationDocumentsDirectory();
-    picPath = appDocDir.path + Platform.pathSeparator + filePath;
-    LogUtil.e(picPath);
-    image.value = picPath;
-  }
 
   @override
-  Future<void> onReady() async {
-    await getFlac();
-    musicList.add(Music(name: "START!! True dreams", cover: picPath, singer: "Liella!", time: "03:42"));
-    musicList.add(Music(name: "START!! True dreams1212121212", cover: picPath, singer: "Liella!", time: "03:42"));
-    musicList.add(Music(name: "START!!", cover: picPath, singer: "Liella!", time: "03:42"));
-
-    playingMusic.value = musicList.value[0];
+  void onReady() {
+    state.playingMusic = state.playList[0];
     super.onReady();
   }
 }
