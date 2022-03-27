@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,11 +5,11 @@ import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:we_slide/we_slide.dart';
 import '../../models/music_Item.dart';
 import '../../modules/drawer/drawer.dart';
-import '../../utils/sd_utils.dart';
 import '../../widgets/refresher_widget.dart';
-import '../player/bottom_bar.dart';
 import '../player/miniplayer.dart';
 import '../player/player.dart';
+import '../player/widget/bottom_bar1.dart';
+import '../player/widget/bottom_bar2.dart';
 import 'widget/listview_item_song.dart';
 import 'widget/song_library_top.dart';
 import 'logic.dart';
@@ -208,8 +205,8 @@ class _MainPageState extends State<MainPage>
         BottomBar(logic.currentIndex.value, onSelect: (index) {
           logic.currentIndex.value = index;
         }),
-        BottomBar(logic.currentIndex.value, onSelect: (index) {
-          logic.currentIndex.value = index;
+        BottomBar2(logic.currentIndex.value, onSelect: (index) {
+          logic.currentIndex.value = index + 3;
         }),
       ],
       controller: tabController,
