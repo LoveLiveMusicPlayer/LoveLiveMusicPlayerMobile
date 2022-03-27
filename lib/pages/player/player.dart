@@ -155,12 +155,12 @@ class _PlayerState extends State<Player> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           materialButton(
-              Icons.skip_previous, () => logic.playPrevMusic(),
+              Icons.skip_previous, () => logic.playPrevOrNextMusic(true),
               width: 60, height: 60, radius: 40),
           materialButton(Icons.play_arrow, () => logic.togglePlay(),
               width: 80, height: 80, radius: 40, iconSize: 50),
           materialButton(
-              Icons.skip_next, () => logic.playNextMusic(),
+              Icons.skip_next, () => logic.playPrevOrNextMusic(false),
               width: 60, height: 60, radius: 40),
         ],
       ),

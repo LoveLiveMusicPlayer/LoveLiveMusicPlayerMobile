@@ -67,24 +67,7 @@ class MainLogic extends GetxController {
     return num;
   }
 
-  playPrevMusic() {
-    final tempList = state.playList;
-    if (tempList.isEmpty) {
-      return;
-    }
-    int playIndex = checkNowPlaying();
-    LogUtil.e(playIndex);
-    tempList[playIndex].isPlaying = false;
-
-    final music = playIndex == 0
-        ? tempList[tempList.length - 1]
-        : tempList[playIndex - 1];
-    music.isPlaying = true;
-    state.playingMusic = music;
-    refresh();
-  }
-
-  playNextMusic() {
+  playPrevOrNextMusic(bool isPrev) {
     final tempList = state.playList;
     if (tempList.isEmpty) {
       return;
@@ -92,9 +75,17 @@ class MainLogic extends GetxController {
     int playIndex = checkNowPlaying();
     tempList[playIndex].isPlaying = false;
 
-    final music = playIndex == tempList.length - 1
-        ? tempList[0]
-        : tempList[playIndex + 1];
+    Music music;
+    if (isPrev) {
+      music = playIndex == 0
+          ? tempList[tempList.length - 1]
+          : tempList[playIndex - 1];
+    } else {
+      music = playIndex == tempList.length - 1
+          ? tempList[0]
+          : tempList[playIndex + 1];
+    }
+
     music.isPlaying = true;
     state.playingMusic = music;
     refresh();
@@ -132,7 +123,8 @@ class MainLogic extends GetxController {
 
   @override
   void onReady() {
-    state.playingMusic = state.playList[0];
     super.onReady();
+    state.playingMusic = state.playList[0];
+    refresh();
   }
 }
