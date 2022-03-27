@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/models/Music.dart';
+import 'package:lovelivemusicplayer/pages/player/widget/player_cover.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_header.dart';
-import 'package:lovelivemusicplayer/pages/player/widget/player_info.dart';
+import 'package:lovelivemusicplayer/pages/player/widget/player_lyric.dart';
+
 import '../../modules/ext.dart';
+import '../../network/http_request.dart';
 import '../main/logic.dart';
 
 class Player extends StatefulWidget {
   final GestureTapCallback onTap;
+  var isCover = true.obs;
+  var jpLyric = "".obs;
+  var zhLyric = "".obs;
+  var romaLyric = "".obs;
 
   Player({required this.onTap});
 
@@ -17,8 +23,19 @@ class Player extends StatefulWidget {
 }
 
 class _PlayerState extends State<Player> {
-  final bottomHeight = 280.0;
   var logic = Get.find<MainLogic>();
+
+  @override
+  void initState() {
+    super.initState();
+    Network.get(
+        "JP/LoveLive/Liella!/%E5%8A%A8%E7%94%BB/%5B2021.07.21%5D%20Liella!%20-%20START!!%20True%20dreams/01.%20START!!%20True%20dreams.lrc",
+        success: (dynamic lyric) {
+      if (lyric != null && lyric is String) {
+        widget.jpLyric.value = lyric;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,48 +47,40 @@ class _PlayerState extends State<Player> {
           children: <Widget>[
             coverBg(),
             Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 SizedBox(
-                  height: ScreenUtil().screenHeight - bottomHeight,
+                  height: 546.h,
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: MediaQuery
-                          .of(context)
-                          .padding
-                          .top),
+                      SizedBox(height: MediaQuery.of(context).padding.top),
+                      SizedBox(height: 20.h),
 
                       /// 头部
                       PlayerHeader(onTap: widget.onTap),
-                      SizedBox(height: 20.h),
 
-                      /// 封面
-                      GetBuilder<MainLogic>(
-                        builder: (logic) {
-                          return showImg(logic.state.playingMusic.cover, radius: 50, width: 300.w, height: 300.h);
-                        },
-                      ),
-
-                      /// 信息
-                      SizedBox(height: 20.h),
-                      PlayerInfo(),
+                      /// 中间可切换的界面
+                      Obx(() => stackBody())
                     ],
                   ),
                 ),
                 SizedBox(
-                  // color: Colors.red,
-                  height: bottomHeight,
+                  height: 230.h,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
-
                       /// 功能栏
                       funcButton(),
-                      SizedBox(height: 34.h),
+                      SizedBox(height: 24.h),
 
                       /// 滑动条
                       slider(),
 
                       /// 用时
                       progress(),
+
+                      SizedBox(height: 24.h),
 
                       /// 播放器控制组件
                       playButton(),
@@ -86,6 +95,23 @@ class _PlayerState extends State<Player> {
     );
   }
 
+  Widget stackBody() {
+    if (widget.isCover.value) {
+      return Cover(onTap: () {
+        widget.isCover.value = false;
+      });
+    } else {
+      return Lyric(
+        onTap: () {
+          widget.isCover.value = true;
+        },
+        jpLrc: widget.jpLyric.value,
+        zhLrc: widget.zhLyric.value,
+        romaLrc: widget.romaLyric.value,
+      );
+    }
+  }
+
   Widget funcButton() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -98,12 +124,12 @@ class _PlayerState extends State<Player> {
               radius: 6,
               iconColor: Colors.pinkAccent,
               iconSize: 15),
-          materialButton(Icons.queue_music, () => {},
+          materialButton(Icons.add, () => {},
               width: 32,
               height: 32,
               radius: 6,
               iconColor: const Color(0xFF999999),
-              iconSize: 15),
+              iconSize: 20),
         ],
       ),
     );
@@ -154,6 +180,8 @@ class _PlayerState extends State<Player> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
+          materialButton(Icons.shuffle, () => logic.playPrevOrNextMusic(true),
+              width: 32, height: 32, radius: 6, iconSize: 15),
           materialButton(
               Icons.skip_previous, () => logic.playPrevOrNextMusic(true),
               width: 60, height: 60, radius: 40),
@@ -162,8 +190,41 @@ class _PlayerState extends State<Player> {
           materialButton(
               Icons.skip_next, () => logic.playPrevOrNextMusic(false),
               width: 60, height: 60, radius: 40),
+          materialButton(
+              Icons.music_note, () => logic.playPrevOrNextMusic(true),
+              width: 32, height: 32, radius: 6, iconSize: 15),
         ],
       ),
     );
   }
+
+  /// 覆盖背景
+  Widget coverBg({Color color = const Color(0xFFF2F8FF), double radius = 34}) {
+    return Container(
+      height: ScreenUtil().screenHeight,
+      decoration:
+          BoxDecoration(color: color, borderRadius: BorderRadius.circular(34)),
+      // child: Stack(
+      //   children: buildReaderBackground(),
+      // ),
+    );
+  }
+
+// List<Widget> buildReaderBackground() {
+//   return [
+//     Positioned.fill(
+//         child: GetBuilder<MainLogic>(builder: (logic) {
+//           return showImg(logic.state.playingMusic.cover);
+//         })
+//     ),
+//     Positioned.fill(
+//       child: BackdropFilter(
+//         filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
+//         child: Container(
+//           color: Colors.black.withOpacity(0.4),
+//         ),
+//       ),
+//     )
+//   ];
+// }
 }

@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:we_slide/we_slide.dart';
 import '../../models/music_Item.dart';
+import '../../modules/drawer/drawer.dart';
 import '../../utils/sd_utils.dart';
 import '../../widgets/refresher_widget.dart';
 import '../player/bottom_bar.dart';
@@ -39,33 +40,38 @@ class _MainPageState extends State<MainPage>
     final WeSlideController _controller = WeSlideController();
     const double _panelMinSize = 150;
     final double _panelMaxSize = ScreenUtil().screenHeight;
-    return WeSlide(
-      controller: _controller,
-      panelMinSize: _panelMinSize.h,
-      panelMaxSize: _panelMaxSize,
-      overlayOpacity: 0.9,
-      backgroundColor: const Color(0xFFF2F8FF),
-      overlay: true,
-      isDismissible: true,
-      body: _getTabBarView(),
-      blurColor: const Color(0xFFF2F8FF),
-      overlayColor: const Color(0xFFF2F8FF),
-      panelBorderRadiusBegin: 10,
-      panelBorderRadiusEnd: 10,
-      panelHeader: MiniPlayer(onTap: _controller.show),
-      panel: Player(onTap: _controller.hide),
-      footer: _buildTabBarView(),
-      footerHeight: 84.h,
-      blur: true,
-      parallax: true,
-      transformScale: true,
-      blurSigma: 5.0,
-      fadeSequence: [
-        TweenSequenceItem<double>(
-            weight: 1.0, tween: Tween(begin: 1, end: 0)),
-        TweenSequenceItem<double>(
-            weight: 8.0, tween: Tween(begin: 0, end: 0)),
-      ],
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+    return Scaffold(
+      key: _scaffoldKey,
+      backgroundColor: Colors.white,
+      endDrawer: const DrawerPage(),
+      body: WeSlide(
+        controller: _controller,
+        panelMinSize: _panelMinSize.h,
+        panelMaxSize: _panelMaxSize,
+        overlayOpacity: 0.9,
+        backgroundColor: const Color(0xFFF2F8FF),
+        overlay: true,
+        isDismissible: true,
+        body: _getTabBarView(() => _scaffoldKey.currentState?.openEndDrawer()),
+        blurColor: const Color(0xFFF2F8FF),
+        overlayColor: const Color(0xFFF2F8FF),
+        panelBorderRadiusBegin: 10,
+        panelBorderRadiusEnd: 10,
+        panelHeader: MiniPlayer(onTap: _controller.show),
+        panel: Player(onTap: _controller.hide),
+        footer: _buildTabBarView(),
+        footerHeight: 84.h,
+        blur: true,
+        parallax: true,
+        transformScale: true,
+        blurSigma: 5.0,
+        fadeSequence: [
+          TweenSequenceItem<double>(weight: 1.0, tween: Tween(begin: 1, end: 0)),
+          TweenSequenceItem<double>(weight: 8.0, tween: Tween(begin: 0, end: 0)),
+        ],
+      ),
     );
   }
 
@@ -98,47 +104,30 @@ class _MainPageState extends State<MainPage>
   }
 
   ///顶部头像
-  Widget _getTopHead() {
-    return Container(
-      child: Center(
-        child: Container(
-            margin: EdgeInsets.only(right: 16.w),
-            height: 36.w,
-            width: 36.w,
-            padding: EdgeInsets.all(3.w),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(18.w),
-                boxShadow: const [
-                  BoxShadow(
-                      color: Color(0xFFD3E0EC),
-                      blurRadius: 10,
-                      offset: Offset(5, 3)),
-                ]),
-            child: showImg(SdUtils.getImgPath("ic_head.jpg"),
-                radius: 18.w, hasShadow: false)),
-      ),
-    );
+  Widget _getTopHead(GestureTapCallback onTap) {
+    return logoIcon("ic_head.jpg", offset: EdgeInsets.only(right: 16.w), onTap: onTap);
   }
 
-  Widget _getTabBarView() {
-    return Column(
-      children: [
-        AppBar(
-          toolbarHeight: 54.w,
-          elevation: 0,
-          centerTitle: false,
-          backgroundColor: const Color(0xFFF2F8FF),
-          title: _getTabBar(),
-          actions: [_getTopHead()],
-        ),
+  Widget _getTabBarView(GestureTapCallback onTap) {
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 54.w,
+        elevation: 0,
+        centerTitle: false,
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color(0xFFF2F8FF),
+        title: _getTabBar(),
+        actions: [_getTopHead(onTap)],
+      ),
+      body: Column(
+        children: [
+          ///顶部歌曲总数栏
+          _buildListTop(),
 
-        ///顶部歌曲总数栏
-        _buildListTop(),
-
-        ///列表数据
-        _buildList(),
-      ],
+          ///列表数据
+          _buildList(),
+        ],
+      ),
     );
   }
 
@@ -167,45 +156,47 @@ class _MainPageState extends State<MainPage>
   Widget _buildList() {
     return Expanded(
       child: GetBuilder<MainLogic>(builder: (logic) {
-        return RefresherWidget(
-          itemCount: logic.state.items.length,
-          enablePullDown: logic.state.items.isNotEmpty,
-          listItem: (cxt, index) {
-            print(index);
-            return ListViewItemSong(
-              index: index,
-              onItemTap: (valut) {},
-              onPlayTap: () {},
-              onMoreTap: () {},
-            );
-          },
-          onRefresh: (controller) async {
-            await Future.delayed(const Duration(milliseconds: 1000));
-            logic.state.items.clear();
+        return Container(
+          color: const Color(0xFFF2F8FF),
+          child: RefresherWidget(
+            itemCount: logic.state.items.length,
+            enablePullDown: logic.state.items.isNotEmpty,
+            listItem: (cxt, index) {
+              return ListViewItemSong(
+                index: index,
+                onItemTap: (valut) {},
+                onPlayTap: () {},
+                onMoreTap: () {},
+              );
+            },
+            onRefresh: (controller) async {
+              await Future.delayed(const Duration(milliseconds: 1000));
+              logic.state.items.clear();
 
-            logic.addItem([
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false)
-            ]);
-            controller.refreshCompleted();
-            controller.loadComplete();
-          },
-          onLoading: (controller) async {
-            await Future.delayed(const Duration(milliseconds: 1000));
-            logic.addItem([
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false)
-            ]);
-            controller.loadComplete();
-          },
+              logic.addItem([
+                MusicItem(titlle: "", checked: false),
+                MusicItem(titlle: "", checked: false),
+                MusicItem(titlle: "", checked: false),
+                MusicItem(titlle: "", checked: false),
+                MusicItem(titlle: "", checked: false),
+                MusicItem(titlle: "", checked: false)
+              ]);
+              controller.refreshCompleted();
+              controller.loadComplete();
+            },
+            onLoading: (controller) async {
+              await Future.delayed(const Duration(milliseconds: 1000));
+              logic.addItem([
+                MusicItem(titlle: "", checked: false),
+                MusicItem(titlle: "", checked: false),
+                MusicItem(titlle: "", checked: false),
+                MusicItem(titlle: "", checked: false),
+                MusicItem(titlle: "", checked: false),
+                MusicItem(titlle: "", checked: false)
+              ]);
+              controller.loadComplete();
+            },
+          ),
         );
       }),
     );

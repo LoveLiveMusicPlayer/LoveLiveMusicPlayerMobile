@@ -31,6 +31,7 @@ class Song_libraryTop extends StatelessWidget {
   Widget _buildPlaySong() {
     return Container(
       height: 45.w,
+      color: const Color(0xFFF2F8FF),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

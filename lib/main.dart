@@ -71,7 +71,7 @@ initServices() async {
   await GetStorage.init();
   await SpUtil.getInstance();
   Network.getInstance();
-  SdUtils.init();
+  SDUtils.init();
   LogUtil.init(tag: "iLab", isDebug: kDebugMode);
   LogUtil.d('All services started...');
 }

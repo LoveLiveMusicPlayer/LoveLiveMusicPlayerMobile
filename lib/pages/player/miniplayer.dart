@@ -12,7 +12,7 @@ import '../main/logic.dart';
 class MiniPlayer extends StatefulWidget {
   MiniPlayer({Key? key, required this.onTap})
       : super(key: key);
-  final Function onTap;
+  final GestureTapCallback onTap;
 
   @override
   _MiniPlayerState createState() => _MiniPlayerState();
@@ -71,7 +71,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
       child: GetBuilder<MainLogic>(builder: (logic) {
         LogUtil.e(logic.state.playingMusic.cover);
         return Row(
-          children: [SizedBox(width: 6.w), showImg(logic.state.playingMusic.cover, radius: 50, width: 50.w, height: 50.w, hasShadow: false)],
+          children: [SizedBox(width: 6.w), showImg(logic.state.playingMusic.cover, radius: 50, width: 50, height: 50, hasShadow: false)],
         );
       }),
     );
@@ -86,11 +86,9 @@ class _MiniPlayerState extends State<MiniPlayer> {
           GetBuilder<MainLogic>(
             id: "miniPlayer",
             builder: (logic) {
-              final musicList = logic.state.playList;
-              final playingMusic = logic.state.playingMusic;
               final isCanScroll = logic.state.isCanMiniPlayerScroll;
               return CarouselSlider(
-                  items: refreshList(musicList, playingMusic),
+                  items: refreshList(logic.state.playList, logic.state.playingMusic),
                   carouselController: sliderController,
                   options: CarouselOptions(
                       height: 20.h,
@@ -103,7 +101,8 @@ class _MiniPlayerState extends State<MiniPlayer> {
                         if (isCanScroll) {
                           logic.changeMusic(index);
                         }
-                      }));
+                      })
+              );
             },
           )
         ],
@@ -129,9 +128,14 @@ class _MiniPlayerState extends State<MiniPlayer> {
               fontSize: 15, color: Color(0xFF333333), height: 1.3),
           speed: 15));
       if (element.uid == currentMusic.uid) {
-        sliderController.jumpToPage(count);
+        slidePage(count);
       }
     });
     return scrollList;
+  }
+
+  slidePage(int count) async {
+    await Future.delayed(const Duration(milliseconds: 200));
+    sliderController.jumpToPage(count);
   }
 }

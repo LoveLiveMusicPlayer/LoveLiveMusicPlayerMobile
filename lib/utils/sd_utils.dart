@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
 
-class SdUtils {
+class SDUtils {
   static String path = "";
 
   static init() async {

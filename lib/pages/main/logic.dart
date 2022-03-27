@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:common_utils/common_utils.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
+import 'package:marquee_text/marquee_text.dart';
 import 'package:path_provider/path_provider.dart';
 import '../../models/Music.dart';
 import '../../models/music_Item.dart';
@@ -89,6 +92,12 @@ class MainLogic extends GetxController {
     music.isPlaying = true;
     state.playingMusic = music;
     refresh();
+    refreshSlidePage();
+  }
+
+  refreshSlidePage() async {
+    await Future.delayed(const Duration(milliseconds: 200));
+    update(["miniPlayer"]);
   }
 
   togglePlay() {}
@@ -102,7 +111,6 @@ class MainLogic extends GetxController {
     tempList[playIndex].isPlaying = false;
     tempList[index].isPlaying = true;
     state.playingMusic = tempList[index];
-    update();
     refresh();
   }
 

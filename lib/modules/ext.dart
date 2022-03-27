@@ -3,6 +3,8 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../utils/sd_utils.dart';
+
 /// 显示图片
 ///
 /// [path] 图片路径
@@ -35,34 +37,37 @@ Widget showImg(String? path,
     }
 
     return Container(
-      width: width,
-      height: height,
+      width: width.w,
+      height: height.h,
       decoration: BoxDecoration(
         image: DecorationImage(image: shadowImage, fit: BoxFit.fill),
-        borderRadius: BorderRadius.circular(radius),
-        boxShadow: const [
+        borderRadius: BorderRadius.circular(radius.w),
+        boxShadow: [
           BoxShadow(
-              color: Color(0xFFD3E0EC), blurRadius: 4, offset: Offset(4, 8)),
+              color: const Color(0xFFD3E0EC),
+              blurRadius: 4,
+              offset: Offset(4.w, 8.h)),
         ],
       ),
     );
   } else {
     if (path == null || path.isEmpty) {
-      noShadowImage = Image.asset(defPhoto, width: width, height: height);
+      noShadowImage = Image.asset(defPhoto, width: width.w, height: height.h);
     } else if (path.startsWith("assets")) {
-      noShadowImage = Image.asset(path, width: width, height: height);
+      noShadowImage = Image.asset(path, width: width.w, height: height.h);
     } else if (path.startsWith("http")) {
-      noShadowImage = Image.network(path, width: width, height: height);
+      noShadowImage = Image.network(path, width: width.w, height: height.h);
     } else {
       final file = File(path);
       if (file.existsSync()) {
-        noShadowImage = Image.file(File(path), width: width, height: height);
+        noShadowImage =
+            Image.file(File(path), width: width.w, height: height.h);
       } else {
-        noShadowImage = Image.asset(defPhoto, width: width, height: height);
+        noShadowImage = Image.asset(defPhoto, width: width.w, height: height.h);
       }
     }
     return ClipRRect(
-        borderRadius: BorderRadius.circular(radius), child: noShadowImage);
+        borderRadius: BorderRadius.circular(radius.w), child: noShadowImage);
   }
 }
 
@@ -129,18 +134,85 @@ Widget materialButton(IconData icon, GestureTapCallback? onTap,
   );
 }
 
-Widget touchIcon(IconData icon, Function onTap, {Color color = const Color(0xff333333), double? size}) {
-  return GestureDetector(
-    onTap: () => onTap,
-    child: Icon(icon, color: color, size: size),
+/// 团组按钮
+///
+/// [path] 图片文件路径
+/// [innerWidth] 图片宽度
+/// [innerHeight] 图片高度
+Widget showGroupButton(String path,
+    {double innerWidth = 130, double innerHeight = 60}) {
+  return Container(
+    width: 118.w,
+    height: 60.h,
+    decoration: BoxDecoration(
+      color: const Color(0xFFF2F8FF),
+      borderRadius: BorderRadius.circular(8.w),
+      boxShadow: const [
+        BoxShadow(
+            color: Colors.white,
+            offset: Offset(-3, -3),
+            blurStyle: BlurStyle.inner,
+            blurRadius: 6),
+        BoxShadow(
+            color: Color(0xFFD3E0EC), offset: Offset(5, 3), blurRadius: 6),
+      ],
+    ),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(8.w),
+      child: Material(
+        color: const Color(0xFFF2F8FF),
+        child: InkWell(
+          splashColor: const Color(0xFFD3E0EC),
+          highlightColor: const Color(0xFFD3E0EC),
+          onTap: () => {},
+          child: Stack(
+            children: [
+              Center(
+                child: Image.asset(path,
+                    width: innerWidth.w, height: innerHeight.h),
+              ),
+              Container(
+                width: 130.w,
+                height: 60.h,
+                alignment: const Alignment(0, 0),
+              )
+            ],
+          ),
+        ),
+      ),
+    ),
   );
 }
 
-/// 覆盖背景
-Widget coverBg({Color color = const Color(0xFFF2F8FF), double radius = 34}) {
-  return Container(
-    height: ScreenUtil().screenHeight,
-    decoration:
-        BoxDecoration(color: color, borderRadius: BorderRadius.circular(34)),
+Widget logoIcon(String path, {double width = 36, double height = 36, double radius = 18, EdgeInsetsGeometry? offset, GestureTapCallback? onTap}) {
+  final margin = offset ?? const EdgeInsets.only(right: 0);
+  return Center(
+    child: Container(
+        margin: margin,
+        width: width.w,
+        height: height.h,
+        padding: EdgeInsets.all(3.w),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(radius.w),
+            boxShadow: [
+              BoxShadow(
+                  color: const Color(0xFFD3E0EC),
+                  blurRadius: 10,
+                  offset: Offset(5.w, 3.h)),
+            ]),
+        child: InkWell(
+          onTap: onTap,
+          child: showImg(SDUtils.getImgPath(path), radius: radius.w, hasShadow: false)
+        )
+    )
+  );
+}
+
+Widget touchIcon(IconData icon, GestureTapCallback onTap,
+    {Color color = const Color(0xff333333), double? size}) {
+  return GestureDetector(
+    onTap: () => onTap,
+    child: Icon(icon, color: color, size: size),
   );
 }

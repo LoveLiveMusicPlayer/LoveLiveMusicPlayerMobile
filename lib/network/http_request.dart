@@ -106,8 +106,10 @@ class Network {
       SmartDialog.showLoading(msg: loadingMessage);
     }
     dio!
-        .request<Map<String, dynamic>>(url,
-            queryParameters: params, options: Options(method: method))
+        // .request<Map<String, dynamic>>(url,
+        //     queryParameters: params, options: Options(method: method))
+        .request<dynamic>(url,
+          queryParameters: params, options: Options(method: method))
         .then((value) => {_handlerSuccess(value.data, success)})
         .onError((e, stackTrace) =>
             {_handlerError(isShowError, e.toString(), error)});
@@ -131,7 +133,6 @@ class Network {
       LogUtil.d("拦截了请求");
       handler.next(options);
     }, onResponse: (Response e, ResponseInterceptorHandler handler) {
-      LogUtil.v(e.data);
       handler.next(e);
     });
     dio?.interceptors.add(inter);
@@ -151,7 +152,11 @@ class Network {
   static _handlerSuccess(dynamic t, Function(dynamic t)? success) {
     SmartDialog.dismiss();
     if (success != null) {
-      success(ApiResponse().fromJson(t).data);
+      if (t is Map<String, dynamic>) {
+        success(ApiResponse().fromJson(t).data);
+      } else if (t is String) {
+        success(t);
+      }
     }
   }
 

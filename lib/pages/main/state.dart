@@ -30,9 +30,13 @@ class MainState {
   Music playingMusic = Music();
   bool isCanMiniPlayerScroll = true;
 
+  String jpLrc = "";
+  String zhLrc = "";
+  String romaLrc = "";
+
   List<Music> playList = [
-    Music(uid: "1", name: "START!! True dreams", cover: SdUtils.path + "LoveLive/Cover_1.jpg", singer: "Liella!", totalTime: "03:42", isPlaying: true),
-    Music(uid: "2", name: "HOT PASSION!!", cover: SdUtils.path + "LoveLive/Cover_2.jpg", singer: "Sunny Passion", totalTime: "04:18"),
-    Music(uid: "3", name: "常夏☆サンシャイン", cover: SdUtils.path + "LoveLive/Cover_3.jpg", singer: "Liella!", totalTime: "04:42")
+    Music(uid: "1", name: "START!! True dreams", cover: SDUtils.path + "LoveLive/Cover_1.jpg", singer: "Liella!", totalTime: "03:42", isPlaying: true),
+    Music(uid: "2", name: "HOT PASSION!!", cover: SDUtils.path + "LoveLive/Cover_2.jpg", singer: "Sunny Passion", totalTime: "04:18"),
+    Music(uid: "3", name: "常夏☆サンシャイン", cover: SDUtils.path + "LoveLive/Cover_3.jpg", singer: "Liella!", totalTime: "04:42")
   ];
 }

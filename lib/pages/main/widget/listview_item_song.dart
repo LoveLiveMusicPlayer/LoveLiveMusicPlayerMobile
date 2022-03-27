@@ -77,7 +77,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
 
   ///缩列图
   Widget _buildIcon() {
-    return showImg(SdUtils.getImgPath("ic_head.jpg"), width: 48.w, height: 48.w, hasShadow: false, radius: 8.w);
+    return showImg(SDUtils.getImgPath("ic_head.jpg"), width: 48, height: 48, hasShadow: false, radius: 8);
   }
 
   ///勾选按钮
