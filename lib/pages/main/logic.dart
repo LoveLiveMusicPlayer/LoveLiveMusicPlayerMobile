@@ -167,4 +167,7 @@ class MainLogic extends GetxController {
     state.playingMusic = state.playList[0];
     refresh();
   }
+
+  ///-------------------------
+
 }

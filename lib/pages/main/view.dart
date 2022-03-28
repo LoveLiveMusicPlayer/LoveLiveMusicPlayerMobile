@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/pages/main/widget/listview_item_album.dart';
+import 'package:lovelivemusicplayer/pages/main/widget/listview_item_singer.dart';
+import 'package:lovelivemusicplayer/pages/main/widget/listview_item_song_sheet.dart';
 import 'package:we_slide/we_slide.dart';
 import '../../models/music_Item.dart';
 import '../../modules/drawer/drawer.dart';
@@ -166,13 +169,17 @@ class _MainPageState extends State<MainPage>
           child: RefresherWidget(
             itemCount: logic.state.items.length,
             enablePullDown: logic.state.items.isNotEmpty,
+            isGridView: logic.state.currentIndex == 1,
+
+            ///当前列表是否网格显示
+            columnNum: 3,
+            crossAxisSpacing: 20.h,
+            mainAxisSpacing: 20.h,
+            leftPadding: 16.h,
+            rightPadding: 16.h,
+            aspectRatio: 0.715,
             listItem: (cxt, index) {
-              return ListViewItemSong(
-                index: index,
-                onItemTap: (valut) {},
-                onPlayTap: () {},
-                onMoreTap: () {},
-              );
+              return _buildListItem(logic, index);
             },
             onRefresh: (controller) async {
               await Future.delayed(const Duration(milliseconds: 1000));
@@ -205,6 +212,23 @@ class _MainPageState extends State<MainPage>
         );
       }),
     );
+  }
+
+  Widget _buildListItem(MainLogic logic, int index) {
+    if (logic.state.currentIndex == 1) {
+      return ListViewItemAlbum(index: index);
+    } else if (logic.state.currentIndex == 2) {
+      return ListViewItemSinger();
+    } else if (logic.state.currentIndex == 4) {
+      return ListViewItemSongSheet(onItemTap: (checked) {}, index: index);
+    } else {
+      return ListViewItemSong(
+        index: index,
+        onItemTap: (valut) {},
+        onPlayTap: () {},
+        onMoreTap: () {},
+      );
+    }
   }
 
   Widget _buildTabBarView() {

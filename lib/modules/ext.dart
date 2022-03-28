@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,11 +13,12 @@ import '../utils/sd_utils.dart';
 /// [radius] 圆角度数
 /// [hasShadow] 是否有阴影效果
 Widget showImg(String? path,
-    {double width = 100,
-    double height = 100,
+    {double? width = 100,
+    double? height = 100,
     double radius = 20,
     bool hasShadow = true,
-    String defPhoto = "assets/thumb/XVztg3oXmX4.jpg"}) {
+    String defPhoto = "assets/thumb/XVztg3oXmX4.jpg",
+    BoxFit fit = BoxFit.cover}) {
   Widget noShadowImage;
   ImageProvider<Object> shadowImage;
   if (hasShadow) {
@@ -38,8 +38,8 @@ Widget showImg(String? path,
     }
 
     return Container(
-      width: width.h,
-      height: height.h,
+      width: width?.h,
+      height: height?.h,
       decoration: BoxDecoration(
         image: DecorationImage(image: shadowImage, fit: BoxFit.fill),
         borderRadius: BorderRadius.circular(radius.h),
@@ -53,18 +53,42 @@ Widget showImg(String? path,
     );
   } else {
     if (path == null || path.isEmpty) {
-      noShadowImage = Image.asset(defPhoto, width: width.h, height: height.h);
+      noShadowImage = Image.asset(
+        defPhoto,
+        width: width?.h,
+        height: height?.h,
+        fit: fit,
+      );
     } else if (path.startsWith("assets")) {
-      noShadowImage = Image.asset(path, width: width.h, height: height.h);
+      noShadowImage = Image.asset(
+        path,
+        width: width?.h,
+        height: height?.h,
+        fit: fit,
+      );
     } else if (path.startsWith("http")) {
-      noShadowImage = Image.network(path, width: width.h, height: height.h);
+      noShadowImage = Image.network(
+        path,
+        width: width?.h,
+        height: height?.h,
+        fit: fit,
+      );
     } else {
       final file = File(path);
       if (file.existsSync()) {
-        noShadowImage =
-            Image.file(File(path), width: width.h, height: height.h);
+        noShadowImage = Image.file(
+          File(path),
+          width: width?.h,
+          height: height?.h,
+          fit: fit,
+        );
       } else {
-        noShadowImage = Image.asset(defPhoto, width: width.h, height: height.h);
+        noShadowImage = Image.asset(
+          defPhoto,
+          width: width?.h,
+          height: height?.h,
+          fit: fit,
+        );
       }
     }
     return ClipRRect(
@@ -192,29 +216,32 @@ Widget showGroupButton(String path,
   );
 }
 
-Widget logoIcon(String path, {double width = 36, double height = 36, double radius = 18, EdgeInsetsGeometry? offset, GestureTapCallback? onTap}) {
+Widget logoIcon(String path,
+    {double width = 36,
+    double height = 36,
+    double radius = 18,
+    EdgeInsetsGeometry? offset,
+    GestureTapCallback? onTap}) {
   final margin = offset ?? const EdgeInsets.only(right: 0);
   return Center(
-    child: Container(
-        margin: margin,
-        width: width.h,
-        height: height.h,
-        padding: EdgeInsets.all(3.h),
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(radius.h),
-            boxShadow: [
-              BoxShadow(
-                  color: const Color(0xFFD3E0EC),
-                  blurRadius: 10,
-                  offset: Offset(5.h, 3.h)),
-            ]),
-        child: InkWell(
-          onTap: onTap,
-          child: showImg(SDUtils.getImgPath(path), radius: radius.h, hasShadow: false)
-        )
-    )
-  );
+      child: Container(
+          margin: margin,
+          width: width.h,
+          height: height.h,
+          padding: EdgeInsets.all(3.h),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(radius.h),
+              boxShadow: [
+                BoxShadow(
+                    color: const Color(0xFFD3E0EC),
+                    blurRadius: 10,
+                    offset: Offset(5.h, 3.h)),
+              ]),
+          child: InkWell(
+              onTap: onTap,
+              child: showImg(SDUtils.getImgPath(path),
+                  radius: radius.h, hasShadow: false))));
 }
 
 Widget touchIcon(IconData icon, GestureTapCallback onTap,

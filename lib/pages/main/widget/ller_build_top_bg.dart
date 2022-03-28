@@ -75,13 +75,4 @@ class LlerBuildTopBg extends StatelessWidget {
       ),
     );
   }
-
-  ///头像
-  Widget _buildTopHead() {
-    return Container(
-      child: ClipOval(
-        child: Image.asset(""),
-      ),
-    );
-  }
 }

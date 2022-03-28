@@ -7,10 +7,8 @@ import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 
 import '../logic.dart';
 
-class ListViewItemSong extends StatefulWidget {
+class ListViewItemSongSheet extends StatefulWidget {
   Function(bool) onItemTap;
-  GestureTapCallback onPlayTap;
-  GestureTapCallback onMoreTap;
 
   ///条目数据
   int index;
@@ -18,22 +16,19 @@ class ListViewItemSong extends StatefulWidget {
   ///全选
   bool isSelect;
 
-  ListViewItemSong(
+  ListViewItemSongSheet(
       {Key? key,
       required this.onItemTap,
-      required this.onPlayTap,
-      required this.onMoreTap,
       this.isSelect = false,
       required this.index})
       : super(key: key);
 
   @override
-  State<ListViewItemSong> createState() => _ListViewItemSongState();
+  State<ListViewItemSongSheet> createState() => _ListViewItemSongStateSheet();
 }
 
-class _ListViewItemSongState extends State<ListViewItemSong> {
+class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
   var logic = Get.find<MainLogic>();
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -48,10 +43,6 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
           children: [
             ///勾选按钮
             _buildCheckBox(),
-            SizedBox(
-              width: 6.w,
-            ),
-
             ///缩列图
             _buildIcon(),
             SizedBox(
@@ -61,8 +52,6 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
             ///中间标题部分
             _buildContent(),
 
-            ///右侧操作按钮
-            _buildAction(),
           ],
         ),
       ),
@@ -130,32 +119,5 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
         ],
       ),
     );
-  }
-
-  ///右侧操作按钮
-  Widget _buildAction() {
-    return GetBuilder<MainLogic>(builder: (logic) {
-      return Visibility(
-        visible: !logic.state.isSelect,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-                padding: EdgeInsets.only(
-                    left: 12.w, right: 12.w, top: 12.h, bottom: 12.h),
-                child: touchIconByAsset(
-                    "assets/main/ic_add_next.svg", widget.onPlayTap,
-                    width: 20, height: 20, color: const Color(0xFFCCCCCC))),
-            Padding(
-                padding: EdgeInsets.only(
-                    left: 12.w, right: 18.w, top: 12.h, bottom: 12.h),
-                child: touchIconByAsset(
-                    "assets/main/ic_more.svg", widget.onMoreTap,
-                    width: 20, height: 20, color: const Color(0xFFCCCCCC))),
-            SizedBox(width: 4.w)
-          ],
-        ),
-      );
-    });
   }
 }
