@@ -28,7 +28,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
     return AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
-          color: const Color(0xFFF2F8FF),
+          color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(34),
         ),
         child: Column(

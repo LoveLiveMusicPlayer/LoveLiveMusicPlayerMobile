@@ -47,7 +47,11 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             enableLog: true,
             defaultTransition: Transition.fade,
-            theme: isDark ? ThemeData.dark() : ThemeData.light(),
+            theme: ThemeData(
+              brightness: isDark ? Brightness.dark : Brightness.light,
+              canvasColor: const Color(0xFFF2F8FF),
+              primaryColor: const Color(0xFFF2F8FF)
+            ),
             initialRoute: Routes.routeInitial,
             getPages: Routes.getRoutes(),
             locale: Translation.locale,

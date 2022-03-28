@@ -22,7 +22,6 @@ class _DrawerPageState extends State<DrawerPage> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        backgroundColor: const Color(0xFFF2F8FF),
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -73,7 +72,7 @@ class _DrawerPageState extends State<DrawerPage> {
                   width: 268.w,
                   height: 204.h,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF2F8FF),
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(8.w),
                     boxShadow: [
                       BoxShadow(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
@@ -30,9 +29,8 @@ class Song_libraryTop extends StatelessWidget {
 
   ///播放歌曲条目
   Widget _buildPlaySong() {
-    return Container(
+    return SizedBox(
       height: 45.w,
-      color: const Color(0xFFF2F8FF),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

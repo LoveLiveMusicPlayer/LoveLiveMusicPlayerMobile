@@ -150,7 +150,6 @@ class _PlayerState extends State<Player> {
       child: Slider(
         inactiveColor: const Color(0xFFCCDDF1).withOpacity(0.6),
         activeColor: const Color(0xFFCCDDF1).withOpacity(0.6),
-        thumbColor: const Color(0xFFF2F8FF),
         value: 10.5,
         min: 0.0,
         max: 100.0,

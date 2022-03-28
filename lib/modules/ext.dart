@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 import '../utils/sd_utils.dart';
 
@@ -145,7 +146,6 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
     child: ClipRRect(
       borderRadius: BorderRadius.circular(radius.h),
       child: Material(
-        color: const Color(0xFFF2F8FF),
         child: InkWell(
           splashColor: const Color(0xFFD3E0EC),
           highlightColor: const Color(0xFFD3E0EC),
@@ -177,7 +177,6 @@ Widget showGroupButton(String path,
     width: 118.h,
     height: 60.h,
     decoration: BoxDecoration(
-      color: const Color(0xFFF2F8FF),
       borderRadius: BorderRadius.circular(8.h),
       boxShadow: const [
         BoxShadow(
@@ -192,7 +191,6 @@ Widget showGroupButton(String path,
     child: ClipRRect(
       borderRadius: BorderRadius.circular(8.h),
       child: Material(
-        color: const Color(0xFFF2F8FF),
         child: InkWell(
           splashColor: const Color(0xFFD3E0EC),
           highlightColor: const Color(0xFFD3E0EC),

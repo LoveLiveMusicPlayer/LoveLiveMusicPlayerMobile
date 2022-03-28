@@ -52,12 +52,12 @@ class _MainPageState extends State<MainPage>
         panelMinSize: _panelMinSize.h,
         panelMaxSize: _panelMaxSize,
         overlayOpacity: 0.9,
-        backgroundColor: const Color(0xFFF2F8FF),
+        backgroundColor: Theme.of(context).primaryColor,
         overlay: true,
         isDismissible: true,
         body: _getTabBarView(() => _scaffoldKey.currentState?.openEndDrawer()),
-        blurColor: const Color(0xFFF2F8FF),
-        overlayColor: const Color(0xFFF2F8FF),
+        blurColor: Theme.of(context).primaryColor,
+        overlayColor: Theme.of(context).primaryColor,
         panelBorderRadiusBegin: 10,
         panelBorderRadiusEnd: 10,
         panelHeader: MiniPlayer(onTap: _controller.show),
@@ -125,7 +125,7 @@ class _MainPageState extends State<MainPage>
         elevation: 0,
         centerTitle: false,
         automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xFFF2F8FF),
+        backgroundColor: Theme.of(Get.context!).primaryColor,
         title: _getTabBar(),
         actions: [_getTopHead(onTap)],
       ),
@@ -164,51 +164,48 @@ class _MainPageState extends State<MainPage>
   Widget _buildList() {
     return Expanded(
       child: GetBuilder<MainLogic>(builder: (logic) {
-        return Container(
-          color: const Color(0xFFF2F8FF),
-          child: RefresherWidget(
-            itemCount: logic.state.items.length,
-            enablePullDown: logic.state.items.isNotEmpty,
-            isGridView: logic.state.currentIndex == 1,
+        return RefresherWidget(
+          itemCount: logic.state.items.length,
+          enablePullDown: logic.state.items.isNotEmpty,
+          isGridView: logic.state.currentIndex == 1,
 
-            ///当前列表是否网格显示
-            columnNum: 3,
-            crossAxisSpacing: 20.h,
-            mainAxisSpacing: 20.h,
-            leftPadding: 16.h,
-            rightPadding: 16.h,
-            aspectRatio: 0.715,
-            listItem: (cxt, index) {
-              return _buildListItem(logic, index);
-            },
-            onRefresh: (controller) async {
-              await Future.delayed(const Duration(milliseconds: 1000));
-              logic.state.items.clear();
+          ///当前列表是否网格显示
+          columnNum: 3,
+          crossAxisSpacing: 20.h,
+          mainAxisSpacing: 20.h,
+          leftPadding: 16.h,
+          rightPadding: 16.h,
+          aspectRatio: 0.715,
+          listItem: (cxt, index) {
+            return _buildListItem(logic, index);
+          },
+          onRefresh: (controller) async {
+            await Future.delayed(const Duration(milliseconds: 1000));
+            logic.state.items.clear();
 
-              logic.addItem([
-                MusicItem(titlle: "", checked: false),
-                MusicItem(titlle: "", checked: false),
-                MusicItem(titlle: "", checked: false),
-                MusicItem(titlle: "", checked: false),
-                MusicItem(titlle: "", checked: false),
-                MusicItem(titlle: "", checked: false)
-              ]);
-              controller.refreshCompleted();
-              controller.loadComplete();
-            },
-            onLoading: (controller) async {
-              await Future.delayed(const Duration(milliseconds: 1000));
-              logic.addItem([
-                MusicItem(titlle: "", checked: false),
-                MusicItem(titlle: "", checked: false),
-                MusicItem(titlle: "", checked: false),
-                MusicItem(titlle: "", checked: false),
-                MusicItem(titlle: "", checked: false),
-                MusicItem(titlle: "", checked: false)
-              ]);
-              controller.loadComplete();
-            },
-          ),
+            logic.addItem([
+              MusicItem(titlle: "", checked: false),
+              MusicItem(titlle: "", checked: false),
+              MusicItem(titlle: "", checked: false),
+              MusicItem(titlle: "", checked: false),
+              MusicItem(titlle: "", checked: false),
+              MusicItem(titlle: "", checked: false)
+            ]);
+            controller.refreshCompleted();
+            controller.loadComplete();
+          },
+          onLoading: (controller) async {
+            await Future.delayed(const Duration(milliseconds: 1000));
+            logic.addItem([
+              MusicItem(titlle: "", checked: false),
+              MusicItem(titlle: "", checked: false),
+              MusicItem(titlle: "", checked: false),
+              MusicItem(titlle: "", checked: false),
+              MusicItem(titlle: "", checked: false),
+              MusicItem(titlle: "", checked: false)
+            ]);
+            controller.loadComplete();
+          },
         );
       }),
     );
