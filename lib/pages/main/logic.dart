@@ -23,7 +23,7 @@ class MainLogic extends GetxController {
         success: (w) {
       if (w != null && w is List) {
         for (var element in w) {
-          LogUtil.e(element);
+          // LogUtil.e(element);
         }
       }
     });
@@ -108,9 +108,27 @@ class MainLogic extends GetxController {
       return;
     }
     int playIndex = checkNowPlaying();
-    tempList[playIndex].isPlaying = false;
-    tempList[index].isPlaying = true;
-    state.playingMusic = tempList[index];
+    if (index != playIndex) {
+      tempList[playIndex].isPlaying = false;
+      tempList[index].isPlaying = true;
+      state.playingMusic = tempList[index];
+      refresh();
+    }
+  }
+
+  changeTab(int index) {
+    final currentIndex = state.currentIndex;
+    if (index == 0) {
+      if (currentIndex < 3) {
+        return;
+      }
+      state.currentIndex = currentIndex % 3;
+    } else {
+      if (currentIndex > 2) {
+        return;
+      }
+      state.currentIndex = currentIndex + 3;
+    }
     refresh();
   }
 
@@ -127,7 +145,6 @@ class MainLogic extends GetxController {
   }
 
   ///-------------------------------
-  var currentIndex = 0.obs;
 
   @override
   void onReady() {

@@ -81,10 +81,8 @@ class SpUtil {
     if (str is String) {
       final res = jsonDecode(str);
       if (res is List) {
-        LogUtil.e("is a list");
         return res;
       } else if (res is Object) {
-        LogUtil.e("is a map");
         return res;
       }
     }

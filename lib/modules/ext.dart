@@ -37,37 +37,37 @@ Widget showImg(String? path,
     }
 
     return Container(
-      width: width.w,
+      width: width.h,
       height: height.h,
       decoration: BoxDecoration(
         image: DecorationImage(image: shadowImage, fit: BoxFit.fill),
-        borderRadius: BorderRadius.circular(radius.w),
+        borderRadius: BorderRadius.circular(radius.h),
         boxShadow: [
           BoxShadow(
               color: const Color(0xFFD3E0EC),
               blurRadius: 4,
-              offset: Offset(4.w, 8.h)),
+              offset: Offset(4.h, 8.h)),
         ],
       ),
     );
   } else {
     if (path == null || path.isEmpty) {
-      noShadowImage = Image.asset(defPhoto, width: width.w, height: height.h);
+      noShadowImage = Image.asset(defPhoto, width: width.h, height: height.h);
     } else if (path.startsWith("assets")) {
-      noShadowImage = Image.asset(path, width: width.w, height: height.h);
+      noShadowImage = Image.asset(path, width: width.h, height: height.h);
     } else if (path.startsWith("http")) {
-      noShadowImage = Image.network(path, width: width.w, height: height.h);
+      noShadowImage = Image.network(path, width: width.h, height: height.h);
     } else {
       final file = File(path);
       if (file.existsSync()) {
         noShadowImage =
-            Image.file(File(path), width: width.w, height: height.h);
+            Image.file(File(path), width: width.h, height: height.h);
       } else {
-        noShadowImage = Image.asset(defPhoto, width: width.w, height: height.h);
+        noShadowImage = Image.asset(defPhoto, width: width.h, height: height.h);
       }
     }
     return ClipRRect(
-        borderRadius: BorderRadius.circular(radius.w), child: noShadowImage);
+        borderRadius: BorderRadius.circular(radius.h), child: noShadowImage);
   }
 }
 
@@ -94,11 +94,11 @@ Widget materialButton(IconData icon, GestureTapCallback? onTap,
     Color iconColor = Colors.black,
     EdgeInsets offset = const EdgeInsets.all(0)}) {
   return Container(
-    width: width.w,
+    width: width.h,
     height: height.h,
     decoration: BoxDecoration(
       color: innerColor,
-      borderRadius: BorderRadius.circular(radius.w),
+      borderRadius: BorderRadius.circular(radius.h),
       boxShadow: [
         const BoxShadow(
             color: Colors.white,
@@ -109,7 +109,7 @@ Widget materialButton(IconData icon, GestureTapCallback? onTap,
       ],
     ),
     child: ClipRRect(
-      borderRadius: BorderRadius.circular(radius.w),
+      borderRadius: BorderRadius.circular(radius.h),
       child: Material(
         color: const Color(0xFFF2F8FF),
         child: InkWell(
@@ -119,10 +119,10 @@ Widget materialButton(IconData icon, GestureTapCallback? onTap,
           child: Stack(
             children: [
               Center(
-                child: Icon(icon, color: iconColor, size: iconSize.w),
+                child: Icon(icon, color: iconColor, size: iconSize.h),
               ),
               Container(
-                width: width.w,
+                width: width.h,
                 height: height.h,
                 alignment: const Alignment(0, 0),
               )
@@ -142,11 +142,11 @@ Widget materialButton(IconData icon, GestureTapCallback? onTap,
 Widget showGroupButton(String path,
     {double innerWidth = 130, double innerHeight = 60}) {
   return Container(
-    width: 118.w,
+    width: 118.h,
     height: 60.h,
     decoration: BoxDecoration(
       color: const Color(0xFFF2F8FF),
-      borderRadius: BorderRadius.circular(8.w),
+      borderRadius: BorderRadius.circular(8.h),
       boxShadow: const [
         BoxShadow(
             color: Colors.white,
@@ -158,7 +158,7 @@ Widget showGroupButton(String path,
       ],
     ),
     child: ClipRRect(
-      borderRadius: BorderRadius.circular(8.w),
+      borderRadius: BorderRadius.circular(8.h),
       child: Material(
         color: const Color(0xFFF2F8FF),
         child: InkWell(
@@ -169,10 +169,10 @@ Widget showGroupButton(String path,
             children: [
               Center(
                 child: Image.asset(path,
-                    width: innerWidth.w, height: innerHeight.h),
+                    width: innerWidth.h, height: innerHeight.h),
               ),
               Container(
-                width: 130.w,
+                width: 130.h,
                 height: 60.h,
                 alignment: const Alignment(0, 0),
               )
@@ -189,21 +189,21 @@ Widget logoIcon(String path, {double width = 36, double height = 36, double radi
   return Center(
     child: Container(
         margin: margin,
-        width: width.w,
+        width: width.h,
         height: height.h,
-        padding: EdgeInsets.all(3.w),
+        padding: EdgeInsets.all(3.h),
         decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(radius.w),
+            borderRadius: BorderRadius.circular(radius.h),
             boxShadow: [
               BoxShadow(
                   color: const Color(0xFFD3E0EC),
                   blurRadius: 10,
-                  offset: Offset(5.w, 3.h)),
+                  offset: Offset(5.h, 3.h)),
             ]),
         child: InkWell(
           onTap: onTap,
-          child: showImg(SDUtils.getImgPath(path), radius: radius.w, hasShadow: false)
+          child: showImg(SDUtils.getImgPath(path), radius: radius.h, hasShadow: false)
         )
     )
   );

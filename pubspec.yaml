@@ -57,6 +57,7 @@ dependencies:
   carousel_slider: ^4.0.0
   marquee_text: ^2.5.0+1
   flutter_lyric: ^2.0.2+3
+  flutter_svg: ^1.0.3
 
 dependency_overrides:
   path: ^1.8.1
@@ -89,6 +90,7 @@ flutter:
     - assets/main/
     - assets/drawer/
     - assets/thumb/
+    - assets/svg/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

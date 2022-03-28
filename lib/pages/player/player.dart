@@ -65,7 +65,7 @@ class _PlayerState extends State<Player> {
                   ),
                 ),
                 SizedBox(
-                  height: 230.h,
+                  height: 234.h,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.end,

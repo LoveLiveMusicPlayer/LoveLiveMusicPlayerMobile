@@ -69,7 +69,6 @@ class _MiniPlayerState extends State<MiniPlayer> {
     return GestureDetector(
       onTap: () => widget.onTap(),
       child: GetBuilder<MainLogic>(builder: (logic) {
-        LogUtil.e(logic.state.playingMusic.cover);
         return Row(
           children: [SizedBox(width: 6.w), showImg(logic.state.playingMusic.cover, radius: 50, width: 50, height: 50, hasShadow: false)],
         );
@@ -128,14 +127,9 @@ class _MiniPlayerState extends State<MiniPlayer> {
               fontSize: 15, color: Color(0xFF333333), height: 1.3),
           speed: 15));
       if (element.uid == currentMusic.uid) {
-        slidePage(count);
+        sliderController.jumpToPage(count);
       }
     });
     return scrollList;
-  }
-
-  slidePage(int count) async {
-    await Future.delayed(const Duration(milliseconds: 200));
-    sliderController.jumpToPage(count);
   }
 }

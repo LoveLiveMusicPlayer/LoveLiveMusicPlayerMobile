@@ -19,6 +19,9 @@ class MainState {
   ///选中歌曲数
   int selectSongNum = 0;
 
+  ///底部导航栏 index
+  int currentIndex = 0;
+
   ///列表数据
   List<MusicItem> items = [MusicItem(titlle: "",checked: false),
     MusicItem(titlle: "",checked: false),

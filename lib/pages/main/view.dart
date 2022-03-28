@@ -1,3 +1,4 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -74,6 +75,7 @@ class _MainPageState extends State<MainPage>
 
   Widget _getTabBar() {
     return TabBar(
+      onTap: (index) => logic.changeTab(index),
       indicatorWeight: 4.w,
       indicatorSize: TabBarIndicatorSize.label,
       indicatorColor: const Color(0xFFF940A7),
@@ -201,13 +203,9 @@ class _MainPageState extends State<MainPage>
 
   Widget _buildTabBarView() {
     return TabBarView(
-      children: [
-        BottomBar(logic.currentIndex.value, onSelect: (index) {
-          logic.currentIndex.value = index;
-        }),
-        BottomBar2(logic.currentIndex.value, onSelect: (index) {
-          logic.currentIndex.value = index + 3;
-        }),
+      children: const [
+        BottomBar(),
+        BottomBar2(),
       ],
       controller: tabController,
     );
