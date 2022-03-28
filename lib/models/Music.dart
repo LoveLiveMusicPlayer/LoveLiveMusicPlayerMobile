@@ -19,7 +19,8 @@ class Music {
     this.preJPLrc = "はすんだ！",
     this.currentJPLrc = "だから僕らは鳴らすんだ！",
     this.nextJPLrc = "だか鳴ららはすんだ！",
-    this.isPlaying = false
+    this.isPlaying = false,
+    this.isLove = false,
   });
 
   String? uid;
@@ -40,6 +41,7 @@ class Music {
   String? nextJPLrc;
 
   bool isPlaying;
+  bool isLove;
 
 
   factory Music.fromJson(Map<String, dynamic> json) => Music(
@@ -60,6 +62,7 @@ class Music {
     nextJPLrc: json["nextJPLrc"],
 
     isPlaying: json["isPlaying"],
+    isLove: json["isLove"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -80,5 +83,6 @@ class Music {
     "nextJPLrc": nextJPLrc,
 
     "isPlaying": isPlaying,
+    "isLove": isLove,
   };
 }

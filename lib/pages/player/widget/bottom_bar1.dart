@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../main/logic.dart';
 
@@ -19,17 +21,39 @@ class _BottomBarState extends State<BottomBar> {
     mIndex = handlePage(logic.state.currentIndex);
 
     return BottomNavigationBar(
+      showUnselectedLabels: true,
       currentIndex: mIndex,
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.music_note), label: '歌曲'),
-        BottomNavigationBarItem(icon: Icon(Icons.library_music), label: '专辑'),
-        BottomNavigationBarItem(icon: Icon(Icons.people), label: '歌手'),
+      items: [
+        BottomNavigationBarItem(
+            icon: SvgPicture.asset("assets/tab/tab_music.svg",
+                height: 20.h,
+                width: 20.h,
+                color: mIndex == 0
+                    ? const Color(0xFFF940A7)
+                    : const Color(0xFFD1E0F3)),
+            label: '歌曲'),
+        BottomNavigationBarItem(
+            icon: SvgPicture.asset("assets/tab/tab_album.svg",
+                height: 20.h,
+                width: 20.h,
+                color: mIndex == 1
+                    ? const Color(0xFFF940A7)
+                    : const Color(0xFFD1E0F3)),
+            label: '专辑'),
+        BottomNavigationBarItem(
+            icon: SvgPicture.asset("assets/tab/tab_singer.svg",
+                height: 20.h,
+                width: 20.h,
+                color: mIndex == 2
+                    ? const Color(0xFFF940A7)
+                    : const Color(0xFFD1E0F3)),
+            label: '歌手'),
       ],
       elevation: 0,
       backgroundColor: colorTheme.surface,
-      type: BottomNavigationBarType.fixed,
-      selectedItemColor: const Color(0xFFD91F86),
-      unselectedItemColor: const Color(0xFFD1E0F3).withOpacity(0.5),
+      type: BottomNavigationBarType.shifting,
+      selectedItemColor: const Color(0xFFF940A7),
+      unselectedItemColor: const Color(0xFFD1E0F3),
       onTap: (index) {
         mIndex = handlePage(index);
         setState(() {});

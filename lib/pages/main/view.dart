@@ -66,45 +66,53 @@ class _MainPageState extends State<MainPage>
         transformScale: true,
         blurSigma: 5.0,
         fadeSequence: [
-          TweenSequenceItem<double>(weight: 1.0, tween: Tween(begin: 1, end: 0)),
-          TweenSequenceItem<double>(weight: 8.0, tween: Tween(begin: 0, end: 0)),
+          TweenSequenceItem<double>(
+              weight: 1.0, tween: Tween(begin: 1, end: 0)),
+          TweenSequenceItem<double>(
+              weight: 8.0, tween: Tween(begin: 0, end: 0)),
         ],
       ),
     );
   }
 
   Widget _getTabBar() {
-    return TabBar(
-      onTap: (index) => logic.changeTab(index),
-      indicatorWeight: 4.w,
-      indicatorSize: TabBarIndicatorSize.label,
-      indicatorColor: const Color(0xFFF940A7),
-      labelPadding: EdgeInsets.only(left: 4.w, right: 4.w),
-      indicator: CustomUnderlineTabIndicator(
-          insets: EdgeInsets.only(top: 0.w, bottom: 8.h),
-          borderSide: BorderSide(width: 16.w, color: const Color(0xFFF940A7)),
-          indicatorWeight: 4.w),
-      isScrollable: true,
-      labelColor: const Color(0xFFF940A7),
-      unselectedLabelColor: const Color(0xFFA9B9CD),
-      labelStyle: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold),
-      unselectedLabelStyle:
-          TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
-      tabs: const [
-        Tab(
-          text: "歌库",
-        ),
-        Tab(
-          text: "我的",
-        ),
-      ],
-      controller: tabController,
-    );
+    return Theme(
+        data: ThemeData(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent),
+        child: TabBar(
+          onTap: (index) => logic.changeTab(index),
+          indicatorWeight: 4.w,
+          indicatorSize: TabBarIndicatorSize.label,
+          indicatorColor: const Color(0xFFF940A7),
+          labelPadding: EdgeInsets.only(left: 4.w, right: 4.w),
+          indicator: CustomUnderlineTabIndicator(
+              insets: EdgeInsets.only(top: 0.w, bottom: 8.h),
+              borderSide:
+                  BorderSide(width: 16.w, color: const Color(0xFFF940A7)),
+              indicatorWeight: 4.w),
+          isScrollable: true,
+          labelColor: const Color(0xFFF940A7),
+          unselectedLabelColor: const Color(0xFFA9B9CD),
+          labelStyle: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold),
+          unselectedLabelStyle:
+              TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+          tabs: const [
+            Tab(
+              text: "歌库",
+            ),
+            Tab(
+              text: "我的",
+            ),
+          ],
+          controller: tabController,
+        ));
   }
 
   ///顶部头像
   Widget _getTopHead(GestureTapCallback onTap) {
-    return logoIcon("ic_head.jpg", offset: EdgeInsets.only(right: 16.w), onTap: onTap);
+    return logoIcon("ic_head.jpg",
+        offset: EdgeInsets.only(right: 16.w), onTap: onTap);
   }
 
   Widget _getTabBarView(GestureTapCallback onTap) {
@@ -134,9 +142,7 @@ class _MainPageState extends State<MainPage>
   Widget _buildListTop() {
     return Song_libraryTop(
       onPlayTap: () {},
-      onScreenTap: () {
-        logic.openSelect();
-      },
+      onScreenTap: () => logic.openSelect(),
       onSelectAllTap: (checked) {
         logic.selectAll(checked);
       },

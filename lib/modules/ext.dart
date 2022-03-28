@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../utils/sd_utils.dart';
 
@@ -74,7 +75,7 @@ Widget showImg(String? path,
 /// 具有material风格的按钮
 /// https://material.io/resources/icons
 ///
-/// [icon] Icons包下的按钮
+/// [icon] 支持Icons包下的按钮、本地assets资源
 /// [onTap] 触摸事件回调
 /// [width] 控件宽度
 /// [height] 控件高度
@@ -84,7 +85,7 @@ Widget showImg(String? path,
 /// [iconSize] 内部图标的大小
 /// [iconColor] 内部图标的颜色
 /// [offset] 内部图标的偏移量
-Widget materialButton(IconData icon, GestureTapCallback? onTap,
+Widget materialButton(dynamic icon, GestureTapCallback? onTap,
     {double width = 80,
     double height = 80,
     double radius = 20,
@@ -93,6 +94,15 @@ Widget materialButton(IconData icon, GestureTapCallback? onTap,
     double iconSize = 30,
     Color iconColor = Colors.black,
     EdgeInsets offset = const EdgeInsets.all(0)}) {
+
+  Widget child;
+  if (icon is IconData) {
+    child = Icon(icon, color: iconColor, size: iconSize.h);
+  } else if (icon is String && icon.startsWith("assets") && icon.endsWith(".svg")) {
+    child = SvgPicture.asset(icon, color: iconColor, width: iconSize.h ,height: iconSize.h);
+  } else {
+    child = Container();
+  }
   return Container(
     width: width.h,
     height: height.h,
@@ -118,9 +128,7 @@ Widget materialButton(IconData icon, GestureTapCallback? onTap,
           onTap: onTap,
           child: Stack(
             children: [
-              Center(
-                child: Icon(icon, color: iconColor, size: iconSize.h),
-              ),
+              Center(child: child),
               Container(
                 width: width.h,
                 height: height.h,
@@ -212,7 +220,15 @@ Widget logoIcon(String path, {double width = 36, double height = 36, double radi
 Widget touchIcon(IconData icon, GestureTapCallback onTap,
     {Color color = const Color(0xff333333), double? size}) {
   return GestureDetector(
-    onTap: () => onTap,
+    onTap: onTap,
     child: Icon(icon, color: color, size: size),
+  );
+}
+
+Widget touchIconByAsset(String path, GestureTapCallback onTap,
+    {Color color = const Color(0xff999999), double width = 20, double height = 20}) {
+  return GestureDetector(
+    onTap: onTap,
+    child: SvgPicture.asset(path, width: width.h, height: height.h, color: color),
   );
 }

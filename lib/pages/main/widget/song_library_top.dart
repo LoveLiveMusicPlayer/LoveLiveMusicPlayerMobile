@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lovelivemusicplayer/modules/ext.dart';
 import '../../../widgets/circular_check_box.dart';
 import '../logic.dart';
 
 class Song_libraryTop extends StatelessWidget {
   final Function onPlayTap;
-  final Function onScreenTap;
+  final GestureTapCallback onScreenTap;
   final Function(bool) onSelectAllTap;
   final Function onCancelTap;
 
@@ -70,7 +71,9 @@ class Song_libraryTop extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.w),
               boxShadow: const [
                 BoxShadow(
-                    color: Color(0xFFD3E0EC), blurRadius: 6, offset: Offset(5, 3)),
+                    color: Color(0xFFD3E0EC),
+                    blurRadius: 6,
+                    offset: Offset(5, 3)),
               ]),
           child: Icon(
             Icons.play_arrow_rounded,
@@ -99,19 +102,10 @@ class Song_libraryTop extends StatelessWidget {
 
   ///筛选按钮
   Widget _buildScreen() {
-    return GestureDetector(
-      onTap: () {
-        onScreenTap();
-      },
-      child: Padding(
-        padding:
-            EdgeInsets.only(right: 16.w, top: 5.w, bottom: 5.w, left: 30.w),
-        child: Image.asset(
-          "assets/main/ic_screen.jpg",
-          width: 20.w,
-          height: 20.w,
-        ),
-      ),
+    return Padding(
+      padding: EdgeInsets.only(right: 16.w, top: 5.w, bottom: 5.w, left: 30.w),
+      child: touchIconByAsset("assets/main/ic_screen.svg", onScreenTap,
+          width: 15, height: 15),
     );
   }
 
@@ -159,6 +153,4 @@ class Song_libraryTop extends StatelessWidget {
       ),
     );
   }
-
-
 }

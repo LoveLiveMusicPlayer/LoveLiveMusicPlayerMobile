@@ -10,8 +10,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import '../main/logic.dart';
 
 class MiniPlayer extends StatefulWidget {
-  MiniPlayer({Key? key, required this.onTap})
-      : super(key: key);
+  MiniPlayer({Key? key, required this.onTap}) : super(key: key);
   final GestureTapCallback onTap;
 
   @override
@@ -42,7 +41,6 @@ class _MiniPlayerState extends State<MiniPlayer> {
                   borderRadius: BorderRadius.circular(34)),
               child: Row(
                 children: [
-
                   /// 迷你封面
                   miniCover(),
                   SizedBox(width: 6.w),
@@ -52,11 +50,24 @@ class _MiniPlayerState extends State<MiniPlayer> {
                   SizedBox(width: 10.w),
 
                   /// 播放按钮
-                  touchIcon(Icons.play_arrow, () => {}, size: 30.w),
+                  GetBuilder<MainLogic>(builder: (logic) {
+                    return touchIconByAsset(
+                        logic.state.isPlaying
+                            ? "assets/player/play_pause.svg"
+                            : "assets/player/play_play.svg",
+                        () => logic.togglePlay(),
+                        width: 16,
+                        height: 16,
+                        color: const Color(0xFF333333));
+                  }),
                   SizedBox(width: 20.w),
 
                   /// 播放列表按钮
-                  touchIcon(Icons.music_note, () => {}),
+                  GetBuilder<MainLogic>(builder: (logic) {
+                    return touchIconByAsset(
+                        "assets/player/play_playlist.svg", () => {},
+                        width: 18, height: 18, color: const Color(0xFF333333));
+                  }),
                   SizedBox(width: 20.w),
                 ],
               ),
@@ -70,7 +81,11 @@ class _MiniPlayerState extends State<MiniPlayer> {
       onTap: () => widget.onTap(),
       child: GetBuilder<MainLogic>(builder: (logic) {
         return Row(
-          children: [SizedBox(width: 6.w), showImg(logic.state.playingMusic.cover, radius: 50, width: 50, height: 50, hasShadow: false)],
+          children: [
+            SizedBox(width: 6.w),
+            showImg(logic.state.playingMusic.cover,
+                radius: 50, width: 50, height: 50, hasShadow: false)
+          ],
         );
       }),
     );
@@ -87,7 +102,8 @@ class _MiniPlayerState extends State<MiniPlayer> {
             builder: (logic) {
               final isCanScroll = logic.state.isCanMiniPlayerScroll;
               return CarouselSlider(
-                  items: refreshList(logic.state.playList, logic.state.playingMusic),
+                  items: refreshList(
+                      logic.state.playList, logic.state.playingMusic),
                   carouselController: sliderController,
                   options: CarouselOptions(
                       height: 20.h,
@@ -100,8 +116,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
                         if (isCanScroll) {
                           logic.changeMusic(index);
                         }
-                      })
-              );
+                      }));
             },
           )
         ],

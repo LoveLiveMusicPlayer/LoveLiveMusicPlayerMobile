@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:get/get.dart';
@@ -90,10 +91,10 @@ class _DrawerPageState extends State<DrawerPage> {
                       children: [
                         Row(
                           children: [
-                            SizedBox(
-                              width: 24.w,
-                              height: 24.h,
-                              child: Icon(Icons.music_note, color: const Color(0xFF666666), size: 20.w),
+                            SvgPicture.asset(
+                                "assets/drawer/drawer_quick_trans.svg",
+                                height: 20.h,
+                                width: 20.h
                             ),
                             SizedBox(width: 8.w),
                             Text("歌曲快传", style: TextStyle(color: const Color(0xFF333333), fontSize: 15.sp))
@@ -101,10 +102,10 @@ class _DrawerPageState extends State<DrawerPage> {
                         ),
                         Row(
                           children: [
-                            SizedBox(
-                              width: 24.w,
-                              height: 24.h,
-                              child: Icon(Icons.directions_transit, color: const Color(0xFF666666), size: 20.w),
+                            SvgPicture.asset(
+                                "assets/drawer/drawer_data_sync.svg",
+                                height: 20.h,
+                                width: 20.h
                             ),
                             SizedBox(width: 8.w),
                             Text("数据同步", style: TextStyle(color: const Color(0xFF333333), fontSize: 15.sp))
@@ -115,10 +116,10 @@ class _DrawerPageState extends State<DrawerPage> {
                           children: [
                             Row(
                               children: [
-                                SizedBox(
-                                  width: 24.w,
-                                  height: 24.h,
-                                  child: Icon(Icons.nights_stay_outlined, color: const Color(0xFF666666), size: 20.w),
+                                SvgPicture.asset(
+                                    "assets/drawer/drawer_day_night.svg",
+                                  height: 20.h,
+                                  width: 20.h
                                 ),
                                 SizedBox(width: 8.w),
                                 Text("夜间模式", style: TextStyle(color: const Color(0xFF333333), fontSize: 15.sp))
@@ -132,10 +133,10 @@ class _DrawerPageState extends State<DrawerPage> {
                         ),
                         Row(
                           children: [
-                            SizedBox(
-                              width: 24.w,
-                              height: 24.h,
-                              child: Icon(Icons.info_outline, color: const Color(0xFF666666), size: 20.w),
+                            SvgPicture.asset(
+                                "assets/drawer/drawer_secret.svg",
+                                height: 20.h,
+                                width: 20.h
                             ),
                             SizedBox(width: 8.w),
                             Text("关于和隐私", style: TextStyle(color: const Color(0xFF333333), fontSize: 15.sp))

@@ -118,12 +118,18 @@ class _PlayerState extends State<Player> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          materialButton(Icons.favorite, () => {},
-              width: 32,
-              height: 32,
-              radius: 6,
-              iconColor: Colors.pinkAccent,
-              iconSize: 15),
+          GetBuilder<MainLogic>(builder: (logic) {
+            return materialButton(
+                logic.state.playingMusic.isLove
+                    ? Icons.favorite
+                    : "assets/player/play_love.svg",
+                () => logic.toggleLove(),
+                width: 32,
+                height: 32,
+                radius: 6,
+                iconColor: Colors.pinkAccent,
+                iconSize: 15);
+          }),
           materialButton(Icons.add, () => {},
               width: 32,
               height: 32,
@@ -180,19 +186,35 @@ class _PlayerState extends State<Player> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          materialButton(Icons.shuffle, () => logic.playPrevOrNextMusic(true),
-              width: 32, height: 32, radius: 6, iconSize: 15),
-          materialButton(
-              Icons.skip_previous, () => logic.playPrevOrNextMusic(true),
-              width: 60, height: 60, radius: 40),
-          materialButton(Icons.play_arrow, () => logic.togglePlay(),
-              width: 80, height: 80, radius: 40, iconSize: 50),
-          materialButton(
-              Icons.skip_next, () => logic.playPrevOrNextMusic(false),
-              width: 60, height: 60, radius: 40),
-          materialButton(
-              Icons.music_note, () => logic.playPrevOrNextMusic(true),
-              width: 32, height: 32, radius: 6, iconSize: 15),
+          materialButton("assets/player/play_shuffle.svg", () => {},
+              width: 32,
+              height: 32,
+              radius: 6,
+              iconSize: 15,
+              iconColor: const Color(0xFF333333)),
+          materialButton("assets/player/play_prev.svg",
+              () => logic.playPrevOrNextMusic(true),
+              width: 60, height: 60, radius: 40, iconSize: 16),
+          GetBuilder<MainLogic>(builder: (logic) {
+            return materialButton(
+                logic.state.isPlaying
+                    ? "assets/player/play_pause.svg"
+                    : "assets/player/play_play.svg",
+                () => logic.togglePlay(),
+                width: 80,
+                height: 80,
+                radius: 40,
+                iconSize: 26);
+          }),
+          materialButton("assets/player/play_next.svg",
+              () => logic.playPrevOrNextMusic(false),
+              width: 60, height: 60, radius: 40, iconSize: 16),
+          materialButton("assets/player/play_playlist.svg", () => {},
+              width: 32,
+              height: 32,
+              radius: 6,
+              iconSize: 15,
+              iconColor: const Color(0xFF333333)),
         ],
       ),
     );

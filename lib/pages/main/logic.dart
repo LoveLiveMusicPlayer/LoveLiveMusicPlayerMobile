@@ -100,7 +100,10 @@ class MainLogic extends GetxController {
     update(["miniPlayer"]);
   }
 
-  togglePlay() {}
+  togglePlay() {
+    state.isPlaying = !state.isPlaying;
+    refresh();
+  }
 
   changeMusic(int index) {
     final tempList = state.playList;
@@ -129,6 +132,18 @@ class MainLogic extends GetxController {
       }
       state.currentIndex = currentIndex + 3;
     }
+    refresh();
+  }
+
+  toggleLove() {
+    final musicList = state.playList;
+    final music = state.playingMusic;
+    musicList.forEach((element) {
+      if (element.uid == music.uid) {
+        element.isLove = !element.isLove;
+        state.playingMusic = element;
+      }
+    });
     refresh();
   }
 

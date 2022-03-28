@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 
 import '../../models/music_Item.dart';
@@ -29,6 +30,8 @@ class MainState {
     MusicItem(titlle: "",checked: false),
     MusicItem(titlle: "",checked: false),
     MusicItem(titlle: "",checked: false)];
+
+  var isPlaying = false;
 
   Music playingMusic = Music();
   bool isCanMiniPlayerScroll = true;

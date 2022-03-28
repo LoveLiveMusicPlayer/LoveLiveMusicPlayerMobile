@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../main/logic.dart';
 
@@ -18,17 +20,41 @@ class _BottomBar2State extends State<BottomBar2> {
     final colorTheme = Theme.of(context).colorScheme;
     mIndex = handlePage(logic.state.currentIndex);
     return BottomNavigationBar(
+      showUnselectedLabels: true,
       currentIndex: mIndex,
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.favorite), label: '我喜欢'),
-        BottomNavigationBarItem(icon: Icon(Icons.library_music), label: '歌单'),
-        BottomNavigationBarItem(icon: Icon(Icons.history), label: '最近播放'),
+      items: [
+        BottomNavigationBarItem(
+            icon: SvgPicture.asset("assets/tab/tab_love.svg",
+                height: 20.h,
+                width: 20.h,
+                color: mIndex == 0
+                    ? const Color(0xFFF940A7)
+                    : const Color(0xFFD1E0F3)),
+            label: '我喜欢'),
+        BottomNavigationBarItem(
+            icon: SvgPicture.asset("assets/tab/tab_playlist.svg",
+                height: 20.h,
+                width: 20.h,
+                color: mIndex == 1
+                    ? const Color(0xFFF940A7)
+                    : const Color(0xFFD1E0F3)),
+            label: '歌单'),
+        BottomNavigationBarItem(
+            icon: SvgPicture.asset("assets/tab/tab_recently.svg",
+                height: 20.h,
+                width: 20.h,
+                color: mIndex == 2
+                    ? const Color(0xFFF940A7)
+                    : const Color(0xFFD1E0F3)),
+            label: '最近播放'),
       ],
       elevation: 0,
       backgroundColor: colorTheme.surface,
-      type: BottomNavigationBarType.fixed,
+      type: BottomNavigationBarType.shifting,
+      selectedFontSize: 13.sp,
+      unselectedFontSize: 13.sp,
       selectedItemColor: const Color(0xFFD91F86),
-      unselectedItemColor: const Color(0xFFD1E0F3).withOpacity(0.5),
+      unselectedItemColor: const Color(0xFFA9B9CD).withOpacity(0.5),
       onTap: (index) {
         mIndex = handlePage(index + 3);
         setState(() {});

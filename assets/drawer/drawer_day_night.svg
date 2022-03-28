@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="歌库-个人中心" transform="translate(-107.000000, -526.000000)">
+            <g id="编组-6" transform="translate(91.000000, 410.000000)">
+                <g id="编组" transform="translate(16.000000, 116.000000)">
+                    <rect id="矩形" fill-opacity="0.01" fill="#FFFFFF" fill-rule="nonzero" x="0" y="0" width="16" height="16"></rect>
+                    <path d="M5.6219,2.48974 C5.43453333,3.07059667 5.33333333,3.69013333 5.33333333,4.33333333 C5.33333333,7.64703333 8.01963333,10.3333333 11.3333333,10.3333333 C12.1782,10.3333333 12.9822667,10.1587 13.7114333,9.8436 C12.9335333,12.2553333 10.6705333,14 8,14 C4.6863,14 2,11.3137 2,8 C2,5.53116667 3.49113333,3.41056667 5.6219,2.48974 Z" id="路径" stroke="#666666" stroke-linejoin="round"></path>
+                    <polyline id="路径" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" points="10.5535 3.33333333 13.6666667 3.33333333 10.3333333 6 13.6666667 6"></polyline>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

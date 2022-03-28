@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="20px" viewBox="0 0 18 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组</title>
+    <defs>
+        <path d="M17.9377597,0.593349129 C17.9377597,0.221555491 17.6024045,-0.0584146875 17.2404362,0.0111153125 L6.5576692,2.06444317 C6.00353311,2.17088529 5.60270672,2.65974241 5.60270672,3.22886511 L5.60270672,14.6310088 C4.74769388,14.285917 3.62860666,14.2834501 2.54153997,14.7032798 C0.673087522,15.4249162 -0.392796021,17.1205437 0.160826131,18.4904949 C0.714425944,19.8605374 2.67793443,20.3861468 4.54640924,19.6644875 C6.12269952,19.0556888 7.12775971,17.7536916 7.07113723,16.5388124 L7.07113723,6.11465712 L16.4692622,4.30827042 L16.4692622,12.2745721 C15.6142717,11.927379 14.4938661,11.9241126 13.4055481,12.3447645 C11.5385928,13.066401 10.473536,14.7620285 11.0267336,16.1320025 C11.5799088,17.502045 13.5418085,18.0276087 15.4088532,17.3059951 C16.9560502,16.7079549 17.9524628,15.4409967 17.9335588,14.2448249 L17.9377597,14.2435457 L17.9377597,0.593349129 L17.9377597,0.593349129 Z" id="path-1"></path>
+        <filter x="-16.7%" y="-15.0%" width="133.5%" height="130.0%" filterUnits="objectBoundingBox" id="filter-2">
+            <feGaussianBlur stdDeviation="2" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="2" dy="2" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.850980392   0 0 0 0 0.121568627   0 0 0 0 0.525490196  0 0 0 1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="歌库-歌曲" transform="translate(-53.000000, -738.000000)">
+            <g id="路径" transform="translate(53.000000, 738.000000)">
+                <use fill="#F940A7" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>

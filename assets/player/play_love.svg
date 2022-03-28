@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="歌库-歌曲-加入到歌单" transform="translate(-15.000000, -478.000000)">
+            <g id="编组" transform="translate(15.000000, 478.000000)">
+                <rect id="矩形" fill-opacity="0.01" fill="#FFFFFF" fill-rule="nonzero" x="0" y="0" width="16" height="16"></rect>
+                <path d="M5,2.66666667 C2.97495667,2.66666667 1.33333333,4.3083 1.33333333,6.33333333 C1.33333333,10 5.66666667,13.3333333 8,14.1087333 C10.3333333,13.3333333 14.6666667,10 14.6666667,6.33333333 C14.6666667,4.3083 13.0250333,2.66666667 11,2.66666667 C9.7599,2.66666667 8.66356667,3.2823 8,4.2246 C7.33643333,3.2823 6.2401,2.66666667 5,2.66666667 Z" id="路径" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path>
+            </g>
+        </g>
+    </g>
+</svg>

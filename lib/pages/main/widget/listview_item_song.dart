@@ -9,8 +9,8 @@ import '../logic.dart';
 
 class ListViewItemSong extends StatefulWidget {
   Function(bool) onItemTap;
-  Function() onPlayTap;
-  Function() onMoreTap;
+  GestureTapCallback onPlayTap;
+  GestureTapCallback onMoreTap;
 
   ///条目数据
   int index;
@@ -77,7 +77,8 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
 
   ///缩列图
   Widget _buildIcon() {
-    return showImg(SDUtils.getImgPath("ic_head.jpg"), width: 48, height: 48, hasShadow: false, radius: 8);
+    return showImg(SDUtils.getImgPath("ic_head.jpg"),
+        width: 48, height: 48, hasShadow: false, radius: 8);
   }
 
   ///勾选按钮
@@ -145,35 +146,19 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            GestureDetector(
-              onTap: () {
-                widget.onPlayTap();
-              },
-              child: Padding(
-                padding: EdgeInsets.all(5.w),
-                child: Image.asset(
-                  "assets/main/ic_play.jpg",
-                  width: 20.w,
-                  height: 20.w,
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                widget.onMoreTap();
-              },
-              child: Padding(
-                padding: EdgeInsets.all(5.w),
-                child: Image.asset(
-                  "assets/main/ic_more.jpg",
-                  width: 20.w,
-                  height: 20.w,
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 4.w,
-            )
+            Padding(
+                padding: EdgeInsets.only(
+                    left: 12.w, right: 12.w, top: 12.h, bottom: 12.h),
+                child: touchIconByAsset(
+                    "assets/main/ic_add_next.svg", widget.onPlayTap,
+                    width: 20, height: 20, color: const Color(0xFFCCCCCC))),
+            Padding(
+                padding: EdgeInsets.only(
+                    left: 12.w, right: 18.w, top: 12.h, bottom: 12.h),
+                child: touchIconByAsset(
+                    "assets/main/ic_more.svg", widget.onMoreTap,
+                    width: 20, height: 20, color: const Color(0xFFCCCCCC))),
+            SizedBox(width: 4.w)
           ],
         ),
       );
