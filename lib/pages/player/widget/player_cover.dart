@@ -21,22 +21,25 @@ class _CoverState extends State<Cover> {
     return InkWell(
       splashColor: Colors.red,
       onTap: widget.onTap,
-      child: Column(
-        children: [
-          SizedBox(height: 24.h),
+      child: SizedBox(
+        height: 440.h,
+        child: Column(
+          children: [
+            SizedBox(height: 24.h),
 
-          /// 封面
-          GetBuilder<MainLogic>(
-            builder: (logic) {
-              return showImg(logic.state.playingMusic.cover,
-                  radius: 50, width: 300, height: 300);
-            },
-          ),
+            /// 封面
+            GetBuilder<MainLogic>(
+              builder: (logic) {
+                return showImg(logic.state.playingMusic.cover,
+                    radius: 24, width: 300, height: 300);
+              },
+            ),
 
-          /// 信息
-          SizedBox(height: 20.h),
-          PlayerInfo(),
-        ],
+            /// 信息
+            SizedBox(height: 26.h),
+            PlayerInfo(),
+          ],
+        ),
       ),
     );
   }

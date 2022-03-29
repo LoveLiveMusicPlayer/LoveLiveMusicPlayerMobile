@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/pages/main/logic.dart';
 
 class PlayerInfo extends StatelessWidget {
-
   var logic = Get.find<MainLogic>();
 
   @override
@@ -16,10 +15,10 @@ class PlayerInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             recentlyLrc(logic.state.playingMusic.preJPLrc),
-            SizedBox(height: 8.h),
+            SizedBox(height: 10.h),
             recentlyLrc(logic.state.playingMusic.currentJPLrc,
-                color: const Color(0xFF333333)),
-            SizedBox(height: 8.h),
+                color: const Color(0xFF333333), fontWeight: FontWeight.w900),
+            SizedBox(height: 10.h),
             recentlyLrc(logic.state.playingMusic.nextJPLrc)
           ],
         );
@@ -27,10 +26,15 @@ class PlayerInfo extends StatelessWidget {
     );
   }
 
-  Widget recentlyLrc(String? text, {Color color = const Color(0xFF999999)}) {
+  Widget recentlyLrc(String? text,
+      {Color color = const Color(0xFF999999),
+      FontWeight fontWeight = FontWeight.normal}) {
     if (text == null) {
       return Text("", style: TextStyle(color: color, fontSize: 15.sp));
     }
-    return Text(text, style: TextStyle(color: color, fontSize: 15.sp));
+    return Text(text,
+        style: TextStyle(color: color, fontSize: 15.sp, fontWeight: fontWeight),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis);
   }
 }

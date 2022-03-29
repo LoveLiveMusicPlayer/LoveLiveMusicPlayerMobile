@@ -17,47 +17,47 @@ class MyLrcUI extends LyricUI {
   bool highlight;
 
   MyLrcUI(
-      {this.defaultSize = 18,
-        this.defaultExtSize = 14,
-        this.otherMainSize = 16,
-        this.bias = 0.5,
-        this.lineGap = 25,
-        this.inlineGap = 25,
-        this.lyricAlign = LyricAlign.CENTER,
-        this.lyricBaseLine = LyricBaseLine.CENTER,
-        this.highlight = true});
+      {this.defaultSize = 15,
+      this.defaultExtSize = 15,
+      this.otherMainSize = 17,
+      this.bias = 0.5,
+      this.lineGap = 20,
+      this.inlineGap = 8,
+      this.lyricAlign = LyricAlign.CENTER,
+      this.lyricBaseLine = LyricBaseLine.CENTER,
+      this.highlight = true});
 
   MyLrcUI.clone(MyLrcUI ui)
       : this(
-      defaultSize: ui.defaultSize,
-      defaultExtSize: ui.defaultExtSize,
-      otherMainSize: ui.otherMainSize,
-      bias: ui.bias,
-      lineGap: ui.lineGap,
-      inlineGap: ui.inlineGap,
-      lyricAlign: ui.lyricAlign,
-      lyricBaseLine: ui.lyricBaseLine,
-      highlight: ui.highlight);
+            defaultSize: ui.defaultSize,
+            defaultExtSize: ui.defaultExtSize,
+            otherMainSize: ui.otherMainSize,
+            bias: ui.bias,
+            lineGap: ui.lineGap,
+            inlineGap: ui.inlineGap,
+            lyricAlign: ui.lyricAlign,
+            lyricBaseLine: ui.lyricBaseLine,
+            highlight: ui.highlight);
 
   @override
-  TextStyle getPlayingExtTextStyle() =>
-      TextStyle(color: const Color(0xFF333333), fontSize: defaultExtSize);
+  TextStyle getPlayingExtTextStyle() => TextStyle(
+      color: Colors.black,
+      fontSize: defaultSize.sp, fontWeight: FontWeight.bold);
 
   @override
   TextStyle getOtherExtTextStyle() => TextStyle(
-    color: const Color(0xFF999999),
-    fontSize: defaultExtSize,
-  );
+        color: const Color(0xFF999999),
+        fontSize: defaultSize.sp,
+      );
 
   @override
   TextStyle getOtherMainTextStyle() =>
-      TextStyle(color: const Color(0xFF999999), fontSize: otherMainSize);
+      TextStyle(color: const Color(0xFF999999), fontSize: otherMainSize.sp);
 
   @override
   TextStyle getPlayingMainTextStyle() => TextStyle(
-    color: Colors.white,
-    fontSize: defaultSize.sp,
-  );
+      color: Colors.black,
+      fontSize: otherMainSize.sp, fontWeight: FontWeight.bold);
 
   @override
   double getInlineSpace() => inlineGap;

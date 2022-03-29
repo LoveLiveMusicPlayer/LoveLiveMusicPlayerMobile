@@ -12,9 +12,6 @@ import '../main/logic.dart';
 class Player extends StatefulWidget {
   final GestureTapCallback onTap;
   var isCover = true.obs;
-  var jpLyric = "".obs;
-  var zhLyric = "".obs;
-  var romaLyric = "".obs;
 
   Player({required this.onTap});
 
@@ -28,13 +25,6 @@ class _PlayerState extends State<Player> {
   @override
   void initState() {
     super.initState();
-    Network.get(
-        "JP/LoveLive/Liella!/%E5%8A%A8%E7%94%BB/%5B2021.07.21%5D%20Liella!%20-%20START!!%20True%20dreams/01.%20START!!%20True%20dreams.lrc",
-        success: (dynamic lyric) {
-      if (lyric != null && lyric is String) {
-        widget.jpLyric.value = lyric;
-      }
-    });
   }
 
   @override
@@ -47,51 +37,53 @@ class _PlayerState extends State<Player> {
           children: <Widget>[
             coverBg(),
             Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                SizedBox(
-                  height: 546.h,
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(height: MediaQuery.of(context).padding.top),
-                      SizedBox(height: 20.h),
-
-                      /// 头部
-                      PlayerHeader(onTap: widget.onTap),
-
-                      /// 中间可切换的界面
-                      Obx(() => stackBody())
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 234.h,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      /// 功能栏
-                      funcButton(),
-                      SizedBox(height: 24.h),
-
-                      /// 滑动条
-                      slider(),
-
-                      /// 用时
-                      progress(),
-
-                      SizedBox(height: 24.h),
-
-                      /// 播放器控制组件
-                      playButton(),
-                    ],
-                  ),
-                ),
+                top(),
+                bottom(),
               ],
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget top() {
+    return SizedBox(
+      height: 600.h,
+      child: Column(
+        children: <Widget>[
+          SizedBox(height: MediaQuery.of(context).padding.top + 16.h),
+
+          /// 头部
+          PlayerHeader(onTap: widget.onTap),
+
+          /// 中间可切换的界面
+          Obx(() => stackBody()),
+
+          SizedBox(height: 30.h),
+
+          /// 功能栏
+          Obx(() => funcButton())
+        ],
+      ),
+    );
+  }
+
+  Widget bottom() {
+    return Column(
+      children: <Widget>[
+        /// 滑动条
+        slider(),
+
+        /// 用时
+        progress(),
+
+        SizedBox(height: 24.h),
+
+        /// 播放器控制组件
+        playButton(),
+      ],
     );
   }
 
@@ -101,18 +93,31 @@ class _PlayerState extends State<Player> {
         widget.isCover.value = false;
       });
     } else {
-      return Lyric(
-        onTap: () {
-          widget.isCover.value = true;
-        },
-        jpLrc: widget.jpLyric.value,
-        zhLrc: widget.zhLyric.value,
-        romaLrc: widget.romaLyric.value,
-      );
+      return Lyric(onTap: () {
+        widget.isCover.value = true;
+      });
     }
   }
 
   Widget funcButton() {
+    if (!widget.isCover.value) {
+      return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+            GetBuilder<MainLogic>(builder: (_) {
+              return materialButton(
+                  logic.state.playingMusic.isLove
+                      ? Icons.favorite
+                      : "assets/player/play_love.svg",
+                  () => logic.toggleLove(),
+                  width: 32,
+                  height: 32,
+                  radius: 6,
+                  iconColor: Colors.pinkAccent,
+                  iconSize: 15);
+            })
+          ]));
+    }
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Row(
@@ -144,12 +149,11 @@ class _PlayerState extends State<Player> {
   Widget slider() {
     return SliderTheme(
       data: const SliderThemeData(
-        trackHeight: 4,
-        thumbShape: RoundSliderThumbShape(),
-      ),
+          trackHeight: 4, thumbShape: RoundSliderThumbShape()),
       child: Slider(
         inactiveColor: const Color(0xFFCCDDF1).withOpacity(0.6),
         activeColor: const Color(0xFFCCDDF1).withOpacity(0.6),
+        thumbColor: Theme.of(Get.context!).primaryColor,
         value: 10.5,
         min: 0.0,
         max: 100.0,
@@ -183,7 +187,7 @@ class _PlayerState extends State<Player> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           materialButton("assets/player/play_shuffle.svg", () => {},
               width: 32,

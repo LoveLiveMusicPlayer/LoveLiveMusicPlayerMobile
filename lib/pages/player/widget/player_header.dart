@@ -33,7 +33,7 @@ class PlayerHeader extends StatelessWidget {
                     logic.state.playingMusic.name ?? "暂无歌曲",
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                        color: const Color(0xFF333333), fontSize: 15.sp),
+                        color: const Color(0xFF333333), fontSize: 15.sp, fontWeight: FontWeight.bold),
                     maxLines: 1,
                   ),
                   Text(

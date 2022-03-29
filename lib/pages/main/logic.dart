@@ -93,6 +93,7 @@ class MainLogic extends GetxController {
     state.playingMusic = music;
     refresh();
     refreshSlidePage();
+    getLrc();
   }
 
   refreshSlidePage() async {
@@ -116,6 +117,8 @@ class MainLogic extends GetxController {
       tempList[index].isPlaying = true;
       state.playingMusic = tempList[index];
       refresh();
+      refreshSlidePage();
+      getLrc();
     }
   }
 
@@ -159,6 +162,28 @@ class MainLogic extends GetxController {
     return playIndex;
   }
 
+  getLrc() async {
+    final jp = state.playingMusic.jpLrc;
+    final zh = state.playingMusic.zhLrc;
+    final roma = state.playingMusic.romaLrc;
+    if (jp == null || jp.isEmpty) {
+      state.jpLrc = "";
+    } else {
+      state.jpLrc = await Network.getSync(jp);
+    }
+    if (zh == null || zh.isEmpty) {
+      state.zhLrc = "";
+    } else {
+      state.zhLrc = await Network.getSync(zh);
+    }
+    if (roma == null || roma.isEmpty) {
+      state.romaLrc = "";
+    } else {
+      state.romaLrc = await Network.getSync(roma);
+    }
+    refresh();
+  }
+
   ///-------------------------------
 
   @override
@@ -166,6 +191,7 @@ class MainLogic extends GetxController {
     super.onReady();
     state.playingMusic = state.playList[0];
     refresh();
+    getLrc();
   }
 
   ///-------------------------

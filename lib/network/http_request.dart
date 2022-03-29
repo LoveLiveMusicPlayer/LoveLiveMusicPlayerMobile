@@ -36,6 +36,27 @@ class Network {
     }
   }
 
+  static getSync(String url,
+    {bool isShowDialog = false,
+      bool isShowError = false,
+      String loadingMessage = "请求网络中..."}) async {
+    if (isShowDialog) {
+      SmartDialog.showLoading(msg: loadingMessage);
+    }
+    var resp = await dio!.get(url).onError((error, stackTrace) {
+      if (isShowError) {
+        SmartDialog.show(
+            widget: OneButtonDialog(
+              title: "请检查网络",
+              isShowMsg: false,
+            ));
+      }
+      return Future.error(error.toString());
+    });
+    SmartDialog.dismiss();
+    return resp.data;
+  }
+
   static get(String url,
       {Map<String, dynamic>? params,
       Function(dynamic t)? success,
