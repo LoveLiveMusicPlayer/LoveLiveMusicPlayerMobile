@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="歌库-歌曲-加入到歌单" transform="translate(-16.000000, -428.000000)" stroke="#666666">
+            <g id="编组" transform="translate(16.000000, 428.000000)">
+                <path d="M6.15789474,2.84210526 L6.15789474,1.73684211 C6.15789474,1.32989526 6.48777895,1 6.89473684,1 L14.2631579,1 C14.6701158,1 15,1.32989526 15,1.73684211 L15,9.84210526 C15,10.2490632 14.6701158,10.5789474 14.2631579,10.5789474 L12.7894737,10.5789474" id="路径"></path>
+                <rect id="矩形" x="1" y="5.78947368" width="8.84210526" height="8.84210526" rx="1"></rect>
+                <line x1="5.42105263" y1="8.36842105" x2="5.42105263" y2="12.0526316" id="路径"></line>
+                <line x1="3.57894737" y1="10.2105263" x2="7.26315789" y2="10.2105263" id="路径"></line>
+            </g>
+        </g>
+    </g>
+</svg>

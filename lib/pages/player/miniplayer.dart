@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:marquee_text/marquee_text.dart';
-
 import '../../models/Music.dart';
 import '../../modules/ext.dart';
 import '../main/logic.dart';
@@ -47,7 +46,9 @@ class _MiniPlayerState extends State<MiniPlayer> {
       return AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
+            color: Theme
+                .of(context)
+                .primaryColor,
             borderRadius: BorderRadius.circular(34),
           ),
           child: Column(
@@ -75,6 +76,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
       color: Colors.grey.withOpacity(0.05),
       child: Row(
         children: [
+
           /// 迷你封面
           miniCover(),
           SizedBox(width: 6.w),
@@ -84,27 +86,33 @@ class _MiniPlayerState extends State<MiniPlayer> {
           SizedBox(width: 10.w),
 
           /// 播放按钮
-          touchIconByAsset(
-              logic.state.isPlaying
-                  ? "assets/player/play_pause.svg"
-                  : "assets/player/play_play.svg",
-                  () => logic.togglePlay(),
-              width: 16,
-              height: 16,
-              color: const Color(0xFF333333)),
+          GetBuilder<MainLogic>(builder: (logic) {
+            return touchIconByAsset(
+                path: logic.state.isPlaying
+                    ? "assets/player/play_pause.svg"
+                    : "assets/player/play_play.svg",
+                onTap: () => logic.togglePlay(),
+                width: 16,
+                height: 16,
+                color: const Color(0xFF333333));
+          }),
           SizedBox(width: 20.w),
 
           /// 播放列表按钮
-          touchIconByAsset(
-              "assets/player/play_playlist.svg", () => {},
-              width: 18,
-              height: 18,
-              color: const Color(0xFF333333)),
+          GetBuilder<MainLogic>(builder: (logic) {
+            return touchIconByAsset(path:
+            "assets/player/play_playlist.svg",
+                onTap: () => {},
+                width: 18,
+                height: 18,
+                color: const Color(0xFF333333));
+          }),
           SizedBox(width: 20.w),
         ],
       ),
     );
   }
+
   Widget miniCover() {
     return GestureDetector(
       onTap: () => widget.onTap(),

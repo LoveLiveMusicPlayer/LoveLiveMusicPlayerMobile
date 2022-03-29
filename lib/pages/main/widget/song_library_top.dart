@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
@@ -22,24 +23,44 @@ class Song_libraryTop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MainLogic>(builder: (logic) {
-      return logic.state.isSelect ? _buildSelectSong() : _buildPlaySong();
+      return buildTopWidget(logic);
     });
     //
   }
 
+  ///获取顶部显示布局
+  Widget buildTopWidget(MainLogic logic){
+    if(logic.state.isSelect){
+      if(logic.state.currentIndex == 2 || logic.state.currentIndex == 4 ){
+        return Container();
+      }else{
+        return _buildSelectSong();
+      }
+    }else{
+      if(logic.state.currentIndex == 2 || logic.state.currentIndex == 4 ){
+        return Container();
+      }else{
+        return _buildPlaySong();
+      }
+    }
+  }
+
+
+
   ///播放歌曲条目
   Widget _buildPlaySong() {
-    return SizedBox(
-      height: 45.w,
+    return Container(
+      height: 45.h,
+      color: const Color(0xFFF2F8FF),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            width: 16.w,
+            width: 16.h,
           ),
           _buildPlayBtn(),
           SizedBox(
-            width: 10.w,
+            width: 10.h,
           ),
           _buildSongNumText(),
           _buildScreen(),
@@ -55,8 +76,8 @@ class Song_libraryTop extends StatelessWidget {
         onPlayTap();
       },
       child: Container(
-          width: 56.w,
-          height: 24.w,
+          width: 56.h,
+          height: 24.h,
           decoration: BoxDecoration(
               gradient: const LinearGradient(
                 begin: Alignment.centerLeft,
@@ -66,7 +87,7 @@ class Song_libraryTop extends StatelessWidget {
                   Color(0xFFF940A7),
                 ],
               ),
-              borderRadius: BorderRadius.circular(12.w),
+              borderRadius: BorderRadius.circular(12.h),
               boxShadow: const [
                 BoxShadow(
                     color: Color(0xFFD3E0EC),
@@ -76,7 +97,7 @@ class Song_libraryTop extends StatelessWidget {
           child: Icon(
             Icons.play_arrow_rounded,
             color: Colors.white,
-            size: 20.w,
+            size: 20.h,
           )),
     );
   }
@@ -91,7 +112,7 @@ class Song_libraryTop extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
               color: Color(0xFF333333),
-              fontSize: 14.w,
+              fontSize: 14.h,
               fontWeight: FontWeight.bold),
         );
       }),
@@ -101,8 +122,8 @@ class Song_libraryTop extends StatelessWidget {
   ///筛选按钮
   Widget _buildScreen() {
     return Padding(
-      padding: EdgeInsets.only(right: 16.w, top: 5.w, bottom: 5.w, left: 30.w),
-      child: touchIconByAsset("assets/main/ic_screen.svg", onScreenTap,
+      padding: EdgeInsets.only(right: 16.h, top: 5.h, bottom: 5.h, left: 30.h),
+      child: touchIconByAsset(path: "assets/main/ic_screen.svg", onTap: onScreenTap,
           width: 15, height: 15),
     );
   }
@@ -110,19 +131,20 @@ class Song_libraryTop extends StatelessWidget {
   ///播放歌曲条目
   Widget _buildSelectSong() {
     return Container(
-      height: 45.w,
+      color: const Color(0xFFF2F8FF),
+      height: 45.h,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            width: 16.w,
+            width: 16.h,
           ),
           GetBuilder<MainLogic>(builder: (logic) {
             return CircularCheckBox(
               checkd: logic.state.selectAll,
               checkIconColor: const Color(0xFFF940A7),
               uncheckedIconColor: const Color(0xFF999999),
-              spacing: 10.w,
+              spacing: 10.h,
               iconSize: 25,
               title: "选择全部/已选${logic.getCheckedSong()}首",
               titleColor: Color(0xFF333333),
@@ -139,7 +161,7 @@ class Song_libraryTop extends StatelessWidget {
               onCancelTap();
             },
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 5.w, horizontal: 16.w),
+              padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 16.h),
               child: Text(
                 "取消",
                 style:

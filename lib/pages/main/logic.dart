@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,16 +41,24 @@ class MainLogic extends GetxController {
     state.items.addAll(data);
     refresh();
   }
-
+  ///全选
   selectAll(bool checked) {
     for (var element in state.items) {
       element.checked = checked;
     }
     refresh();
   }
-
+  ///选中单个条目
   selectItem(int index, bool checked) {
     state.items[index].checked = checked;
+    bool select = true;
+    for (var element in state.items) {
+      if(!element.checked){
+        select = false;
+      }
+    }
+    state.selectAll = select;
+
     refresh();
   }
 
@@ -135,7 +141,16 @@ class MainLogic extends GetxController {
       }
       state.currentIndex = currentIndex + 3;
     }
+    resetCheckedState();
     refresh();
+  }
+  ///重置选中状态
+  resetCheckedState(){
+    state.isSelect = false;
+    state.selectAll = false;
+    for (var element in state.items) {
+      element.checked = false;
+    }
   }
 
   toggleLove() {

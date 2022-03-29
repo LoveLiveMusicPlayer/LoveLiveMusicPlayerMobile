@@ -14,8 +14,8 @@ import '../utils/sd_utils.dart';
 /// [radius] 圆角度数
 /// [hasShadow] 是否有阴影效果
 Widget showImg(String? path,
-    {double? width = 100,
-    double? height = 100,
+    {double? width,
+    double? height,
     double radius = 20,
     bool hasShadow = true,
     String defPhoto = "assets/thumb/XVztg3oXmX4.jpg",
@@ -250,8 +250,8 @@ Widget touchIcon(IconData icon, GestureTapCallback onTap,
   );
 }
 
-Widget touchIconByAsset(String path, GestureTapCallback onTap,
-    {Color color = const Color(0xff999999), double width = 20, double height = 20}) {
+Widget touchIconByAsset({required String path, GestureTapCallback? onTap,
+    Color color = const Color(0xff999999), double width = 20, double height = 20}) {
   return GestureDetector(
     onTap: onTap,
     child: SvgPicture.asset(path, width: width.h, height: height.h, color: color),

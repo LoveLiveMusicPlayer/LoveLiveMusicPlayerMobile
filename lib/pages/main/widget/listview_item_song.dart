@@ -1,3 +1,4 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
@@ -7,24 +8,29 @@ import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 
 import '../logic.dart';
 
+///歌曲
 class ListViewItemSong extends StatefulWidget {
-  Function(bool) onItemTap;
-  GestureTapCallback onPlayTap;
-  GestureTapCallback onMoreTap;
+  Function(int, bool) onItemTap;
+  Function(int) onPlayTap;
+  Function(int) onMoreTap;
 
   ///条目数据
   int index;
 
-  ///全选
+  ///当前是否处于勾选状态
   bool isSelect;
+
+  ///当前选中状态
+  bool checked;
 
   ListViewItemSong(
       {Key? key,
       required this.onItemTap,
       required this.onPlayTap,
       required this.onMoreTap,
-      this.isSelect = false,
-      required this.index})
+      required this.index,
+      this.checked = false,
+      this.isSelect = false})
       : super(key: key);
 
   @override
@@ -32,18 +38,16 @@ class ListViewItemSong extends StatefulWidget {
 }
 
 class _ListViewItemSongState extends State<ListViewItemSong> {
-  var logic = Get.find<MainLogic>();
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        logic.selectItem(widget.index, !logic.isItemChecked(widget.index));
-        widget.onItemTap(logic.isItemChecked(widget.index));
+        widget.checked = !widget.checked;
+        widget.onItemTap(widget.index, widget.checked);
+        setState(() {});
       },
       child: Container(
         color: const Color(0xFFF2F8FF),
-        height: 68.w,
         child: Row(
           children: [
             ///勾选按钮
@@ -77,23 +81,21 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
 
   ///勾选按钮
   Widget _buildCheckBox() {
-    return GetBuilder<MainLogic>(builder: (logic) {
-      return Visibility(
-        visible: logic.state.isSelect,
-        child: Padding(
-          padding: EdgeInsets.only(right: 10.h),
-          child: CircularCheckBox(
-            checkd: logic.isItemChecked(widget.index),
-            onCheckd: (value) {
-              logic.selectItem(widget.index, value);
-              widget.onItemTap(logic.isItemChecked(widget.index));
-            },
-            checkIconColor: Color(0xFFF940A7),
-            uncheckedIconColor: Color(0xFF999999),
-          ),
+    return Visibility(
+      visible: widget.isSelect,
+      child: Padding(
+        padding: EdgeInsets.only(right: 10.h),
+        child: CircularCheckBox(
+          checkd: widget.checked,
+          onCheckd: (value) {
+            widget.checked = value;
+            widget.onItemTap(widget.index, widget.checked);
+          },
+          checkIconColor: Color(0xFFF940A7),
+          uncheckedIconColor: Color(0xFF999999),
         ),
-      );
-    });
+      ),
+    );
   }
 
   ///中间标题部分
@@ -143,15 +145,21 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
             Padding(
                 padding: EdgeInsets.only(
                     left: 12.w, right: 12.w, top: 12.h, bottom: 12.h),
-                child: touchIconByAsset(
-                    "assets/main/ic_add_next.svg", widget.onPlayTap,
+                child: touchIconByAsset(path:
+                    "assets/main/ic_add_next.svg",onTap: (){
+                  widget.onPlayTap(widget.index);
+                },
                     width: 20, height: 20, color: const Color(0xFFCCCCCC))),
-            Padding(
+            InkWell(
+              onTap: (){
+                widget.onMoreTap(widget.index);
+              },
+              child: Container(
                 padding: EdgeInsets.only(
                     left: 12.w, right: 18.w, top: 12.h, bottom: 12.h),
-                child: touchIconByAsset(
-                    "assets/main/ic_more.svg", widget.onMoreTap,
-                    width: 20, height: 20, color: const Color(0xFFCCCCCC))),
+                child: touchIconByAsset(path: "assets/main/ic_more.svg", width: 20, height: 20, color: const Color(0xFFCCCCCC)),
+              ),
+            ),
             SizedBox(width: 4.w)
           ],
         ),

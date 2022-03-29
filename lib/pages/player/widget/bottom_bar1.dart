@@ -58,6 +58,7 @@ class _BottomBarState extends State<BottomBar> {
         mIndex = handlePage(index);
         setState(() {});
         logic.state.currentIndex = index;
+        logic.resetCheckedState();///重置选中状态
         logic.update();
       },
     );

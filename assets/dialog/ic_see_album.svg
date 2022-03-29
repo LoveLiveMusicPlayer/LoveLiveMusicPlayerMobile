@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="歌库-歌曲更多操作" transform="translate(-15.000000, -745.000000)">
+            <g id="编组-10" transform="translate(0.000000, 532.000000)">
+                <g id="编组-6" transform="translate(15.000000, 210.000000)">
+                    <g id="编组" transform="translate(0.000000, 3.000000)">
+                        <rect id="矩形" fill-opacity="0.01" fill="#FFFFFF" fill-rule="nonzero" x="0" y="0" width="16" height="16"></rect>
+                        <path d="M8,14.6666667 C11.6819,14.6666667 14.6666667,11.6819 14.6666667,8 C14.6666667,4.3181 11.6819,1.33333333 8,1.33333333 C4.3181,1.33333333 1.33333333,4.3181 1.33333333,8 C1.33333333,11.6819 4.3181,14.6666667 8,14.6666667 Z" id="路径" stroke="#666666" stroke-linejoin="round"></path>
+                        <path d="M8,4 C5.79086667,4 4,5.79086667 4,8" id="路径" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M8,12 C10.2091333,12 12,10.2091333 12,8" id="路径" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M8,9.33333333 C8.73636667,9.33333333 9.33333333,8.73636667 9.33333333,8 C9.33333333,7.26363333 8.73636667,6.66666667 8,6.66666667 C7.26363333,6.66666667 6.66666667,7.26363333 6.66666667,8 C6.66666667,8.73636667 7.26363333,9.33333333 8,9.33333333 Z" id="路径" stroke="#666666" stroke-linejoin="round"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

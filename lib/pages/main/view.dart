@@ -1,8 +1,11 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/pages/main/widget/dialog_bottom_btn.dart';
+import 'package:lovelivemusicplayer/pages/main/widget/dialog_more.dart';
 import 'package:lovelivemusicplayer/pages/main/widget/listview_item_album.dart';
 import 'package:lovelivemusicplayer/pages/main/widget/listview_item_singer.dart';
 import 'package:lovelivemusicplayer/pages/main/widget/listview_item_song_sheet.dart';
@@ -145,14 +148,60 @@ class _MainPageState extends State<MainPage>
   Widget _buildListTop() {
     return Song_libraryTop(
       onPlayTap: () {},
-      onScreenTap: () => logic.openSelect(),
+      onScreenTap: () {
+        logic.openSelect();
+        showSelelctDialog();
+      },
       onSelectAllTap: (checked) {
         logic.selectAll(checked);
       },
       onCancelTap: () {
         logic.openSelect();
+        SmartDialog.dismiss();
       },
     );
+  }
+
+  showSelelctDialog() {
+    List<BtnItem> list = [];
+    if (logic.state.currentIndex == 1) {
+      list.add(BtnItem(
+          imgPath: "assets/dialog/ic_add_play_list2.svg",
+          title: "专辑播放",
+          onTap: () {}));
+      list.add(BtnItem(
+          imgPath: "assets/dialog/ic_add_song_sheet.svg",
+          title: "添加到歌单",
+          onTap: () {}));
+      list.add(BtnItem(
+          imgPath: "assets/dialog/ic_delete.svg", title: "删除专辑", onTap: () {}));
+    } else if (logic.state.currentIndex == 1) {
+      list.add(BtnItem(
+          imgPath: "assets/dialog/ic_add_play_list2.svg",
+          title: "全部播放",
+          onTap: () {}));
+      list.add(BtnItem(
+          imgPath: "assets/dialog/ic_add_play_list.svg",
+          title: "添加到歌单",
+          onTap: () {}));
+    } else {
+      list.add(BtnItem(
+          imgPath: "assets/dialog/ic_add_play_list2.svg",
+          title: "加入播放列表",
+          onTap: () {}));
+      list.add(BtnItem(
+          imgPath: "assets/dialog/ic_add_play_list.svg",
+          title: "添加到歌单",
+          onTap: () {}));
+    }
+    SmartDialog.show(
+        widget: DialogBottomBtn(
+          list: list,
+        ),
+        isPenetrateTemp: true,
+        clickBgDismissTemp: false,
+        maskColorTemp: Colors.transparent,
+        alignmentTemp: Alignment.bottomCenter);
   }
 
   @override
@@ -213,17 +262,38 @@ class _MainPageState extends State<MainPage>
 
   Widget _buildListItem(MainLogic logic, int index) {
     if (logic.state.currentIndex == 1) {
-      return ListViewItemAlbum(index: index);
+      return ListViewItemAlbum(
+        index: index,
+        checked: logic.isItemChecked(index),
+        isSelect: logic.state.isSelect,
+        onItemTap: (index, checked) {
+          logic.selectItem(index, checked);
+        },
+      );
     } else if (logic.state.currentIndex == 2) {
-      return ListViewItemSinger();
+      return ListViewItemSinger(
+        index: index,
+        checked: logic.isItemChecked(index),
+        isSelect: logic.state.isSelect,
+        onItemTap: (index, checked) {
+          logic.selectItem(index, checked);
+        },
+      );
     } else if (logic.state.currentIndex == 4) {
       return ListViewItemSongSheet(onItemTap: (checked) {}, index: index);
     } else {
       return ListViewItemSong(
         index: index,
-        onItemTap: (valut) {},
-        onPlayTap: () {},
-        onMoreTap: () {},
+        checked: logic.isItemChecked(index),
+        isSelect: logic.state.isSelect,
+        onItemTap: (index, checked) {
+          logic.selectItem(index, checked);
+        },
+        onPlayTap: (index) {},
+        onMoreTap: (index) {
+          SmartDialog.show(
+              widget: DialogMore(), alignmentTemp: Alignment.bottomCenter);
+        },
       );
     }
   }

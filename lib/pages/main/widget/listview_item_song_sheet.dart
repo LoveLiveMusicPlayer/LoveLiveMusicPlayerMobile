@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 
 import '../logic.dart';
-
+///歌单
 class ListViewItemSongSheet extends StatefulWidget {
   Function(bool) onItemTap;
 
@@ -38,11 +38,8 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
       },
       child: Container(
         color: const Color(0xFFF2F8FF),
-        height: 68.w,
         child: Row(
           children: [
-            ///勾选按钮
-            _buildCheckBox(),
             ///缩列图
             _buildIcon(),
             SizedBox(
@@ -64,27 +61,6 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
         width: 48, height: 48, hasShadow: false, radius: 8);
   }
 
-  ///勾选按钮
-  Widget _buildCheckBox() {
-    return GetBuilder<MainLogic>(builder: (logic) {
-      return Visibility(
-        visible: logic.state.isSelect,
-        child: Padding(
-          padding: EdgeInsets.only(right: 10.h),
-          child: CircularCheckBox(
-            checkd: logic.isItemChecked(widget.index),
-            onCheckd: (value) {
-              logic.selectItem(widget.index, value);
-              widget.onItemTap(logic.isItemChecked(widget.index));
-            },
-            checkIconColor: Color(0xFFF940A7),
-            uncheckedIconColor: Color(0xFF999999),
-          ),
-        ),
-      );
-    });
-  }
-
   ///中间标题部分
   Widget _buildContent() {
     return Expanded(
@@ -93,7 +69,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "START！！True dreams",
+            "歌单${widget.index}",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -105,7 +81,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
             height: 4.w,
           ),
           Text(
-            "Liella!",
+            "10首",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(

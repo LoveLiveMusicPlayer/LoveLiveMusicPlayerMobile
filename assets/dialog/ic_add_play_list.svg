@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="歌库-歌曲更多操作" transform="translate(-15.000000, -598.000000)">
+            <g id="编组-10" transform="translate(0.000000, 532.000000)">
+                <g id="编组-9" transform="translate(15.000000, 63.000000)">
+                    <g id="编组" transform="translate(0.000000, 3.000000)">
+                        <rect id="矩形" fill-opacity="0.01" fill="#FFFFFF" fill-rule="nonzero" x="0" y="0" width="16" height="16"></rect>
+                        <path d="M10,11.5 C10,10.8556667 10.5223333,10.3333333 11.1666667,10.3333333 L13.6666667,10.3333333 L13.6666667,11.4666667 C13.6666667,12.1294 13.1294,12.6666667 12.4666667,12.6666667 L11.1666667,12.6666667 C10.5223333,12.6666667 10,12.1443333 10,11.5 Z" id="路径" stroke="#666666" stroke-linejoin="round"></path>
+                        <path d="M2,12.8333333 C2,12.189 2.52233333,11.6666667 3.16666667,11.6666667 L5.33333333,11.6666667 L5.33333333,12.8 C5.33333333,13.4627333 4.79606667,14 4.13333333,14 L3.16666667,14 C2.52233333,14 2,13.4776667 2,12.8333333 Z" id="路径" stroke="#666666" stroke-linejoin="round"></path>
+                        <polyline id="路径" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" points="5.33333333 6.01466667 5.33333333 6.01466667 13.6666667 4.04166667"></polyline>
+                        <polyline id="路径" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" points="5.33333333 12.6666667 5.33333333 3.33333333 13.6666667 1.33333333 13.6666667 11.2308"></polyline>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
