@@ -105,15 +105,25 @@ class _PlayerState extends State<Player> {
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
             GetBuilder<MainLogic>(builder: (_) {
+              var icon;
+              switch (logic.state.lrcType) {
+                case 0:
+                  icon = Icons.translate;
+                  break;
+                case 1:
+                  icon = Icons.enhance_photo_translate;
+                  break;
+                case 2:
+                  icon = Icons.g_translate;
+                  break;
+              }
               return materialButton(
-                  logic.state.playingMusic.isLove
-                      ? Icons.favorite
-                      : "assets/player/play_love.svg",
-                  () => logic.toggleLove(),
+                  icon,
+                  () => logic.toggleTranslate(),
                   width: 32,
                   height: 32,
                   radius: 6,
-                  iconColor: Colors.pinkAccent,
+                  iconColor: const Color(0xFF333333),
                   iconSize: 15);
             })
           ]));

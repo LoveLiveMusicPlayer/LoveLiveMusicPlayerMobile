@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lyric/lyrics_model_builder.dart';
@@ -23,13 +25,30 @@ class _LyricState extends State<Lyric> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MainLogic>(builder: (logic) {
+      var model;
+      switch(logic.state.lrcType) {
+        case 0:
+          model = LyricsModelBuilder.create()
+              .bindLyricToMain(logic.state.jpLrc)
+              .getModel();
+          break;
+        case 1:
+          model = LyricsModelBuilder.create()
+              .bindLyricToMain(logic.state.jpLrc)
+              .bindLyricToExt(logic.state.zhLrc)
+              .getModel();
+          break;
+        case 2:
+          model = LyricsModelBuilder.create()
+              .bindLyricToMain(logic.state.jpLrc)
+              .bindLyricToExt(logic.state.romaLrc)
+              .getModel();
+          break;
+      }
       return LyricsReader(
         size: Size(ScreenUtil().screenWidth, 440.h),
         padding: EdgeInsets.symmetric(horizontal: 12.h),
-        model: LyricsModelBuilder.create()
-            .bindLyricToMain(logic.state.jpLrc == "" ? "暂无歌词" : logic.state.jpLrc)
-            .bindLyricToExt(logic.state.zhLrc == "" ? "1" : logic.state.zhLrc)
-            .getModel(),
+        model: model,
         position: 0,
         lyricUi: lyricUI,
         playing: false,

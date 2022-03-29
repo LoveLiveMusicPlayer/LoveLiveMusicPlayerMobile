@@ -165,6 +165,21 @@ class MainLogic extends GetxController {
     refresh();
   }
 
+  toggleTranslate() {
+    switch (state.lrcType) {
+      case 0:
+        state.lrcType = 1;
+        break;
+      case 1:
+        state.lrcType = 2;
+        break;
+      case 2:
+        state.lrcType = 0;
+        break;
+    }
+    refresh();
+  }
+
   int checkNowPlaying() {
     int playIndex = 0;
     for (var element in state.playList) {

@@ -38,6 +38,7 @@ class MainState {
 
   Music playingMusic = Music();
   bool isCanMiniPlayerScroll = true;
+  int lrcType = 0; // 0:原文; 1:翻译; 2:罗马音
 
   String jpLrc = "";
   String zhLrc = "";
