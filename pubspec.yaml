@@ -54,7 +54,10 @@ dependencies:
   we_slide: ^2.2.1 # 侧拉框
   sleek_circular_slider: ^2.0.1 #滑动进度条
   flutter_native_splash: ^2.1.1 # 启动页
-  carousel_slider: ^4.0.0
+  carousel_slider:
+    git:
+      url: https://github.com/zhushenwudi/flutter_carousel_slider
+      ref: master
   marquee_text: ^2.5.0+1
   flutter_lyric: ^2.0.2+3
   flutter_svg: ^1.0.3
