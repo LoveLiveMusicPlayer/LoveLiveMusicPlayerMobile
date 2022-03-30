@@ -61,6 +61,7 @@ dependencies:
   marquee_text: ^2.5.0+1
   flutter_lyric: ^2.0.3
   flutter_svg: ^1.0.3
+  on_audio_room: ^2.2.1+1
   assets_audio_player: ^3.0.3+1
   event_bus: ^2.0.0
 
