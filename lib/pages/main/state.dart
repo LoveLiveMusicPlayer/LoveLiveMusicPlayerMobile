@@ -48,29 +48,29 @@ class MainState {
     Music(
       uid: "1",
       name: "START!! True dreams",
-      cover: SDUtils.path + "LoveLive/Cover_1.jpg",
-      singer: "Liella!",
+      coverPath: SDUtils.path + "LoveLive/Cover_1.jpg",
+      artist: "Liella!",
       totalTime: "03:42",
       isPlaying: true,
-      jpLrc:
+      jpUrl:
           "JP/LoveLive/Liella!/%E5%8A%A8%E7%94%BB/%5B2021.07.21%5D%20Liella!%20-%20START!!%20True%20dreams/01.%20START!!%20True%20dreams.lrc",
-      zhLrc:
+      zhUrl:
           "ZH/LoveLive/Liella!/%E5%8A%A8%E7%94%BB/%5B2021.07.21%5D%20Liella!%20-%20START!!%20True%20dreams/01.%20START!!%20True%20dreams.lrc",
-      romaLrc:
+      romaUrl:
           "ROMA/LoveLive/Liella!/%E5%8A%A8%E7%94%BB/%5B2021.07.21%5D%20Liella!%20-%20START!!%20True%20dreams/01.%20START!!%20True%20dreams.lrc",
     ),
     Music(
       uid: "2",
       name: "HOT PASSION!!",
-      cover: SDUtils.path + "LoveLive/Cover_2.jpg",
-      singer: "Sunny Passion",
+      coverPath: SDUtils.path + "LoveLive/Cover_2.jpg",
+      artist: "Sunny Passion",
       totalTime: "04:18",
     ),
     Music(
       uid: "3",
       name: "常夏☆サンシャイン",
-      cover: SDUtils.path + "LoveLive/Cover_3.jpg",
-      singer: "Liella!",
+      coverPath: SDUtils.path + "LoveLive/Cover_3.jpg",
+      artist: "Liella!",
       totalTime: "04:42",
     )
   ];

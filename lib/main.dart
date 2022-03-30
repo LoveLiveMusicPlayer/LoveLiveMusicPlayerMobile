@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:lovelivemusicplayer/pages/player/player_binding.dart';
 import 'routes.dart';
 import 'package:flutter/services.dart';
 import 'global/const.dart';
@@ -76,6 +77,7 @@ initServices() async {
   await SpUtil.getInstance();
   Network.getInstance();
   SDUtils.init();
+  PlayerBinding().dependencies();
   LogUtil.init(tag: "iLab", isDebug: kDebugMode);
   LogUtil.d('All services started...');
 }

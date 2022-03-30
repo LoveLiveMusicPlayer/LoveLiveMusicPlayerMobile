@@ -30,7 +30,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
     return GetBuilder<MainLogic>(builder: (_) {
       Decoration? decoration;
       final music = logic.state.playingMusic;
-      if (music.uid == null || music.cover == null || music.cover!.isEmpty) {
+      if (music.uid == null || music.coverPath == null || music.coverPath!.isEmpty) {
         decoration = BoxDecoration(
           color: const Color(0xFFEBF3FE),
           borderRadius: BorderRadius.circular(34),
@@ -38,7 +38,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
       } else {
         decoration = BoxDecoration(
           image: DecorationImage(
-              image: FileImage(File(music.cover!)), fit: BoxFit.fill),
+              image: FileImage(File(music.coverPath!)), fit: BoxFit.fill),
           borderRadius: BorderRadius.circular(34),
         );
       }
@@ -119,7 +119,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
       child: Row(
         children: [
           SizedBox(width: 6.w),
-          showImg(logic.state.playingMusic.cover,
+          showImg(logic.state.playingMusic.coverPath,
               radius: 50, width: 50, height: 50, hasShadow: false)
         ],
       ),

@@ -1,15 +1,8 @@
-import 'package:common_utils/common_utils.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/routes.dart';
-import 'package:lovelivemusicplayer/utils/sd_utils.dart';
-import 'package:marquee_text/marquee_text.dart';
-import 'package:path_provider/path_provider.dart';
+
+import '/network/http_request.dart';
 import '../../models/Music.dart';
 import '../../models/music_Item.dart';
-import '/network/http_request.dart';
-
 import 'state.dart';
 
 class MainLogic extends GetxController {
@@ -41,6 +34,7 @@ class MainLogic extends GetxController {
     state.items.addAll(data);
     refresh();
   }
+
   ///全选
   selectAll(bool checked) {
     for (var element in state.items) {
@@ -48,12 +42,13 @@ class MainLogic extends GetxController {
     }
     refresh();
   }
+
   ///选中单个条目
   selectItem(int index, bool checked) {
     state.items[index].checked = checked;
     bool select = true;
     for (var element in state.items) {
-      if(!element.checked){
+      if (!element.checked) {
         select = false;
       }
     }
@@ -144,8 +139,9 @@ class MainLogic extends GetxController {
     resetCheckedState();
     refresh();
   }
+
   ///重置选中状态
-  resetCheckedState(){
+  resetCheckedState() {
     state.isSelect = false;
     state.selectAll = false;
     for (var element in state.items) {
@@ -193,9 +189,9 @@ class MainLogic extends GetxController {
   }
 
   getLrc() async {
-    final jp = state.playingMusic.jpLrc;
-    final zh = state.playingMusic.zhLrc;
-    final roma = state.playingMusic.romaLrc;
+    final jp = state.playingMusic.jpUrl;
+    final zh = state.playingMusic.zhUrl;
+    final roma = state.playingMusic.romaUrl;
     if (jp == null || jp.isEmpty) {
       state.jpLrc = "";
     } else {

@@ -7,15 +7,17 @@ String musicToJson(Music data) => json.encode(data.toJson());
 class Music {
   Music({
     this.uid,
-    this.id,
     this.name,
-    this.cover,
-    this.singer,
-    this.playedTime,
+    this.albumId,
+    this.albumName,
+    this.coverPath,
+    this.musicPath,
+    this.artist,
+    this.artistBin,
     this.totalTime,
-    this.jpLrc,
-    this.zhLrc,
-    this.romaLrc,
+    this.jpUrl,
+    this.zhUrl,
+    this.romaUrl,
     this.preJPLrc = "はすんだ！",
     this.currentJPLrc = "だから僕らは鳴らすんだ！",
     this.nextJPLrc = "だか鳴ららはすんだ！",
@@ -23,39 +25,42 @@ class Music {
     this.isLove = false,
   });
 
-  String? uid;
-  int? id;
+  String? uid; // id
 
-  String? name;
-  String? cover;
-  String? singer;
-  String? playedTime;
-  String? totalTime;
+  String? name; // 歌名
+  String? albumId; // 专辑id
+  String? albumName; // 专辑名
+  String? coverPath; // 封面路径
+  String? musicPath; // 歌曲路径
+  String? artist; // 歌手
+  String? artistBin; // 歌手32进制数据
+  String? totalTime; // 时长
 
-  String? jpLrc;
-  String? zhLrc;
-  String? romaLrc;
+  String? jpUrl; // 日文歌词 URL
+  String? zhUrl; // 中文歌词 URL
+  String? romaUrl; // 罗马音歌词 URL
 
+  // todo: 不放在这里
   String? preJPLrc;
   String? currentJPLrc;
   String? nextJPLrc;
 
-  bool isPlaying;
-  bool isLove;
+  bool isPlaying; // 正在播放
+  bool isLove; // 我喜欢
 
 
   factory Music.fromJson(Map<String, dynamic> json) => Music(
     uid: json["uid"],
-    id: json["id"],
     name: json["name"],
-    cover: json["cover"],
-    singer: json["singer"],
-    playedTime: json["playedTime"],
+    coverPath: json["coverPath"],
+    musicPath: json["musicPath"],
+    artist: json["artist"],
+    artistBin: json["artistBin"],
     totalTime: json["totalTime"],
 
-    jpLrc: json["jpLrc"],
-    zhLrc: json["zhLrc"],
-    romaLrc: json["romaLrc"],
+    jpUrl: json["jpUrl"],
+    zhUrl: json["zhUrl"],
+    romaUrl: json["romaUrl"],
 
     preJPLrc: json["preJPLrc"],
     currentJPLrc: json["currentJPLrc"],
@@ -67,16 +72,16 @@ class Music {
 
   Map<String, dynamic> toJson() => {
     "uid": uid,
-    "id": id,
     "name": name,
-    "cover": cover,
-    "singer": singer,
-    "playedTime": playedTime,
+    "coverPath": coverPath,
+    "musicPath": musicPath,
+    "artist": artist,
+    "artistBin": artistBin,
     "totalTime": totalTime,
 
-    "jpLrc": jpLrc,
-    "zhLrc": zhLrc,
-    "romaLrc": romaLrc,
+    "jpUrl": jpUrl,
+    "zhUrl": zhUrl,
+    "romaUrl": romaUrl,
 
     "preJPLrc": preJPLrc,
     "currentJPLrc": currentJPLrc,

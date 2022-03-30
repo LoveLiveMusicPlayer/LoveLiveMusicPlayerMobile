@@ -37,7 +37,7 @@ class PlayerHeader extends StatelessWidget {
                     maxLines: 1,
                   ),
                   Text(
-                    logic.state.playingMusic.singer ?? "",
+                    logic.state.playingMusic.artist ?? "",
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         color: const Color(0xFF999999), fontSize: 12.sp),

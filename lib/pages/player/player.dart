@@ -180,7 +180,7 @@ class _PlayerState extends State<Player> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              logic.state.playingMusic.playedTime ?? "00:00",
+              "00:00",
               style: TextStyle(fontSize: 12.sp, color: const Color(0xFF999999)),
             ),
             Text(

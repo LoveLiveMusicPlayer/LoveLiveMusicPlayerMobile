@@ -30,7 +30,7 @@ class _CoverState extends State<Cover> {
             /// 封面
             GetBuilder<MainLogic>(
               builder: (logic) {
-                return showImg(logic.state.playingMusic.cover,
+                return showImg(logic.state.playingMusic.coverPath,
                     radius: 24, width: 300, height: 300);
               },
             ),
