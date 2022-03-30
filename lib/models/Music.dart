@@ -24,9 +24,8 @@ class Music {
     this.isPlaying = false,
     this.isLove = false,
   });
-
+  /// 实体层属性
   String? uid; // id
-
   String? name; // 歌名
   String? albumId; // 专辑id
   String? albumName; // 专辑名
@@ -35,19 +34,17 @@ class Music {
   String? artist; // 歌手
   String? artistBin; // 歌手32进制数据
   String? totalTime; // 时长
-
   String? jpUrl; // 日文歌词 URL
   String? zhUrl; // 中文歌词 URL
   String? romaUrl; // 罗马音歌词 URL
+  bool isLove; // 我喜欢
 
+  /// 业务层属性
+  bool isPlaying; // 正在播放
   // todo: 不放在这里
   String? preJPLrc;
   String? currentJPLrc;
   String? nextJPLrc;
-
-  bool isPlaying; // 正在播放
-  bool isLove; // 我喜欢
-
 
   factory Music.fromJson(Map<String, dynamic> json) => Music(
     uid: json["uid"],
