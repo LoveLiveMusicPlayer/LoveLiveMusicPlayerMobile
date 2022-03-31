@@ -31,7 +31,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
   var logic = Get.find<MainLogic>();
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         logic.selectItem(widget.index, !logic.isItemChecked(widget.index));
         widget.onItemTap(logic.isItemChecked(widget.index));

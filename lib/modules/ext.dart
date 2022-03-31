@@ -244,7 +244,7 @@ Widget logoIcon(String path,
 
 Widget touchIcon(IconData icon, GestureTapCallback onTap,
     {Color color = const Color(0xff333333), double? size}) {
-  return GestureDetector(
+  return InkWell(
     onTap: onTap,
     child: Icon(icon, color: color, size: size),
   );
@@ -252,7 +252,7 @@ Widget touchIcon(IconData icon, GestureTapCallback onTap,
 
 Widget touchIconByAsset({required String path, GestureTapCallback? onTap,
     Color color = const Color(0xff999999), double width = 20, double height = 20}) {
-  return GestureDetector(
+  return InkWell(
     onTap: onTap,
     child: SvgPicture.asset(path, width: width.h, height: height.h, color: color),
   );

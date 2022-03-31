@@ -70,7 +70,7 @@ class DialogAddSongSheet extends StatelessWidget {
       String path, String title, bool showLin, GestureTapCallback? onTap) {
     return Padding(
       padding: EdgeInsets.only(left: 16.h, right: 16.h),
-      child: GestureDetector(
+      child: InkWell(
         onTap: onTap,
         child: Column(
           mainAxisSize: MainAxisSize.min,

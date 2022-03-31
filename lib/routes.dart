@@ -1,15 +1,20 @@
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/pages/album_details/view.dart';
+import 'package:lovelivemusicplayer/pages/singer_details/view.dart';
 import 'pages/main/view.dart';
 
 class Routes {
   static const String routeInitial = "/";
-  static const String routeTest = "/test";
   static const String routeScan = "/scan";
   static const String routeTransform = "/transform";
+  static const String routeAlbumDetails = "/album_details";
+  static const String routeSingerDetails = "/singer_details";
 
   static List<GetPage> getRoutes() {
     return [
       GetPage(name: Routes.routeInitial, page: () => MainPage()),
+      GetPage(name: Routes.routeAlbumDetails, page: () => AlbumDetailsPage()),
+      GetPage(name: Routes.routeSingerDetails, page: () => SingerDetailsPage()),
     ];
   }
 }

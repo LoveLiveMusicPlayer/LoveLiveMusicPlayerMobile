@@ -33,7 +33,7 @@ class ListViewItemAlbum extends StatefulWidget {
 class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: (){
         widget.checked = !widget.checked;
         widget.onItemTap(widget.index,widget.checked);

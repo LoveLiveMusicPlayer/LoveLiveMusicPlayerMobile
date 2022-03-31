@@ -114,7 +114,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
   }
 
   Widget miniCover() {
-    return GestureDetector(
+    return InkWell(
       onTap: () => widget.onTap(),
       child: Row(
         children: [

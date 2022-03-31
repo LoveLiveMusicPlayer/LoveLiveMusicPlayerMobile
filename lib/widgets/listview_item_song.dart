@@ -6,7 +6,7 @@ import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 
-import '../logic.dart';
+import '../pages/main/logic.dart';
 
 ///歌曲
 class ListViewItemSong extends StatefulWidget {
@@ -40,7 +40,7 @@ class ListViewItemSong extends StatefulWidget {
 class _ListViewItemSongState extends State<ListViewItemSong> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         widget.checked = !widget.checked;
         widget.onItemTap(widget.index, widget.checked);
@@ -52,10 +52,6 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
           children: [
             ///勾选按钮
             _buildCheckBox(),
-            SizedBox(
-              width: 6.w,
-            ),
-
             ///缩列图
             _buildIcon(),
             SizedBox(
@@ -136,34 +132,32 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
 
   ///右侧操作按钮
   Widget _buildAction() {
-    return GetBuilder<MainLogic>(builder: (logic) {
-      return Visibility(
-        visible: !logic.state.isSelect,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-                padding: EdgeInsets.only(
-                    left: 12.w, right: 12.w, top: 12.h, bottom: 12.h),
-                child: touchIconByAsset(path:
-                    "assets/main/ic_add_next.svg",onTap: (){
-                  widget.onPlayTap(widget.index);
-                },
-                    width: 20, height: 20, color: const Color(0xFFCCCCCC))),
-            InkWell(
-              onTap: (){
-                widget.onMoreTap(widget.index);
+    return Visibility(
+      visible: !widget.isSelect,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+              padding: EdgeInsets.only(
+                  left: 12.w, right: 12.w, top: 12.h, bottom: 12.h),
+              child: touchIconByAsset(path:
+              "assets/main/ic_add_next.svg",onTap: (){
+                widget.onPlayTap(widget.index);
               },
-              child: Container(
-                padding: EdgeInsets.only(
-                    left: 12.w, right: 18.w, top: 12.h, bottom: 12.h),
-                child: touchIconByAsset(path: "assets/main/ic_more.svg", width: 20, height: 20, color: const Color(0xFFCCCCCC)),
-              ),
+                  width: 20, height: 20, color: const Color(0xFFCCCCCC))),
+          InkWell(
+            onTap: (){
+              widget.onMoreTap(widget.index);
+            },
+            child: Container(
+              padding: EdgeInsets.only(
+                  left: 12.w, right: 10.w, top: 12.h, bottom: 12.h),
+              child: touchIconByAsset(path: "assets/main/ic_more.svg", width: 10, height: 20, color: const Color(0xFFCCCCCC)),
             ),
-            SizedBox(width: 4.w)
-          ],
-        ),
-      );
-    });
+          ),
+          SizedBox(width: 4.w)
+        ],
+      ),
+    );
   }
 }

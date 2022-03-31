@@ -5,8 +5,8 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class RefresherWidget extends StatefulWidget {
   Widget Function(BuildContext context, int index) listItem;
-  Function(RefreshController controller) onRefresh;
-  Function(RefreshController controller) onLoading;
+  Function(RefreshController controller)? onRefresh;
+  Function(RefreshController controller)? onLoading;
   int itemCount;
   String emptyMsg;
   String emptyImg;
@@ -27,8 +27,8 @@ class RefresherWidget extends StatefulWidget {
     Key? key,
     required this.itemCount,
     required this.listItem,
-    required this.onRefresh,
-    required this.onLoading,
+    this.onRefresh,
+    this.onLoading,
     this.emptyMsg = "暂无数据",
     this.emptyImg = "assets/main/ic_null.png",
     this.enablePullUp = true,
@@ -92,8 +92,8 @@ class _RefresherWidgetState extends State<RefresherWidget> {
       padding:
           EdgeInsets.only(left: widget.leftPadding, right: widget.rightPadding),
       child: SmartRefresher(
-        enablePullDown: true,
-        enablePullUp: true,
+        enablePullDown: widget.enablePullDown,
+        enablePullUp: widget.enablePullUp,
         controller: _controller,
         child: !widget.isGridView
             ? ListView.separated(
@@ -116,10 +116,14 @@ class _RefresherWidgetState extends State<RefresherWidget> {
                 ),
                 itemBuilder: widget.listItem),
         onRefresh: () async {
-          widget.onRefresh(_controller);
+          if (widget.onRefresh != null) {
+            widget.onRefresh!(_controller);
+          }
         },
         onLoading: () async {
-          widget.onLoading(_controller);
+          if (widget.onLoading != null) {
+            widget.onLoading!(_controller);
+          }
         },
         footer: CustomFooter(
           builder: (BuildContext context, LoadStatus? mode) {

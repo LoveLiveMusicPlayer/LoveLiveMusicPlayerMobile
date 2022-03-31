@@ -3,17 +3,26 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
-import '../../../widgets/circular_check_box.dart';
-import '../logic.dart';
+import 'circular_check_box.dart';
+import '../pages/singer_details/logic.dart';
+import '../pages/album_details/logic.dart';
 
-class Song_libraryTop extends StatelessWidget {
+class DetailsListTop extends StatelessWidget {
   final Function onPlayTap;
   final GestureTapCallback onScreenTap;
   final Function(bool) onSelectAllTap;
   final Function onCancelTap;
+  bool selectAll;
+  bool isSelect;
+  int itemsLength;
+  int checkedItemLength;
 
-  Song_libraryTop({
+  DetailsListTop({
     Key? key,
+    this.selectAll = false,
+    this.isSelect = false,
+    this.itemsLength = 0,
+    this.checkedItemLength = 0,
     required this.onPlayTap,
     required this.onScreenTap,
     required this.onSelectAllTap,
@@ -22,30 +31,8 @@ class Song_libraryTop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MainLogic>(builder: (logic) {
-      return buildTopWidget(logic);
-    });
-    //
+    return isSelect ? _buildSelectSong() : _buildPlaySong();
   }
-
-  ///获取顶部显示布局
-  Widget buildTopWidget(MainLogic logic){
-    if(logic.state.isSelect){
-      if(logic.state.currentIndex == 2 || logic.state.currentIndex == 4 ){
-        return Container();
-      }else{
-        return _buildSelectSong();
-      }
-    }else{
-      if(logic.state.currentIndex == 2 || logic.state.currentIndex == 4 ){
-        return Container();
-      }else{
-        return _buildPlaySong();
-      }
-    }
-  }
-
-
 
   ///播放歌曲条目
   Widget _buildPlaySong() {
@@ -105,17 +92,15 @@ class Song_libraryTop extends StatelessWidget {
   ///歌曲总数
   Widget _buildSongNumText() {
     return Expanded(
-      child: GetBuilder<MainLogic>(builder: (logic) {
-        return Text(
-          "${logic.state.items.length}首歌曲",
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-              color: Color(0xFF333333),
-              fontSize: 14.h,
-              fontWeight: FontWeight.bold),
-        );
-      }),
+      child: Text(
+        "$itemsLength首歌曲",
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+            color: const Color(0xFF333333),
+            fontSize: 14.h,
+            fontWeight: FontWeight.bold),
+      ),
     );
   }
 
@@ -123,8 +108,11 @@ class Song_libraryTop extends StatelessWidget {
   Widget _buildScreen() {
     return Padding(
       padding: EdgeInsets.only(right: 16.h, top: 5.h, bottom: 5.h, left: 30.h),
-      child: touchIconByAsset(path: "assets/main/ic_screen.svg", onTap: onScreenTap,
-          width: 15, height: 15),
+      child: touchIconByAsset(
+          path: "assets/main/ic_screen.svg",
+          onTap: onScreenTap,
+          width: 18,
+          height: 18),
     );
   }
 
@@ -139,22 +127,19 @@ class Song_libraryTop extends StatelessWidget {
           SizedBox(
             width: 16.h,
           ),
-          GetBuilder<MainLogic>(builder: (logic) {
-            return CircularCheckBox(
-              checkd: logic.state.selectAll,
-              checkIconColor: const Color(0xFFF940A7),
-              uncheckedIconColor: const Color(0xFF999999),
-              spacing: 10.h,
-              iconSize: 25,
-              title: "选择全部/已选${logic.getCheckedSong()}首",
-              titleColor: Color(0xFF333333),
-              titleSize: 15.sp,
-              onCheckd: (value) {
-                logic.state.selectAll = value;
-                onSelectAllTap(value);
-              },
-            );
-          }),
+          CircularCheckBox(
+            checkd: selectAll,
+            checkIconColor: const Color(0xFFF940A7),
+            uncheckedIconColor: const Color(0xFF999999),
+            spacing: 10.h,
+            iconSize: 25,
+            title: "选择全部/已选$checkedItemLength首",
+            titleColor: const Color(0xFF333333),
+            titleSize: 15.sp,
+            onCheckd: (value) {
+              onSelectAllTap(value);
+            },
+          ),
           Expanded(child: Container()),
           InkWell(
             onTap: () {

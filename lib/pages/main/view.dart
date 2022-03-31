@@ -9,6 +9,7 @@ import 'package:lovelivemusicplayer/pages/main/widget/dialog_more.dart';
 import 'package:lovelivemusicplayer/pages/main/widget/listview_item_album.dart';
 import 'package:lovelivemusicplayer/pages/main/widget/listview_item_singer.dart';
 import 'package:lovelivemusicplayer/pages/main/widget/listview_item_song_sheet.dart';
+import 'package:lovelivemusicplayer/routes.dart';
 import 'package:we_slide/we_slide.dart';
 import '../../models/music_Item.dart';
 import '../../modules/drawer/drawer.dart';
@@ -17,7 +18,7 @@ import '../player/miniplayer.dart';
 import '../player/player.dart';
 import '../player/widget/bottom_bar1.dart';
 import '../player/widget/bottom_bar2.dart';
-import 'widget/listview_item_song.dart';
+import '../../widgets/listview_item_song.dart';
 import 'widget/song_library_top.dart';
 import 'logic.dart';
 import 'widget/custom_underline_tabIndicator.dart';
@@ -261,13 +262,18 @@ class _MainPageState extends State<MainPage>
   }
 
   Widget _buildListItem(MainLogic logic, int index) {
+    /// 0 歌曲  1 专辑  2 歌手  3 我喜欢  4 歌单  5  最近播放
     if (logic.state.currentIndex == 1) {
       return ListViewItemAlbum(
         index: index,
         checked: logic.isItemChecked(index),
         isSelect: logic.state.isSelect,
         onItemTap: (index, checked) {
-          logic.selectItem(index, checked);
+          if(logic.state.isSelect){
+            logic.selectItem(index, checked);
+          }else{
+           Get.toNamed(Routes.routeAlbumDetails);
+          }
         },
       );
     } else if (logic.state.currentIndex == 2) {
@@ -276,7 +282,12 @@ class _MainPageState extends State<MainPage>
         checked: logic.isItemChecked(index),
         isSelect: logic.state.isSelect,
         onItemTap: (index, checked) {
-          logic.selectItem(index, checked);
+          if(logic.state.isSelect){
+            logic.selectItem(index, checked);
+          }else{
+            Get.toNamed(Routes.routeSingerDetails);
+          }
+
         },
       );
     } else if (logic.state.currentIndex == 4) {

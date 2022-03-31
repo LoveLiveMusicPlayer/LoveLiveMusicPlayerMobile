@@ -51,7 +51,7 @@ class _ListViewItemSingerState extends State<ListViewItemSinger> {
           width: 10.h,
         ),
         Expanded(
-          child: GestureDetector(
+          child: InkWell(
             onTap: () {
               widget.checked = !widget.checked;
               widget.onItemTap(widget.index, widget.checked);

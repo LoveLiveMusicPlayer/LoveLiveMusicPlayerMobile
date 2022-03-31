@@ -47,7 +47,7 @@ class LlerBuildTopBg extends StatelessWidget {
 
   ///单个导航
   Widget _buildTabItem(String title, bool select) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         onTabTap(select);
       },

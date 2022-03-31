@@ -22,7 +22,7 @@ class MainState {
   int selectSongNum = 0;
 
   ///底部导航栏 index
-  int currentIndex = 0;
+  int currentIndex = 0; /// 0 歌曲  1 专辑  2 歌手  3 我喜欢  4 歌单  5  最近播放
 
   ///列表数据
   List<MusicItem> items = [

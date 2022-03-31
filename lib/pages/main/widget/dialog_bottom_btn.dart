@@ -37,7 +37,7 @@ class DialogBottomBtn extends StatelessWidget {
 
   Widget _buildItem(String path, String title, GestureTapCallback onTap) {
     return Expanded(
-        child: GestureDetector(
+        child: InkWell(
       onTap: onTap,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
