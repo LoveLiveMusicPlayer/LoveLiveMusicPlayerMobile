@@ -61,10 +61,9 @@ dependencies:
   marquee_text: ^2.5.0+1
   flutter_lyric: ^2.0.3
   flutter_svg: ^1.0.3
-  on_audio_room: ^2.2.1+1
   assets_audio_player: ^3.0.3+1
   event_bus: ^2.0.0
-  on_audio_query: ^2.6.0
+  floor: ^1.2.0
 
 dependency_overrides:
   path: ^1.8.1
@@ -72,6 +71,8 @@ dependency_overrides:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  floor_generator: ^1.2.0
+  build_runner: ^2.1.2
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

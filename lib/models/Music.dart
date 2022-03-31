@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'package:floor/floor.dart';
 
 Music musicFromJson(String str) => Music.fromJson(json.decode(str));
 
 String musicToJson(Music data) => json.encode(data.toJson());
 
+@Entity(tableName: "Music")
 class Music {
   Music({
     this.uid,
@@ -18,13 +20,13 @@ class Music {
     this.jpUrl,
     this.zhUrl,
     this.romaUrl,
-    this.preJPLrc = "はすんだ！",
-    this.currentJPLrc = "だから僕らは鳴らすんだ！",
-    this.nextJPLrc = "だか鳴ららはすんだ！",
-    this.isPlaying = false,
     this.isLove = false,
+    this.isPlaying = false
   });
+
+
   /// 实体层属性
+  @primaryKey
   String? uid; // id
   String? name; // 歌名
   String? albumId; // 专辑id
@@ -37,14 +39,9 @@ class Music {
   String? jpUrl; // 日文歌词 URL
   String? zhUrl; // 中文歌词 URL
   String? romaUrl; // 罗马音歌词 URL
-  bool isLove; // 我喜欢
+  bool isLove; // 是否我喜欢
 
-  /// 业务层属性
-  bool isPlaying; // 正在播放
-  // todo: 不放在这里
-  String? preJPLrc;
-  String? currentJPLrc;
-  String? nextJPLrc;
+  bool isPlaying; // 是否当前播放
 
   factory Music.fromJson(Map<String, dynamic> json) => Music(
     uid: json["uid"],
@@ -54,17 +51,12 @@ class Music {
     artist: json["artist"],
     artistBin: json["artistBin"],
     totalTime: json["totalTime"],
-
     jpUrl: json["jpUrl"],
     zhUrl: json["zhUrl"],
     romaUrl: json["romaUrl"],
-
-    preJPLrc: json["preJPLrc"],
-    currentJPLrc: json["currentJPLrc"],
-    nextJPLrc: json["nextJPLrc"],
+    isLove: json["isLove"],
 
     isPlaying: json["isPlaying"],
-    isLove: json["isLove"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -75,16 +67,11 @@ class Music {
     "artist": artist,
     "artistBin": artistBin,
     "totalTime": totalTime,
-
     "jpUrl": jpUrl,
     "zhUrl": zhUrl,
     "romaUrl": romaUrl,
-
-    "preJPLrc": preJPLrc,
-    "currentJPLrc": currentJPLrc,
-    "nextJPLrc": nextJPLrc,
+    "isLove": isLove,
 
     "isPlaying": isPlaying,
-    "isLove": isLove,
   };
 }

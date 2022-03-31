@@ -1,13 +1,15 @@
 import 'dart:async';
 import 'package:common_utils/common_utils.dart';
-import 'package:event_bus/event_bus.dart';
 import 'package:get/get.dart';
-import '../../models/Music.dart';
-import 'player_state.dart' as player;
+import '../eventbus/playing_lrc_bus.dart';
+import '../models/Music.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import '../eventbus/eventbus.dart';
 
-class PlayerLogic extends GetxController {
-  final player.PlayerState state = player.PlayerState();
+class PlayerLogic extends SuperController with GetSingleTickerProviderStateMixin {
+  var preJPLrc = "".obs;
+  var currentJPLrc = "".obs;
+  var nextJPLrc = "".obs;
 
   final mPlayer = AssetsAudioPlayer();
   final List<StreamSubscription> _subscriptions = [];
@@ -16,10 +18,16 @@ class PlayerLogic extends GetxController {
 
   @override
   void onInit() {
-    super.onInit();
     _subscriptions.add(mPlayer.current.listen((data) {
       LogUtil.e(data);
     }));
+
+    eventBus.on<PlayingLrcEvent>().listen((lrc) {
+      preJPLrc.value = lrc.playingLrc.preJPLrc ?? "";
+      currentJPLrc.value = lrc.playingLrc.currentJPLrc ?? "";
+      nextJPLrc.value = lrc.playingLrc.nextJPLrc ?? "";
+    });
+    super.onInit();
   }
 
   playMusic(List<Music> musicList, {int index = 0}) {
@@ -52,5 +60,25 @@ class PlayerLogic extends GetxController {
   
   changePlayIndex(int index) {
     mPlayer.playlistPlayAtIndex(index);
+  }
+
+  @override
+  void onDetached() {
+    LogUtil.e('onDetached');
+  }
+
+  @override
+  void onInactive() {
+    LogUtil.e('onInactive');
+  }
+
+  @override
+  void onPaused() {
+    LogUtil.e('onPaused');
+  }
+
+  @override
+  void onResumed() {
+    LogUtil.e('onResumed');
   }
 }

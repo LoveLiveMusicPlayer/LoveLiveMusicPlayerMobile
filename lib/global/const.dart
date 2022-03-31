@@ -3,5 +3,5 @@ class Const{
   static const double uiHeight = 812;//设计图高度 dp
 
   /// sp
-  static const String spDark = 'SP_IS_DARK';
+  static const String spDark = "SP_IS_DARK";
 }

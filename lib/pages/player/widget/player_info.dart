@@ -1,28 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/pages/main/logic.dart';
+import '../../../global/global_player.dart';
 
-class PlayerInfo extends StatelessWidget {
-  var logic = Get.find<MainLogic>();
+class PlayerInfo extends GetView<PlayerLogic> {
+  const PlayerInfo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: GetBuilder<MainLogic>(builder: (logic) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            recentlyLrc(logic.state.playingMusic.preJPLrc),
-            SizedBox(height: 10.h),
-            recentlyLrc(logic.state.playingMusic.currentJPLrc,
-                color: const Color(0xFF333333), fontWeight: FontWeight.w900),
-            SizedBox(height: 10.h),
-            recentlyLrc(logic.state.playingMusic.nextJPLrc)
-          ],
-        );
-      }),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          recentlyLrc(controller.preJPLrc.value),
+          SizedBox(height: 10.h),
+          recentlyLrc(controller.currentJPLrc.value,
+              color: const Color(0xFF333333), fontWeight: FontWeight.w900),
+          SizedBox(height: 10.h),
+          recentlyLrc(controller.nextJPLrc.value)
+        ],
+      ),
     );
   }
 

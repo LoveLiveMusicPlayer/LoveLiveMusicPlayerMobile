@@ -1,40 +1,55 @@
 import 'dart:convert';
+import 'package:floor/floor.dart';
 
-AlbumData musicFromJson(String str) => AlbumData.fromJson(json.decode(str));
+Album albumFromJson(String str) => Album.fromJson(json.decode(str));
 
-String musicToJson(AlbumData data) => json.encode(data.toJson());
+String albumToJson(Album data) => json.encode(data.toJson());
 
-class AlbumData {
+@Entity(tableName: "Album")
+class Album {
+  @primaryKey
   String? uid; //唯一标识
   String? name; //专辑名称
   String? date; //时间
+
   List<String>? coverPath; //封面
+
   String? category; //类别
-  List<int>? music;
 
-  AlbumData(
-      {this.uid,
-      this.name,
-      this.date,
-      this.coverPath,
-      this.category,
-      this.music}); //对应歌曲id
+  List<String>? music;
 
-  factory AlbumData.fromJson(Map<String, dynamic> json) => AlbumData(
-        uid: json["_id"],
+  bool isPlaying;
+
+  Album({
+    this.uid,
+    this.name,
+    this.date,
+    this.coverPath,
+    this.category,
+    this.music,
+    this.isPlaying = false
+  }); //对应歌曲id
+
+  factory Album.fromJson(Map<String, dynamic> json) =>
+      Album(
+        uid: json["uid"],
         name: json["name"],
         date: json["date"],
-        coverPath: List<String>.from(json["cover_path"].map((x) => x)),
+        coverPath: List<String>.from(json["coverPath"].map((x) => x)),
         category: json["category"],
-        music: List<int>.from(json["music"].map((x) => x)),
+        music: List<String>.from(json["music"].map((x) => x)),
+        isPlaying: json["isPlaying"],
       );
 
-  Map<String, dynamic> toJson() => {
-        "_id": uid,
+  Map<String, dynamic> toJson() =>
+      {
+        "uid": uid,
         "name": name,
         "date": date,
-        "cover_path": List<dynamic>.from(coverPath!.map((x) => x)),
+        "coverPath": List<dynamic>.from(coverPath!.map((x) => x)),
         "category": category,
         "music": List<dynamic>.from(music!.map((x) => x)),
+
+        "isPlaying": isPlaying,
       };
 }
