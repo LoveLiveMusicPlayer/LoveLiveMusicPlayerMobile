@@ -5,6 +5,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lovelivemusicplayer/global/global_binding.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'routes.dart';
 import 'package:flutter/services.dart';
 import 'global/const.dart';
@@ -24,7 +25,13 @@ void main() async {
   // 初始化
   await initServices();
   isDark = await SpUtil.getBoolean(Const.spDark);
-  runApp(const MyApp());
+  await SentryFlutter.init(
+        (options) {
+      options.dsn = 'https://dbb1e416963545c5893b40d85793e081@o1185358.ingest.sentry.io/6303906';
+      options.tracesSampleRate = 1.0;
+    },
+    appRunner: () => runApp(const MyApp()),
+  );
   setStatusBar();
 
   await Future.delayed(const Duration(seconds: 2));
