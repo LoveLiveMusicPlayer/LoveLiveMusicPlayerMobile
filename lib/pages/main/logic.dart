@@ -1,9 +1,8 @@
 import 'package:get/get.dart';
-
-import '/network/http_request.dart';
-import '../../models/Music.dart';
-import '../../models/music_Item.dart';
-import 'state.dart';
+import 'package:lovelivemusicplayer/models/Music.dart';
+import 'package:lovelivemusicplayer/models/music_Item.dart';
+import 'package:lovelivemusicplayer/network/http_request.dart';
+import 'package:lovelivemusicplayer/pages/main/state.dart';
 
 class MainLogic extends GetxController {
   final MainState state = MainState();

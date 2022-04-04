@@ -150,7 +150,7 @@ class _MainPageState extends State<MainPage>
       onPlayTap: () {},
       onScreenTap: () {
         logic.openSelect();
-        showSelelctDialog();
+        showSelectDialog();
       },
       onSelectAllTap: (checked) {
         logic.selectAll(checked);
@@ -162,7 +162,7 @@ class _MainPageState extends State<MainPage>
     );
   }
 
-  showSelelctDialog() {
+  showSelectDialog() {
     List<BtnItem> list = [];
     if (logic.state.currentIndex == 1) {
       list.add(BtnItem(

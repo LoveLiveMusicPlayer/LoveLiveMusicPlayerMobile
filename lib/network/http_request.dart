@@ -1,10 +1,10 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import '/models/ApiResponse.dart';
-import '/widgets/one_button_dialog.dart';
+import 'package:lovelivemusicplayer/models/apiResponse.dart';
+import 'package:lovelivemusicplayer/network/api_service.dart';
+import 'package:lovelivemusicplayer/widgets/one_button_dialog.dart';
 import 'package:synchronized/extension.dart';
-import './api_service.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class Network {
