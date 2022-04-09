@@ -172,7 +172,7 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
 /// [innerWidth] 图片宽度
 /// [innerHeight] 图片高度
 Widget showGroupButton(String path,
-    {double innerWidth = 130, double innerHeight = 60}) {
+    {GestureTapCallback? onTap, double innerWidth = 130, double innerHeight = 60}) {
   return Container(
     width: 118.h,
     height: 60.h,
@@ -194,7 +194,7 @@ Widget showGroupButton(String path,
         child: InkWell(
           splashColor: const Color(0xFFD3E0EC),
           highlightColor: const Color(0xFFD3E0EC),
-          onTap: () => {},
+          onTap: onTap,
           child: Stack(
             children: [
               Center(
