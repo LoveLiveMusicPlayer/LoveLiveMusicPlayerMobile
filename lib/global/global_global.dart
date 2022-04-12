@@ -5,6 +5,9 @@ import '../models/Music.dart';
 
 class GlobalLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
+  /// all、μ's、aqours、niji、liella、combine
+  final currentGroup = "all".obs;
+
   final musicByUsList = <Music>[].obs;
   final musicByAqoursList = <Music>[].obs;
   final musicByNijiList = <Music>[].obs;

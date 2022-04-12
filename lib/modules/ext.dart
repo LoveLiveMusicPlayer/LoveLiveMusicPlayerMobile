@@ -1,9 +1,8 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-
 import '../utils/sd_utils.dart';
 
 /// 显示图片
@@ -119,12 +118,14 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
     double iconSize = 30,
     Color iconColor = Colors.black,
     EdgeInsets offset = const EdgeInsets.all(0)}) {
-
   Widget child;
   if (icon is IconData) {
     child = Icon(icon, color: iconColor, size: iconSize.h);
-  } else if (icon is String && icon.startsWith("assets") && icon.endsWith(".svg")) {
-    child = SvgPicture.asset(icon, color: iconColor, width: iconSize.h ,height: iconSize.h);
+  } else if (icon is String &&
+      icon.startsWith("assets") &&
+      icon.endsWith(".svg")) {
+    child = SvgPicture.asset(icon,
+        color: iconColor, width: iconSize.h, height: iconSize.h);
   } else {
     child = Container();
   }
@@ -172,7 +173,9 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
 /// [innerWidth] 图片宽度
 /// [innerHeight] 图片高度
 Widget showGroupButton(String path,
-    {GestureTapCallback? onTap, double innerWidth = 130, double innerHeight = 60}) {
+    {GestureTapCallback? onTap,
+    double innerWidth = 130,
+    double innerHeight = 60}) {
   return Container(
     width: 118.h,
     height: 60.h,
@@ -250,10 +253,15 @@ Widget touchIcon(IconData icon, GestureTapCallback onTap,
   );
 }
 
-Widget touchIconByAsset({required String path, GestureTapCallback? onTap,
-    Color color = const Color(0xff999999), double width = 20, double height = 20}) {
+Widget touchIconByAsset(
+    {required String path,
+    GestureTapCallback? onTap,
+    Color color = const Color(0xff999999),
+    double width = 20,
+    double height = 20}) {
   return InkWell(
     onTap: onTap,
-    child: SvgPicture.asset(path, width: width.h, height: height.h, color: color),
+    child:
+        SvgPicture.asset(path, width: width.h, height: height.h, color: color),
   );
 }
