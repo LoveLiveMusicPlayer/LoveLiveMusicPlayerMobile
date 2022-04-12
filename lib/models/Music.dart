@@ -44,34 +44,34 @@ class Music {
   bool isPlaying; // 是否当前播放
 
   factory Music.fromJson(Map<String, dynamic> json) => Music(
-    uid: json["uid"],
+    uid: json["_id"],
     name: json["name"],
-    coverPath: json["coverPath"],
-    musicPath: json["musicPath"],
+    coverPath: json["cover_path"],
+    musicPath: json["music_path"],
     artist: json["artist"],
-    artistBin: json["artistBin"],
-    totalTime: json["totalTime"],
-    jpUrl: json["jpUrl"],
-    zhUrl: json["zhUrl"],
-    romaUrl: json["romaUrl"],
-    isLove: json["isLove"],
+    artistBin: json["artist_bin"],
+    totalTime: json["time"],
+    jpUrl: json["lyric"],
+    zhUrl: json["trans"],
+    romaUrl: json["roma"],
+    isLove: json["isLove"] == 1 ? true : false,
 
-    isPlaying: json["isPlaying"],
+    isPlaying: json["isPlaying"] == 1 ? true : false,
   );
 
   Map<String, dynamic> toJson() => {
-    "uid": uid,
+    "_id": uid,
     "name": name,
-    "coverPath": coverPath,
-    "musicPath": musicPath,
+    "cover_path": coverPath,
+    "music_path": musicPath,
     "artist": artist,
-    "artistBin": artistBin,
-    "totalTime": totalTime,
-    "jpUrl": jpUrl,
-    "zhUrl": zhUrl,
-    "romaUrl": romaUrl,
-    "isLove": isLove,
+    "artist_bin": artistBin,
+    "time": totalTime,
+    "lyric": jpUrl,
+    "trans": zhUrl,
+    "roma": romaUrl,
+    "isLove": isLove ? 1 : 0,
 
-    "isPlaying": isPlaying,
+    "isPlaying": isPlaying ? 1 : 0,
   };
 }

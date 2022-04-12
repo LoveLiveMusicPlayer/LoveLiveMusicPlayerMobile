@@ -11,7 +11,7 @@
       {
         "_id": "615d5da14d33a9f9fe51be9c",
         "name": "僕らのLIVE 君とのLIFE",
-        "album": "615d56254d33a9f9fe51ba90",
+        "albumId": "615d56254d33a9f9fe51ba90",
         "cover_path": "LoveLive/μ's/单曲/[2010.08.25] μ's - 僕らのLIVE 君とのLIFE/Cover_1.jpg",
         "music_path": "LoveLive/μ's/单曲/[2010.08.25] μ's - 僕らのLIVE 君とのLIFE/01. 僕らのLIVE 君とのLIFE.flac",
         "artist": "μ's",
@@ -25,7 +25,7 @@
       {
         "_id": "615d5da14d33a9f9fe51be9d",
         "name": "友情ノーチェンジ",
-        "album": "615d56254d33a9f9fe51ba90",
+        "albumId": "615d56254d33a9f9fe51ba90",
         "cover_path": "LoveLive/μ's/单曲/[2010.08.25] μ's - 僕らのLIVE 君とのLIFE/Cover_1.jpg",
         "music_path": "LoveLive/μ's/单曲/[2010.08.25] μ's - 僕らのLIVE 君とのLIFE/02. 友情ノーチェンジ.flac",
         "artist": "μ's",
@@ -51,7 +51,7 @@
       {
         "_id": "615d5da14d33a9f9fe51be9e",
         "name": "Snow halation",
-        "album": "615d56254d33a9f9fe51ba91",
+        "albumId": "615d56254d33a9f9fe51ba91",
         "cover_path": "LoveLive/μ's/单曲/[2010.12.22] μ's - Snow halation/Cover_1.jpg",
         "music_path": "LoveLive/μ's/单曲/[2010.12.22] μ's - Snow halation/01. Snow halation.flac",
         "artist": "μ's",
@@ -65,7 +65,7 @@
       {
         "_id": "615d5da14d33a9f9fe51be9f",
         "name": "baby maybe 恋のボタン",
-        "album": "615d56254d33a9f9fe51ba91",
+        "albumId": "615d56254d33a9f9fe51ba91",
         "cover_path": "LoveLive/μ's/单曲/[2010.12.22] μ's - Snow halation/Cover_1.jpg",
         "music_path": "LoveLive/μ's/单曲/[2010.12.22] μ's - Snow halation/02. baby maybe 恋のボタン.flac",
         "artist": "μ's",
@@ -91,7 +91,7 @@
       {
         "_id": "615d5da14d33a9f9fe51bea0",
         "name": "Love marginal",
-        "album": "615d56254d33a9f9fe51ba92",
+        "albumId": "615d56254d33a9f9fe51ba92",
         "cover_path": "LoveLive/μ's/小组曲/Printemps/[2011.05.25] Printemps - Love marginal/Cover_1.jpg",
         "music_path": "LoveLive/μ's/小组曲/Printemps/[2011.05.25] Printemps - Love marginal/01. Love marginal.flac",
         "artist": "Printemps",
@@ -105,7 +105,7 @@
       {
         "_id": "615d5da14d33a9f9fe51bea1",
         "name": "sweet＆sweet holiday",
-        "album": "615d56254d33a9f9fe51ba92",
+        "albumId": "615d56254d33a9f9fe51ba92",
         "cover_path": "LoveLive/μ's/小组曲/Printemps/[2011.05.25] Printemps - Love marginal/Cover_1.jpg",
         "music_path": "LoveLive/μ's/小组曲/Printemps/[2011.05.25] Printemps - Love marginal/02. sweet＆sweet holiday.flac",
         "artist": "Printemps",
@@ -131,7 +131,7 @@
       {
         "_id": "615d5da14d33a9f9fe51bea2",
         "name": "ダイヤモンドプリンセスの憂鬱",
-        "album": "615d56254d33a9f9fe51ba93",
+        "albumId": "615d56254d33a9f9fe51ba93",
         "cover_path": "LoveLive/μ's/小组曲/BiBi/[2011.06.22] BiBi - ダイヤモンドプリンセスの憂鬱/Cover_1.jpg",
         "music_path": "LoveLive/μ's/小组曲/BiBi/[2011.06.22] BiBi - ダイヤモンドプリンセスの憂鬱/01. ダイヤモンドプリンセスの憂鬱.flac",
         "artist": "BiBi",
@@ -145,7 +145,7 @@
       {
         "_id": "615d5da14d33a9f9fe51bea3",
         "name": "ラブノベルス",
-        "album": "615d56254d33a9f9fe51ba93",
+        "albumId": "615d56254d33a9f9fe51ba93",
         "cover_path": "LoveLive/μ's/小组曲/BiBi/[2011.06.22] BiBi - ダイヤモンドプリンセスの憂鬱/Cover_1.jpg",
         "music_path": "LoveLive/μ's/小组曲/BiBi/[2011.06.22] BiBi - ダイヤモンドプリンセスの憂鬱/02. ラブノベルス.flac",
         "artist": "BiBi",
@@ -171,7 +171,7 @@
       {
         "_id": "615e6faa4d33a9f9fe51c246",
         "name": "君のこころは輝いてるかい？",
-        "album": "615e71014d33a9f9fe51c4a2",
+        "albumId": "615e71014d33a9f9fe51c4a2",
         "cover_path": "LoveLive/Aqours/单曲/[2015.10.07] Aqours - 君のこころは輝いてるかい？/Cover_1.jpg",
         "music_path": "LoveLive/Aqours/单曲/[2015.10.07] Aqours - 君のこころは輝いてるかい？/01. 君のこころは輝いてるかい？.flac",
         "artist": "Aqours",
@@ -185,7 +185,7 @@
       {
         "_id": "615e6faa4d33a9f9fe51c247",
         "name": "Step! ZERO to ONE",
-        "album": "615e71014d33a9f9fe51c4a2",
+        "albumId": "615e71014d33a9f9fe51c4a2",
         "cover_path": "LoveLive/Aqours/单曲/[2015.10.07] Aqours - 君のこころは輝いてるかい？/Cover_1.jpg",
         "music_path": "LoveLive/Aqours/单曲/[2015.10.07] Aqours - 君のこころは輝いてるかい？/02. Step! ZERO to ONE.flac",
         "artist": "Aqours",
@@ -199,7 +199,7 @@
       {
         "_id": "615e6faa4d33a9f9fe51c248",
         "name": "Aqours☆HEROES",
-        "album": "615e71014d33a9f9fe51c4a2",
+        "albumId": "615e71014d33a9f9fe51c4a2",
         "cover_path": "LoveLive/Aqours/单曲/[2015.10.07] Aqours - 君のこころは輝いてるかい？/Cover_1.jpg",
         "music_path": "LoveLive/Aqours/单曲/[2015.10.07] Aqours - 君のこころは輝いてるかい？/03. Aqours☆HEROES.flac",
         "artist": "Aqours",
@@ -225,7 +225,7 @@
       {
         "_id": "615e6faa4d33a9f9fe51c249",
         "name": "恋になりたいAQUARIUM",
-        "album": "615e71014d33a9f9fe51c4a3",
+        "albumId": "615e71014d33a9f9fe51c4a3",
         "cover_path": "LoveLive/Aqours/单曲/[2016.04.27] Aqours - 恋になりたいAQUARIUM/Cover_1.jpg",
         "music_path": "LoveLive/Aqours/单曲/[2016.04.27] Aqours - 恋になりたいAQUARIUM/01. 恋になりたいAQUARIUM.flac",
         "artist": "Aqours",
@@ -239,7 +239,7 @@
       {
         "_id": "615e6faa4d33a9f9fe51c24a",
         "name": "待ってて愛のうた",
-        "album": "615e71014d33a9f9fe51c4a3",
+        "albumId": "615e71014d33a9f9fe51c4a3",
         "cover_path": "LoveLive/Aqours/单曲/[2016.04.27] Aqours - 恋になりたいAQUARIUM/Cover_1.jpg",
         "music_path": "LoveLive/Aqours/单曲/[2016.04.27] Aqours - 恋になりたいAQUARIUM/02. 待ってて愛のうた.flac",
         "artist": "Aqours",
@@ -253,7 +253,7 @@
       {
         "_id": "615e6faa4d33a9f9fe51c24b",
         "name": "届かない星だとしても",
-        "album": "615e71014d33a9f9fe51c4a3",
+        "albumId": "615e71014d33a9f9fe51c4a3",
         "cover_path": "LoveLive/Aqours/单曲/[2016.04.27] Aqours - 恋になりたいAQUARIUM/Cover_1.jpg",
         "music_path": "LoveLive/Aqours/单曲/[2016.04.27] Aqours - 恋になりたいAQUARIUM/03. 届かない星だとしても.flac",
         "artist": "Aqours",
@@ -279,7 +279,7 @@
       {
         "_id": "615e6faa4d33a9f9fe51c24c",
         "name": "元気全開DAY! DAY! DAY!",
-        "album": "615e71014d33a9f9fe51c4a4",
+        "albumId": "615e71014d33a9f9fe51c4a4",
         "cover_path": "LoveLive/Aqours/小组曲/CYaRon!/[2016.05.11] CYaRon! - 元気全開DAY! DAY! DAY!/Cover_1.jpg",
         "music_path": "LoveLive/Aqours/小组曲/CYaRon!/[2016.05.11] CYaRon! - 元気全開DAY! DAY! DAY!/01. 元気全開DAY! DAY! DAY!.flac",
         "artist": "CYaRon!",
@@ -293,7 +293,7 @@
       {
         "_id": "615e6faa4d33a9f9fe51c24d",
         "name": "夜空はなんでも知ってるの？",
-        "album": "615e71014d33a9f9fe51c4a4",
+        "albumId": "615e71014d33a9f9fe51c4a4",
         "cover_path": "LoveLive/Aqours/小组曲/CYaRon!/[2016.05.11] CYaRon! - 元気全開DAY! DAY! DAY!/Cover_1.jpg",
         "music_path": "LoveLive/Aqours/小组曲/CYaRon!/[2016.05.11] CYaRon! - 元気全開DAY! DAY! DAY!/02. 夜空はなんでも知ってるの？.flac",
         "artist": "CYaRon!",
@@ -319,7 +319,7 @@
       {
         "_id": "615e6faa4d33a9f9fe51c24e",
         "name": "トリコリコPLEASE!!",
-        "album": "615e71014d33a9f9fe51c4a5",
+        "albumId": "615e71014d33a9f9fe51c4a5",
         "cover_path": "LoveLive/Aqours/小组曲/AZALEA/[2016.05.25] AZALEA - トリコリコPLEASE!!/Cover_1.jpg",
         "music_path": "LoveLive/Aqours/小组曲/AZALEA/[2016.05.25] AZALEA - トリコリコPLEASE!!/01. トリコリコPLEASE!!.flac",
         "artist": "AZALEA",
@@ -333,7 +333,7 @@
       {
         "_id": "615e6faa4d33a9f9fe51c24f",
         "name": "ときめき分類学",
-        "album": "615e71014d33a9f9fe51c4a5",
+        "albumId": "615e71014d33a9f9fe51c4a5",
         "cover_path": "LoveLive/Aqours/小组曲/AZALEA/[2016.05.25] AZALEA - トリコリコPLEASE!!/Cover_1.jpg",
         "music_path": "LoveLive/Aqours/小组曲/AZALEA/[2016.05.25] AZALEA - トリコリコPLEASE!!/02. ときめき分類学.flac",
         "artist": "AZALEA",
@@ -359,7 +359,7 @@
       {
         "_id": "615d16a6b7f7a56a3a81d013",
         "name": "虹色Passions!",
-        "album": "615d1a64b7f7a56a3a81d068",
+        "albumId": "615d1a64b7f7a56a3a81d068",
         "cover_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.10.21] 虹咲学园学园偶像同好会 - 虹色Passions！/Cover_1.jpg",
         "music_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.10.21] 虹咲学园学园偶像同好会 - 虹色Passions！/01. 虹色Passions!.flac",
         "artist": "虹咲学园学园偶像同好会",
@@ -373,7 +373,7 @@
       {
         "_id": "615d16a6b7f7a56a3a81d014",
         "name": "Sweet Eyes",
-        "album": "615d1a64b7f7a56a3a81d068",
+        "albumId": "615d1a64b7f7a56a3a81d068",
         "cover_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.10.21] 虹咲学园学园偶像同好会 - 虹色Passions！/Cover_1.jpg",
         "music_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.10.21] 虹咲学园学园偶像同好会 - 虹色Passions！/02. Sweet Eyes.flac",
         "artist": "虹咲学园学园偶像同好会",
@@ -399,7 +399,7 @@
       {
         "_id": "615d16a6b7f7a56a3a81d015",
         "name": "NEO SKY, NEO MAP!",
-        "album": "615d1a64b7f7a56a3a81d069",
+        "albumId": "615d1a64b7f7a56a3a81d069",
         "cover_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.11.04] 虹咲学园学园偶像同好会 - NEO SKY, NEO MAP!/Cover_1.jpg",
         "music_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.11.04] 虹咲学园学园偶像同好会 - NEO SKY, NEO MAP!/01. NEO SKY, NEO MAP!.flac",
         "artist": "虹咲学园学园偶像同好会",
@@ -413,7 +413,7 @@
       {
         "_id": "615d16a6b7f7a56a3a81d016",
         "name": "全速ドリーマー",
-        "album": "615d1a64b7f7a56a3a81d069",
+        "albumId": "615d1a64b7f7a56a3a81d069",
         "cover_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.11.04] 虹咲学园学园偶像同好会 - NEO SKY, NEO MAP!/Cover_1.jpg",
         "music_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.11.04] 虹咲学园学园偶像同好会 - NEO SKY, NEO MAP!/02. 全速ドリーマー.flac",
         "artist": "虹咲学园学园偶像同好会",
@@ -441,7 +441,7 @@
       {
         "_id": "615d16a6b7f7a56a3a81d017",
         "name": "Dream with You",
-        "album": "615d1a64b7f7a56a3a81d06a",
+        "albumId": "615d1a64b7f7a56a3a81d06a",
         "cover_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.11.18] 上原歩夢,中須かすみ,優木せつ菜 - Dream with You／Poppin' Up!／DIVE!/Cover_1.jpg",
         "music_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.11.18] 上原歩夢,中須かすみ,優木せつ菜 - Dream with You／Poppin' Up!／DIVE!/01.Dream with You.flac",
         "artist": "上原步梦",
@@ -455,7 +455,7 @@
       {
         "_id": "615d16a6b7f7a56a3a81d018",
         "name": "Poppin' Up!",
-        "album": "615d1a64b7f7a56a3a81d06a",
+        "albumId": "615d1a64b7f7a56a3a81d06a",
         "cover_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.11.18] 上原歩夢,中須かすみ,優木せつ菜 - Dream with You／Poppin' Up!／DIVE!/Cover_2.jpg",
         "music_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.11.18] 上原歩夢,中須かすみ,優木せつ菜 - Dream with You／Poppin' Up!／DIVE!/02.Poppin Up.flac",
         "artist": "中须霞",
@@ -469,7 +469,7 @@
       {
         "_id": "615d16a6b7f7a56a3a81d019",
         "name": "DIVE！",
-        "album": "615d1a64b7f7a56a3a81d06a",
+        "albumId": "615d1a64b7f7a56a3a81d06a",
         "cover_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.11.18] 上原歩夢,中須かすみ,優木せつ菜 - Dream with You／Poppin' Up!／DIVE!/Cover_3.jpg",
         "music_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.11.18] 上原歩夢,中須かすみ,優木せつ菜 - Dream with You／Poppin' Up!／DIVE!/03.DIVE.flac",
         "artist": "优木雪菜",
@@ -497,7 +497,7 @@
       {
         "_id": "615d16a6b7f7a56a3a81d01a",
         "name": "サイコーハート",
-        "album": "615d1a64b7f7a56a3a81d06b",
+        "albumId": "615d1a64b7f7a56a3a81d06b",
         "cover_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.12.02] 宮下愛,エマ.ヴェルデ,天王寺璃奈 - サイコーハート／La Bella Patria／ツナガルコネクト/Cover_1.jpg",
         "music_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.12.02] 宮下愛,エマ.ヴェルデ,天王寺璃奈 - サイコーハート／La Bella Patria／ツナガルコネクト/01.サイコーハート.flac",
         "artist": "宫下爱",
@@ -511,7 +511,7 @@
       {
         "_id": "615d16a6b7f7a56a3a81d01b",
         "name": "La Bella Patria",
-        "album": "615d1a64b7f7a56a3a81d06b",
+        "albumId": "615d1a64b7f7a56a3a81d06b",
         "cover_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.12.02] 宮下愛,エマ.ヴェルデ,天王寺璃奈 - サイコーハート／La Bella Patria／ツナガルコネクト/Cover_2.jpg",
         "music_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.12.02] 宮下愛,エマ.ヴェルデ,天王寺璃奈 - サイコーハート／La Bella Patria／ツナガルコネクト/02.La Bella Patria.flac",
         "artist": "艾玛・维尔德",
@@ -525,7 +525,7 @@
       {
         "_id": "615d16a6b7f7a56a3a81d01c",
         "name": "ツナガルコネクト",
-        "album": "615d1a64b7f7a56a3a81d06b",
+        "albumId": "615d1a64b7f7a56a3a81d06b",
         "cover_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.12.02] 宮下愛,エマ.ヴェルデ,天王寺璃奈 - サイコーハート／La Bella Patria／ツナガルコネクト/Cover_3.jpg",
         "music_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.12.02] 宮下愛,エマ.ヴェルデ,天王寺璃奈 - サイコーハート／La Bella Patria／ツナガルコネクト/03.ツナガルコネクト.flac",
         "artist": "天王寺璃奈",
@@ -551,7 +551,7 @@
       {
         "_id": "615d2189b7f7a56a3a81d096",
         "name": "START!! True dreams",
-        "album": "615d213eb7f7a56a3a81d08e",
+        "albumId": "615d213eb7f7a56a3a81d08e",
         "cover_path": "LoveLive/Liella!/动画/[2021.07.21] Liella! - START!! True dreams/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/动画/[2021.07.21] Liella! - START!! True dreams/01. START!! True dreams.flac",
         "artist": "Liella!",
@@ -565,7 +565,7 @@
       {
         "_id": "615d2189b7f7a56a3a81d097",
         "name": "だから僕らは鳴らすんだ!",
-        "album": "615d213eb7f7a56a3a81d08e",
+        "albumId": "615d213eb7f7a56a3a81d08e",
         "cover_path": "LoveLive/Liella!/动画/[2021.07.21] Liella! - START!! True dreams/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/动画/[2021.07.21] Liella! - START!! True dreams/02. だから僕らは鳴らすんだ！.flac",
         "artist": "Liella!",
@@ -591,7 +591,7 @@
       {
         "_id": "615d2189b7f7a56a3a81d098",
         "name": "未来は風のように",
-        "album": "615d213eb7f7a56a3a81d08f",
+        "albumId": "615d213eb7f7a56a3a81d08f",
         "cover_path": "LoveLive/Liella!/动画/[2021.08.04] Liella! - 未来わ風のように/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/动画/[2021.08.04] Liella! - 未来わ風のように/01.未来は風のように.flac",
         "artist": "Liella!",
@@ -605,7 +605,7 @@
       {
         "_id": "615d2189b7f7a56a3a81d099",
         "name": "この街でいまキミと",
-        "album": "615d213eb7f7a56a3a81d08f",
+        "albumId": "615d213eb7f7a56a3a81d08f",
         "cover_path": "LoveLive/Liella!/动画/[2021.08.04] Liella! - 未来わ風のように/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/动画/[2021.08.04] Liella! - 未来わ風のように/02.この街でいまキミと.flac",
         "artist": "Liella!",
@@ -632,7 +632,7 @@
       {
         "_id": "615d2189b7f7a56a3a81d09a",
         "name": "未来予報ハレルヤ！",
-        "album": "615d213eb7f7a56a3a81d090",
+        "albumId": "615d213eb7f7a56a3a81d090",
         "cover_path": "LoveLive/Liella!/动画/[2021.08.25] Liella! - 未来予報ハレルヤ！／Tiny Stars/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/动画/[2021.08.25] Liella! - 未来予報ハレルヤ！／Tiny Stars/01. 未来予報ハレルヤ！.flac",
         "artist": "Liella!",
@@ -646,7 +646,7 @@
       {
         "_id": "615d2189b7f7a56a3a81d09b",
         "name": "Tiny Stars",
-        "album": "615d213eb7f7a56a3a81d090",
+        "albumId": "615d213eb7f7a56a3a81d090",
         "cover_path": "LoveLive/Liella!/动画/[2021.08.25] Liella! - 未来予報ハレルヤ！／Tiny Stars/Cover_2.jpg",
         "music_path": "LoveLive/Liella!/动画/[2021.08.25] Liella! - 未来予報ハレルヤ！／Tiny Stars/02. Tiny Stars.flac",
         "artist": "涩谷香音/唐可可",
@@ -660,7 +660,7 @@
       {
         "_id": "615d2189b7f7a56a3a81d09c",
         "name": "1.2.3!",
-        "album": "615d213eb7f7a56a3a81d090",
+        "albumId": "615d213eb7f7a56a3a81d090",
         "cover_path": "LoveLive/Liella!/动画/[2021.08.25] Liella! - 未来予報ハレルヤ！／Tiny Stars/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/动画/[2021.08.25] Liella! - 未来予報ハレルヤ！／Tiny Stars/03. 1.2.3!.flac",
         "artist": "Liella!",
@@ -674,7 +674,7 @@
       {
         "_id": "615d2189b7f7a56a3a81d09d",
         "name": "GOING UP",
-        "album": "615d213eb7f7a56a3a81d090",
+        "albumId": "615d213eb7f7a56a3a81d090",
         "cover_path": "LoveLive/Liella!/动画/[2021.08.25] Liella! - 未来予報ハレルヤ！／Tiny Stars/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/动画/[2021.08.25] Liella! - 未来予報ハレルヤ！／Tiny Stars/03. GOING UP.flac",
         "artist": "Liella!",
@@ -701,7 +701,7 @@
       {
         "_id": "615d2189b7f7a56a3a81d09e",
         "name": "常夏☆サンシャイン",
-        "album": "615d213eb7f7a56a3a81d091",
+        "albumId": "615d213eb7f7a56a3a81d091",
         "cover_path": "LoveLive/Liella!/动画/[2021.09.29] Liella! - 常夏☆サンシャイン／Wish Song/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/动画/[2021.09.29] Liella! - 常夏☆サンシャイン／Wish Song/01. 常夏☆サンシャイン.flac",
         "artist": "涩谷香音/唐可可/岚千砂都/平安名堇",
@@ -715,7 +715,7 @@
       {
         "_id": "615d2189b7f7a56a3a81d09f",
         "name": "Wish Song",
-        "album": "615d213eb7f7a56a3a81d091",
+        "albumId": "615d213eb7f7a56a3a81d091",
         "cover_path": "LoveLive/Liella!/动画/[2021.09.29] Liella! - 常夏☆サンシャイン／Wish Song/Cover_2.jpg",
         "music_path": "LoveLive/Liella!/动画/[2021.09.29] Liella! - 常夏☆サンシャイン／Wish Song/02. Wish Song.flac",
         "artist": "Liella!",
@@ -729,7 +729,7 @@
       {
         "_id": "615d2189b7f7a56a3a81d0a0",
         "name": "バイバイしちゃえば！？",
-        "album": "615d213eb7f7a56a3a81d091",
+        "albumId": "615d213eb7f7a56a3a81d091",
         "cover_path": "LoveLive/Liella!/动画/[2021.09.29] Liella! - 常夏☆サンシャイン／Wish Song/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/动画/[2021.09.29] Liella! - 常夏☆サンシャイン／Wish Song/03. バイバイしちゃえば！？.flac",
         "artist": "Liella!",
@@ -743,7 +743,7 @@
       {
         "_id": "615d2189b7f7a56a3a81d0a1",
         "name": "瞬きの先へ",
-        "album": "615d213eb7f7a56a3a81d091",
+        "albumId": "615d213eb7f7a56a3a81d091",
         "cover_path": "LoveLive/Liella!/动画/[2021.09.29] Liella! - 常夏☆サンシャイン／Wish Song/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/动画/[2021.09.29] Liella! - 常夏☆サンシャイン／Wish Song/03. 瞬きの先へ.flac",
         "artist": "Liella!",
@@ -769,7 +769,7 @@
       {
         "_id": "619c85997bfe68c89a6fd96a",
         "name": "LIVE with a smile!",
-        "album": "619c84f67bfe68c89a6fd969",
+        "albumId": "619c84f67bfe68c89a6fd969",
         "cover_path": "LoveLive/Liella!/其他/[2021.11.03] ANL - LIVE with a smile!/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/其他/[2021.11.03] ANL - LIVE with a smile!/01. LIVE with a smile!.flac",
         "artist": "A-N-L",
@@ -783,7 +783,7 @@
       {
         "_id": "619c85de7bfe68c89a6fd96b",
         "name": "LIVE with a smile! (Aqours Ver.)",
-        "album": "619c84f67bfe68c89a6fd969",
+        "albumId": "619c84f67bfe68c89a6fd969",
         "cover_path": "LoveLive/Liella!/其他/[2021.11.03] ANL - LIVE with a smile!/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/其他/[2021.11.03] ANL - LIVE with a smile!/02. LIVE with a smile! (Aqours Ver.).flac",
         "artist": "Aqours",
@@ -797,7 +797,7 @@
       {
         "_id": "619c86007bfe68c89a6fd96c",
         "name": "LIVE with a smile! (虹咲学院偶像同好会 Ver.)",
-        "album": "619c84f67bfe68c89a6fd969",
+        "albumId": "619c84f67bfe68c89a6fd969",
         "cover_path": "LoveLive/Liella!/其他/[2021.11.03] ANL - LIVE with a smile!/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/其他/[2021.11.03] ANL - LIVE with a smile!/03. LIVE with a smile! (虹ヶ咲学園スクールアイドル同好会 Ver.).flac",
         "artist": "虹咲学园学园偶像同好会",
@@ -811,7 +811,7 @@
       {
         "_id": "619c86107bfe68c89a6fd96d",
         "name": "LIVE with a smile! (Liella! Ver.)",
-        "album": "619c84f67bfe68c89a6fd969",
+        "albumId": "619c84f67bfe68c89a6fd969",
         "cover_path": "LoveLive/Liella!/其他/[2021.11.03] ANL - LIVE with a smile!/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/其他/[2021.11.03] ANL - LIVE with a smile!/04. LIVE with a smile! (Liella! Ver.).flac",
         "artist": "Liella!",
@@ -839,7 +839,7 @@
       {
         "_id": "619d9eff00757cdf3ec720f6",
         "name": "not ALONE not HITORI",
-        "album": "619d9e2d00757cdf3ec720ee",
+        "albumId": "619d9e2d00757cdf3ec720ee",
         "cover_path": "LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/Cover_1.jpg",
         "music_path": "LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/01. not ALONE not HITORI.flac",
         "artist": "Aqours",
@@ -853,7 +853,7 @@
       {
         "_id": "619d9eff00757cdf3ec720f7",
         "name": "ミラクル STAY TUNE!",
-        "album": "619d9e2d00757cdf3ec720ee",
+        "albumId": "619d9e2d00757cdf3ec720ee",
         "cover_path": "LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/Cover_2.jpg",
         "music_path": "LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/02. ミラクル STAY TUNE!.flac",
         "artist": "虹咲学园学园偶像同好会",
@@ -867,7 +867,7 @@
       {
         "_id": "619d9eff00757cdf3ec720f8",
         "name": "Shooting Voice!!",
-        "album": "619d9e2d00757cdf3ec720ee",
+        "albumId": "619d9e2d00757cdf3ec720ee",
         "cover_path": "LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/Cover_3.jpg",
         "music_path": "LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/03. Shooting Voice!!.flac",
         "artist": "Liella!",

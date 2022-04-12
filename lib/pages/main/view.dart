@@ -69,6 +69,7 @@ class _MainPageState extends State<MainPage>
         footerHeight: 84.h,
         blur: true,
         parallax: true,
+        isUpSlide: false,
         transformScale: true,
         blurSigma: 5.0,
         fadeSequence: [

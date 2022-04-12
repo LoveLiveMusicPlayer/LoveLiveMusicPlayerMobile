@@ -41,7 +41,7 @@ dependencies:
   path_provider: ^2.0.9 # 路径提供
   pull_to_refresh: ^2.0.0 # 下拉刷新上拉加载
   web_socket_channel: ^2.1.0 # webSocket
-  connectivity_plus: ^2.2.1 # 网络监测
+  connectivity_plus: ^2.2.2 # 网络监测
   ftpconnect: ^1.0.1 # ftp
   scan: ^1.6.0 # 扫码
   flutter_smart_dialog: ^3.4.0 # 弹窗
@@ -51,7 +51,10 @@ dependencies:
   get_storage: ^2.0.3 # sp存储
   common_utils: ^2.1.0 # 工具类
   flutter_screenutil: ^5.3.1 # 屏幕适配方案
-  we_slide: ^2.2.1 # 侧拉框
+  we_slide:
+    git:
+      url: https://github.com/zhushenwudi/we_slide
+      ref: master
   sleek_circular_slider: ^2.0.1 #滑动进度条
   flutter_native_splash: ^2.1.1 # 启动页
   carousel_slider:

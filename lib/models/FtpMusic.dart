@@ -1,8 +1,5 @@
-// To parse this JSON data, do
-//
-//     final ftpMusic = ftpMusicFromJson(jsonString);
-
 import 'dart:convert';
+import 'Music.dart';
 
 List<FtpMusic> ftpMusicFromJson(String str) => List<FtpMusic>.from(json.decode(str).map((x) => FtpMusic.fromJson(x)));
 
@@ -45,65 +42,5 @@ class FtpMusic {
     "category": category,
     "music": List<dynamic>.from(music.map((x) => x.toJson())),
     "group": group,
-  };
-}
-
-class Music {
-  Music({
-    required this.id,
-    required this.name,
-    required this.album,
-    required this.coverPath,
-    required this.musicPath,
-    required this.artist,
-    required this.artistBin,
-    required this.time,
-    required this.lyric,
-    required this.trans,
-    required this.roma,
-    required this.albumName,
-  });
-
-  String id;
-  String name;
-  String album;
-  String coverPath;
-  String musicPath;
-  String artist;
-  String artistBin;
-  String time;
-  String lyric;
-  String trans;
-  String roma;
-  String albumName;
-
-  factory Music.fromJson(Map<String, dynamic> json) => Music(
-    id: json["_id"],
-    name: json["name"],
-    album: json["album"],
-    coverPath: json["cover_path"],
-    musicPath: json["music_path"],
-    artist: json["artist"],
-    artistBin: json["artist_bin"],
-    time: json["time"],
-    lyric: json["lyric"],
-    trans: json["trans"],
-    roma: json["roma"],
-    albumName: json["albumName"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "name": name,
-    "album": album,
-    "cover_path": coverPath,
-    "music_path": musicPath,
-    "artist": artist,
-    "artist_bin": artistBin,
-    "time": time,
-    "lyric": lyric,
-    "trans": trans,
-    "roma": roma,
-    "albumName": albumName,
   };
 }
