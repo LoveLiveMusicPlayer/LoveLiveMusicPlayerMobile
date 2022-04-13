@@ -130,9 +130,12 @@ class _DrawerPageState extends State<DrawerPage> {
                         }
                       },
                     ),
-                    const DrawerFunctionButton(
+                    DrawerFunctionButton(
                       icon: "assets/drawer/drawer_data_sync.svg",
                       text: "数据同步",
+                      onTap: () {
+
+                      },
                     ),
                     DrawerFunctionButton(
                       icon: "assets/drawer/drawer_day_night.svg",
@@ -142,9 +145,12 @@ class _DrawerPageState extends State<DrawerPage> {
                         LogUtil.e(check);
                       }
                     ),
-                    const DrawerFunctionButton(
+                    DrawerFunctionButton(
                       icon: "assets/drawer/drawer_secret.svg",
                       text: "关于和隐私",
+                      onTap: () {
+
+                      },
                     )
                   ],
                 ),

@@ -101,16 +101,17 @@ class _MainPageState extends State<MainPage>
           isScrollable: true,
           labelColor: const Color(0xFFF940A7),
           unselectedLabelColor: const Color(0xFFA9B9CD),
-          labelStyle: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold),
-          unselectedLabelStyle:
-              TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+          labelStyle: TextStyle(
+              fontSize: 24.sp,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'KaTong'),
+          unselectedLabelStyle: TextStyle(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'KaTong'),
           tabs: const [
-            Tab(
-              text: "歌库",
-            ),
-            Tab(
-              text: "我的",
-            ),
+            Tab(text: "歌库"),
+            Tab(text: "我的"),
           ],
           controller: tabController,
         ));
@@ -207,7 +208,7 @@ class _MainPageState extends State<MainPage>
 
   @override
   void dispose() {
-    tabController!.dispose();
+    tabController?.dispose();
     super.dispose();
   }
 
@@ -269,10 +270,10 @@ class _MainPageState extends State<MainPage>
         checked: logic.isItemChecked(index),
         isSelect: logic.state.isSelect,
         onItemTap: (index, checked) {
-          if(logic.state.isSelect){
+          if (logic.state.isSelect) {
             logic.selectItem(index, checked);
-          }else{
-           Get.toNamed(Routes.routeAlbumDetails);
+          } else {
+            Get.toNamed(Routes.routeAlbumDetails);
           }
         },
       );
@@ -282,12 +283,11 @@ class _MainPageState extends State<MainPage>
         checked: logic.isItemChecked(index),
         isSelect: logic.state.isSelect,
         onItemTap: (index, checked) {
-          if(logic.state.isSelect){
+          if (logic.state.isSelect) {
             logic.selectItem(index, checked);
-          }else{
+          } else {
             Get.toNamed(Routes.routeSingerDetails);
           }
-
         },
       );
     } else if (logic.state.currentIndex == 4) {

@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(Const.uiWidth, Const.uiHeight),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: () {
+      builder: (_) {
         return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             enableLog: true,
