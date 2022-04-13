@@ -1,5 +1,3 @@
-import '../../models/music_Item.dart';
-
 class SingerDetailsState {
   SingerDetailsState() {
     ///Initialize variables
@@ -12,14 +10,4 @@ class SingerDetailsState {
 
   ///全选
   bool selectAll = false;
-
-  ///列表数据
-  List<MusicItem> items = [
-    MusicItem(titlle: "", checked: false),
-    MusicItem(titlle: "", checked: false),
-    MusicItem(titlle: "", checked: false),
-    MusicItem(titlle: "", checked: false),
-    MusicItem(titlle: "", checked: false),
-    MusicItem(titlle: "", checked: false)
-  ];
 }

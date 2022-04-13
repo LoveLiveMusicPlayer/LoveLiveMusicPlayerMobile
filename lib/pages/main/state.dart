@@ -1,7 +1,4 @@
-import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
-
-import '../../models/music_Item.dart';
 import '../../utils/sd_utils.dart';
 
 class MainState {
@@ -23,16 +20,6 @@ class MainState {
 
   ///底部导航栏 index
   int currentIndex = 0; /// 0 歌曲  1 专辑  2 歌手  3 我喜欢  4 歌单  5  最近播放
-
-  ///列表数据
-  List<MusicItem> items = [
-    MusicItem(titlle: "", checked: false),
-    MusicItem(titlle: "", checked: false),
-    MusicItem(titlle: "", checked: false),
-    MusicItem(titlle: "", checked: false),
-    MusicItem(titlle: "", checked: false),
-    MusicItem(titlle: "", checked: false)
-  ];
 
   var isPlaying = false;
 

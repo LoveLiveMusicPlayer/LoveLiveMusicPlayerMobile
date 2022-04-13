@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
-import 'package:lovelivemusicplayer/models/music_Item.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/main/state.dart';
 
@@ -29,44 +28,41 @@ class MainLogic extends GetxController {
     refresh();
   }
 
-  addItem(List<MusicItem> data) {
-    state.items.addAll(data);
-    refresh();
-  }
-
   ///全选
   selectAll(bool checked) {
-    for (var element in state.items) {
-      element.checked = checked;
-    }
-    refresh();
+    // for (var element in state.items) {
+    //   element.checked = checked;
+    // }
+    // refresh();
   }
 
   ///选中单个条目
-  selectItem(int index, bool checked) {
-    state.items[index].checked = checked;
-    bool select = true;
-    for (var element in state.items) {
-      if (!element.checked) {
-        select = false;
-      }
-    }
-    state.selectAll = select;
+  selectItem(Object obj, bool checked) {
 
-    refresh();
+    // state.items[index].checked = checked;
+    // bool select = true;
+    // for (var element in state.items) {
+    //   if (!element.checked) {
+    //     select = false;
+    //   }
+    // }
+    // state.selectAll = select;
+    //
+    // refresh();
   }
 
   isItemChecked(int index) {
-    return state.items[index].checked;
+    return false;
+    // return state.items[index].checked;
   }
 
   int getCheckedSong() {
-    int num = 0;
-    for (var element in state.items) {
-      if (element.checked) {
-        num++;
-      }
-    }
+    int num = 47;
+    // for (var element in state.items) {
+    //   if (element.checked) {
+    //     num++;
+    //   }
+    // }
     return num;
   }
 
@@ -141,11 +137,11 @@ class MainLogic extends GetxController {
 
   ///重置选中状态
   resetCheckedState() {
-    state.isSelect = false;
-    state.selectAll = false;
-    for (var element in state.items) {
-      element.checked = false;
-    }
+    // state.isSelect = false;
+    // state.selectAll = false;
+    // for (var element in state.items) {
+    //   element.checked = false;
+    // }
   }
 
   toggleLove() {

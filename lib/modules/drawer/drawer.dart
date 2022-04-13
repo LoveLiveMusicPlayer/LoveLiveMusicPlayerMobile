@@ -17,7 +17,7 @@ class DrawerPage extends StatefulWidget {
 
 class _DrawerPageState extends State<DrawerPage> {
   bool switchValue = false;
-  final global = Get.put(GlobalLogic());
+  final global = Get.find<GlobalLogic>();
 
   @override
   Widget build(BuildContext context) {

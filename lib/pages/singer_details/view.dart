@@ -2,21 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
-
+import 'package:lovelivemusicplayer/models/Album.dart';
 import '../../modules/ext.dart';
 import '../../utils/sd_utils.dart';
-import '../album_details/widget/details_header.dart';
 import '../../widgets/details_list_top.dart';
+import '../../widgets/listview_item_song.dart';
+import '../album_details/widget/details_header.dart';
 import '../main/widget/dialog_bottom_btn.dart';
 import '../main/widget/dialog_more.dart';
-import '../../widgets/listview_item_song.dart';
 import 'logic.dart';
 
 class SingerDetailsPage extends StatelessWidget {
   final logic = Get.put(SingerDetailsLogic());
-  final state = Get
-      .find<SingerDetailsLogic>()
-      .state;
+  final state = Get.find<SingerDetailsLogic>().state;
+  final Album album = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +52,7 @@ class SingerDetailsPage extends StatelessWidget {
     list.add(DetailsListTop(
         selectAll: logic.state.selectAll,
         isSelect: logic.state.isSelect,
-        itemsLength: logic.state.items.length,
+        itemsLength: album.music.length,
         checkedItemLength: logic.getCheckedSong(),
         onPlayTap: () {},
         onScreenTap: () {
@@ -70,15 +69,15 @@ class SingerDetailsPage extends StatelessWidget {
     list.add(SizedBox(
       height: 10.h,
     ));
-    for (int index = 0; index < logic.state.items.length; index++) {
+    for (final music in album.music) {
       list.add(Padding(
         padding: EdgeInsets.only(left: 16.h, bottom: 20.h),
         child: ListViewItemSong(
-          index: index,
-          checked: logic.isItemChecked(index),
+          music: music,
+          checked: logic.isItemChecked(music),
           isSelect: logic.state.isSelect,
-          onItemTap: (index, checked) {
-            logic.selectItem(index, checked);
+          onItemTap: (music, checked) {
+            logic.selectItem(music, checked);
           },
           onPlayTap: (index) {},
           onMoreTap: (index) {

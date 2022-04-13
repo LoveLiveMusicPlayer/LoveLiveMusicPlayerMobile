@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/models/Music.dart';
 
 import 'state.dart';
 
@@ -7,11 +8,11 @@ class AlbumDetailsLogic extends GetxController {
 
   int getCheckedSong() {
     int num = 0;
-    for (var element in state.items) {
-      if (element.checked) {
-        num++;
-      }
-    }
+    // for (var element in state.items) {
+    //   if (element.checked) {
+    //     num++;
+    //   }
+    // }
     return num;
   }
 
@@ -20,29 +21,29 @@ class AlbumDetailsLogic extends GetxController {
     refresh();
   }
 
-  isItemChecked(int index) {
-    return state.items[index].checked;
+  isItemChecked(Music index) {
+    return false;
+    // return state.items[index].checked;
   }
 
   ///选中单个条目
-  selectItem(int index, bool checked) {
-    state.items[index].checked = checked;
-    bool select = true;
-    for (var element in state.items) {
-      if (!element.checked) {
-        select = false;
-      }
-    }
-    state.selectAll = select;
-    refresh();
+  selectItem(Music index, bool checked) {
+    // state.items[index].checked = checked;
+    // bool select = true;
+    // for (var element in state.items) {
+    //   if (!element.checked) {
+    //     select = false;
+    //   }
+    // }
+    // state.selectAll = select;
+    // refresh();
   }
   ///全选
   selectAll(bool checked) {
-    for (var element in state.items) {
-      element.checked = checked;
-    }
-    state.selectAll = checked;
-    refresh();
+    // for (var element in state.items) {
+    //   element.checked = checked;
+    // }
+    // state.selectAll = checked;
+    // refresh();
   }
-
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import '../../../widgets/circular_check_box.dart';
 import '../logic.dart';
@@ -19,6 +20,8 @@ class Song_libraryTop extends StatelessWidget {
     required this.onSelectAllTap,
     required this.onCancelTap,
   }) : super(key: key);
+
+  final global = Get.find<GlobalLogic>();
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +110,7 @@ class Song_libraryTop extends StatelessWidget {
     return Expanded(
       child: GetBuilder<MainLogic>(builder: (logic) {
         return Text(
-          "${logic.state.items.length}首歌曲",
+          "${global.getListSize(logic.state.currentIndex)}首歌曲",
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(

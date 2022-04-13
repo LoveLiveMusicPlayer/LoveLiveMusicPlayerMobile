@@ -1,7 +1,9 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/main/widget/dialog_bottom_btn.dart';
 import 'package:lovelivemusicplayer/pages/main/widget/dialog_more.dart';
@@ -10,7 +12,6 @@ import 'package:lovelivemusicplayer/pages/main/widget/listview_item_singer.dart'
 import 'package:lovelivemusicplayer/pages/main/widget/listview_item_song_sheet.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:we_slide/we_slide.dart';
-import '../../models/music_Item.dart';
 import '../../modules/drawer/drawer.dart';
 import '../../widgets/refresher_widget.dart';
 import '../player/miniplayer.dart';
@@ -31,6 +32,7 @@ class _MainPageState extends State<MainPage>
     with SingleTickerProviderStateMixin {
   final logic = Get.put(MainLogic());
   final state = Get.find<MainLogic>().state;
+  final global = Get.find<GlobalLogic>();
   TabController? tabController;
 
   @override
@@ -149,7 +151,9 @@ class _MainPageState extends State<MainPage>
   ///顶部歌曲总数栏
   Widget _buildListTop() {
     return Song_libraryTop(
-      onPlayTap: () {},
+      onPlayTap: () {
+        LogUtil.e(global.musicByAllList.length);
+      },
       onScreenTap: () {
         logic.openSelect();
         showSelectDialog();
@@ -216,8 +220,9 @@ class _MainPageState extends State<MainPage>
     return Expanded(
       child: GetBuilder<MainLogic>(builder: (logic) {
         return RefresherWidget(
-          itemCount: logic.state.items.length,
-          enablePullDown: logic.state.items.isNotEmpty,
+          itemCount: global.getListSize(logic.state.currentIndex),
+          enablePullUp: false,
+          enablePullDown: false,
           isGridView: logic.state.currentIndex == 1,
 
           ///当前列表是否网格显示
@@ -230,33 +235,6 @@ class _MainPageState extends State<MainPage>
           listItem: (cxt, index) {
             return _buildListItem(logic, index);
           },
-          onRefresh: (controller) async {
-            await Future.delayed(const Duration(milliseconds: 1000));
-            logic.state.items.clear();
-
-            logic.addItem([
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false)
-            ]);
-            controller.refreshCompleted();
-            controller.loadComplete();
-          },
-          onLoading: (controller) async {
-            await Future.delayed(const Duration(milliseconds: 1000));
-            logic.addItem([
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false),
-              MusicItem(titlle: "", checked: false)
-            ]);
-            controller.loadComplete();
-          },
         );
       }),
     );
@@ -266,14 +244,15 @@ class _MainPageState extends State<MainPage>
     /// 0 歌曲  1 专辑  2 歌手  3 我喜欢  4 歌单  5  最近播放
     if (logic.state.currentIndex == 1) {
       return ListViewItemAlbum(
-        index: index,
+        album: global.checkAlbumList()[index],
         checked: logic.isItemChecked(index),
         isSelect: logic.state.isSelect,
-        onItemTap: (index, checked) {
+        onItemTap: (album, checked) {
+          LogUtil.e(index);
           if (logic.state.isSelect) {
-            logic.selectItem(index, checked);
+            logic.selectItem(album, checked);
           } else {
-            Get.toNamed(Routes.routeAlbumDetails);
+            Get.toNamed(Routes.routeAlbumDetails, arguments: global.checkAlbumList()[index]);
           }
         },
       );
@@ -282,11 +261,11 @@ class _MainPageState extends State<MainPage>
         index: index,
         checked: logic.isItemChecked(index),
         isSelect: logic.state.isSelect,
-        onItemTap: (index, checked) {
+        onItemTap: (artist, checked) {
           if (logic.state.isSelect) {
-            logic.selectItem(index, checked);
+            logic.selectItem(artist, checked);
           } else {
-            Get.toNamed(Routes.routeSingerDetails);
+            Get.toNamed(Routes.routeSingerDetails, arguments: global.checkAlbumList()[index]);
           }
         },
       );
@@ -294,11 +273,11 @@ class _MainPageState extends State<MainPage>
       return ListViewItemSongSheet(onItemTap: (checked) {}, index: index);
     } else {
       return ListViewItemSong(
-        index: index,
+        music: global.checkMusicList()[index],
         checked: logic.isItemChecked(index),
         isSelect: logic.state.isSelect,
-        onItemTap: (index, checked) {
-          logic.selectItem(index, checked);
+        onItemTap: (music, checked) {
+          logic.selectItem(music, checked);
         },
         onPlayTap: (index) {},
         onMoreTap: (index) {

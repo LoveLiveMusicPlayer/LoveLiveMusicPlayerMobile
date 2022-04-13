@@ -1,25 +1,21 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/widgets/details_cover.dart';
 import 'package:lovelivemusicplayer/widgets/details_list_top.dart';
-
-import '../../models/music_Item.dart';
-import '../../modules/ext.dart';
-import '../../widgets/refresher_widget.dart';
+import '../../widgets/listview_item_song.dart';
 import '../main/widget/dialog_bottom_btn.dart';
 import '../main/widget/dialog_more.dart';
-import '../../widgets/listview_item_song.dart';
-import '../main/widget/song_library_top.dart';
 import 'logic.dart';
 import 'widget/details_header.dart';
 
 class AlbumDetailsPage extends StatelessWidget {
   final logic = Get.put(AlbumDetailsLogic());
-  final state = Get
-      .find<AlbumDetailsLogic>()
-      .state;
+  final state = Get.find<AlbumDetailsLogic>().state;
+  final Album album = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -47,14 +43,14 @@ class AlbumDetailsPage extends StatelessWidget {
 
   List<Widget> getListItems(AlbumDetailsLogic logic) {
     List<Widget> list = [];
-    list.add(DetailsCover());
+    list.add(DetailsCover(album: album));
     list.add(SizedBox(
       height: 10.h,
     ));
     list.add(DetailsListTop(
         selectAll: logic.state.selectAll,
         isSelect: logic.state.isSelect,
-        itemsLength: logic.state.items.length,
+        itemsLength: album.music.length,
         checkedItemLength: logic.getCheckedSong(),
         onPlayTap: () {},
         onScreenTap: () {
@@ -71,15 +67,15 @@ class AlbumDetailsPage extends StatelessWidget {
     list.add(SizedBox(
       height: 10.h,
     ));
-    for (int index = 0; index < logic.state.items.length; index++) {
+    for (final music in album.music) {
       list.add(Padding(
         padding: EdgeInsets.only(left: 16.h, bottom: 20.h),
         child: ListViewItemSong(
-          index: index,
-          checked: logic.isItemChecked(index),
+          music: music,
+          checked: logic.isItemChecked(music),
           isSelect: logic.state.isSelect,
           onItemTap: (index, checked) {
-            logic.selectItem(index, checked);
+            logic.selectItem(music, checked);
           },
           onPlayTap: (index) {},
           onMoreTap: (index) {

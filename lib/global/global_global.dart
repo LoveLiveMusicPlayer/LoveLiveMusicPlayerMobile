@@ -1,25 +1,104 @@
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
+import 'package:lovelivemusicplayer/models/Artist.dart';
 
 import '../models/Music.dart';
 
-class GlobalLogic extends SuperController with GetSingleTickerProviderStateMixin {
-
+class GlobalLogic extends SuperController
+    with GetSingleTickerProviderStateMixin {
   /// all、μ's、aqours、niji、liella、combine
   final currentGroup = "all".obs;
 
-  final musicByUsList = <Music>[].obs;
-  final musicByAqoursList = <Music>[].obs;
-  final musicByNijiList = <Music>[].obs;
-  final musicByLiellaList = <Music>[].obs;
-  final musicByCombineList = <Music>[].obs;
+  final musicByAllList = <Music>[];
+  final musicByUsList = <Music>[];
+  final musicByAqoursList = <Music>[];
+  final musicByNijiList = <Music>[];
+  final musicByLiellaList = <Music>[];
+  final musicByCombineList = <Music>[];
 
-  final albumByUsList = <Album>[].obs;
-  final albumByAqoursList = <Album>[].obs;
-  final albumByNijiList = <Album>[].obs;
-  final albumByLiellaList = <Album>[].obs;
-  final albumByCombineList = <Album>[].obs;
+  final albumByAllList = <Album>[];
+  final albumByUsList = <Album>[];
+  final albumByAqoursList = <Album>[];
+  final albumByNijiList = <Album>[];
+  final albumByLiellaList = <Album>[];
+  final albumByCombineList = <Album>[];
 
+  final artistByAllList = <Artist>[];
+  final artistByUsList = <Artist>[];
+  final artistByAqoursList = <Artist>[];
+  final artistByNijiList = <Artist>[];
+  final artistByLiellaList = <Artist>[];
+  final artistByCombineList = <Artist>[];
+
+  getListSize(int index) {
+    switch (index) {
+      case 0:
+        return checkMusicList().length;
+      case 1:
+        return checkAlbumList().length;
+      case 2:
+        return checkArtistList().length;
+      default:
+        return 6;
+    }
+  }
+
+  List<Music> checkMusicList() {
+    switch (currentGroup.value) {
+      case "all":
+        return musicByAllList;
+      case "μ's":
+        return musicByUsList;
+      case "aqours":
+        return musicByAqoursList;
+      case "niji":
+        return musicByNijiList;
+      case "liella":
+        return musicByLiellaList;
+      case "combine":
+        return musicByCombineList;
+      default:
+        return [];
+    }
+  }
+
+  List<Album> checkAlbumList() {
+    switch (currentGroup.value) {
+      case "all":
+        return albumByAllList;
+      case "μ's":
+        return albumByUsList;
+      case "aqours":
+        return albumByAqoursList;
+      case "niji":
+        return albumByNijiList;
+      case "liella":
+        return albumByLiellaList;
+      case "combine":
+        return albumByCombineList;
+      default:
+        return [];
+    }
+  }
+
+  List<Artist> checkArtistList() {
+    switch (currentGroup.value) {
+      case "all":
+        return artistByAllList;
+      case "μ's":
+        return artistByUsList;
+      case "aqours":
+        return artistByAqoursList;
+      case "niji":
+        return artistByNijiList;
+      case "liella":
+        return artistByLiellaList;
+      case "combine":
+        return artistByCombineList;
+      default:
+        return [];
+    }
+  }
 
   @override
   void onDetached() {
@@ -40,5 +119,4 @@ class GlobalLogic extends SuperController with GetSingleTickerProviderStateMixin
   void onResumed() {
     // TODO: implement onResumed
   }
-
 }
