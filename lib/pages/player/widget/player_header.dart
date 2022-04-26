@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/pages/main/logic.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 import '../../../modules/ext.dart';
 
 class PlayerHeader extends StatelessWidget {
   final GestureTapCallback onTap;
-  var logic = Get.find<MainLogic>();
 
   PlayerHeader({Key? key, required this.onTap}) : super(key: key);
 
@@ -26,18 +25,18 @@ class PlayerHeader extends StatelessWidget {
 
           /// 曲名 + 歌手
           Expanded(
-            child: GetBuilder<MainLogic>(builder: (logic) {
+            child: Obx(() {
               return Column(
                 children: <Widget>[
                   Text(
-                    logic.state.playingMusic.name ?? "暂无歌曲",
+                    PlayerLogic.to.playingMusic.value.name ?? "暂无歌曲",
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         color: const Color(0xFF333333), fontSize: 15.sp, fontWeight: FontWeight.bold),
                     maxLines: 1,
                   ),
                   Text(
-                    logic.state.playingMusic.artist ?? "",
+                    PlayerLogic.to.playingMusic.value.artist ?? "",
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         color: const Color(0xFF999999), fontSize: 12.sp),

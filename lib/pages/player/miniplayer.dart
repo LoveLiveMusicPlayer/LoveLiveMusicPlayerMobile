@@ -4,10 +4,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:marquee_text/marquee_text.dart';
 import '../../models/Music.dart';
 import '../../modules/ext.dart';
-import '../main/logic.dart';
 
 class MiniPlayer extends StatefulWidget {
   MiniPlayer({Key? key, required this.onTap}) : super(key: key);
@@ -19,15 +21,16 @@ class MiniPlayer extends StatefulWidget {
 
 class _MiniPlayerState extends State<MiniPlayer> {
   final scrollList = <Widget>[];
-  var logic = Get.find<MainLogic>();
 
   CarouselController sliderController = CarouselController();
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MainLogic>(builder: (_) {
+    return Obx(() {
+      print("---------------------------------");
       Decoration? decoration;
-      final music = logic.state.playingMusic;
+      final music = PlayerLogic.to.playingMusic.value;
+      print(music.uid);
       if (music.uid == null || music.coverPath == null || music.coverPath!.isEmpty) {
         decoration = BoxDecoration(
           color: const Color(0xFFEBF3FE),
@@ -36,7 +39,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
       } else {
         decoration = BoxDecoration(
           image: DecorationImage(
-              image: FileImage(File(music.coverPath!)), fit: BoxFit.fill),
+              image: FileImage(SDUtils.getImgFile(music.coverPath ?? "")), fit: BoxFit.fill),
           borderRadius: BorderRadius.circular(34),
         );
       }
@@ -84,12 +87,14 @@ class _MiniPlayerState extends State<MiniPlayer> {
           SizedBox(width: 10.w),
 
           /// 播放按钮
-          GetBuilder<MainLogic>(builder: (logic) {
+          Obx(() {
             return touchIconByAsset(
-                path: logic.state.isPlaying
+                path: PlayerLogic.to.isPlaying.value
                     ? "assets/player/play_pause.svg"
                     : "assets/player/play_play.svg",
-                onTap: () => logic.togglePlay(),
+                onTap: () => {
+                  PlayerLogic.to.togglePlay()
+                },
                 width: 16,
                 height: 16,
                 color: const Color(0xFF333333));
@@ -97,7 +102,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
           SizedBox(width: 20.w),
 
           /// 播放列表按钮
-          GetBuilder<MainLogic>(builder: (logic) {
+          GetBuilder<HomeController>(builder: (logic) {
             return touchIconByAsset(path:
             "assets/player/play_playlist.svg",
                 onTap: () => {},
@@ -117,7 +122,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
       child: Row(
         children: [
           SizedBox(width: 6.w),
-          showImg(logic.state.playingMusic.coverPath,
+          showImg(SDUtils.getImgPath(PlayerLogic.to.playingMusic.value.coverPath ?? ""),
               radius: 50, width: 50, height: 50, hasShadow: false)
         ],
       ),
@@ -125,17 +130,17 @@ class _MiniPlayerState extends State<MiniPlayer> {
   }
 
   Widget marqueeMusicName() {
-    final isCanScroll = logic.state.isCanMiniPlayerScroll;
+    final isCanScroll = PlayerLogic.to.isCanMiniPlayerScroll;
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           InkWell(
-            onDoubleTap: () => logic.togglePlay(),
+            onDoubleTap: () => PlayerLogic.to.togglePlay(),
             child: CarouselSlider(
                 items:
-                refreshList(logic.state.playList, logic.state.playingMusic),
+                refreshList(PlayerLogic.to.mPlayList, PlayerLogic.to.playingMusic.value),
                 carouselController: sliderController,
                 options: CarouselOptions(
                     height: 20.h,
@@ -146,7 +151,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
                     enableInfiniteScroll: false,
                     onPageChanged: (index, reason) {
                       if (isCanScroll) {
-                        logic.changeMusic(index);
+                        HomeController.to.changeMusic(index);
                       }
                     })),
           )

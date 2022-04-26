@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import '../../../widgets/circular_check_box.dart';
-import '../logic.dart';
 
 class Song_libraryTop extends StatelessWidget {
   final Function onPlayTap;
@@ -25,22 +24,22 @@ class Song_libraryTop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MainLogic>(builder: (logic) {
-      return buildTopWidget(logic);
+    return GetBuilder<HomeController>(builder: (logic) {
+      return buildTopWidget();
     });
     //
   }
 
   ///获取顶部显示布局
-  Widget buildTopWidget(MainLogic logic){
-    if(logic.state.isSelect){
-      if(logic.state.currentIndex == 2 || logic.state.currentIndex == 4 ){
+  Widget buildTopWidget(){
+    if(HomeController.to.state.isSelect){
+      if(HomeController.to.state.currentIndex == 2 || HomeController.to.state.currentIndex == 4 ){
         return Container();
       }else{
         return _buildSelectSong();
       }
     }else{
-      if(logic.state.currentIndex == 2 || logic.state.currentIndex == 4 ){
+      if(HomeController.to.state.currentIndex == 2 || HomeController.to.state.currentIndex == 4 ){
         return Container();
       }else{
         return _buildPlaySong();
@@ -108,13 +107,13 @@ class Song_libraryTop extends StatelessWidget {
   ///歌曲总数
   Widget _buildSongNumText() {
     return Expanded(
-      child: GetBuilder<MainLogic>(builder: (logic) {
+      child: GetBuilder<HomeController>(builder: (logic) {
         return Text(
-          "${global.getListSize(logic.state.currentIndex)}首歌曲",
+          "${global.getListSize(HomeController.to.state.currentIndex)}首歌曲",
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-              color: Color(0xFF333333),
+              color: const Color(0xFF333333),
               fontSize: 14.h,
               fontWeight: FontWeight.bold),
         );
@@ -142,18 +141,18 @@ class Song_libraryTop extends StatelessWidget {
           SizedBox(
             width: 16.h,
           ),
-          GetBuilder<MainLogic>(builder: (logic) {
+          GetBuilder<HomeController>(builder: (logic) {
             return CircularCheckBox(
-              checkd: logic.state.selectAll,
+              checkd: HomeController.to.state.selectAll,
               checkIconColor: const Color(0xFFF940A7),
               uncheckedIconColor: const Color(0xFF999999),
               spacing: 10.h,
               iconSize: 25,
-              title: "选择全部/已选${logic.getCheckedSong()}首",
+              title: "选择全部/已选${HomeController.to.getCheckedSong()}首",
               titleColor: Color(0xFF333333),
               titleSize: 15.sp,
               onCheckd: (value) {
-                logic.state.selectAll = value;
+                HomeController.to.state.selectAll = value;
                 onSelectAllTap(value);
               },
             );

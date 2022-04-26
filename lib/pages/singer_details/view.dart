@@ -8,8 +8,8 @@ import '../../utils/sd_utils.dart';
 import '../../widgets/details_list_top.dart';
 import '../../widgets/listview_item_song.dart';
 import '../album_details/widget/details_header.dart';
-import '../main/widget/dialog_bottom_btn.dart';
-import '../main/widget/dialog_more.dart';
+import '../home/widget/dialog_bottom_btn.dart';
+import '../home/widget/dialog_more.dart';
 import 'logic.dart';
 
 class SingerDetailsPage extends StatelessWidget {

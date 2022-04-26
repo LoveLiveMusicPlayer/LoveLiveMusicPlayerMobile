@@ -3,7 +3,7 @@ import 'package:lovelivemusicplayer/models/Music.dart';
 
 import 'state.dart';
 
-class AlbumDetailsLogic extends GetxController {
+class AlbumDetailsController extends GetxController {
   final AlbumDetailsState state = AlbumDetailsState();
 
   int getCheckedSong() {

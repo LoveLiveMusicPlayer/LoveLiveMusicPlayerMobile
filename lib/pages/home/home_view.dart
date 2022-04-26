@@ -4,37 +4,35 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
-import 'package:lovelivemusicplayer/pages/main/widget/dialog_bottom_btn.dart';
-import 'package:lovelivemusicplayer/pages/main/widget/dialog_more.dart';
-import 'package:lovelivemusicplayer/pages/main/widget/listview_item_album.dart';
-import 'package:lovelivemusicplayer/pages/main/widget/listview_item_singer.dart';
-import 'package:lovelivemusicplayer/pages/main/widget/listview_item_song_sheet.dart';
+import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/dialog_more.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/listview_item_album.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/listview_item_singer.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/listview_item_song_sheet.dart';
 import 'package:lovelivemusicplayer/routes.dart';
+import 'package:lovelivemusicplayer/widgets/bottom_bar2.dart';
 import 'package:we_slide/we_slide.dart';
 import '../../modules/drawer/drawer.dart';
 import '../../widgets/refresher_widget.dart';
 import '../player/miniplayer.dart';
 import '../player/player.dart';
-import '../player/widget/bottom_bar1.dart';
-import '../player/widget/bottom_bar2.dart';
+import '../../widgets/bottom_bar1.dart';
 import '../../widgets/listview_item_song.dart';
 import 'widget/song_library_top.dart';
-import 'logic.dart';
 import 'widget/custom_underline_tabIndicator.dart';
 
-class MainPage extends StatefulWidget {
+class HomeView extends StatefulWidget {
   @override
-  State<MainPage> createState() => _MainPageState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class _MainPageState extends State<MainPage>
-    with SingleTickerProviderStateMixin {
-  final logic = Get.put(MainLogic());
-  final state = Get.find<MainLogic>().state;
-  final global = Get.find<GlobalLogic>();
+class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin {
   TabController? tabController;
-
+  final logic = Get.find<HomeController>();
   @override
   void initState() {
     super.initState();
@@ -98,7 +96,7 @@ class _MainPageState extends State<MainPage>
           indicator: CustomUnderlineTabIndicator(
               insets: EdgeInsets.only(top: 0.w, bottom: 8.h),
               borderSide:
-                  BorderSide(width: 16.w, color: const Color(0xFFF940A7)),
+              BorderSide(width: 16.w, color: const Color(0xFFF940A7)),
               indicatorWeight: 4.w),
           isScrollable: true,
           labelColor: const Color(0xFFF940A7),
@@ -152,7 +150,7 @@ class _MainPageState extends State<MainPage>
   Widget _buildListTop() {
     return Song_libraryTop(
       onPlayTap: () {
-        LogUtil.e(global.musicByAllList.length);
+        LogUtil.e(GlobalLogic.to.musicByAllList.length);
       },
       onScreenTap: () {
         logic.openSelect();
@@ -210,17 +208,11 @@ class _MainPageState extends State<MainPage>
         alignmentTemp: Alignment.bottomCenter);
   }
 
-  @override
-  void dispose() {
-    tabController?.dispose();
-    super.dispose();
-  }
-
   Widget _buildList() {
     return Expanded(
-      child: GetBuilder<MainLogic>(builder: (logic) {
+      child: GetBuilder<HomeController>(builder: (_) {
         return RefresherWidget(
-          itemCount: global.getListSize(logic.state.currentIndex),
+          itemCount: GlobalLogic.to.getListSize(logic.state.currentIndex),
           enablePullUp: false,
           enablePullDown: false,
           isGridView: logic.state.currentIndex == 1,
@@ -233,18 +225,18 @@ class _MainPageState extends State<MainPage>
           rightPadding: 16.h,
           aspectRatio: 0.715,
           listItem: (cxt, index) {
-            return _buildListItem(logic, index);
+            return _buildListItem(index);
           },
         );
       }),
     );
   }
 
-  Widget _buildListItem(MainLogic logic, int index) {
+  Widget _buildListItem(int index) {
     /// 0 歌曲  1 专辑  2 歌手  3 我喜欢  4 歌单  5  最近播放
     if (logic.state.currentIndex == 1) {
       return ListViewItemAlbum(
-        album: global.checkAlbumList()[index],
+        album: GlobalLogic.to.checkAlbumList()[index],
         checked: logic.isItemChecked(index),
         isSelect: logic.state.isSelect,
         onItemTap: (album, checked) {
@@ -252,7 +244,7 @@ class _MainPageState extends State<MainPage>
           if (logic.state.isSelect) {
             logic.selectItem(album, checked);
           } else {
-            Get.toNamed(Routes.routeAlbumDetails, arguments: global.checkAlbumList()[index]);
+            Get.toNamed(Routes.routeAlbumDetails, arguments: GlobalLogic.to.checkAlbumList()[index]);
           }
         },
       );
@@ -265,7 +257,7 @@ class _MainPageState extends State<MainPage>
           if (logic.state.isSelect) {
             logic.selectItem(artist, checked);
           } else {
-            Get.toNamed(Routes.routeSingerDetails, arguments: global.checkAlbumList()[index]);
+            Get.toNamed(Routes.routeSingerDetails, arguments: GlobalLogic.to.checkAlbumList()[index]);
           }
         },
       );
@@ -273,16 +265,20 @@ class _MainPageState extends State<MainPage>
       return ListViewItemSongSheet(onItemTap: (checked) {}, index: index);
     } else {
       return ListViewItemSong(
-        music: global.checkMusicList()[index],
+        music: GlobalLogic.to.checkMusicList()[index],
         checked: logic.isItemChecked(index),
         isSelect: logic.state.isSelect,
         onItemTap: (music, checked) {
-          logic.selectItem(music, checked);
+          if (logic.state.isSelect) {
+            logic.selectItem(music, checked);
+            return;
+          }
+          PlayerLogic.to.playMusic([music]);
         },
         onPlayTap: (index) {},
         onMoreTap: (index) {
           SmartDialog.show(
-              widget: DialogMore(), alignmentTemp: Alignment.bottomCenter);
+              widget: const DialogMore(), alignmentTemp: Alignment.bottomCenter);
         },
       );
     }

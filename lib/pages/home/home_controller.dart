@@ -1,21 +1,24 @@
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
-import 'package:lovelivemusicplayer/pages/main/state.dart';
+import 'package:lovelivemusicplayer/pages/home/home_state.dart';
 
-class MainLogic extends GetxController {
-  final MainState state = MainState();
+class HomeController extends GetxController {
+  final HomeState state = HomeState();
+
+  static HomeController get to => Get.find();
 
   getData() {
     Network.get(
         'https://inventory.scionedev.ilabservice.cloud/api/labbase/v1/company/all?account=17826808739&type=saas',
         success: (w) {
-      if (w != null && w is List) {
-        for (var element in w) {
-          // LogUtil.e(element);
-        }
-      }
-    });
+          if (w != null && w is List) {
+            for (var element in w) {
+              // LogUtil.e(element);
+            }
+          }
+        });
   }
 
   selectSongLibrary(bool value) {
@@ -67,7 +70,7 @@ class MainLogic extends GetxController {
   }
 
   playPrevOrNextMusic(bool isPrev) {
-    final tempList = state.playList;
+    final tempList = PlayerLogic.to.mPlayList;
     if (tempList.isEmpty) {
       return;
     }
@@ -86,7 +89,7 @@ class MainLogic extends GetxController {
     }
 
     music.isPlaying = true;
-    state.playingMusic = music;
+    PlayerLogic.to.playingMusic.value = music;
     refresh();
     refreshSlidePage();
     getLrc();
@@ -97,13 +100,8 @@ class MainLogic extends GetxController {
     update(["miniPlayer"]);
   }
 
-  togglePlay() {
-    state.isPlaying = !state.isPlaying;
-    refresh();
-  }
-
   changeMusic(int index) {
-    final tempList = state.playList;
+    final tempList = PlayerLogic.to.mPlayList;
     if (tempList.isEmpty) {
       return;
     }
@@ -111,7 +109,7 @@ class MainLogic extends GetxController {
     if (index != playIndex) {
       tempList[playIndex].isPlaying = false;
       tempList[index].isPlaying = true;
-      state.playingMusic = tempList[index];
+      PlayerLogic.to.playingMusic.value = tempList[index];
       refresh();
       refreshSlidePage();
       getLrc();
@@ -145,27 +143,20 @@ class MainLogic extends GetxController {
   }
 
   toggleLove() {
-    final musicList = state.playList;
-    final music = state.playingMusic;
-    musicList.forEach((element) {
-      if (element.uid == music.uid) {
-        element.isLove = !element.isLove;
-        state.playingMusic = element;
-      }
-    });
+
     refresh();
   }
 
   toggleTranslate() {
-    switch (state.lrcType) {
+    switch (PlayerLogic.to.lrcType.value) {
       case 0:
-        state.lrcType = 1;
+        PlayerLogic.to.lrcType.value = 1;
         break;
       case 1:
-        state.lrcType = 2;
+        PlayerLogic.to.lrcType.value = 2;
         break;
       case 2:
-        state.lrcType = 0;
+        PlayerLogic.to.lrcType.value = 0;
         break;
     }
     refresh();
@@ -173,7 +164,7 @@ class MainLogic extends GetxController {
 
   int checkNowPlaying() {
     int playIndex = 0;
-    for (var element in state.playList) {
+    for (var element in PlayerLogic.to.mPlayList) {
       if (element.isPlaying) {
         break;
       } else {
@@ -184,23 +175,23 @@ class MainLogic extends GetxController {
   }
 
   getLrc() async {
-    final jp = state.playingMusic.jpUrl;
-    final zh = state.playingMusic.zhUrl;
-    final roma = state.playingMusic.romaUrl;
+    final jp = PlayerLogic.to.playingMusic.value.jpUrl;
+    final zh = PlayerLogic.to.playingMusic.value.zhUrl;
+    final roma = PlayerLogic.to.playingMusic.value.romaUrl;
     if (jp == null || jp.isEmpty) {
-      state.jpLrc = "";
+      PlayerLogic.to.jpLrc.value = "";
     } else {
-      state.jpLrc = await Network.getSync(jp);
+      PlayerLogic.to.jpLrc.value = await Network.getSync(jp);
     }
     if (zh == null || zh.isEmpty) {
-      state.zhLrc = "";
+      PlayerLogic.to.zhLrc.value = "";
     } else {
-      state.zhLrc = await Network.getSync(zh);
+      PlayerLogic.to.zhLrc.value = await Network.getSync(zh);
     }
     if (roma == null || roma.isEmpty) {
-      state.romaLrc = "";
+      PlayerLogic.to.romaLrc.value = "";
     } else {
-      state.romaLrc = await Network.getSync(roma);
+      PlayerLogic.to.romaLrc.value = await Network.getSync(roma);
     }
     refresh();
   }
@@ -210,11 +201,13 @@ class MainLogic extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    state.playingMusic = state.playList[0];
+    if (PlayerLogic.to.mPlayList.isNotEmpty) {
+      PlayerLogic.to.playingMusic.value = PlayerLogic.to.mPlayList[0];
+    }
     refresh();
     getLrc();
   }
 
-  ///-------------------------
+///-------------------------
 
 }

@@ -1,20 +1,20 @@
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/dialog_more.dart';
 import 'package:lovelivemusicplayer/widgets/details_cover.dart';
 import 'package:lovelivemusicplayer/widgets/details_list_top.dart';
 import '../../widgets/listview_item_song.dart';
-import '../main/widget/dialog_bottom_btn.dart';
-import '../main/widget/dialog_more.dart';
 import 'logic.dart';
 import 'widget/details_header.dart';
 
 class AlbumDetailsPage extends StatelessWidget {
-  final logic = Get.put(AlbumDetailsLogic());
-  final state = Get.find<AlbumDetailsLogic>().state;
+  final logic = Get.put(AlbumDetailsController());
+  final state = Get.find<AlbumDetailsController>().state;
   final Album album = Get.arguments;
 
   @override
@@ -30,7 +30,7 @@ class AlbumDetailsPage extends StatelessWidget {
       children: [
         DetailsHeader(),
         Expanded(
-          child: GetBuilder<AlbumDetailsLogic>(builder: (logic) {
+          child: GetBuilder<AlbumDetailsController>(builder: (logic) {
             return ListView(
               padding: const EdgeInsets.all(0),
               children: getListItems(logic),
@@ -41,7 +41,7 @@ class AlbumDetailsPage extends StatelessWidget {
     );
   }
 
-  List<Widget> getListItems(AlbumDetailsLogic logic) {
+  List<Widget> getListItems(AlbumDetailsController logic) {
     List<Widget> list = [];
     list.add(DetailsCover(album: album));
     list.add(SizedBox(
@@ -52,7 +52,9 @@ class AlbumDetailsPage extends StatelessWidget {
         isSelect: logic.state.isSelect,
         itemsLength: album.music.length,
         checkedItemLength: logic.getCheckedSong(),
-        onPlayTap: () {},
+        onPlayTap: () {
+          PlayerLogic.to.playMusic(album.music);
+        },
         onScreenTap: () {
           logic.openSelect();
           showSelelctDialog();

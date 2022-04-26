@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_cover.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_header.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_lyric.dart';
-
 import '../../modules/ext.dart';
-import '../../network/http_request.dart';
-import '../main/logic.dart';
 
 class Player extends StatefulWidget {
   final GestureTapCallback onTap;
@@ -20,8 +19,6 @@ class Player extends StatefulWidget {
 }
 
 class _PlayerState extends State<Player> {
-  var logic = Get.find<MainLogic>();
-
   @override
   void initState() {
     super.initState();
@@ -104,9 +101,9 @@ class _PlayerState extends State<Player> {
       return Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-            GetBuilder<MainLogic>(builder: (_) {
+            Obx(() {
               var icon;
-              switch (logic.state.lrcType) {
+              switch (PlayerLogic.to.lrcType.value) {
                 case 0:
                   icon = Icons.translate;
                   break;
@@ -118,8 +115,7 @@ class _PlayerState extends State<Player> {
                   break;
               }
               return materialButton(
-                  icon,
-                  () => logic.toggleTranslate(),
+                  icon, () => HomeController.to.toggleTranslate(),
                   width: 32,
                   height: 32,
                   radius: 6,
@@ -133,12 +129,12 @@ class _PlayerState extends State<Player> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          GetBuilder<MainLogic>(builder: (logic) {
+          GetBuilder<HomeController>(builder: (logic) {
             return materialButton(
-                logic.state.playingMusic.isLove
+                PlayerLogic.to.playingMusic.value.isLove
                     ? Icons.favorite
                     : "assets/player/play_love.svg",
-                () => logic.toggleLove(),
+                () => HomeController.to.toggleLove(),
                 width: 32,
                 height: 32,
                 radius: 6,
@@ -175,7 +171,7 @@ class _PlayerState extends State<Player> {
   Widget progress() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: GetBuilder<MainLogic>(builder: (logic) {
+      child: GetBuilder<HomeController>(builder: (logic) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -184,7 +180,7 @@ class _PlayerState extends State<Player> {
               style: TextStyle(fontSize: 12.sp, color: const Color(0xFF999999)),
             ),
             Text(
-              logic.state.playingMusic.totalTime ?? "00:00",
+              PlayerLogic.to.playingMusic.value.totalTime ?? "00:00",
               style: TextStyle(fontSize: 12.sp, color: const Color(0xFF999999)),
             )
           ],
@@ -206,21 +202,21 @@ class _PlayerState extends State<Player> {
               iconSize: 15,
               iconColor: const Color(0xFF333333)),
           materialButton("assets/player/play_prev.svg",
-              () => logic.playPrevOrNextMusic(true),
+              () => HomeController.to.playPrevOrNextMusic(true),
               width: 60, height: 60, radius: 40, iconSize: 16),
-          GetBuilder<MainLogic>(builder: (logic) {
+          Obx(() {
             return materialButton(
-                logic.state.isPlaying
+                PlayerLogic.to.isPlaying.value
                     ? "assets/player/play_pause.svg"
                     : "assets/player/play_play.svg",
-                () => logic.togglePlay(),
+                () => PlayerLogic.to.togglePlay(),
                 width: 80,
                 height: 80,
                 radius: 40,
                 iconSize: 26);
           }),
           materialButton("assets/player/play_next.svg",
-              () => logic.playPrevOrNextMusic(false),
+              () => HomeController.to.playPrevOrNextMusic(false),
               width: 60, height: 60, radius: 40, iconSize: 16),
           materialButton("assets/player/play_playlist.svg", () => {},
               width: 32,

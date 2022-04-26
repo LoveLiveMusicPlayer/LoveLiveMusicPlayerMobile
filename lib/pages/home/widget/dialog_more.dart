@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:lovelivemusicplayer/pages/main/widget/dialog_add_song_sheet.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';
 
 import '../../../modules/ext.dart';
 

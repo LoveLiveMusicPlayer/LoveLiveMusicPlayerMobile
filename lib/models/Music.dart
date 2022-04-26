@@ -20,6 +20,7 @@ class Music {
     this.jpUrl,
     this.zhUrl,
     this.romaUrl,
+    this.group,
     this.isLove = false,
     this.isPlaying = false
   });
@@ -40,7 +41,7 @@ class Music {
   String? zhUrl; // 中文歌词 URL
   String? romaUrl; // 罗马音歌词 URL
   bool isLove; // 是否我喜欢
-
+  String? group; // 团组
   bool isPlaying; // 是否当前播放
 
   factory Music.fromJson(Map<String, dynamic> json) => Music(
@@ -55,7 +56,7 @@ class Music {
     zhUrl: json["trans"],
     romaUrl: json["roma"],
     isLove: json["isLove"] == 1 ? true : false,
-
+    group: json["group"],
     isPlaying: json["isPlaying"] == 1 ? true : false,
   );
 
@@ -71,7 +72,7 @@ class Music {
     "trans": zhUrl,
     "roma": romaUrl,
     "isLove": isLove ? 1 : 0,
-
+    "group": group,
     "isPlaying": isPlaying ? 1 : 0,
   };
 }

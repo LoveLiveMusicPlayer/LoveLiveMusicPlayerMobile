@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lovelivemusicplayer/pages/main/state.dart';
+import 'package:lovelivemusicplayer/pages/home/home_state.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LlerBuildTopBg extends StatelessWidget {
-  MainState data;
+  HomeState data;
   Function(bool) onTabTap;
 
   LlerBuildTopBg({

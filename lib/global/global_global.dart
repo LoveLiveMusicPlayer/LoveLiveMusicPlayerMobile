@@ -4,8 +4,7 @@ import 'package:lovelivemusicplayer/models/Artist.dart';
 
 import '../models/Music.dart';
 
-class GlobalLogic extends SuperController
-    with GetSingleTickerProviderStateMixin {
+class GlobalLogic extends SuperController with GetSingleTickerProviderStateMixin {
   /// all、μ's、aqours、niji、liella、combine
   final currentGroup = "all".obs;
 
@@ -29,6 +28,8 @@ class GlobalLogic extends SuperController
   final artistByNijiList = <Artist>[];
   final artistByLiellaList = <Artist>[];
   final artistByCombineList = <Artist>[];
+
+  static GlobalLogic get to => Get.find();
 
   getListSize(int index) {
     switch (index) {
@@ -97,6 +98,23 @@ class GlobalLogic extends SuperController
         return artistByCombineList;
       default:
         return [];
+    }
+  }
+
+  Music getMusicByUidAndGroup(String uid, String? group) {
+    switch (group) {
+      case "μ's":
+        return musicByUsList.where((element) => element.uid == uid).first;
+      case "aqours":
+        return musicByAqoursList.where((element) => element.uid == uid).first;
+      case "niji":
+        return musicByNijiList.where((element) => element.uid == uid).first;
+      case "liella":
+        return musicByLiellaList.where((element) => element.uid == uid).first;
+      case "combine":
+        return musicByCombineList.where((element) => element.uid == uid).first;
+      default:
+        return musicByAllList.where((element) => element.uid == uid).first;
     }
   }
 

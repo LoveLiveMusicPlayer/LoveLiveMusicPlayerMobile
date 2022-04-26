@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 
-import '../logic.dart';
 ///歌单
 class ListViewItemSongSheet extends StatefulWidget {
   Function(bool) onItemTap;
@@ -28,13 +27,12 @@ class ListViewItemSongSheet extends StatefulWidget {
 }
 
 class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
-  var logic = Get.find<MainLogic>();
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        logic.selectItem(widget.index, !logic.isItemChecked(widget.index));
-        widget.onItemTap(logic.isItemChecked(widget.index));
+        HomeController.to.selectItem(widget.index, !HomeController.to.isItemChecked(widget.index));
+        widget.onItemTap(HomeController.to.isItemChecked(widget.index));
       },
       child: Container(
         color: const Color(0xFFF2F8FF),

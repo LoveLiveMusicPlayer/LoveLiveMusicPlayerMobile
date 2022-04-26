@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/pages/album_details/view.dart';
+import 'package:lovelivemusicplayer/pages/home/home_binding.dart';
+import 'package:lovelivemusicplayer/pages/home/home_view.dart';
 import 'package:lovelivemusicplayer/pages/singer_details/view.dart';
-import 'pages/main/view.dart';
 
 class Routes {
   static const String routeInitial = "/";
@@ -12,7 +13,7 @@ class Routes {
 
   static List<GetPage> getRoutes() {
     return [
-      GetPage(name: Routes.routeInitial, page: () => MainPage()),
+      GetPage(name: Routes.routeInitial, page: () => HomeView(), binding: HomeBinding()),
       GetPage(name: Routes.routeAlbumDetails, page: () => AlbumDetailsPage()),
       GetPage(name: Routes.routeSingerDetails, page: () => SingerDetailsPage()),
     ];
