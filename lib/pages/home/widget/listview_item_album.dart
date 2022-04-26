@@ -29,40 +29,36 @@ class ListViewItemAlbum extends StatefulWidget {
 }
 
 class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        widget.checked = !widget.checked;
-        widget.onItemTap(widget.album, widget.checked);
-        setState(() {});
-      },
-      child: Column(
-          children: [
-            showImg(
-                SDUtils.getImgPath(
-                    widget.album.coverPath?.first ?? "ic_head.jpg"),
-                width: 95.h,
-                height: 95.h,
-                fit: BoxFit.cover,
-                hasShadow: false),
-            Container(
-              height: 40.h,
-              alignment: Alignment.center,
-              child: Text(
-                widget.album.name ?? "",
-                maxLines: 2,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    fontSize: 12.sp,
-                    color: const Color(0xFF333333),
-                    fontWeight: FontWeight.bold),
-              ),
-            )
-          ]
-      )
-    );
+        onTap: () {
+          widget.checked = !widget.checked;
+          widget.onItemTap(widget.album, widget.checked);
+          setState(() {});
+        },
+        child: Column(children: [
+          showImg(
+              SDUtils.getImgPath(
+                  widget.album.coverPath?.first ?? "ic_head.jpg"),
+              width: 95.h,
+              height: 95.h,
+              fit: BoxFit.cover,
+              hasShadow: false),
+          Container(
+            height: 40.h,
+            alignment: Alignment.center,
+            child: Text(
+              widget.album.name ?? "",
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  fontSize: 12.sp,
+                  color: const Color(0xFF333333),
+                  fontWeight: FontWeight.bold),
+            ),
+          )
+        ]));
   }
 }

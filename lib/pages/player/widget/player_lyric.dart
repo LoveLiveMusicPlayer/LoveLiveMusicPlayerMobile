@@ -24,7 +24,7 @@ class _LyricState extends State<Lyric> {
   Widget build(BuildContext context) {
     return Obx(() {
       var model;
-      switch(PlayerLogic.to.lrcType.value) {
+      switch (PlayerLogic.to.lrcType.value) {
         case 0:
           model = LyricsModelBuilder.create()
               .bindLyricToMain(PlayerLogic.to.jpLrc.value)
@@ -47,7 +47,7 @@ class _LyricState extends State<Lyric> {
         size: Size(ScreenUtil().screenWidth, 440.h),
         padding: EdgeInsets.symmetric(horizontal: 12.h),
         model: model,
-        position: 0,
+        position: PlayerLogic.to.playingPosition.value,
         lyricUi: lyricUI,
         playing: false,
         onTap: widget.onTap,
@@ -55,12 +55,12 @@ class _LyricState extends State<Lyric> {
           return Row(
             children: [
               IconButton(
-                  onPressed: () {
-
-                  },
+                  padding: const EdgeInsets.all(0),
+                  onPressed: () => PlayerLogic.to.seekTo(progress),
                   icon: const Icon(Icons.play_arrow, color: Colors.green)),
               Expanded(
                 child: Container(
+                  margin: EdgeInsets.only(right: 15.w),
                   decoration: const BoxDecoration(color: Colors.green),
                   height: 1,
                   width: double.infinity,

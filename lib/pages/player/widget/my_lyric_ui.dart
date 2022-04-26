@@ -25,7 +25,7 @@ class MyLrcUI extends LyricUI {
       this.inlineGap = 8,
       this.lyricAlign = LyricAlign.CENTER,
       this.lyricBaseLine = LyricBaseLine.CENTER,
-      this.highlight = true});
+      this.highlight = false});
 
   MyLrcUI.clone(MyLrcUI ui)
       : this(

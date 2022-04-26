@@ -1,8 +1,8 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_cover.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_header.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_lyric.dart';
@@ -19,6 +19,11 @@ class Player extends StatefulWidget {
 }
 
 class _PlayerState extends State<Player> {
+  double percent = 0.0;
+
+  /// slider 正在被滑动
+  var isTouch = false.obs;
+
   @override
   void initState() {
     super.initState();
@@ -115,7 +120,7 @@ class _PlayerState extends State<Player> {
                   break;
               }
               return materialButton(
-                  icon, () => HomeController.to.toggleTranslate(),
+                  icon, () => PlayerLogic.to.toggleTranslate(),
                   width: 32,
                   height: 32,
                   radius: 6,
@@ -129,12 +134,12 @@ class _PlayerState extends State<Player> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          GetBuilder<HomeController>(builder: (logic) {
+          Obx(() {
             return materialButton(
                 PlayerLogic.to.playingMusic.value.isLove
                     ? Icons.favorite
                     : "assets/player/play_love.svg",
-                () => HomeController.to.toggleLove(),
+                () => PlayerLogic.to.toggleLove(),
                 width: 32,
                 height: 32,
                 radius: 6,
@@ -156,31 +161,86 @@ class _PlayerState extends State<Player> {
     return SliderTheme(
       data: const SliderThemeData(
           trackHeight: 4, thumbShape: RoundSliderThumbShape()),
-      child: Slider(
-        inactiveColor: const Color(0xFFCCDDF1).withOpacity(0.6),
-        activeColor: const Color(0xFFCCDDF1).withOpacity(0.6),
-        thumbColor: Theme.of(Get.context!).primaryColor,
-        value: 10.5,
-        min: 0.0,
-        max: 100.0,
-        onChanged: (double value) {},
-      ),
+      child: Obx(() {
+        final total = PlayerLogic.to.playingTotal.value;
+        if (total == 0) {
+          return Slider(
+            inactiveColor: const Color(0xFFCCDDF1).withOpacity(0.6),
+            activeColor: const Color(0xFFCCDDF1).withOpacity(0.6),
+            thumbColor: Theme.of(Get.context!).primaryColor,
+            value: 0.0,
+            min: 0.0,
+            max: 100.0,
+            onChanged: (double value) {},
+          );
+        } else {
+          final current = PlayerLogic.to.playingPosition.value;
+          /// 延时200ms 来避免首次加载 UI 同时再次更新 UI 导致的异常
+          Future.delayed(const Duration(milliseconds: 200)).then((e) {
+            /// 手滑滑块时，不进行以下更新 UI 操作
+            if (!isTouch.value) {
+              try {
+                _updateSlider(100 * current / total);
+              } catch (e) {
+                _updateSlider(0.0);
+              }
+            }
+          });
+          return Slider(
+              inactiveColor: const Color(0xFFCCDDF1).withOpacity(0.6),
+              activeColor: const Color(0xFFCCDDF1).withOpacity(0.6),
+              thumbColor: Theme.of(Get.context!).primaryColor,
+              value: percent,
+              min: 0.0,
+              max: 100.0,
+              onChangeStart: (double value) {
+                isTouch.value = true;
+                _updateSlider(value);
+              },
+              onChanged: (double value) {
+                _updateSlider(value);
+              },
+              onChangeEnd: (double value) {
+                _updateSlider(value);
+                final position = total * value / 100;
+                PlayerLogic.to.seekTo(position.toInt());
+                Future.delayed(const Duration(milliseconds: 200)).then((e) {
+                  /// 延时200ms后再让obx接受播放器消息改变滑块位置，防止滑块位置跳动
+                  isTouch.value = false;
+                });
+              });
+        }
+      }),
     );
+  }
+
+  /// 更新滑块位置
+  _updateSlider(double per) {
+    if (per >= 0.0 && per <= 100.0) {
+      percent = per;
+      setState(() {});
+    }
   }
 
   Widget progress() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: GetBuilder<HomeController>(builder: (logic) {
+      child: Obx(() {
+        final total = PlayerLogic.to.playingTotal.value;
+        final current = PlayerLogic.to.playingPosition.value;
+        final totalMS = DateUtil.formatDate(DateUtil.getDateTimeByMs(total),
+            format: "mm:ss");
+        final currentMS = DateUtil.formatDate(DateUtil.getDateTimeByMs(current),
+            format: "mm:ss");
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              "00:00",
+              currentMS,
               style: TextStyle(fontSize: 12.sp, color: const Color(0xFF999999)),
             ),
             Text(
-              PlayerLogic.to.playingMusic.value.totalTime ?? "00:00",
+              totalMS,
               style: TextStyle(fontSize: 12.sp, color: const Color(0xFF999999)),
             )
           ],
@@ -195,14 +255,15 @@ class _PlayerState extends State<Player> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          materialButton("assets/player/play_shuffle.svg", () => {},
+          materialButton("assets/player/play_shuffle.svg",
+              () => PlayerLogic.to.changePlayMode(),
               width: 32,
               height: 32,
               radius: 6,
               iconSize: 15,
               iconColor: const Color(0xFF333333)),
           materialButton("assets/player/play_prev.svg",
-              () => HomeController.to.playPrevOrNextMusic(true),
+              () => PlayerLogic.to.changePlayPrevOrNext(-1),
               width: 60, height: 60, radius: 40, iconSize: 16),
           Obx(() {
             return materialButton(
@@ -216,7 +277,7 @@ class _PlayerState extends State<Player> {
                 iconSize: 26);
           }),
           materialButton("assets/player/play_next.svg",
-              () => HomeController.to.playPrevOrNextMusic(false),
+              () => PlayerLogic.to.changePlayPrevOrNext(1),
               width: 60, height: 60, radius: 40, iconSize: 16),
           materialButton("assets/player/play_playlist.svg", () => {},
               width: 32,

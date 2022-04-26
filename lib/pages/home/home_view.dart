@@ -150,7 +150,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
   Widget _buildListTop() {
     return Song_libraryTop(
       onPlayTap: () {
-        LogUtil.e(GlobalLogic.to.musicByAllList.length);
+        PlayerLogic.to.playMusic(GlobalLogic.to.musicByAllList);
       },
       onScreenTap: () {
         logic.openSelect();
@@ -219,11 +219,11 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
 
           ///当前列表是否网格显示
           columnNum: 3,
-          crossAxisSpacing: 20.h,
-          mainAxisSpacing: 20.h,
+          crossAxisSpacing: 16.h,
+          mainAxisSpacing: 16.h,
           leftPadding: 16.h,
           rightPadding: 16.h,
-          aspectRatio: 0.715,
+          aspectRatio: 0.71,
           listItem: (cxt, index) {
             return _buildListItem(index);
           },

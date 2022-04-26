@@ -27,10 +27,8 @@ class _MiniPlayerState extends State<MiniPlayer> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      print("---------------------------------");
       Decoration? decoration;
       final music = PlayerLogic.to.playingMusic.value;
-      print(music.uid);
       if (music.uid == null || music.coverPath == null || music.coverPath!.isEmpty) {
         decoration = BoxDecoration(
           color: const Color(0xFFEBF3FE),
@@ -151,7 +149,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
                     enableInfiniteScroll: false,
                     onPageChanged: (index, reason) {
                       if (isCanScroll) {
-                        HomeController.to.changeMusic(index);
+                        PlayerLogic.to.changePlayIndex(index);
                       }
                     })),
           )
@@ -170,17 +168,17 @@ class _MiniPlayerState extends State<MiniPlayer> {
       return scrollList;
     }
     int count = -1;
-    musicList.forEach((element) {
+    for (var music in musicList) {
       count++;
       scrollList.add(MarqueeText(
-          text: TextSpan(text: element.name),
+          text: TextSpan(text: music.name),
           style: const TextStyle(
               fontSize: 15, color: Color(0xFF333333), height: 1.3),
           speed: 15));
-      if (element.uid == currentMusic.uid) {
+      if (music.uid == currentMusic.uid) {
         sliderController.jumpToPage(count);
       }
-    });
+    }
     return scrollList;
   }
 }

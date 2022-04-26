@@ -69,53 +69,6 @@ class HomeController extends GetxController {
     return num;
   }
 
-  playPrevOrNextMusic(bool isPrev) {
-    final tempList = PlayerLogic.to.mPlayList;
-    if (tempList.isEmpty) {
-      return;
-    }
-    int playIndex = checkNowPlaying();
-    tempList[playIndex].isPlaying = false;
-
-    Music music;
-    if (isPrev) {
-      music = playIndex == 0
-          ? tempList[tempList.length - 1]
-          : tempList[playIndex - 1];
-    } else {
-      music = playIndex == tempList.length - 1
-          ? tempList[0]
-          : tempList[playIndex + 1];
-    }
-
-    music.isPlaying = true;
-    PlayerLogic.to.playingMusic.value = music;
-    refresh();
-    refreshSlidePage();
-    getLrc();
-  }
-
-  refreshSlidePage() async {
-    await Future.delayed(const Duration(milliseconds: 200));
-    update(["miniPlayer"]);
-  }
-
-  changeMusic(int index) {
-    final tempList = PlayerLogic.to.mPlayList;
-    if (tempList.isEmpty) {
-      return;
-    }
-    int playIndex = checkNowPlaying();
-    if (index != playIndex) {
-      tempList[playIndex].isPlaying = false;
-      tempList[index].isPlaying = true;
-      PlayerLogic.to.playingMusic.value = tempList[index];
-      refresh();
-      refreshSlidePage();
-      getLrc();
-    }
-  }
-
   changeTab(int index) {
     final currentIndex = state.currentIndex;
     if (index == 0) {
@@ -142,60 +95,6 @@ class HomeController extends GetxController {
     // }
   }
 
-  toggleLove() {
-
-    refresh();
-  }
-
-  toggleTranslate() {
-    switch (PlayerLogic.to.lrcType.value) {
-      case 0:
-        PlayerLogic.to.lrcType.value = 1;
-        break;
-      case 1:
-        PlayerLogic.to.lrcType.value = 2;
-        break;
-      case 2:
-        PlayerLogic.to.lrcType.value = 0;
-        break;
-    }
-    refresh();
-  }
-
-  int checkNowPlaying() {
-    int playIndex = 0;
-    for (var element in PlayerLogic.to.mPlayList) {
-      if (element.isPlaying) {
-        break;
-      } else {
-        playIndex++;
-      }
-    }
-    return playIndex;
-  }
-
-  getLrc() async {
-    final jp = PlayerLogic.to.playingMusic.value.jpUrl;
-    final zh = PlayerLogic.to.playingMusic.value.zhUrl;
-    final roma = PlayerLogic.to.playingMusic.value.romaUrl;
-    if (jp == null || jp.isEmpty) {
-      PlayerLogic.to.jpLrc.value = "";
-    } else {
-      PlayerLogic.to.jpLrc.value = await Network.getSync(jp);
-    }
-    if (zh == null || zh.isEmpty) {
-      PlayerLogic.to.zhLrc.value = "";
-    } else {
-      PlayerLogic.to.zhLrc.value = await Network.getSync(zh);
-    }
-    if (roma == null || roma.isEmpty) {
-      PlayerLogic.to.romaLrc.value = "";
-    } else {
-      PlayerLogic.to.romaLrc.value = await Network.getSync(roma);
-    }
-    refresh();
-  }
-
   ///-------------------------------
 
   @override
@@ -205,7 +104,6 @@ class HomeController extends GetxController {
       PlayerLogic.to.playingMusic.value = PlayerLogic.to.mPlayList[0];
     }
     refresh();
-    getLrc();
   }
 
 ///-------------------------
