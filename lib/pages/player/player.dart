@@ -60,10 +60,12 @@ class _PlayerState extends State<Player> {
           /// 头部
           PlayerHeader(onTap: widget.onTap),
 
+          SizedBox(height: 15.h),
+
           /// 中间可切换的界面
           Obx(() => stackBody()),
 
-          SizedBox(height: 30.h),
+          SizedBox(height: 15.h),
 
           /// 功能栏
           Obx(() => funcButton())

@@ -2,6 +2,7 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/routes.dart';
@@ -38,7 +39,7 @@ class _DrawerPageState extends State<DrawerPage> {
     return Column(
       children: [
         SizedBox(height: 12.h),
-        logoIcon("ic_head.jpg", width: 96, height: 96, radius: 96),
+        logoIcon(Const.logo, width: 96, height: 96, radius: 96),
         SizedBox(height: 12.h),
         Text("LoveLiveMusicPlayer",
             style:

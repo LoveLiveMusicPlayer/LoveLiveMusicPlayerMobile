@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
@@ -126,7 +127,7 @@ class _HomeViewState extends State<HomeView>
 
   ///顶部头像
   Widget _getTopHead(GestureTapCallback onTap) {
-    return logoIcon("ic_head.jpg",
+    return logoIcon(Const.logo,
         offset: EdgeInsets.only(right: 16.w), onTap: onTap);
   }
 

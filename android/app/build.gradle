@@ -11,6 +11,10 @@ if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -37,12 +41,33 @@ android {
         targetSdkVersion 31
         versionCode 1
         versionName "1.0.0"
+
+        ndk {
+            abiFilters "arm64-v8a", "armeabi-v7a"
+        }
+    }
+
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties["keyAlias"]
+            keyPassword keystoreProperties["storePassword"]
+            storeFile file(keystoreProperties["storeFile"])
+            storePassword keystoreProperties["keyPassword"]
+        }
     }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
+            minifyEnabled true
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
         }
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+        checkReleaseBuilds false
+        abortOnError false
     }
 }
 

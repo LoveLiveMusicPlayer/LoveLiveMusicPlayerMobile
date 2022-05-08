@@ -24,7 +24,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     database =
         await $FloorMusicDatabase
             .databaseBuilder('app_database.db')
-            .addMigrations([migration1to2])
+            // .addMigrations([migration1to2])
             .build();
     albumDao = database.albumDao;
     lyricDao = database.lyricDao;

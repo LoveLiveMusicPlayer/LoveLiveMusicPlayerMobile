@@ -106,10 +106,11 @@ class Song_libraryTop extends StatelessWidget {
 
   ///歌曲总数
   Widget _buildSongNumText() {
+    final index = HomeController.to.state.currentIndex.value;
     return Expanded(
       child: Obx(() {
         return Text(
-          "${global.getListSize(HomeController.to.state.currentIndex.value, global.databaseInitOver.value)}首歌曲",
+          "${global.getListSize(index, global.databaseInitOver.value)}${index == 0 ? '首歌曲' : '张专辑'}",
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(

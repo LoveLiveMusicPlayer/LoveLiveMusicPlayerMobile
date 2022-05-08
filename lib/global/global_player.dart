@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/Lyric.dart';
@@ -141,7 +142,7 @@ class PlayerLogic extends SuperController
                     : MetasImage(
                         path: SDUtils.path + coverPath, type: ImageType.file),
                 onImageLoadFail: const MetasImage(
-                    path: "assets/thumb/XVztg3oXmX4.jpg",
+                    path: Const.logo,
                     type: ImageType.asset))));
       }
     }
@@ -299,18 +300,21 @@ class PlayerLogic extends SuperController
     switch (mode) {
       case PlayMode.playlist:
         playMode.value = PlayMode.playlist;
-        mPlayer.setLoopMode(LoopMode.playlist);
         mPlayer.shuffle = false;
+        mPlayer.setLoopMode(LoopMode.playlist);
+        LogUtil.e("顺序播放");
         break;
       case PlayMode.single:
         playMode.value = PlayMode.single;
-        mPlayer.setLoopMode(LoopMode.single);
         mPlayer.shuffle = false;
+        mPlayer.setLoopMode(LoopMode.single);
+        LogUtil.e("单曲循环");
         break;
       default:
         playMode.value = PlayMode.shuffling;
-        mPlayer.setLoopMode(LoopMode.none);
         mPlayer.shuffle = true;
+        mPlayer.setLoopMode(LoopMode.playlist);
+        LogUtil.e("随机播放");
         break;
     }
     SpUtil.put("playMode", mode?.index ?? 0);

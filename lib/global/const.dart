@@ -4,4 +4,6 @@ class Const{
 
   /// sp
   static const String spDark = "SP_IS_DARK";
+
+  static const String logo = "assets/logo.png";
 }

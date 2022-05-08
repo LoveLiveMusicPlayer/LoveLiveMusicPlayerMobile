@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lovelivemusicplayer/global/const.dart';
 import '../utils/sd_utils.dart';
 
 /// 显示图片
@@ -17,7 +18,7 @@ Widget showImg(String? path,
     double? height,
     double radius = 20,
     bool hasShadow = true,
-    String defPhoto = "assets/thumb/XVztg3oXmX4.jpg",
+    String defPhoto = Const.logo,
     BoxFit fit = BoxFit.cover}) {
   Widget noShadowImage;
   ImageProvider<Object> shadowImage;
@@ -224,6 +225,7 @@ Widget logoIcon(String path,
     EdgeInsetsGeometry? offset,
     GestureTapCallback? onTap}) {
   final margin = offset ?? const EdgeInsets.only(right: 0);
+  final image = path.startsWith("assets") ? path : SDUtils.getImgPath(path);
   return Center(
       child: Container(
           margin: margin,
@@ -241,7 +243,7 @@ Widget logoIcon(String path,
               ]),
           child: InkWell(
               onTap: onTap,
-              child: showImg(SDUtils.getImgPath(path),
+              child: showImg(image,
                   radius: radius.h, hasShadow: false))));
 }
 

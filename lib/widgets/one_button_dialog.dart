@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:lovelivemusicplayer/global/const.dart';
 
 class OneButtonDialog extends StatelessWidget {
   String _imgAsset = "";
@@ -11,7 +12,7 @@ class OneButtonDialog extends StatelessWidget {
   Callback? _onBackListener;
 
   OneButtonDialog(
-      {String imgAsset = "assets/thumb/XVztg3oXmX4.jpg",
+      {String imgAsset = Const.logo,
       String title = "标题",
       String msg = "网络异常!",
       bool isShowTitle = true,
