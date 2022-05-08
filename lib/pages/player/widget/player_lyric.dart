@@ -11,7 +11,7 @@ import 'my_lyric_ui.dart';
 class Lyric extends StatefulWidget {
   final GestureTapCallback onTap;
 
-  Lyric({required this.onTap});
+  const Lyric({Key? key, required this.onTap}) : super(key: key);
 
   @override
   _LyricState createState() => _LyricState();
@@ -47,7 +47,7 @@ class _LyricState extends State<Lyric> {
         size: Size(ScreenUtil().screenWidth, 440.h),
         padding: EdgeInsets.symmetric(horizontal: 12.h),
         model: model,
-        position: PlayerLogic.to.playingPosition.value,
+        position: PlayerLogic.to.playingPosition.value.inMilliseconds,
         lyricUi: lyricUI,
         playing: false,
         onTap: widget.onTap,
@@ -73,6 +73,12 @@ class _LyricState extends State<Lyric> {
             ],
           );
         },
+        emptyBuilder: () => Center(
+          child: Text(
+            "暂无歌词",
+            style: lyricUI.getOtherMainTextStyle(),
+          ),
+        ),
       );
     });
   }

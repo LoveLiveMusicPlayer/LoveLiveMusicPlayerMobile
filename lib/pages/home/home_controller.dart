@@ -70,17 +70,17 @@ class HomeController extends GetxController {
   }
 
   changeTab(int index) {
-    final currentIndex = state.currentIndex;
+    final currentIndex = state.currentIndex.value;
     if (index == 0) {
       if (currentIndex < 3) {
         return;
       }
-      state.currentIndex = currentIndex % 3;
+      state.currentIndex.value = currentIndex % 3;
     } else {
       if (currentIndex > 2) {
         return;
       }
-      state.currentIndex = currentIndex + 3;
+      state.currentIndex.value = currentIndex + 3;
     }
     resetCheckedState();
     refresh();

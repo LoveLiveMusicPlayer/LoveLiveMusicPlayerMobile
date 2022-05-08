@@ -1,10 +1,13 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/modules/carousel/carousel_slider.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:marquee_text/marquee_text.dart';
@@ -136,22 +139,11 @@ class _MiniPlayerState extends State<MiniPlayer> {
         children: [
           InkWell(
             onDoubleTap: () => PlayerLogic.to.togglePlay(),
-            child: CarouselSlider(
-                items:
-                refreshList(PlayerLogic.to.mPlayList, PlayerLogic.to.playingMusic.value),
-                carouselController: sliderController,
-                options: CarouselOptions(
-                    height: 20.h,
-                    viewportFraction: 1.0,
-                    scrollPhysics: isCanScroll
-                        ? const PageScrollPhysics()
-                        : const NeverScrollableScrollPhysics(),
-                    enableInfiniteScroll: false,
-                    onPageChanged: (index, reason) {
-                      if (isCanScroll) {
-                        PlayerLogic.to.changePlayIndex(index);
-                      }
-                    })),
+            child: CarouselPlayer(
+                listItems: refreshList(PlayerLogic.to.mPlayList, PlayerLogic.to.playingMusic.value),
+                sliderController: sliderController,
+                isCanScroll: isCanScroll
+            ),
           )
         ],
       ),

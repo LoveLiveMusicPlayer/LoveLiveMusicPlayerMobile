@@ -1,11 +1,12 @@
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/models/PlayMode.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_cover.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_header.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_lyric.dart';
+import 'package:lovelivemusicplayer/pages/player/widget/seekbar.dart';
 import '../../modules/ext.dart';
 
 class Player extends StatefulWidget {
@@ -19,7 +20,6 @@ class Player extends StatefulWidget {
 }
 
 class _PlayerState extends State<Player> {
-  double percent = 0.0;
 
   /// slider 正在被滑动
   var isTouch = false.obs;
@@ -78,9 +78,6 @@ class _PlayerState extends State<Player> {
         /// 滑动条
         slider(),
 
-        /// 用时
-        progress(),
-
         SizedBox(height: 24.h),
 
         /// 播放器控制组件
@@ -95,9 +92,11 @@ class _PlayerState extends State<Player> {
         widget.isCover.value = false;
       });
     } else {
-      return Lyric(onTap: () {
-        widget.isCover.value = true;
-      });
+      return Lyric(
+          key: const Key("Lyric"),
+          onTap: () {
+            widget.isCover.value = true;
+          });
     }
   }
 
@@ -105,18 +104,26 @@ class _PlayerState extends State<Player> {
     if (!widget.isCover.value) {
       return Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            materialButton(
+                Icons.youtube_searched_for, () => PlayerLogic.to.getLrc(true),
+                width: 32,
+                height: 32,
+                radius: 6,
+                iconColor: const Color(0xFF333333),
+                iconSize: 20),
             Obx(() {
               var icon;
               switch (PlayerLogic.to.lrcType.value) {
                 case 0:
-                  icon = Icons.translate;
+                  icon = "assets/player/play_jp.svg";
                   break;
                 case 1:
-                  icon = Icons.enhance_photo_translate;
+                  icon = "assets/player/play_zh.svg";
                   break;
                 case 2:
-                  icon = Icons.g_translate;
+                  icon = "assets/player/play_roma.svg";
                   break;
               }
               return materialButton(
@@ -125,7 +132,7 @@ class _PlayerState extends State<Player> {
                   height: 32,
                   radius: 6,
                   iconColor: const Color(0xFF333333),
-                  iconSize: 15);
+                  iconSize: 30);
             })
           ]));
     }
@@ -158,95 +165,15 @@ class _PlayerState extends State<Player> {
   }
 
   Widget slider() {
-    return SliderTheme(
-      data: const SliderThemeData(
-          trackHeight: 4, thumbShape: RoundSliderThumbShape()),
-      child: Obx(() {
-        final total = PlayerLogic.to.playingTotal.value;
-        if (total == 0) {
-          return Slider(
-            inactiveColor: const Color(0xFFCCDDF1).withOpacity(0.6),
-            activeColor: const Color(0xFFCCDDF1).withOpacity(0.6),
-            thumbColor: Theme.of(Get.context!).primaryColor,
-            value: 0.0,
-            min: 0.0,
-            max: 100.0,
-            onChanged: (double value) {},
-          );
-        } else {
-          final current = PlayerLogic.to.playingPosition.value;
-          /// 延时200ms 来避免首次加载 UI 同时再次更新 UI 导致的异常
-          Future.delayed(const Duration(milliseconds: 200)).then((e) {
-            /// 手滑滑块时，不进行以下更新 UI 操作
-            if (!isTouch.value) {
-              try {
-                _updateSlider(100 * current / total);
-              } catch (e) {
-                _updateSlider(0.0);
-              }
-            }
-          });
-          return Slider(
-              inactiveColor: const Color(0xFFCCDDF1).withOpacity(0.6),
-              activeColor: const Color(0xFFCCDDF1).withOpacity(0.6),
-              thumbColor: Theme.of(Get.context!).primaryColor,
-              value: percent,
-              min: 0.0,
-              max: 100.0,
-              onChangeStart: (double value) {
-                isTouch.value = true;
-                _updateSlider(value);
-              },
-              onChanged: (double value) {
-                _updateSlider(value);
-              },
-              onChangeEnd: (double value) {
-                _updateSlider(value);
-                final position = total * value / 100;
-                PlayerLogic.to.seekTo(position.toInt());
-                Future.delayed(const Duration(milliseconds: 200)).then((e) {
-                  /// 延时200ms后再让obx接受播放器消息改变滑块位置，防止滑块位置跳动
-                  isTouch.value = false;
-                });
-              });
+    return Obx(() {
+      return SeekBar(
+        duration: PlayerLogic.to.playingTotal.value,
+        position: PlayerLogic.to.playingPosition.value,
+        onChangeEnd: (newPosition) {
+          PlayerLogic.to.seekTo(newPosition.inMilliseconds.truncate());
         }
-      }),
-    );
-  }
-
-  /// 更新滑块位置
-  _updateSlider(double per) {
-    if (per >= 0.0 && per <= 100.0) {
-      percent = per;
-      setState(() {});
-    }
-  }
-
-  Widget progress() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: Obx(() {
-        final total = PlayerLogic.to.playingTotal.value;
-        final current = PlayerLogic.to.playingPosition.value;
-        final totalMS = DateUtil.formatDate(DateUtil.getDateTimeByMs(total),
-            format: "mm:ss");
-        final currentMS = DateUtil.formatDate(DateUtil.getDateTimeByMs(current),
-            format: "mm:ss");
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              currentMS,
-              style: TextStyle(fontSize: 12.sp, color: const Color(0xFF999999)),
-            ),
-            Text(
-              totalMS,
-              style: TextStyle(fontSize: 12.sp, color: const Color(0xFF999999)),
-            )
-          ],
-        );
-      }),
-    );
+      );
+    });
   }
 
   Widget playButton() {
@@ -255,13 +182,23 @@ class _PlayerState extends State<Player> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          materialButton("assets/player/play_shuffle.svg",
-              () => PlayerLogic.to.changePlayMode(),
-              width: 32,
-              height: 32,
-              radius: 6,
-              iconSize: 15,
-              iconColor: const Color(0xFF333333)),
+          Obx(() {
+            String icon;
+            final playMode = PlayerLogic.to.playMode.value;
+            if (playMode == PlayMode.playlist) {
+              icon = "assets/player/play_recycle.svg";
+            } else if (playMode == PlayMode.single) {
+              icon = "assets/player/play_single.svg";
+            } else {
+              icon = "assets/player/play_shuffle.svg";
+            }
+            return materialButton(icon, () => PlayerLogic.to.changePlayMode(),
+                width: 32,
+                height: 32,
+                radius: 6,
+                iconSize: 15,
+                iconColor: const Color(0xFF333333));
+          }),
           materialButton("assets/player/play_prev.svg",
               () => PlayerLogic.to.changePlayPrevOrNext(-1),
               width: 60, height: 60, radius: 40, iconSize: 16),

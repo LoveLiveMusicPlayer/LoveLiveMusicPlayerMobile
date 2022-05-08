@@ -1,10 +1,11 @@
 import 'dart:async';
-import 'dart:collection';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/models/Lyric.dart';
 import 'package:lovelivemusicplayer/models/PlayMode.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
@@ -16,7 +17,7 @@ import '../models/Music.dart';
 
 class PlayerLogic extends SuperController
     with GetSingleTickerProviderStateMixin {
-  late AssetsAudioPlayer mPlayer;
+  AssetsAudioPlayer mPlayer = AssetsAudioPlayer.withId("LLMP");
 
   var preJPLrc = "".obs;
   var currentJPLrc = "".obs;
@@ -25,13 +26,13 @@ class PlayerLogic extends SuperController
   var zhLrc = "".obs;
   var romaLrc = "".obs;
   var isPlaying = false.obs;
-  var playingPosition = 0.obs;
-  var playingTotal = 0.obs;
+  var playingPosition = const Duration(milliseconds: 0).obs;
+  var playingTotal = const Duration(milliseconds: 0).obs;
   var playingMusic = Music().obs;
 
   var lrcType = 0.obs; // 0:原文; 1:翻译; 2:罗马音
   bool isCanMiniPlayerScroll = true;
-  PlayMode playMode = PlayMode.playlist;
+  var playMode = PlayMode.playlist.obs;
 
   final List<StreamSubscription> _subscriptions = [];
 
@@ -42,7 +43,6 @@ class PlayerLogic extends SuperController
   @override
   void onInit() {
     /// 指定播放器 id, 防止播放多个实例
-    mPlayer = AssetsAudioPlayer.withId("LLMP");
     SpUtil.getInt("playMode").then((mode) {
       if (PlayMode.playlist.index == mode) {
         print("播放模式：列表循环");
@@ -61,7 +61,7 @@ class PlayerLogic extends SuperController
 
     /// 播放状态监听
     _subscriptions.add(mPlayer.playerState.listen((event) {
-      switch(event) {
+      switch (event) {
         case PlayerState.play:
           isPlaying.value = true;
           print("player is playing...");
@@ -77,13 +77,14 @@ class PlayerLogic extends SuperController
       }
     }));
 
-    /// 播放列表播放结束监听
+    /// 歌曲播放结束监听
     _subscriptions.add(mPlayer.playlistAudioFinished.listen((data) {
       print('playlistAudioFinished: $data');
     }));
 
     _subscriptions.add(mPlayer.currentPosition.listen((duration) {
-      playingPosition.value = duration.inMilliseconds;
+      // LogUtil.e(DateUtil.formatDate(DateUtil.getDateTimeByMs(duration.inMilliseconds), format: "mm:ss"));
+      playingPosition.value = duration;
     }));
 
     /// 当前播放监听
@@ -91,7 +92,7 @@ class PlayerLogic extends SuperController
       if (data == null) {
         return;
       }
-      playingTotal.value = data.audio.duration.inMilliseconds;
+      playingTotal.value = data.audio.duration;
       final String uid = data.audio.audio.metas.id!;
       final String? group = data.audio.audio.metas.extra?["group"];
       final music = GlobalLogic.to.getMusicByUidAndGroup(uid, group);
@@ -100,8 +101,12 @@ class PlayerLogic extends SuperController
       }
       music.isPlaying = true;
       playingMusic.value = music;
-      getLrc();
+      getLrc(false);
     }));
+
+    mPlayer.loopMode.listen((loopMode){
+      LogUtil.e("loopMode: $loopMode");
+    });
 
     eventBus.on<PlayingLrcEvent>().listen((lrc) {
       preJPLrc.value = lrc.playingLrc.preJPLrc ?? "";
@@ -124,30 +129,48 @@ class PlayerLogic extends SuperController
       final musicPath = music.musicPath;
       if (musicPath?.isNotEmpty == true) {
         map["group"] = music.group;
-        tempList.add(Audio.file(SDUtils.path + musicPath!, metas: Metas(
-            id: music.uid,
-            title: music.name,
-            artist: music.artist,
-            album: music.albumName,
-            extra: map,
-            image: (coverPath == null || coverPath.isEmpty) ? null : MetasImage(
-                path: SDUtils.path + coverPath, type: ImageType.file),
-            onImageLoadFail: const MetasImage(
-                path: "assets/thumb/XVztg3oXmX4.jpg", type: ImageType.asset)
-        )));
+        tempList.add(Audio.file(SDUtils.path + musicPath!,
+            metas: Metas(
+                id: music.uid,
+                title: music.name,
+                artist: music.artist,
+                album: music.albumName,
+                extra: map,
+                image: (coverPath == null || coverPath.isEmpty)
+                    ? null
+                    : MetasImage(
+                        path: SDUtils.path + coverPath, type: ImageType.file),
+                onImageLoadFail: const MetasImage(
+                    path: "assets/thumb/XVztg3oXmX4.jpg",
+                    type: ImageType.asset))));
       }
+    }
+    var mode = LoopMode.none;
+    switch (playMode.value) {
+      case PlayMode.playlist:
+        mode = LoopMode.playlist;
+        break;
+      case PlayMode.single:
+        mode = LoopMode.single;
+        break;
+      default:
+        break;
     }
     mPlayer.open(
       Playlist(audios: tempList),
       autoStart: true,
       showNotification: true,
+      loopMode: mode
     );
     mPlayList.clear();
     mPlayList.addAll(musicList);
   }
 
   /// 播放 播放列表 指定位置的歌曲
-  changePlayIndex(int index) {
+  changePlayIndex(bool isController, int index) {
+    if (isController && mPlayer.isFirstBackgroundToForeground) {
+      return;
+    }
     isCanMiniPlayerScroll = false;
     mPlayer.playlistPlayAtIndex(index);
     isCanMiniPlayerScroll = true;
@@ -159,7 +182,7 @@ class PlayerLogic extends SuperController
     if (currentMusic == null) {
       return;
     }
-    changePlayIndex(currentMusic.index + direction);
+    changePlayIndex(false, currentMusic.index + direction);
   }
 
   /// 开关播放
@@ -169,25 +192,87 @@ class PlayerLogic extends SuperController
   }
 
   /// 获取中/日/罗马歌词
-  getLrc() async {
-    final jp = playingMusic.value.jpUrl;
-    final zh = playingMusic.value.zhUrl;
-    final roma = playingMusic.value.romaUrl;
-    if (jp == null || jp.isEmpty) {
-      jpLrc.value = "";
-    } else {
-      jpLrc.value = await Network.getSync(jp);
+  getLrc(bool forceRefresh) async {
+    jpLrc.value = "";
+    zhLrc.value = "";
+    romaLrc.value = "";
+
+    final uid = playingMusic.value.uid;
+    final jp =
+        await handleLRC("jp", playingMusic.value.jpUrl, uid, forceRefresh);
+    if (jp != null) {
+      jpLrc.value = jp;
     }
-    if (zh == null || zh.isEmpty) {
-      zhLrc.value = "";
-    } else {
-      zhLrc.value = await Network.getSync(zh);
+    final zh =
+        await handleLRC("zh", playingMusic.value.zhUrl, uid, forceRefresh);
+    if (zh != null) {
+      zhLrc.value = zh;
     }
-    if (roma == null || roma.isEmpty) {
-      romaLrc.value = "";
-    } else {
-      romaLrc.value = await Network.getSync(roma);
+    final roma =
+        await handleLRC("roma", playingMusic.value.romaUrl, uid, forceRefresh);
+    if (roma != null) {
+      romaLrc.value = roma;
     }
+  }
+
+  /// 处理歌词二级缓存
+  /// @param type 要处理的歌词类型
+  /// @param lrcUrl 歌词的网络地址
+  /// @param uid 歌曲的id
+  /// @param forceRefresh 是否强制刷新歌词
+  Future<String?> handleLRC(
+      String type, String? lrcUrl, String? uid, bool forceRefresh) async {
+    if (lrcUrl != null && lrcUrl.isNotEmpty) {
+      if (uid != null && uid.isNotEmpty) {
+        /// null: 从未插入; "": 插入但没有值
+        var lyric = await DBLogic.to.lyricDao.findLyricById(uid);
+        String? storageLrc;
+        if (lyric != null) {
+          switch (type) {
+            case "jp":
+              storageLrc = lyric.jp ?? "";
+              break;
+            case "zh":
+              storageLrc = lyric.zh ?? "";
+              break;
+            case "roma":
+              storageLrc = lyric.roma ?? "";
+              break;
+          }
+        }
+        if (storageLrc == null || storageLrc.isEmpty || forceRefresh) {
+          final netLrc = await Network.getSync(lrcUrl) ?? "";
+          if (netLrc != null && netLrc.isNotEmpty) {
+            if (storageLrc == null) {
+              lyric = Lyric(uid: uid, jp: null, zh: null, roma: null);
+            }
+            if (lyric != null) {
+              switch (type) {
+                case "jp":
+                  lyric.jp = netLrc;
+                  break;
+                case "zh":
+                  lyric.zh = netLrc;
+                  break;
+                case "roma":
+                  lyric.roma = netLrc;
+                  break;
+              }
+
+              if (storageLrc == null) {
+                await DBLogic.to.lyricDao.insertLyric(lyric);
+              } else {
+                await DBLogic.to.lyricDao.updateLrc(lyric);
+              }
+            }
+            return netLrc;
+          }
+        } else {
+          return storageLrc;
+        }
+      }
+    }
+    return null;
   }
 
   toggleTranslate() {
@@ -204,9 +289,7 @@ class PlayerLogic extends SuperController
     }
   }
 
-  toggleLove() {
-
-  }
+  toggleLove() {}
 
   seekTo(int ms) {
     mPlayer.seek(Duration(milliseconds: ms), force: true);
@@ -215,18 +298,18 @@ class PlayerLogic extends SuperController
   _setPlayMode(PlayMode? mode) {
     switch (mode) {
       case PlayMode.playlist:
-        playMode = PlayMode.playlist;
+        playMode.value = PlayMode.playlist;
         mPlayer.setLoopMode(LoopMode.playlist);
         mPlayer.shuffle = false;
         break;
       case PlayMode.single:
-        playMode = PlayMode.single;
+        playMode.value = PlayMode.single;
         mPlayer.setLoopMode(LoopMode.single);
         mPlayer.shuffle = false;
         break;
       default:
-        playMode = PlayMode.shuffling;
-        mPlayer.setLoopMode(LoopMode.playlist);
+        playMode.value = PlayMode.shuffling;
+        mPlayer.setLoopMode(LoopMode.none);
         mPlayer.shuffle = true;
         break;
     }
@@ -235,7 +318,7 @@ class PlayerLogic extends SuperController
 
   /// 切换循环播放模式
   changePlayMode() {
-    switch (playMode) {
+    switch (playMode.value) {
       case PlayMode.playlist:
         _setPlayMode(PlayMode.single);
         break;

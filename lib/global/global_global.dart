@@ -7,31 +7,35 @@ import '../models/Music.dart';
 class GlobalLogic extends SuperController with GetSingleTickerProviderStateMixin {
   /// all、μ's、aqours、niji、liella、combine
   final currentGroup = "all".obs;
+  final databaseInitOver = false.obs;
 
-  final musicByAllList = <Music>[];
-  final musicByUsList = <Music>[];
-  final musicByAqoursList = <Music>[];
-  final musicByNijiList = <Music>[];
-  final musicByLiellaList = <Music>[];
-  final musicByCombineList = <Music>[];
+  final musicByAllList = <Music>[].obs;
+  final musicByUsList = <Music>[].obs;
+  final musicByAqoursList = <Music>[].obs;
+  final musicByNijiList = <Music>[].obs;
+  final musicByLiellaList = <Music>[].obs;
+  final musicByCombineList = <Music>[].obs;
 
-  final albumByAllList = <Album>[];
-  final albumByUsList = <Album>[];
-  final albumByAqoursList = <Album>[];
-  final albumByNijiList = <Album>[];
-  final albumByLiellaList = <Album>[];
-  final albumByCombineList = <Album>[];
+  final albumByAllList = <Album>[].obs;
+  final albumByUsList = <Album>[].obs;
+  final albumByAqoursList = <Album>[].obs;
+  final albumByNijiList = <Album>[].obs;
+  final albumByLiellaList = <Album>[].obs;
+  final albumByCombineList = <Album>[].obs;
 
-  final artistByAllList = <Artist>[];
-  final artistByUsList = <Artist>[];
-  final artistByAqoursList = <Artist>[];
-  final artistByNijiList = <Artist>[];
-  final artistByLiellaList = <Artist>[];
-  final artistByCombineList = <Artist>[];
+  final artistByAllList = <Artist>[].obs;
+  final artistByUsList = <Artist>[].obs;
+  final artistByAqoursList = <Artist>[].obs;
+  final artistByNijiList = <Artist>[].obs;
+  final artistByLiellaList = <Artist>[].obs;
+  final artistByCombineList = <Artist>[].obs;
 
   static GlobalLogic get to => Get.find();
 
-  getListSize(int index) {
+  getListSize(int index, bool isDbInit) {
+    if (!isDbInit) {
+      return 0;
+    }
     switch (index) {
       case 0:
         return checkMusicList().length;
@@ -40,7 +44,7 @@ class GlobalLogic extends SuperController with GetSingleTickerProviderStateMixin
       case 2:
         return checkArtistList().length;
       default:
-        return 6;
+        return 0;
     }
   }
 

@@ -1,7 +1,7 @@
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/dao/database.dart';
+import 'package:lovelivemusicplayer/dao/lyric_dao.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
@@ -13,15 +13,21 @@ import '../models/Music.dart';
 class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   late MusicDatabase database;
   late AlbumDao albumDao;
+  late LyricDao lyricDao;
 
   final globalLogic = Get.find<GlobalLogic>();
+
+  static DBLogic get to => Get.find();
 
   @override
   Future<void> onInit() async {
     database =
-        await $FloorMusicDatabase.databaseBuilder('app_database.db').build();
+        await $FloorMusicDatabase
+            .databaseBuilder('app_database.db')
+            .addMigrations([migration1to2])
+            .build();
     albumDao = database.albumDao;
-
+    lyricDao = database.lyricDao;
     final allAlbums = await albumDao.findAllAlbums();
     if (allAlbums.isEmpty) {
       await parseJson();
@@ -67,11 +73,16 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   findAllList() async {
     /// 设置专辑数据
     final allAlbums = await albumDao.findAllAlbums();
-    final usAlbums = allAlbums.where((element) => element.group == "μ's").toList();
-    final aqoursAlbums = allAlbums.where((element) => element.group == "Aqours").toList();
-    final nijiAlbums = allAlbums.where((element) => element.group == "Nijigasaki").toList();
-    final liellaAlbums = allAlbums.where((element) => element.group == "Liella!").toList();
-    final combineAlbums = allAlbums.where((element) => element.group == "Combine").toList();
+    final usAlbums =
+        allAlbums.where((element) => element.group == "μ's").toList();
+    final aqoursAlbums =
+        allAlbums.where((element) => element.group == "Aqours").toList();
+    final nijiAlbums =
+        allAlbums.where((element) => element.group == "Nijigasaki").toList();
+    final liellaAlbums =
+        allAlbums.where((element) => element.group == "Liella!").toList();
+    final combineAlbums =
+        allAlbums.where((element) => element.group == "Combine").toList();
 
     globalLogic.albumByUsList.addAll(usAlbums);
     globalLogic.albumByAqoursList.addAll(aqoursAlbums);
@@ -125,35 +136,25 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     final liellaArtists = <Artist>[];
     final combineArtists = <Artist>[];
 
-
-
-
-
     globalLogic.artistByUsList.addAll(usArtists);
     globalLogic.artistByAqoursList.addAll(aqoursArtists);
     globalLogic.artistByNijiList.addAll(nijiArtists);
     globalLogic.artistByLiellaList.addAll(liellaArtists);
     globalLogic.artistByCombineList.addAll(combineArtists);
     globalLogic.artistByAllList.addAll(allArtists);
+
+    GlobalLogic.to.databaseInitOver.value = true;
   }
 
   @override
-  void onDetached() {
-    LogUtil.e('onDetached');
-  }
+  void onDetached() {}
 
   @override
-  void onInactive() {
-    LogUtil.e('onInactive');
-  }
+  void onInactive() {}
 
   @override
-  void onPaused() {
-    LogUtil.e('onPaused');
-  }
+  void onPaused() {}
 
   @override
-  void onResumed() {
-    LogUtil.e('onResumed');
-  }
+  void onResumed() {}
 }

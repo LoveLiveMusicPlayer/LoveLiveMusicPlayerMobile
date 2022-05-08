@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';
@@ -30,9 +29,11 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin {
+class _HomeViewState extends State<HomeView>
+    with SingleTickerProviderStateMixin {
   TabController? tabController;
   final logic = Get.find<HomeController>();
+
   @override
   void initState() {
     super.initState();
@@ -55,12 +56,18 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
         panelMinSize: _panelMinSize.h,
         panelMaxSize: _panelMaxSize,
         overlayOpacity: 0.9,
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme
+            .of(context)
+            .primaryColor,
         overlay: true,
         isDismissible: true,
         body: _getTabBarView(() => _scaffoldKey.currentState?.openEndDrawer()),
-        blurColor: Theme.of(context).primaryColor,
-        overlayColor: Theme.of(context).primaryColor,
+        blurColor: Theme
+            .of(context)
+            .primaryColor,
+        overlayColor: Theme
+            .of(context)
+            .primaryColor,
         panelBorderRadiusBegin: 10,
         panelBorderRadiusEnd: 10,
         panelHeader: MiniPlayer(onTap: _controller.show),
@@ -130,12 +137,15 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
         elevation: 0,
         centerTitle: false,
         automaticallyImplyLeading: false,
-        backgroundColor: Theme.of(Get.context!).primaryColor,
+        backgroundColor: Theme
+            .of(Get.context!)
+            .primaryColor,
         title: _getTabBar(),
         actions: [_getTopHead(onTap)],
       ),
       body: Column(
         children: [
+
           ///顶部歌曲总数栏
           _buildListTop(),
 
@@ -168,7 +178,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
 
   showSelectDialog() {
     List<BtnItem> list = [];
-    if (logic.state.currentIndex == 1) {
+    if (logic.state.currentIndex.value == 1) {
       list.add(BtnItem(
           imgPath: "assets/dialog/ic_add_play_list2.svg",
           title: "专辑播放",
@@ -179,7 +189,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
           onTap: () {}));
       list.add(BtnItem(
           imgPath: "assets/dialog/ic_delete.svg", title: "删除专辑", onTap: () {}));
-    } else if (logic.state.currentIndex == 1) {
+    } else if (logic.state.currentIndex.value == 1) {
       list.add(BtnItem(
           imgPath: "assets/dialog/ic_add_play_list2.svg",
           title: "全部播放",
@@ -210,12 +220,13 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
 
   Widget _buildList() {
     return Expanded(
-      child: GetBuilder<HomeController>(builder: (_) {
+      child: Obx(() {
+        LogUtil.e(logic.state.currentIndex.value);
         return RefresherWidget(
-          itemCount: GlobalLogic.to.getListSize(logic.state.currentIndex),
+          itemCount: GlobalLogic.to.getListSize(logic.state.currentIndex.value, GlobalLogic.to.databaseInitOver.value),
           enablePullUp: false,
           enablePullDown: false,
-          isGridView: logic.state.currentIndex == 1,
+          isGridView: logic.state.currentIndex.value == 1,
 
           ///当前列表是否网格显示
           columnNum: 3,
@@ -234,7 +245,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
 
   Widget _buildListItem(int index) {
     /// 0 歌曲  1 专辑  2 歌手  3 我喜欢  4 歌单  5  最近播放
-    if (logic.state.currentIndex == 1) {
+    if (logic.state.currentIndex.value == 1) {
       return ListViewItemAlbum(
         album: GlobalLogic.to.checkAlbumList()[index],
         checked: logic.isItemChecked(index),
@@ -244,11 +255,12 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
           if (logic.state.isSelect) {
             logic.selectItem(album, checked);
           } else {
-            Get.toNamed(Routes.routeAlbumDetails, arguments: GlobalLogic.to.checkAlbumList()[index]);
+            Get.toNamed(Routes.routeAlbumDetails,
+                arguments: GlobalLogic.to.checkAlbumList()[index]);
           }
         },
       );
-    } else if (logic.state.currentIndex == 2) {
+    } else if (logic.state.currentIndex.value == 2) {
       return ListViewItemSinger(
         index: index,
         checked: logic.isItemChecked(index),
@@ -257,11 +269,12 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
           if (logic.state.isSelect) {
             logic.selectItem(artist, checked);
           } else {
-            Get.toNamed(Routes.routeSingerDetails, arguments: GlobalLogic.to.checkAlbumList()[index]);
+            Get.toNamed(Routes.routeSingerDetails,
+                arguments: GlobalLogic.to.checkAlbumList()[index]);
           }
         },
       );
-    } else if (logic.state.currentIndex == 4) {
+    } else if (logic.state.currentIndex.value == 4) {
       return ListViewItemSongSheet(onItemTap: (checked) {}, index: index);
     } else {
       return ListViewItemSong(
@@ -278,7 +291,8 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
         onPlayTap: (index) {},
         onMoreTap: (index) {
           SmartDialog.show(
-              widget: const DialogMore(), alignmentTemp: Alignment.bottomCenter);
+              widget: const DialogMore(),
+              alignmentTemp: Alignment.bottomCenter);
         },
       );
     }

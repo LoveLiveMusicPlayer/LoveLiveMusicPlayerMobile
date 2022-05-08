@@ -6,8 +6,8 @@ abstract class AlbumDao {
   @Query('SELECT * FROM Album')
   Future<List<Album>> findAllAlbums();
 
-  @Query('SELECT * FROM Album WHERE id = :id')
-  Stream<Album?> findAlbumById(int id);
+  @Query('SELECT * FROM Album WHERE uid = :uid')
+  Future<Album?> findAlbumById(int uid);
 
   @insert
   Future<void> insertAlbum(Album album);

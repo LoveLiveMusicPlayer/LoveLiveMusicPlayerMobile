@@ -16,7 +16,7 @@ class _BottomBar2State extends State<BottomBar2> {
   @override
   Widget build(BuildContext context) {
     final colorTheme = Theme.of(context).colorScheme;
-    mIndex = handlePage(HomeController.to.state.currentIndex);
+    mIndex = handlePage(HomeController.to.state.currentIndex.value);
     return BottomNavigationBar(
       showUnselectedLabels: true,
       currentIndex: mIndex,
@@ -55,7 +55,7 @@ class _BottomBar2State extends State<BottomBar2> {
       onTap: (index) {
         mIndex = handlePage(index + 3);
         setState(() {});
-        HomeController.to.state.currentIndex = index + 3;
+        HomeController.to.state.currentIndex.value = index + 3;
         HomeController.to.update();
       },
     );

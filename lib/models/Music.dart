@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'package:floor/floor.dart';
 
 Music musicFromJson(String str) => Music.fromJson(json.decode(str));
 
 String musicToJson(Music data) => json.encode(data.toJson());
 
-@Entity(tableName: "Music")
 class Music {
   Music({
     this.uid,
@@ -22,12 +20,12 @@ class Music {
     this.romaUrl,
     this.group,
     this.isLove = false,
-    this.isPlaying = false
+    this.isPlaying = false,
+    this.index = 0
   });
 
 
   /// 实体层属性
-  @primaryKey
   String? uid; // id
   String? name; // 歌名
   String? albumId; // 专辑id
@@ -43,6 +41,7 @@ class Music {
   bool isLove; // 是否我喜欢
   String? group; // 团组
   bool isPlaying; // 是否当前播放
+  int index; // 处于播放器播放列表第几首
 
   factory Music.fromJson(Map<String, dynamic> json) => Music(
     uid: json["_id"],

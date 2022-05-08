@@ -16,7 +16,7 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     final colorTheme = Theme.of(context).colorScheme;
-    mIndex = handlePage(HomeController.to.state.currentIndex);
+    mIndex = handlePage(HomeController.to.state.currentIndex.value);
 
     return BottomNavigationBar(
       showUnselectedLabels: true,
@@ -54,7 +54,7 @@ class _BottomBarState extends State<BottomBar> {
       onTap: (index) {
         mIndex = handlePage(index);
         setState(() {});
-        HomeController.to.state.currentIndex = index;
+        HomeController.to.state.currentIndex.value = index;
         HomeController.to.resetCheckedState();///重置选中状态
         HomeController.to.update();
       },

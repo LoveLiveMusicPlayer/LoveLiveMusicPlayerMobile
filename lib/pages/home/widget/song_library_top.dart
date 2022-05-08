@@ -31,23 +31,23 @@ class Song_libraryTop extends StatelessWidget {
   }
 
   ///获取顶部显示布局
-  Widget buildTopWidget(){
-    if(HomeController.to.state.isSelect){
-      if(HomeController.to.state.currentIndex == 2 || HomeController.to.state.currentIndex == 4 ){
+  Widget buildTopWidget() {
+    if (HomeController.to.state.isSelect) {
+      if (HomeController.to.state.currentIndex.value == 2 ||
+          HomeController.to.state.currentIndex.value == 4) {
         return Container();
-      }else{
+      } else {
         return _buildSelectSong();
       }
-    }else{
-      if(HomeController.to.state.currentIndex == 2 || HomeController.to.state.currentIndex == 4 ){
+    } else {
+      if (HomeController.to.state.currentIndex.value == 2 ||
+          HomeController.to.state.currentIndex.value == 4) {
         return Container();
-      }else{
+      } else {
         return _buildPlaySong();
       }
     }
   }
-
-
 
   ///播放歌曲条目
   Widget _buildPlaySong() {
@@ -107,9 +107,9 @@ class Song_libraryTop extends StatelessWidget {
   ///歌曲总数
   Widget _buildSongNumText() {
     return Expanded(
-      child: GetBuilder<HomeController>(builder: (logic) {
+      child: Obx(() {
         return Text(
-          "${global.getListSize(HomeController.to.state.currentIndex)}首歌曲",
+          "${global.getListSize(HomeController.to.state.currentIndex.value, global.databaseInitOver.value)}首歌曲",
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
@@ -125,8 +125,11 @@ class Song_libraryTop extends StatelessWidget {
   Widget _buildScreen() {
     return Padding(
       padding: EdgeInsets.only(right: 16.h, top: 5.h, bottom: 5.h, left: 30.h),
-      child: touchIconByAsset(path: "assets/main/ic_screen.svg", onTap: onScreenTap,
-          width: 15, height: 15),
+      child: touchIconByAsset(
+          path: "assets/main/ic_screen.svg",
+          onTap: onScreenTap,
+          width: 15,
+          height: 15),
     );
   }
 
@@ -149,7 +152,7 @@ class Song_libraryTop extends StatelessWidget {
               spacing: 10.h,
               iconSize: 25,
               title: "选择全部/已选${HomeController.to.getCheckedSong()}首",
-              titleColor: Color(0xFF333333),
+              titleColor: const Color(0xFF333333),
               titleSize: 15.sp,
               onCheckd: (value) {
                 HomeController.to.state.selectAll = value;
