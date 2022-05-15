@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/dao/database.dart';
@@ -5,6 +7,7 @@ import 'package:lovelivemusicplayer/dao/lyric_dao.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
+
 import '../dao/album_dao.dart';
 import '../models/Album.dart';
 import '../models/FtpMusic.dart';
@@ -21,11 +24,10 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
   @override
   Future<void> onInit() async {
-    database =
-        await $FloorMusicDatabase
-            .databaseBuilder('app_database.db')
-            // .addMigrations([migration1to2])
-            .build();
+    database = await $FloorMusicDatabase
+        .databaseBuilder('app_database.db')
+        // .addMigrations([migration1to2])
+        .build();
     albumDao = database.albumDao;
     lyricDao = database.lyricDao;
     final allAlbums = await albumDao.findAllAlbums();
@@ -49,7 +51,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
             albumId: music.albumId,
             albumName: music.albumName,
             coverPath: music.coverPath,
-            musicPath: music.musicPath,
+            musicPath:
+                "${music.musicPath}${Platform.isAndroid ? ".flac" : ".wav"}",
             artist: music.artist,
             artistBin: music.artistBin,
             totalTime: music.totalTime,

@@ -1,9 +1,11 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
+
 import '../utils/sd_utils.dart';
 
 /// 显示图片
@@ -117,16 +119,23 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
     Color innerColor = const Color(0xFFF2F8FF),
     Color outerColor = const Color(0xFFD3E0EC),
     double iconSize = 30,
-    Color iconColor = Colors.black,
+    Color bgColor = Colors.black,
+    Color? iconColor,
     EdgeInsets offset = const EdgeInsets.all(0)}) {
   Widget child;
   if (icon is IconData) {
-    child = Icon(icon, color: iconColor, size: iconSize.h);
+    child = Icon(icon,
+        color: iconColor ??
+            (Get.isDarkMode ? Colors.white : const Color(0xFF333333)),
+        size: iconSize.h);
   } else if (icon is String &&
       icon.startsWith("assets") &&
       icon.endsWith(".svg")) {
     child = SvgPicture.asset(icon,
-        color: iconColor, width: iconSize.h, height: iconSize.h);
+        color: iconColor ??
+            (Get.isDarkMode ? Colors.white : const Color(0xFF333333)),
+        width: iconSize.h,
+        height: iconSize.h);
   } else {
     child = Container();
   }
@@ -148,6 +157,9 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
     child: ClipRRect(
       borderRadius: BorderRadius.circular(radius.h),
       child: Material(
+        color: Get.isDarkMode
+            ? Get.theme.primaryColorLight
+            : Get.theme.primaryColor,
         child: InkWell(
           splashColor: const Color(0xFFD3E0EC),
           highlightColor: const Color(0xFFD3E0EC),
@@ -243,8 +255,7 @@ Widget logoIcon(String path,
               ]),
           child: InkWell(
               onTap: onTap,
-              child: showImg(image,
-                  radius: radius.h, hasShadow: false))));
+              child: showImg(image, radius: radius.h, hasShadow: false))));
 }
 
 Widget touchIcon(IconData icon, GestureTapCallback onTap,

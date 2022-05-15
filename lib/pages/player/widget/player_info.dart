@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import '../../../global/global_player.dart';
 
 class PlayerInfo extends GetView<PlayerLogic> {

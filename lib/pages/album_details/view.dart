@@ -8,6 +8,7 @@ import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_more.dart';
 import 'package:lovelivemusicplayer/widgets/details_cover.dart';
 import 'package:lovelivemusicplayer/widgets/details_list_top.dart';
+
 import '../../widgets/listview_item_song.dart';
 import 'logic.dart';
 import 'widget/details_header.dart';
@@ -20,7 +21,7 @@ class AlbumDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF2F8FF),
+      backgroundColor: Get.theme.primaryColor,
       body: _buildBody(),
     );
   }
@@ -71,11 +72,10 @@ class AlbumDetailsPage extends StatelessWidget {
     ));
     for (final music in album.music) {
       list.add(Padding(
-        padding: EdgeInsets.only(left: 16.h, bottom: 20.h),
+        padding: EdgeInsets.only(left: 16.w, bottom: 20.h, right: 16.w),
         child: ListViewItemSong(
           music: music,
           checked: logic.isItemChecked(music),
-          isSelect: logic.state.isSelect,
           onItemTap: (index, checked) {
             logic.selectItem(music, checked);
           },

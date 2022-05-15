@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
+
 import '../../../widgets/circular_check_box.dart';
 
 class Song_libraryTop extends StatelessWidget {
@@ -24,7 +26,7 @@ class Song_libraryTop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(builder: (logic) {
+    return Obx(() {
       return buildTopWidget();
     });
     //
@@ -32,7 +34,7 @@ class Song_libraryTop extends StatelessWidget {
 
   ///获取顶部显示布局
   Widget buildTopWidget() {
-    if (HomeController.to.state.isSelect) {
+    if (HomeController.to.state.isSelect.value) {
       if (HomeController.to.state.currentIndex.value == 2 ||
           HomeController.to.state.currentIndex.value == 4) {
         return Container();
@@ -53,7 +55,7 @@ class Song_libraryTop extends StatelessWidget {
   Widget _buildPlaySong() {
     return Container(
       height: 45.h,
-      color: const Color(0xFFF2F8FF),
+      color: Get.theme.primaryColor,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -110,14 +112,11 @@ class Song_libraryTop extends StatelessWidget {
     return Expanded(
       child: Obx(() {
         return Text(
-          "${global.getListSize(index, global.databaseInitOver.value)}${index == 0 ? '首歌曲' : '张专辑'}",
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-              color: const Color(0xFF333333),
-              fontSize: 14.h,
-              fontWeight: FontWeight.bold),
-        );
+            "${global.getListSize(index, global.databaseInitOver.value)}${index == 0 ? '首歌曲' : '张专辑'}",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style:
+                Get.isDarkMode ? TextStyleMs.white_14 : TextStyleMs.black_14);
       }),
     );
   }
@@ -137,7 +136,7 @@ class Song_libraryTop extends StatelessWidget {
   ///播放歌曲条目
   Widget _buildSelectSong() {
     return Container(
-      color: const Color(0xFFF2F8FF),
+      color: Get.theme.primaryColor,
       height: 45.h,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -153,8 +152,8 @@ class Song_libraryTop extends StatelessWidget {
               spacing: 10.h,
               iconSize: 25,
               title: "选择全部/已选${HomeController.to.getCheckedSong()}首",
-              titleColor: const Color(0xFF333333),
-              titleSize: 15.sp,
+              textStyle:
+                  Get.isDarkMode ? TextStyleMs.white_15 : TextStyleMs.black_15,
               onCheckd: (value) {
                 HomeController.to.state.selectAll = value;
                 onSelectAllTap(value);
@@ -170,8 +169,9 @@ class Song_libraryTop extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 16.h),
               child: Text(
                 "取消",
-                style:
-                    TextStyle(color: const Color(0xFF333333), fontSize: 15.sp),
+                style: Get.isDarkMode
+                    ? TextStyleMs.white_15
+                    : TextStyleMs.black_15,
               ),
             ),
           )

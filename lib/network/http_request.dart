@@ -1,11 +1,11 @@
 import 'package:common_utils/common_utils.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:lovelivemusicplayer/models/apiResponse.dart';
 import 'package:lovelivemusicplayer/network/api_service.dart';
 import 'package:lovelivemusicplayer/widgets/one_button_dialog.dart';
 import 'package:synchronized/extension.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 
 class Network {
   static Network? _httpRequest;
@@ -37,7 +37,7 @@ class Network {
   }
 
   static getSync(String url,
-    {bool isShowDialog = false,
+      {bool isShowDialog = false,
       bool isShowError = false,
       String loadingMessage = "请求网络中..."}) async {
     if (isShowDialog) {
@@ -47,9 +47,9 @@ class Network {
       if (isShowError) {
         SmartDialog.show(
             widget: OneButtonDialog(
-              title: "请检查网络",
-              isShowMsg: false,
-            ));
+          title: "请检查网络",
+          isShowMsg: false,
+        ));
       }
       return Future.error(error.toString());
     });
@@ -130,7 +130,7 @@ class Network {
         // .request<Map<String, dynamic>>(url,
         //     queryParameters: params, options: Options(method: method))
         .request<dynamic>(url,
-          queryParameters: params, options: Options(method: method))
+            queryParameters: params, options: Options(method: method))
         .then((value) => {_handlerSuccess(value.data, success)})
         .onError((e, stackTrace) =>
             {_handlerError(isShowError, e.toString(), error)});

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class DetailsCover extends StatelessWidget {
   final Album album;
+
   const DetailsCover({Key? key, required this.album}) : super(key: key);
 
   @override
@@ -24,10 +27,9 @@ class DetailsCover extends StatelessWidget {
             album.name ?? "",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-                color: const Color(0xff333333),
-                fontSize: 15.sp,
-                fontWeight: FontWeight.bold),
+            style: Get.isDarkMode
+                ? TextStyleMs.whiteBold_15
+                : TextStyleMs.blackBold_15,
           ),
           SizedBox(
             height: 5.h,

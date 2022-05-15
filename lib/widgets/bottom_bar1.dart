@@ -55,7 +55,9 @@ class _BottomBarState extends State<BottomBar> {
         mIndex = handlePage(index);
         setState(() {});
         HomeController.to.state.currentIndex.value = index;
-        HomeController.to.resetCheckedState();///重置选中状态
+        HomeController.to.resetCheckedState();
+
+        ///重置选中状态
         HomeController.to.update();
       },
     );

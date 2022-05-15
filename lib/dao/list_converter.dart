@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:floor/floor.dart';
 
 import '../models/Music.dart';
@@ -18,7 +19,8 @@ class StringListConverter extends TypeConverter<List<String>?, String> {
 class MusicListConverter extends TypeConverter<List<Music>, String> {
   @override
   List<Music> decode(String databaseValue) {
-    return List<Music>.from(json.decode(databaseValue).map((x) => musicFromJson(x)));
+    return List<Music>.from(
+        json.decode(databaseValue).map((x) => musicFromJson(x)));
   }
 
   @override

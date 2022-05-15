@@ -1,5 +1,4 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
@@ -29,7 +28,8 @@ class CarouselPlayer extends StatelessWidget {
                 : const NeverScrollableScrollPhysics(),
             enableInfiniteScroll: false,
             onPageChanged: (index, reason) {
-              final isController = reason == CarouselPageChangedReason.controller;
+              final isController =
+                  reason == CarouselPageChangedReason.controller;
               if (isCanScroll) {
                 PlayerLogic.to.changePlayIndex(isController, index);
               }

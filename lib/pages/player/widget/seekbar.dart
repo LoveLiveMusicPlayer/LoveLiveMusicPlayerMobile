@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +10,8 @@ class SeekBar extends StatefulWidget {
   final Duration position;
   final ValueChanged<Duration>? onChangeEnd;
 
-  const SeekBar({Key? key,
+  const SeekBar({
+    Key? key,
     required this.duration,
     required this.position,
     this.onChangeEnd,
@@ -45,7 +47,7 @@ class _SeekBarState extends State<SeekBar> {
           child: Slider(
             inactiveColor: const Color(0xFFCCDDF1).withOpacity(0.6),
             activeColor: const Color(0xFFCCDDF1).withOpacity(0.6),
-            thumbColor: Theme.of(Get.context!).primaryColor,
+            thumbColor: Get.isDarkMode ? Colors.white : Get.theme.primaryColor,
             min: 0.0,
             max: total.toDouble(),
             value: value,

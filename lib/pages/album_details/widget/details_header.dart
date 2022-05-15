@@ -6,12 +6,13 @@ import '../../../modules/ext.dart';
 
 class DetailsHeader extends StatelessWidget {
   String title;
-  DetailsHeader({Key? key,this.title = ""}) : super(key: key);
+
+  DetailsHeader({Key? key, this.title = ""}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFFF2F8FF),
+      color: Get.theme.primaryColor,
       child: SafeArea(
         child: Stack(
           alignment: Alignment.bottomCenter,
@@ -23,12 +24,7 @@ class DetailsHeader extends StatelessWidget {
                 padding: EdgeInsets.only(left: 16.h, top: 18.h),
                 child: materialButton(Icons.keyboard_arrow_left, () {
                   Get.back();
-                },
-                    width: 32,
-                    height: 32,
-                    iconSize: 24,
-                    radius: 6,
-                    iconColor: const Color(0xFF333333)),
+                }, width: 32, height: 32, iconSize: 24, radius: 6),
               ),
             ),
             SizedBox(
@@ -38,8 +34,10 @@ class DetailsHeader extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 15.sp,
-                    color: const Color(0xff333333),),
+                style: TextStyle(
+                  fontSize: 15.sp,
+                  color: const Color(0xff333333),
+                ),
               ),
             )
           ],

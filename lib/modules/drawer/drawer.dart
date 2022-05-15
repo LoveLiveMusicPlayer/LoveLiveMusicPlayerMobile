@@ -1,11 +1,14 @@
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/global/global_theme.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/routes.dart';
+import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -26,11 +29,7 @@ class _DrawerPageState extends State<DrawerPage> {
         child: SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          topView(),
-          groupView(),
-          functionView()
-        ],
+        children: [topView(), groupView(), functionView()],
       ),
     ));
   }
@@ -42,8 +41,7 @@ class _DrawerPageState extends State<DrawerPage> {
         logoIcon(Const.logo, width: 96, height: 96, radius: 96),
         SizedBox(height: 12.h),
         Text("LoveLiveMusicPlayer",
-            style:
-            TextStyle(fontSize: 17.sp, color: const Color(0xFF333333))),
+            style: TextStyle(fontSize: 17.sp, color: const Color(0xFF333333))),
         SizedBox(height: 20.h)
       ],
     );
@@ -127,30 +125,38 @@ class _DrawerPageState extends State<DrawerPage> {
                         var data = await Get.toNamed(Routes.routeScan);
                         if (data != null) {
                           Get.toNamed(Routes.routeTransform,
-                              arguments: IOWebSocketChannel.connect(Uri.parse(data)));
+                              arguments:
+                                  IOWebSocketChannel.connect(Uri.parse(data)));
                         }
                       },
                     ),
                     DrawerFunctionButton(
                       icon: "assets/drawer/drawer_data_sync.svg",
                       text: "数据同步",
-                      onTap: () {
-
-                      },
+                      onTap: () {},
                     ),
                     DrawerFunctionButton(
-                      icon: "assets/drawer/drawer_day_night.svg",
-                      text: "夜间模式",
-                      hasSwitch: true,
-                      callBack: (check) {
-                        LogUtil.e(check);
-                      }
-                    ),
+                        icon: "assets/drawer/drawer_day_night.svg",
+                        text: "夜间模式",
+                        hasSwitch: true,
+                        initSwitch: Get.isDarkMode,
+                        callBack: (check) {
+                          Get.changeTheme(check ? darkTheme : lightTheme);
+                          SpUtil.put(Const.spDark, check);
+                        }),
                     DrawerFunctionButton(
                       icon: "assets/drawer/drawer_secret.svg",
                       text: "关于和隐私",
-                      onTap: () {
-
+                      onTap: () {},
+                    ),
+                    DrawerFunctionButton(
+                      icon: "assets/drawer/drawer_reset.svg",
+                      text: "清理数据",
+                      onTap: () async {
+                        SmartDialog.showLoading(
+                            msg: "重置中...", backDismiss: false);
+                        await DBLogic.to.parseJson();
+                        SmartDialog.dismiss();
                       },
                     )
                   ],

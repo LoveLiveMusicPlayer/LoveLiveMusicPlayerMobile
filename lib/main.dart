@@ -1,18 +1,20 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lovelivemusicplayer/global/global_binding.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'routes.dart';
-import 'package:flutter/services.dart';
+
 import 'global/const.dart';
+import 'global/global_theme.dart';
 import 'i18n/translation.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'network/http_request.dart';
+import 'routes.dart';
 import 'utils/sd_utils.dart';
 import 'utils/sp_util.dart';
 
@@ -21,13 +23,16 @@ var isDark = false;
 void main() async {
   // 启动屏开启
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  // 仅支持竖屏
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   // 初始化
   await initServices();
   isDark = await SpUtil.getBoolean(Const.spDark);
   await SentryFlutter.init(
-        (options) {
-      options.dsn = 'https://dbb1e416963545c5893b40d85793e081@o1185358.ingest.sentry.io/6303906';
+    (options) {
+      options.dsn =
+          'https://dbb1e416963545c5893b40d85793e081@o1185358.ingest.sentry.io/6303906';
       options.tracesSampleRate = 1.0;
     },
     appRunner: () => runApp(const MyApp()),
@@ -55,11 +60,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             enableLog: true,
             defaultTransition: Transition.fade,
-            theme: ThemeData(
-              brightness: isDark ? Brightness.dark : Brightness.light,
-              canvasColor: const Color(0xFFF2F8FF),
-              primaryColor: const Color(0xFFF2F8FF)
-            ),
+            theme: isDark ? darkTheme : lightTheme,
             initialRoute: Routes.routeInitial,
             getPages: Routes.getRoutes(),
             locale: Translation.locale,

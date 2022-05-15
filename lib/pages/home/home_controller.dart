@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_state.dart';
 
@@ -13,12 +12,12 @@ class HomeController extends GetxController {
     Network.get(
         'https://inventory.scionedev.ilabservice.cloud/api/labbase/v1/company/all?account=17826808739&type=saas',
         success: (w) {
-          if (w != null && w is List) {
-            for (var element in w) {
-              // LogUtil.e(element);
-            }
-          }
-        });
+      if (w != null && w is List) {
+        for (var element in w) {
+          // LogUtil.e(element);
+        }
+      }
+    });
   }
 
   selectSongLibrary(bool value) {
@@ -27,8 +26,7 @@ class HomeController extends GetxController {
   }
 
   openSelect() {
-    state.isSelect = !state.isSelect;
-    refresh();
+    state.isSelect.value = !state.isSelect.value;
   }
 
   ///全选
@@ -41,7 +39,6 @@ class HomeController extends GetxController {
 
   ///选中单个条目
   selectItem(Object obj, bool checked) {
-
     // state.items[index].checked = checked;
     // bool select = true;
     // for (var element in state.items) {
@@ -106,6 +103,6 @@ class HomeController extends GetxController {
     refresh();
   }
 
-///-------------------------
+  ///-------------------------
 
 }

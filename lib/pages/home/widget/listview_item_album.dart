@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
-import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
+
 import '../../../utils/sd_utils.dart';
 
 ///专辑 item
@@ -53,10 +55,8 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
               maxLines: 2,
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  fontSize: 12.sp,
-                  color: const Color(0xFF333333),
-                  fontWeight: FontWeight.bold),
+              style:
+                  Get.isDarkMode ? TextStyleMs.white_12 : TextStyleMs.black_12,
             ),
           )
         ]));

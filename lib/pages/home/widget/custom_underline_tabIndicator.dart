@@ -15,6 +15,7 @@ class CustomUnderlineTabIndicator extends Decoration {
   /// The color and weight of the horizontal line drawn below the selected tab.
   final BorderSide borderSide;
   final double indicatorWeight;
+
   /// Locates the selected tab's underline relative to the tab's boundary.
   ///
   /// The [TabBar.indicatorSize] property can be used to define the tab
@@ -55,7 +56,7 @@ class CustomUnderlineTabIndicator extends Decoration {
     assert(textDirection != null);
     final Rect indicator = insets.resolve(textDirection).deflateRect(rect);
     return Rect.fromLTWH(
-      indicator.left+(indicator.width - indicatorWeight)/2,
+      indicator.left + (indicator.width - indicatorWeight) / 2,
       indicator.bottom - indicatorWeight,
       indicatorWeight,
       borderSide.width,

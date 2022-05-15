@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_song_sheet.dart';
 
 import '../../../modules/ext.dart';
@@ -31,7 +32,7 @@ class DialogAddSongSheet extends StatelessWidget {
           ),
           Divider(
             height: 0.5.h,
-            color: const Color(0xFFEAF4FF),
+            color: Get.theme.primaryColor,
           ),
           _buildItem("assets/dialog/ic_new_song_list.svg", "加入播放列表", true, () {
             SmartDialog.dismiss();
@@ -41,25 +42,25 @@ class DialogAddSongSheet extends StatelessWidget {
           }),
           Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 16.h,right: 16.h),
-                child: ListView.separated(
-                    itemCount: 2,
-                    padding: const EdgeInsets.all(0),
-                    separatorBuilder: (BuildContext context, int index) {
-                      return Container(
-                        color: Colors.transparent,
-                        height: 10.h,
-                      );
+            padding: EdgeInsets.only(left: 16.h, right: 16.h),
+            child: ListView.separated(
+                itemCount: 2,
+                padding: const EdgeInsets.all(0),
+                separatorBuilder: (BuildContext context, int index) {
+                  return Container(
+                    color: Colors.transparent,
+                    height: 10.h,
+                  );
+                },
+                itemBuilder: (cxt, index) {
+                  return ListViewItemSongSheet(
+                    onItemTap: (checked) {
+                      SmartDialog.dismiss();
                     },
-                    itemBuilder: (cxt, index) {
-                      return ListViewItemSongSheet(
-                        onItemTap: (checked) {
-                          SmartDialog.dismiss();
-                        },
-                        index: 0,
-                      );
-                    }),
-              ))
+                    index: 0,
+                  );
+                }),
+          ))
         ],
       ),
     );
@@ -105,7 +106,7 @@ class DialogAddSongSheet extends StatelessWidget {
               visible: showLin,
               child: Divider(
                 height: 0.5.h,
-                color: const Color(0xFFEAF4FF),
+                color: Get.theme.primaryColor,
               ),
             )
           ],

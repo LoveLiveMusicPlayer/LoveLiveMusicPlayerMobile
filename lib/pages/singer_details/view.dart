@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
+
 import '../../modules/ext.dart';
 import '../../utils/sd_utils.dart';
 import '../../widgets/details_list_top.dart';
@@ -75,7 +76,6 @@ class SingerDetailsPage extends StatelessWidget {
         child: ListViewItemSong(
           music: music,
           checked: logic.isItemChecked(music),
-          isSelect: logic.state.isSelect,
           onItemTap: (music, checked) {
             logic.selectItem(music, checked);
           },

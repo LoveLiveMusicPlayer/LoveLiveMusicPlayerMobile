@@ -18,7 +18,6 @@ class OneButtonDialog extends StatelessWidget {
       bool isShowTitle = true,
       bool isShowMsg = true,
       Callback? onBackListener}) {
-
     _imgAsset = imgAsset;
     _title = title;
     _msg = msg;
@@ -90,7 +89,7 @@ class OneButtonDialog extends StatelessWidget {
             child: TextButton(
                 onPressed: () {
                   SmartDialog.dismiss();
-                  if(_onBackListener != null) _onBackListener!();
+                  if (_onBackListener != null) _onBackListener!();
                 },
                 child: Text(
                   "确定",

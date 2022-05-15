@@ -29,7 +29,7 @@ class ImageUtil {
   }) {
     Completer<Rect> completer = Completer<Rect>();
     _listener = ImageStreamListener(
-          (ImageInfo info, bool synchronousCall) {
+      (ImageInfo info, bool synchronousCall) {
         _imageStream.removeListener(_listener);
         if (!completer.isCompleted) {
           completer.complete(Rect.fromLTWH(
@@ -51,9 +51,10 @@ class ImageUtil {
     }
     Image? img = image;
     img ??= (url != null && url.isNotEmpty)
-          ? Image.network(url)
-          : Image.asset(localUrl!, package: package);
-    _imageStream = img.image.resolve(configuration ?? const ImageConfiguration());
+        ? Image.network(url)
+        : Image.asset(localUrl!, package: package);
+    _imageStream =
+        img.image.resolve(configuration ?? const ImageConfiguration());
     _imageStream.addListener(_listener);
     return completer.future;
   }

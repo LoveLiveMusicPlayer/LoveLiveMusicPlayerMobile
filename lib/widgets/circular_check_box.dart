@@ -6,10 +6,9 @@ class CircularCheckBox extends StatefulWidget {
   Color uncheckedIconColor;
   double iconSize;
   String title;
-  double titleSize;
-  Color titleColor;
   double spacing;
   Function(bool) onCheckd;
+  TextStyle textStyle;
 
   CircularCheckBox(
       {Key? key,
@@ -18,8 +17,7 @@ class CircularCheckBox extends StatefulWidget {
       this.uncheckedIconColor = Colors.black54,
       this.iconSize = 20,
       this.title = "",
-      this.titleSize = 20,
-      this.titleColor = Colors.black54,
+      this.textStyle = const TextStyle(color: Colors.black54, fontSize: 20),
       this.spacing = 0,
       required this.onCheckd})
       : super(key: key);
@@ -55,8 +53,7 @@ class _CircularCheckBoxState extends State<CircularCheckBox> {
           ),
           Text(
             widget.title,
-            style:
-                TextStyle(fontSize: widget.titleSize, color: widget.titleColor),
+            style: widget.textStyle,
           )
         ],
       ),

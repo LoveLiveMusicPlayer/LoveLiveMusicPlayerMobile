@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lyric/lyric_ui/lyric_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 ///Sample Netease style
 ///should be extends LyricUI implementation your own UI.
@@ -41,8 +42,9 @@ class MyLrcUI extends LyricUI {
 
   @override
   TextStyle getPlayingExtTextStyle() => TextStyle(
-      color: Colors.black,
-      fontSize: defaultSize.sp, fontWeight: FontWeight.bold);
+      color: Get.isDarkMode ? Colors.orangeAccent : Colors.black,
+      fontSize: defaultSize.sp,
+      fontWeight: FontWeight.bold);
 
   @override
   TextStyle getOtherExtTextStyle() => TextStyle(
@@ -56,8 +58,9 @@ class MyLrcUI extends LyricUI {
 
   @override
   TextStyle getPlayingMainTextStyle() => TextStyle(
-      color: Colors.black,
-      fontSize: otherMainSize.sp, fontWeight: FontWeight.bold);
+      color: Get.isDarkMode ? Colors.orangeAccent : Colors.black,
+      fontSize: otherMainSize.sp,
+      fontWeight: FontWeight.bold);
 
   @override
   double getInlineSpace() => inlineGap;

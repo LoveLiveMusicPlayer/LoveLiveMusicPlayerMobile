@@ -1,8 +1,6 @@
-import 'dart:io';
 import 'dart:ui';
-import 'package:assets_audio_player/assets_audio_player.dart';
+
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -11,6 +9,7 @@ import 'package:lovelivemusicplayer/modules/carousel/carousel_slider.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:marquee_text/marquee_text.dart';
+
 import '../../models/Music.dart';
 import '../../modules/ext.dart';
 
@@ -32,7 +31,9 @@ class _MiniPlayerState extends State<MiniPlayer> {
     return Obx(() {
       Decoration? decoration;
       final music = PlayerLogic.to.playingMusic.value;
-      if (music.uid == null || music.coverPath == null || music.coverPath!.isEmpty) {
+      if (music.uid == null ||
+          music.coverPath == null ||
+          music.coverPath!.isEmpty) {
         decoration = BoxDecoration(
           color: const Color(0xFFEBF3FE),
           borderRadius: BorderRadius.circular(34),
@@ -40,7 +41,8 @@ class _MiniPlayerState extends State<MiniPlayer> {
       } else {
         decoration = BoxDecoration(
           image: DecorationImage(
-              image: FileImage(SDUtils.getImgFile(music.coverPath ?? "")), fit: BoxFit.fill),
+              image: FileImage(SDUtils.getImgFile(music.coverPath ?? "")),
+              fit: BoxFit.fill),
           borderRadius: BorderRadius.circular(34),
         );
       }
@@ -48,9 +50,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
       return AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
-            color: Theme
-                .of(context)
-                .primaryColor,
+            color: Theme.of(context).primaryColor,
             borderRadius: BorderRadius.circular(34),
           ),
           child: Column(
@@ -78,7 +78,6 @@ class _MiniPlayerState extends State<MiniPlayer> {
       color: Colors.grey.withOpacity(0.05),
       child: Row(
         children: [
-
           /// 迷你封面
           miniCover(),
           SizedBox(width: 6.w),
@@ -93,9 +92,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
                 path: PlayerLogic.to.isPlaying.value
                     ? "assets/player/play_pause.svg"
                     : "assets/player/play_play.svg",
-                onTap: () => {
-                  PlayerLogic.to.togglePlay()
-                },
+                onTap: () => {PlayerLogic.to.togglePlay()},
                 width: 16,
                 height: 16,
                 color: const Color(0xFF333333));
@@ -104,8 +101,8 @@ class _MiniPlayerState extends State<MiniPlayer> {
 
           /// 播放列表按钮
           GetBuilder<HomeController>(builder: (logic) {
-            return touchIconByAsset(path:
-            "assets/player/play_playlist.svg",
+            return touchIconByAsset(
+                path: "assets/player/play_playlist.svg",
                 onTap: () => {},
                 width: 18,
                 height: 18,
@@ -123,8 +120,13 @@ class _MiniPlayerState extends State<MiniPlayer> {
       child: Row(
         children: [
           SizedBox(width: 6.w),
-          showImg(SDUtils.getImgPath(PlayerLogic.to.playingMusic.value.coverPath ?? ""),
-              radius: 50, width: 50, height: 50, hasShadow: false)
+          showImg(
+              SDUtils.getImgPath(
+                  PlayerLogic.to.playingMusic.value.coverPath ?? ""),
+              radius: 50,
+              width: 50,
+              height: 50,
+              hasShadow: false)
         ],
       ),
     );
@@ -140,10 +142,10 @@ class _MiniPlayerState extends State<MiniPlayer> {
           InkWell(
             onDoubleTap: () => PlayerLogic.to.togglePlay(),
             child: CarouselPlayer(
-                listItems: refreshList(PlayerLogic.to.mPlayList, PlayerLogic.to.playingMusic.value),
+                listItems: refreshList(PlayerLogic.to.mPlayList,
+                    PlayerLogic.to.playingMusic.value),
                 sliderController: sliderController,
-                isCanScroll: isCanScroll
-            ),
+                isCanScroll: isCanScroll),
           )
         ],
       ),

@@ -26,10 +26,14 @@ class FtpBody {
       fileList = list.map((i) => File.fromJson(i)).toList();
     }
     return FtpBody(
-        host: json["host"], port: json["port"], folderName: json["folderName"], fileList: fileList);
+        host: json["host"],
+        port: json["port"],
+        folderName: json["folderName"],
+        fileList: fileList);
   }
 
-  Map<String, dynamic> toJson() => {"host": host, "port": port, "folderName": folderName};
+  Map<String, dynamic> toJson() =>
+      {"host": host, "port": port, "folderName": folderName};
 }
 
 class File {

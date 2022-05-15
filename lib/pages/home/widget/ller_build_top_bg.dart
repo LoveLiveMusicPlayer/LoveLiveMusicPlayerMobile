@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lovelivemusicplayer/pages/home/home_state.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lovelivemusicplayer/pages/home/home_state.dart';
 
 class LlerBuildTopBg extends StatelessWidget {
   HomeState data;

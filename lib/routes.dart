@@ -13,7 +13,10 @@ class Routes {
 
   static List<GetPage> getRoutes() {
     return [
-      GetPage(name: Routes.routeInitial, page: () => HomeView(), binding: HomeBinding()),
+      GetPage(
+          name: Routes.routeInitial,
+          page: () => HomeView(),
+          binding: HomeBinding()),
       GetPage(name: Routes.routeAlbumDetails, page: () => AlbumDetailsPage()),
       GetPage(name: Routes.routeSingerDetails, page: () => SingerDetailsPage()),
     ];

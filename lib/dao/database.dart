@@ -1,11 +1,13 @@
 import 'dart:async';
+
 import 'package:floor/floor.dart';
 import 'package:lovelivemusicplayer/dao/list_converter.dart';
 import 'package:lovelivemusicplayer/dao/lyric_dao.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Lyric.dart';
-import 'album_dao.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
+
+import 'album_dao.dart';
 
 part 'database.g.dart';
 
@@ -13,6 +15,7 @@ part 'database.g.dart';
 @Database(version: 1, entities: [Album, Lyric])
 abstract class MusicDatabase extends FloorDatabase {
   AlbumDao get albumDao;
+
   LyricDao get lyricDao;
 }
 

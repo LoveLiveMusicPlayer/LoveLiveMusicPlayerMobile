@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
+
 import '../../../modules/ext.dart';
 
 class PlayerHeader extends StatelessWidget {
@@ -21,7 +23,7 @@ class PlayerHeader extends StatelessWidget {
               height: 32,
               iconSize: 20,
               radius: 6,
-              iconColor: const Color(0xFF999999)),
+              bgColor: Get.isDarkMode ? Colors.white : Colors.black),
 
           /// 曲名 + 歌手
           Expanded(
@@ -31,8 +33,9 @@ class PlayerHeader extends StatelessWidget {
                   Text(
                     PlayerLogic.to.playingMusic.value.name ?? "暂无歌曲",
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        color: const Color(0xFF333333), fontSize: 15.sp, fontWeight: FontWeight.bold),
+                    style: Get.isDarkMode
+                        ? TextStyleMs.whiteBold_15
+                        : TextStyleMs.blackBold_15,
                     maxLines: 1,
                   ),
                   Text(
@@ -49,11 +52,7 @@ class PlayerHeader extends StatelessWidget {
 
           /// 更多功能
           materialButton(Icons.more_horiz, () => {},
-              width: 32,
-              height: 32,
-              iconSize: 18,
-              radius: 6,
-              iconColor: const Color(0xFF999999)),
+              width: 32, height: 32, iconSize: 18, radius: 6),
         ],
       ),
     );

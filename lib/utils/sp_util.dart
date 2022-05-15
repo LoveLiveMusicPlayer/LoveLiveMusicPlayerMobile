@@ -1,7 +1,7 @@
-import 'package:common_utils/common_utils.dart';
+import 'dart:convert';
+
 import 'package:get_storage/get_storage.dart';
 import 'package:synchronized/synchronized.dart';
-import 'dart:convert';
 
 class SpUtil {
   static SpUtil? _singleton;

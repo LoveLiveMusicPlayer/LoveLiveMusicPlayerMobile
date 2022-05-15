@@ -5,7 +5,7 @@ import 'package:flutter_lyric/lyrics_reader_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+
 import 'my_lyric_ui.dart';
 
 class Lyric extends StatefulWidget {

@@ -4,7 +4,8 @@ import 'package:lovelivemusicplayer/models/Artist.dart';
 
 import '../models/Music.dart';
 
-class GlobalLogic extends SuperController with GetSingleTickerProviderStateMixin {
+class GlobalLogic extends SuperController
+    with GetSingleTickerProviderStateMixin {
   /// all、μ's、aqours、niji、liella、combine
   final currentGroup = "all".obs;
   final databaseInitOver = false.obs;

@@ -105,7 +105,7 @@ class PlayerLogic extends SuperController
       getLrc(false);
     }));
 
-    mPlayer.loopMode.listen((loopMode){
+    mPlayer.loopMode.listen((loopMode) {
       LogUtil.e("loopMode: $loopMode");
     });
 
@@ -142,8 +142,7 @@ class PlayerLogic extends SuperController
                     : MetasImage(
                         path: SDUtils.path + coverPath, type: ImageType.file),
                 onImageLoadFail: const MetasImage(
-                    path: Const.logo,
-                    type: ImageType.asset))));
+                    path: Const.logo, type: ImageType.asset))));
       }
     }
     var mode = LoopMode.none;
@@ -157,12 +156,8 @@ class PlayerLogic extends SuperController
       default:
         break;
     }
-    mPlayer.open(
-      Playlist(audios: tempList),
-      autoStart: true,
-      showNotification: true,
-      loopMode: mode
-    );
+    mPlayer.open(Playlist(audios: tempList),
+        autoStart: true, showNotification: true, loopMode: mode);
     mPlayList.clear();
     mPlayList.addAll(musicList);
   }

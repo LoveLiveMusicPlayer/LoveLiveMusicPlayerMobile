@@ -38,6 +38,7 @@ class AlbumDetailsController extends GetxController {
     // state.selectAll = select;
     // refresh();
   }
+
   ///全选
   selectAll(bool checked) {
     // for (var element in state.items) {

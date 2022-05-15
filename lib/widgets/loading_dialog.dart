@@ -1,5 +1,5 @@
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoadingDialog extends Dialog {
@@ -29,13 +29,13 @@ class LoadingDialog extends Dialog {
               height: 8.w,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 2.w),
+                padding: EdgeInsets.symmetric(horizontal: 2.w),
                 child: Text(
-              mag,
-              style: TextStyle(color: Colors.white,fontSize: 17.w),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-            ))
+                  mag,
+                  style: TextStyle(color: Colors.white, fontSize: 17.w),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ))
           ],
         ),
       )),

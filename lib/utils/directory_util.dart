@@ -155,11 +155,11 @@ class DirectoryUtil {
   /// fileName 文件名
   /// format 文件格式，如果文件名包含格式，则不需要
   static String? getPath(
-      Directory? dir, {
-        String? category,
-        String? fileName,
-        String? format,
-      }) {
+    Directory? dir, {
+    String? category,
+    String? fileName,
+    String? format,
+  }) {
     if (dir == null) return null;
     StringBuffer sb = StringBuffer("${dir.path}");
     if (category != null) sb.write("/$category");

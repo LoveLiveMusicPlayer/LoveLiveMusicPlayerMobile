@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 
 ///歌曲
@@ -14,9 +17,6 @@ class ListViewItemSong extends StatefulWidget {
   ///条目数据
   Music music;
 
-  ///当前是否处于勾选状态
-  bool isSelect;
-
   ///当前选中状态
   bool checked;
 
@@ -26,8 +26,7 @@ class ListViewItemSong extends StatefulWidget {
       required this.onPlayTap,
       required this.onMoreTap,
       required this.music,
-      this.checked = false,
-      this.isSelect = false})
+      this.checked = false})
       : super(key: key);
 
   @override
@@ -37,33 +36,36 @@ class ListViewItemSong extends StatefulWidget {
 class _ListViewItemSongState extends State<ListViewItemSong> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        widget.checked = !widget.checked;
-        widget.onItemTap(widget.music, widget.checked);
-        setState(() {});
-      },
-      child: Container(
-        color: const Color(0xFFF2F8FF),
-        child: Row(
-          children: [
-            ///勾选按钮
-            _buildCheckBox(),
-            ///缩列图
-            _buildIcon(),
-            SizedBox(
-              width: 10.w,
-            ),
+    return Obx(() {
+      return InkWell(
+        onTap: () {
+          widget.checked = !widget.checked;
+          widget.onItemTap(widget.music, widget.checked);
+          setState(() {});
+        },
+        child: Container(
+          color: Get.theme.primaryColor,
+          child: Row(
+            children: [
+              ///勾选按钮
+              _buildCheckBox(),
 
-            ///中间标题部分
-            _buildContent(),
+              ///缩列图
+              _buildIcon(),
+              SizedBox(
+                width: 10.w,
+              ),
 
-            ///右侧操作按钮
-            _buildAction(),
-          ],
+              ///中间标题部分
+              _buildContent(),
+
+              ///右侧操作按钮
+              _buildAction(),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   ///缩列图
@@ -75,7 +77,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
   ///勾选按钮
   Widget _buildCheckBox() {
     return Visibility(
-      visible: widget.isSelect,
+      visible: HomeController.to.state.isSelect.value,
       child: Padding(
         padding: EdgeInsets.only(right: 10.h),
         child: CircularCheckBox(
@@ -98,15 +100,11 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            widget.music.name ?? "",
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-                color: const Color(0xff333333),
-                fontSize: 15.sp,
-                fontWeight: FontWeight.bold),
-          ),
+          Text(widget.music.name ?? "",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style:
+                  Get.isDarkMode ? TextStyleMs.white_15 : TextStyleMs.black_15),
           SizedBox(
             height: 4.w,
           ),
@@ -130,26 +128,33 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
   ///右侧操作按钮
   Widget _buildAction() {
     return Visibility(
-      visible: !widget.isSelect,
+      visible: !HomeController.to.state.isSelect.value,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
               padding: EdgeInsets.only(
                   left: 12.w, right: 12.w, top: 12.h, bottom: 12.h),
-              child: touchIconByAsset(path:
-              "assets/main/ic_add_next.svg",onTap: (){
-                widget.onPlayTap(widget.music);
-              },
-                  width: 20, height: 20, color: const Color(0xFFCCCCCC))),
+              child: touchIconByAsset(
+                  path: "assets/main/ic_add_next.svg",
+                  onTap: () {
+                    widget.onPlayTap(widget.music);
+                  },
+                  width: 20,
+                  height: 20,
+                  color: const Color(0xFFCCCCCC))),
           InkWell(
-            onTap: (){
+            onTap: () {
               widget.onMoreTap(widget.music);
             },
             child: Container(
               padding: EdgeInsets.only(
                   left: 12.w, right: 10.w, top: 12.h, bottom: 12.h),
-              child: touchIconByAsset(path: "assets/main/ic_more.svg", width: 10, height: 20, color: const Color(0xFFCCCCCC)),
+              child: touchIconByAsset(
+                  path: "assets/main/ic_more.svg",
+                  width: 10,
+                  height: 20,
+                  color: const Color(0xFFCCCCCC)),
             ),
           ),
           SizedBox(width: 4.w)

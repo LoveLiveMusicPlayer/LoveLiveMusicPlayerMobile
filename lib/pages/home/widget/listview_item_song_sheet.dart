@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ///歌单
 class ListViewItemSongSheet extends StatefulWidget {
@@ -31,7 +30,8 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        HomeController.to.selectItem(widget.index, !HomeController.to.isItemChecked(widget.index));
+        HomeController.to.selectItem(
+            widget.index, !HomeController.to.isItemChecked(widget.index));
         widget.onItemTap(HomeController.to.isItemChecked(widget.index));
       },
       child: Container(
@@ -46,7 +46,6 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
 
             ///中间标题部分
             _buildContent(),
-
           ],
         ),
       ),

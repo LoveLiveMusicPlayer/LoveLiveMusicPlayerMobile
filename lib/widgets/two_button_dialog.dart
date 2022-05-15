@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class TwoButtonDialog extends StatelessWidget {
   String _imgAsset = "";
@@ -55,13 +57,12 @@ class TwoButtonDialog extends StatelessWidget {
             visible: _isShowTitle,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Text(
-                _title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style:
-                    TextStyle(fontSize: 18.sp, color: const Color(0xFF333333)),
-              ),
+              child: Text(_title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Get.isDarkMode
+                      ? TextStyleMs.black_18
+                      : TextStyleMs.white_18),
             ),
           ),
           SizedBox(
@@ -95,7 +96,7 @@ class TwoButtonDialog extends StatelessWidget {
                   child: TextButton(
                       onPressed: () {
                         SmartDialog.dismiss();
-                        if(_onBackListener != null) _onBackListener!();
+                        if (_onBackListener != null) _onBackListener!();
                       },
                       child: Text(
                         "取消",
@@ -114,7 +115,7 @@ class TwoButtonDialog extends StatelessWidget {
                   child: TextButton(
                       onPressed: () {
                         SmartDialog.dismiss();
-                        if(_onConfirmListener != null) _onConfirmListener!();
+                        if (_onConfirmListener != null) _onConfirmListener!();
                       },
                       child: Text(
                         "确定",

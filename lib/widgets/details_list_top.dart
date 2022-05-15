@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
+
 import 'circular_check_box.dart';
-import '../pages/singer_details/logic.dart';
-import '../pages/album_details/logic.dart';
 
 class DetailsListTop extends StatelessWidget {
   final Function onPlayTap;
@@ -38,7 +38,7 @@ class DetailsListTop extends StatelessWidget {
   Widget _buildPlaySong() {
     return Container(
       height: 45.h,
-      color: const Color(0xFFF2F8FF),
+      color: Get.theme.primaryColor,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -92,15 +92,12 @@ class DetailsListTop extends StatelessWidget {
   ///歌曲总数
   Widget _buildSongNumText() {
     return Expanded(
-      child: Text(
-        "$itemsLength首歌曲",
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(
-            color: const Color(0xFF333333),
-            fontSize: 14.h,
-            fontWeight: FontWeight.bold),
-      ),
+      child: Text("$itemsLength首歌曲",
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Get.isDarkMode
+              ? TextStyleMs.whiteBold_14
+              : TextStyleMs.blackBold_14),
     );
   }
 
@@ -119,7 +116,7 @@ class DetailsListTop extends StatelessWidget {
   ///播放歌曲条目
   Widget _buildSelectSong() {
     return Container(
-      color: const Color(0xFFF2F8FF),
+      color: Get.theme.primaryColor,
       height: 45.h,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -134,8 +131,8 @@ class DetailsListTop extends StatelessWidget {
             spacing: 10.h,
             iconSize: 25,
             title: "选择全部/已选$checkedItemLength首",
-            titleColor: const Color(0xFF333333),
-            titleSize: 15.sp,
+            textStyle:
+                Get.isDarkMode ? TextStyleMs.white_15 : TextStyleMs.black_15,
             onCheckd: (value) {
               onSelectAllTap(value);
             },
@@ -149,8 +146,9 @@ class DetailsListTop extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 16.h),
               child: Text(
                 "取消",
-                style:
-                    TextStyle(color: const Color(0xFF333333), fontSize: 15.sp),
+                style: Get.isDarkMode
+                    ? TextStyleMs.white_15
+                    : TextStyleMs.black_15,
               ),
             ),
           )
