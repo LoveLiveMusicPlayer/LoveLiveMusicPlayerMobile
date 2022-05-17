@@ -30,7 +30,8 @@ class CarouselPlayer extends StatelessWidget {
             onPageChanged: (index, reason) {
               final isController =
                   reason == CarouselPageChangedReason.controller;
-              if (isCanScroll) {
+              if (PlayerLogic.to.isCanMiniPlayerScroll.value) {
+                PlayerLogic.to.isCanMiniPlayerScroll.value = false;
                 PlayerLogic.to.changePlayIndex(isController, index);
               }
             }));

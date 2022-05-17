@@ -123,6 +123,29 @@ class GlobalLogic extends SuperController
     }
   }
 
+  List<Music> filterMusicListByAlbums(menuIndex) {
+    switch (menuIndex) {
+      case 0:
+        return checkMusicList();
+      case 1:
+        List<Music> musicList = [];
+        checkAlbumList().forEach((album) {
+          for (var music in musicByAllList) {
+            if (music.albumId == album.uid) {
+              musicList.add(music);
+            }
+          }
+        });
+        return musicList;
+      case 3:
+        return [];
+      case 5:
+        return [];
+      default:
+        return [];
+    }
+  }
+
   @override
   void onDetached() {
     // TODO: implement onDetached

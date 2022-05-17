@@ -88,6 +88,6 @@ initServices() async {
   Network.getInstance();
   SDUtils.init();
   PlayerBinding().dependencies();
-  LogUtil.init(tag: "iLab", isDebug: kDebugMode);
+  LogUtil.init(tag: "zhu", isDebug: kDebugMode);
   LogUtil.d('All services started...');
 }

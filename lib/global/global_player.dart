@@ -161,9 +161,9 @@ class PlayerLogic extends SuperController
   /// 播放 播放列表 指定位置的歌曲
   changePlayIndex(bool isController, int index) async {
     if (isController && mPlayer.isFirstBackgroundToForeground) {
+      isCanMiniPlayerScroll.value = true;
       return;
     }
-    isCanMiniPlayerScroll.value = false;
     await mPlayer.playlistPlayAtIndex(index);
     await Future.delayed(const Duration(milliseconds: 300));
     isCanMiniPlayerScroll.value = true;

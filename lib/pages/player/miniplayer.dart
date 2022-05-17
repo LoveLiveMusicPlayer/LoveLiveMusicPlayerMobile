@@ -133,7 +133,6 @@ class _MiniPlayerState extends State<MiniPlayer> {
   }
 
   Widget marqueeMusicName() {
-    final isCanScroll = PlayerLogic.to.isCanMiniPlayerScroll.value;
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,8 +143,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
             child: CarouselPlayer(
                 listItems: refreshList(PlayerLogic.to.mPlayList,
                     PlayerLogic.to.playingMusic.value),
-                sliderController: sliderController,
-                isCanScroll: isCanScroll),
+                sliderController: sliderController, isCanScroll: PlayerLogic.to.isCanMiniPlayerScroll.value),
           )
         ],
       ),

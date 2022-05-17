@@ -11,7 +11,7 @@
       {
         "_id": "615d5da14d33a9f9fe51be9c",
         "name": "僕らのLIVE 君とのLIFE",
-        "albumId": "615d56254d33a9f9fe51ba90",
+        "album_id": "615d56254d33a9f9fe51ba90",
         "cover_path": "LoveLive/μ's/单曲/[2010.08.25] μ's - 僕らのLIVE 君とのLIFE/Cover_1.jpg",
         "music_path": "LoveLive/μ's/单曲/[2010.08.25] μ's - 僕らのLIVE 君とのLIFE/01. 僕らのLIVE 君とのLIFE",
         "artist": "μ's",
@@ -20,7 +20,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/μ's/单曲/[2010.08.25] μ's - 僕らのLIVE 君とのLIFE/01. 僕らのLIVE 君とのLIFE.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/μ's/单曲/[2010.08.25] μ's - 僕らのLIVE 君とのLIFE/01. 僕らのLIVE 君とのLIFE.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/μ's/单曲/[2010.08.25] μ's - 僕らのLIVE 君とのLIFE/01. 僕らのLIVE 君とのLIFE.lrc",
-        "albumName": "僕らのLIVE 君とのLIFE"
+        "album_name": "僕らのLIVE 君とのLIFE"
       }
     ],
     "group": "μ's"
@@ -37,7 +37,7 @@
       {
         "_id": "615d5da14d33a9f9fe51be9e",
         "name": "Snow halation",
-        "albumId": "615d56254d33a9f9fe51ba91",
+        "album_id": "615d56254d33a9f9fe51ba91",
         "cover_path": "LoveLive/μ's/单曲/[2010.12.22] μ's - Snow halation/Cover_1.jpg",
         "music_path": "LoveLive/μ's/单曲/[2010.12.22] μ's - Snow halation/01. Snow halation",
         "artist": "μ's",
@@ -46,7 +46,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/μ's/单曲/[2010.12.22] μ's - Snow halation/01. Snow halation.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/μ's/单曲/[2010.12.22] μ's - Snow halation/01. Snow halation.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/μ's/单曲/[2010.12.22] μ's - Snow halation/01. Snow halation.lrc",
-        "albumName": "Snow halation"
+        "album_name": "Snow halation"
       }
     ],
     "group": "μ's"
@@ -63,7 +63,7 @@
       {
         "_id": "615d5da14d33a9f9fe51bf26",
         "name": "僕らは今のなかで",
-        "albumId": "615d56254d33a9f9fe51baa7",
+        "album_id": "615d56254d33a9f9fe51baa7",
         "cover_path": "LoveLive/μ's/动画/[2013.01.23] μ's - 僕らは今のなかで/Cover_1.jpg",
         "music_path": "LoveLive/μ's/动画/[2013.01.23] μ's - 僕らは今のなかで/01. 僕らは今のなかで",
         "artist": "μ's",
@@ -72,7 +72,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/μ's/动画/[2013.01.23] μ's - 僕らは今のなかで/01. 僕らは今のなかで.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/μ's/动画/[2013.01.23] μ's - 僕らは今のなかで/01. 僕らは今のなかで.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/μ's/动画/[2013.01.23] μ's - 僕らは今のなかで/01. 僕らは今のなかで.lrc",
-        "albumName": "μ's"
+        "album_name": "μ's"
       }
     ],
     "group": "μ's"
@@ -89,7 +89,7 @@
       {
         "_id": "615d5da14d33a9f9fe51bf28",
         "name": "きっと青春が聞こえる",
-        "albumId": "615d56254d33a9f9fe51baa8",
+        "album_id": "615d56254d33a9f9fe51baa8",
         "cover_path": "LoveLive/μ's/动画/[2013.02.06] μ's - きっと青春が聞こえる/Cover_1.jpg",
         "music_path": "LoveLive/μ's/动画/[2013.02.06] μ's - きっと青春が聞こえる/01. きっと青春が聞こえる",
         "artist": "μ's",
@@ -98,7 +98,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/μ's/动画/[2013.02.06] μ's - きっと青春が聞こえる/01. きっと青春が聞こえる.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/μ's/动画/[2013.02.06] μ's - きっと青春が聞こえる/01. きっと青春が聞こえる.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/μ's/动画/[2013.02.06] μ's - きっと青春が聞こえる/01. きっと青春が聞こえる.lrc",
-        "albumName": "きっと青春が聞こえる"
+        "album_name": "きっと青春が聞こえる"
       }
     ],
     "group": "μ's"
@@ -115,7 +115,7 @@
       {
         "_id": "615d5da14d33a9f9fe51bf2b",
         "name": "START：DASH!! (3人 ver.)",
-        "albumId": "615d56254d33a9f9fe51baa9",
+        "album_id": "615d56254d33a9f9fe51baa9",
         "cover_path": "LoveLive/μ's/动画/[2013.02.20] Honoka, Kotori, Umi - ススメ→トゥモロウ／START：DASH!!/Cover_1.jpg",
         "music_path": "LoveLive/μ's/动画/[2013.02.20] Honoka, Kotori, Umi - ススメ→トゥモロウ／START：DASH!!/02. START：DASH!!",
         "artist": "高坂穂乃果/南小鸟/园田海未",
@@ -124,7 +124,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/μ's/动画/[2013.02.20] Honoka, Kotori, Umi - ススメ→トゥモロウ／START：DASH!!/02. START：DASH!!.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/μ's/动画/[2013.02.20] Honoka, Kotori, Umi - ススメ→トゥモロウ／START：DASH!!/02. START：DASH!!.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/μ's/动画/[2013.02.20] Honoka, Kotori, Umi - ススメ→トゥモロウ／START：DASH!!/02. START：DASH!!.lrc",
-        "albumName": "ススメ→トゥモロウ／START：DASH!!"
+        "album_name": "ススメ→トゥモロウ／START：DASH!!"
       }
     ],
     "group": "μ's"
@@ -141,7 +141,7 @@
       {
         "_id": "615d5da14d33a9f9fe51bfdc",
         "name": "それは僕たちの奇跡",
-        "albumId": "615d56254d33a9f9fe51bac5",
+        "album_id": "615d56254d33a9f9fe51bac5",
         "cover_path": "LoveLive/μ's/动画/[2014.04.23] μ's - それは僕たちの奇跡/Cover_1.jpg",
         "music_path": "LoveLive/μ's/动画/[2014.04.23] μ's - それは僕たちの奇跡/01. それは僕たちの奇跡",
         "artist": "μ's",
@@ -150,7 +150,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/μ's/动画/[2014.04.23] μ's - それは僕たちの奇跡/01. それは僕たちの奇跡.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/μ's/动画/[2014.04.23] μ's - それは僕たちの奇跡/01. それは僕たちの奇跡.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/μ's/动画/[2014.04.23] μ's - それは僕たちの奇跡/01. それは僕たちの奇跡.lrc",
-        "albumName": "それは僕たちの奇跡"
+        "album_name": "それは僕たちの奇跡"
       }
     ],
     "group": "μ's"
@@ -167,7 +167,7 @@
       {
         "_id": "615d5da14d33a9f9fe51bfe0",
         "name": "ユメノトビラ",
-        "albumId": "615d56254d33a9f9fe51bac7",
+        "album_id": "615d56254d33a9f9fe51bac7",
         "cover_path": "LoveLive/μ's/动画/[2014.05.28] μ's - ユメノトビラ/Cover_1.jpg",
         "music_path": "LoveLive/μ's/动画/[2014.05.28] μ's - ユメノトビラ/01. ユメノトビラ",
         "artist": "μ's",
@@ -176,7 +176,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/μ's/动画/[2014.05.28] μ's - ユメノトビラ/01. ユメノトビラ.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/μ's/动画/[2014.05.28] μ's - ユメノトビラ/01. ユメノトビラ.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/μ's/动画/[2014.05.28] μ's - ユメノトビラ/01. ユメノトビラ.lrc",
-        "albumName": "ユメノトビラ"
+        "album_name": "ユメノトビラ"
       }
     ],
     "group": "μ's"
@@ -193,7 +193,7 @@
       {
         "_id": "615d5da14d33a9f9fe51c047",
         "name": "僕たちはひとつの光",
-        "albumId": "615d56254d33a9f9fe51bae2",
+        "album_id": "615d56254d33a9f9fe51bae2",
         "cover_path": "LoveLive/μ's/动画/[2015.07.15] μ's - 僕たちはひとつの光／Future style/Cover_1.jpg",
         "music_path": "LoveLive/μ's/动画/[2015.07.15] μ's - 僕たちはひとつの光／Future style/01. 僕たちはひとつの光",
         "artist": "μ's",
@@ -202,7 +202,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/μ's/动画/[2015.07.15] μ's - 僕たちはひとつの光／Future style/01. 僕たちはひとつの光.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/μ's/动画/[2015.07.15] μ's - 僕たちはひとつの光／Future style/01. 僕たちはひとつの光.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/μ's/动画/[2015.07.15] μ's - 僕たちはひとつの光／Future style/01. 僕たちはひとつの光.lrc",
-        "albumName": "僕たちはひとつの光／Future style"
+        "album_name": "僕たちはひとつの光／Future style"
       }
     ],
     "group": "μ's"
@@ -219,7 +219,7 @@
       {
         "_id": "615d5da14d33a9f9fe51c22c",
         "name": "A song for You! You？You!!",
-        "albumId": "615d56254d33a9f9fe51baf5",
+        "album_id": "615d56254d33a9f9fe51baf5",
         "cover_path": "LoveLive/μ's/单曲/[2020.03.25] μ's - A song for You! You？You!!/Cover_1.jpg",
         "music_path": "LoveLive/μ's/单曲/[2020.03.25] μ's - A song for You! You？You!!/01. A song for You! You？You!!",
         "artist": "μ's",
@@ -228,7 +228,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/μ's/单曲/[2020.03.25] μ's - A song for You! You？You!!/01. A song for You! You？You!!.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/μ's/单曲/[2020.03.25] μ's - A song for You! You？You!!/01. A song for You! You？You!!.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/μ's/单曲/[2020.03.25] μ's - A song for You! You？You!!/01. A song for You! You？You!!.lrc",
-        "albumName": "A song for You! You？You!!"
+        "album_name": "A song for You! You？You!!"
       }
     ],
     "group": "μ's"
@@ -245,7 +245,7 @@
       {
         "_id": "615e6faa4d33a9f9fe51c246",
         "name": "君のこころは輝いてるかい？",
-        "albumId": "615e71014d33a9f9fe51c4a2",
+        "album_id": "615e71014d33a9f9fe51c4a2",
         "cover_path": "LoveLive/Aqours/单曲/[2015.10.07] Aqours - 君のこころは輝いてるかい？/Cover_1.jpg",
         "music_path": "LoveLive/Aqours/单曲/[2015.10.07] Aqours - 君のこころは輝いてるかい？/01. 君のこころは輝いてるかい？",
         "artist": "Aqours",
@@ -254,7 +254,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/Aqours/单曲/[2015.10.07] Aqours - 君のこころは輝いてるかい？/01. 君のこころは輝いてるかい？.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/Aqours/单曲/[2015.10.07] Aqours - 君のこころは輝いてるかい？/01. 君のこころは輝いてるかい？.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/Aqours/单曲/[2015.10.07] Aqours - 君のこころは輝いてるかい？/01. 君のこころは輝いてるかい？.lrc",
-        "albumName": "君のこころは輝いてるかい？"
+        "album_name": "君のこころは輝いてるかい？"
       }
     ],
     "group": "Aqours"
@@ -271,7 +271,7 @@
       {
         "_id": "615e6faa4d33a9f9fe51c256",
         "name": "ユメ語るよりユメ歌おう",
-        "albumId": "615e71014d33a9f9fe51c4a9",
+        "album_id": "615e71014d33a9f9fe51c4a9",
         "cover_path": "LoveLive/Aqours/动画/[2016.08.24] Aqours - ユメ語るよりユメ歌おう/Cover_1.jpg",
         "music_path": "LoveLive/Aqours/动画/[2016.08.24] Aqours - ユメ語るよりユメ歌おう/01. ユメ語るよりユメ歌おう",
         "artist": "Aqours",
@@ -280,7 +280,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/Aqours/动画/[2016.08.24] Aqours - ユメ語るよりユメ歌おう/01. ユメ語るよりユメ歌おう.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/Aqours/动画/[2016.08.24] Aqours - ユメ語るよりユメ歌おう/01. ユメ語るよりユメ歌おう.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/Aqours/动画/[2016.08.24] Aqours - ユメ語るよりユメ歌おう/01. ユメ語るよりユメ歌おう.lrc",
-        "albumName": "ユメ語るよりユメ歌おう"
+        "album_name": "ユメ語るよりユメ歌おう"
       }
     ],
     "group": "Aqours"
@@ -297,7 +297,7 @@
       {
         "_id": "615e6faa4d33a9f9fe51c291",
         "name": "未来の僕らは知ってるよ",
-        "albumId": "615e71014d33a9f9fe51c4be",
+        "album_id": "615e71014d33a9f9fe51c4be",
         "cover_path": "LoveLive/Aqours/动画/[2017.10.25] Aqours - 未来の僕らは知ってるよ/Cover_1.jpg",
         "music_path": "LoveLive/Aqours/动画/[2017.10.25] Aqours - 未来の僕らは知ってるよ/01. 未来の僕らは知ってるよ",
         "artist": "Aqours",
@@ -306,7 +306,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/Aqours/动画/[2017.10.25] Aqours - 未来の僕らは知ってるよ/01. 未来の僕らは知ってるよ.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/Aqours/动画/[2017.10.25] Aqours - 未来の僕らは知ってるよ/01. 未来の僕らは知ってるよ.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/Aqours/动画/[2017.10.25] Aqours - 未来の僕らは知ってるよ/01. 未来の僕らは知ってるよ.lrc",
-        "albumName": "未来の僕らは知ってるよ"
+        "album_name": "未来の僕らは知ってるよ"
       }
     ],
     "group": "Aqours"
@@ -323,7 +323,7 @@
       {
         "_id": "615e6faa4d33a9f9fe51c2e7",
         "name": "CHANGELESS",
-        "albumId": "615e71014d33a9f9fe51c4d8",
+        "album_id": "615e71014d33a9f9fe51c4d8",
         "cover_path": "LoveLive/Aqours/小组曲/CYaRon!/[2019.12.04] CYaRon! - Braveheart Coaster/Cover_1.jpg",
         "music_path": "LoveLive/Aqours/小组曲/CYaRon!/[2019.12.04] CYaRon! - Braveheart Coaster/02. CHANGELESS",
         "artist": "CYaRon!",
@@ -332,7 +332,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/Aqours/小组曲/CYaRon!/[2019.12.04] CYaRon! - Braveheart Coaster/02. CHANGELESS.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/Aqours/小组曲/CYaRon!/[2019.12.04] CYaRon! - Braveheart Coaster/02. CHANGELESS.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/Aqours/小组曲/CYaRon!/[2019.12.04] CYaRon! - Braveheart Coaster/02. CHANGELESS.lrc",
-        "albumName": "Braveheart Coaster"
+        "album_name": "Braveheart Coaster"
       }
     ],
     "group": "Aqours"
@@ -349,7 +349,7 @@
       {
         "_id": "615e6faa4d33a9f9fe51c302",
         "name": "JIMO-AI Dash!",
-        "albumId": "615e71014d33a9f9fe51c4de",
+        "album_id": "615e71014d33a9f9fe51c4de",
         "cover_path": "LoveLive/Aqours/其他/[2020.08.26] Aqours - JIMO-AI Dash!/Cover_1.jpg",
         "music_path": "LoveLive/Aqours/其他/[2020.08.26] Aqours - JIMO-AI Dash!/01 - JIMO-AI Dash!",
         "artist": "Aqours",
@@ -358,7 +358,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/Aqours/其他/[2020.08.26] Aqours - JIMO-AI Dash!/01 - JIMO-AI Dash!.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/Aqours/其他/[2020.08.26] Aqours - JIMO-AI Dash!/01 - JIMO-AI Dash!.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/Aqours/其他/[2020.08.26] Aqours - JIMO-AI Dash!/01 - JIMO-AI Dash!.lrc",
-        "albumName": "Take Me Higher Project"
+        "album_name": "Take Me Higher Project"
       }
     ],
     "group": "Aqours"
@@ -375,7 +375,7 @@
       {
         "_id": "615e6faa4d33a9f9fe51c3be",
         "name": "PHOENIX DANCE",
-        "albumId": "615e71014d33a9f9fe51c4ea",
+        "album_id": "615e71014d33a9f9fe51c4ea",
         "cover_path": "LoveLive/Aqours/小组曲/AZALEA/[2021.06.23] AZALEA - We'll get the next dream!!!/Cover_1.jpg",
         "music_path": "LoveLive/Aqours/小组曲/AZALEA/[2021.06.23] AZALEA - We'll get the next dream!!!/02. PHOENIX DANCE",
         "artist": "AZALEA",
@@ -384,7 +384,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/Aqours/小组曲/AZALEA/[2021.06.23] AZALEA - We'll get the next dream!!!/02. PHOENIX DANCE.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/Aqours/小组曲/AZALEA/[2021.06.23] AZALEA - We'll get the next dream!!!/02. PHOENIX DANCE.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/Aqours/小组曲/AZALEA/[2021.06.23] AZALEA - We'll get the next dream!!!/02. PHOENIX DANCE.lrc",
-        "albumName": "We'll get the next dream!!!"
+        "album_name": "We'll get the next dream!!!"
       }
     ],
     "group": "Aqours"
@@ -401,7 +401,7 @@
       {
         "_id": "615e6faa4d33a9f9fe51c3ed",
         "name": "Nameless Love Song",
-        "albumId": "615e71014d33a9f9fe51c4ed",
+        "album_id": "615e71014d33a9f9fe51c4ed",
         "cover_path": "LoveLive/Aqours/小组曲/Guilty Kiss/[2021.07.28] Guilty Kiss - Shooting Star Warrior/Cover_1.jpg",
         "music_path": "LoveLive/Aqours/小组曲/Guilty Kiss/[2021.07.28] Guilty Kiss - Shooting Star Warrior/09. Nameless Love Song",
         "artist": "Guilty Kiss",
@@ -410,7 +410,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/Aqours/小组曲/Guilty Kiss/[2021.07.28] Guilty Kiss - Shooting Star Warrior/09. Nameless Love Song.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/Aqours/小组曲/Guilty Kiss/[2021.07.28] Guilty Kiss - Shooting Star Warrior/09. Nameless Love Song.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/Aqours/小组曲/Guilty Kiss/[2021.07.28] Guilty Kiss - Shooting Star Warrior/09. Nameless Love Song.lrc",
-        "albumName": "Shooting Star Warrior"
+        "album_name": "Shooting Star Warrior"
       }
     ],
     "group": "Aqours"
@@ -427,7 +427,7 @@
       {
         "_id": "6203e745c151378148f103e2",
         "name": "RUN KAKERU RUN",
-        "albumId": "6203e6b8c151378148f103d2",
+        "album_id": "6203e6b8c151378148f103d2",
         "cover_path": "LoveLive/Aqours/独唱/[2022.02.10] Love Live! Sunshine!! Second Solo Concert Album ～THE STORY OF FEATHER～ starring Matsuura Kanan/Cover_1.jpg",
         "music_path": "LoveLive/Aqours/独唱/[2022.02.10] Love Live! Sunshine!! Second Solo Concert Album ～THE STORY OF FEATHER～ starring Matsuura Kanan/16. RUN KAKERU RUN",
         "artist": "松浦果南",
@@ -436,7 +436,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/Aqours/独唱/[2022.02.10] Love Live! Sunshine!! Second Solo Concert Album ～THE STORY OF FEATHER～ starring Matsuura Kanan/16. RUN KAKERU RUN.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/Aqours/独唱/[2022.02.10] Love Live! Sunshine!! Second Solo Concert Album ～THE STORY OF FEATHER～ starring Matsuura Kanan/16. RUN KAKERU RUN.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/Aqours/独唱/[2022.02.10] Love Live! Sunshine!! Second Solo Concert Album ～THE STORY OF FEATHER～ starring Matsuura Kanan/16. RUN KAKERU RUN.lrc",
-        "albumName": "Matsuura Kanan Second Solo ～THE STORY OF FEATHER～"
+        "album_name": "Matsuura Kanan Second Solo ～THE STORY OF FEATHER～"
       }
     ],
     "group": "Aqours"
@@ -453,7 +453,7 @@
       {
         "_id": "625f58dd964d387d2a164e71",
         "name": "Paradise Chime",
-        "albumId": "",
+        "album_id": "",
         "cover_path": "LoveLive/Aqours/独唱/[2022.04.17] Love Live! Sunshine!! Second Solo Concert Album ～THE STORY OF FEATHER～ starring Watanabe You/Cover_1.jpg",
         "music_path": "LoveLive/Aqours/独唱/[2022.04.17] Love Live! Sunshine!! Second Solo Concert Album ～THE STORY OF FEATHER～ starring Watanabe You/19. Paradise Chime",
         "artist": "渡边曜",
@@ -462,7 +462,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/Aqours/独唱/[2022.04.17] Love Live! Sunshine!! Second Solo Concert Album ～THE STORY OF FEATHER～ starring Watanabe You/19. Paradise Chime.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/Aqours/独唱/[2022.04.17] Love Live! Sunshine!! Second Solo Concert Album ～THE STORY OF FEATHER～ starring Watanabe You/19. Paradise Chime.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/Aqours/独唱/[2022.04.17] Love Live! Sunshine!! Second Solo Concert Album ～THE STORY OF FEATHER～ starring Watanabe You/19. Paradise Chime.lrc",
-        "albumName": "Love Live! Sunshine!! Second Solo Concert Album ～THE STORY OF FEATHER～ starring Watanabe You"
+        "album_name": "Love Live! Sunshine!! Second Solo Concert Album ～THE STORY OF FEATHER～ starring Watanabe You"
       }
     ],
     "group": "Aqours"
@@ -479,7 +479,7 @@
       {
         "_id": "615d16a6b7f7a56a3a81d038",
         "name": "CHASE!",
-        "albumId": "615d1a64b7f7a56a3a81d070",
+        "album_id": "615d1a64b7f7a56a3a81d070",
         "cover_path": "LoveLive/虹咲学园学园偶像同好会/单曲/[2018.11.21] 虹咲学园学园偶像同好会-TOKIMEKI Runners/Cover_1.jpg",
         "music_path": "LoveLive/虹咲学园学园偶像同好会/单曲/[2018.11.21] 虹咲学园学园偶像同好会-TOKIMEKI Runners/08.優木せつ菜(CV.楠木ともり) - CHASE!",
         "artist": "优木雪菜",
@@ -488,7 +488,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/虹咲学园学园偶像同好会/单曲/[2018.11.21] 虹咲学园学园偶像同好会-TOKIMEKI Runners/08.優木せつ菜(CV.楠木ともり) - CHASE!.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/虹咲学园学园偶像同好会/单曲/[2018.11.21] 虹咲学园学园偶像同好会-TOKIMEKI Runners/08.優木せつ菜(CV.楠木ともり) - CHASE!.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/虹咲学园学园偶像同好会/单曲/[2018.11.21] 虹咲学园学园偶像同好会-TOKIMEKI Runners/08.優木せつ菜(CV.楠木ともり) - CHASE!.lrc",
-        "albumName": "TOKIMEKI Runners"
+        "album_name": "TOKIMEKI Runners"
       }
     ],
     "group": "Nijigasaki"
@@ -505,7 +505,7 @@
       {
         "_id": "615d16a6b7f7a56a3a81d03d",
         "name": "オードリー",
-        "albumId": "615d1a64b7f7a56a3a81d071",
+        "album_id": "615d1a64b7f7a56a3a81d071",
         "cover_path": "LoveLive/虹咲学园学园偶像同好会/单曲/[2019.10.2] 虹咲学园学园偶像同好会-Love U my friends/Cover_1.jpg",
         "music_path": "LoveLive/虹咲学园学园偶像同好会/单曲/[2019.10.2] 虹咲学园学园偶像同好会-Love U my friends/03. 桜坂しずく(CV.前田佳織里) - オードリー",
         "artist": "樱坂雫",
@@ -514,7 +514,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/虹咲学园学园偶像同好会/单曲/[2019.10.2] 虹咲学园学园偶像同好会-Love U my friends/03. 桜坂しずく(CV.前田佳織里) - オードリー.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/虹咲学园学园偶像同好会/单曲/[2019.10.2] 虹咲学园学园偶像同好会-Love U my friends/03. 桜坂しずく(CV.前田佳織里) - オードリー.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/虹咲学园学园偶像同好会/单曲/[2019.10.2] 虹咲学园学园偶像同好会-Love U my friends/03. 桜坂しずく(CV.前田佳織里) - オードリー.lrc",
-        "albumName": "Love U my friends"
+        "album_name": "Love U my friends"
       }
     ],
     "group": "Nijigasaki"
@@ -531,7 +531,7 @@
       {
         "_id": "615d16a6b7f7a56a3a81d051",
         "name": "決意の光",
-        "albumId": "615d1a64b7f7a56a3a81d073",
+        "album_id": "615d1a64b7f7a56a3a81d073",
         "cover_path": "LoveLive/虹咲学园学园偶像同好会/单曲/[2020.9.2] 虹咲学园学园偶像同好会-Just Believe!!!/Cover_1.jpg",
         "music_path": "LoveLive/虹咲学园学园偶像同好会/单曲/[2020.9.2] 虹咲学园学园偶像同好会-Just Believe!!!/10. 三船栞子(CV.小泉萌香) - 決意の光",
         "artist": "三船栞子",
@@ -540,7 +540,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/虹咲学园学园偶像同好会/单曲/[2020.9.2] 虹咲学园学园偶像同好会-Just Believe!!!/10. 三船栞子(CV.小泉萌香) - 決意の光.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/虹咲学园学园偶像同好会/单曲/[2020.9.2] 虹咲学园学园偶像同好会-Just Believe!!!/10. 三船栞子(CV.小泉萌香) - 決意の光.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/虹咲学园学园偶像同好会/单曲/[2020.9.2] 虹咲学园学园偶像同好会-Just Believe!!!/10. 三船栞子(CV.小泉萌香) - 決意の光.lrc",
-        "albumName": "Just Believe!!!"
+        "album_name": "Just Believe!!!"
       }
     ],
     "group": "Nijigasaki"
@@ -557,7 +557,7 @@
       {
         "_id": "6166e9a630fc3915b6ab70cf",
         "name": "L!L!L! (Love the Life We Live)",
-        "albumId": "6166e76a30fc3915b6ab70cc",
+        "album_id": "6166e76a30fc3915b6ab70cc",
         "cover_path": "LoveLive/虹咲学园学园偶像同好会/单曲/[2021.10.13] 虹咲学园学园偶像同好会 - L！L！L！ (Love the Life We Live)/Cover_1.jpg",
         "music_path": "LoveLive/虹咲学园学园偶像同好会/单曲/[2021.10.13] 虹咲学园学园偶像同好会 - L！L！L！ (Love the Life We Live)/01. L!L!L! (Love the Life We Live)",
         "artist": "虹咲学园学园偶像同好会",
@@ -566,7 +566,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/虹咲学园学园偶像同好会/单曲/[2021.10.13] 虹咲学园学园偶像同好会 - L！L！L！ (Love the Life We Live)/01. L!L!L! (Love the Life We Live).lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/虹咲学园学园偶像同好会/单曲/[2021.10.13] 虹咲学园学园偶像同好会 - L！L！L！ (Love the Life We Live)/01. L!L!L! (Love the Life We Live).lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/虹咲学园学园偶像同好会/单曲/[2021.10.13] 虹咲学园学园偶像同好会 - L！L！L！ (Love the Life We Live)/01. L!L!L! (Love the Life We Live).lrc",
-        "albumName": "L!L!L! (Love the Life We Live)"
+        "album_name": "L!L!L! (Love the Life We Live)"
       }
     ],
     "group": "Nijigasaki"
@@ -583,7 +583,7 @@
       {
         "_id": "615d16a6b7f7a56a3a81d045",
         "name": "無敵級*ビリーバー",
-        "albumId": "615d1a64b7f7a56a3a81d072",
+        "album_id": "615d1a64b7f7a56a3a81d072",
         "cover_path": "LoveLive/虹咲学园学园偶像同好会/单曲/[2020.7.29] 虹咲学园学园偶像同好会-無敵級ビリーバー/Cover_1.jpg",
         "music_path": "LoveLive/虹咲学园学园偶像同好会/单曲/[2020.7.29] 虹咲学园学园偶像同好会-無敵級ビリーバー/01. 中須かすみ(CV.相良茉優) - 無敵級＊ビリーバー",
         "artist": "中须霞",
@@ -592,7 +592,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/虹咲学园学园偶像同好会/单曲/[2020.7.29] 虹咲学园学园偶像同好会-無敵級ビリーバー/01. 中須かすみ(CV.相良茉優) - 無敵級＊ビリーバー.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/虹咲学园学园偶像同好会/单曲/[2020.7.29] 虹咲学园学园偶像同好会-無敵級ビリーバー/01. 中須かすみ(CV.相良茉優) - 無敵級＊ビリーバー.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/虹咲学园学园偶像同好会/单曲/[2020.7.29] 虹咲学园学园偶像同好会-無敵級ビリーバー/01. 中須かすみ(CV.相良茉優) - 無敵級＊ビリーバー.lrc",
-        "albumName": "無敵級*ビリーバー"
+        "album_name": "無敵級*ビリーバー"
       }
     ],
     "group": "Nijigasaki"
@@ -609,7 +609,7 @@
       {
         "_id": "615d69c54d33a9f9fe51c23e",
         "name": "I'm Still...",
-        "albumId": "615e71014d33a9f9fe51c4a3",
+        "album_id": "615e71014d33a9f9fe51c4a3",
         "cover_path": "LoveLive/虹咲学园学园偶像同好会/小组曲/R3BIRTH/[2021.10.06] R3BIRTH - MONSTER GIRLS/Cover_1.jpg",
         "music_path": "LoveLive/虹咲学园学园偶像同好会/小组曲/R3BIRTH/[2021.10.06] R3BIRTH - MONSTER GIRLS/03.I'm Still...",
         "artist": "米娅·泰勒",
@@ -618,7 +618,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/虹咲学园学园偶像同好会/小组曲/R3BIRTH/[2021.10.06] R3BIRTH - MONSTER GIRLS/03.I'm Still....lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/虹咲学园学园偶像同好会/小组曲/R3BIRTH/[2021.10.06] R3BIRTH - MONSTER GIRLS/03.I'm Still....lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/虹咲学园学园偶像同好会/小组曲/R3BIRTH/[2021.10.06] R3BIRTH - MONSTER GIRLS/03.I'm Still....lrc",
-        "albumName": "MONSTER GIRLS"
+        "album_name": "MONSTER GIRLS"
       }
     ],
     "group": "Nijigasaki"
@@ -635,7 +635,7 @@
       {
         "_id": "615d16a6b7f7a56a3a81d015",
         "name": "NEO SKY, NEO MAP!",
-        "albumId": "615d1a64b7f7a56a3a81d069",
+        "album_id": "615d1a64b7f7a56a3a81d069",
         "cover_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.11.04] 虹咲学园学园偶像同好会 - NEO SKY, NEO MAP!/Cover_1.jpg",
         "music_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2020.11.04] 虹咲学园学园偶像同好会 - NEO SKY, NEO MAP!/01. NEO SKY, NEO MAP!",
         "artist": "虹咲学园学园偶像同好会",
@@ -644,7 +644,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/虹咲学园学园偶像同好会/动画/[2020.11.04] 虹咲学园学园偶像同好会 - NEO SKY, NEO MAP!/01. NEO SKY, NEO MAP!.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/虹咲学园学园偶像同好会/动画/[2020.11.04] 虹咲学园学园偶像同好会 - NEO SKY, NEO MAP!/01. NEO SKY, NEO MAP!.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/虹咲学园学园偶像同好会/动画/[2020.11.04] 虹咲学园学园偶像同好会 - NEO SKY, NEO MAP!/01. NEO SKY, NEO MAP!.lrc",
-        "albumName": "NEO SKY, NEO MAP!"
+        "album_name": "NEO SKY, NEO MAP!"
       }
     ],
     "group": "Nijigasaki"
@@ -661,7 +661,7 @@
       {
         "_id": "6268d77ee7e29bcc5c9c8995",
         "name": "夢が僕らの太陽さ",
-        "albumId": "6268d73fe7e29bcc5c9c8990",
+        "album_id": "6268d73fe7e29bcc5c9c8990",
         "cover_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2022.04.27] 虹咲学园学园偶像同好会 - 夢が僕らの太陽さ/Cover_1.jpg",
         "music_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2022.04.27] 虹咲学园学园偶像同好会 - 夢が僕らの太陽さ/01. 夢が僕らの太陽さ",
         "artist": "虹咲学园学园偶像同好会",
@@ -670,12 +670,12 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/虹咲学园学园偶像同好会/动画/[2022.04.27] 虹咲学园学园偶像同好会 - 夢が僕らの太陽さ/01. 夢が僕らの太陽さ.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/虹咲学园学园偶像同好会/动画/[2022.04.27] 虹咲学园学园偶像同好会 - 夢が僕らの太陽さ/01. 夢が僕らの太陽さ.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/虹咲学园学园偶像同好会/动画/[2022.04.27] 虹咲学园学园偶像同好会 - 夢が僕らの太陽さ/01. 夢が僕らの太陽さ.lrc",
-        "albumName": "夢が僕らの太陽さ"
+        "album_name": "夢が僕らの太陽さ"
       },
       {
         "_id": "6268d7a4e7e29bcc5c9c8996",
         "name": "繚乱！ビクトリーロード",
-        "albumId": "6268d73fe7e29bcc5c9c8990",
+        "album_id": "6268d73fe7e29bcc5c9c8990",
         "cover_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2022.04.27] 虹咲学园学园偶像同好会 - 夢が僕らの太陽さ/Cover_1.jpg",
         "music_path": "LoveLive/虹咲学园学园偶像同好会/动画/[2022.04.27] 虹咲学园学园偶像同好会 - 夢が僕らの太陽さ/02. 繚乱！ビクトリーロード",
         "artist": "虹咲学园学园偶像同好会",
@@ -684,7 +684,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/虹咲学园学园偶像同好会/动画/[2022.04.27] 虹咲学园学园偶像同好会 - 夢が僕らの太陽さ/02. 繚乱！ビクトリーロード.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/虹咲学园学园偶像同好会/动画/[2022.04.27] 虹咲学园学园偶像同好会 - 夢が僕らの太陽さ/02. 繚乱！ビクトリーロード.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/虹咲学园学园偶像同好会/动画/[2022.04.27] 虹咲学园学园偶像同好会 - 夢が僕らの太陽さ/02. 繚乱！ビクトリーロード.lrc",
-        "albumName": "夢が僕らの太陽さ"
+        "album_name": "夢が僕らの太陽さ"
       }
     ],
     "group": "Nijigasaki"
@@ -701,7 +701,7 @@
       {
         "_id": "615d2189b7f7a56a3a81d096",
         "name": "START!! True dreams",
-        "albumId": "615d213eb7f7a56a3a81d08e",
+        "album_id": "615d213eb7f7a56a3a81d08e",
         "cover_path": "LoveLive/Liella!/动画/[2021.07.21] Liella! - START!! True dreams/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/动画/[2021.07.21] Liella! - START!! True dreams/01. START!! True dreams",
         "artist": "Liella!",
@@ -710,7 +710,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/Liella!/动画/[2021.07.21] Liella! - START!! True dreams/01. START!! True dreams.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/Liella!/动画/[2021.07.21] Liella! - START!! True dreams/01. START!! True dreams.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/Liella!/动画/[2021.07.21] Liella! - START!! True dreams/01. START!! True dreams.lrc",
-        "albumName": "START!! True dreams"
+        "album_name": "START!! True dreams"
       }
     ],
     "group": "Liella!"
@@ -727,7 +727,7 @@
       {
         "_id": "615d2189b7f7a56a3a81d098",
         "name": "未来は風のように",
-        "albumId": "615d213eb7f7a56a3a81d08f",
+        "album_id": "615d213eb7f7a56a3a81d08f",
         "cover_path": "LoveLive/Liella!/动画/[2021.08.04] Liella! - 未来わ風のように/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/动画/[2021.08.04] Liella! - 未来わ風のように/01.未来は風のように",
         "artist": "Liella!",
@@ -736,7 +736,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/Liella!/动画/[2021.08.04] Liella! - 未来わ風のように/01.未来は風のように.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/Liella!/动画/[2021.08.04] Liella! - 未来わ風のように/01.未来は風のように.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/Liella!/动画/[2021.08.04] Liella! - 未来わ風のように/01.未来は風のように.lrc",
-        "albumName": "未来は風のように"
+        "album_name": "未来は風のように"
       }
     ],
     "group": "Liella!"
@@ -754,7 +754,7 @@
       {
         "_id": "615d2189b7f7a56a3a81d09b",
         "name": "Tiny Stars",
-        "albumId": "615d213eb7f7a56a3a81d090",
+        "album_id": "615d213eb7f7a56a3a81d090",
         "cover_path": "LoveLive/Liella!/动画/[2021.08.25] Liella! - 未来予報ハレルヤ！／Tiny Stars/Cover_2.jpg",
         "music_path": "LoveLive/Liella!/动画/[2021.08.25] Liella! - 未来予報ハレルヤ！／Tiny Stars/02. Tiny Stars",
         "artist": "涩谷香音/唐可可",
@@ -763,7 +763,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/Liella!/动画/[2021.08.25] Liella! - 未来予報ハレルヤ！／Tiny Stars/02. Tiny Stars.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/Liella!/动画/[2021.08.25] Liella! - 未来予報ハレルヤ！／Tiny Stars/02. Tiny Stars.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/Liella!/动画/[2021.08.25] Liella! - 未来予報ハレルヤ！／Tiny Stars/02. Tiny Stars.lrc",
-        "albumName": "未来予報ハレルヤ！/Tiny Stars"
+        "album_name": "未来予報ハレルヤ！/Tiny Stars"
       }
     ],
     "group": "Liella!"
@@ -781,7 +781,7 @@
       {
         "_id": "615d2189b7f7a56a3a81d09f",
         "name": "Wish Song",
-        "albumId": "615d213eb7f7a56a3a81d091",
+        "album_id": "615d213eb7f7a56a3a81d091",
         "cover_path": "LoveLive/Liella!/动画/[2021.09.29] Liella! - 常夏☆サンシャイン／Wish Song/Cover_2.jpg",
         "music_path": "LoveLive/Liella!/动画/[2021.09.29] Liella! - 常夏☆サンシャイン／Wish Song/02. Wish Song",
         "artist": "Liella!",
@@ -790,7 +790,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/Liella!/动画/[2021.09.29] Liella! - 常夏☆サンシャイン／Wish Song/02. Wish Song.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/Liella!/动画/[2021.09.29] Liella! - 常夏☆サンシャイン／Wish Song/02. Wish Song.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/Liella!/动画/[2021.09.29] Liella! - 常夏☆サンシャイン／Wish Song/02. Wish Song.lrc",
-        "albumName": "常夏☆サンシャイン/Wish Song"
+        "album_name": "常夏☆サンシャイン/Wish Song"
       }
     ],
     "group": "Liella!"
@@ -808,7 +808,7 @@
       {
         "_id": "615d2189b7f7a56a3a81d0a3",
         "name": "始まりは君の空",
-        "albumId": "615d213eb7f7a56a3a81d093",
+        "album_id": "615d213eb7f7a56a3a81d093",
         "cover_path": "LoveLive/Liella!/单曲/[2021.04.07] Liella! - 始まりは君の空/CD/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/单曲/[2021.04.07] Liella! - 始まりは君の空/CD/01. 始まりは君の空",
         "artist": "Liella!",
@@ -817,7 +817,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/Liella!/单曲/[2021.04.07] Liella! - 始まりは君の空/CD/01. 始まりは君の空.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/Liella!/单曲/[2021.04.07] Liella! - 始まりは君の空/CD/01. 始まりは君の空.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/Liella!/单曲/[2021.04.07] Liella! - 始まりは君の空/CD/01. 始まりは君の空.lrc",
-        "albumName": "始まりは君の空"
+        "album_name": "始まりは君の空"
       }
     ],
     "group": "Liella!"
@@ -835,7 +835,7 @@
       {
         "_id": "61715132f5d687ee5a9d522a",
         "name": "Starlight Prologue",
-        "albumId": "61714fdaf5d687ee5a9d5226",
+        "album_id": "61714fdaf5d687ee5a9d5226",
         "cover_path": "LoveLive/Liella!/动画/[2021.10.19] Liella! - Nonfiction!! ／ Starlight Prologue/Cover_2.jpg",
         "music_path": "LoveLive/Liella!/动画/[2021.10.19] Liella! - Nonfiction!! ／ Starlight Prologue/02. Starlight Prologue",
         "artist": "Liella!",
@@ -844,7 +844,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/Liella!/动画/[2021.10.19] Liella! - Nonfiction!! ／ Starlight Prologue/02. Starlight Prologue.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/Liella!/动画/[2021.10.19] Liella! - Nonfiction!! ／ Starlight Prologue/02. Starlight Prologue.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/Liella!/动画/[2021.10.19] Liella! - Nonfiction!! ／ Starlight Prologue/02. Starlight Prologue.lrc",
-        "albumName": "ノンフィクション!! / Starlight Prologue"
+        "album_name": "ノンフィクション!! / Starlight Prologue"
       }
     ],
     "group": "Liella!"
@@ -861,7 +861,7 @@
       {
         "_id": "61aacab17880276cae325ab5",
         "name": "勇気のカケラ",
-        "albumId": "61aacbd07880276cae325ab6",
+        "album_id": "61aacbd07880276cae325ab6",
         "cover_path": "LoveLive/Liella!/动画/blu-ray/[2021.11.26] 岚千砂都 - 勇気のカケラ/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/动画/blu-ray/[2021.11.26] 岚千砂都 - 勇気のカケラ/勇気のカケラ",
         "artist": "岚千砂都",
@@ -870,7 +870,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/Liella!/动画/blu-ray/[2021.11.26] 岚千砂都 - 勇気のカケラ/勇気のカケラ.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/Liella!/动画/blu-ray/[2021.11.26] 岚千砂都 - 勇気のカケラ/勇気のカケラ.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/Liella!/动画/blu-ray/[2021.11.26] 岚千砂都 - 勇気のカケラ/勇気のカケラ.lrc",
-        "albumName": "勇気のカケラ"
+        "album_name": "勇気のカケラ"
       }
     ],
     "group": "Liella!"
@@ -888,7 +888,7 @@
       {
         "_id": "621eba0db6158e130061fe01",
         "name": "What a Wonderful Dream!!",
-        "albumId": "621eb911b6158e130061fdff",
+        "album_id": "621eb911b6158e130061fdff",
         "cover_path": "LoveLive/Liella!/单曲/[2022.03.02] Liella! - What a Wonderful Dream!!/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/单曲/[2022.03.02] Liella! - What a Wonderful Dream!!/02. What a Wonderful Dream!!",
         "artist": "Liella!",
@@ -897,12 +897,12 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/Liella!/单曲/[2022.03.02] Liella! - What a Wonderful Dream!!/02. What a Wonderful Dream!!.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/Liella!/单曲/[2022.03.02] Liella! - What a Wonderful Dream!!/02. What a Wonderful Dream!!.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/Liella!/单曲/[2022.03.02] Liella! - What a Wonderful Dream!!/02. What a Wonderful Dream!!.lrc",
-        "albumName": "What a Wonderful Dream!!"
+        "album_name": "What a Wonderful Dream!!"
       },
       {
         "_id": "621eba0db6158e130061fe09",
         "name": "ユニゾン",
-        "albumId": "621eb911b6158e130061fdff",
+        "album_id": "621eb911b6158e130061fdff",
         "cover_path": "LoveLive/Liella!/单曲/[2022.03.02] Liella! - What a Wonderful Dream!!/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/单曲/[2022.03.02] Liella! - What a Wonderful Dream!!/10. ユニゾン",
         "artist": "Liella!",
@@ -911,7 +911,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/Liella!/单曲/[2022.03.02] Liella! - What a Wonderful Dream!!/10. ユニゾン.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/Liella!/单曲/[2022.03.02] Liella! - What a Wonderful Dream!!/10. ユニゾン.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/Liella!/单曲/[2022.03.02] Liella! - What a Wonderful Dream!!/10. ユニゾン.lrc",
-        "albumName": "What a Wonderful Dream!!"
+        "album_name": "What a Wonderful Dream!!"
       }
     ],
     "group": "Liella!"
@@ -928,7 +928,7 @@
       {
         "_id": "619c85997bfe68c89a6fd96a",
         "name": "LIVE with a smile!",
-        "albumId": "619c84f67bfe68c89a6fd969",
+        "album_id": "619c84f67bfe68c89a6fd969",
         "cover_path": "LoveLive/Liella!/其他/[2021.11.03] ANL - LIVE with a smile!/Cover_1.jpg",
         "music_path": "LoveLive/Liella!/其他/[2021.11.03] ANL - LIVE with a smile!/01. LIVE with a smile!",
         "artist": "A-N-L",
@@ -937,7 +937,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/Liella!/其他/[2021.11.03] ANL - LIVE with a smile!/01. LIVE with a smile!.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/Liella!/其他/[2021.11.03] ANL - LIVE with a smile!/01. LIVE with a smile!.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/Liella!/其他/[2021.11.03] ANL - LIVE with a smile!/01. LIVE with a smile!.lrc",
-        "albumName": "LIVE with a smile!"
+        "album_name": "LIVE with a smile!"
       }
     ],
     "group": "Combine"
@@ -956,7 +956,7 @@
       {
         "_id": "619d9eff00757cdf3ec720f6",
         "name": "not ALONE not HITORI",
-        "albumId": "619d9e2d00757cdf3ec720ee",
+        "album_id": "619d9e2d00757cdf3ec720ee",
         "cover_path": "LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/Cover_1.jpg",
         "music_path": "LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/01. not ALONE not HITORI",
         "artist": "Aqours",
@@ -965,12 +965,12 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/01. not ALONE not HITORI.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/01. not ALONE not HITORI.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/01. not ALONE not HITORI.lrc",
-        "albumName": "not ALONE not HITORI/ミラクル STAY TUNE!/Shooting Voice!!"
+        "album_name": "not ALONE not HITORI/ミラクル STAY TUNE!/Shooting Voice!!"
       },
       {
         "_id": "619d9eff00757cdf3ec720f7",
         "name": "ミラクル STAY TUNE!",
-        "albumId": "619d9e2d00757cdf3ec720ee",
+        "album_id": "619d9e2d00757cdf3ec720ee",
         "cover_path": "LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/Cover_2.jpg",
         "music_path": "LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/02. ミラクル STAY TUNE!",
         "artist": "虹咲学园学园偶像同好会",
@@ -979,12 +979,12 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/02. ミラクル STAY TUNE!.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/02. ミラクル STAY TUNE!.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/02. ミラクル STAY TUNE!.lrc",
-        "albumName": "not ALONE not HITORI/ミラクル STAY TUNE!/Shooting Voice!!"
+        "album_name": "not ALONE not HITORI/ミラクル STAY TUNE!/Shooting Voice!!"
       },
       {
         "_id": "619d9eff00757cdf3ec720f8",
         "name": "Shooting Voice!!",
-        "albumId": "619d9e2d00757cdf3ec720ee",
+        "album_id": "619d9e2d00757cdf3ec720ee",
         "cover_path": "LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/Cover_3.jpg",
         "music_path": "LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/03. Shooting Voice!!",
         "artist": "Liella!",
@@ -993,7 +993,7 @@
         "lyric": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/JP/LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/03. Shooting Voice!!.lrc",
         "trans": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ZH/LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/03. Shooting Voice!!.lrc",
         "roma": "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/ROMA/LoveLive/组合/[2021.11.24] ANL - not ALONE not HITORI／ミラクル STAY TUNE!／Shooting Voice!!/03. Shooting Voice!!.lrc",
-        "albumName": "not ALONE not HITORI/ミラクル STAY TUNE!/Shooting Voice!!"
+        "album_name": "not ALONE not HITORI/ミラクル STAY TUNE!/Shooting Voice!!"
       }
     ],
     "group": "Combine"

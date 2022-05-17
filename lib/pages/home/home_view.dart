@@ -174,7 +174,7 @@ class _HomeViewState extends State<HomeView>
   Widget _buildListTop() {
     return Song_libraryTop(
       onPlayTap: () {
-        PlayerLogic.to.playMusic(GlobalLogic.to.musicByAllList);
+        PlayerLogic.to.playMusic(GlobalLogic.to.filterMusicListByAlbums(logic.state.currentIndex.value));
       },
       onScreenTap: () {
         logic.openSelect();

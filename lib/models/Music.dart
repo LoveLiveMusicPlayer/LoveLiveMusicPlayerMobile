@@ -44,6 +44,8 @@ class Music {
   factory Music.fromJson(Map<String, dynamic> json) => Music(
         uid: json["_id"],
         name: json["name"],
+        albumId: json["album_id"],
+        albumName: json["album_name"],
         coverPath: json["cover_path"],
         musicPath: json["music_path"],
         artist: json["artist"],
@@ -60,6 +62,8 @@ class Music {
   Map<String, dynamic> toJson() => {
         "_id": uid,
         "name": name,
+        "album_id": albumId,
+        "album_name": albumName,
         "cover_path": coverPath,
         "music_path": musicPath,
         "artist": artist,
