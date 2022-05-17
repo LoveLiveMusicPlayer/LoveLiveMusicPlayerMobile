@@ -32,7 +32,7 @@ class PlayerLogic extends SuperController
   var playingMusic = Music().obs;
 
   var lrcType = 0.obs; // 0:原文; 1:翻译; 2:罗马音
-  bool isCanMiniPlayerScroll = true;
+  var isCanMiniPlayerScroll = true.obs;
   var playMode = PlayMode.playlist.obs;
 
   final List<StreamSubscription> _subscriptions = [];
@@ -65,15 +65,12 @@ class PlayerLogic extends SuperController
       switch (event) {
         case PlayerState.play:
           isPlaying.value = true;
-          print("player is playing...");
           break;
         case PlayerState.pause:
           isPlaying.value = false;
-          print("player is pause...");
           break;
         case PlayerState.stop:
           isPlaying.value = false;
-          print("player is stop...");
           break;
       }
     }));
@@ -84,7 +81,6 @@ class PlayerLogic extends SuperController
     }));
 
     _subscriptions.add(mPlayer.currentPosition.listen((duration) {
-      // LogUtil.e(DateUtil.formatDate(DateUtil.getDateTimeByMs(duration.inMilliseconds), format: "mm:ss"));
       playingPosition.value = duration;
     }));
 
@@ -163,13 +159,14 @@ class PlayerLogic extends SuperController
   }
 
   /// 播放 播放列表 指定位置的歌曲
-  changePlayIndex(bool isController, int index) {
+  changePlayIndex(bool isController, int index) async {
     if (isController && mPlayer.isFirstBackgroundToForeground) {
       return;
     }
-    isCanMiniPlayerScroll = false;
-    mPlayer.playlistPlayAtIndex(index);
-    isCanMiniPlayerScroll = true;
+    isCanMiniPlayerScroll.value = false;
+    await mPlayer.playlistPlayAtIndex(index);
+    await Future.delayed(const Duration(milliseconds: 300));
+    isCanMiniPlayerScroll.value = true;
   }
 
   /// 上一曲 / 下一曲

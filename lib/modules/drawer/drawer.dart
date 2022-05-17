@@ -1,3 +1,4 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -150,7 +151,8 @@ class _DrawerPageState extends State<DrawerPage> {
                       onTap: () {},
                     ),
                     DrawerFunctionButton(
-                      icon: "assets/drawer/drawer_reset.svg",
+                      icon: "assets/drawer/drawer_secret.svg",
+                      // icon: "assets/drawer/drawer_reset.svg",
                       text: "清理数据",
                       onTap: () async {
                         SmartDialog.showLoading(

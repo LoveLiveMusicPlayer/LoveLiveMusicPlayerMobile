@@ -61,6 +61,8 @@ class MyApp extends StatelessWidget {
             enableLog: true,
             defaultTransition: Transition.fade,
             theme: isDark ? darkTheme : lightTheme,
+            themeMode: ThemeMode.light,
+            darkTheme: darkTheme,
             initialRoute: Routes.routeInitial,
             getPages: Routes.getRoutes(),
             locale: Translation.locale,

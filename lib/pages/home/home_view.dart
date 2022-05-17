@@ -235,7 +235,6 @@ class _HomeViewState extends State<HomeView>
   Widget _buildList() {
     return Expanded(
       child: Obx(() {
-        LogUtil.e(logic.state.currentIndex.value);
         return RefresherWidget(
           itemCount: GlobalLogic.to.getListSize(logic.state.currentIndex.value,
               GlobalLogic.to.databaseInitOver.value),
@@ -266,7 +265,6 @@ class _HomeViewState extends State<HomeView>
         checked: logic.isItemChecked(index),
         isSelect: logic.state.isSelect.value,
         onItemTap: (album, checked) {
-          LogUtil.e(index);
           if (logic.state.isSelect.value) {
             logic.selectItem(album, checked);
           } else {
