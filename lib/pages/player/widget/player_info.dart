@@ -18,7 +18,8 @@ class PlayerInfo extends StatelessWidget {
             recentlyLrc(PlayerLogic.to.preJPLrc.value),
             SizedBox(height: 10.h),
             recentlyLrc(PlayerLogic.to.currentJPLrc.value,
-                color: const Color(0xFF333333), fontWeight: FontWeight.w900),
+                color: Get.isDarkMode ? Colors.white : Get.theme.primaryColor,
+                fontWeight: FontWeight.w900),
             SizedBox(height: 10.h),
             recentlyLrc(PlayerLogic.to.nextJPLrc.value)
           ],
@@ -29,7 +30,7 @@ class PlayerInfo extends StatelessWidget {
 
   Widget recentlyLrc(String? text,
       {Color color = const Color(0xFF999999),
-        FontWeight fontWeight = FontWeight.normal}) {
+      FontWeight fontWeight = FontWeight.normal}) {
     if (text == null) {
       return Text("", style: TextStyle(color: color, fontSize: 15.sp));
     }
