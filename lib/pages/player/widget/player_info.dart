@@ -18,7 +18,7 @@ class PlayerInfo extends StatelessWidget {
             recentlyLrc(PlayerLogic.to.preJPLrc.value),
             SizedBox(height: 10.h),
             recentlyLrc(PlayerLogic.to.currentJPLrc.value,
-                color: Get.isDarkMode ? Colors.white : Get.theme.primaryColor,
+                color: Get.isDarkMode ? Colors.white : Colors.black,
                 fontWeight: FontWeight.w900),
             SizedBox(height: 10.h),
             recentlyLrc(PlayerLogic.to.nextJPLrc.value)
