@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:lovelivemusicplayer/global/global_binding.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -29,6 +30,11 @@ void main() async {
   // 初始化
   await initServices();
   isDark = await SpUtil.getBoolean(Const.spDark);
+  await JustAudioBackground.init(
+    androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
+    androidNotificationChannelName: 'Audio playback',
+    androidNotificationOngoing: true,
+  );
   await SentryFlutter.init(
     (options) {
       options.dsn =
@@ -86,7 +92,7 @@ initServices() async {
   await GetStorage.init();
   await SpUtil.getInstance();
   Network.getInstance();
-  SDUtils.init();
+  await SDUtils.init();
   PlayerBinding().dependencies();
   LogUtil.init(tag: "zhu", isDebug: kDebugMode);
   LogUtil.d('All services started...');

@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/carousel/carousel_slider.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
@@ -87,16 +88,45 @@ class _MiniPlayerState extends State<MiniPlayer> {
           SizedBox(width: 10.w),
 
           /// 播放按钮
-          Obx(() {
-            return touchIconByAsset(
-                path: PlayerLogic.to.isPlaying.value
-                    ? "assets/player/play_pause.svg"
-                    : "assets/player/play_play.svg",
-                onTap: () => {PlayerLogic.to.togglePlay()},
-                width: 16,
-                height: 16,
-                color: const Color(0xFF333333));
-          }),
+          StreamBuilder<PlayerState>(
+            stream: PlayerLogic.to.mPlayer.playerStateStream,
+            builder: (context, snapshot) {
+              final playerState = snapshot.data;
+              final processingState = playerState?.processingState;
+              final playing = playerState?.playing;
+              if (processingState == ProcessingState.loading ||
+                  processingState == ProcessingState.buffering) {
+                return Container(
+                  margin: const EdgeInsets.all(8.0),
+                  width: 16,
+                  height: 16,
+                  child: const CircularProgressIndicator(),
+                );
+              } else if (playing != true) {
+                return touchIconByAsset(
+                    path: "assets/player/play_play.svg",
+                    onTap: () => PlayerLogic.to.mPlayer.play(),
+                    width: 16,
+                    height: 16,
+                    color: const Color(0xFF333333));
+              } else if (processingState != ProcessingState.completed) {
+                return touchIconByAsset(
+                    path: "assets/player/play_pause.svg",
+                    onTap: () => PlayerLogic.to.mPlayer.pause(),
+                    width: 16,
+                    height: 16,
+                    color: const Color(0xFF333333));
+              } else {
+                return touchIconByAsset(
+                    path: "assets/player/play_play.svg",
+                    onTap: () => PlayerLogic.to.mPlayer.seek(Duration.zero,
+                        index: PlayerLogic.to.mPlayer.effectiveIndices!.first),
+                    width: 16,
+                    height: 16,
+                    color: const Color(0xFF333333));
+              }
+            },
+          ),
           SizedBox(width: 20.w),
 
           /// 播放列表按钮
@@ -141,16 +171,17 @@ class _MiniPlayerState extends State<MiniPlayer> {
           InkWell(
             onDoubleTap: () => PlayerLogic.to.togglePlay(),
             child: CarouselPlayer(
-                listItems: refreshList(PlayerLogic.to.mPlayList,
-                    PlayerLogic.to.playingMusic.value),
-                sliderController: sliderController, isCanScroll: PlayerLogic.to.isCanMiniPlayerScroll.value),
+                listItems: refreshList(PlayerLogic.to.playingMusic.value),
+                sliderController: sliderController,
+                isCanScroll: PlayerLogic.to.isCanMiniPlayerScroll.value),
           )
         ],
       ),
     );
   }
 
-  List<Widget> refreshList(List<Music> musicList, Music currentMusic) {
+  List<Widget> refreshList(Music currentMusic) {
+    final musicList = PlayerLogic.to.mPlayList;
     scrollList.clear();
     if (musicList.isEmpty) {
       scrollList.add(const MarqueeText(
@@ -167,7 +198,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
           style: const TextStyle(
               fontSize: 15, color: Color(0xFF333333), height: 1.3),
           speed: 15));
-      if (music.uid == currentMusic.uid) {
+      if (music.uid == currentMusic.uid && !music.isPlaying) {
         sliderController.jumpToPage(count);
       }
     }

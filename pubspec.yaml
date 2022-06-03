@@ -64,10 +64,8 @@ dependencies:
       url: https://github.com/zhushenwudi/flutter_lyric
       ref: c2d6485
   flutter_svg: ^1.0.3
-  assets_audio_player:
-    git:
-      url: https://github.com/zhushenwudi/Flutter-AssetsAudioPlayer
-      ref: d77e803
+  just_audio: ^0.9.24
+  just_audio_background: ^0.0.1-beta.5
   event_bus: ^2.0.0
   floor: ^1.2.0
   sentry_flutter: ^6.5.1

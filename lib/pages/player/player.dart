@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:rxdart/rxdart.dart' as RxDart;
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/models/PlayMode.dart';
+import 'package:lovelivemusicplayer/models/PositionData.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/control_buttons.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_cover.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_header.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_lyric.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/seekbar.dart';
-import 'package:rxdart/rxdart.dart';
-
 import '../../modules/ext.dart';
 
 class Player extends StatefulWidget {
@@ -25,37 +25,13 @@ class _PlayerState extends State<Player> {
   /// slider 正在被滑动
   var isTouch = false.obs;
 
-  late PublishSubject<String> _handleSubject;
-
-  @override
-  void initState() {
-    super.initState();
-    _handleSubject = PublishSubject<String>();
-    _handleSubject
-        .throttleTime(const Duration(milliseconds: 500))
-        .listen((item) {
-      switch (item) {
-        case "prev":
-          PlayerLogic.to.changePlayPrevOrNext(-1);
-          break;
-        case "next":
-          PlayerLogic.to.changePlayPrevOrNext(1);
-          break;
-        case "play":
-          PlayerLogic.to.togglePlay();
-          break;
-        case "mode":
-          PlayerLogic.to.changePlayMode();
-          break;
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _handleSubject.close();
-    super.dispose();
-  }
+  Stream<PositionData> get _positionDataStream =>
+      RxDart.Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
+          PlayerLogic.to.mPlayer.positionStream,
+          PlayerLogic.to.mPlayer.bufferedPositionStream,
+          PlayerLogic.to.mPlayer.durationStream,
+              (position, bufferedPosition, duration) => PositionData(
+              position, bufferedPosition, duration ?? Duration.zero));
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +90,7 @@ class _PlayerState extends State<Player> {
           SizedBox(height: 24.h),
 
           /// 播放器控制组件
-          playButton(),
+          ControlButtons(PlayerLogic.to.mPlayer),
         ],
       ),
     );
@@ -187,56 +163,18 @@ class _PlayerState extends State<Player> {
   }
 
   Widget slider() {
-    return Obx(() {
-      return SeekBar(
-          duration: PlayerLogic.to.playingTotal.value,
-          position: PlayerLogic.to.playingPosition.value,
+    return StreamBuilder<PositionData>(
+      stream: _positionDataStream,
+      builder: (context, snapshot) {
+        final positionData = snapshot.data;
+        return SeekBar(
+          duration: positionData?.duration ?? Duration.zero,
+          position: positionData?.position ?? Duration.zero,
           onChangeEnd: (newPosition) {
-            PlayerLogic.to.seekTo(newPosition.inMilliseconds.truncate());
-          });
-    });
-  }
-
-  Widget playButton() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Obx(() {
-            String icon;
-            final playMode = PlayerLogic.to.playMode.value;
-            if (playMode == PlayMode.playlist) {
-              icon = "assets/player/play_recycle.svg";
-            } else if (playMode == PlayMode.single) {
-              icon = "assets/player/play_single.svg";
-            } else {
-              icon = "assets/player/play_shuffle.svg";
-            }
-            return materialButton(icon, () => _handleSubject.add("mode"),
-                width: 32, height: 32, radius: 6, iconSize: 15);
-          }),
-          materialButton(
-              "assets/player/play_prev.svg", () => _handleSubject.add("prev"),
-              width: 60, height: 60, radius: 40, iconSize: 16),
-          Obx(() {
-            return materialButton(
-                PlayerLogic.to.isPlaying.value
-                    ? "assets/player/play_pause.svg"
-                    : "assets/player/play_play.svg",
-                () => _handleSubject.add("play"),
-                width: 80,
-                height: 80,
-                radius: 40,
-                iconSize: 26);
-          }),
-          materialButton(
-              "assets/player/play_next.svg", () => _handleSubject.add("next"),
-              width: 60, height: 60, radius: 40, iconSize: 16),
-          materialButton("assets/player/play_playlist.svg", () => {},
-              width: 32, height: 32, radius: 6, iconSize: 15),
-        ],
-      ),
+            PlayerLogic.to.mPlayer.seek(newPosition);
+          },
+        );
+      },
     );
   }
 
