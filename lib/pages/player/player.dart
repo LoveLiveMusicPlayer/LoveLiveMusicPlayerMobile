@@ -57,7 +57,7 @@ class _PlayerState extends State<Player> {
   Widget top() {
     return Container(
       color: Get.theme.primaryColor,
-      height: 600.h,
+      height: 612.h,
       child: Column(
         children: <Widget>[
           SizedBox(height: MediaQuery.of(context).padding.top + 16.h),
