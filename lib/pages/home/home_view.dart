@@ -52,7 +52,10 @@ class _HomeViewState extends State<HomeView>
         child: Scaffold(
             key: _scaffoldKey,
             backgroundColor: Colors.white,
-            endDrawer: const DrawerPage(),
+            endDrawer: SizedBox(
+              width: 300.w,
+              child: const DrawerPage(),
+            ),
             body: MediaQuery(
 
                 ///设置文字大小不随系统设置改变

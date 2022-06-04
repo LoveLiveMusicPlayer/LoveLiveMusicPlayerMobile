@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 
 class BottomBar extends StatefulWidget {
@@ -15,7 +16,7 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
-    final colorTheme = Theme.of(context).colorScheme;
+    final colorTheme = Get.theme.colorScheme;
     mIndex = handlePage(HomeController.to.state.currentIndex.value);
 
     return BottomNavigationBar(

@@ -24,6 +24,7 @@ class _CoverState extends State<Cover> {
       onTap: widget.onTap,
       child: SizedBox(
         height: 440.h,
+        width: double.infinity,
         child: Column(
           children: [
             SizedBox(height: 24.h),

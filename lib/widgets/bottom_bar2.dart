@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 
 class BottomBar2 extends StatefulWidget {
@@ -15,7 +16,7 @@ class _BottomBar2State extends State<BottomBar2> {
 
   @override
   Widget build(BuildContext context) {
-    final colorTheme = Theme.of(context).colorScheme;
+    final colorTheme = Get.theme.colorScheme;
     mIndex = handlePage(HomeController.to.state.currentIndex.value);
     return BottomNavigationBar(
       showUnselectedLabels: true,

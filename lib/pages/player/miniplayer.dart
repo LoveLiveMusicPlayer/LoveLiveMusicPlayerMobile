@@ -8,6 +8,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/carousel/carousel_slider.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/utils/debounce.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:marquee_text/marquee_text.dart';
 
@@ -51,7 +52,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
       return AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
+            color: Get.theme.primaryColor,
             borderRadius: BorderRadius.circular(34),
           ),
           child: Column(
@@ -198,9 +199,11 @@ class _MiniPlayerState extends State<MiniPlayer> {
           style: const TextStyle(
               fontSize: 15, color: Color(0xFF333333), height: 1.3),
           speed: 15));
-      if (music.uid == currentMusic.uid && !music.isPlaying) {
-        sliderController.jumpToPage(count);
-      }
+      debounceUtil(() {
+        if (music.uid == currentMusic.uid) {
+          sliderController.jumpToPage(count);
+        }
+      });
     }
     return scrollList;
   }

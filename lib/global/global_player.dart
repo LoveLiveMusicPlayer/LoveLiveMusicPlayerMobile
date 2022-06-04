@@ -54,14 +54,22 @@ class PlayerLogic extends SuperController
       playingPosition.value = duration;
       final lrcList = ParserSmart(jpLrc.value).parseLines();
       for (var i = 0; i < lrcList.length; i++) {
-        if ((lrcList[i].startTime ?? 0) < duration.inMilliseconds &&
-            (lrcList[i + 1].startTime ?? 0) > duration.inMilliseconds) {
+        if (i == lrcList.length - 1 && (lrcList[i].startTime ?? 0) < duration.inMilliseconds) {
+          nextJPLrc.value = "";
+          currentJPLrc.value =
+          (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "";
+          preJPLrc.value = (i - 1 <= lrcList.length - 1 && i > 0)
+              ? lrcList[i - 1].mainText ?? ""
+              : "";
+          break;
+        } else if ((lrcList[i].startTime ?? 0) < duration.inMilliseconds &&
+            (lrcList[i + 1].startTime ?? 0) > duration.inMilliseconds){
           nextJPLrc.value = (i + 1 <= lrcList.length - 1)
               ? lrcList[i + 1].mainText ?? ""
               : "";
           currentJPLrc.value =
-              (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "";
-          preJPLrc.value = (i - 1 <= lrcList.length - 1)
+          (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "";
+          preJPLrc.value = (i - 1 <= lrcList.length - 1 && i > 0)
               ? lrcList[i - 1].mainText ?? ""
               : "";
           break;
@@ -71,12 +79,14 @@ class PlayerLogic extends SuperController
 
     /// 当前播放监听
     mPlayer.currentIndexStream.listen((index) {
-      final currentMusic = mPlayList[index ?? 0];
-      for (var music in mPlayList) {
-        music.isPlaying = music.uid == currentMusic.uid;
+      if (index != null && mPlayList.isNotEmpty) {
+        final currentMusic = mPlayList[index];
+        for (var music in mPlayList) {
+          music.isPlaying = music.uid == currentMusic.uid;
+        }
+        playingMusic.value = currentMusic;
+        getLrc(false);
       }
-      playingMusic.value = currentMusic;
-      getLrc(false);
     });
   }
 
@@ -248,7 +258,11 @@ class PlayerLogic extends SuperController
   /// 切换循环模式
   void changeLoopMode(int index) async {
     final nextIndex = index % loopModes.length;
-    mPlayer.setLoopMode(loopModes[nextIndex]);
+
+    /// 特殊处理随机播放：当处于LoopMode.off模式时，更改为循环列表且随机洗牌
+    mPlayer.setLoopMode(loopModes[nextIndex] == LoopMode.off
+        ? LoopMode.all
+        : loopModes[nextIndex]);
     final enableShuffle = nextIndex == 0;
     if (enableShuffle) {
       await mPlayer.shuffle();
