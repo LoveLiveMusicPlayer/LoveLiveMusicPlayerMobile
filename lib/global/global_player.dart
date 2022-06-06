@@ -84,8 +84,11 @@ class PlayerLogic extends SuperController
         for (var music in mPlayList) {
           music.isPlaying = music.uid == currentMusic.uid;
         }
-        playingMusic.value = currentMusic;
-        getLrc(false);
+        if (isCanMiniPlayerScroll.value) {
+          print("aaa: 111");
+          playingMusic.value = currentMusic;
+          getLrc(false);
+        }
       }
     });
   }
@@ -122,6 +125,7 @@ class PlayerLogic extends SuperController
     mPlayList = musicList;
     mPlayer.play();
     if (callback == null) {
+      print("aaa: 222");
       playingMusic.value = musicList[index];
     } else {
       callback(musicList[index]);
@@ -138,7 +142,9 @@ class PlayerLogic extends SuperController
     playMusic(mPlayList, index: index, callback: (Music music) async {
       await Future.delayed(const Duration(milliseconds: 300));
       isCanMiniPlayerScroll.value = true;
+      print("aaa: 333");
       playingMusic.value = music;
+      getLrc(false);
     });
   }
 

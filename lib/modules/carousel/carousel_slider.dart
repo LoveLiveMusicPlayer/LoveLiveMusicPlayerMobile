@@ -21,7 +21,7 @@ class CarouselPlayer extends StatelessWidget {
         items: listItems,
         carouselController: sliderController,
         options: CarouselOptions(
-            height: 20.h,
+            height: 60.h,
             viewportFraction: 1.0,
             scrollPhysics: isCanScroll
                 ? const PageScrollPhysics()
