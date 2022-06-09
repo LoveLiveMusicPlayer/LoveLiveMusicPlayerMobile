@@ -25,4 +25,16 @@ class SDUtils {
   static String getImgPath(String fileName) {
     return path + fileName;
   }
+
+  static void makeDir(String dir) {
+    var file = Directory(dir);
+    try {
+      bool exists = file.existsSync();
+      if (!exists) {
+        file.createSync(recursive: true);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 }

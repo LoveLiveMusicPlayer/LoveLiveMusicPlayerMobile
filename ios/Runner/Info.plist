@@ -55,5 +55,10 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+    <string>需要获取摄像头权限扫描二维码</string>
+
+    <key>io.flutter.embedded_views_preview</key>
+    <string>YES</string>
 </dict>
 </plist>

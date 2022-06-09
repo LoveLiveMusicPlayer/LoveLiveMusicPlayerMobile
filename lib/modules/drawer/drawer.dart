@@ -124,9 +124,8 @@ class _DrawerPageState extends State<DrawerPage> {
                       onTap: () async {
                         var data = await Get.toNamed(Routes.routeScan);
                         if (data != null) {
-                          Get.toNamed(Routes.routeTransform,
-                              arguments:
-                                  IOWebSocketChannel.connect(Uri.parse(data)));
+                          print(data);
+                          Get.toNamed(Routes.routeTransform, arguments: data);
                         }
                       },
                     ),

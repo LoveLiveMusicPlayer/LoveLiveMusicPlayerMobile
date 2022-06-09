@@ -89,6 +89,16 @@ class Network {
         isShowError: isShowError);
   }
 
+  static download(String url, String dest, ProgressCallback? onReceiveProgress, Function? onFail) async {
+    try {
+      dio?.download(url, dest, onReceiveProgress: onReceiveProgress);
+    } on DioError catch (e) {
+      if (onFail != null) {
+        onFail();
+      }
+    }
+  }
+
   static request(String url,
       {String method = 'get',
       Map<String, dynamic>? params,
