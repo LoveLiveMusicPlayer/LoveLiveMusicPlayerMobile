@@ -57,20 +57,20 @@ class _PlayerState extends State<Player> {
   Widget top() {
     return Container(
       color: Get.theme.primaryColor,
-      height: 612.h,
+      height: 557.h,
       child: Column(
         children: <Widget>[
-          SizedBox(height: MediaQuery.of(context).padding.top + 16.h),
+          SizedBox(height: MediaQuery.of(context).padding.top + 14.56.h),
 
           /// 头部
           PlayerHeader(onTap: widget.onTap),
 
-          SizedBox(height: 15.h),
+          SizedBox(height: 13.65.h),
 
           /// 中间可切换的界面
           Obx(() => stackBody()),
 
-          SizedBox(height: 15.h),
+          SizedBox(height: 13.65.h),
 
           /// 功能栏
           Obx(() => funcButton())

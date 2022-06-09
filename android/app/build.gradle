@@ -47,20 +47,20 @@ android {
         }
     }
 
-    signingConfigs {
-        release {
-            keyAlias keystoreProperties["keyAlias"]
-            keyPassword keystoreProperties["storePassword"]
-            storeFile file(keystoreProperties["storeFile"])
-            storePassword keystoreProperties["keyPassword"]
-        }
-    }
+//    signingConfigs {
+//        release {
+//            keyAlias keystoreProperties["keyAlias"]
+//            keyPassword keystoreProperties["storePassword"]
+//            storeFile file(keystoreProperties["storeFile"])
+//            storePassword keystoreProperties["keyPassword"]
+//        }
+//    }
 
     buildTypes {
         release {
             minifyEnabled true
             zipAlignEnabled true
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
         }
     }
 
