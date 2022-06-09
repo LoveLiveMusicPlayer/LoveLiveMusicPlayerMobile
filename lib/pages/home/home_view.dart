@@ -247,11 +247,11 @@ class _HomeViewState extends State<HomeView>
 
           ///当前列表是否网格显示
           columnNum: 3,
-          crossAxisSpacing: 16.h,
-          mainAxisSpacing: 16.h,
-          leftPadding: 16.h,
-          rightPadding: 16.h,
-          aspectRatio: 0.71,
+          crossAxisSpacing: 10.h,
+          mainAxisSpacing: 10.w,
+          leftPadding: 6.w,
+          rightPadding: 6.w,
+          aspectRatio: 0.9,
           listItem: (cxt, index) {
             return _buildListItem(index);
           },

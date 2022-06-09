@@ -45,6 +45,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
         },
         child: Container(
           color: Get.theme.primaryColor,
+          padding: EdgeInsets.only(left: 10.w, right: 10.w),
           child: Row(
             children: [
               ///勾选按钮

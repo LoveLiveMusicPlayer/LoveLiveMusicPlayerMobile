@@ -23,11 +23,11 @@ class _CoverState extends State<Cover> {
       splashColor: Colors.red,
       onTap: widget.onTap,
       child: SizedBox(
-        height: 440.h,
+        height: 400.h,
         width: double.infinity,
         child: Column(
           children: [
-            SizedBox(height: 24.h),
+            SizedBox(height: 21.h),
 
             /// 封面
             Obx(
@@ -36,13 +36,13 @@ class _CoverState extends State<Cover> {
                     SDUtils.getImgPath(
                         PlayerLogic.to.playingMusic.value.coverPath ?? ""),
                     radius: 24,
-                    width: 300,
-                    height: 300);
+                    width: 273,
+                    height: 273);
               },
             ),
 
             /// 信息
-            SizedBox(height: 26.h),
+            SizedBox(height: 23.h),
             const PlayerInfo(),
           ],
         ),

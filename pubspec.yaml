@@ -50,7 +50,7 @@ dependencies:
   dots_indicator: ^2.1.0 # 轮播指示器
   get_storage: ^2.0.3 # sp存储
   common_utils: ^2.1.0 # 工具类
-  flutter_screenutil: ^5.3.1 # 屏幕适配方案
+  flutter_screenutil: ^5.5.3+2 # 屏幕适配方案
   we_slide: ^2.3.0
   sleek_circular_slider: ^2.0.1 #滑动进度条
   flutter_native_splash: ^2.1.1 # 启动页
