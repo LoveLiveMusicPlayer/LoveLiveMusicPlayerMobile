@@ -1,4 +1,3 @@
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -177,7 +176,8 @@ class _HomeViewState extends State<HomeView>
   Widget _buildListTop() {
     return Song_libraryTop(
       onPlayTap: () {
-        PlayerLogic.to.playMusic(GlobalLogic.to.filterMusicListByAlbums(logic.state.currentIndex.value));
+        PlayerLogic.to.playMusic(GlobalLogic.to
+            .filterMusicListByAlbums(logic.state.currentIndex.value));
       },
       onScreenTap: () {
         logic.openSelect();
@@ -247,10 +247,10 @@ class _HomeViewState extends State<HomeView>
 
           ///当前列表是否网格显示
           columnNum: 3,
-          crossAxisSpacing: 10.h,
-          mainAxisSpacing: 10.w,
-          leftPadding: 6.w,
-          rightPadding: 6.w,
+          crossAxisSpacing: 10.w,
+          mainAxisSpacing: 10.h,
+          leftPadding: 16.w,
+          rightPadding: 16.w,
           aspectRatio: 0.9,
           listItem: (cxt, index) {
             return _buildListItem(index);

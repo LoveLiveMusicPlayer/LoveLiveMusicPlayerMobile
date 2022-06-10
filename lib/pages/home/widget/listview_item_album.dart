@@ -33,6 +33,7 @@ class ListViewItemAlbum extends StatefulWidget {
 class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
   @override
   Widget build(BuildContext context) {
+    final borderWidth = (ScreenUtil().screenWidth - 72.w) / 3;
     return InkWell(
         onTap: () {
           widget.checked = !widget.checked;
@@ -43,21 +44,19 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
           showImg(
               SDUtils.getImgPath(
                   widget.album.coverPath?.first ?? "ic_head.jpg"),
-              width: (ScreenUtil().screenWidth - 52.w) / 3,
-              height: (ScreenUtil().screenWidth - 52.w) / 3,
+              width: borderWidth,
+              height: borderWidth,
               hasShadow: false),
           SizedBox(
             height: 5.h,
           ),
-          Expanded(
-            child: Text(
-              widget.album.name ?? "",
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              style:
-                  Get.isDarkMode ? TextStyleMs.white_12 : TextStyleMs.black_12,
-            ),
+          Text(
+            widget.album.name ?? "",
+            maxLines: 2,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style:
+            Get.isDarkMode ? TextStyleMs.white_12 : TextStyleMs.black_12,
           )
         ]));
   }

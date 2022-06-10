@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class RefresherWidget extends StatefulWidget {
@@ -106,14 +107,11 @@ class _RefresherWidgetState extends State<RefresherWidget> {
                   );
                 },
               )
-            : GridView.builder(
+            : AlignedGridView.count(
                 itemCount: widget.itemCount,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: widget.aspectRatio,
-                  crossAxisCount: widget.columnNum,
-                  mainAxisSpacing: widget.mainAxisSpacing,
-                  crossAxisSpacing: widget.crossAxisSpacing,
-                ),
+                crossAxisCount: widget.columnNum,
+                mainAxisSpacing: widget.mainAxisSpacing,
+                crossAxisSpacing: widget.crossAxisSpacing,
                 itemBuilder: widget.listItem),
         onRefresh: () async {
           if (widget.onRefresh != null) {

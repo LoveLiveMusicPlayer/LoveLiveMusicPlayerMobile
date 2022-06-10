@@ -45,7 +45,6 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
         },
         child: Container(
           color: Get.theme.primaryColor,
-          padding: EdgeInsets.only(left: 10.w, right: 10.w),
           child: Row(
             children: [
               ///勾选按钮
@@ -53,9 +52,8 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
 
               ///缩列图
               _buildIcon(),
-              SizedBox(
-                width: 10.w,
-              ),
+
+              SizedBox(width: 10.w),
 
               ///中间标题部分
               _buildContent(),

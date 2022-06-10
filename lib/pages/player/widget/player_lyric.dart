@@ -44,7 +44,7 @@ class _LyricState extends State<Lyric> {
           break;
       }
       return LyricsReader(
-        size: Size(ScreenUtil().screenWidth, 440.h),
+        size: Size(ScreenUtil().screenWidth, 400.h),
         padding: EdgeInsets.symmetric(horizontal: 12.h),
         model: model,
         position: PlayerLogic.to.playingPosition.value.inMilliseconds,

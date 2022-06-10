@@ -65,12 +65,12 @@ class _PlayerState extends State<Player> {
           /// 头部
           PlayerHeader(onTap: widget.onTap),
 
-          SizedBox(height: 13.65.h),
+          SizedBox(height: 10.h),
 
           /// 中间可切换的界面
           Obx(() => stackBody()),
 
-          SizedBox(height: 13.65.h),
+          SizedBox(height: 10.h),
 
           /// 功能栏
           Obx(() => funcButton())
@@ -81,19 +81,22 @@ class _PlayerState extends State<Player> {
 
   Widget bottom() {
     return Container(
+      height: ScreenUtil().screenHeight - 560.h,
       color: Get.theme.primaryColor,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           /// 滑动条
           slider(),
 
-          SizedBox(height: 24.h),
+          SizedBox(height: 20.h),
 
           /// 播放器控制组件
           ControlButtons(PlayerLogic.to.mPlayer),
         ],
       ),
     );
+    // return Expanded(child: Container(color: Colors.red,));
   }
 
   Widget stackBody() {

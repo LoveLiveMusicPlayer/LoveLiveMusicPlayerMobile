@@ -11,9 +11,27 @@ if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
-def keystorePropertiesFile = rootProject.file("key.properties")
-def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+// 判断是否为release模式
+def isReleaseBuildType() {
+    boolean isReleaseTypes = false
+    for (String s : gradle.startParameter.taskNames) {
+        if (s.equals(":app:assembleOfficialRelease") || s.equals("assembleOfficialRelease")) {
+            isReleaseTypes = true
+            break
+        }
+    }
+    return isReleaseTypes
+}
+
+if (isReleaseBuildType()) {
+    def keystorePropertiesFile = rootProject.file("key.properties")
+    if (keystorePropertiesFile.exists()) {
+        def keystoreProperties = new Properties()
+        keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    } else {
+        throw new GradleException("release模式需要在 app目录下创建 key.properties")
+    }
+}
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
@@ -41,13 +59,10 @@ android {
         targetSdkVersion 31
         versionCode 2
         versionName "1.0.1"
-
-        ndk {
-            abiFilters "arm64-v8a", "armeabi-v7a"
-        }
     }
 
     signingConfigs {
+        // debug 模式或使用模拟器请注释这里
         release {
             keyAlias keystoreProperties["keyAlias"]
             keyPassword keystoreProperties["storePassword"]
@@ -57,11 +72,15 @@ android {
     }
 
     buildTypes {
+        // debug 模式或使用模拟器请注释这里
         release {
             minifyEnabled true
             zipAlignEnabled true
             signingConfig signingConfigs.release
-            consumerProguardFiles 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            ndk {
+                abiFilter "arm64-v8a", "armeabi-v7a"
+            }
         }
     }
 
