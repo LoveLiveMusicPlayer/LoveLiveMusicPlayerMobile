@@ -89,14 +89,8 @@ class Network {
         isShowError: isShowError);
   }
 
-  static download(String url, String dest, ProgressCallback? onReceiveProgress, Function? onFail) async {
-    try {
-      dio?.download(url, dest, onReceiveProgress: onReceiveProgress);
-    } on DioError catch (e) {
-      if (onFail != null) {
-        onFail();
-      }
-    }
+  static Future<Response>? download(String url, String dest, ProgressCallback? onReceiveProgress) {
+    return dio?.download(url, dest, onReceiveProgress: onReceiveProgress);
   }
 
   static request(String url,
@@ -154,14 +148,15 @@ class Network {
       // 2.很多页面的访问必须要求携带Token,那么就可以在这里判断是有Token
       // 3.对参数进行一些处理,比如序列化处理等
       //     options.extra
+
       if (options.path.startsWith("http") || options.path.startsWith("https")) {
         LogUtil.v(options.path);
       } else {
         LogUtil.v(options.baseUrl + options.path);
       }
-      LogUtil.v(options.headers);
-      LogUtil.v(options.queryParameters);
-      LogUtil.d("拦截了请求");
+      // LogUtil.v(options.headers);
+      // LogUtil.v(options.queryParameters);
+      // LogUtil.d("拦截了请求");
       handler.next(options);
     }, onResponse: (Response e, ResponseInterceptorHandler handler) {
       handler.next(e);

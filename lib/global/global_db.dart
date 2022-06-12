@@ -39,38 +39,38 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   }
 
   parseJson() async {
-    final data = await rootBundle.loadString("assets/data.json");
-    final ftpList = ftpMusicFromJson(data);
-    final albumList = <Album>[];
-    for (var album in ftpList) {
-      final musicList = <Music>[];
-      for (var music in album.music) {
-        musicList.add(Music(
-            uid: music.uid,
-            name: music.name,
-            albumId: music.albumId,
-            albumName: music.albumName,
-            coverPath: music.coverPath,
-            musicPath:
-                "${music.musicPath}${Platform.isAndroid ? ".flac" : ".wav"}",
-            artist: music.artist,
-            artistBin: music.artistBin,
-            totalTime: music.totalTime,
-            jpUrl: music.jpUrl,
-            zhUrl: music.zhUrl,
-            romaUrl: music.romaUrl));
-      }
-      albumList.add(Album(
-          uid: album.id,
-          name: album.name,
-          date: album.date,
-          coverPath: album.coverPath,
-          category: album.category,
-          music: musicList,
-          group: album.group));
-    }
-    await albumDao.deleteAllAlbums();
-    await albumDao.insertAllAlbums(albumList);
+    // final data = await rootBundle.loadString("assets/data.json");
+    // final ftpList = ftpMusicFromJson(data);
+    // final albumList = <Album>[];
+    // for (var album in ftpList) {
+    //   final musicList = <Music>[];
+    //   for (var music in album.music) {
+    //     musicList.add(Music(
+    //         uid: music.uid,
+    //         name: music.name,
+    //         albumId: music.albumId,
+    //         albumName: music.albumName,
+    //         coverPath: music.coverPath,
+    //         musicPath:
+    //             "${music.musicPath}${Platform.isAndroid ? ".flac" : ".wav"}",
+    //         artist: music.artist,
+    //         artistBin: music.artistBin,
+    //         totalTime: music.totalTime,
+    //         jpUrl: music.jpUrl,
+    //         zhUrl: music.zhUrl,
+    //         romaUrl: music.romaUrl));
+    //   }
+    //   albumList.add(Album(
+    //       uid: album.id,
+    //       name: album.name,
+    //       date: album.date,
+    //       coverPath: album.coverPath,
+    //       category: album.category,
+    //       music: musicList,
+    //       group: album.group));
+    // }
+    // await albumDao.deleteAllAlbums();
+    // await albumDao.insertAllAlbums(albumList);
   }
 
   findAllList() async {

@@ -1,49 +1,89 @@
+// To parse this JSON data, do
+//
+//     final downloadMusic = downloadMusicFromJson(jsonString);
+
 import 'dart:convert';
 
-import 'Music.dart';
+List<DownloadMusic> downloadMusicFromJson(String str) => List<DownloadMusic>.from(json.decode(str).map((x) => DownloadMusic.fromJson(x)));
 
-List<FtpMusic> ftpMusicFromJson(String str) =>
-    List<FtpMusic>.from(json.decode(str).map((x) => FtpMusic.fromJson(x)));
+String downloadMusicToJson(List<DownloadMusic> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-String ftpMusicToJson(List<FtpMusic> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
-class FtpMusic {
-  FtpMusic({
-    required this.id,
-    required this.name,
-    required this.date,
+class DownloadMusic {
+  DownloadMusic({
+    required this.albumUId,
+    required this.albumId,
+    required this.albumName,
     required this.coverPath,
+    required this.date,
     required this.category,
-    required this.music,
     required this.group,
+    required this.musicUId,
+    required this.musicId,
+    required this.musicName,
+    required this.musicPath,
+    required this.artist,
+    required this.artistBin,
+    required this.totalTime,
+    required this.jpUrl,
+    required this.zhUrl,
+    required this.romaUrl
   });
 
-  String id;
-  String name;
+  String albumUId;
+  int albumId;
+  String albumName;
+  String coverPath;
   String date;
-  List<String> coverPath;
   String category;
-  List<Music> music;
   String group;
+  String musicUId;
+  int musicId;
+  String musicName;
+  String musicPath;
+  String artist;
+  String artistBin;
+  String totalTime;
+  String jpUrl;
+  String zhUrl;
+  String romaUrl;
 
-  factory FtpMusic.fromJson(Map<String, dynamic> json) => FtpMusic(
-        id: json["_id"],
-        name: json["name"],
-        date: json["date"],
-        coverPath: List<String>.from(json["cover_path"].map((x) => x)),
-        category: json["category"],
-        music: List<Music>.from(json["music"].map((x) => Music.fromJson(x))),
-        group: json["group"],
-      );
+  factory DownloadMusic.fromJson(Map<String, dynamic> json) => DownloadMusic(
+    albumUId: json["albumUId"],
+    albumId: json["albumId"],
+    albumName: json["albumName"],
+    coverPath: json["coverPath"],
+    date: json["date"],
+    category: json["category"],
+    group: json["group"],
+    musicUId: json["musicUId"],
+    musicId: json["musicId"],
+    musicName: json["musicName"],
+    musicPath: json["musicPath"],
+    artist: json["artist"],
+    artistBin: json["artistBin"],
+    totalTime: json["totalTime"],
+    jpUrl: json["jpUrl"],
+    zhUrl: json["zhUrl"],
+    romaUrl: json["romaUrl"]
+  );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "name": name,
-        "date": date,
-        "cover_path": List<dynamic>.from(coverPath.map((x) => x)),
-        "category": category,
-        "music": List<dynamic>.from(music.map((x) => x.toJson())),
-        "group": group,
-      };
+    "albumUId": albumUId,
+    "albumId": albumId,
+    "albumName": albumName,
+    "coverPath": coverPath,
+    "date": date,
+    "category": category,
+    "group": group,
+    "musicUId": musicUId,
+    "musicId": musicId,
+    "musicName": musicName,
+    "musicPath": musicPath,
+    "artist": artist,
+    "artistBin": artistBin,
+    "totalTime": totalTime,
+    "jpUrl": jpUrl,
+    "zhUrl": zhUrl,
+    "romaUrl": romaUrl
+  };
 }

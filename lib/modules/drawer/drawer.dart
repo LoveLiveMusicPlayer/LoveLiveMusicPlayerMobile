@@ -149,8 +149,7 @@ class _DrawerPageState extends State<DrawerPage> {
                       onTap: () {},
                     ),
                     DrawerFunctionButton(
-                      icon: "assets/drawer/drawer_secret.svg",
-                      // icon: "assets/drawer/drawer_reset.svg",
+                      icon: "assets/drawer/drawer_reset.svg",
                       text: "清理数据",
                       onTap: () async {
                         SmartDialog.showLoading(
