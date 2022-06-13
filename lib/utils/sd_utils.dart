@@ -26,6 +26,11 @@ class SDUtils {
     return path + fileName;
   }
 
+  static bool checkFileExist(String filePath) {
+    var file = File(filePath);
+    return file.existsSync();
+  }
+
   static void makeDir(String dir) {
     var file = Directory(dir);
     try {

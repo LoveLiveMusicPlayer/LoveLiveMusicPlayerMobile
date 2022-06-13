@@ -1,5 +1,6 @@
 import 'dart:convert' as convert;
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/FtpCmd.dart';
@@ -8,12 +9,12 @@ import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:web_socket_channel/io.dart';
-import 'package:queue/queue.dart';
+import 'package:concurrent_queue/concurrent_queue.dart';
 
 class MusicTransform extends StatefulWidget {
   final IOWebSocketChannel channel =
       IOWebSocketChannel.connect(Uri.parse("ws://${Get.arguments}:4388"));
-  final queue = Queue(delay: const Duration(milliseconds: 300));
+  final queue = ConcurrentQueue(concurrency: 1);
 
   MusicTransform({Key? key}) : super(key: key);
 
@@ -29,8 +30,9 @@ class _MusicTransformState extends State<MusicTransform> {
   String currentMusic = "";
   final musicList = <DownloadMusic>[];
   String port = "10000";
-  int total = 0;
   int currentProgress = 0;
+  bool isRunning = false;
+  CancelToken? cancelToken;
 
   @override
   void initState() {
@@ -42,11 +44,32 @@ class _MusicTransformState extends State<MusicTransform> {
         case "port":
           port = ftpCmd.body;
           break;
-        case "json":
+        case "prepare":
+          if (ftpCmd.body.contains(" === ")) {
+            final array = ftpCmd.body.split(" === ");
+            final json = array[0];
+            final needTransAll = array[1] == "true" ? true : false;
+            final downloadList = downloadMusicFromJson(json);
+            final musicIdList = <String>[];
+
+            for (var music in downloadList) {
+              if (needTransAll) {
+                musicIdList.add(music.musicUId);
+              } else if (!SDUtils.checkFileExist(SDUtils.path + music.musicPath)) {
+                musicIdList.add(music.musicUId);
+              }
+            }
+            final message = {
+              "cmd": "musicList",
+              "body": convert.jsonEncode(musicIdList)
+            };
+            widget.channel.sink.add(convert.jsonEncode(message));
+          }
+          break;
+        case "ready":
           final downloadList = downloadMusicFromJson(ftpCmd.body);
-          total = downloadList.length;
-          musicList.clear();
           musicList.addAll(downloadList);
+          isRunning = true;
           break;
         case "download":
           for (var music in musicList) {
@@ -55,52 +78,10 @@ class _MusicTransformState extends State<MusicTransform> {
               final musicUId = array[0];
               final isLast = array[1] == "true" ? true : false;
               if (music.musicUId == musicUId) {
-                final url = "http://${Get.arguments}:$port/${music.musicPath}";
-                final dest = SDUtils.path + music.musicPath;
-                final tempList = dest.split(Platform.pathSeparator);
-                var destDir = "";
-                for (var i = 0; i < tempList.length - 1; i++) {
-                  destDir += tempList[i] + Platform.pathSeparator;
-                }
-                SDUtils.makeDir(destDir);
-                print("music: " + music.musicName + " add queue");
-                await widget.queue.add(() => Network.dio!.download(url, dest));
-                print("${music.musicName} download finish");
-                // await widget.queue.add(() async {
-                //   try {
-                //     await Network.download(url, dest, (received, total) {
-                //       if (total != -1) {
-                //         final _progress = (received / total * 100).toStringAsFixed(0);
-                //         progress = _progress + "%";
-                //         song = music.musicName;
-                //         setState(() {});
-                //         final p = double.parse(_progress).truncate();
-                //         if (currentProgress != p) {
-                //           currentProgress = p;
-                //           if (_progress == "100") {
-                //             final message = ftpCmdToJson(FtpCmd(cmd: "download success", body: music.musicUId));
-                //             print("${music.musicName} download finish");
-                //             widget.channel.sink.add(message);
-                //           } else {
-                //             final message = ftpCmdToJson(FtpCmd(cmd: "downloading", body: "${music.musicUId} === $p"));
-                //             widget.channel.sink.add(message);
-                //           }
-                //         }
-                //       }
-                //     });
-                //   } catch (e) {
-                //     // print("${music.musicName} is fail");
-                //     final message = ftpCmdToJson(FtpCmd(cmd: "download fail", body: music.musicUId));
-                //     // print("download fail: ${music.musicName}");
-                //     widget.channel.sink.add(message);
-                //   }
-                // });
-                if (isLast) {
-                  await widget.queue.onComplete;
-                  final message = ftpCmdToJson(FtpCmd(cmd: "finish", body: ""));
-                  widget.channel.sink.add(message);
-                  // print("finish");
-                }
+                genFileList(music).forEach((url, dest) {
+                  pushQueue(music, url, dest, url.contains("jpg") ? false : isLast);
+                });
+                musicList.remove(music);
               }
             } else {
               final message = ftpCmdToJson(FtpCmd(cmd: "download fail", body: music.musicUId));
@@ -108,8 +89,11 @@ class _MusicTransformState extends State<MusicTransform> {
             }
           }
           break;
-        case "cancel":
-
+        case "stop":
+          isRunning = false;
+          widget.queue.clear();
+          musicList.clear();
+          cancelToken?.cancel();
           break;
       }
       message = msg;
@@ -121,6 +105,61 @@ class _MusicTransformState extends State<MusicTransform> {
       "body": Platform.isAndroid ? "android" : "ios"
     };
     widget.channel.sink.add(convert.jsonEncode(system));
+  }
+
+  Map<String, String> genFileList(DownloadMusic music) {
+    final musicUrl = "http://${Get.arguments}:$port/${music.musicPath}";
+    final picUrl = "http://${Get.arguments}:$port/${music.coverPath}";
+    final musicDest = SDUtils.path + music.musicPath;
+    final picDest = SDUtils.path + music.coverPath;
+    final tempList = musicDest.split(Platform.pathSeparator);
+    var destDir = "";
+    for (var i = 0; i < tempList.length - 1; i++) {
+      destDir += tempList[i] + Platform.pathSeparator;
+    }
+    SDUtils.makeDir(destDir);
+    if (!isRunning) {
+      return {};
+    }
+    return {picUrl: picDest, musicUrl: musicDest};
+  }
+
+  pushQueue(DownloadMusic music, String url, String dest, bool isLast) async {
+    print("add queue");
+    await widget.queue.add(() async {
+      try {
+        cancelToken = CancelToken();
+        await Network.download(url, dest, (received, total) {
+          if (total != -1) {
+            final _progress = (received / total * 100).toStringAsFixed(0);
+            progress = _progress + "%";
+            song = music.musicName;
+            setState(() {});
+            final p = double.parse(_progress).truncate();
+            if (currentProgress != p) {
+              currentProgress = p;
+              if (_progress == "100") {
+                final message = ftpCmdToJson(FtpCmd(cmd: "download success", body: music.musicUId));
+                widget.channel.sink.add(message);
+              } else {
+                if (isRunning) {
+                  final message = ftpCmdToJson(FtpCmd(cmd: "downloading", body: "${music.musicUId} === $p"));
+                  widget.channel.sink.add(message);
+                }
+              }
+            }
+          }
+        }, cancelToken);
+      } catch (e) {
+        final message = ftpCmdToJson(FtpCmd(cmd: "download fail", body: music.musicUId));
+        widget.channel.sink.add(message);
+      }
+    });
+    if (isLast) {
+      await widget.queue.onIdle();
+      final message = ftpCmdToJson(FtpCmd(cmd: "finish", body: ""));
+      widget.channel.sink.add(message);
+    }
   }
 
   @override
@@ -140,7 +179,7 @@ class _MusicTransformState extends State<MusicTransform> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text("message: $message"),
+          // Text("message: $message"),
           Text("song: $song"),
           Text("progress: $progress"),
         ],

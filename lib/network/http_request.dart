@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:common_utils/common_utils.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
@@ -89,8 +91,8 @@ class Network {
         isShowError: isShowError);
   }
 
-  static Future<Response>? download(String url, String dest, ProgressCallback? onReceiveProgress) {
-    return dio?.download(url, dest, onReceiveProgress: onReceiveProgress);
+  static Future<Response>? download(String url, String dest, ProgressCallback? onReceiveProgress, CancelToken? cancelToken) {
+    return dio?.download(url, dest, onReceiveProgress: onReceiveProgress, cancelToken: cancelToken);
   }
 
   static request(String url,
@@ -149,11 +151,11 @@ class Network {
       // 3.对参数进行一些处理,比如序列化处理等
       //     options.extra
 
-      if (options.path.startsWith("http") || options.path.startsWith("https")) {
-        LogUtil.v(options.path);
-      } else {
-        LogUtil.v(options.baseUrl + options.path);
-      }
+      // if (options.path.startsWith("http") || options.path.startsWith("https")) {
+      //   LogUtil.v(options.path);
+      // } else {
+      //   LogUtil.v(options.baseUrl + options.path);
+      // }
       // LogUtil.v(options.headers);
       // LogUtil.v(options.queryParameters);
       // LogUtil.d("拦截了请求");
