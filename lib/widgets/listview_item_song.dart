@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
@@ -95,31 +96,35 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
   ///中间标题部分
   Widget _buildContent() {
     return Expanded(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(widget.music.name ?? "",
+      child: Container(
+        // color: Color.green,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(widget.music.name ?? "",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Get.isDarkMode
+                    ? TextStyleMs.white_15
+                    : TextStyleMs.black_15),
+            SizedBox(
+              height: 4.w,
+            ),
+            Text(
+              widget.music.artist ?? "",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style:
-                  Get.isDarkMode ? TextStyleMs.white_15 : TextStyleMs.black_15),
-          SizedBox(
-            height: 4.w,
-          ),
-          Text(
-            widget.music.artist ?? "",
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: const Color(0xff999999),
-              fontSize: 12.sp,
+              style: TextStyle(
+                color: const Color(0xff999999),
+                fontSize: 12.sp,
+              ),
             ),
-          ),
-          SizedBox(
-            width: 16.w,
-          )
-        ],
+            SizedBox(
+              width: 16.w,
+            )
+          ],
+        ),
       ),
     );
   }
@@ -128,36 +133,39 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
   Widget _buildAction() {
     return Visibility(
       visible: !HomeController.to.state.isSelect.value,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-              padding: EdgeInsets.only(
-                  left: 12.w, right: 12.w, top: 12.h, bottom: 12.h),
-              child: touchIconByAsset(
-                  path: "assets/main/ic_add_next.svg",
-                  onTap: () {
-                    widget.onPlayTap(widget.music);
-                  },
-                  width: 20,
-                  height: 20,
-                  color: const Color(0xFFCCCCCC))),
-          InkWell(
-            onTap: () {
-              widget.onMoreTap(widget.music);
-            },
-            child: Container(
-              padding: EdgeInsets.only(
-                  left: 12.w, right: 10.w, top: 12.h, bottom: 12.h),
-              child: touchIconByAsset(
-                  path: "assets/main/ic_more.svg",
-                  width: 10,
-                  height: 20,
-                  color: const Color(0xFFCCCCCC)),
+      child: Container(
+        // color: Colors.red,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+                padding: EdgeInsets.only(
+                    left: 12.w, right: 12.w, top: 12.h, bottom: 12.h),
+                child: touchIconByAsset(
+                    path: "assets/main/ic_add_next.svg",
+                    onTap: () {
+                      PlayerLogic.to.insertMusic(widget.music);
+                    },
+                    width: 20,
+                    height: 20,
+                    color: const Color(0xFFCCCCCC))),
+            InkWell(
+              onTap: () {
+                widget.onMoreTap(widget.music);
+              },
+              child: Container(
+                padding: EdgeInsets.only(
+                    left: 12.w, right: 10.w, top: 12.h, bottom: 12.h),
+                child: touchIconByAsset(
+                    path: "assets/main/ic_more.svg",
+                    width: 10,
+                    height: 20,
+                    color: const Color(0xFFCCCCCC)),
+              ),
             ),
-          ),
-          SizedBox(width: 4.w)
-        ],
+            SizedBox(width: 4.w)
+          ],
+        ),
       ),
     );
   }
