@@ -1,6 +1,4 @@
-import 'dart:io';
-
-import 'package:flutter/services.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/dao/database.dart';
 import 'package:lovelivemusicplayer/dao/lyric_dao.dart';
@@ -30,47 +28,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         .build();
     albumDao = database.albumDao;
     lyricDao = database.lyricDao;
-    final allAlbums = await albumDao.findAllAlbums();
-    if (allAlbums.isEmpty) {
-      await parseJson();
-    }
     await findAllList();
     super.onInit();
-  }
-
-  parseJson() async {
-    // final data = await rootBundle.loadString("assets/data.json");
-    // final ftpList = ftpMusicFromJson(data);
-    // final albumList = <Album>[];
-    // for (var album in ftpList) {
-    //   final musicList = <Music>[];
-    //   for (var music in album.music) {
-    //     musicList.add(Music(
-    //         uid: music.uid,
-    //         name: music.name,
-    //         albumId: music.albumId,
-    //         albumName: music.albumName,
-    //         coverPath: music.coverPath,
-    //         musicPath:
-    //             "${music.musicPath}${Platform.isAndroid ? ".flac" : ".wav"}",
-    //         artist: music.artist,
-    //         artistBin: music.artistBin,
-    //         totalTime: music.totalTime,
-    //         jpUrl: music.jpUrl,
-    //         zhUrl: music.zhUrl,
-    //         romaUrl: music.romaUrl));
-    //   }
-    //   albumList.add(Album(
-    //       uid: album.id,
-    //       name: album.name,
-    //       date: album.date,
-    //       coverPath: album.coverPath,
-    //       category: album.category,
-    //       music: musicList,
-    //       group: album.group));
-    // }
-    // await albumDao.deleteAllAlbums();
-    // await albumDao.insertAllAlbums(albumList);
   }
 
   findAllList() async {
@@ -87,6 +46,14 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     final combineAlbums =
         allAlbums.where((element) => element.group == "Combine").toList();
 
+    /// 先清空
+    globalLogic.albumByUsList.clear();
+    globalLogic.albumByAqoursList.clear();
+    globalLogic.albumByNijiList.clear();
+    globalLogic.albumByLiellaList.clear();
+    globalLogic.albumByCombineList.clear();
+    globalLogic.albumByAllList.clear();
+    /// 再赋值
     globalLogic.albumByUsList.addAll(usAlbums);
     globalLogic.albumByAqoursList.addAll(aqoursAlbums);
     globalLogic.albumByNijiList.addAll(nijiAlbums);
@@ -124,6 +91,14 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     allMusics.addAll(liellaMusics);
     allMusics.addAll(combineMusics);
 
+    /// 先清空
+    globalLogic.musicByUsList.clear();
+    globalLogic.musicByAqoursList.clear();
+    globalLogic.musicByNijiList.clear();
+    globalLogic.musicByLiellaList.clear();
+    globalLogic.musicByCombineList.clear();
+    globalLogic.musicByAllList.clear();
+    /// 再赋值
     globalLogic.musicByUsList.addAll(usMusics);
     globalLogic.musicByAqoursList.addAll(aqoursMusics);
     globalLogic.musicByNijiList.addAll(nijiMusics);
@@ -139,6 +114,14 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     final liellaArtists = <Artist>[];
     final combineArtists = <Artist>[];
 
+    /// 先清空
+    globalLogic.artistByUsList.clear();
+    globalLogic.artistByAqoursList.clear();
+    globalLogic.artistByNijiList.clear();
+    globalLogic.artistByLiellaList.clear();
+    globalLogic.artistByCombineList.clear();
+    globalLogic.artistByAllList.clear();
+    /// 再赋值
     globalLogic.artistByUsList.addAll(usArtists);
     globalLogic.artistByAqoursList.addAll(aqoursArtists);
     globalLogic.artistByNijiList.addAll(nijiArtists);
@@ -147,6 +130,55 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     globalLogic.artistByAllList.addAll(allArtists);
 
     GlobalLogic.to.databaseInitOver.value = true;
+
+    SmartDialog.showToast("专辑: ${allAlbums.length}; 歌曲: ${allMusics.length}", time: const Duration(seconds: 5));
+  }
+
+  insertMusicIntoAlbum(DownloadMusic music) async {
+    final albumUId = music.albumUId;
+    final album = await albumDao.findAlbumByUId(albumUId);
+    final _music = Music(
+        uid: music.musicUId,
+        name: music.musicName,
+        albumId: music.albumUId,
+        coverPath: music.coverPath,
+        artist: music.artist,
+        artistBin: music.artistBin,
+        albumName: music.albumName,
+        musicPath: music.musicPath,
+        totalTime: music.totalTime,
+        jpUrl: music.jpUrl,
+        zhUrl: music.zhUrl,
+        romaUrl: music.romaUrl,
+        group: music.group
+    );
+    if (album == null) {
+      final _album = Album(
+        uid: music.albumUId,
+        name: music.albumName,
+        date: music.date,
+        coverPath: [music.coverPath],
+        category: music.category,
+        group: music.group,
+        music: [_music]
+      );
+      albumDao.insertAlbum(_album);
+      print(albumToJson(_album));
+    } else {
+      final hasCurrentMusic = album.music.any((element) => element.uid == music.musicUId);
+      if (!hasCurrentMusic) {
+        album.coverPath = album.coverPath ?? <String>[];
+        album.coverPath?.add(music.coverPath);
+        album.music.add(_music);
+        albumDao.updateAlbum(album);
+        print(albumToJson(album));
+      }
+    }
+    print(musicToJson(_music));
+  }
+
+  clearAllAlbum() async {
+    await albumDao.deleteAllAlbums();
   }
 
   @override

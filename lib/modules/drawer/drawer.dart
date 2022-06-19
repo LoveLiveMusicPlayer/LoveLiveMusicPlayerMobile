@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_theme.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/routes.dart';
+import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
-import 'package:web_socket_channel/io.dart';
 
 class DrawerPage extends StatefulWidget {
   const DrawerPage({Key? key}) : super(key: key);
@@ -53,10 +54,10 @@ class _DrawerPageState extends State<DrawerPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            showGroupButton("assets/drawer/logo_lovelive.png", onTap: () {
+            showGroupButton(Assets.drawerLogoLovelive, onTap: () {
               global.currentGroup.value = "all";
             }, innerWidth: 107, innerHeight: 27),
-            showGroupButton("assets/drawer/logo_us.png", onTap: () {
+            showGroupButton(Assets.drawerLogoUs, onTap: () {
               global.currentGroup.value = "μ's";
             }, innerWidth: 74, innerHeight: 58),
           ],
@@ -65,10 +66,10 @@ class _DrawerPageState extends State<DrawerPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            showGroupButton("assets/drawer/logo_aqours.png", onTap: () {
+            showGroupButton(Assets.drawerLogoAqours, onTap: () {
               global.currentGroup.value = "aqours";
             }, innerWidth: 90, innerHeight: 36),
-            showGroupButton("assets/drawer/logo_nijigasaki.png", onTap: () {
+            showGroupButton(Assets.drawerLogoNijigasaki, onTap: () {
               global.currentGroup.value = "niji";
             }, innerWidth: 101, innerHeight: 40)
           ],
@@ -77,10 +78,10 @@ class _DrawerPageState extends State<DrawerPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            showGroupButton("assets/drawer/logo_liella.png", onTap: () {
+            showGroupButton(Assets.drawerLogoLiella, onTap: () {
               global.currentGroup.value = "liella";
             }, innerWidth: 100, innerHeight: 35),
-            showGroupButton("assets/drawer/logo_allstars.png", onTap: () {
+            showGroupButton(Assets.drawerLogoAllstars, onTap: () {
               global.currentGroup.value = "combine";
             }, innerWidth: 88, innerHeight: 44),
           ],
@@ -119,7 +120,7 @@ class _DrawerPageState extends State<DrawerPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     DrawerFunctionButton(
-                      icon: "assets/drawer/drawer_quick_trans.svg",
+                      icon: Assets.drawerDrawerQuickTrans,
                       text: "歌曲快传",
                       onTap: () async {
                         var data = await Get.toNamed(Routes.routeScan);
@@ -130,12 +131,12 @@ class _DrawerPageState extends State<DrawerPage> {
                       },
                     ),
                     DrawerFunctionButton(
-                      icon: "assets/drawer/drawer_data_sync.svg",
+                      icon: Assets.drawerDrawerDataSync,
                       text: "数据同步",
                       onTap: () {},
                     ),
                     DrawerFunctionButton(
-                        icon: "assets/drawer/drawer_day_night.svg",
+                        icon: Assets.drawerDrawerDayNight,
                         text: "夜间模式",
                         hasSwitch: true,
                         initSwitch: Get.isDarkMode,
@@ -144,18 +145,27 @@ class _DrawerPageState extends State<DrawerPage> {
                           SpUtil.put(Const.spDark, check);
                         }),
                     DrawerFunctionButton(
-                      icon: "assets/drawer/drawer_secret.svg",
+                      icon: Assets.drawerDrawerSecret,
                       text: "关于和隐私",
                       onTap: () {},
                     ),
                     DrawerFunctionButton(
-                      icon: "assets/drawer/drawer_reset.svg",
+                      icon: Assets.drawerDrawerReset,
                       text: "清理数据",
                       onTap: () async {
                         SmartDialog.showLoading(
                             msg: "重置中...", backDismiss: false);
-                        await DBLogic.to.parseJson();
+                        await DBLogic.to.clearAllAlbum();
                         SmartDialog.dismiss();
+                        SmartDialog.showToast("清理成功", time: const Duration(seconds: 5));
+                      },
+                    ),
+                    DrawerFunctionButton(
+                      icon: Assets.drawerDrawerDebug,
+                      text: "保存日志",
+                      onTap: () async {
+                        await SDUtils.writeDBToFile();
+                        SmartDialog.showToast("导出成功", time: const Duration(seconds: 5));
                       },
                     )
                   ],

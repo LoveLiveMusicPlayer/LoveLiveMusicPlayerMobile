@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:common_utils/common_utils.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:path_provider/path_provider.dart';
 
 class SDUtils {
@@ -41,5 +42,35 @@ class SDUtils {
     } catch (e) {
       print(e);
     }
+  }
+
+  static void touchFile(String filePath) {
+    var file = File(filePath);
+    try {
+      bool exists = file.existsSync();
+      if (!exists) {
+        file.createSync(recursive: true);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static writeDBToFile() async {
+    final time = DateUtil.getNowDateStr();
+    final albumList = await DBLogic.to.albumDao.findAllAlbums();
+    var buffer = StringBuffer();
+    var musicCount = 0;
+    for (var album in albumList) {
+      buffer.write("    专辑: ${album.uid} - ${album.name}\n");
+      for (var music in album.music) {
+        musicCount++;
+        buffer.write("        歌曲: ${music.uid} - ${music.name}\n");
+      }
+    }
+    buffer.write("专辑数目: ${albumList.length}; 歌曲数目: $musicCount\n");
+    final filePath = path + "log" + Platform.pathSeparator + time + ".txt";
+    touchFile(filePath);
+    File(filePath).writeAsStringSync(buffer.toString(), flush: true);
   }
 }

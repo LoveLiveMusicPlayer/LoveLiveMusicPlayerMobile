@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/FtpCmd.dart';
 import 'package:lovelivemusicplayer/models/FtpMusic.dart';
+import 'package:wakelock/wakelock.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -37,7 +39,7 @@ class _MusicTransformState extends State<MusicTransform> {
   @override
   void initState() {
     super.initState();
-
+    Wakelock.enable();
     widget.channel.stream.listen((msg) async {
       final ftpCmd = ftpCmdFromJson(msg as String);
       switch (ftpCmd.cmd) {
@@ -150,6 +152,7 @@ class _MusicTransformState extends State<MusicTransform> {
             }
           }
         }, cancelToken);
+        DBLogic.to.insertMusicIntoAlbum(music);
       } catch (e) {
         final message = ftpCmdToJson(FtpCmd(cmd: "download fail", body: music.musicUId));
         widget.channel.sink.add(message);
@@ -159,6 +162,8 @@ class _MusicTransformState extends State<MusicTransform> {
       await widget.queue.onIdle();
       final message = ftpCmdToJson(FtpCmd(cmd: "finish", body: ""));
       widget.channel.sink.add(message);
+      await DBLogic.to.findAllList();
+      Get.back();
     }
   }
 
@@ -166,6 +171,7 @@ class _MusicTransformState extends State<MusicTransform> {
   void dispose() {
     super.dispose();
     widget.channel.sink.close();
+    Wakelock.disable();
   }
 
   @override
