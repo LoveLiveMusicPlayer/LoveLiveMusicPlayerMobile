@@ -2,6 +2,7 @@ import 'dart:convert' as convert;
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/FtpCmd.dart';
@@ -186,8 +187,8 @@ class _MusicTransformState extends State<MusicTransform> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // Text("message: $message"),
-          Text("song: $song"),
-          Text("progress: $progress"),
+          Text("song: $song", style: TextStyle(fontSize: 17.sp, color: Colors.amber)),
+          Text("progress: $progress", style: TextStyle(fontSize: 17.sp, color: Colors.amber)),
         ],
       );
     } else {
