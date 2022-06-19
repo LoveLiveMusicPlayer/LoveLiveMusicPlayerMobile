@@ -301,7 +301,7 @@ class _HomeViewState extends State<HomeView>
             logic.selectItem(music, checked);
             return;
           }
-          PlayerLogic.to.playMusic([music]);
+          PlayerLogic.to.playMusic(GlobalLogic.to.checkMusicList(), index: index);
         },
         onPlayTap: (index) {},
         onMoreTap: (index) {

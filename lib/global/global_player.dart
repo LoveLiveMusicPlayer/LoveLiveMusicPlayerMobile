@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter_lyric/lyric_parser/parser_smart.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
@@ -23,6 +24,8 @@ class PlayerLogic extends SuperController
     LoopMode.all,
     LoopMode.one,
   ];
+
+  final audioSourceList = ConcatenatingAudioSource(children: []);
 
   var preJPLrc = "".obs;
   var currentJPLrc = "".obs;
@@ -54,21 +57,22 @@ class PlayerLogic extends SuperController
       playingPosition.value = duration;
       final lrcList = ParserSmart(jpLrc.value).parseLines();
       for (var i = 0; i < lrcList.length; i++) {
-        if (i == lrcList.length - 1 && (lrcList[i].startTime ?? 0) < duration.inMilliseconds) {
+        if (i == lrcList.length - 1 &&
+            (lrcList[i].startTime ?? 0) < duration.inMilliseconds) {
           nextJPLrc.value = "";
           currentJPLrc.value =
-          (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "";
+              (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "";
           preJPLrc.value = (i - 1 <= lrcList.length - 1 && i > 0)
               ? lrcList[i - 1].mainText ?? ""
               : "";
           break;
         } else if ((lrcList[i].startTime ?? 0) < duration.inMilliseconds &&
-            (lrcList[i + 1].startTime ?? 0) > duration.inMilliseconds){
+            (lrcList[i + 1].startTime ?? 0) > duration.inMilliseconds) {
           nextJPLrc.value = (i + 1 <= lrcList.length - 1)
               ? lrcList[i + 1].mainText ?? ""
               : "";
           currentJPLrc.value =
-          (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "";
+              (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "";
           preJPLrc.value = (i - 1 <= lrcList.length - 1 && i > 0)
               ? lrcList[i - 1].mainText ?? ""
               : "";
@@ -105,23 +109,12 @@ class PlayerLogic extends SuperController
       final coverPath = music.coverPath;
       final musicPath = music.musicPath;
       if (musicPath?.isNotEmpty == true) {
-        audioList.add(AudioSource.uri(
-          Uri.file('${SDUtils.path}$musicPath'),
-          tag: MediaItem(
-            id: music.uid!,
-            title: music.name!,
-            album: music.albumName!,
-            artist: music.artist,
-            duration: playingPosition.value,
-            artUri: (coverPath == null || coverPath.isEmpty)
-                ? Uri.parse(Const.logo)
-                : Uri.file(SDUtils.path + coverPath),
-          ),
-        ));
+        audioList.add(AudioSourceUri(musicPath, music, coverPath));
       }
     }
-    mPlayer.setAudioSource(ConcatenatingAudioSource(children: audioList),
-        initialIndex: index);
+    audioSourceList.clear();
+    audioSourceList.addAll(audioList);
+    mPlayer.setAudioSource(audioSourceList, initialIndex: index);
     mPlayList = musicList;
     mPlayer.play();
     if (callback == null) {
@@ -131,6 +124,47 @@ class PlayerLogic extends SuperController
       callback(musicList[index]);
     }
     getLrc(false);
+  }
+
+  insertMusic(Music music) {
+    final coverPath = music.coverPath;
+    final musicPath = music.musicPath;
+    if (musicPath?.isNotEmpty == true) {
+      if (music.uid != playingMusic.value.uid) {
+        for (var index = 0; index < mPlayList.length; index++) {
+          if (mPlayList[index].uid == music.uid) {
+            audioSourceList.removeAt(index);
+            mPlayList.removeAt(index);
+            break;
+          }
+        }
+        for (var index = 0; index < mPlayList.length; index++) {
+          if (mPlayList[index].uid == playingMusic.value.uid) {
+            audioSourceList.insert(
+                index + 1, AudioSourceUri(musicPath, music, coverPath));
+            mPlayList.insert(index + 1, music);
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  UriAudioSource AudioSourceUri(
+      String? musicPath, Music music, String? coverPath) {
+    return AudioSource.uri(
+      Uri.file('${SDUtils.path}$musicPath'),
+      tag: MediaItem(
+        id: music.uid!,
+        title: music.name!,
+        album: music.albumName!,
+        artist: music.artist,
+        duration: playingPosition.value,
+        artUri: (coverPath == null || coverPath.isEmpty)
+            ? Uri.parse(Const.logo)
+            : Uri.file(SDUtils.path + coverPath),
+      ),
+    );
   }
 
   /// 播放 播放列表 指定位置的歌曲

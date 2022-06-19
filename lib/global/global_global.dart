@@ -52,17 +52,17 @@ class GlobalLogic extends SuperController
   List<Music> checkMusicList() {
     switch (currentGroup.value) {
       case "all":
-        return musicByAllList;
+        return [...musicByAllList];
       case "μ's":
-        return musicByUsList;
+        return [...musicByUsList];
       case "aqours":
-        return musicByAqoursList;
+        return [...musicByAqoursList];
       case "niji":
-        return musicByNijiList;
+        return [...musicByNijiList];
       case "liella":
-        return musicByLiellaList;
+        return [...musicByLiellaList];
       case "combine":
-        return musicByCombineList;
+        return [...musicByCombineList];
       default:
         return [];
     }
