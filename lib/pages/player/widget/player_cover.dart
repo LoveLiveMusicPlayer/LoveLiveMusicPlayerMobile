@@ -27,7 +27,7 @@ class _CoverState extends State<Cover> {
         width: double.infinity,
         child: Column(
           children: [
-            SizedBox(height: 21.h),
+            SizedBox(height: 18.h),
 
             /// 封面
             Obx(
@@ -42,7 +42,7 @@ class _CoverState extends State<Cover> {
             ),
 
             /// 信息
-            SizedBox(height: 23.h),
+            SizedBox(height: 18.h),
             const PlayerInfo(),
           ],
         ),
