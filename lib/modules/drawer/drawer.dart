@@ -140,9 +140,9 @@ class _DrawerPageState extends State<DrawerPage> {
                         text: "夜间模式",
                         hasSwitch: true,
                         initSwitch: Get.isDarkMode,
-                        callBack: (check) {
+                        callBack: (check) async {
                           Get.changeTheme(check ? darkTheme : lightTheme);
-                          SpUtil.put(Const.spDark, check);
+                          await SpUtil.put(Const.spDark, check);
                         }),
                     DrawerFunctionButton(
                       icon: Assets.drawerDrawerSecret,

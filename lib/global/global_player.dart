@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter_lyric/lyric_parser/parser_smart.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
@@ -25,22 +24,39 @@ class PlayerLogic extends SuperController
     LoopMode.one,
   ];
 
+  // 播放列表<AudioSource>
   final audioSourceList = ConcatenatingAudioSource(children: []);
+  // 播放列表<Music>
+  var mPlayList = <Music>[];
 
+  // 前一句歌词
   var preJPLrc = "".obs;
+  // 当前句歌词
   var currentJPLrc = "".obs;
+  // 后一句歌词
   var nextJPLrc = "".obs;
+
+  // 日文全量歌词
   var jpLrc = "".obs;
+  // 中文全量歌词
   var zhLrc = "".obs;
+  // 罗马音全量歌词
   var romaLrc = "".obs;
+
+  // 播放状态
   var isPlaying = false.obs;
+  // 播放位置
   var playingPosition = const Duration(milliseconds: 0).obs;
+  // 当前播放位置索引
+  var playingMusicIndex = 0.obs;
+  // 当前播放歌曲
   var playingMusic = Music().obs;
 
-  var lrcType = 0.obs; // 0:原文; 1:翻译; 2:罗马音
-  var isCanMiniPlayerScroll = true.obs;
+  // 切换显示歌词类型 (0:原文; 1:翻译; 2:罗马音)
+  var lrcType = 0.obs;
 
-  var mPlayList = <Music>[];
+  // mini窗口是否允许滚动
+  var isCanMiniPlayerScroll = true.obs;
 
   static PlayerLogic get to => Get.find();
 
@@ -53,8 +69,10 @@ class PlayerLogic extends SuperController
       isPlaying.value = state.playing;
     });
 
+    /// 播放位置监听
     mPlayer.positionStream.listen((duration) {
       playingPosition.value = duration;
+      // 修改前一句、当前、后一句歌词内容
       final lrcList = ParserSmart(jpLrc.value).parseLines();
       for (var i = 0; i < lrcList.length; i++) {
         if (i == lrcList.length - 1 &&
@@ -84,12 +102,14 @@ class PlayerLogic extends SuperController
     /// 当前播放监听
     mPlayer.currentIndexStream.listen((index) {
       if (index != null && mPlayList.isNotEmpty) {
+        // 修改播放位置索引
+        playingMusicIndex.value = index;
+        // 修改当前播放歌曲
         final currentMusic = mPlayList[index];
         for (var music in mPlayList) {
           music.isPlaying = music.uid == currentMusic.uid;
         }
         if (isCanMiniPlayerScroll.value) {
-          print("aaa: 111");
           playingMusic.value = currentMusic;
           getLrc(false);
         }
@@ -103,22 +123,21 @@ class PlayerLogic extends SuperController
       return;
     }
 
+    // 设置新的播放列表
     final audioList = <AudioSource>[];
-    for (var i = 0; i < musicList.length; i++) {
-      final music = musicList[i];
+    for (var music in musicList) {
       final coverPath = music.coverPath;
       final musicPath = music.musicPath;
       if (musicPath?.isNotEmpty == true) {
-        audioList.add(AudioSourceUri(musicPath, music, coverPath));
+        audioList.add(genAudioSourceUri(musicPath, music, coverPath));
       }
     }
     audioSourceList.clear();
     audioSourceList.addAll(audioList);
     mPlayer.setAudioSource(audioSourceList, initialIndex: index);
-    mPlayList = musicList;
+    mPlayList = [...musicList];
     mPlayer.play();
     if (callback == null) {
-      print("aaa: 222");
       playingMusic.value = musicList[index];
     } else {
       callback(musicList[index]);
@@ -126,31 +145,37 @@ class PlayerLogic extends SuperController
     getLrc(false);
   }
 
-  insertMusic(Music music) {
+  /// 插入到下一曲
+  addNextMusic(Music music) {
     final coverPath = music.coverPath;
     final musicPath = music.musicPath;
     if (musicPath?.isNotEmpty == true) {
-      if (music.uid != playingMusic.value.uid) {
-        for (var index = 0; index < mPlayList.length; index++) {
-          if (mPlayList[index].uid == music.uid) {
-            audioSourceList.removeAt(index);
-            mPlayList.removeAt(index);
-            break;
-          }
+      if (music.uid == playingMusic.value.uid) {
+        // 如果选中的歌曲是当前播放的歌曲
+        return;
+      }
+      // 搜索并删除当前要插入的歌曲
+      for (var index = 0; index < mPlayList.length; index++) {
+        if (mPlayList[index].uid == music.uid) {
+          audioSourceList.removeAt(index);
+          mPlayList.removeAt(index);
+          break;
         }
-        for (var index = 0; index < mPlayList.length; index++) {
-          if (mPlayList[index].uid == playingMusic.value.uid) {
-            audioSourceList.insert(
-                index + 1, AudioSourceUri(musicPath, music, coverPath));
-            mPlayList.insert(index + 1, music);
-            break;
-          }
+      }
+      // 将插入的歌曲放在当前播放歌曲的后面
+      for (var index = 0; index < mPlayList.length; index++) {
+        if (mPlayList[index].uid == playingMusic.value.uid) {
+          audioSourceList.insert(
+              index + 1, genAudioSourceUri(musicPath, music, coverPath));
+          mPlayList.insert(index + 1, music);
+          break;
         }
       }
     }
   }
 
-  UriAudioSource AudioSourceUri(
+  /// 生成一个播放URI
+  UriAudioSource genAudioSourceUri(
       String? musicPath, Music music, String? coverPath) {
     return AudioSource.uri(
       Uri.file('${SDUtils.path}$musicPath'),
@@ -176,7 +201,6 @@ class PlayerLogic extends SuperController
     playMusic(mPlayList, index: index, callback: (Music music) async {
       await Future.delayed(const Duration(milliseconds: 300));
       isCanMiniPlayerScroll.value = true;
-      print("aaa: 333");
       playingMusic.value = music;
       getLrc(false);
     });
@@ -275,6 +299,7 @@ class PlayerLogic extends SuperController
     return null;
   }
 
+  /// 切换歌词类型
   toggleTranslate() {
     switch (lrcType.value) {
       case 0:
@@ -291,24 +316,24 @@ class PlayerLogic extends SuperController
 
   toggleLove() {}
 
+  /// 拖拽到指定位置播放
   seekTo(int ms) {
     mPlayer.seek(Duration(milliseconds: ms));
   }
 
   /// 切换循环模式
   void changeLoopMode(int index) async {
-    final nextIndex = index % loopModes.length;
-
-    /// 特殊处理随机播放：当处于LoopMode.off模式时，更改为循环列表且随机洗牌
-    mPlayer.setLoopMode(loopModes[nextIndex] == LoopMode.off
-        ? LoopMode.all
-        : loopModes[nextIndex]);
-    final enableShuffle = nextIndex == 0;
+    // 先设置随机模式，再设置循环模式，否则监听到的流会遗漏随机状态
+    final enableShuffle = index == 0;
+    await mPlayer.setShuffleModeEnabled(enableShuffle);
     if (enableShuffle) {
       await mPlayer.shuffle();
     }
-    await mPlayer.setShuffleModeEnabled(enableShuffle);
-    SpUtil.put("loopMode", index);
+    // 特殊处理随机播放：当处于LoopMode.off模式时，更改为循环列表且随机洗牌
+    mPlayer.setLoopMode(loopModes[index] == LoopMode.off
+        ? LoopMode.all
+        : loopModes[index]);
+    await SpUtil.put("loopMode", index);
   }
 
   @override

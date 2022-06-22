@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -26,6 +28,8 @@
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>需要获取摄像头权限扫描二维码</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
@@ -54,13 +58,6 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
-	<true/>
-	<key>NSCameraUsageDescription</key>
-    <string>需要获取摄像头权限扫描二维码</string>
-
-    <key>io.flutter.embedded_views_preview</key>
-    <string>YES</string>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
+	<string>YES</string>
 </dict>
 </plist>

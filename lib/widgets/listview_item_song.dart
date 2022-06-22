@@ -144,7 +144,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
                 child: touchIconByAsset(
                     path: "assets/main/ic_add_next.svg",
                     onTap: () {
-                      PlayerLogic.to.insertMusic(widget.music);
+                      PlayerLogic.to.addNextMusic(widget.music);
                     },
                     width: 20,
                     height: 20,
