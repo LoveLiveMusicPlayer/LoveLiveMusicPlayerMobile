@@ -94,8 +94,7 @@ class DirectoryUtil {
     if (_initStorageDir) {
       await initStorageDir();
     }
-    print(
-        "thll DirectoryUtil init : ${DateTime.now().millisecondsSinceEpoch - old}");
+    print("thll DirectoryUtil init : ${DateTime.now().millisecondsSinceEpoch - old}");
   }
 
   static Future<Directory?> initTempDir() async {

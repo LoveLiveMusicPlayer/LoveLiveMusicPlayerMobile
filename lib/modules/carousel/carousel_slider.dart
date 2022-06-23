@@ -28,12 +28,7 @@ class CarouselPlayer extends StatelessWidget {
                 : const NeverScrollableScrollPhysics(),
             enableInfiniteScroll: false,
             onPageChanged: (index, reason) {
-              final isController =
-                  reason == CarouselPageChangedReason.controller;
-              if (PlayerLogic.to.isCanMiniPlayerScroll.value) {
-                PlayerLogic.to.isCanMiniPlayerScroll.value = false;
-                PlayerLogic.to.changePlayIndex(isController, index);
-              }
+
             }));
   }
 }

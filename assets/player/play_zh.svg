@@ -1,13 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>译</title>
-    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="PingFangSC-Regular, PingFang SC" font-size="15" font-weight="normal">
-        <g id="歌库-播放详情页歌词" transform="translate(-327.000000, -560.000000)" fill="#333333">
-            <g id="编组-3" transform="translate(327.000000, 560.000000)">
-                <text id="译">
-                    <tspan x="9" y="22">译</tspan>
-                </text>
-            </g>
-        </g>
-    </g>
-</svg>
+<svg height="32" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><text fill="#333" fill-rule="evenodd" font-family="PingFangSC-Regular, PingFang SC" font-size="15"><tspan x="9" y="22">译</tspan></text></svg>

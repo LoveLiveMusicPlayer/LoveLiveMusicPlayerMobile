@@ -55,9 +55,6 @@ class PlayerLogic extends SuperController
   // 切换显示歌词类型 (0:原文; 1:翻译; 2:罗马音)
   var lrcType = 0.obs;
 
-  // mini窗口是否允许滚动
-  var isCanMiniPlayerScroll = true.obs;
-
   static PlayerLogic get to => Get.find();
 
   @override
@@ -109,39 +106,69 @@ class PlayerLogic extends SuperController
         for (var music in mPlayList) {
           music.isPlaying = music.uid == currentMusic.uid;
         }
-        if (isCanMiniPlayerScroll.value) {
+        if (playingMusic.value != currentMusic) {
           playingMusic.value = currentMusic;
-          getLrc(false);
         }
+        getLrc(false);
       }
     });
   }
 
   /// 播放指定列表的歌曲
-  playMusic(List<Music> musicList, {int index = 0, ScrollCallback? callback}) {
+  playMusic(List<Music> musicList, {int index = 0}) {
     if (musicList.isEmpty) {
       return;
     }
 
     // 设置新的播放列表
     final audioList = <AudioSource>[];
-    for (var music in musicList) {
-      final coverPath = music.coverPath;
-      final musicPath = music.musicPath;
+    // 传入列表是否和原播放列表相同
+    bool isSameList = true;
+
+    for (var i = 0; i < musicList.length; i++) {
+      final coverPath = musicList[i].coverPath;
+      final musicPath = musicList[i].musicPath;
       if (musicPath?.isNotEmpty == true) {
-        audioList.add(genAudioSourceUri(musicPath, music, coverPath));
+        audioList.add(genAudioSourceUri(musicPath, musicList[i], coverPath));
+      }
+      if (isSameList == true && (mPlayList.isEmpty || musicList[i] != mPlayList[i])) {
+        isSameList = false;
       }
     }
+
     audioSourceList.clear();
     audioSourceList.addAll(audioList);
     mPlayer.setAudioSource(audioSourceList, initialIndex: index);
-    mPlayList = [...musicList];
-    mPlayer.play();
-    if (callback == null) {
-      playingMusic.value = musicList[index];
-    } else {
-      callback(musicList[index]);
+
+    // 如果不相同，替换播放列表
+    if (!isSameList) {
+      mPlayList = [...musicList];
     }
+
+    // 当前是否正在播放
+    if (isPlaying.value) {
+      if (isSameList) {
+        // 如果正在播放且列表相同，直接跳到对应索引播放
+        mPlayer.seek(Duration.zero, index: index);
+        if (playingMusic.value != musicList[index]) {
+          playingMusic.value = musicList[index];
+        }
+      } else {
+        // 如果正在播放但是列表不同，就停止再打开播放器
+        mPlayer.stop();
+        mPlayer.play();
+        if (playingMusic.value != musicList[0]) {
+          playingMusic.value = musicList[0];
+        }
+      }
+    } else {
+      // 首次播放
+      mPlayer.play();
+      if (playingMusic.value != musicList[0]) {
+        playingMusic.value = musicList[0];
+      }
+    }
+
     getLrc(false);
   }
 
@@ -193,17 +220,8 @@ class PlayerLogic extends SuperController
   }
 
   /// 播放 播放列表 指定位置的歌曲
-  changePlayIndex(bool isController, int index) async {
-    if (isController) {
-      isCanMiniPlayerScroll.value = true;
-      return;
-    }
-    playMusic(mPlayList, index: index, callback: (Music music) async {
-      await Future.delayed(const Duration(milliseconds: 300));
-      isCanMiniPlayerScroll.value = true;
-      playingMusic.value = music;
-      getLrc(false);
-    });
+  changePlayIndex(int index) async {
+    mPlayer.seek(Duration.zero, index: index);
   }
 
   /// 开关播放

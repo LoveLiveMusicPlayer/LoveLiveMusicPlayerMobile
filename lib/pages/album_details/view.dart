@@ -81,7 +81,7 @@ class AlbumDetailsPage extends StatelessWidget {
           },
           onPlayTap: (index) {},
           onMoreTap: (index) {
-            SmartDialog.show(
+            SmartDialog.compatible.show(
                 widget: DialogMore(), alignmentTemp: Alignment.bottomCenter);
           },
         ),
@@ -100,7 +100,7 @@ class AlbumDetailsPage extends StatelessWidget {
         imgPath: "assets/dialog/ic_add_play_list.svg",
         title: "添加到歌单",
         onTap: () {}));
-    SmartDialog.show(
+    SmartDialog.compatible.show(
         widget: DialogBottomBtn(
           list: list,
         ),

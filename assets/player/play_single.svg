@@ -1,13 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>编组</title>
-    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="编组">
-            <rect id="矩形" fill-opacity="0.01" fill="#FFFFFF" fill-rule="nonzero" x="0" y="0" width="16" height="16"></rect>
-            <path d="M14.6077667,8.7435 C14.5673,8.9963 14.5065,9.24233333 14.4271333,9.47983333 C14.2543333,9.99713333 13.9933667,10.4740667 13.6621,10.8928333 C12.8074,11.9733667 11.4846667,12.6666667 10,12.6666667 L5.33333333,12.6666667 C3.13232333,12.6666667 1.33333333,10.8928333 1.33333333,8.66666667 C1.33333333,6.45006667 3.13208,4.66666667 5.33333333,4.66666667 L14.6666667,4.66666667" id="路径" stroke="#333333" stroke-linecap="round" stroke-linejoin="round"></path>
-            <polyline id="路径" stroke="#333333" stroke-linecap="round" stroke-linejoin="round" points="12.6666667 2.66666667 14.6666667 4.66666667 12.6666667 6.66666667"></polyline>
-            <line x1="8" y1="7" x2="8" y2="11" id="路径" stroke="#333333" stroke-linecap="round" stroke-linejoin="round"></line>
-            <polyline id="路径" stroke="#333333" stroke-linecap="round" stroke-linejoin="round" points="8 7 7 8 6.5 8.5"></polyline>
-        </g>
-    </g>
-</svg>
+<svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 0h16v16h-16z" fill="#fff" fill-opacity=".01" fill-rule="nonzero"/><g stroke="#333" stroke-linecap="round" stroke-linejoin="round"><path d="m14.6077667 8.7435c-.0404667.2528-.1012667.49883333-.1806334.73633333-.1728.5173-.4337666.99423337-.7650333 1.41299997-.8547 1.0805334-2.1774333 1.7738334-3.6621 1.7738334h-4.66666667c-2.20101 0-4-1.7738334-4-4.00000003 0-2.2166 1.79874667-4 4-4h9.33333337"/><path d="m12.6666667 2.66666667 2 2-2 2"/><path d="m8 7v4"/><path d="m8 7-1 1-.5.5"/></g></g></svg>

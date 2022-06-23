@@ -1,15 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="16px" height="17px" viewBox="0 0 16 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>编组</title>
-    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="歌库-播放-播放列表" transform="translate(-16.000000, -268.000000)">
-            <g id="编组" transform="translate(16.000000, 268.500000)">
-                <rect id="矩形" fill-opacity="0.01" fill="#FFFFFF" fill-rule="nonzero" x="0" y="0" width="16" height="16"></rect>
-                <polyline id="路径" stroke="#999999" stroke-linecap="round" stroke-linejoin="round" points="13.3333333 11 14.6666667 12.3333333 13.3333333 13.6666667"></polyline>
-                <polyline id="路径" stroke="#999999" stroke-linecap="round" stroke-linejoin="round" points="13.3333333 2.33333333 14.6666667 3.66666667 13.3333333 5"></polyline>
-                <path d="M14.6666667,3.6667 L12.3333333,3.6667 C9.9401,3.6667 8,5.6068 8,8.00003333 L8,8.00003333 C8,10.3932667 9.9401,12.3333667 12.3333333,12.3333667 L14.6666667,12.3333667" id="路径" stroke="#999999" stroke-linecap="round"></path>
-                <path d="M1.33333333,12.3333667 L3.66666667,12.3333667 C6.0599,12.3333667 8,10.3932667 8,8.00003333 L8,8.00003333 C8,5.6068 6.0599,3.6667 3.66666667,3.6667 L1.33333333,3.6667" id="路径" stroke="#999999" stroke-linecap="round"></path>
-            </g>
-        </g>
-    </g>
-</svg>
+<svg height="17" viewBox="0 0 16 17" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" transform="translate(0 .5)"><path d="m0 0h16v16h-16z" fill="#fff" fill-opacity=".01" fill-rule="nonzero"/><g stroke="#999" stroke-linecap="round"><path d="m13.3333333 11 1.3333334 1.3333333-1.3333334 1.3333334" stroke-linejoin="round"/><path d="m13.3333333 2.33333333 1.3333334 1.33333334-1.3333334 1.33333333" stroke-linejoin="round"/><path d="m14.6666667 3.6667h-2.3333334c-2.3932333 0-4.3333333 1.9401-4.3333333 4.33333333 0 2.39323337 1.9401 4.33333337 4.3333333 4.33333337h2.3333334"/><path d="m1.33333333 12.3333667h2.33333334c2.39323333 0 4.33333333-1.9401 4.33333333-4.33333337 0-2.39323333-1.9401-4.33333333-4.33333333-4.33333333h-2.33333334"/></g></g></svg>

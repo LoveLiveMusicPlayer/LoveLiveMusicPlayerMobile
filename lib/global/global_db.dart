@@ -131,7 +131,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
     GlobalLogic.to.databaseInitOver.value = true;
 
-    SmartDialog.showToast("专辑: ${allAlbums.length}; 歌曲: ${allMusics.length}", time: const Duration(seconds: 5));
+    SmartDialog.compatible.showToast("专辑: ${allAlbums.length}; 歌曲: ${allMusics.length}", time: const Duration(seconds: 5));
   }
 
   insertMusicIntoAlbum(DownloadMusic music) async {
@@ -163,7 +163,6 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         music: [_music]
       );
       albumDao.insertAlbum(_album);
-      print(albumToJson(_album));
     } else {
       final hasCurrentMusic = album.music.any((element) => element.uid == music.musicUId);
       if (!hasCurrentMusic) {
@@ -171,10 +170,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         album.coverPath?.add(music.coverPath);
         album.music.add(_music);
         albumDao.updateAlbum(album);
-        print(albumToJson(album));
       }
     }
-    print(musicToJson(_music));
   }
 
   clearAllAlbum() async {

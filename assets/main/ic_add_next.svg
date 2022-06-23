@@ -1,16 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>编组备份 5</title>
-    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linejoin="round">
-        <g id="歌库-歌曲" transform="translate(-314.000000, -157.000000)" stroke="#CCCCCC" stroke-width="1.4">
-            <g id="编组-7" transform="translate(16.000000, 142.000000)">
-                <g id="编组备份-5" transform="translate(299.000000, 16.000000)">
-                    <path d="M8,16 C3.58172,16 0,12.41828 0,8 C0,3.58172 3.58172,0 8,0 C12.41828,0 16,3.58172 16,8" id="路径" stroke-linecap="round"></path>
-                    <polygon id="路径" points="6.4 8 6.4 5.22872 8.8 6.61436 11.2 8 8.8 9.38564 6.4 10.77128"></polygon>
-                    <line x1="13.22032" y1="11.2" x2="13.22032" y2="15.2" id="路径" stroke-linecap="round"></line>
-                    <line x1="15.2" y1="13.17988" x2="11.2" y2="13.17988" id="路径" stroke-linecap="round"></line>
-                </g>
-            </g>
-        </g>
-    </g>
-</svg>
+<svg height="18" viewBox="0 0 18 18" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="#ccc" stroke-linejoin="round" stroke-width="1.4" transform="translate(1 1)"><path d="m8 16c-4.41828 0-8-3.58172-8-8s3.58172-8 8-8 8 3.58172 8 8" stroke-linecap="round"/><path d="m6.4 8v-2.77128l2.4 1.38564 2.4 1.38564-2.4 1.38564-2.4 1.38564z"/><g stroke-linecap="round"><path d="m13.22032 11.2v4"/><path d="m15.2 13.17988h-4"/></g></g></svg>

@@ -125,7 +125,6 @@ class _DrawerPageState extends State<DrawerPage> {
                       onTap: () async {
                         var data = await Get.toNamed(Routes.routeScan);
                         if (data != null) {
-                          print(data);
                           Get.toNamed(Routes.routeTransform, arguments: data);
                         }
                       },
@@ -153,11 +152,11 @@ class _DrawerPageState extends State<DrawerPage> {
                       icon: Assets.drawerDrawerReset,
                       text: "清理数据",
                       onTap: () async {
-                        SmartDialog.showLoading(
+                        SmartDialog.compatible.showLoading(
                             msg: "重置中...", backDismiss: false);
                         await DBLogic.to.clearAllAlbum();
                         SmartDialog.dismiss();
-                        SmartDialog.showToast("清理成功", time: const Duration(seconds: 5));
+                        SmartDialog.compatible.showToast("清理成功", time: const Duration(seconds: 5));
                       },
                     ),
                     DrawerFunctionButton(
@@ -165,7 +164,7 @@ class _DrawerPageState extends State<DrawerPage> {
                       text: "保存日志",
                       onTap: () async {
                         await SDUtils.writeDBToFile();
-                        SmartDialog.showToast("导出成功", time: const Duration(seconds: 5));
+                        SmartDialog.compatible.showToast("导出成功", time: const Duration(seconds: 5));
                       },
                     )
                   ],

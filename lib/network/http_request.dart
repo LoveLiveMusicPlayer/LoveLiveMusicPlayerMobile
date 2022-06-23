@@ -43,11 +43,11 @@ class Network {
       bool isShowError = false,
       String loadingMessage = "请求网络中..."}) async {
     if (isShowDialog) {
-      SmartDialog.showLoading(msg: loadingMessage);
+      SmartDialog.compatible.showLoading(msg: loadingMessage);
     }
     var resp = await dio!.get(url).onError((error, stackTrace) {
       if (isShowError) {
-        SmartDialog.show(
+        SmartDialog.compatible.show(
             widget: OneButtonDialog(
           title: "请检查网络",
           isShowMsg: false,
@@ -103,7 +103,7 @@ class Network {
       bool isShowDialog = true,
       bool isShowError = true,
       String loadingMessage = "请求网络中..."}) async {
-    // if (SmartDialog.config.isLoading) SmartDialog.dismiss();
+    // if (SmartDialog.compatible.config.isLoading) SmartDialog.dismiss();
     if (dio == null) {
       return throw "请先在实例化网络";
     }
@@ -130,7 +130,7 @@ class Network {
       bool isShowError,
       String loadingMessage) {
     if (isShowDialog) {
-      SmartDialog.showLoading(msg: loadingMessage);
+      SmartDialog.compatible.showLoading(msg: loadingMessage);
     }
     dio!
         // .request<Map<String, dynamic>>(url,
@@ -169,7 +169,7 @@ class Network {
   static _noNetwork(Function(String msg)? error, bool isShowError) {
     if (error != null) error("请检查网络");
     if (isShowError) {
-      SmartDialog.show(
+      SmartDialog.compatible.show(
           widget: OneButtonDialog(
         title: "请检查网络",
         isShowMsg: false,
@@ -192,7 +192,7 @@ class Network {
       bool isShowError, String msg, Function(String msg)? error) {
     SmartDialog.dismiss();
     if (isShowError) {
-      SmartDialog.show(
+      SmartDialog.compatible.show(
           widget: OneButtonDialog(
         title: msg,
         isShowMsg: false,

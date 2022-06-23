@@ -11,6 +11,7 @@ import 'package:lovelivemusicplayer/modules/carousel/carousel_slider.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_playlist.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:marquee_text/marquee_text.dart';
 
 import '../../models/Music.dart';
@@ -138,7 +139,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
             return touchIconByAsset(
                 path: "assets/player/play_playlist.svg",
                 onTap: () {
-                  SmartDialog.show(
+                  SmartDialog.compatible.show(
                       widget: DialogPlaylist(),
                       alignmentTemp: Alignment.bottomCenter);
                 },
@@ -173,21 +174,22 @@ class _MiniPlayerState extends State<MiniPlayer> {
   Widget marqueeMusicName() {
     return Expanded(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           InkWell(
             onDoubleTap: () => PlayerLogic.to.togglePlay(),
-            child: FutureBuilder(
-              initialData: const <Widget>[],
-              builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
-                return CarouselPlayer(
-                    listItems: snapshot.requireData,
-                    sliderController: sliderController,
-                    isCanScroll: PlayerLogic.to.isCanMiniPlayerScroll.value);
-              },
-              future: refreshList(PlayerLogic.to.playingMusic.value),
-            ),
+            // child: FutureBuilder(
+            //   initialData: const <Widget>[],
+            //   builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
+            //     return CarouselPlayer(
+            //         listItems: snapshot.requireData,
+            //         sliderController: sliderController,
+            //         isCanScroll: PlayerLogic.to.isCanMiniPlayerScroll.value);
+            //   },
+            //   future: refreshList(PlayerLogic.to.playingMusic.value),
+            // ),
+            child: Text(PlayerLogic.to.playingMusic.value.name ?? "暂无歌曲", style: TextStyleMs.black_14),
           )
         ],
       ),

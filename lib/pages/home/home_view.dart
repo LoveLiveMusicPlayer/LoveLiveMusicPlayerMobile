@@ -66,7 +66,7 @@ class _HomeViewState extends State<HomeView>
                   const Duration(seconds: 1)) {
             //间隔时间大于1秒 则重新赋值
             lastPressTime = DateTime.now();
-            SmartDialog.showToast("再次点击回到桌面");
+            SmartDialog.compatible.showToast("再次点击回到桌面");
             return false;
           }
           AndroidBackDesktop.backToDesktop();
@@ -225,7 +225,7 @@ class _HomeViewState extends State<HomeView>
           title: "添加到歌单",
           onTap: () {}));
     }
-    SmartDialog.show(
+    SmartDialog.compatible.show(
         widget: DialogBottomBtn(
           list: list,
         ),
@@ -301,11 +301,11 @@ class _HomeViewState extends State<HomeView>
             logic.selectItem(music, checked);
             return;
           }
-          PlayerLogic.to.playMusic(GlobalLogic.to.checkMusicList(), index: index);
+          PlayerLogic.to.changePlayIndex(index);
         },
         onPlayTap: (index) {},
         onMoreTap: (index) {
-          SmartDialog.show(
+          SmartDialog.compatible.show(
               widget: const DialogMore(),
               alignmentTemp: Alignment.bottomCenter);
         },

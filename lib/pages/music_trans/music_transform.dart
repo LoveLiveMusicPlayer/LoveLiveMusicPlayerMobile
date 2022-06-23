@@ -128,7 +128,6 @@ class _MusicTransformState extends State<MusicTransform> {
   }
 
   pushQueue(DownloadMusic music, String url, String dest, bool isLast) async {
-    print("add queue");
     await widget.queue.add(() async {
       try {
         cancelToken = CancelToken();
