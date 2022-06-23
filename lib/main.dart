@@ -31,8 +31,8 @@ void main() async {
   await initServices();
   isDark = await SpUtil.getBoolean(Const.spDark);
   await JustAudioBackground.init(
-    androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
-    androidNotificationChannelName: 'Audio playback',
+    androidNotificationChannelId: 'com.zhushenwudi.lovelivemusicplayer.channel.audio',
+    androidNotificationChannelName: 'lovelive audio playback',
     androidNotificationOngoing: true,
   );
   await SentryFlutter.init(

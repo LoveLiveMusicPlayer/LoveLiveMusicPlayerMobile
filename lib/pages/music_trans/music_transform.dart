@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/FtpCmd.dart';
@@ -97,6 +98,8 @@ class _MusicTransformState extends State<MusicTransform> {
           widget.queue.clear();
           musicList.clear();
           cancelToken?.cancel();
+          SmartDialog.dismiss();
+          Future.delayed(const Duration(milliseconds: 200)).then((value) => Get.back());
           break;
       }
       message = msg;
@@ -176,7 +179,38 @@ class _MusicTransformState extends State<MusicTransform> {
 
   @override
   Widget build(BuildContext context) {
-    return checkPermission();
+    return WillPopScope(
+        child: checkPermission(),
+        onWillPop: () async {
+          SmartDialog.compatible.show(
+              widget: Container(
+                width: 300.w,
+                height: 150.h,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.w),
+                ),
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  Container(
+                    width: 250.w,
+                    margin: EdgeInsets.only(bottom: 30.h),
+                    child: const Text("退出后会中断连接及传输，是否继续？"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      final message = ftpCmdToJson(FtpCmd(cmd: "stop", body: ""));
+                      widget.channel.sink.add(message);
+                      SmartDialog.dismiss();
+                      Future.delayed(const Duration(milliseconds: 200)).then((value) => Get.back());
+                    },
+                    child: const Text('确定'),
+                  )
+                ]),
+              ));
+          return false;
+        }
+    );
   }
 
   checkPermission() {
