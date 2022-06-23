@@ -1,20 +1,16 @@
 import 'dart:ui';
 
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/modules/carousel/carousel_slider.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_playlist.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:marquee_text/marquee_text.dart';
-
-import '../../models/Music.dart';
 import '../../modules/ext.dart';
 
 class MiniPlayer extends StatefulWidget {
@@ -27,8 +23,6 @@ class MiniPlayer extends StatefulWidget {
 
 class _MiniPlayerState extends State<MiniPlayer> {
   final scrollList = <Widget>[];
-
-  CarouselController sliderController = CarouselController();
 
   @override
   Widget build(BuildContext context) {
@@ -179,56 +173,11 @@ class _MiniPlayerState extends State<MiniPlayer> {
         children: [
           InkWell(
             onDoubleTap: () => PlayerLogic.to.togglePlay(),
-            // child: FutureBuilder(
-            //   initialData: const <Widget>[],
-            //   builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
-            //     return CarouselPlayer(
-            //         listItems: snapshot.requireData,
-            //         sliderController: sliderController,
-            //         isCanScroll: PlayerLogic.to.isCanMiniPlayerScroll.value);
-            //   },
-            //   future: refreshList(PlayerLogic.to.playingMusic.value),
-            // ),
-            child: Text(PlayerLogic.to.playingMusic.value.name ?? "暂无歌曲", style: TextStyleMs.black_14),
+            child: MarqueeText(
+                text: TextSpan(text: PlayerLogic.to.playingMusic.value.name ?? "暂无歌曲"),
+                style: TextStyleMs.black_14,
+                speed: 15),
           )
-        ],
-      ),
-    );
-  }
-
-  Future<List<Widget>>? refreshList(Music currentMusic) async {
-    final musicList = PlayerLogic.to.mPlayList;
-    scrollList.clear();
-    if (musicList.isEmpty) {
-      scrollList.add(boxView("暂无歌曲"));
-      return scrollList;
-    }
-    int count = -1;
-    int? currentIndex;
-    for (var music in musicList) {
-      count++;
-      scrollList.add(boxView(music.name));
-      if (currentIndex == null && music.uid == currentMusic.uid) {
-        currentIndex = count;
-      }
-    }
-    sliderController.jumpToPage(currentIndex ?? 0);
-    return scrollList;
-  }
-
-  Widget boxView(text) {
-    return SizedBox(
-      width: double.infinity,
-      height: double.infinity,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          MarqueeText(
-              text: TextSpan(text: text),
-              style: const TextStyle(
-                  fontSize: 15, color: Color(0xFF333333), height: 1.3),
-              speed: 15)
         ],
       ),
     );
