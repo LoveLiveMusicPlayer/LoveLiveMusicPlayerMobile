@@ -9,6 +9,7 @@ import 'package:lovelivemusicplayer/pages/player/widget/player_cover.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_header.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_lyric.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/seekbar.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import '../../modules/ext.dart';
 
 class Player extends StatefulWidget {
@@ -126,13 +127,13 @@ class _PlayerState extends State<Player> {
               var icon;
               switch (PlayerLogic.to.lrcType.value) {
                 case 0:
-                  icon = "assets/player/play_jp.svg";
+                  icon = Assets.playerPlayJp;
                   break;
                 case 1:
-                  icon = "assets/player/play_zh.svg";
+                  icon = Assets.playerPlayZh;
                   break;
                 case 2:
-                  icon = "assets/player/play_roma.svg";
+                  icon = Assets.playerPlayRoma;
                   break;
               }
               return materialButton(
@@ -150,7 +151,7 @@ class _PlayerState extends State<Player> {
             return materialButton(
                 PlayerLogic.to.playingMusic.value.isLove
                     ? Icons.favorite
-                    : "assets/player/play_love.svg",
+                    : Assets.playerPlayLove,
                 () => PlayerLogic.to.toggleLove(),
                 width: 32,
                 height: 32,

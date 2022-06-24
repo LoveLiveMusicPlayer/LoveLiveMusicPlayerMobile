@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 
 ///歌单
 class ListViewItemPlaylist extends StatefulWidget {
@@ -79,7 +80,7 @@ class _ListViewItemPlaylist extends State<ListViewItemPlaylist> {
             ],
           ),
           touchIconByAsset(
-              path: "assets/dialog/ic_delete.svg",
+              path: Assets.dialogIcDelete,
               onTap: () {
                 widget.onTap(widget.index);
               },

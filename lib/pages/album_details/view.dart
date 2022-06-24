@@ -12,6 +12,7 @@ import 'package:lovelivemusicplayer/widgets/details_list_top.dart';
 import '../../widgets/listview_item_song.dart';
 import 'logic.dart';
 import 'widget/details_header.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 
 class AlbumDetailsPage extends StatelessWidget {
   final logic = Get.put(AlbumDetailsController());
@@ -79,10 +80,10 @@ class AlbumDetailsPage extends StatelessWidget {
           onItemTap: (index, checked) {
             logic.selectItem(music, checked);
           },
-          onPlayTap: (index) {},
-          onMoreTap: (index) {
+          onPlayTap: (music) {},
+          onMoreTap: (music) {
             SmartDialog.compatible.show(
-                widget: DialogMore(), alignmentTemp: Alignment.bottomCenter);
+                widget: DialogMore(music: music), alignmentTemp: Alignment.bottomCenter);
           },
         ),
       ));
@@ -93,11 +94,11 @@ class AlbumDetailsPage extends StatelessWidget {
   showSelelctDialog() {
     List<BtnItem> list = [];
     list.add(BtnItem(
-        imgPath: "assets/dialog/ic_add_play_list2.svg",
+        imgPath: Assets.dialogIcAddPlayList2,
         title: "加入播放列表",
         onTap: () {}));
     list.add(BtnItem(
-        imgPath: "assets/dialog/ic_add_play_list.svg",
+        imgPath: Assets.dialogIcAddPlayList,
         title: "添加到歌单",
         onTap: () {}));
     SmartDialog.compatible.show(

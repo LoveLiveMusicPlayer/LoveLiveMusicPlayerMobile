@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class _BottomBarState extends State<BottomBar> {
       currentIndex: mIndex,
       items: [
         BottomNavigationBarItem(
-            icon: SvgPicture.asset("assets/tab/tab_music.svg",
+            icon: SvgPicture.asset(Assets.tabTabMusic,
                 height: 18.h,
                 width: 20.h,
                 color: mIndex == 0
@@ -32,7 +33,7 @@ class _BottomBarState extends State<BottomBar> {
                     : const Color(0xFFD1E0F3)),
             label: '歌曲'),
         BottomNavigationBarItem(
-            icon: SvgPicture.asset("assets/tab/tab_album.svg",
+            icon: SvgPicture.asset(Assets.tabTabAlbum,
                 height: 18.h,
                 width: 20.h,
                 color: mIndex == 1
@@ -40,7 +41,7 @@ class _BottomBarState extends State<BottomBar> {
                     : const Color(0xFFD1E0F3)),
             label: '专辑'),
         BottomNavigationBarItem(
-            icon: SvgPicture.asset("assets/tab/tab_singer.svg",
+            icon: SvgPicture.asset(Assets.tabTabSinger,
                 height: 18.h,
                 width: 20.h,
                 color: mIndex == 2

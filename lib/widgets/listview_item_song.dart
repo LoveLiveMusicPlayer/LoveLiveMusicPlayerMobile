@@ -8,6 +8,7 @@ import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 
 ///歌曲
 class ListViewItemSong extends StatefulWidget {
@@ -142,7 +143,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
                 padding: EdgeInsets.only(
                     left: 12.w, right: 12.w, top: 12.h, bottom: 12.h),
                 child: touchIconByAsset(
-                    path: "assets/main/ic_add_next.svg",
+                    path: Assets.mainIcAddNext,
                     onTap: () {
                       PlayerLogic.to.addNextMusic(widget.music);
                     },
@@ -157,7 +158,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
                 padding: EdgeInsets.only(
                     left: 12.w, right: 10.w, top: 12.h, bottom: 12.h),
                 child: touchIconByAsset(
-                    path: "assets/main/ic_more.svg",
+                    path: Assets.mainIcMore,
                     width: 10,
                     height: 20,
                     color: const Color(0xFFCCCCCC)),

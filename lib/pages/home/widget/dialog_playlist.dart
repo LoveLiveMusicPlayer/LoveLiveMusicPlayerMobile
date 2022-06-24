@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_playlist.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 
 class DialogPlaylist extends StatelessWidget {
   @override
@@ -17,7 +18,7 @@ class DialogPlaylist extends StatelessWidget {
       height: 560.h,
       child: Column(
         children: [
-          _buildItem("assets/player/play_shuffle.svg",
+          _buildItem(Assets.playerPlayShuffle,
               "随机播放(${PlayerLogic.to.mPlayList.length})", true, () {}),
           Divider(
             height: 0.5.h,
@@ -87,7 +88,7 @@ class DialogPlaylist extends StatelessWidget {
                   ),
                 ),
                 touchIconByAsset(
-                    path: "assets/player/play_shuffle.svg",
+                    path: Assets.playerPlayShuffle,
                     onTap: () {},
                     width: 16.h,
                     height: 16.h,

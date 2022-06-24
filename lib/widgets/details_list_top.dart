@@ -6,6 +6,7 @@ import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 import 'circular_check_box.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 
 class DetailsListTop extends StatelessWidget {
   final Function onPlayTap;
@@ -106,7 +107,7 @@ class DetailsListTop extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(right: 16.h, top: 5.h, bottom: 5.h, left: 30.h),
       child: touchIconByAsset(
-          path: "assets/main/ic_screen.svg",
+          path: Assets.mainIcScreen,
           onTap: onScreenTap,
           width: 18,
           height: 18),

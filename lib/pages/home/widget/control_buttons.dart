@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 
 class ControlButtons extends StatelessWidget {
   final AudioPlayer player;
@@ -23,9 +24,9 @@ class ControlButtons extends StatelessWidget {
               builder: (context, snapshot) {
                 var loopMode = snapshot.data ?? LoopMode.off;
                 const icons = [
-                  "assets/player/play_shuffle.svg",
-                  "assets/player/play_recycle.svg",
-                  "assets/player/play_single.svg",
+                  Assets.playerPlayShuffle,
+                  Assets.playerPlayRecycle,
+                  Assets.playerPlaySingle
                 ];
                 if (loopMode == LoopMode.all && player.shuffleModeEnabled) {
                   loopMode = LoopMode.off;
@@ -41,7 +42,7 @@ class ControlButtons extends StatelessWidget {
             StreamBuilder<SequenceState?>(
               stream: player.sequenceStateStream,
               builder: (context, snapshot) => materialButton(
-                  "assets/player/play_prev.svg",
+                  Assets.playerPlayPrev,
                       () => player.hasPrevious ? player.seekToPrevious() : null,
                   width: 60,
                   height: 60,
@@ -63,15 +64,15 @@ class ControlButtons extends StatelessWidget {
                   );
                 } else if (playing != true) {
                   return materialButton(
-                      "assets/player/play_play.svg", () => player.play(),
+                      Assets.playerPlayPlay, () => player.play(),
                       width: 80, height: 80, radius: 40, iconSize: 26);
                 } else if (processingState != ProcessingState.completed) {
                   return materialButton(
-                      "assets/player/play_pause.svg", () => player.pause(),
+                      Assets.playerPlayPause, () => player.pause(),
                       width: 80, height: 80, radius: 40, iconSize: 26);
                 } else {
                   return materialButton(
-                      "assets/player/play_play.svg",
+                      Assets.playerPlayPlay,
                           () => player.seek(Duration.zero,
                           index: player.effectiveIndices!.first),
                       width: 80,
@@ -84,14 +85,14 @@ class ControlButtons extends StatelessWidget {
             StreamBuilder<SequenceState?>(
               stream: player.sequenceStateStream,
               builder: (context, snapshot) => materialButton(
-                  "assets/player/play_next.svg",
+                  Assets.playerPlayNext,
                       () => player.hasNext ? player.seekToNext() : null,
                   width: 60,
                   height: 60,
                   radius: 40,
                   iconSize: 16),
             ),
-            materialButton("assets/player/play_playlist.svg", () => {},
+            materialButton(Assets.playerPlayPlaylist, () => {},
                 width: 32, height: 32, radius: 6, iconSize: 15),
           ],
         ),

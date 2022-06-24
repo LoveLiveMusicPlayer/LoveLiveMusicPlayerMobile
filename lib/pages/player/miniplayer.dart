@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -101,21 +101,21 @@ class _MiniPlayerState extends State<MiniPlayer> {
                 );
               } else if (playing != true) {
                 return touchIconByAsset(
-                    path: "assets/player/play_play.svg",
+                    path: Assets.playerPlayPlay,
                     onTap: () => PlayerLogic.to.mPlayer.play(),
                     width: 16,
                     height: 16,
                     color: const Color(0xFF333333));
               } else if (processingState != ProcessingState.completed) {
                 return touchIconByAsset(
-                    path: "assets/player/play_pause.svg",
+                    path: Assets.playerPlayPause,
                     onTap: () => PlayerLogic.to.mPlayer.pause(),
                     width: 16,
                     height: 16,
                     color: const Color(0xFF333333));
               } else {
                 return touchIconByAsset(
-                    path: "assets/player/play_play.svg",
+                    path: Assets.playerPlayPlay,
                     onTap: () =>
                         PlayerLogic.to.mPlayer.seek(Duration.zero,
                             index: PlayerLogic.to.mPlayer.effectiveIndices!
@@ -131,7 +131,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
           /// 播放列表按钮
           GetBuilder<HomeController>(builder: (logic) {
             return touchIconByAsset(
-                path: "assets/player/play_playlist.svg",
+                path: Assets.playerPlayPlaylist,
                 onTap: () {
                   SmartDialog.compatible.show(
                       widget: DialogPlaylist(),

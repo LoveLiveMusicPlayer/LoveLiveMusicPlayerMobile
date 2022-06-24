@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_song_sheet.dart';
 
 import '../../../modules/ext.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 
 class DialogAddSongSheet extends StatelessWidget {
   @override
@@ -34,10 +35,10 @@ class DialogAddSongSheet extends StatelessWidget {
             height: 0.5.h,
             color: Get.theme.primaryColor,
           ),
-          _buildItem("assets/dialog/ic_new_song_list.svg", "加入播放列表", true, () {
+          _buildItem(Assets.dialogIcNewSongList, "加入播放列表", true, () {
             SmartDialog.dismiss();
           }),
-          _buildItem("assets/dialog/ic_new_song_list.svg", "我喜欢", true, () {
+          _buildItem(Assets.dialogIcNewSongList, "我喜欢", true, () {
             SmartDialog.dismiss();
           }),
           Expanded(

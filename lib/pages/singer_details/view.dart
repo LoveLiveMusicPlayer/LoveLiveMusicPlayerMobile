@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
-
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import '../../modules/ext.dart';
 import '../../utils/sd_utils.dart';
 import '../../widgets/details_list_top.dart';
@@ -79,10 +79,10 @@ class SingerDetailsPage extends StatelessWidget {
           onItemTap: (music, checked) {
             logic.selectItem(music, checked);
           },
-          onPlayTap: (index) {},
-          onMoreTap: (index) {
+          onPlayTap: (music) {},
+          onMoreTap: (music) {
             SmartDialog.compatible.show(
-                widget: DialogMore(), alignmentTemp: Alignment.bottomCenter);
+                widget: DialogMore(music: music), alignmentTemp: Alignment.bottomCenter);
           },
         ),
       ));
@@ -93,11 +93,11 @@ class SingerDetailsPage extends StatelessWidget {
   showSelelctDialog() {
     List<BtnItem> list = [];
     list.add(BtnItem(
-        imgPath: "assets/dialog/ic_add_play_list2.svg",
+        imgPath: Assets.dialogIcAddPlayList2,
         title: "加入播放列表",
         onTap: () {}));
     list.add(BtnItem(
-        imgPath: "assets/dialog/ic_add_play_list.svg",
+        imgPath: Assets.dialogIcAddPlayList,
         title: "添加到歌单",
         onTap: () {}));
     SmartDialog.compatible.show(

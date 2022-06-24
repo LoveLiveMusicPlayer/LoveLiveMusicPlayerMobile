@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';
 
 import '../../../modules/ext.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 
 class DialogMore extends StatelessWidget {
-  const DialogMore({Key? key}) : super(key: key);
+  final Music music;
+  const DialogMore({Key? key, required this.music}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,7 @@ class DialogMore extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(12.h),
             child: Text(
-              "だから僕らは鳴らすんだ！",
+              music.name ?? "",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(fontSize: 17.sp, color: const Color(0xff333333)),
@@ -33,19 +36,19 @@ class DialogMore extends StatelessWidget {
             height: 0.5.h,
             color: Get.theme.primaryColor,
           ),
-          _buildItem("assets/dialog/ic_add_play_list.svg", "加入播放列表", true, () {
+          _buildItem(Assets.dialogIcAddPlayList, "加入播放列表", true, () {
             SmartDialog.dismiss();
           }),
-          _buildItem("assets/dialog/ic_add_song_sheet.svg", "添加到歌单", true, () {
+          _buildItem(Assets.dialogIcAddSongSheet, "添加到歌单", true, () {
             SmartDialog.dismiss();
             SmartDialog.compatible.show(
                 widget: DialogAddSongSheet(),
                 alignmentTemp: Alignment.bottomCenter);
           }),
-          _buildItem("assets/dialog/ic_song_info.svg", "歌曲信息", true, () {
+          _buildItem(Assets.dialogIcSongInfo, "歌曲信息", true, () {
             SmartDialog.dismiss();
           }),
-          _buildItem("assets/dialog/ic_see_album.svg", "查看专辑", true, () {
+          _buildItem(Assets.dialogIcSeeAlbum, "查看专辑", true, () {
             SmartDialog.dismiss();
           }),
         ],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 
 class RefresherWidget extends StatefulWidget {
   Widget Function(BuildContext context, int index) listItem;
@@ -31,7 +32,7 @@ class RefresherWidget extends StatefulWidget {
     this.onRefresh,
     this.onLoading,
     this.emptyMsg = "暂无数据",
-    this.emptyImg = "assets/main/ic_null.png",
+    this.emptyImg = Assets.mainIcNull,
     this.enablePullUp = true,
     this.enablePullDown = true,
     this.isGridView = false,

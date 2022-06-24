@@ -25,6 +25,7 @@ import '../player/miniplayer.dart';
 import '../player/player.dart';
 import 'widget/custom_underline_tabIndicator.dart';
 import 'widget/song_library_top.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -197,31 +198,31 @@ class _HomeViewState extends State<HomeView>
     List<BtnItem> list = [];
     if (logic.state.currentIndex.value == 1) {
       list.add(BtnItem(
-          imgPath: "assets/dialog/ic_add_play_list2.svg",
+          imgPath: Assets.dialogIcAddPlayList2,
           title: "专辑播放",
           onTap: () {}));
       list.add(BtnItem(
-          imgPath: "assets/dialog/ic_add_song_sheet.svg",
+          imgPath: Assets.dialogIcAddSongSheet,
           title: "添加到歌单",
           onTap: () {}));
       list.add(BtnItem(
-          imgPath: "assets/dialog/ic_delete.svg", title: "删除专辑", onTap: () {}));
+          imgPath: Assets.dialogIcDelete, title: "删除专辑", onTap: () {}));
     } else if (logic.state.currentIndex.value == 1) {
       list.add(BtnItem(
-          imgPath: "assets/dialog/ic_add_play_list2.svg",
+          imgPath: Assets.dialogIcAddPlayList2,
           title: "全部播放",
           onTap: () {}));
       list.add(BtnItem(
-          imgPath: "assets/dialog/ic_add_play_list.svg",
+          imgPath: Assets.dialogIcAddPlayList,
           title: "添加到歌单",
           onTap: () {}));
     } else {
       list.add(BtnItem(
-          imgPath: "assets/dialog/ic_add_play_list2.svg",
+          imgPath: Assets.dialogIcAddPlayList2,
           title: "加入播放列表",
           onTap: () {}));
       list.add(BtnItem(
-          imgPath: "assets/dialog/ic_add_play_list.svg",
+          imgPath: Assets.dialogIcAddPlayList,
           title: "添加到歌单",
           onTap: () {}));
     }
@@ -304,9 +305,9 @@ class _HomeViewState extends State<HomeView>
           PlayerLogic.to.changePlayIndex(index);
         },
         onPlayTap: (index) {},
-        onMoreTap: (index) {
+        onMoreTap: (music) {
           SmartDialog.compatible.show(
-              widget: const DialogMore(),
+              widget: DialogMore(music: music),
               alignmentTemp: Alignment.bottomCenter);
         },
       );

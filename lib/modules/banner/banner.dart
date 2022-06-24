@@ -1,13 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
-const List<String> images = [
-  "assets/home/list_item1.png",
-  "assets/home/list_item2.png",
-  "assets/home/list_item3.png",
-  "assets/home/list_item2.png",
-  "assets/home/list_item1.png",
-];
+const List<String> images = [];
 
 class ExampleHorizontal extends StatelessWidget {
   const ExampleHorizontal({Key? key}) : super(key: key);

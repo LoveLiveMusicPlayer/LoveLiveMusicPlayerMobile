@@ -374,5 +374,3 @@ class PlayerLogic extends SuperController
     LogUtil.e('onResumed');
   }
 }
-
-typedef ScrollCallback = void Function(Music music);
