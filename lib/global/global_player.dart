@@ -136,10 +136,6 @@ class PlayerLogic extends SuperController
       }
     }
 
-    audioSourceList.clear();
-    audioSourceList.addAll(audioList);
-    mPlayer.setAudioSource(audioSourceList, initialIndex: index);
-
     // 如果不相同，替换播放列表
     if (!isSameList) {
       mPlayList = [...musicList];
@@ -153,16 +149,26 @@ class PlayerLogic extends SuperController
       } else {
         // 如果正在播放但是列表不同，就停止再打开播放器
         mPlayer.stop();
+
+        audioSourceList.clear();
+        audioSourceList.addAll(audioList);
+        mPlayer.setAudioSource(audioSourceList, initialIndex: index);
+
         mPlayer.play();
       }
     } else {
       // 首次播放
+      audioSourceList.clear();
+      audioSourceList.addAll(audioList);
+      mPlayer.setAudioSource(audioSourceList, initialIndex: index);
+
       mPlayer.play();
     }
     if (playingMusic.value != musicList[index]) {
       playingMusic.value = musicList[index];
     }
     getLrc(false);
+    audioList.clear();
   }
 
   /// 插入到下一曲
