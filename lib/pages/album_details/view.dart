@@ -71,16 +71,19 @@ class AlbumDetailsPage extends StatelessWidget {
     list.add(SizedBox(
       height: 10.h,
     ));
-    for (final music in album.music) {
+    for (var index = 0; index < album.music.length; index++) {
       list.add(Padding(
         padding: EdgeInsets.only(left: 16.w, bottom: 20.h, right: 16.w),
         child: ListViewItemSong(
-          music: music,
-          checked: logic.isItemChecked(music),
+          index: index,
+          music: album.music[index],
+          checked: logic.isItemChecked(album.music[index]),
           onItemTap: (index, checked) {
-            logic.selectItem(music, checked);
+            logic.selectItem(index, checked);
           },
-          onPlayTap: (music) {},
+          onPlayTap: (music) {
+
+          },
           onMoreTap: (music) {
             SmartDialog.compatible.show(
                 widget: DialogMore(music: music), alignmentTemp: Alignment.bottomCenter);

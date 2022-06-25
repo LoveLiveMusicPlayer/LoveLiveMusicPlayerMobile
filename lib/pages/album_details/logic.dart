@@ -27,7 +27,7 @@ class AlbumDetailsController extends GetxController {
   }
 
   ///选中单个条目
-  selectItem(Music index, bool checked) {
+  selectItem(int index, bool checked) {
     // state.items[index].checked = checked;
     // bool select = true;
     // for (var element in state.items) {

@@ -150,25 +150,18 @@ class PlayerLogic extends SuperController
       if (isSameList) {
         // 如果正在播放且列表相同，直接跳到对应索引播放
         mPlayer.seek(Duration.zero, index: index);
-        if (playingMusic.value != musicList[index]) {
-          playingMusic.value = musicList[index];
-        }
       } else {
         // 如果正在播放但是列表不同，就停止再打开播放器
         mPlayer.stop();
         mPlayer.play();
-        if (playingMusic.value != musicList[0]) {
-          playingMusic.value = musicList[0];
-        }
       }
     } else {
       // 首次播放
       mPlayer.play();
-      if (playingMusic.value != musicList[0]) {
-        playingMusic.value = musicList[0];
-      }
     }
-
+    if (playingMusic.value != musicList[index]) {
+      playingMusic.value = musicList[index];
+    }
     getLrc(false);
   }
 
@@ -217,11 +210,6 @@ class PlayerLogic extends SuperController
             : Uri.file(SDUtils.path + coverPath),
       ),
     );
-  }
-
-  /// 播放 播放列表 指定位置的歌曲
-  changePlayIndex(int index) async {
-    mPlayer.seek(Duration.zero, index: index);
   }
 
   /// 开关播放

@@ -35,6 +35,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   findAllList() async {
     /// 设置专辑数据
     final allAlbums = await albumDao.findAllAlbums();
+    allAlbums.sort((a, b) => a.date!.compareTo(b.date!));
     final usAlbums =
         allAlbums.where((element) => element.group == "μ's").toList();
     final aqoursAlbums =

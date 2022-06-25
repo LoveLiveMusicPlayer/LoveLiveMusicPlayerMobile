@@ -295,14 +295,15 @@ class _HomeViewState extends State<HomeView>
       return ListViewItemSongSheet(onItemTap: (checked) {}, index: index);
     } else {
       return ListViewItemSong(
+        index: index,
         music: GlobalLogic.to.checkMusicList()[index],
         checked: logic.isItemChecked(index),
-        onItemTap: (music, checked) {
+        onItemTap: (index, checked) {
           if (logic.state.isSelect.value) {
-            logic.selectItem(music, checked);
+            logic.selectItem(index, checked);
             return;
           }
-          PlayerLogic.to.changePlayIndex(index);
+          PlayerLogic.to.playMusic(GlobalLogic.to.checkMusicList(), index: index);
         },
         onPlayTap: (index) {},
         onMoreTap: (music) {

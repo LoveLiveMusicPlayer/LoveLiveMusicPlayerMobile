@@ -12,7 +12,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 
 ///歌曲
 class ListViewItemSong extends StatefulWidget {
-  Function(Music, bool) onItemTap;
+  Function(int, bool) onItemTap;
   Function(Music) onPlayTap;
   Function(Music) onMoreTap;
 
@@ -22,8 +22,11 @@ class ListViewItemSong extends StatefulWidget {
   ///当前选中状态
   bool checked;
 
+  int index;
+
   ListViewItemSong(
       {Key? key,
+        required this.index,
       required this.onItemTap,
       required this.onPlayTap,
       required this.onMoreTap,
@@ -42,7 +45,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
       return InkWell(
         onTap: () {
           widget.checked = !widget.checked;
-          widget.onItemTap(widget.music, widget.checked);
+          widget.onItemTap(widget.index, widget.checked);
           setState(() {});
         },
         child: Container(
@@ -85,7 +88,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
           checkd: widget.checked,
           onCheckd: (value) {
             widget.checked = value;
-            widget.onItemTap(widget.music, widget.checked);
+            widget.onItemTap(widget.index, widget.checked);
           },
           checkIconColor: Color(0xFFF940A7),
           uncheckedIconColor: Color(0xFF999999),
