@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/FtpCmd.dart';
 import 'package:lovelivemusicplayer/models/FtpMusic.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
@@ -59,7 +60,8 @@ class _MusicTransformState extends State<MusicTransform> {
             for (var music in downloadList) {
               if (needTransAll) {
                 musicIdList.add(music.musicUId);
-              } else if (!SDUtils.checkFileExist(SDUtils.path + music.musicPath)) {
+              } else if (!SDUtils.checkFileExist(
+                  SDUtils.path + music.musicPath)) {
                 musicIdList.add(music.musicUId);
               }
             }
@@ -83,12 +85,14 @@ class _MusicTransformState extends State<MusicTransform> {
               final isLast = array[1] == "true" ? true : false;
               if (music.musicUId == musicUId) {
                 genFileList(music).forEach((url, dest) {
-                  pushQueue(music, url, dest, url.contains("jpg") ? false : isLast);
+                  pushQueue(
+                      music, url, dest, url.contains("jpg") ? false : isLast);
                 });
                 musicList.remove(music);
               }
             } else {
-              final message = ftpCmdToJson(FtpCmd(cmd: "download fail", body: music.musicUId));
+              final message = ftpCmdToJson(
+                  FtpCmd(cmd: "download fail", body: music.musicUId));
               widget.channel.sink.add(message);
             }
           }
@@ -99,7 +103,11 @@ class _MusicTransformState extends State<MusicTransform> {
           musicList.clear();
           cancelToken?.cancel();
           SmartDialog.dismiss();
-          Future.delayed(const Duration(milliseconds: 200)).then((value) => Get.back());
+          await DBLogic.to.findAllList();
+          Get.back();
+          break;
+        case "back":
+          Get.back();
           break;
       }
       message = msg;
@@ -144,11 +152,13 @@ class _MusicTransformState extends State<MusicTransform> {
             if (currentProgress != p) {
               currentProgress = p;
               if (_progress == "100") {
-                final message = ftpCmdToJson(FtpCmd(cmd: "download success", body: music.musicUId));
+                final message = ftpCmdToJson(
+                    FtpCmd(cmd: "download success", body: music.musicUId));
                 widget.channel.sink.add(message);
               } else {
                 if (isRunning) {
-                  final message = ftpCmdToJson(FtpCmd(cmd: "downloading", body: "${music.musicUId} === $p"));
+                  final message = ftpCmdToJson(
+                      FtpCmd(cmd: "downloading", body: music.musicUId));
                   widget.channel.sink.add(message);
                 }
               }
@@ -157,7 +167,8 @@ class _MusicTransformState extends State<MusicTransform> {
         }, cancelToken);
         DBLogic.to.insertMusicIntoAlbum(music);
       } catch (e) {
-        final message = ftpCmdToJson(FtpCmd(cmd: "download fail", body: music.musicUId));
+        final message =
+            ftpCmdToJson(FtpCmd(cmd: "download fail", body: music.musicUId));
         widget.channel.sink.add(message);
       }
     });
@@ -184,45 +195,55 @@ class _MusicTransformState extends State<MusicTransform> {
         onWillPop: () async {
           SmartDialog.compatible.show(
               widget: Container(
-                width: 300.w,
-                height: 150.h,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20.w),
-                ),
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  Container(
-                    width: 250.w,
-                    margin: EdgeInsets.only(bottom: 30.h),
-                    child: const Text("退出后会中断连接及传输，是否继续？"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      final message = ftpCmdToJson(FtpCmd(cmd: "stop", body: ""));
-                      widget.channel.sink.add(message);
-                      SmartDialog.dismiss();
-                      Future.delayed(const Duration(milliseconds: 200)).then((value) => Get.back());
-                    },
-                    child: const Text('确定'),
-                  )
-                ]),
-              ));
+            width: 300.w,
+            height: 150.h,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20.w),
+            ),
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              Container(
+                width: 250.w,
+                margin: EdgeInsets.only(bottom: 30.h),
+                child: Text("退出后会中断连接及传输，是否继续？",
+                    style: TextStyleMs.black_14),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  final message = ftpCmdToJson(FtpCmd(cmd: "stop", body: ""));
+                  widget.channel.sink.add(message);
+                  SmartDialog.dismiss();
+                  await DBLogic.to.findAllList();
+                  Get.back();
+                },
+                child: const Text('确定'),
+              )
+            ]),
+          ));
           return false;
-        }
-    );
+        });
   }
 
   checkPermission() {
     if (isPermission) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // Text("message: $message"),
-          Text("song: $song", style: TextStyle(fontSize: 17.sp, color: Colors.amber)),
-          Text("progress: $progress", style: TextStyle(fontSize: 17.sp, color: Colors.amber)),
-        ],
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("歌曲快传", style: TextStyleMs.white_14),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Text("message: $message"),
+              Text("song: $song",
+                  style: Get.isDarkMode ? TextStyle(fontSize: 17.sp, color: Colors.amber): TextStyleMs.black_14),
+              Text("progress: $progress",
+                  style: Get.isDarkMode ? TextStyle(fontSize: 17.sp, color: Colors.amber): TextStyleMs.black_14),
+            ],
+          ),
+        ),
       );
     } else {
       requestPermission();

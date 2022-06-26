@@ -21,7 +21,6 @@ class DrawerPage extends StatefulWidget {
 }
 
 class _DrawerPageState extends State<DrawerPage> {
-  bool switchValue = false;
   final global = Get.find<GlobalLogic>();
 
   @override
@@ -123,6 +122,7 @@ class _DrawerPageState extends State<DrawerPage> {
                       icon: Assets.drawerDrawerQuickTrans,
                       text: "歌曲快传",
                       onTap: () async {
+                        Get.back();
                         var data = await Get.toNamed(Routes.routeScan);
                         if (data != null) {
                           Get.toNamed(Routes.routeTransform, arguments: data);
