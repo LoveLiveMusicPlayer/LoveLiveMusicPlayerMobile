@@ -15,13 +15,13 @@ class PlayerInfo extends StatelessWidget {
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            recentlyLrc(PlayerLogic.to.preJPLrc.value),
+            recentlyLrc(PlayerLogic.to.playingJPLrc["pre"]),
             SizedBox(height: 10.h),
-            recentlyLrc(PlayerLogic.to.currentJPLrc.value,
+            recentlyLrc(PlayerLogic.to.playingJPLrc["current"],
                 color: Get.isDarkMode ? Colors.white : Colors.black,
                 fontWeight: FontWeight.w900),
             SizedBox(height: 10.h),
-            recentlyLrc(PlayerLogic.to.nextJPLrc.value)
+            recentlyLrc(PlayerLogic.to.playingJPLrc["next"])
           ],
         );
       }),

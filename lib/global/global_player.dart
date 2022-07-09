@@ -29,26 +29,23 @@ class PlayerLogic extends SuperController
   // 播放列表<Music>
   var mPlayList = <Music>[];
 
-  // 前一句歌词
-  var preJPLrc = "".obs;
-  // 当前句歌词
-  var currentJPLrc = "".obs;
-  // 后一句歌词
-  var nextJPLrc = "".obs;
+  // 当前播放的歌词
+  var playingJPLrc = {
+    "pre": "",
+    "current": "",
+    "next": ""
+  }.obs;
 
-  // 日文全量歌词
-  var jpLrc = "".obs;
-  // 中文全量歌词
-  var zhLrc = "".obs;
-  // 罗马音全量歌词
-  var romaLrc = "".obs;
+  var fullLrc = {
+    "jp": "",
+    "zh": "",
+    "roma": ""
+  }.obs;
 
   // 播放状态
   var isPlaying = false.obs;
   // 播放位置
   var playingPosition = const Duration(milliseconds: 0).obs;
-  // 当前播放位置索引
-  var playingMusicIndex = 0.obs;
   // 当前播放歌曲
   var playingMusic = Music().obs;
 
@@ -70,27 +67,27 @@ class PlayerLogic extends SuperController
     mPlayer.positionStream.listen((duration) {
       playingPosition.value = duration;
       // 修改前一句、当前、后一句歌词内容
-      final lrcList = ParserSmart(jpLrc.value).parseLines();
+      final lrcList = ParserSmart(fullLrc["jp"]!).parseLines();
       for (var i = 0; i < lrcList.length; i++) {
         if (i == lrcList.length - 1 &&
             (lrcList[i].startTime ?? 0) < duration.inMilliseconds) {
-          nextJPLrc.value = "";
-          currentJPLrc.value =
-              (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "";
-          preJPLrc.value = (i - 1 <= lrcList.length - 1 && i > 0)
-              ? lrcList[i - 1].mainText ?? ""
-              : "";
+          playingJPLrc.value = {
+            "pre": (i - 1 <= lrcList.length - 1 && i > 0)
+                ? lrcList[i - 1].mainText ?? ""
+                : "",
+            "current": (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "",
+            "next": ""
+          };
           break;
         } else if ((lrcList[i].startTime ?? 0) < duration.inMilliseconds &&
             (lrcList[i + 1].startTime ?? 0) > duration.inMilliseconds) {
-          nextJPLrc.value = (i + 1 <= lrcList.length - 1)
-              ? lrcList[i + 1].mainText ?? ""
-              : "";
-          currentJPLrc.value =
-              (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "";
-          preJPLrc.value = (i - 1 <= lrcList.length - 1 && i > 0)
-              ? lrcList[i - 1].mainText ?? ""
-              : "";
+          playingJPLrc.value = {
+            "pre": (i - 1 <= lrcList.length - 1 && i > 0)
+                ? lrcList[i - 1].mainText ?? ""
+                : "",
+            "current": (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "",
+            "next": (i + 1 <= lrcList.length - 1) ? lrcList[i + 1].mainText ?? "" : ""
+          };
           break;
         }
       }
@@ -99,8 +96,6 @@ class PlayerLogic extends SuperController
     /// 当前播放监听
     mPlayer.currentIndexStream.listen((index) {
       if (index != null && mPlayList.isNotEmpty) {
-        // 修改播放位置索引
-        playingMusicIndex.value = index;
         // 修改当前播放歌曲
         final currentMusic = mPlayList[index];
         for (var music in mPlayList) {
@@ -210,7 +205,6 @@ class PlayerLogic extends SuperController
         title: music.name!,
         album: music.albumName!,
         artist: music.artist,
-        duration: playingPosition.value,
         artUri: (coverPath == null || coverPath.isEmpty)
             ? Uri.parse(Const.logo)
             : Uri.file(SDUtils.path + coverPath),
@@ -229,26 +223,32 @@ class PlayerLogic extends SuperController
 
   /// 获取中/日/罗马歌词
   getLrc(bool forceRefresh) async {
-    jpLrc.value = "";
-    zhLrc.value = "";
-    romaLrc.value = "";
+    var jpLrc = "";
+    var zhLrc = "";
+    var romaLrc = "";
 
     final uid = playingMusic.value.uid;
     final jp =
         await handleLRC("jp", playingMusic.value.jpUrl, uid, forceRefresh);
     if (jp != null) {
-      jpLrc.value = jp;
+      jpLrc = jp;
     }
     final zh =
         await handleLRC("zh", playingMusic.value.zhUrl, uid, forceRefresh);
     if (zh != null) {
-      zhLrc.value = zh;
+      zhLrc = zh;
     }
     final roma =
         await handleLRC("roma", playingMusic.value.romaUrl, uid, forceRefresh);
     if (roma != null) {
-      romaLrc.value = roma;
+      romaLrc = roma;
     }
+
+    fullLrc.value = {
+      "jp": jpLrc,
+      "zh": zhLrc,
+      "roma": romaLrc
+    };
   }
 
   /// 处理歌词二级缓存

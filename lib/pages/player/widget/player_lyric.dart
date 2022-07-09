@@ -27,19 +27,19 @@ class _LyricState extends State<Lyric> {
       switch (PlayerLogic.to.lrcType.value) {
         case 0:
           model = LyricsModelBuilder.create()
-              .bindLyricToMain(PlayerLogic.to.jpLrc.value)
+              .bindLyricToMain(PlayerLogic.to.fullLrc['jp']!)
               .getModel();
           break;
         case 1:
           model = LyricsModelBuilder.create()
-              .bindLyricToMain(PlayerLogic.to.jpLrc.value)
-              .bindLyricToExt(PlayerLogic.to.zhLrc.value)
+              .bindLyricToMain(PlayerLogic.to.fullLrc['jp']!)
+              .bindLyricToExt(PlayerLogic.to.fullLrc['zh']!)
               .getModel();
           break;
         case 2:
           model = LyricsModelBuilder.create()
-              .bindLyricToMain(PlayerLogic.to.jpLrc.value)
-              .bindLyricToExt(PlayerLogic.to.romaLrc.value)
+              .bindLyricToMain(PlayerLogic.to.fullLrc['jp']!)
+              .bindLyricToExt(PlayerLogic.to.fullLrc['roma']!)
               .getModel();
           break;
       }
