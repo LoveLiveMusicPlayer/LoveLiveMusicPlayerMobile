@@ -22,7 +22,7 @@ class Player extends StatefulWidget {
   _PlayerState createState() => _PlayerState();
 }
 
-class _PlayerState extends State<Player> {
+class _PlayerState extends State<Player>{
   /// slider 正在被滑动
   var isTouch = false.obs;
 

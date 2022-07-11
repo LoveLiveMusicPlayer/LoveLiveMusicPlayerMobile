@@ -1,3 +1,4 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -47,7 +48,6 @@ class _HomeViewState extends State<HomeView>
   Widget build(BuildContext context) {
     DateTime? lastPressTime;
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
     return WillPopScope(
         child: Scaffold(
             key: _scaffoldKey,
@@ -56,10 +56,8 @@ class _HomeViewState extends State<HomeView>
               width: 300.w,
               child: const DrawerPage(),
             ),
-            body: MediaQuery(
-                ///设置文字大小不随系统设置改变
-                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                child: _weSlider(_scaffoldKey))),
+            body: _weSlider(_scaffoldKey)
+        ),
         onWillPop: () async {
           if (lastPressTime == null ||
               DateTime.now().difference(lastPressTime!) >
@@ -144,12 +142,12 @@ class _HomeViewState extends State<HomeView>
   }
 
   ///顶部头像
-  Widget _getTopHead(GestureTapCallback onTap) {
+  Widget _getTopHead(GestureTapCallback? onTap) {
     return logoIcon(Const.logo,
         offset: EdgeInsets.only(right: 16.w), onTap: onTap);
   }
 
-  Widget _getTabBarView(GestureTapCallback onTap) {
+  Widget _getTabBarView(GestureTapCallback? onTap) {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 54.w,
@@ -157,6 +155,7 @@ class _HomeViewState extends State<HomeView>
         centerTitle: false,
         automaticallyImplyLeading: false,
         backgroundColor: Get.theme.primaryColor,
+
         title: _getTabBar(),
         actions: [_getTopHead(onTap)],
       ),

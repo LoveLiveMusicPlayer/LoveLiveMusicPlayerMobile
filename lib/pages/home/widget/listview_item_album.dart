@@ -30,7 +30,7 @@ class ListViewItemAlbum extends StatefulWidget {
   State<ListViewItemAlbum> createState() => _ListViewItemAlbumState();
 }
 
-class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
+class _ListViewItemAlbumState extends State<ListViewItemAlbum>{
   @override
   Widget build(BuildContext context) {
     final borderWidth = (ScreenUtil().screenWidth - 72.w) / 3;

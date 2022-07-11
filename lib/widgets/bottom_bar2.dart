@@ -12,7 +12,7 @@ class BottomBar2 extends StatefulWidget {
   State<BottomBar2> createState() => _BottomBar2State();
 }
 
-class _BottomBar2State extends State<BottomBar2> {
+class _BottomBar2State extends State<BottomBar2>{
   var mIndex = 0;
 
   @override

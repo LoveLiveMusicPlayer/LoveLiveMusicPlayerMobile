@@ -74,7 +74,16 @@ class MyApp extends StatelessWidget {
             locale: Translation.locale,
             fallbackLocale: Translation.fallbackLocale,
             translations: Translation(),
-            builder: FlutterSmartDialog.init());
+            builder: FlutterSmartDialog.init(
+                builder:(context, widget) {
+                  return MediaQuery(
+                    ///设置文字大小不随系统设置改变
+                      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                      child: widget!
+                  );
+                }
+            )
+        );
       },
     );
   }

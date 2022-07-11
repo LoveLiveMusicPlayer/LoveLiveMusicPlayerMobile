@@ -38,9 +38,10 @@ class ListViewItemSong extends StatefulWidget {
   State<ListViewItemSong> createState() => _ListViewItemSongState();
 }
 
-class _ListViewItemSongState extends State<ListViewItemSong> {
+class _ListViewItemSongState extends State<ListViewItemSong> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Obx(() {
       return InkWell(
         onTap: () {
@@ -173,4 +174,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
