@@ -58,7 +58,7 @@ class SingerDetailsPage extends StatelessWidget {
         onPlayTap: () {},
         onScreenTap: () {
           logic.openSelect();
-          showSelelctDialog();
+          showSelectDialog();
         },
         onSelectAllTap: (checked) {
           logic.selectAll(checked);
@@ -91,7 +91,7 @@ class SingerDetailsPage extends StatelessWidget {
     return list;
   }
 
-  showSelelctDialog() {
+  showSelectDialog() {
     List<BtnItem> list = [];
     list.add(BtnItem(
         imgPath: Assets.dialogIcAddPlayList2,
@@ -118,7 +118,7 @@ class SingerDetailsPage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           showImg(SDUtils.getImgPath("ic_head.jpg"),
-              width: 240, height: 240, radius: 120),
+              240, 240, radius: 120),
         ],
       ),
     );

@@ -92,11 +92,11 @@ class Song_libraryTop extends StatelessWidget {
                 ],
               ),
               borderRadius: BorderRadius.circular(12.h),
-              boxShadow: const [
+              boxShadow: [
                 BoxShadow(
-                    color: Color(0xFFD3E0EC),
+                    color: Get.isDarkMode ? const Color(0xFF05080C) : const Color(0xFFD3E0EC),
                     blurRadius: 6,
-                    offset: Offset(5, 3)),
+                    offset: const Offset(5, 3)),
               ]),
           child: Icon(
             Icons.play_arrow_rounded,

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:common_utils/common_utils.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,8 +7,10 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_playlist.dart';
+import 'package:lovelivemusicplayer/utils/image_util.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:marquee_text/marquee_text.dart';
@@ -23,27 +26,19 @@ class MiniPlayer extends StatefulWidget {
 
 class _MiniPlayerState extends State<MiniPlayer> {
   final scrollList = <Widget>[];
+  ImageProvider? provider;
+
+  @override
+  void initState() {
+    super.initState();
+
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return Obx(() {
-      Decoration? decoration;
       final music = PlayerLogic.to.playingMusic.value;
-      if (music.uid == null ||
-          music.coverPath == null ||
-          music.coverPath!.isEmpty) {
-        decoration = BoxDecoration(
-          color: const Color(0xFFEBF3FE),
-          borderRadius: BorderRadius.circular(34),
-        );
-      } else {
-        decoration = BoxDecoration(
-          image: DecorationImage(
-              image: FileImage(SDUtils.getImgFile(music.coverPath ?? "")),
-              fit: BoxFit.fill),
-          borderRadius: BorderRadius.circular(34),
-        );
-      }
 
       return AnimatedContainer(
           duration: const Duration(milliseconds: 200),
@@ -51,23 +46,56 @@ class _MiniPlayerState extends State<MiniPlayer> {
             color: Get.theme.primaryColor,
             borderRadius: BorderRadius.circular(34),
           ),
-          child: Column(
-            children: [
-              Container(
-                height: 60.h,
-                margin: EdgeInsets.only(left: 16.w, right: 16.w),
-                decoration: decoration,
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(34),
-                    child: BackdropFilter(
-                      //背景滤镜
-                      filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30), //背景模糊化
-                      child: body(),
-                    )),
+        child: Column(
+          children: [
+            FutureBuilder<Decoration>(
+              initialData: BoxDecoration(
+                color: const Color(0xFFEBF3FE),
+                borderRadius: BorderRadius.circular(34),
               ),
-            ],
-          ));
+              builder: (BuildContext context, AsyncSnapshot<Decoration> snapshot) {
+                return Container(
+                    height: 60.h,
+                    margin: EdgeInsets.only(left: 16.w, right: 16.w),
+                    decoration: snapshot.requireData,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(34),
+                      child: BackdropFilter(
+                        //背景滤镜
+                        filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30), //背景模糊化
+                        child: body(),
+                      )),
+                );
+              },
+              future: generateDecoration(music),
+            ),
+          ],
+        ),
+      );
     });
+  }
+
+
+  Future<Decoration> generateDecoration(Music music) async {
+    Decoration decoration;
+    if (music.uid == null ||
+        music.coverPath == null ||
+        music.coverPath!.isEmpty
+    ) {
+      decoration = BoxDecoration(
+        color: const Color(0xFFEBF3FE),
+        borderRadius: BorderRadius.circular(34),
+      );
+    } else {
+      final compressPic = await ImageUtil().compressAndTryCatch(SDUtils.getImgFile(music.coverPath!).path);
+      decoration = BoxDecoration(
+        image: DecorationImage(
+            image: MemoryImage(compressPic!),
+            fit: BoxFit.fill),
+        borderRadius: BorderRadius.circular(34),
+      );
+    }
+    return decoration;
   }
 
   Widget body() {
@@ -156,9 +184,9 @@ class _MiniPlayerState extends State<MiniPlayer> {
           showImg(
               SDUtils.getImgPath(
                   PlayerLogic.to.playingMusic.value.coverPath ?? ""),
+              50,
+              50,
               radius: 50,
-              width: 50,
-              height: 50,
               hasShadow: false)
         ],
       ),

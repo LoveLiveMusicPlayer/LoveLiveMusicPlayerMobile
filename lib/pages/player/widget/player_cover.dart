@@ -35,9 +35,9 @@ class _CoverState extends State<Cover> {
                 return showImg(
                     SDUtils.getImgPath(
                         PlayerLogic.to.playingMusic.value.coverPath ?? ""),
-                    radius: 24,
-                    width: 273,
-                    height: 273);
+                    273,
+                    273,
+                    radius: 24,);
               },
             ),
 

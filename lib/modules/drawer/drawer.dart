@@ -103,12 +103,12 @@ class _DrawerPageState extends State<DrawerPage> {
                 borderRadius: BorderRadius.circular(8.w),
                 boxShadow: [
                   BoxShadow(
-                      color: Colors.white,
+                      color: Get.isDarkMode ? const Color(0x1005080C) : Colors.white,
                       offset: Offset(-3.w, -3.h),
                       blurStyle: BlurStyle.inner,
                       blurRadius: 6.w),
                   BoxShadow(
-                      color: const Color(0xFFD3E0EC),
+                      color: Get.isDarkMode ? const Color(0xFF05080C) : const Color(0xFFD3E0EC),
                       offset: Offset(5.w, 3.h),
                       blurRadius: 6.w),
                 ],

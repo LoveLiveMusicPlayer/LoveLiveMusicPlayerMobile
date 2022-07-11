@@ -44,8 +44,8 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
           showImg(
               SDUtils.getImgPath(
                   widget.album.coverPath?.first ?? "ic_head.jpg"),
-              width: borderWidth,
-              height: borderWidth,
+              borderWidth,
+              borderWidth,
               hasShadow: false),
           SizedBox(
             height: 5.h,

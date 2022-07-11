@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 /**
  * @Author: Sky24n
@@ -57,5 +59,18 @@ class ImageUtil {
         img.image.resolve(configuration ?? const ImageConfiguration());
     _imageStream.addListener(_listener);
     return completer.future;
+  }
+
+  Future<Uint8List?> compressAndTryCatch(String path) async {
+    Uint8List? result;
+    try {
+      result = await FlutterImageCompress.compressWithFile(path,
+          format: CompressFormat.heic);
+    } on UnsupportedError catch (e) {
+      print(e);
+      result = await FlutterImageCompress.compressWithFile(path,
+          format: CompressFormat.jpeg);
+    }
+    return result;
   }
 }

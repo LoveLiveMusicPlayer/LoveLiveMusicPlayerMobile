@@ -55,7 +55,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
   ///缩列图
   Widget _buildIcon() {
     return showImg(SDUtils.getImgPath("ic_head.jpg"),
-        width: 48, height: 48, hasShadow: false, radius: 8);
+        48, 48, hasShadow: false, radius: 8);
   }
 
   ///中间标题部分
