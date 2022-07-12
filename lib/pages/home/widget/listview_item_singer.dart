@@ -45,8 +45,8 @@ class _ListViewItemSingerState extends State<ListViewItemSinger> {
                 }),
           ),
         ),
-        showImg(SDUtils.getImgPath("ic_head.jpg"),
-            48.h, 48.h, radius: 24.h, hasShadow: false),
+        showImg(SDUtils.getImgPath("ic_head.jpg"), 48.h, 48.h,
+            radius: 24.h, hasShadow: false),
         SizedBox(
           width: 10.h,
         ),

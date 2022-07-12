@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
-import 'package:lovelivemusicplayer/generated/assets.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar({Key? key}) : super(key: key);
@@ -49,7 +49,7 @@ class BottomBar extends StatelessWidget {
         selectedItemColor: const Color(0xFFF940A7),
         unselectedItemColor: const Color(0xFFD1E0F3),
         onTap: (index) {
-          PageViewLogic.to.controller.animateToPage(index, duration: const Duration(milliseconds: 200), curve: Curves.ease);
+          PageViewLogic.to.controller.jumpToPage(index);
         },
       );
     });

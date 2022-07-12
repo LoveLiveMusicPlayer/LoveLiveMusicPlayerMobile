@@ -14,12 +14,12 @@ class FtpCmd {
   String body;
 
   factory FtpCmd.fromJson(Map<String, dynamic> json) => FtpCmd(
-    cmd: json["cmd"],
-    body: json["body"],
-  );
+        cmd: json["cmd"],
+        body: json["body"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "cmd": cmd,
-    "body": body,
-  };
+        "cmd": cmd,
+        "body": body,
+      };
 }

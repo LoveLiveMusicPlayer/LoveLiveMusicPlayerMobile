@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/models/Album.dart';
+import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+
 import '../../modules/ext.dart';
 import '../../utils/sd_utils.dart';
 import '../../widgets/details_list_top.dart';
@@ -57,8 +60,12 @@ class SingerDetailsPage extends StatelessWidget {
         checkedItemLength: logic.getCheckedSong(),
         onPlayTap: () {},
         onScreenTap: () {
-          logic.openSelect();
-          showSelectDialog();
+          if (HomeController.to.state.isSelect.value) {
+            SmartDialog.dismiss();
+          } else {
+            showSelectDialog();
+          }
+          HomeController.to.openSelect();
         },
         onSelectAllTap: (checked) {
           logic.selectAll(checked);
@@ -80,10 +87,14 @@ class SingerDetailsPage extends StatelessWidget {
           onItemTap: (index, checked) {
             logic.selectItem(index, checked);
           },
-          onPlayTap: (music) {},
+          onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
           onMoreTap: (music) {
             SmartDialog.compatible.show(
-                widget: DialogMore(music: music), alignmentTemp: Alignment.bottomCenter);
+                widget: DialogMore(music: music),
+                alignmentTemp: Alignment.bottomCenter);
+          },
+          onPlayNowTap: () {
+            PlayerLogic.to.playMusic(album.music, index: index);
           },
         ),
       ));
@@ -94,13 +105,9 @@ class SingerDetailsPage extends StatelessWidget {
   showSelectDialog() {
     List<BtnItem> list = [];
     list.add(BtnItem(
-        imgPath: Assets.dialogIcAddPlayList2,
-        title: "加入播放列表",
-        onTap: () {}));
+        imgPath: Assets.dialogIcAddPlayList2, title: "加入播放列表", onTap: () {}));
     list.add(BtnItem(
-        imgPath: Assets.dialogIcAddPlayList,
-        title: "添加到歌单",
-        onTap: () {}));
+        imgPath: Assets.dialogIcAddPlayList, title: "添加到歌单", onTap: () {}));
     SmartDialog.compatible.show(
         widget: DialogBottomBtn(
           list: list,
@@ -117,8 +124,7 @@ class SingerDetailsPage extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          showImg(SDUtils.getImgPath("ic_head.jpg"),
-              240, 240, radius: 120),
+          showImg(SDUtils.getImgPath("ic_head.jpg"), 240, 240, radius: 120),
         ],
       ),
     );

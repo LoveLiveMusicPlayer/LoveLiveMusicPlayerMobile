@@ -1,11 +1,11 @@
 import 'dart:ui';
-import 'package:common_utils/common_utils.dart';
-import 'package:lovelivemusicplayer/generated/assets.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
@@ -14,6 +14,7 @@ import 'package:lovelivemusicplayer/utils/image_util.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:marquee_text/marquee_text.dart';
+
 import '../../modules/ext.dart';
 
 class MiniPlayer extends StatefulWidget {
@@ -31,21 +32,19 @@ class _MiniPlayerState extends State<MiniPlayer> {
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Obx(() {
       final music = PlayerLogic.to.playingMusic.value;
 
       return AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          decoration: BoxDecoration(
-            color: Get.theme.primaryColor,
-            borderRadius: BorderRadius.circular(34),
-          ),
+        duration: const Duration(milliseconds: 200),
+        decoration: BoxDecoration(
+          color: Get.theme.primaryColor,
+          borderRadius: BorderRadius.circular(34),
+        ),
         child: Column(
           children: [
             FutureBuilder<Decoration>(
@@ -53,16 +52,18 @@ class _MiniPlayerState extends State<MiniPlayer> {
                 color: const Color(0xFFEBF3FE),
                 borderRadius: BorderRadius.circular(34),
               ),
-              builder: (BuildContext context, AsyncSnapshot<Decoration> snapshot) {
+              builder:
+                  (BuildContext context, AsyncSnapshot<Decoration> snapshot) {
                 return Container(
-                    height: 60.h,
-                    margin: EdgeInsets.only(left: 16.w, right: 16.w),
-                    decoration: snapshot.requireData,
-                    child: ClipRRect(
+                  height: 60.h,
+                  margin: EdgeInsets.only(left: 16.w, right: 16.w),
+                  decoration: snapshot.requireData,
+                  child: ClipRRect(
                       borderRadius: BorderRadius.circular(34),
                       child: BackdropFilter(
                         //背景滤镜
-                        filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30), //背景模糊化
+                        filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+                        //背景模糊化
                         child: body(),
                       )),
                 );
@@ -75,23 +76,21 @@ class _MiniPlayerState extends State<MiniPlayer> {
     });
   }
 
-
   Future<Decoration> generateDecoration(Music music) async {
     Decoration decoration;
     if (music.uid == null ||
         music.coverPath == null ||
-        music.coverPath!.isEmpty
-    ) {
+        music.coverPath!.isEmpty) {
       decoration = BoxDecoration(
         color: const Color(0xFFEBF3FE),
         borderRadius: BorderRadius.circular(34),
       );
     } else {
-      final compressPic = await ImageUtil().compressAndTryCatch(SDUtils.getImgFile(music.coverPath!).path);
+      final compressPic = await ImageUtil()
+          .compressAndTryCatch(SDUtils.getImgFile(music.coverPath!).path);
       decoration = BoxDecoration(
-        image: DecorationImage(
-            image: MemoryImage(compressPic!),
-            fit: BoxFit.fill),
+        image:
+            DecorationImage(image: MemoryImage(compressPic!), fit: BoxFit.fill),
         borderRadius: BorderRadius.circular(34),
       );
     }
@@ -144,10 +143,8 @@ class _MiniPlayerState extends State<MiniPlayer> {
               } else {
                 return touchIconByAsset(
                     path: Assets.playerPlayPlay,
-                    onTap: () =>
-                        PlayerLogic.to.mPlayer.seek(Duration.zero,
-                            index: PlayerLogic.to.mPlayer.effectiveIndices!
-                                .first),
+                    onTap: () => PlayerLogic.to.mPlayer.seek(Duration.zero,
+                        index: PlayerLogic.to.mPlayer.effectiveIndices!.first),
                     width: 16,
                     height: 16,
                     color: const Color(0xFF333333));
@@ -202,7 +199,8 @@ class _MiniPlayerState extends State<MiniPlayer> {
           InkWell(
             onDoubleTap: () => PlayerLogic.to.togglePlay(),
             child: MarqueeText(
-                text: TextSpan(text: PlayerLogic.to.playingMusic.value.name ?? "暂无歌曲"),
+                text: TextSpan(
+                    text: PlayerLogic.to.playingMusic.value.name ?? "暂无歌曲"),
                 style: TextStyleMs.black_14,
                 speed: 15),
           )

@@ -1,34 +1,25 @@
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
-import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/modules/pageview/view.dart';
+import 'package:lovelivemusicplayer/modules/tabbar/tabbar.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';
-import 'package:lovelivemusicplayer/pages/home/widget/dialog_more.dart';
-import 'package:lovelivemusicplayer/pages/home/widget/listview_item_album.dart';
-import 'package:lovelivemusicplayer/pages/home/widget/listview_item_singer.dart';
-import 'package:lovelivemusicplayer/pages/home/widget/listview_item_song_sheet.dart';
-import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/android_back_desktop.dart';
 import 'package:lovelivemusicplayer/widgets/bottom_bar2.dart';
 import 'package:we_slide/we_slide.dart';
 
 import '../../modules/drawer/drawer.dart';
 import '../../widgets/bottom_bar1.dart';
-import '../../widgets/listview_item_song.dart';
-import '../../widgets/refresher_widget.dart';
 import '../player/miniplayer.dart';
 import '../player/player.dart';
-import 'widget/custom_underline_tabIndicator.dart';
 import 'widget/song_library_top.dart';
-import 'package:lovelivemusicplayer/generated/assets.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -111,40 +102,14 @@ class _HomeViewState extends State<HomeView>
         data: ThemeData(
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent),
-        child: TabBar(
-          onTap: (index) {
-            logic.changeTab(index);
-            PageViewLogic.to.controller.animateToPage(
-                HomeController.to.state.currentIndex.value,
-                duration: const Duration(milliseconds: 200),
-                curve: Curves.ease);
-          },
-          indicatorWeight: 4.w,
-          indicatorSize: TabBarIndicatorSize.label,
-          indicatorColor: const Color(0xFFF940A7),
-          labelPadding: EdgeInsets.only(left: 4.w, right: 4.w),
-          indicator: CustomUnderlineTabIndicator(
-              insets: EdgeInsets.only(top: 0.w, bottom: 8.h),
-              borderSide:
-                  BorderSide(width: 16.w, color: const Color(0xFFF940A7)),
-              indicatorWeight: 4.w),
-          isScrollable: true,
-          labelColor: const Color(0xFFF940A7),
-          unselectedLabelColor: const Color(0xFFA9B9CD),
-          labelStyle: TextStyle(
-              fontSize: 24.sp,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'KaTong'),
-          unselectedLabelStyle: TextStyle(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'KaTong'),
-          tabs: const [
-            Tab(text: "歌库"),
-            Tab(text: "我的"),
-          ],
-          controller: logic.tabController,
-        ));
+        child: Obx(() {
+          final isSelect = HomeController.to.state.isSelect.value;
+          return isSelect
+              ? const IgnorePointer(
+                  child: TabBarComponent(),
+                )
+              : const TabBarComponent();
+        }));
   }
 
   ///顶部头像

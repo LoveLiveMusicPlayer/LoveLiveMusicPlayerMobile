@@ -1,5 +1,7 @@
 import 'dart:convert' as convert;
 import 'dart:io';
+
+import 'package:concurrent_queue/concurrent_queue.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,13 +10,12 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/FtpCmd.dart';
 import 'package:lovelivemusicplayer/models/FtpMusic.dart';
-import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
-import 'package:wakelock/wakelock.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:wakelock/wakelock.dart';
 import 'package:web_socket_channel/io.dart';
-import 'package:concurrent_queue/concurrent_queue.dart';
 
 class MusicTransform extends StatefulWidget {
   final IOWebSocketChannel channel =
@@ -206,8 +207,7 @@ class _MusicTransformState extends State<MusicTransform> {
               Container(
                 width: 250.w,
                 margin: EdgeInsets.only(bottom: 30.h),
-                child: Text("退出后会中断连接及传输，是否继续？",
-                    style: TextStyleMs.black_14),
+                child: Text("退出后会中断连接及传输，是否继续？", style: TextStyleMs.black_14),
               ),
               ElevatedButton(
                 onPressed: () async {
@@ -238,9 +238,13 @@ class _MusicTransformState extends State<MusicTransform> {
             children: [
               // Text("message: $message"),
               Text("song: $song",
-                  style: Get.isDarkMode ? TextStyle(fontSize: 17.sp, color: Colors.amber): TextStyleMs.black_14),
+                  style: Get.isDarkMode
+                      ? TextStyle(fontSize: 17.sp, color: Colors.amber)
+                      : TextStyleMs.black_14),
               Text("progress: $progress",
-                  style: Get.isDarkMode ? TextStyle(fontSize: 17.sp, color: Colors.amber): TextStyleMs.black_14),
+                  style: Get.isDarkMode
+                      ? TextStyle(fontSize: 17.sp, color: Colors.amber)
+                      : TextStyleMs.black_14),
             ],
           ),
         ),

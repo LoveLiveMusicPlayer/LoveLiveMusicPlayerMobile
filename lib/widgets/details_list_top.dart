@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 import 'circular_check_box.dart';
-import 'package:lovelivemusicplayer/generated/assets.dart';
 
 class DetailsListTop extends StatelessWidget {
   final Function onPlayTap;
@@ -76,11 +76,13 @@ class DetailsListTop extends StatelessWidget {
                 ],
               ),
               borderRadius: BorderRadius.circular(12.h),
-              boxShadow: const [
+              boxShadow: [
                 BoxShadow(
-                    color: Color(0xFFD3E0EC),
+                    color: Get.isDarkMode
+                        ? const Color(0xFF05080C)
+                        : const Color(0xFFD3E0EC),
                     blurRadius: 6,
-                    offset: Offset(5, 3)),
+                    offset: const Offset(5, 3)),
               ]),
           child: Icon(
             Icons.play_arrow_rounded,
@@ -107,10 +109,7 @@ class DetailsListTop extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(right: 16.h, top: 5.h, bottom: 5.h, left: 30.h),
       child: touchIconByAsset(
-          path: Assets.mainIcScreen,
-          onTap: onScreenTap,
-          width: 18,
-          height: 18),
+          path: Assets.mainIcScreen, onTap: onScreenTap, width: 18, height: 18),
     );
   }
 

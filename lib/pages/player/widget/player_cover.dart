@@ -33,11 +33,12 @@ class _CoverState extends State<Cover> {
             Obx(
               () {
                 return showImg(
-                    SDUtils.getImgPath(
-                        PlayerLogic.to.playingMusic.value.coverPath ?? ""),
-                    273,
-                    273,
-                    radius: 24,);
+                  SDUtils.getImgPath(
+                      PlayerLogic.to.playingMusic.value.coverPath ?? ""),
+                  273,
+                  273,
+                  radius: 24,
+                );
               },
             ),
 

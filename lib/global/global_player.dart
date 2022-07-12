@@ -26,26 +26,21 @@ class PlayerLogic extends SuperController
 
   // 播放列表<AudioSource>
   final audioSourceList = ConcatenatingAudioSource(children: []);
+
   // 播放列表<Music>
   var mPlayList = <Music>[];
 
   // 当前播放的歌词
-  var playingJPLrc = {
-    "pre": "",
-    "current": "",
-    "next": ""
-  }.obs;
+  var playingJPLrc = {"pre": "", "current": "", "next": ""}.obs;
 
-  var fullLrc = {
-    "jp": "",
-    "zh": "",
-    "roma": ""
-  }.obs;
+  var fullLrc = {"jp": "", "zh": "", "roma": ""}.obs;
 
   // 播放状态
   var isPlaying = false.obs;
+
   // 播放位置
   var playingPosition = const Duration(milliseconds: 0).obs;
+
   // 当前播放歌曲
   var playingMusic = Music().obs;
 
@@ -75,7 +70,8 @@ class PlayerLogic extends SuperController
             "pre": (i - 1 <= lrcList.length - 1 && i > 0)
                 ? lrcList[i - 1].mainText ?? ""
                 : "",
-            "current": (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "",
+            "current":
+                (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "",
             "next": ""
           };
           break;
@@ -85,8 +81,11 @@ class PlayerLogic extends SuperController
             "pre": (i - 1 <= lrcList.length - 1 && i > 0)
                 ? lrcList[i - 1].mainText ?? ""
                 : "",
-            "current": (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "",
-            "next": (i + 1 <= lrcList.length - 1) ? lrcList[i + 1].mainText ?? "" : ""
+            "current":
+                (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "",
+            "next": (i + 1 <= lrcList.length - 1)
+                ? lrcList[i + 1].mainText ?? ""
+                : ""
           };
           break;
         }
@@ -126,7 +125,8 @@ class PlayerLogic extends SuperController
       if (musicPath?.isNotEmpty == true) {
         audioList.add(genAudioSourceUri(musicPath, musicList[i], coverPath));
       }
-      if (isSameList == true && (mPlayList.isEmpty || musicList[i] != mPlayList[i])) {
+      if (isSameList == true &&
+          (mPlayList.isEmpty || musicList[i] != mPlayList[i])) {
         isSameList = false;
       }
     }
@@ -244,11 +244,7 @@ class PlayerLogic extends SuperController
       romaLrc = roma;
     }
 
-    fullLrc.value = {
-      "jp": jpLrc,
-      "zh": zhLrc,
-      "roma": romaLrc
-    };
+    fullLrc.value = {"jp": jpLrc, "zh": zhLrc, "roma": romaLrc};
   }
 
   /// 处理歌词二级缓存
@@ -342,9 +338,8 @@ class PlayerLogic extends SuperController
       await mPlayer.shuffle();
     }
     // 特殊处理随机播放：当处于LoopMode.off模式时，更改为循环列表且随机洗牌
-    mPlayer.setLoopMode(loopModes[index] == LoopMode.off
-        ? LoopMode.all
-        : loopModes[index]);
+    mPlayer.setLoopMode(
+        loopModes[index] == LoopMode.off ? LoopMode.all : loopModes[index]);
     await SpUtil.put("loopMode", index);
   }
 

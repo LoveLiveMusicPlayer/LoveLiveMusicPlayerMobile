@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:common_utils/common_utils.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -91,8 +90,10 @@ class Network {
         isShowError: isShowError);
   }
 
-  static Future<Response>? download(String url, String dest, ProgressCallback? onReceiveProgress, CancelToken? cancelToken) {
-    return dio?.download(url, dest, onReceiveProgress: onReceiveProgress, cancelToken: cancelToken);
+  static Future<Response>? download(String url, String dest,
+      ProgressCallback? onReceiveProgress, CancelToken? cancelToken) {
+    return dio?.download(url, dest,
+        onReceiveProgress: onReceiveProgress, cancelToken: cancelToken);
   }
 
   static request(String url,

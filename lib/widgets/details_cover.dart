@@ -19,7 +19,8 @@ class DetailsCover extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           showImg(SDUtils.getImgPath(album.coverPath?.first ?? "ic_head.jpg"),
-              240, 240, radius: 24),
+              240, 240,
+              radius: 24),
           SizedBox(
             height: 20.h,
           ),

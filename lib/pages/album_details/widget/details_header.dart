@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 
 import '../../../modules/ext.dart';
 
@@ -23,6 +25,8 @@ class DetailsHeader extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(left: 16.h, top: 18.h),
                 child: materialButton(Icons.keyboard_arrow_left, () {
+                  HomeController.to.state.isSelect.value = false;
+                  SmartDialog.dismiss();
                   Get.back();
                 }, width: 32, height: 32, iconSize: 24, radius: 6),
               ),

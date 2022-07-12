@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';
 
 import '../../../modules/ext.dart';
-import 'package:lovelivemusicplayer/generated/assets.dart';
 
 class DialogMore extends StatelessWidget {
   final Music music;
+
   const DialogMore({Key? key, required this.music}) : super(key: key);
 
   @override

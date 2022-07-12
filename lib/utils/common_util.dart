@@ -16,7 +16,11 @@ class CommonUtil {
   // 节流函数
   static const String deFaultThrottleId = 'DeFaultThrottleId';
   static Map<String, int> startTimeMap = {deFaultThrottleId: 0};
-  static throttle(Function doSomething, {String throttleId = deFaultThrottleId, durationTime = deFaultDurationTime, required Function continueClick}) {
+
+  static throttle(Function doSomething,
+      {String throttleId = deFaultThrottleId,
+      durationTime = deFaultDurationTime,
+      required Function continueClick}) {
     int currentTime = DateTime.now().millisecondsSinceEpoch;
     if (currentTime - (startTimeMap[throttleId] ?? 0) > durationTime) {
       doSomething.call();
@@ -25,5 +29,4 @@ class CommonUtil {
       continueClick.call();
     }
   }
-
 }

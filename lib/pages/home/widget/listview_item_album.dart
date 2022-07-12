@@ -30,7 +30,7 @@ class ListViewItemAlbum extends StatefulWidget {
   State<ListViewItemAlbum> createState() => _ListViewItemAlbumState();
 }
 
-class _ListViewItemAlbumState extends State<ListViewItemAlbum>{
+class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
   @override
   Widget build(BuildContext context) {
     final borderWidth = (ScreenUtil().screenWidth - 72.w) / 3;
@@ -55,8 +55,7 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum>{
             maxLines: 2,
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
-            style:
-            Get.isDarkMode ? TextStyleMs.white_12 : TextStyleMs.black_12,
+            style: Get.isDarkMode ? TextStyleMs.white_12 : TextStyleMs.black_12,
           )
         ]));
   }

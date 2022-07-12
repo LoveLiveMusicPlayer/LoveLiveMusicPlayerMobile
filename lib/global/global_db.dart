@@ -54,6 +54,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     globalLogic.albumByLiellaList.clear();
     globalLogic.albumByCombineList.clear();
     globalLogic.albumByAllList.clear();
+
     /// 再赋值
     globalLogic.albumByUsList.addAll(usAlbums);
     globalLogic.albumByAqoursList.addAll(aqoursAlbums);
@@ -99,6 +100,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     globalLogic.musicByLiellaList.clear();
     globalLogic.musicByCombineList.clear();
     globalLogic.musicByAllList.clear();
+
     /// 再赋值
     globalLogic.musicByUsList.addAll(usMusics);
     globalLogic.musicByAqoursList.addAll(aqoursMusics);
@@ -122,6 +124,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     globalLogic.artistByLiellaList.clear();
     globalLogic.artistByCombineList.clear();
     globalLogic.artistByAllList.clear();
+
     /// 再赋值
     globalLogic.artistByUsList.addAll(usArtists);
     globalLogic.artistByAqoursList.addAll(aqoursArtists);
@@ -132,7 +135,9 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
     GlobalLogic.to.databaseInitOver.value = true;
 
-    SmartDialog.compatible.showToast("专辑: ${allAlbums.length}; 歌曲: ${allMusics.length}", time: const Duration(seconds: 5));
+    SmartDialog.compatible.showToast(
+        "专辑: ${allAlbums.length}; 歌曲: ${allMusics.length}",
+        time: const Duration(seconds: 5));
   }
 
   insertMusicIntoAlbum(DownloadMusic music) async {
@@ -151,21 +156,20 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         jpUrl: music.jpUrl,
         zhUrl: music.zhUrl,
         romaUrl: music.romaUrl,
-        group: music.group
-    );
+        group: music.group);
     if (album == null) {
       final _album = Album(
-        uid: music.albumUId,
-        name: music.albumName,
-        date: music.date,
-        coverPath: [music.coverPath],
-        category: music.category,
-        group: music.group,
-        music: [_music]
-      );
+          uid: music.albumUId,
+          name: music.albumName,
+          date: music.date,
+          coverPath: [music.coverPath],
+          category: music.category,
+          group: music.group,
+          music: [_music]);
       albumDao.insertAlbum(_album);
     } else {
-      final hasCurrentMusic = album.music.any((element) => element.uid == music.musicUId);
+      final hasCurrentMusic =
+          album.music.any((element) => element.uid == music.musicUId);
       if (!hasCurrentMusic) {
         album.coverPath = album.coverPath ?? <String>[];
         album.coverPath?.add(music.coverPath);

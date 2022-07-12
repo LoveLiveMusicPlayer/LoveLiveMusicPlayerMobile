@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
-import 'package:lovelivemusicplayer/generated/assets.dart';
 
 ///歌曲
 class ListViewItemSong extends StatefulWidget {
   Function(int, bool) onItemTap;
-  Function(Music) onPlayTap;
+  Function(Music) onPlayNextTap;
+  Function() onPlayNowTap;
   Function(Music) onMoreTap;
 
   ///条目数据
@@ -26,9 +26,10 @@ class ListViewItemSong extends StatefulWidget {
 
   ListViewItemSong(
       {Key? key,
-        required this.index,
+      required this.index,
       required this.onItemTap,
-      required this.onPlayTap,
+      required this.onPlayNextTap,
+      required this.onPlayNowTap,
       required this.onMoreTap,
       required this.music,
       this.checked = false})
@@ -38,7 +39,8 @@ class ListViewItemSong extends StatefulWidget {
   State<ListViewItemSong> createState() => _ListViewItemSongState();
 }
 
-class _ListViewItemSongState extends State<ListViewItemSong> with AutomaticKeepAliveClientMixin {
+class _ListViewItemSongState extends State<ListViewItemSong>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -46,7 +48,11 @@ class _ListViewItemSongState extends State<ListViewItemSong> with AutomaticKeepA
       return InkWell(
         onTap: () {
           widget.checked = !widget.checked;
-          widget.onItemTap(widget.index, widget.checked);
+          if (HomeController.to.state.isSelect.value) {
+            widget.onItemTap(widget.index, widget.checked);
+          } else {
+            widget.onPlayNowTap();
+          }
           setState(() {});
         },
         child: Container(
@@ -75,8 +81,9 @@ class _ListViewItemSongState extends State<ListViewItemSong> with AutomaticKeepA
 
   ///缩列图
   Widget _buildIcon() {
-    return showImg(SDUtils.getImgPath(widget.music.coverPath ?? "ic_head.jpg"),
-        48, 48, hasShadow: false, radius: 8);
+    return showImg(
+        SDUtils.getImgPath(widget.music.coverPath ?? "ic_head.jpg"), 48, 48,
+        hasShadow: false, radius: 8);
   }
 
   ///勾选按钮
@@ -149,7 +156,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> with AutomaticKeepA
                 child: touchIconByAsset(
                     path: Assets.mainIcAddNext,
                     onTap: () {
-                      PlayerLogic.to.addNextMusic(widget.music);
+                      widget.onPlayNextTap(widget.music);
                     },
                     width: 20,
                     height: 20,

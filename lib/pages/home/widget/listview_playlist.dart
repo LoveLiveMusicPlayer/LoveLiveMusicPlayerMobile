@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/modules/ext.dart';
 
 ///歌单
 class ListViewItemPlaylist extends StatefulWidget {
@@ -11,7 +11,11 @@ class ListViewItemPlaylist extends StatefulWidget {
   Function(int) onTap;
 
   ListViewItemPlaylist(
-      {Key? key, required this.index, required this.name, required this.artist, required this.onTap})
+      {Key? key,
+      required this.index,
+      required this.name,
+      required this.artist,
+      required this.onTap})
       : super(key: key);
 
   @override
@@ -42,9 +46,7 @@ class _ListViewItemPlaylist extends State<ListViewItemPlaylist> {
         children: [
           Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Container(
-              constraints: BoxConstraints(
-                  maxWidth: 200.w
-              ),
+              constraints: BoxConstraints(maxWidth: 200.w),
               child: Text(
                 widget.name,
                 maxLines: 1,
@@ -63,9 +65,7 @@ class _ListViewItemPlaylist extends State<ListViewItemPlaylist> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                constraints: BoxConstraints(
-                    maxWidth: 100.w
-                ),
+                constraints: BoxConstraints(maxWidth: 100.w),
                 child: Text(
                   "-${widget.artist}",
                   maxLines: 1,

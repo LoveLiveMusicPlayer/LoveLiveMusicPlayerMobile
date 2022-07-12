@@ -12,6 +12,7 @@ import 'package:lovelivemusicplayer/pages/home/widget/listview_item_song_sheet.d
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/widgets/listview_item_song.dart';
 import 'package:lovelivemusicplayer/widgets/refresher_widget.dart';
+
 import 'logic.dart';
 
 class PageViewComponent extends StatelessWidget {
@@ -21,28 +22,33 @@ class PageViewComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final logic = Get.put(PageViewLogic());
 
-    return PageView(
-      controller: logic.controller,
-      onPageChanged: (index) {
-        HomeController.to.tabController?.animateTo(index > 2 ? 1 : 0);
-        HomeController.to.state.currentIndex.value = index;
-      },
-      children: [
-        _buildList(0),
-        _buildList(1),
-        _buildList(2),
-        _buildList(3),
-        _buildList(4),
-        _buildList(5)
-      ],
-    );
+    return Obx(() {
+      return PageView(
+        controller: logic.controller,
+        physics: HomeController.to.state.isSelect.value
+            ? const NeverScrollableScrollPhysics()
+            : const AlwaysScrollableScrollPhysics(),
+        onPageChanged: (index) {
+          HomeController.to.tabController?.animateTo(index > 2 ? 1 : 0);
+          HomeController.to.state.currentIndex.value = index;
+        },
+        children: [
+          _buildList(0),
+          _buildList(1),
+          _buildList(2),
+          _buildList(3),
+          _buildList(4),
+          _buildList(5)
+        ],
+      );
+    });
   }
 
   Widget _buildList(int page) {
     return Obx(() {
       return RefresherWidget(
-        itemCount: GlobalLogic.to.getListSize(
-            page, GlobalLogic.to.databaseInitOver.value),
+        itemCount: GlobalLogic.to
+            .getListSize(page, GlobalLogic.to.databaseInitOver.value),
         enablePullUp: false,
         enablePullDown: false,
         isGridView: page == 1,
@@ -103,14 +109,18 @@ class PageViewComponent extends StatelessWidget {
             HomeController.to.selectItem(index, checked);
             return;
           }
-          PlayerLogic.to.playMusic(
-              GlobalLogic.to.checkMusicList(), index: index);
+          PlayerLogic.to
+              .playMusic(GlobalLogic.to.checkMusicList(), index: index);
         },
-        onPlayTap: (index) {},
+        onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
         onMoreTap: (music) {
           SmartDialog.compatible.show(
               widget: DialogMore(music: music),
               alignmentTemp: Alignment.bottomCenter);
+        },
+        onPlayNowTap: () {
+          PlayerLogic.to
+              .playMusic(GlobalLogic.to.checkMusicList(), index: index);
         },
       );
     }

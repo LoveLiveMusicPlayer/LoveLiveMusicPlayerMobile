@@ -31,7 +31,8 @@ void main() async {
   await initServices();
   isDark = await SpUtil.getBoolean(Const.spDark);
   await JustAudioBackground.init(
-    androidNotificationChannelId: 'com.zhushenwudi.lovelivemusicplayer.channel.audio',
+    androidNotificationChannelId:
+        'com.zhushenwudi.lovelivemusicplayer.channel.audio',
     androidNotificationChannelName: 'lovelive audio playback',
     androidNotificationOngoing: true,
   );
@@ -41,7 +42,7 @@ void main() async {
           'https://dbb1e416963545c5893b40d85793e081@o1185358.ingest.sentry.io/6303906';
       options.tracesSampleRate = 1.0;
     },
-    appRunner: () => runApp(const MyApp()),
+    appRunner: () => runApp(MyApp()),
   );
   setStatusBar();
 
@@ -51,8 +52,17 @@ void main() async {
   FlutterNativeSplash.remove();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    PaintingBinding.instance.imageCache.maximumSizeBytes = 1024 * 1024 * 100;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,16 +84,13 @@ class MyApp extends StatelessWidget {
             locale: Translation.locale,
             fallbackLocale: Translation.fallbackLocale,
             translations: Translation(),
-            builder: FlutterSmartDialog.init(
-                builder:(context, widget) {
-                  return MediaQuery(
-                    ///设置文字大小不随系统设置改变
-                      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                      child: widget!
-                  );
-                }
-            )
-        );
+            builder: FlutterSmartDialog.init(builder: (context, widget) {
+              return MediaQuery(
+
+                  ///设置文字大小不随系统设置改变
+                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                  child: widget!);
+            }));
       },
     );
   }

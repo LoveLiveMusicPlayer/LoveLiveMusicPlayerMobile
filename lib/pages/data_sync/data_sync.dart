@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 class DataSync extends StatefulWidget {
@@ -11,8 +10,6 @@ class DataSync extends StatefulWidget {
 class _DataSyncState extends State<DataSync> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-
-    );
+    return Container();
   }
 }

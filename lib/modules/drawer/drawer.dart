@@ -103,12 +103,16 @@ class _DrawerPageState extends State<DrawerPage> {
                 borderRadius: BorderRadius.circular(8.w),
                 boxShadow: [
                   BoxShadow(
-                      color: Get.isDarkMode ? const Color(0x1005080C) : Colors.white,
+                      color: Get.isDarkMode
+                          ? const Color(0x1005080C)
+                          : Colors.white,
                       offset: Offset(-3.w, -3.h),
                       blurStyle: BlurStyle.inner,
                       blurRadius: 6.w),
                   BoxShadow(
-                      color: Get.isDarkMode ? const Color(0xFF05080C) : const Color(0xFFD3E0EC),
+                      color: Get.isDarkMode
+                          ? const Color(0xFF05080C)
+                          : const Color(0xFFD3E0EC),
                       offset: Offset(5.w, 3.h),
                       blurRadius: 6.w),
                 ],
@@ -152,11 +156,12 @@ class _DrawerPageState extends State<DrawerPage> {
                       icon: Assets.drawerDrawerReset,
                       text: "清理数据",
                       onTap: () async {
-                        SmartDialog.compatible.showLoading(
-                            msg: "重置中...", backDismiss: false);
+                        SmartDialog.compatible
+                            .showLoading(msg: "重置中...", backDismiss: false);
                         await DBLogic.to.clearAllAlbum();
                         SmartDialog.dismiss();
-                        SmartDialog.compatible.showToast("清理成功", time: const Duration(seconds: 5));
+                        SmartDialog.compatible.showToast("清理成功",
+                            time: const Duration(seconds: 5));
                       },
                     ),
                     DrawerFunctionButton(
@@ -164,7 +169,8 @@ class _DrawerPageState extends State<DrawerPage> {
                       text: "保存日志",
                       onTap: () async {
                         await SDUtils.writeDBToFile();
-                        SmartDialog.compatible.showToast("导出成功", time: const Duration(seconds: 5));
+                        SmartDialog.compatible.showToast("导出成功",
+                            time: const Duration(seconds: 5));
                       },
                     )
                   ],

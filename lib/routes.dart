@@ -25,7 +25,7 @@ class Routes {
       GetPage(name: Routes.routeSingerDetails, page: () => SingerDetailsPage()),
       GetPage(name: Routes.routeScan, page: () => const Scanner()),
       GetPage(name: Routes.routeTransform, page: () => MusicTransform()),
-      GetPage(name: Routes.routeDataSync, page: () => DataSync()),
+      GetPage(name: Routes.routeDataSync, page: () => const DataSync()),
     ];
   }
 }

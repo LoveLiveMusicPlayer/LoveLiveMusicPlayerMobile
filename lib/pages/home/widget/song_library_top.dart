@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
-import 'package:lovelivemusicplayer/generated/assets.dart';
+
 import '../../../widgets/circular_check_box.dart';
 
 class Song_libraryTop extends StatelessWidget {
@@ -94,7 +95,9 @@ class Song_libraryTop extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.h),
               boxShadow: [
                 BoxShadow(
-                    color: Get.isDarkMode ? const Color(0xFF05080C) : const Color(0xFFD3E0EC),
+                    color: Get.isDarkMode
+                        ? const Color(0xFF05080C)
+                        : const Color(0xFFD3E0EC),
                     blurRadius: 6,
                     offset: const Offset(5, 3)),
               ]),
@@ -126,10 +129,7 @@ class Song_libraryTop extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(right: 16.h, top: 5.h, bottom: 5.h, left: 30.h),
       child: touchIconByAsset(
-          path: Assets.mainIcScreen,
-          onTap: onScreenTap,
-          width: 15,
-          height: 15),
+          path: Assets.mainIcScreen, onTap: onScreenTap, width: 15, height: 15),
     );
   }
 

@@ -2,21 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
+import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_more.dart';
 import 'package:lovelivemusicplayer/widgets/details_cover.dart';
 import 'package:lovelivemusicplayer/widgets/details_list_top.dart';
 
 import '../../widgets/listview_item_song.dart';
-import 'logic.dart';
 import 'widget/details_header.dart';
-import 'package:lovelivemusicplayer/generated/assets.dart';
 
 class AlbumDetailsPage extends StatelessWidget {
-  final logic = Get.put(AlbumDetailsController());
-  final state = Get.find<AlbumDetailsController>().state;
   final Album album = Get.arguments;
 
   @override
@@ -32,40 +30,42 @@ class AlbumDetailsPage extends StatelessWidget {
       children: [
         DetailsHeader(),
         Expanded(
-          child: GetBuilder<AlbumDetailsController>(builder: (logic) {
-            return ListView(
-              padding: const EdgeInsets.all(0),
-              children: getListItems(logic),
-            );
-          }),
+          child: ListView(
+            padding: const EdgeInsets.all(0),
+            children: getListItems(),
+          ),
         ),
       ],
     );
   }
 
-  List<Widget> getListItems(AlbumDetailsController logic) {
+  List<Widget> getListItems() {
     List<Widget> list = [];
     list.add(DetailsCover(album: album));
     list.add(SizedBox(
       height: 10.h,
     ));
     list.add(DetailsListTop(
-        selectAll: logic.state.selectAll,
-        isSelect: logic.state.isSelect,
+        selectAll: HomeController.to.state.selectAll,
+        isSelect: HomeController.to.state.isSelect.value,
         itemsLength: album.music.length,
-        checkedItemLength: logic.getCheckedSong(),
+        checkedItemLength: HomeController.to.getCheckedSong(),
         onPlayTap: () {
           PlayerLogic.to.playMusic(album.music);
         },
         onScreenTap: () {
-          logic.openSelect();
-          showSelelctDialog();
+          if (HomeController.to.state.isSelect.value) {
+            SmartDialog.dismiss();
+          } else {
+            showSelectDialog();
+          }
+          HomeController.to.openSelect();
         },
         onSelectAllTap: (checked) {
-          logic.selectAll(checked);
+          HomeController.to.selectAll(checked);
         },
         onCancelTap: () {
-          logic.openSelect();
+          HomeController.to.openSelect();
           SmartDialog.dismiss();
         }));
     list.add(SizedBox(
@@ -77,16 +77,18 @@ class AlbumDetailsPage extends StatelessWidget {
         child: ListViewItemSong(
           index: index,
           music: album.music[index],
-          checked: logic.isItemChecked(album.music[index]),
+          checked: HomeController.to.isItemChecked(index),
           onItemTap: (index, checked) {
-            logic.selectItem(index, checked);
+            HomeController.to.selectItem(index, checked);
           },
-          onPlayTap: (music) {
-
-          },
+          onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
           onMoreTap: (music) {
             SmartDialog.compatible.show(
-                widget: DialogMore(music: music), alignmentTemp: Alignment.bottomCenter);
+                widget: DialogMore(music: music),
+                alignmentTemp: Alignment.bottomCenter);
+          },
+          onPlayNowTap: () {
+            PlayerLogic.to.playMusic(album.music, index: index);
           },
         ),
       ));
@@ -94,16 +96,12 @@ class AlbumDetailsPage extends StatelessWidget {
     return list;
   }
 
-  showSelelctDialog() {
+  showSelectDialog() {
     List<BtnItem> list = [];
     list.add(BtnItem(
-        imgPath: Assets.dialogIcAddPlayList2,
-        title: "加入播放列表",
-        onTap: () {}));
+        imgPath: Assets.dialogIcAddPlayList2, title: "加入播放列表", onTap: () {}));
     list.add(BtnItem(
-        imgPath: Assets.dialogIcAddPlayList,
-        title: "添加到歌单",
-        onTap: () {}));
+        imgPath: Assets.dialogIcAddPlayList, title: "添加到歌单", onTap: () {}));
     SmartDialog.compatible.show(
         widget: DialogBottomBtn(
           list: list,

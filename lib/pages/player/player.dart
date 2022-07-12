@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:rxdart/rxdart.dart' as RxDart;
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/PositionData.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/control_buttons.dart';
@@ -9,7 +9,8 @@ import 'package:lovelivemusicplayer/pages/player/widget/player_cover.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_header.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_lyric.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/seekbar.dart';
-import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:rxdart/rxdart.dart' as RxDart;
+
 import '../../modules/ext.dart';
 
 class Player extends StatefulWidget {
@@ -22,7 +23,7 @@ class Player extends StatefulWidget {
   _PlayerState createState() => _PlayerState();
 }
 
-class _PlayerState extends State<Player>{
+class _PlayerState extends State<Player> {
   /// slider 正在被滑动
   var isTouch = false.obs;
 
@@ -31,7 +32,7 @@ class _PlayerState extends State<Player>{
           PlayerLogic.to.mPlayer.positionStream,
           PlayerLogic.to.mPlayer.bufferedPositionStream,
           PlayerLogic.to.mPlayer.durationStream,
-              (position, bufferedPosition, duration) => PositionData(
+          (position, bufferedPosition, duration) => PositionData(
               position, bufferedPosition, duration ?? Duration.zero));
 
   @override

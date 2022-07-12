@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
-import 'package:lovelivemusicplayer/generated/assets.dart';
 
 class ControlButtons extends StatelessWidget {
   final AudioPlayer player;
@@ -34,7 +34,8 @@ class ControlButtons extends StatelessWidget {
                 final index = PlayerLogic.loopModes.indexOf(loopMode);
                 return materialButton(icons[index], () async {
                   final currentIndex = PlayerLogic.loopModes.indexOf(loopMode);
-                  final nextIndex = (currentIndex + 1) % PlayerLogic.loopModes.length;
+                  final nextIndex =
+                      (currentIndex + 1) % PlayerLogic.loopModes.length;
                   PlayerLogic.to.changeLoopMode(nextIndex);
                 }, width: 32, height: 32, radius: 6, iconSize: 15);
               },
@@ -43,7 +44,7 @@ class ControlButtons extends StatelessWidget {
               stream: player.sequenceStateStream,
               builder: (context, snapshot) => materialButton(
                   Assets.playerPlayPrev,
-                      () => player.hasPrevious ? player.seekToPrevious() : null,
+                  () => player.hasPrevious ? player.seekToPrevious() : null,
                   width: 60,
                   height: 60,
                   radius: 40,
@@ -73,7 +74,7 @@ class ControlButtons extends StatelessWidget {
                 } else {
                   return materialButton(
                       Assets.playerPlayPlay,
-                          () => player.seek(Duration.zero,
+                      () => player.seek(Duration.zero,
                           index: player.effectiveIndices!.first),
                       width: 80,
                       height: 80,
@@ -86,7 +87,7 @@ class ControlButtons extends StatelessWidget {
               stream: player.sequenceStateStream,
               builder: (context, snapshot) => materialButton(
                   Assets.playerPlayNext,
-                      () => player.hasNext ? player.seekToNext() : null,
+                  () => player.hasNext ? player.seekToNext() : null,
                   width: 60,
                   height: 60,
                   radius: 40,

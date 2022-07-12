@@ -15,9 +15,7 @@ import '../utils/sd_utils.dart';
 /// [height] 显示的高度
 /// [radius] 圆角度数
 /// [hasShadow] 是否有阴影效果
-Widget showImg(String? path,
-    double? width,
-    double? height,
+Widget showImg(String? path, double? width, double? height,
     {double radius = 20,
     bool hasShadow = true,
     String defPhoto = Const.logo,
@@ -44,11 +42,17 @@ Widget showImg(String? path,
       width: width?.h,
       height: height?.h,
       decoration: BoxDecoration(
-        image: DecorationImage(image: ResizeImage(shadowImage, width: (width?.h.toInt() ?? 1) * 2, height: (height?.h.toInt() ?? 1) * 2), fit: BoxFit.fill),
+        image: DecorationImage(
+            image: ResizeImage(shadowImage,
+                width: (width?.h.toInt() ?? 1) * 2,
+                height: (height?.h.toInt() ?? 1) * 2),
+            fit: BoxFit.fill),
         borderRadius: BorderRadius.circular(radius.h),
         boxShadow: [
           BoxShadow(
-              color: Get.isDarkMode ? const Color(0xFF05080C) : const Color(0xFFD3E0EC),
+              color: Get.isDarkMode
+                  ? const Color(0xFF05080C)
+                  : const Color(0xFFD3E0EC),
               blurRadius: 4,
               offset: Offset(4.h, 8.h)),
         ],
@@ -96,8 +100,13 @@ Widget showImg(String? path,
     }
     return ClipRRect(
         borderRadius: BorderRadius.circular(radius.h),
-        child: Image(image: ResizeImage(noShadowImage, width: (width?.h.toInt() ?? 1) * 2, height: (height?.h.toInt() ?? 1) * 2), width: width?.h, height: height?.h,)
-    );
+        child: Image(
+          image: ResizeImage(noShadowImage,
+              width: (width?.h.toInt() ?? 1) * 2,
+              height: (height?.h.toInt() ?? 1) * 2),
+          width: width?.h,
+          height: height?.h,
+        ));
   }
 }
 
@@ -153,7 +162,13 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
             offset: Offset(-3, -3),
             blurStyle: BlurStyle.inner,
             blurRadius: 6),
-        BoxShadow(color: outerColor ?? (Get.isDarkMode ? const Color(0xFF05080C) : const Color(0xFFD3E0EC)), offset: const Offset(5, 3), blurRadius: 6),
+        BoxShadow(
+            color: outerColor ??
+                (Get.isDarkMode
+                    ? const Color(0xFF05080C)
+                    : const Color(0xFFD3E0EC)),
+            offset: const Offset(5, 3),
+            blurRadius: 6),
       ],
     ),
     child: ClipRRect(
@@ -203,7 +218,11 @@ Widget showGroupButton(String path,
             blurStyle: BlurStyle.inner,
             blurRadius: 6),
         BoxShadow(
-            color: Get.isDarkMode ? const Color(0xFF05080C) : const Color(0xFFD3E0EC), offset: Offset(5, 3), blurRadius: 6),
+            color: Get.isDarkMode
+                ? const Color(0xFF05080C)
+                : const Color(0xFFD3E0EC),
+            offset: Offset(5, 3),
+            blurRadius: 6),
       ],
     ),
     child: ClipRRect(
@@ -251,13 +270,16 @@ Widget logoIcon(String path,
               borderRadius: BorderRadius.circular(radius.h),
               boxShadow: [
                 BoxShadow(
-                    color: Get.isDarkMode ? const Color(0xFF05080C) : const Color(0xFFD3E0EC),
+                    color: Get.isDarkMode
+                        ? const Color(0xFF05080C)
+                        : const Color(0xFFD3E0EC),
                     blurRadius: 10,
                     offset: Offset(5.h, 3.h)),
               ]),
           child: InkWell(
               onTap: onTap,
-              child: showImg(image, width, height, radius: radius.h, hasShadow: false))));
+              child: showImg(image, width, height,
+                  radius: radius.h, hasShadow: false))));
 }
 
 Widget touchIcon(IconData icon, GestureTapCallback onTap,
