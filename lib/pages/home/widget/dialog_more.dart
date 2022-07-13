@@ -27,7 +27,7 @@ class DialogMore extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(12.h),
             child: Text(
-              music.name ?? "",
+              music.musicName!,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(fontSize: 17.sp, color: const Color(0xff333333)),

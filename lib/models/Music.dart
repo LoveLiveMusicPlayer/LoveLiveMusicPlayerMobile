@@ -1,79 +1,81 @@
 import 'dart:convert';
 
-Music musicFromJson(String str) => Music.fromJson(json.decode(str));
+import 'package:floor/floor.dart';
 
-String musicToJson(Music data) => json.encode(data.toJson());
+Music albumFromJson(String str) => Music.fromJson(json.decode(str));
 
+String albumToJson(Music data) => json.encode(data.toJson());
+
+@Entity(tableName: "Music")
 class Music {
-  Music(
-      {this.uid,
-      this.name,
-      this.albumId,
-      this.albumName,
-      this.coverPath,
-      this.musicPath,
-      this.artist,
-      this.artistBin,
-      this.totalTime,
-      this.jpUrl,
-      this.zhUrl,
-      this.romaUrl,
-      this.group,
-      this.isLove = false,
-      this.isPlaying = false,
-      this.index = 0});
+  Music({
+    this.musicId,
+    this.musicName,
+    this.artist,
+    this.artistBin,
+    this.albumId,
+    this.albumName,
+    this.coverPath,
+    this.musicPath,
+    this.time,
+    this.jpUrl,
+    this.zhUrl,
+    this.romaUrl,
+    this.category,
+    this.group,
+    this.isLove = false,
+  });
 
-  /// 实体层属性
-  String? uid; // id
-  String? name; // 歌名
-  String? albumId; // 专辑id
-  String? albumName; // 专辑名
-  String? coverPath; // 封面路径
-  String? musicPath; // 歌曲路径
-  String? artist; // 歌手
-  String? artistBin; // 歌手32进制数据
-  String? totalTime; // 时长
-  String? jpUrl; // 日文歌词 URL
-  String? zhUrl; // 中文歌词 URL
-  String? romaUrl; // 罗马音歌词 URL
-  bool isLove; // 是否我喜欢
-  String? group; // 团组
-  bool isPlaying; // 是否当前播放
-  int index; // 处于播放器播放列表第几首
+  @primaryKey
+  String? musicId;     // id
+  String? musicName;   // 歌名
+  String? artist;      // 歌手
+  String? artistBin;   // 歌手32进制数据
+  String? albumId;     // 专辑id
+  String? albumName;   // 专辑名
+  String? coverPath;   // 封面路径
+  String? musicPath;   // 歌曲路径
+  String? time;        // 时长
+  String? jpUrl;       // 日文歌词 URL
+  String? zhUrl;       // 中文歌词 URL
+  String? romaUrl;     // 罗马音歌词 URL
+  String? category;    // 分类
+  String? group;    // 分类
+  bool isLove;        // 是否我喜欢
 
   factory Music.fromJson(Map<String, dynamic> json) => Music(
-        uid: json["_id"],
-        name: json["name"],
-        albumId: json["album_id"],
-        albumName: json["album_name"],
-        coverPath: json["cover_path"],
-        musicPath: json["music_path"],
-        artist: json["artist"],
-        artistBin: json["artist_bin"],
-        totalTime: json["time"],
-        jpUrl: json["lyric"],
-        zhUrl: json["trans"],
-        romaUrl: json["roma"],
-        isLove: json["isLove"] == 1 ? true : false,
-        group: json["group"],
-        isPlaying: json["isPlaying"] == 1 ? true : false,
-      );
+    musicId: json["musicId"],
+    musicName: json["musicName"],
+    artist: json["artist"],
+    artistBin: json["artistBin"],
+    albumId: json["albumId"],
+    albumName: json["albumName"],
+    coverPath: json["coverPath"],
+    musicPath: json["musicPath"],
+    time: json["time"],
+    jpUrl: json["jpUrl"],
+    zhUrl: json["zhUrl"],
+    romaUrl: json["romaUrl"],
+    category: json["category"],
+    group: json["group"],
+    isLove: json["isLove"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "_id": uid,
-        "name": name,
-        "album_id": albumId,
-        "album_name": albumName,
-        "cover_path": coverPath,
-        "music_path": musicPath,
-        "artist": artist,
-        "artist_bin": artistBin,
-        "time": totalTime,
-        "lyric": jpUrl,
-        "trans": zhUrl,
-        "roma": romaUrl,
-        "isLove": isLove ? 1 : 0,
-        "group": group,
-        "isPlaying": isPlaying ? 1 : 0,
-      };
+    "musicId": musicId,
+    "musicName": musicName,
+    "artist": artist,
+    "artistBin": artistBin,
+    "albumId": albumId,
+    "albumName": albumName,
+    "coverPath": coverPath,
+    "musicPath": musicPath,
+    "time": time,
+    "jpUrl": jpUrl,
+    "zhUrl": zhUrl,
+    "romaUrl": romaUrl,
+    "category": category,
+    "group": group,
+    "isLove": isLove,
+  };
 }

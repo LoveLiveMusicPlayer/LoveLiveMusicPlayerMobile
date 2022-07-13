@@ -43,7 +43,7 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
         child: Column(children: [
           showImg(
               SDUtils.getImgPath(
-                  widget.album.coverPath?.first ?? "ic_head.jpg"),
+                  widget.album.coverPath!),
               borderWidth,
               borderWidth,
               hasShadow: false),
@@ -51,7 +51,7 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
             height: 5.h,
           ),
           Text(
-            widget.album.name ?? "",
+            widget.album.albumName!,
             maxLines: 2,
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,

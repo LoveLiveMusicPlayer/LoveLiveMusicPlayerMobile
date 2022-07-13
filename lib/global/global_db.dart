@@ -2,8 +2,8 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/dao/database.dart';
 import 'package:lovelivemusicplayer/dao/lyric_dao.dart';
+import 'package:lovelivemusicplayer/dao/music_dao.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 
 import '../dao/album_dao.dart';
@@ -15,6 +15,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   late MusicDatabase database;
   late AlbumDao albumDao;
   late LyricDao lyricDao;
+  late MusicDao musicDao;
 
   final globalLogic = Get.find<GlobalLogic>();
 
@@ -28,110 +29,28 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         .build();
     albumDao = database.albumDao;
     lyricDao = database.lyricDao;
-    await findAllList();
+    musicDao = database.musicDao;
+    await findAllListByGroup("all");
     super.onInit();
   }
 
-  findAllList() async {
-    /// 设置专辑数据
-    final allAlbums = await albumDao.findAllAlbums();
-    allAlbums.sort((a, b) => a.date!.compareTo(b.date!));
-    final usAlbums =
-        allAlbums.where((element) => element.group == "μ's").toList();
-    final aqoursAlbums =
-        allAlbums.where((element) => element.group == "Aqours").toList();
-    final nijiAlbums =
-        allAlbums.where((element) => element.group == "Nijigasaki").toList();
-    final liellaAlbums =
-        allAlbums.where((element) => element.group == "Liella!").toList();
-    final combineAlbums =
-        allAlbums.where((element) => element.group == "Combine").toList();
+  Future<void> findAllListByGroup(String group) async {
+    print(group);
 
-    /// 先清空
-    globalLogic.albumByUsList.clear();
-    globalLogic.albumByAqoursList.clear();
-    globalLogic.albumByNijiList.clear();
-    globalLogic.albumByLiellaList.clear();
-    globalLogic.albumByCombineList.clear();
-    globalLogic.albumByAllList.clear();
-
-    /// 再赋值
-    globalLogic.albumByUsList.addAll(usAlbums);
-    globalLogic.albumByAqoursList.addAll(aqoursAlbums);
-    globalLogic.albumByNijiList.addAll(nijiAlbums);
-    globalLogic.albumByLiellaList.addAll(liellaAlbums);
-    globalLogic.albumByCombineList.addAll(combineAlbums);
-    globalLogic.albumByAllList.addAll(allAlbums);
-
-    /// 设置歌曲数据
+    /// 设置专辑、歌曲数据
+    final allAlbums = <Album>[];
     final allMusics = <Music>[];
-    final usMusics = <Music>[];
-    final aqoursMusics = <Music>[];
-    final nijiMusics = <Music>[];
-    final liellaMusics = <Music>[];
-    final combineMusics = <Music>[];
-
-    for (var element in usAlbums) {
-      usMusics.addAll(element.music);
+    if (group == "all") {
+      allAlbums.addAll(await albumDao.findAllAlbums());
+      allMusics.addAll(await musicDao.findAllMusics());
+    } else {
+      allAlbums.addAll(await albumDao.findAllAlbumsByGroup(group));
+      allMusics.addAll(await musicDao.findAllMusicsByGroup(group));
     }
-    for (var element in aqoursAlbums) {
-      aqoursMusics.addAll(element.music);
-    }
-    for (var element in nijiAlbums) {
-      nijiMusics.addAll(element.music);
-    }
-    for (var element in liellaAlbums) {
-      liellaMusics.addAll(element.music);
-    }
-    for (var element in combineAlbums) {
-      combineMusics.addAll(element.music);
-    }
+    allAlbums.sort((a, b) => a.date!.compareTo(b.date!));
 
-    allMusics.addAll(usMusics);
-    allMusics.addAll(aqoursMusics);
-    allMusics.addAll(nijiMusics);
-    allMusics.addAll(liellaMusics);
-    allMusics.addAll(combineMusics);
-
-    /// 先清空
-    globalLogic.musicByUsList.clear();
-    globalLogic.musicByAqoursList.clear();
-    globalLogic.musicByNijiList.clear();
-    globalLogic.musicByLiellaList.clear();
-    globalLogic.musicByCombineList.clear();
-    globalLogic.musicByAllList.clear();
-
-    /// 再赋值
-    globalLogic.musicByUsList.addAll(usMusics);
-    globalLogic.musicByAqoursList.addAll(aqoursMusics);
-    globalLogic.musicByNijiList.addAll(nijiMusics);
-    globalLogic.musicByLiellaList.addAll(liellaMusics);
-    globalLogic.musicByCombineList.addAll(combineMusics);
-    globalLogic.musicByAllList.addAll(allMusics);
-
-    /// 设置歌手数据
-    final allArtists = <Artist>[];
-    final usArtists = <Artist>[];
-    final aqoursArtists = <Artist>[];
-    final nijiArtists = <Artist>[];
-    final liellaArtists = <Artist>[];
-    final combineArtists = <Artist>[];
-
-    /// 先清空
-    globalLogic.artistByUsList.clear();
-    globalLogic.artistByAqoursList.clear();
-    globalLogic.artistByNijiList.clear();
-    globalLogic.artistByLiellaList.clear();
-    globalLogic.artistByCombineList.clear();
-    globalLogic.artistByAllList.clear();
-
-    /// 再赋值
-    globalLogic.artistByUsList.addAll(usArtists);
-    globalLogic.artistByAqoursList.addAll(aqoursArtists);
-    globalLogic.artistByNijiList.addAll(nijiArtists);
-    globalLogic.artistByLiellaList.addAll(liellaArtists);
-    globalLogic.artistByCombineList.addAll(combineArtists);
-    globalLogic.artistByAllList.addAll(allArtists);
+    GlobalLogic.to.albumList.value = allAlbums;
+    GlobalLogic.to.musicList.value = allMusics;
 
     GlobalLogic.to.databaseInitOver.value = true;
 
@@ -140,43 +59,49 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         time: const Duration(seconds: 5));
   }
 
-  insertMusicIntoAlbum(DownloadMusic music) async {
-    final albumUId = music.albumUId;
-    final album = await albumDao.findAlbumByUId(albumUId);
-    final _music = Music(
-        uid: music.musicUId,
-        name: music.musicName,
-        albumId: music.albumUId,
-        coverPath: music.coverPath,
-        artist: music.artist,
-        artistBin: music.artistBin,
-        albumName: music.albumName,
-        musicPath: music.musicPath,
-        totalTime: music.totalTime,
-        jpUrl: music.jpUrl,
-        zhUrl: music.zhUrl,
-        romaUrl: music.romaUrl,
-        group: music.group);
+  Future<void> insertMusicIntoAlbum(DownloadMusic downloadMusic) async {
+    final album = await albumDao.findAlbumByUId(downloadMusic.albumUId);
     if (album == null) {
       final _album = Album(
-          uid: music.albumUId,
-          name: music.albumName,
-          date: music.date,
-          coverPath: [music.coverPath],
-          category: music.category,
-          group: music.group,
-          music: [_music]);
-      albumDao.insertAlbum(_album);
-    } else {
-      final hasCurrentMusic =
-          album.music.any((element) => element.uid == music.musicUId);
-      if (!hasCurrentMusic) {
-        album.coverPath = album.coverPath ?? <String>[];
-        album.coverPath?.add(music.coverPath);
-        album.music.add(_music);
-        albumDao.updateAlbum(album);
-      }
+          albumId: downloadMusic.albumUId,
+          albumName: downloadMusic.albumName,
+          date: downloadMusic.date,
+          coverPath: downloadMusic.coverPath,
+          category: downloadMusic.category,
+          group: downloadMusic.group
+      );
+      await albumDao.insertAlbum(_album);
     }
+
+    final music = await musicDao.findMusicByUId(downloadMusic.musicUId);
+    if (music == null) {
+      final _music = Music(
+          musicId: downloadMusic.musicUId,
+          musicName: downloadMusic.musicName,
+          albumId: downloadMusic.albumUId,
+          coverPath: downloadMusic.coverPath,
+          artist: downloadMusic.artist,
+          artistBin: downloadMusic.artistBin,
+          albumName: downloadMusic.albumName,
+          musicPath: downloadMusic.musicPath,
+          time: downloadMusic.totalTime,
+          jpUrl: downloadMusic.jpUrl,
+          zhUrl: downloadMusic.zhUrl,
+          romaUrl: downloadMusic.romaUrl,
+          group: downloadMusic.group,
+          category: downloadMusic.category,
+          isLove: false
+      );
+      await musicDao.insertMusic(_music);
+    }
+  }
+
+  Future<List<Music>> findAllMusicsByAlbumId(String albumId) async {
+    return await musicDao.findAllMusicsByAlbumId(albumId);
+  }
+
+  Future<Music?> findMusicByMusicId(String musicId) async {
+    return await musicDao.findMusicByUId(musicId);
   }
 
   clearAllAlbum() async {

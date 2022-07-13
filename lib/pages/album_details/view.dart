@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
+import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_more.dart';
@@ -14,8 +16,20 @@ import 'package:lovelivemusicplayer/widgets/details_list_top.dart';
 import '../../widgets/listview_item_song.dart';
 import 'widget/details_header.dart';
 
-class AlbumDetailsPage extends StatelessWidget {
+class AlbumDetailsPage extends StatefulWidget {
+  @override
+  State<AlbumDetailsPage> createState() => _AlbumDetailsPageState();
+}
+
+class _AlbumDetailsPageState extends State<AlbumDetailsPage> {
   final Album album = Get.arguments;
+  final music = <Music>[];
+
+  @override
+  Future<void> initState() async {
+    music.addAll(await DBLogic.to.findAllMusicsByAlbumId(album.albumId!));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +62,10 @@ class AlbumDetailsPage extends StatelessWidget {
     list.add(DetailsListTop(
         selectAll: HomeController.to.state.selectAll,
         isSelect: HomeController.to.state.isSelect.value,
-        itemsLength: album.music.length,
+        itemsLength: music.length,
         checkedItemLength: HomeController.to.getCheckedSong(),
         onPlayTap: () {
-          PlayerLogic.to.playMusic(album.music);
+          PlayerLogic.to.playMusic(music);
         },
         onScreenTap: () {
           if (HomeController.to.state.isSelect.value) {
@@ -71,12 +85,12 @@ class AlbumDetailsPage extends StatelessWidget {
     list.add(SizedBox(
       height: 10.h,
     ));
-    for (var index = 0; index < album.music.length; index++) {
+    for (var index = 0; index < music.length; index++) {
       list.add(Padding(
         padding: EdgeInsets.only(left: 16.w, bottom: 20.h, right: 16.w),
         child: ListViewItemSong(
           index: index,
-          music: album.music[index],
+          music: music[index],
           checked: HomeController.to.isItemChecked(index),
           onItemTap: (index, checked) {
             HomeController.to.selectItem(index, checked);
@@ -88,7 +102,7 @@ class AlbumDetailsPage extends StatelessWidget {
                 alignmentTemp: Alignment.bottomCenter);
           },
           onPlayNowTap: () {
-            PlayerLogic.to.playMusic(album.music, index: index);
+            PlayerLogic.to.playMusic(music, index: index);
           },
         ),
       ));

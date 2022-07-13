@@ -1,8 +1,5 @@
 import 'dart:convert';
-
 import 'package:floor/floor.dart';
-
-import 'Music.dart';
 
 Album albumFromJson(String str) => Album.fromJson(json.decode(str));
 
@@ -10,50 +7,38 @@ String albumToJson(Album data) => json.encode(data.toJson());
 
 @Entity(tableName: "Album")
 class Album {
+  Album({
+    this.albumId,   // 唯一标识
+    this.albumName, // 专辑名称
+    this.date,      // 时间
+    this.coverPath, // 封面
+    this.category,  // 分类
+    this.group,  // 团组
+  });
+
   @primaryKey
-  String? uid; //唯一标识
-  String? name; //专辑名称
-  String? date; //时间
-  String? group; // 团组
-
-  List<String>? coverPath; //封面
-
-  String? category; //类别
-
-  List<Music> music;
-
-  @ignore
-  bool isPlaying;
-
-  Album(
-      {this.uid,
-      this.name,
-      this.date,
-      this.coverPath,
-      this.category,
-      this.group,
-      this.music = const <Music>[],
-      this.isPlaying = false}); //对应歌曲id
+  String? albumId;
+  String? albumName;
+  String? date;
+  String? coverPath;
+  String? category;
+  String? group;
 
   factory Album.fromJson(Map<String, dynamic> json) => Album(
-        uid: json["_id"],
-        name: json["name"],
-        date: json["date"],
-        group: json["group"],
-        coverPath: List<String>.from(json["cover_path"].map((x) => x)),
-        category: json["category"],
-        music: List<Music>.from(json["music"].map((x) => x)),
-        isPlaying: json["isPlaying"] == 1 ? true : false,
-      );
+    albumId: json["albumId"],
+    albumName: json["albumName"],
+    date: json["date"],
+    coverPath: json["coverPath"],
+    category: json["category"],
+    group: json["group"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "_id": uid,
-        "name": name,
-        "date": date,
-        "group": group,
-        "cover_path": List<String>.from(coverPath!.map((x) => x)),
-        "category": category,
-        "music": music,
-        "isPlaying": isPlaying ? 1 : 0,
-      };
+    "albumId": albumId,
+    "albumName": albumName,
+    "date": date,
+    "coverPath": coverPath,
+    "category": category,
+    "group": group,
+  };
 }

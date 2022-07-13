@@ -71,7 +71,7 @@ class PageViewComponent extends StatelessWidget {
     /// 0 歌曲  1 专辑  2 歌手  3 我喜欢  4 歌单  5  最近播放
     if (page == 1) {
       return ListViewItemAlbum(
-        album: GlobalLogic.to.checkAlbumList()[index],
+        album: GlobalLogic.to.albumList[index],
         checked: HomeController.to.isItemChecked(index),
         isSelect: HomeController.to.state.isSelect.value,
         onItemTap: (album, checked) {
@@ -79,7 +79,7 @@ class PageViewComponent extends StatelessWidget {
             HomeController.to.selectItem(album, checked);
           } else {
             Get.toNamed(Routes.routeAlbumDetails,
-                arguments: GlobalLogic.to.checkAlbumList()[index]);
+                arguments: GlobalLogic.to.albumList[index]);
           }
         },
       );
@@ -93,7 +93,7 @@ class PageViewComponent extends StatelessWidget {
             HomeController.to.selectItem(artist, checked);
           } else {
             Get.toNamed(Routes.routeSingerDetails,
-                arguments: GlobalLogic.to.checkAlbumList()[index]);
+                arguments: GlobalLogic.to.albumList[index]);
           }
         },
       );
@@ -102,7 +102,7 @@ class PageViewComponent extends StatelessWidget {
     } else {
       return ListViewItemSong(
         index: index,
-        music: GlobalLogic.to.checkMusicList()[index],
+        music: GlobalLogic.to.musicList[index],
         checked: HomeController.to.isItemChecked(index),
         onItemTap: (index, checked) {
           if (HomeController.to.state.isSelect.value) {
@@ -110,7 +110,7 @@ class PageViewComponent extends StatelessWidget {
             return;
           }
           PlayerLogic.to
-              .playMusic(GlobalLogic.to.checkMusicList(), index: index);
+              .playMusic(GlobalLogic.to.musicList, index: index);
         },
         onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
         onMoreTap: (music) {
@@ -120,7 +120,7 @@ class PageViewComponent extends StatelessWidget {
         },
         onPlayNowTap: () {
           PlayerLogic.to
-              .playMusic(GlobalLogic.to.checkMusicList(), index: index);
+              .playMusic(GlobalLogic.to.musicList, index: index);
         },
       );
     }

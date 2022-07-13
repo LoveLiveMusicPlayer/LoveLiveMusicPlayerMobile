@@ -8,6 +8,7 @@ import 'package:just_audio_background/just_audio_background.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/Lyric.dart';
+import 'package:lovelivemusicplayer/models/PlayingList.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
@@ -27,8 +28,8 @@ class PlayerLogic extends SuperController
   // 播放列表<AudioSource>
   final audioSourceList = ConcatenatingAudioSource(children: []);
 
-  // 播放列表<Music>
-  var mPlayList = <Music>[];
+  // 播放列表<PlayingList>
+  var mPlayList = <PlayListMusic>[];
 
   // 当前播放的歌词
   var playingJPLrc = {"pre": "", "current": "", "next": ""}.obs;
@@ -98,11 +99,11 @@ class PlayerLogic extends SuperController
         // 修改当前播放歌曲
         final currentMusic = mPlayList[index];
         for (var music in mPlayList) {
-          music.isPlaying = music.uid == currentMusic.uid;
+          music.isPlaying = music.musicId == currentMusic.musicId;
         }
-        if (playingMusic.value != currentMusic) {
-          playingMusic.value = currentMusic;
-        }
+        // if (playingMusic.value != currentMusic) {
+        //   playingMusic.value = currentMusic;
+        // }
         getLrc(false);
       }
     });
@@ -116,8 +117,6 @@ class PlayerLogic extends SuperController
 
     // 设置新的播放列表
     final audioList = <AudioSource>[];
-    // 传入列表是否和原播放列表相同
-    bool isSameList = true;
 
     for (var i = 0; i < musicList.length; i++) {
       final coverPath = musicList[i].coverPath;
@@ -125,32 +124,22 @@ class PlayerLogic extends SuperController
       if (musicPath?.isNotEmpty == true) {
         audioList.add(genAudioSourceUri(musicPath, musicList[i], coverPath));
       }
-      if (isSameList == true &&
-          (mPlayList.isEmpty || musicList[i] != mPlayList[i])) {
-        isSameList = false;
-      }
     }
 
-    // 如果不相同，替换播放列表
-    if (!isSameList) {
-      mPlayList = [...musicList];
+    mPlayList.clear();
+    for (var music in musicList) {
+      mPlayList.add(PlayListMusic(musicId: music.musicId!, musicName: music.musicName!, artist: music.artist!));
     }
 
     // 当前是否正在播放
     if (isPlaying.value) {
-      if (isSameList) {
-        // 如果正在播放且列表相同，直接跳到对应索引播放
-        mPlayer.seek(Duration.zero, index: index);
-      } else {
-        // 如果正在播放但是列表不同，就停止再打开播放器
-        mPlayer.stop();
+      mPlayer.stop();
 
-        audioSourceList.clear();
-        audioSourceList.addAll(audioList);
-        mPlayer.setAudioSource(audioSourceList, initialIndex: index);
+      audioSourceList.clear();
+      audioSourceList.addAll(audioList);
+      mPlayer.setAudioSource(audioSourceList, initialIndex: index);
 
-        mPlayer.play();
-      }
+      mPlayer.play();
     } else {
       // 首次播放
       audioSourceList.clear();
@@ -171,13 +160,13 @@ class PlayerLogic extends SuperController
     final coverPath = music.coverPath;
     final musicPath = music.musicPath;
     if (musicPath?.isNotEmpty == true) {
-      if (music.uid == playingMusic.value.uid) {
+      if (music.musicId == playingMusic.value.musicId) {
         // 如果选中的歌曲是当前播放的歌曲
         return;
       }
       // 搜索并删除当前要插入的歌曲
       for (var index = 0; index < mPlayList.length; index++) {
-        if (mPlayList[index].uid == music.uid) {
+        if (mPlayList[index].musicId == music.musicId) {
           audioSourceList.removeAt(index);
           mPlayList.removeAt(index);
           break;
@@ -185,10 +174,11 @@ class PlayerLogic extends SuperController
       }
       // 将插入的歌曲放在当前播放歌曲的后面
       for (var index = 0; index < mPlayList.length; index++) {
-        if (mPlayList[index].uid == playingMusic.value.uid) {
+        if (mPlayList[index].musicId == playingMusic.value.musicId) {
           audioSourceList.insert(
               index + 1, genAudioSourceUri(musicPath, music, coverPath));
-          mPlayList.insert(index + 1, music);
+          final pMusic = PlayListMusic(musicId: music.musicId!, musicName: music.musicName!, artist: music.artist!);
+          mPlayList.insert(index + 1, pMusic);
           break;
         }
       }
@@ -201,8 +191,8 @@ class PlayerLogic extends SuperController
     return AudioSource.uri(
       Uri.file('${SDUtils.path}$musicPath'),
       tag: MediaItem(
-        id: music.uid!,
-        title: music.name!,
+        id: music.musicId!,
+        title: music.musicName!,
         album: music.albumName!,
         artist: music.artist,
         artUri: (coverPath == null || coverPath.isEmpty)
@@ -227,7 +217,7 @@ class PlayerLogic extends SuperController
     var zhLrc = "";
     var romaLrc = "";
 
-    final uid = playingMusic.value.uid;
+    final uid = playingMusic.value.musicId;
     final jp =
         await handleLRC("jp", playingMusic.value.jpUrl, uid, forceRefresh);
     if (jp != null) {
@@ -344,22 +334,14 @@ class PlayerLogic extends SuperController
   }
 
   @override
-  void onDetached() {
-    LogUtil.e('onDetached');
-  }
+  void onDetached() {}
 
   @override
-  void onInactive() {
-    LogUtil.e('onInactive');
-  }
+  void onInactive() {}
 
   @override
-  void onPaused() {
-    LogUtil.e('onPaused');
-  }
+  void onPaused() {}
 
   @override
-  void onResumed() {
-    LogUtil.e('onResumed');
-  }
+  void onResumed() {}
 }

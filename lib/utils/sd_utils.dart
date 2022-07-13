@@ -62,10 +62,11 @@ class SDUtils {
     var buffer = StringBuffer();
     var musicCount = 0;
     for (var album in albumList) {
-      buffer.write("    专辑: ${album.uid} - ${album.name}\n");
-      for (var music in album.music) {
+      buffer.write("    专辑: ${album.albumId} - ${album.albumName}\n");
+      final musicList = await DBLogic.to.findAllMusicsByAlbumId(album.albumId!);
+      for (var music in musicList) {
         musicCount++;
-        buffer.write("        歌曲: ${music.uid} - ${music.name}\n");
+        buffer.write("        歌曲: ${music.musicId} - ${music.musicName}\n");
       }
     }
     buffer.write("专辑数目: ${albumList.length}; 歌曲数目: $musicCount\n");

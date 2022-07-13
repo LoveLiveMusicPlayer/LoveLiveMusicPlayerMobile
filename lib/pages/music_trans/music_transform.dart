@@ -44,9 +44,14 @@ class _MusicTransformState extends State<MusicTransform> {
   void initState() {
     super.initState();
     Wakelock.enable();
-    widget.channel.stream.listen((msg) async {
+    widget.channel.stream.listen((msg) {
       final ftpCmd = ftpCmdFromJson(msg as String);
       switch (ftpCmd.cmd) {
+        case "test":
+          Future.forEach(downloadMusicFromJson(ftpCmd.body), (music) async {
+            await DBLogic.to.insertMusicIntoAlbum(music as DownloadMusic);
+          });
+          break;
         case "port":
           port = ftpCmd.body;
           break;
@@ -104,8 +109,7 @@ class _MusicTransformState extends State<MusicTransform> {
           musicList.clear();
           cancelToken?.cancel();
           SmartDialog.dismiss();
-          await DBLogic.to.findAllList();
-          Get.back();
+          DBLogic.to.findAllListByGroup("all").then((value) => Get.back());
           break;
         case "back":
           Get.back();
@@ -177,7 +181,7 @@ class _MusicTransformState extends State<MusicTransform> {
       await widget.queue.onIdle();
       final message = ftpCmdToJson(FtpCmd(cmd: "finish", body: ""));
       widget.channel.sink.add(message);
-      await DBLogic.to.findAllList();
+      await DBLogic.to.findAllListByGroup("all");
       Get.back();
     }
   }
@@ -214,7 +218,7 @@ class _MusicTransformState extends State<MusicTransform> {
                   final message = ftpCmdToJson(FtpCmd(cmd: "stop", body: ""));
                   widget.channel.sink.add(message);
                   SmartDialog.dismiss();
-                  await DBLogic.to.findAllList();
+                  await DBLogic.to.findAllListByGroup("all");
                   Get.back();
                 },
                 child: const Text('确定'),

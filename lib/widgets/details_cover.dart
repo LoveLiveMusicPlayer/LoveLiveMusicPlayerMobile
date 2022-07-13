@@ -18,14 +18,14 @@ class DetailsCover extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          showImg(SDUtils.getImgPath(album.coverPath?.first ?? "ic_head.jpg"),
+          showImg(SDUtils.getImgPath(album.coverPath!),
               240, 240,
               radius: 24),
           SizedBox(
             height: 20.h,
           ),
           Text(
-            album.name ?? "",
+            album.albumName!,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Get.isDarkMode

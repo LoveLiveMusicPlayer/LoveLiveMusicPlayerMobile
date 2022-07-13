@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
+import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 
 import '../../modules/ext.dart';
@@ -16,10 +18,25 @@ import '../home/widget/dialog_bottom_btn.dart';
 import '../home/widget/dialog_more.dart';
 import 'logic.dart';
 
-class SingerDetailsPage extends StatelessWidget {
+class SingerDetailsPage extends StatefulWidget {
+  @override
+  State<SingerDetailsPage> createState() => _SingerDetailsPageState();
+}
+
+class _SingerDetailsPageState extends State<SingerDetailsPage> {
   final logic = Get.put(SingerDetailsLogic());
+
   final state = Get.find<SingerDetailsLogic>().state;
+
   final Album album = Get.arguments;
+
+  final music = <Music>[];
+
+  @override
+  Future<void> initState() async {
+    music.addAll(await DBLogic.to.findAllMusicsByAlbumId(album.albumId!));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +73,7 @@ class SingerDetailsPage extends StatelessWidget {
     list.add(DetailsListTop(
         selectAll: logic.state.selectAll,
         isSelect: logic.state.isSelect,
-        itemsLength: album.music.length,
+        itemsLength: music.length,
         checkedItemLength: logic.getCheckedSong(),
         onPlayTap: () {},
         onScreenTap: () {
@@ -77,13 +94,13 @@ class SingerDetailsPage extends StatelessWidget {
     list.add(SizedBox(
       height: 10.h,
     ));
-    for (var index = 0; index < album.music.length; index++) {
+    for (var index = 0; index < music.length; index++) {
       list.add(Padding(
         padding: EdgeInsets.only(left: 16.h, bottom: 20.h),
         child: ListViewItemSong(
           index: index,
-          music: album.music[index],
-          checked: logic.isItemChecked(album.music[index]),
+          music: music[index],
+          checked: logic.isItemChecked(music[index]),
           onItemTap: (index, checked) {
             logic.selectItem(index, checked);
           },
@@ -94,7 +111,7 @@ class SingerDetailsPage extends StatelessWidget {
                 alignmentTemp: Alignment.bottomCenter);
           },
           onPlayNowTap: () {
-            PlayerLogic.to.playMusic(album.music, index: index);
+            PlayerLogic.to.playMusic(music, index: index);
           },
         ),
       ));

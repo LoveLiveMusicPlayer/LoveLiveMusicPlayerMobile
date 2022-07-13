@@ -78,7 +78,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
 
   Future<Decoration> generateDecoration(Music music) async {
     Decoration decoration;
-    if (music.uid == null ||
+    if (music.musicId == null ||
         music.coverPath == null ||
         music.coverPath!.isEmpty) {
       decoration = BoxDecoration(
@@ -200,7 +200,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
             onDoubleTap: () => PlayerLogic.to.togglePlay(),
             child: MarqueeText(
                 text: TextSpan(
-                    text: PlayerLogic.to.playingMusic.value.name ?? "暂无歌曲"),
+                    text: PlayerLogic.to.playingMusic.value.musicName ?? "暂无歌曲"),
                 style: TextStyleMs.black_14,
                 speed: 15),
           )

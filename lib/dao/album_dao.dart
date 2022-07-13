@@ -6,8 +6,14 @@ abstract class AlbumDao {
   @Query('SELECT * FROM Album')
   Future<List<Album>> findAllAlbums();
 
-  @Query('SELECT * FROM Album WHERE uid = :uid')
-  Future<Album?> findAlbumByUId(String uid);
+  @Query('SELECT * FROM Album WHERE `group` = :group')
+  Future<List<Album>> findAllAlbumsByGroup(String group);
+
+  @Query('SELECT * FROM Album WHERE name like "%ん%"')
+  Future<List<Album>> findAllAlbumsTest();
+
+  @Query('SELECT * FROM Album WHERE albumId = :albumId')
+  Future<Album?> findAlbumByUId(String albumId);
 
   @insert
   Future<void> insertAlbum(Album album);

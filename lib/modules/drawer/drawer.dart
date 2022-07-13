@@ -55,9 +55,11 @@ class _DrawerPageState extends State<DrawerPage> {
           children: [
             showGroupButton(Assets.drawerLogoLovelive, onTap: () {
               global.currentGroup.value = "all";
+              DBLogic.to.findAllListByGroup("all");
             }, innerWidth: 107, innerHeight: 27),
             showGroupButton(Assets.drawerLogoUs, onTap: () {
               global.currentGroup.value = "μ's";
+              DBLogic.to.findAllListByGroup("μ's");
             }, innerWidth: 74, innerHeight: 58),
           ],
         ),
@@ -66,10 +68,12 @@ class _DrawerPageState extends State<DrawerPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             showGroupButton(Assets.drawerLogoAqours, onTap: () {
-              global.currentGroup.value = "aqours";
+              global.currentGroup.value = "Aqours";
+              DBLogic.to.findAllListByGroup("Aqours");
             }, innerWidth: 90, innerHeight: 36),
             showGroupButton(Assets.drawerLogoNijigasaki, onTap: () {
-              global.currentGroup.value = "niji";
+              global.currentGroup.value = "Nijigasaki";
+              DBLogic.to.findAllListByGroup("Nijigasaki");
             }, innerWidth: 101, innerHeight: 40)
           ],
         ),
@@ -78,10 +82,12 @@ class _DrawerPageState extends State<DrawerPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             showGroupButton(Assets.drawerLogoLiella, onTap: () {
-              global.currentGroup.value = "liella";
+              global.currentGroup.value = "Liella!";
+              DBLogic.to.findAllListByGroup("Liella!");
             }, innerWidth: 100, innerHeight: 35),
             showGroupButton(Assets.drawerLogoAllstars, onTap: () {
-              global.currentGroup.value = "combine";
+              global.currentGroup.value = "Combine";
+              DBLogic.to.findAllListByGroup("Combine");
             }, innerWidth: 88, innerHeight: 44),
           ],
         ),

@@ -40,8 +40,8 @@ class DialogPlaylist extends StatelessWidget {
                   if (PlayerLogic.to.mPlayList.isNotEmpty) {
                     return ListViewItemPlaylist(
                       index: index,
-                      name: PlayerLogic.to.mPlayList[index].name ?? "",
-                      artist: PlayerLogic.to.mPlayList[index].artist ?? "",
+                      name: PlayerLogic.to.mPlayList[index].musicName,
+                      artist: PlayerLogic.to.mPlayList[index].artist,
                       onTap: (index) {
                         // todo
                         // PlayerLogic.to.mPlayList.removeAt(index);

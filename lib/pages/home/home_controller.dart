@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_state.dart';
@@ -98,10 +99,14 @@ class HomeController extends GetxController {
   ///-------------------------------
 
   @override
-  void onReady() {
+  Future<void> onReady() async {
     super.onReady();
     if (PlayerLogic.to.mPlayList.isNotEmpty) {
-      PlayerLogic.to.playingMusic.value = PlayerLogic.to.mPlayList[0];
+      DBLogic.to.findMusicByMusicId(PlayerLogic.to.mPlayList[0].musicId).then((playingMusic) {
+        if (playingMusic != null) {
+          PlayerLogic.to.playingMusic.value = playingMusic;
+        }
+      });
     }
     refresh();
   }

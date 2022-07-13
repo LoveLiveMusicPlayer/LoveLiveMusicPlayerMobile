@@ -6,30 +6,13 @@ import '../models/Music.dart';
 
 class GlobalLogic extends SuperController
     with GetSingleTickerProviderStateMixin {
-  /// all、μ's、aqours、niji、liella、combine
+  /// all、μ's、Aqours、Nijigasaki、Liella!、Combine
   final currentGroup = "all".obs;
   final databaseInitOver = false.obs;
 
-  final musicByAllList = <Music>[].obs;
-  final musicByUsList = <Music>[].obs;
-  final musicByAqoursList = <Music>[].obs;
-  final musicByNijiList = <Music>[].obs;
-  final musicByLiellaList = <Music>[].obs;
-  final musicByCombineList = <Music>[].obs;
-
-  final albumByAllList = <Album>[].obs;
-  final albumByUsList = <Album>[].obs;
-  final albumByAqoursList = <Album>[].obs;
-  final albumByNijiList = <Album>[].obs;
-  final albumByLiellaList = <Album>[].obs;
-  final albumByCombineList = <Album>[].obs;
-
-  final artistByAllList = <Artist>[].obs;
-  final artistByUsList = <Artist>[].obs;
-  final artistByAqoursList = <Artist>[].obs;
-  final artistByNijiList = <Artist>[].obs;
-  final artistByLiellaList = <Artist>[].obs;
-  final artistByCombineList = <Artist>[].obs;
+  final musicList = <Music>[].obs;
+  final albumList = <Album>[].obs;
+  final artistList = <Artist>[].obs;
 
   static GlobalLogic get to => Get.find();
 
@@ -39,104 +22,30 @@ class GlobalLogic extends SuperController
     }
     switch (index) {
       case 0:
-        return checkMusicList().length;
+        return musicList.length;
       case 1:
-        return checkAlbumList().length;
+        return albumList.length;
       case 2:
-        return checkArtistList().length;
+        return artistList.length;
       default:
         return 0;
-    }
-  }
-
-  List<Music> checkMusicList() {
-    switch (currentGroup.value) {
-      case "all":
-        return [...musicByAllList];
-      case "μ's":
-        return [...musicByUsList];
-      case "aqours":
-        return [...musicByAqoursList];
-      case "niji":
-        return [...musicByNijiList];
-      case "liella":
-        return [...musicByLiellaList];
-      case "combine":
-        return [...musicByCombineList];
-      default:
-        return [];
-    }
-  }
-
-  List<Album> checkAlbumList() {
-    switch (currentGroup.value) {
-      case "all":
-        return albumByAllList;
-      case "μ's":
-        return albumByUsList;
-      case "aqours":
-        return albumByAqoursList;
-      case "niji":
-        return albumByNijiList;
-      case "liella":
-        return albumByLiellaList;
-      case "combine":
-        return albumByCombineList;
-      default:
-        return [];
-    }
-  }
-
-  List<Artist> checkArtistList() {
-    switch (currentGroup.value) {
-      case "all":
-        return artistByAllList;
-      case "μ's":
-        return artistByUsList;
-      case "aqours":
-        return artistByAqoursList;
-      case "niji":
-        return artistByNijiList;
-      case "liella":
-        return artistByLiellaList;
-      case "combine":
-        return artistByCombineList;
-      default:
-        return [];
-    }
-  }
-
-  Music getMusicByUidAndGroup(String uid, String? group) {
-    switch (group) {
-      case "μ's":
-        return musicByUsList.where((element) => element.uid == uid).first;
-      case "aqours":
-        return musicByAqoursList.where((element) => element.uid == uid).first;
-      case "niji":
-        return musicByNijiList.where((element) => element.uid == uid).first;
-      case "liella":
-        return musicByLiellaList.where((element) => element.uid == uid).first;
-      case "combine":
-        return musicByCombineList.where((element) => element.uid == uid).first;
-      default:
-        return musicByAllList.where((element) => element.uid == uid).first;
     }
   }
 
   List<Music> filterMusicListByAlbums(menuIndex) {
     switch (menuIndex) {
       case 0:
-        return checkMusicList();
+        return musicList;
       case 1:
-        List<Music> musicList = [];
-        checkAlbumList().forEach((album) {
-          for (var music in musicByAllList) {
-            if (music.albumId == album.uid) {
-              musicList.add(music);
+        List<Music> _musicList = [];
+        for (var album in albumList) {
+          for (var music in musicList) {
+            if (music.albumId == album.albumId) {
+              _musicList.add(music);
             }
           }
-        });
-        return musicList;
+        }
+        return _musicList;
       case 3:
         return [];
       case 5:
@@ -147,22 +56,14 @@ class GlobalLogic extends SuperController
   }
 
   @override
-  void onDetached() {
-    // TODO: implement onDetached
-  }
+  void onDetached() {}
 
   @override
-  void onInactive() {
-    // TODO: implement onInactive
-  }
+  void onInactive() {}
 
   @override
-  void onPaused() {
-    // TODO: implement onPaused
-  }
+  void onPaused() {}
 
   @override
-  void onResumed() {
-    // TODO: implement onResumed
-  }
+  void onResumed() {}
 }

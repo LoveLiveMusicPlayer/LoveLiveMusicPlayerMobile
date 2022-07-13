@@ -114,7 +114,7 @@ class _ListViewItemSongState extends State<ListViewItemSong>
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.music.name ?? "",
+            Text(widget.music.musicName ?? "",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Get.isDarkMode
