@@ -25,9 +25,11 @@ class ListViewItemSongSheet extends StatefulWidget {
   State<ListViewItemSongSheet> createState() => _ListViewItemSongStateSheet();
 }
 
-class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
+class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return InkWell(
       onTap: () {
         HomeController.to.selectItem(
@@ -93,4 +95,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

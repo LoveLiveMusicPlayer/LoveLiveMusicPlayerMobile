@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter_lyric/lyric_parser/parser_smart.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
@@ -94,16 +93,21 @@ class PlayerLogic extends SuperController
     });
 
     /// 当前播放监听
-    mPlayer.currentIndexStream.listen((index) {
+    mPlayer.currentIndexStream.listen((index) async {
       if (index != null && mPlayList.isNotEmpty) {
         // 修改当前播放歌曲
         final currentMusic = mPlayList[index];
         for (var music in mPlayList) {
           music.isPlaying = music.musicId == currentMusic.musicId;
         }
-        // if (playingMusic.value != currentMusic) {
-        //   playingMusic.value = currentMusic;
-        // }
+
+        if (playingMusic.value.musicId != currentMusic.musicId) {
+          final music =
+              await DBLogic.to.findMusicByMusicId(currentMusic.musicId);
+          if (music != null) {
+            playingMusic.value = music;
+          }
+        }
         getLrc(false);
       }
     });
@@ -128,7 +132,10 @@ class PlayerLogic extends SuperController
 
     mPlayList.clear();
     for (var music in musicList) {
-      mPlayList.add(PlayListMusic(musicId: music.musicId!, musicName: music.musicName!, artist: music.artist!));
+      mPlayList.add(PlayListMusic(
+          musicId: music.musicId!,
+          musicName: music.musicName!,
+          artist: music.artist!));
     }
 
     // 当前是否正在播放
@@ -177,7 +184,10 @@ class PlayerLogic extends SuperController
         if (mPlayList[index].musicId == playingMusic.value.musicId) {
           audioSourceList.insert(
               index + 1, genAudioSourceUri(musicPath, music, coverPath));
-          final pMusic = PlayListMusic(musicId: music.musicId!, musicName: music.musicName!, artist: music.artist!);
+          final pMusic = PlayListMusic(
+              musicId: music.musicId!,
+              musicName: music.musicName!,
+              artist: music.artist!);
           mPlayList.insert(index + 1, pMusic);
           break;
         }

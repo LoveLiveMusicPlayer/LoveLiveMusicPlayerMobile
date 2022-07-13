@@ -22,6 +22,7 @@ class RefresherWidget extends StatefulWidget {
   double leftPadding;
   double rightPadding;
   double aspectRatio;
+  ScrollController? scrollController;
 
   /// 长宽比
 
@@ -31,6 +32,7 @@ class RefresherWidget extends StatefulWidget {
     required this.listItem,
     this.onRefresh,
     this.onLoading,
+    this.scrollController,
     this.emptyMsg = "暂无数据",
     this.emptyImg = Assets.mainIcNull,
     this.enablePullUp = true,
@@ -101,6 +103,7 @@ class _RefresherWidgetState extends State<RefresherWidget> {
             ? ListView.separated(
                 itemCount: widget.itemCount,
                 itemBuilder: widget.listItem,
+                controller: widget.scrollController,
                 separatorBuilder: (BuildContext context, int index) {
                   return Container(
                     color: widget.spacingColor,
@@ -109,6 +112,7 @@ class _RefresherWidgetState extends State<RefresherWidget> {
                 },
               )
             : AlignedGridView.count(
+                controller: widget.scrollController,
                 itemCount: widget.itemCount,
                 crossAxisCount: widget.columnNum,
                 mainAxisSpacing: widget.mainAxisSpacing,

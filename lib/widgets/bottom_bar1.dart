@@ -49,6 +49,25 @@ class BottomBar extends StatelessWidget {
         selectedItemColor: const Color(0xFFF940A7),
         unselectedItemColor: const Color(0xFFD1E0F3),
         onTap: (index) {
+          if (HomeController.to.state.currentIndex.value == index) {
+            switch (index) {
+              case 0:
+                HomeController.to.scrollController1.animateTo(0,
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.ease);
+                break;
+              case 1:
+                HomeController.to.scrollController2.animateTo(0,
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.ease);
+                break;
+              case 2:
+                HomeController.to.scrollController3.animateTo(0,
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.ease);
+                break;
+            }
+          }
           PageViewLogic.to.controller.jumpToPage(index);
         },
       );

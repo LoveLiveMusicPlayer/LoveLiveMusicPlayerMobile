@@ -28,9 +28,11 @@ class ListViewItemSinger extends StatefulWidget {
   State<ListViewItemSinger> createState() => _ListViewItemSingerState();
 }
 
-class _ListViewItemSingerState extends State<ListViewItemSinger> {
+class _ListViewItemSingerState extends State<ListViewItemSinger>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Row(
       children: [
         Visibility(
@@ -92,4 +94,7 @@ class _ListViewItemSingerState extends State<ListViewItemSinger> {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

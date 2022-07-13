@@ -30,9 +30,11 @@ class ListViewItemAlbum extends StatefulWidget {
   State<ListViewItemAlbum> createState() => _ListViewItemAlbumState();
 }
 
-class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
+class _ListViewItemAlbumState extends State<ListViewItemAlbum>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final borderWidth = (ScreenUtil().screenWidth - 72.w) / 3;
     return InkWell(
         onTap: () {
@@ -41,10 +43,7 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
           setState(() {});
         },
         child: Column(children: [
-          showImg(
-              SDUtils.getImgPath(
-                  widget.album.coverPath!),
-              borderWidth,
+          showImg(SDUtils.getImgPath(widget.album.coverPath!), borderWidth,
               borderWidth,
               hasShadow: false),
           SizedBox(
@@ -59,4 +58,7 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
           )
         ]));
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

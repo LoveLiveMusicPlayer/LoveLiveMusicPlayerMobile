@@ -200,7 +200,8 @@ class _MiniPlayerState extends State<MiniPlayer> {
             onDoubleTap: () => PlayerLogic.to.togglePlay(),
             child: MarqueeText(
                 text: TextSpan(
-                    text: PlayerLogic.to.playingMusic.value.musicName ?? "暂无歌曲"),
+                    text:
+                        PlayerLogic.to.playingMusic.value.musicName ?? "暂无歌曲"),
                 style: TextStyleMs.black_14,
                 speed: 15),
           )

@@ -33,20 +33,21 @@ class PageViewComponent extends StatelessWidget {
           HomeController.to.state.currentIndex.value = index;
         },
         children: [
-          _buildList(0),
-          _buildList(1),
-          _buildList(2),
-          _buildList(3),
-          _buildList(4),
-          _buildList(5)
+          _buildList(0, HomeController.to.scrollController1),
+          _buildList(1, HomeController.to.scrollController2),
+          _buildList(2, HomeController.to.scrollController3),
+          _buildList(3, HomeController.to.scrollController4),
+          _buildList(4, HomeController.to.scrollController5),
+          _buildList(5, HomeController.to.scrollController6)
         ],
       );
     });
   }
 
-  Widget _buildList(int page) {
+  Widget _buildList(int page, ScrollController scrollController) {
     return Obx(() {
       return RefresherWidget(
+        scrollController: scrollController,
         itemCount: GlobalLogic.to
             .getListSize(page, GlobalLogic.to.databaseInitOver.value),
         enablePullUp: false,
@@ -109,8 +110,7 @@ class PageViewComponent extends StatelessWidget {
             HomeController.to.selectItem(index, checked);
             return;
           }
-          PlayerLogic.to
-              .playMusic(GlobalLogic.to.musicList, index: index);
+          PlayerLogic.to.playMusic(GlobalLogic.to.musicList, index: index);
         },
         onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
         onMoreTap: (music) {
@@ -119,8 +119,7 @@ class PageViewComponent extends StatelessWidget {
               alignmentTemp: Alignment.bottomCenter);
         },
         onPlayNowTap: () {
-          PlayerLogic.to
-              .playMusic(GlobalLogic.to.musicList, index: index);
+          PlayerLogic.to.playMusic(GlobalLogic.to.musicList, index: index);
         },
       );
     }

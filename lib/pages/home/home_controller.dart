@@ -10,6 +10,13 @@ class HomeController extends GetxController {
 
   TabController? tabController;
 
+  ScrollController scrollController1 = ScrollController();
+  ScrollController scrollController2 = ScrollController();
+  ScrollController scrollController3 = ScrollController();
+  ScrollController scrollController4 = ScrollController();
+  ScrollController scrollController5 = ScrollController();
+  ScrollController scrollController6 = ScrollController();
+
   static HomeController get to => Get.find();
 
   getData() {
@@ -102,7 +109,9 @@ class HomeController extends GetxController {
   Future<void> onReady() async {
     super.onReady();
     if (PlayerLogic.to.mPlayList.isNotEmpty) {
-      DBLogic.to.findMusicByMusicId(PlayerLogic.to.mPlayList[0].musicId).then((playingMusic) {
+      DBLogic.to
+          .findMusicByMusicId(PlayerLogic.to.mPlayList[0].musicId)
+          .then((playingMusic) {
         if (playingMusic != null) {
           PlayerLogic.to.playingMusic.value = playingMusic;
         }

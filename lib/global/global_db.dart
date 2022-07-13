@@ -68,8 +68,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
           date: downloadMusic.date,
           coverPath: downloadMusic.coverPath,
           category: downloadMusic.category,
-          group: downloadMusic.group
-      );
+          group: downloadMusic.group);
       await albumDao.insertAlbum(_album);
     }
 
@@ -90,8 +89,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
           romaUrl: downloadMusic.romaUrl,
           group: downloadMusic.group,
           category: downloadMusic.category,
-          isLove: false
-      );
+          isLove: false);
       await musicDao.insertMusic(_music);
     }
   }

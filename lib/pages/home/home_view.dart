@@ -119,25 +119,20 @@ class _HomeViewState extends State<HomeView>
   }
 
   Widget _getTabBarView(GestureTapCallback? onTap) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 54.w,
-        elevation: 0,
-        centerTitle: false,
-        automaticallyImplyLeading: false,
-        backgroundColor: Get.theme.primaryColor,
-        title: _getTabBar(),
-        actions: [_getTopHead(onTap)],
-      ),
-      body: Column(
-        children: [
-          ///顶部歌曲总数栏
-          _buildListTop(),
-
-          ///列表数据
-          const Expanded(child: PageViewComponent())
-        ],
-      ),
+    return Column(
+      children: [
+        AppBar(
+          toolbarHeight: 54.w,
+          elevation: 0,
+          centerTitle: false,
+          automaticallyImplyLeading: false,
+          backgroundColor: Get.theme.primaryColor,
+          title: _getTabBar(),
+          actions: [_getTopHead(onTap)],
+        ),
+        _buildListTop(),
+        const Expanded(child: PageViewComponent())
+      ],
     );
   }
 
