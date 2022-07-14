@@ -65,7 +65,13 @@ class _PlayerState extends State<Player> {
           SizedBox(height: MediaQuery.of(context).padding.top + 14.56.h),
 
           /// 头部
-          PlayerHeader(onTap: widget.onTap),
+          PlayerHeader(onTap: () {
+            /// 点击关闭按钮后确定关闭掉全量歌词界面，防止cpu消耗过多
+            if (!widget.isCover.value) {
+              widget.isCover.value = true;
+            }
+            widget.onTap();
+          }),
 
           SizedBox(height: 10.h),
 

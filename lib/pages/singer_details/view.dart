@@ -33,9 +33,16 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
   final music = <Music>[];
 
   @override
-  Future<void> initState() async {
-    music.addAll(await DBLogic.to.findAllMusicsByAlbumId(album.albumId!));
+  void initState() {
     super.initState();
+    Future.delayed(Duration.zero, () async {
+      await _load();
+      setState(() {});
+    });
+  }
+
+  _load() async {
+    music.addAll(await DBLogic.to.findAllMusicsByAlbumId(album.albumId!));
   }
 
   @override

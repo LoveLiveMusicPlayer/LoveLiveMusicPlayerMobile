@@ -18,6 +18,9 @@ abstract class MusicDao {
   @Query('SELECT * FROM Music WHERE musicId = :musicId')
   Future<Music?> findMusicByUId(String musicId);
 
+  @Query("SELECT * FROM Music WHERE isLove = true")
+  Future<List<Music>> findLovedMusic();
+
   @insert
   Future<void> insertMusic(Music music);
 
