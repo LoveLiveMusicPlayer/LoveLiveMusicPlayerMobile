@@ -139,12 +139,8 @@ class PlayerLogic extends SuperController
     // 设置新的播放列表
     final audioList = <AudioSource>[];
 
-    for (var i = 0; i < musicList.length; i++) {
-      final coverPath = musicList[i].coverPath;
-      final musicPath = musicList[i].musicPath;
-      if (musicPath?.isNotEmpty == true) {
-        audioList.add(genAudioSourceUri(musicPath, musicList[i], coverPath));
-      }
+    for (var music in musicList) {
+      audioList.add(genAudioSourceUri(music));
     }
 
     mPlayList.clear();
@@ -189,50 +185,45 @@ class PlayerLogic extends SuperController
 
   /// 插入到下一曲
   addNextMusic(Music music) {
-    final coverPath = music.coverPath;
-    final musicPath = music.musicPath;
-    if (musicPath?.isNotEmpty == true) {
-      if (music.musicId == playingMusic.value.musicId) {
-        // 如果选中的歌曲是当前播放的歌曲
-        return;
+    if (music.musicId == playingMusic.value.musicId) {
+      // 如果选中的歌曲是当前播放的歌曲
+      return;
+    }
+    // 搜索并删除当前要插入的歌曲
+    for (var index = 0; index < mPlayList.length; index++) {
+      if (mPlayList[index].musicId == music.musicId) {
+        audioSourceList.removeAt(index);
+        mPlayList.removeAt(index);
+        break;
       }
-      // 搜索并删除当前要插入的歌曲
-      for (var index = 0; index < mPlayList.length; index++) {
-        if (mPlayList[index].musicId == music.musicId) {
-          audioSourceList.removeAt(index);
-          mPlayList.removeAt(index);
-          break;
-        }
-      }
-      // 将插入的歌曲放在当前播放歌曲的后面
-      for (var index = 0; index < mPlayList.length; index++) {
-        if (mPlayList[index].musicId == playingMusic.value.musicId) {
-          audioSourceList.insert(
-              index + 1, genAudioSourceUri(musicPath, music, coverPath));
-          final pMusic = PlayListMusic(
-              musicId: music.musicId!,
-              musicName: music.musicName!,
-              artist: music.artist!);
-          mPlayList.insert(index + 1, pMusic);
-          break;
-        }
+    }
+    // 将插入的歌曲放在当前播放歌曲的后面
+    for (var index = 0; index < mPlayList.length; index++) {
+      if (mPlayList[index].musicId == playingMusic.value.musicId) {
+        audioSourceList.insert(
+            index + 1, genAudioSourceUri(music));
+        final pMusic = PlayListMusic(
+            musicId: music.musicId!,
+            musicName: music.musicName!,
+            artist: music.artist!);
+        mPlayList.insert(index + 1, pMusic);
+        break;
       }
     }
   }
 
   /// 生成一个播放URI
-  UriAudioSource genAudioSourceUri(
-      String? musicPath, Music music, String? coverPath) {
+  UriAudioSource genAudioSourceUri(Music music) {
     return AudioSource.uri(
-      Uri.file('${SDUtils.path}$musicPath'),
+      Uri.file('${SDUtils.path}${music.musicPath}'),
       tag: MediaItem(
         id: music.musicId!,
         title: music.musicName!,
         album: music.albumName!,
         artist: music.artist,
-        artUri: (coverPath == null || coverPath.isEmpty)
+        artUri: (music.coverPath == null || music.coverPath!.isEmpty)
             ? Uri.parse(Const.logo)
-            : Uri.file(SDUtils.path + coverPath),
+            : Uri.file(SDUtils.path + music.coverPath!),
       ),
     );
   }
