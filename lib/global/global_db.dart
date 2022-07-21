@@ -20,6 +20,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   late LyricDao lyricDao;
   late MusicDao musicDao;
   late PlayListMusicDao playListMusicDao;
+  // 是否是第一次获取持久化播放列表
+  bool isInit = true;
 
   final globalLogic = Get.find<GlobalLogic>();
   final playLogic = Get.find<PlayerLogic>();
@@ -116,14 +118,18 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       }
     }
     final musicList = await musicDao.findMusicsByMusicIds(musicIds);
-    playLogic.playMusic(musicList, index: willPlayMusicIndex);
+    playLogic.playMusic(musicList, index: willPlayMusicIndex, needPlay: false);
   }
 
   /// 更新播放列表
   Future<void> updatePlayingList(List<PlayListMusic> playMusics) async {
-    if (playMusics.isNotEmpty) {
-      playListMusicDao.deleteAllPlayListMusics();
-      playListMusicDao.insertAllPlayListMusics(playMusics);
+    if (isInit) {
+      isInit = false;
+      return;
+    }
+    if (playMusics.isNotEmpty && !isInit) {
+      await playListMusicDao.deleteAllPlayListMusics();
+      await playListMusicDao.insertAllPlayListMusics(playMusics);
     }
   }
 

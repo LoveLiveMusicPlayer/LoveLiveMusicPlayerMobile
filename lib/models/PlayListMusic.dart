@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:floor/floor.dart';
 
-PlayListMusic albumFromJson(String str) =>
+PlayListMusic playListMusicFromJson(String str) =>
     PlayListMusic.fromJson(json.decode(str));
 
-String albumToJson(PlayListMusic data) => json.encode(data.toJson());
+String playListMusicToJson(PlayListMusic data) => json.encode(data.toJson());
 
 @Entity(tableName: "PlayListMusic")
 class PlayListMusic {

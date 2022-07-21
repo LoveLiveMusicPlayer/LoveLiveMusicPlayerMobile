@@ -69,8 +69,8 @@ class PlayerLogic extends SuperController
     /// 当前播放监听
     mPlayer.currentIndexStream.listen((index) async {
       if (index != null && mPlayList.isNotEmpty) {
+        print("currentIndexStream: $index - ${mPlayList[index].musicName}");
         final currentMusic = mPlayList[index];
-        await persistencePLayList(currentMusic);
         await changePlayingMusic(currentMusic);
         getLrc(false);
       }
@@ -125,7 +125,7 @@ class PlayerLogic extends SuperController
   }
 
   /// 播放指定列表的歌曲
-  playMusic(List<Music> musicList, {int index = 0}) {
+  playMusic(List<Music> musicList, {int index = 0, bool needPlay = true}) {
     // 如果上一次处理没有结束，直接跳过
     if (GlobalLogic.to.isHandlePlay) {
       return;
@@ -148,36 +148,43 @@ class PlayerLogic extends SuperController
     }
 
     mPlayList.clear();
-    for (var music in musicList) {
+    for (var i = 0; i < musicList.length; i++) {
+      final music = musicList[i];
       mPlayList.add(PlayListMusic(
           musicId: music.musicId!,
           musicName: music.musicName!,
-          artist: music.artist!));
+          artist: music.artist!,
+          isPlaying: index == i
+      ));
     }
 
-    // 当前是否正在播放
-    if (isPlaying.value) {
-      mPlayer.stop();
+    persistencePLayList(mPlayList[index]).then((value) {
+      // 当前是否正在播放
+      if (isPlaying.value) {
+        mPlayer.stop();
 
-      audioSourceList.clear();
-      audioSourceList.addAll(audioList);
-      mPlayer.setAudioSource(audioSourceList, initialIndex: index);
-
-      mPlayer.play();
-    } else {
-      // 首次播放
-      audioSourceList.clear();
-      audioSourceList.addAll(audioList);
-      mPlayer.setAudioSource(audioSourceList, initialIndex: index);
-
-      mPlayer.play();
-    }
-    if (playingMusic.value != musicList[index]) {
-      playingMusic.value = musicList[index];
-    }
-    getLrc(false);
-    audioList.clear();
-    GlobalLogic.to.isHandlePlay = false;
+        audioSourceList.clear();
+        audioSourceList.addAll(audioList);
+        mPlayer.setAudioSource(audioSourceList, initialIndex: index);
+        if (needPlay) {
+          mPlayer.play();
+        }
+      } else {
+        // 首次播放
+        audioSourceList.clear();
+        audioSourceList.addAll(audioList);
+        mPlayer.setAudioSource(audioSourceList, initialIndex: index);
+        if (needPlay) {
+          mPlayer.play();
+        }
+      }
+      if (playingMusic.value != musicList[index]) {
+        playingMusic.value = musicList[index];
+      }
+      getLrc(false);
+      audioList.clear();
+      GlobalLogic.to.isHandlePlay = false;
+    });
   }
 
   /// 插入到下一曲
