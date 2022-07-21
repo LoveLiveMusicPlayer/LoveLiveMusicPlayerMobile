@@ -1,10 +1,13 @@
 import 'dart:convert';
 
+import 'package:floor/floor.dart';
+
 PlayListMusic albumFromJson(String str) =>
     PlayListMusic.fromJson(json.decode(str));
 
 String albumToJson(PlayListMusic data) => json.encode(data.toJson());
 
+@Entity(tableName: "PlayListMusic")
 class PlayListMusic {
   PlayListMusic(
       {required this.musicId,
@@ -12,6 +15,7 @@ class PlayListMusic {
       required this.artist,
       this.isPlaying = false});
 
+  @primaryKey
   String musicId;
   String musicName;
   String artist;

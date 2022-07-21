@@ -3,8 +3,11 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/dao/database.dart';
 import 'package:lovelivemusicplayer/dao/lyric_dao.dart';
 import 'package:lovelivemusicplayer/dao/music_dao.dart';
+import 'package:lovelivemusicplayer/dao/playlistmusic_dao.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
+import 'package:lovelivemusicplayer/models/PlayListMusic.dart';
 
 import '../dao/album_dao.dart';
 import '../models/Album.dart';
@@ -16,8 +19,10 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   late AlbumDao albumDao;
   late LyricDao lyricDao;
   late MusicDao musicDao;
+  late PlayListMusicDao playListMusicDao;
 
   final globalLogic = Get.find<GlobalLogic>();
+  final playLogic = Get.find<PlayerLogic>();
 
   static DBLogic get to => Get.find();
 
@@ -30,7 +35,9 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     albumDao = database.albumDao;
     lyricDao = database.lyricDao;
     musicDao = database.musicDao;
+    playListMusicDao = database.playListMusicDao;
     await findAllListByGroup("all");
+    await findAllPlayListMusics();
     super.onInit();
   }
 
@@ -59,6 +66,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         time: const Duration(seconds: 5));
   }
 
+  /// 初始化数据库数据
   Future<void> insertMusicIntoAlbum(DownloadMusic downloadMusic) async {
     final album = await albumDao.findAlbumByUId(downloadMusic.albumUId);
     if (album == null) {
@@ -94,14 +102,42 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     }
   }
 
+  /// 获取上一次持久化的播放列表并播放
+  Future<void> findAllPlayListMusics() async {
+    final playList = await playListMusicDao.findAllPlayListMusics();
+    final musicIds = <String>[];
+    for (var playListMusic in playList) {
+      musicIds.add(playListMusic.musicId);
+    }
+    var willPlayMusicIndex = 0;
+    for (var i = 0; i < playList.length; i++) {
+      if (playList[i].isPlaying) {
+        willPlayMusicIndex = i;
+      }
+    }
+    final musicList = await musicDao.findMusicsByMusicIds(musicIds);
+    playLogic.playMusic(musicList, index: willPlayMusicIndex);
+  }
+
+  /// 更新播放列表
+  Future<void> updatePlayingList(List<PlayListMusic> playMusics) async {
+    if (playMusics.isNotEmpty) {
+      playListMusicDao.deleteAllPlayListMusics();
+      playListMusicDao.insertAllPlayListMusics(playMusics);
+    }
+  }
+
+  /// 通过albumId获取专辑下的全部歌曲
   Future<List<Music>> findAllMusicsByAlbumId(String albumId) async {
     return await musicDao.findAllMusicsByAlbumId(albumId);
   }
 
+  /// 通过musicId获取歌曲
   Future<Music?> findMusicByMusicId(String musicId) async {
     return await musicDao.findMusicByUId(musicId);
   }
 
+  /// 清空全部专辑
   clearAllAlbum() async {
     await albumDao.deleteAllAlbums();
   }

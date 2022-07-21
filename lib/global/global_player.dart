@@ -6,8 +6,9 @@ import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/Lyric.dart';
-import 'package:lovelivemusicplayer/models/PlayingList.dart';
+import 'package:lovelivemusicplayer/models/PlayListMusic.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
@@ -51,6 +52,7 @@ class PlayerLogic extends SuperController
 
   @override
   void onInit() {
+    super.onInit();
     SpUtil.getInt("loopMode", 0).then((index) => changeLoopMode(index));
 
     /// 播放状态监听
@@ -61,61 +63,76 @@ class PlayerLogic extends SuperController
     /// 播放位置监听
     mPlayer.positionStream.listen((duration) {
       playingPosition.value = duration;
-      // 修改前一句、当前、后一句歌词内容
-      final lrcList = ParserSmart(fullLrc["jp"]!).parseLines();
-      for (var i = 0; i < lrcList.length; i++) {
-        if (i == lrcList.length - 1 &&
-            (lrcList[i].startTime ?? 0) < duration.inMilliseconds) {
-          playingJPLrc.value = {
-            "pre": (i - 1 <= lrcList.length - 1 && i > 0)
-                ? lrcList[i - 1].mainText ?? ""
-                : "",
-            "current":
-                (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "",
-            "next": ""
-          };
-          break;
-        } else if ((lrcList[i].startTime ?? 0) < duration.inMilliseconds &&
-            (lrcList[i + 1].startTime ?? 0) > duration.inMilliseconds) {
-          playingJPLrc.value = {
-            "pre": (i - 1 <= lrcList.length - 1 && i > 0)
-                ? lrcList[i - 1].mainText ?? ""
-                : "",
-            "current":
-                (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "",
-            "next": (i + 1 <= lrcList.length - 1)
-                ? lrcList[i + 1].mainText ?? ""
-                : ""
-          };
-          break;
-        }
-      }
+      changePlayingLyric(duration);
     });
 
     /// 当前播放监听
     mPlayer.currentIndexStream.listen((index) async {
       if (index != null && mPlayList.isNotEmpty) {
-        // 修改当前播放歌曲
         final currentMusic = mPlayList[index];
-        for (var music in mPlayList) {
-          music.isPlaying = music.musicId == currentMusic.musicId;
-        }
-
-        if (playingMusic.value.musicId != currentMusic.musicId) {
-          final music =
-              await DBLogic.to.findMusicByMusicId(currentMusic.musicId);
-          if (music != null) {
-            playingMusic.value = music;
-          }
-        }
+        await persistencePLayList(currentMusic);
+        await changePlayingMusic(currentMusic);
         getLrc(false);
       }
     });
   }
 
+  /// 持久化播放列表
+  Future<void> persistencePLayList(PlayListMusic currentMusic) async {
+    for (var playListMusic in mPlayList) {
+      playListMusic.isPlaying = playListMusic.musicId == currentMusic.musicId;
+    }
+    await DBLogic.to.updatePlayingList(mPlayList);
+  }
+
+  /// 修改当前播放的歌曲
+  Future<void> changePlayingMusic(PlayListMusic currentMusic) async {
+    if (playingMusic.value.musicId != currentMusic.musicId) {
+      final music = await DBLogic.to.findMusicByMusicId(currentMusic.musicId);
+      if (music != null) {
+        playingMusic.value = music;
+      }
+    }
+  }
+
+  /// 修改前一句、当前、后一句歌词内容
+  Future<void> changePlayingLyric(Duration duration) async {
+    final lrcList = ParserSmart(fullLrc["jp"]!).parseLines();
+    for (var i = 0; i < lrcList.length; i++) {
+      if (i == lrcList.length - 1 &&
+          (lrcList[i].startTime ?? 0) < duration.inMilliseconds) {
+        playingJPLrc.value = {
+          "pre": (i - 1 <= lrcList.length - 1 && i > 0)
+              ? lrcList[i - 1].mainText ?? ""
+              : "",
+          "current": (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "",
+          "next": ""
+        };
+        break;
+      } else if ((lrcList[i].startTime ?? 0) < duration.inMilliseconds &&
+          (lrcList[i + 1].startTime ?? 0) > duration.inMilliseconds) {
+        playingJPLrc.value = {
+          "pre": (i - 1 <= lrcList.length - 1 && i > 0)
+              ? lrcList[i - 1].mainText ?? ""
+              : "",
+          "current": (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "",
+          "next":
+              (i + 1 <= lrcList.length - 1) ? lrcList[i + 1].mainText ?? "" : ""
+        };
+        break;
+      }
+    }
+  }
+
   /// 播放指定列表的歌曲
   playMusic(List<Music> musicList, {int index = 0}) {
+    // 如果上一次处理没有结束，直接跳过
+    if (GlobalLogic.to.isHandlePlay) {
+      return;
+    }
+    GlobalLogic.to.isHandlePlay = true;
     if (musicList.isEmpty) {
+      GlobalLogic.to.isHandlePlay = false;
       return;
     }
 
@@ -160,6 +177,7 @@ class PlayerLogic extends SuperController
     }
     getLrc(false);
     audioList.clear();
+    GlobalLogic.to.isHandlePlay = false;
   }
 
   /// 插入到下一曲
@@ -222,7 +240,7 @@ class PlayerLogic extends SuperController
   }
 
   /// 获取中/日/罗马歌词
-  getLrc(bool forceRefresh) async {
+  Future<void> getLrc(bool forceRefresh) async {
     var jpLrc = "";
     var zhLrc = "";
     var romaLrc = "";

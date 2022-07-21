@@ -4,9 +4,11 @@ import 'package:floor/floor.dart';
 import 'package:lovelivemusicplayer/dao/list_converter.dart';
 import 'package:lovelivemusicplayer/dao/lyric_dao.dart';
 import 'package:lovelivemusicplayer/dao/music_dao.dart';
+import 'package:lovelivemusicplayer/dao/playlistmusic_dao.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Lyric.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
+import 'package:lovelivemusicplayer/models/PlayListMusic.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 import 'album_dao.dart';
@@ -14,13 +16,15 @@ import 'album_dao.dart';
 part 'database.g.dart';
 
 @TypeConverters([StringListConverter])
-@Database(version: 1, entities: [Album, Lyric, Music])
+@Database(version: 1, entities: [Album, Lyric, Music, PlayListMusic])
 abstract class MusicDatabase extends FloorDatabase {
   AlbumDao get albumDao;
 
   LyricDao get lyricDao;
 
   MusicDao get musicDao;
+
+  PlayListMusicDao get playListMusicDao;
 }
 
 // final migration1to2 = Migration(1, 2, (database) async {

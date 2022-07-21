@@ -14,6 +14,9 @@ class GlobalLogic extends SuperController
   final albumList = <Album>[].obs;
   final artistList = <Artist>[].obs;
 
+  /// 是否正在处理播放逻辑
+  var isHandlePlay = false;
+
   static GlobalLogic get to => Get.find();
 
   getListSize(int index, bool isDbInit) {
