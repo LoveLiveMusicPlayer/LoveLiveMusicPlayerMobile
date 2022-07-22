@@ -47,9 +47,15 @@ class _MusicTransformState extends State<MusicTransform> {
     widget.channel.stream.listen((msg) {
       final ftpCmd = ftpCmdFromJson(msg as String);
       switch (ftpCmd.cmd) {
-        case "test":
-          Future.forEach(downloadMusicFromJson(ftpCmd.body), (music) async {
-            await DBLogic.to.insertMusicIntoAlbum(music as DownloadMusic);
+        case "noTrans":
+          Future.forEach<DownloadMusic>(downloadMusicFromJson(ftpCmd.body), (music) async {
+            if (File(SDUtils.path + music.musicPath).existsSync()) {
+              song = music.musicName;
+              setState(() {});
+              await DBLogic.to.insertMusicIntoAlbum(music);
+            }
+          }).then((_) {
+            DBLogic.to.findAllListByGroup("all").then((value) => Get.back());
           });
           break;
         case "port":
@@ -144,11 +150,12 @@ class _MusicTransformState extends State<MusicTransform> {
   }
 
   pushQueue(DownloadMusic music, String url, String dest, bool isLast) async {
+    final isMusic = url.endsWith("flac") || url.endsWith("wav");
     await widget.queue.add(() async {
       try {
         cancelToken = CancelToken();
         await Network.download(url, dest, (received, total) {
-          if (total != -1) {
+          if (total != -1 && isMusic) {
             final _progress = (received / total * 100).toStringAsFixed(0);
             progress = _progress + "%";
             song = music.musicName;
@@ -170,7 +177,9 @@ class _MusicTransformState extends State<MusicTransform> {
             }
           }
         }, cancelToken);
-        DBLogic.to.insertMusicIntoAlbum(music);
+        if (isMusic) {
+          DBLogic.to.insertMusicIntoAlbum(music);
+        }
       } catch (e) {
         final message =
             ftpCmdToJson(FtpCmd(cmd: "download fail", body: music.musicUId));

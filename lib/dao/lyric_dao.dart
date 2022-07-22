@@ -11,4 +11,7 @@ abstract class LyricDao {
 
   @update
   Future<void> updateLrc(Lyric lyric);
+
+  @Query("Delete FROM Lyric")
+  Future<void> deleteAllLyrics();
 }

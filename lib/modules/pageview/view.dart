@@ -10,6 +10,7 @@ import 'package:lovelivemusicplayer/pages/home/widget/listview_item_album.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_singer.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_song_sheet.dart';
 import 'package:lovelivemusicplayer/routes.dart';
+import 'package:lovelivemusicplayer/widgets/listview_item_love.dart';
 import 'package:lovelivemusicplayer/widgets/listview_item_song.dart';
 import 'package:lovelivemusicplayer/widgets/refresher_widget.dart';
 
@@ -45,27 +46,25 @@ class PageViewComponent extends StatelessWidget {
   }
 
   Widget _buildList(int page, ScrollController scrollController) {
-    return Obx(() {
-      return RefresherWidget(
-        scrollController: scrollController,
-        itemCount: GlobalLogic.to
-            .getListSize(page, GlobalLogic.to.databaseInitOver.value),
-        enablePullUp: false,
-        enablePullDown: false,
-        isGridView: page == 1,
+    return RefresherWidget(
+      scrollController: scrollController,
+      itemCount: GlobalLogic.to
+          .getListSize(page, GlobalLogic.to.databaseInitOver.value),
+      enablePullUp: false,
+      enablePullDown: false,
+      isGridView: page == 1,
 
-        ///当前列表是否网格显示
-        columnNum: 3,
-        crossAxisSpacing: 10.w,
-        mainAxisSpacing: 10.h,
-        leftPadding: 16.w,
-        rightPadding: 16.w,
-        aspectRatio: 0.9,
-        listItem: (cxt, index) {
-          return _buildListItem(index, page);
-        },
-      );
-    });
+      ///当前列表是否网格显示
+      columnNum: 3,
+      crossAxisSpacing: 10.w,
+      mainAxisSpacing: 10.h,
+      leftPadding: 16.w,
+      rightPadding: 16.w,
+      aspectRatio: 0.9,
+      listItem: (cxt, index) {
+        return _buildListItem(index, page);
+      },
+    );
   }
 
   Widget _buildListItem(int index, int page) {
@@ -96,6 +95,28 @@ class PageViewComponent extends StatelessWidget {
             Get.toNamed(Routes.routeSingerDetails,
                 arguments: GlobalLogic.to.albumList[index]);
           }
+        },
+      );
+    } else if (page == 3) {
+      return ListViewItemLove(
+        index: index,
+        music: GlobalLogic.to.loveList[index],
+        checked: HomeController.to.isItemChecked(index),
+        onItemTap: (index, checked) {
+          if (HomeController.to.state.isSelect.value) {
+            HomeController.to.selectItem(index, checked);
+            return;
+          }
+          PlayerLogic.to.playMusic(GlobalLogic.to.loveList, index: index);
+        },
+        onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
+        onMoreTap: (music) {
+          SmartDialog.compatible.show(
+              widget: DialogMore(music: music),
+              alignmentTemp: Alignment.bottomCenter);
+        },
+        onPlayNowTap: () {
+          PlayerLogic.to.playMusic(GlobalLogic.to.loveList, index: index);
         },
       );
     } else if (page == 4) {

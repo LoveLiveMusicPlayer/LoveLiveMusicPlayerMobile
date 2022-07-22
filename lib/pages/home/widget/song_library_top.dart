@@ -115,7 +115,7 @@ class Song_libraryTop extends StatelessWidget {
     return Expanded(
       child: Obx(() {
         return Text(
-            "${global.getListSize(index, global.databaseInitOver.value)}${index == 0 ? '首歌曲' : '张专辑'}",
+            "${global.getListSize(index, global.databaseInitOver.value)}${index == 1 ? "张专辑" : "首歌曲"}",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style:

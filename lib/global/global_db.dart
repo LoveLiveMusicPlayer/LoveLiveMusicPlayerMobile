@@ -60,12 +60,28 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
     GlobalLogic.to.albumList.value = allAlbums;
     GlobalLogic.to.musicList.value = allMusics;
+    findAllLoveListByGroup(group);
 
     GlobalLogic.to.databaseInitOver.value = true;
 
     SmartDialog.compatible.showToast(
         "专辑: ${allAlbums.length}; 歌曲: ${allMusics.length}",
         time: const Duration(seconds: 5));
+  }
+
+  /// 获取我喜欢列表
+  findAllLoveListByGroup(String group) {
+    final loveList = <Music>[];
+    GlobalLogic.to.musicList.where((music) {
+      if (group == "all") {
+        return music.isLove;
+      } else {
+        return music.isLove && music.group == group;
+      }
+    }).forEach((music) {
+      loveList.add(music);
+    });
+    GlobalLogic.to.loveList.value = loveList;
   }
 
   /// 初始化数据库数据
@@ -143,9 +159,19 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     return await musicDao.findMusicByUId(musicId);
   }
 
+  Future<Music> updateLove(Music music) async {
+    music.isLove = !music.isLove;
+    await musicDao.updateMusic(music);
+    GlobalLogic.to.musicList.firstWhere((_music) => _music.musicId == music.musicId).isLove = music.isLove;
+    return music;
+  }
+
   /// 清空全部专辑
   clearAllAlbum() async {
     await albumDao.deleteAllAlbums();
+    await musicDao.deleteAllMusics();
+    await lyricDao.deleteAllLyrics();
+    await playListMusicDao.deleteAllPlayListMusics();
   }
 
   @override

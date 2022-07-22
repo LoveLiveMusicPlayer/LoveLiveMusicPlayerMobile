@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
-
 import '../models/Music.dart';
 
 class GlobalLogic extends SuperController
@@ -13,6 +12,9 @@ class GlobalLogic extends SuperController
   final musicList = <Music>[].obs;
   final albumList = <Album>[].obs;
   final artistList = <Artist>[].obs;
+  final loveList = <Music>[].obs;
+  final menuList = <Music>[].obs;
+  final recentlyList = <Music>[].obs;
 
   /// 是否正在处理播放逻辑
   var isHandlePlay = false;
@@ -30,6 +32,8 @@ class GlobalLogic extends SuperController
         return albumList.length;
       case 2:
         return artistList.length;
+      case 3:
+        return loveList.length;
       default:
         return 0;
     }
@@ -50,7 +54,7 @@ class GlobalLogic extends SuperController
         }
         return _musicList;
       case 3:
-        return [];
+        return loveList;
       case 5:
         return [];
       default:

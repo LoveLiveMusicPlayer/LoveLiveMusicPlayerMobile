@@ -338,7 +338,12 @@ class PlayerLogic extends SuperController
     }
   }
 
-  toggleLove() {}
+  toggleLove() {
+    DBLogic.to.updateLove(playingMusic.value).then((value) {
+      playingMusic.value = Music.deepClone(value);
+      DBLogic.to.findAllLoveListByGroup(GlobalLogic.to.currentGroup.value);
+    });
+  }
 
   /// 拖拽到指定位置播放
   seekTo(int ms) {
