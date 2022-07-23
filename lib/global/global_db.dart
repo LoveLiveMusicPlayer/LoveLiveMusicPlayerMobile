@@ -8,6 +8,7 @@ import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/models/PlayListMusic.dart';
+import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 
 import '../dao/album_dao.dart';
 import '../models/Album.dart';
@@ -39,7 +40,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     musicDao = database.musicDao;
     playListMusicDao = database.playListMusicDao;
     await findAllListByGroup("all");
-    await findAllPlayListMusics();
+    Future.delayed(const Duration(seconds: 3)).then((value) => findAllPlayListMusics());
     super.onInit();
   }
 
@@ -67,6 +68,13 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     SmartDialog.compatible.showToast(
         "专辑: ${allAlbums.length}; 歌曲: ${allMusics.length}",
         time: const Duration(seconds: 5));
+
+    HomeController.to.scrollController1.jumpTo(0);
+    HomeController.to.scrollController2.jumpTo(0);
+    HomeController.to.scrollController3.jumpTo(0);
+    HomeController.to.scrollController4.jumpTo(0);
+    HomeController.to.scrollController5.jumpTo(0);
+    HomeController.to.scrollController6.jumpTo(0);
   }
 
   /// 获取我喜欢列表

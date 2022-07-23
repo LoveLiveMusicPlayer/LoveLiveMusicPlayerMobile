@@ -94,8 +94,8 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                       },
                       onDelTap: (index) {
                         mPlayList.removeAt(index);
-                        PlayerLogic.to.removeMusic(index);
                         setState(() {});
+                        PlayerLogic.to.removeMusic(index);
                       },
                     );
                   } else {

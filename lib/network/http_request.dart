@@ -54,7 +54,9 @@ class Network {
       }
       return Future.error(error.toString());
     });
-    SmartDialog.dismiss();
+    if (isShowDialog) {
+      SmartDialog.dismiss();
+    }
     return resp.data;
   }
 

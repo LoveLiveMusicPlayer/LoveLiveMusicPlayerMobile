@@ -68,22 +68,20 @@ class PlayerLogic extends SuperController
 
     /// 当前播放监听
     mPlayer.currentIndexStream.listen((index) async {
-      if (index != null && mPlayList.isNotEmpty) {
-        // print("currentIndexStream: $index - ${mPlayList[index].musicName}");
+      if (index != null && mPlayList.isNotEmpty && !GlobalLogic.to.isHandlePlay) {
+        print("currentIndexStream: $index - ${mPlayList[index].musicName}");
         final currentMusic = mPlayList[index];
         await changePlayingMusic(currentMusic);
-        if (!GlobalLogic.to.isHandlePlay) {
-          persistencePLayList2(mPlayList, index).then((value) {
-            GlobalLogic.to.isHandlePlay = false;
-          });
-          getLrc(false);
-        }
+        persistencePLayList2(mPlayList, index).then((value) {
+          GlobalLogic.to.isHandlePlay = false;
+        });
+        getLrc(false);
       }
     });
   }
 
   /// 持久化播放列表
-  Future<void> persistencePLayList(List<Music> musicList, int index) async {
+  Future<void> persistencePlayList(List<Music> musicList, int index) async {
     mPlayList.clear();
     for (var i = 0; i < musicList.length; i++) {
       final music = musicList[i];
@@ -168,18 +166,21 @@ class PlayerLogic extends SuperController
     audioSourceList.clear();
     audioSourceList.addAll(audioList);
     audioList.clear();
-    if (playingMusic.value != musicList[index]) {
-      playingMusic.value = musicList[index];
-    }
+
     mPlayer.setAudioSource(audioSourceList, initialIndex: index).then((value) {
       if (needPlay) {
         mPlayer.play();
       }
-      persistencePLayList(musicList, index).then((value) {
-        GlobalLogic.to.isHandlePlay = false;
+      persistencePlayList(musicList, index).then((value) {
+        if (playingMusic.value != musicList[index]) {
+          playingMusic.value = musicList[index];
+        }
+        getLrc(false).then((value) {
+          GlobalLogic.to.isHandlePlay = false;
+        });
       });
     });
-    getLrc(false);
+
   }
 
   /// 插入到下一曲
@@ -363,8 +364,15 @@ class PlayerLogic extends SuperController
     await SpUtil.put("loopMode", index);
   }
 
-  removeMusic(int index) {
+  Future<void> removeMusic(int index) async {
     audioSourceList.removeAt(index);
+    if (mPlayList.length == index) {
+      final music = await DBLogic.to.findMusicByMusicId(mPlayList[0].musicId);
+      playingMusic.value = music!;
+    } else {
+      final music = await DBLogic.to.findMusicByMusicId(mPlayList[index].musicId);
+      playingMusic.value = music!;
+    }
   }
 
   @override

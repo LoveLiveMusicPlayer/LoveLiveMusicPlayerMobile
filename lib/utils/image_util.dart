@@ -65,11 +65,9 @@ class ImageUtil {
     Uint8List? result;
     try {
       result = await FlutterImageCompress.compressWithFile(path,
-          format: CompressFormat.heic);
-    } on UnsupportedError catch (e) {
-      print(e);
-      result = await FlutterImageCompress.compressWithFile(path,
           format: CompressFormat.jpeg);
+    } catch (e) {
+      print(e);
     }
     return result;
   }
