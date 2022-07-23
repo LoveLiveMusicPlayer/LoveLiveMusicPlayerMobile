@@ -32,7 +32,7 @@ class ControlButtons extends StatelessWidget {
                   loopMode = LoopMode.off;
                 }
                 final index = PlayerLogic.loopModes.indexOf(loopMode);
-                return materialButton(icons[index], () async {
+                return materialButton(icons[index], () {
                   final currentIndex = PlayerLogic.loopModes.indexOf(loopMode);
                   final nextIndex =
                       (currentIndex + 1) % PlayerLogic.loopModes.length;

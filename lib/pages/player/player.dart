@@ -104,7 +104,6 @@ class _PlayerState extends State<Player> {
         ],
       ),
     );
-    // return Expanded(child: Container(color: Colors.red,));
   }
 
   Widget stackBody() {

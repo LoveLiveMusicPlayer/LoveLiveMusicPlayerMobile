@@ -45,9 +45,9 @@ class _SeekBarState extends State<SeekBar> {
           data: const SliderThemeData(
               trackHeight: 4, thumbShape: RoundSliderThumbShape()),
           child: Slider(
-            inactiveColor: const Color(0xFFCCDDF1).withOpacity(0.6),
-            activeColor: const Color(0xFFCCDDF1).withOpacity(0.6),
-            thumbColor: Get.isDarkMode ? Colors.white : Get.theme.primaryColor,
+            inactiveColor: Get.isDarkMode ? const Color(0x4D05080C) : const Color(0x99CCDDF1),
+            activeColor: Get.isDarkMode ? const Color(0x9905080C) : const Color(0x99CCDDF1),
+            thumbColor: Get.isDarkMode ? const Color(0xFF05080c) : Get.theme.primaryColor,
             min: 0.0,
             max: total.toDouble(),
             value: value,

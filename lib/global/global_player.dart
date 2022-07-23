@@ -69,20 +69,43 @@ class PlayerLogic extends SuperController
     /// 当前播放监听
     mPlayer.currentIndexStream.listen((index) async {
       if (index != null && mPlayList.isNotEmpty) {
-        print("currentIndexStream: $index - ${mPlayList[index].musicName}");
+        // print("currentIndexStream: $index - ${mPlayList[index].musicName}");
         final currentMusic = mPlayList[index];
         await changePlayingMusic(currentMusic);
-        getLrc(false);
+        if (!GlobalLogic.to.isHandlePlay) {
+          persistencePLayList2(mPlayList, index).then((value) {
+            GlobalLogic.to.isHandlePlay = false;
+          });
+          getLrc(false);
+        }
       }
     });
   }
 
   /// 持久化播放列表
-  Future<void> persistencePLayList(PlayListMusic currentMusic) async {
+  Future<void> persistencePLayList(List<Music> musicList, int index) async {
+    mPlayList.clear();
+    for (var i = 0; i < musicList.length; i++) {
+      final music = musicList[i];
+      mPlayList.add(PlayListMusic(
+          musicId: music.musicId!,
+          musicName: music.musicName!,
+          artist: music.artist!,
+          isPlaying: index == i
+      ));
+    }
     for (var playListMusic in mPlayList) {
-      playListMusic.isPlaying = playListMusic.musicId == currentMusic.musicId;
+      playListMusic.isPlaying = playListMusic.musicId == musicList[index].musicId;
     }
     await DBLogic.to.updatePlayingList(mPlayList);
+  }
+
+  /// 持久化播放列表2
+  Future<void> persistencePLayList2(List<PlayListMusic> playList, int index) async {
+    for (var i = 0; i < playList.length; i++) {
+      playList[i].isPlaying = index == i;
+    }
+    await DBLogic.to.updatePlayingList(playList);
   }
 
   /// 修改当前播放的歌曲
@@ -138,49 +161,25 @@ class PlayerLogic extends SuperController
 
     // 设置新的播放列表
     final audioList = <AudioSource>[];
-
     for (var music in musicList) {
       audioList.add(genAudioSourceUri(music));
     }
-
-    mPlayList.clear();
-    for (var i = 0; i < musicList.length; i++) {
-      final music = musicList[i];
-      mPlayList.add(PlayListMusic(
-          musicId: music.musicId!,
-          musicName: music.musicName!,
-          artist: music.artist!,
-          isPlaying: index == i
-      ));
+    mPlayer.stop();
+    audioSourceList.clear();
+    audioSourceList.addAll(audioList);
+    audioList.clear();
+    if (playingMusic.value != musicList[index]) {
+      playingMusic.value = musicList[index];
     }
-
-    persistencePLayList(mPlayList[index]).then((value) {
-      // 当前是否正在播放
-      if (isPlaying.value) {
-        mPlayer.stop();
-
-        audioSourceList.clear();
-        audioSourceList.addAll(audioList);
-        mPlayer.setAudioSource(audioSourceList, initialIndex: index);
-        if (needPlay) {
-          mPlayer.play();
-        }
-      } else {
-        // 首次播放
-        audioSourceList.clear();
-        audioSourceList.addAll(audioList);
-        mPlayer.setAudioSource(audioSourceList, initialIndex: index);
-        if (needPlay) {
-          mPlayer.play();
-        }
+    mPlayer.setAudioSource(audioSourceList, initialIndex: index).then((value) {
+      if (needPlay) {
+        mPlayer.play();
       }
-      if (playingMusic.value != musicList[index]) {
-        playingMusic.value = musicList[index];
-      }
-      getLrc(false);
-      audioList.clear();
-      GlobalLogic.to.isHandlePlay = false;
+      persistencePLayList(musicList, index).then((value) {
+        GlobalLogic.to.isHandlePlay = false;
+      });
     });
+    getLrc(false);
   }
 
   /// 插入到下一曲
@@ -351,7 +350,7 @@ class PlayerLogic extends SuperController
   }
 
   /// 切换循环模式
-  void changeLoopMode(int index) async {
+  Future<void> changeLoopMode(int index) async {
     // 先设置随机模式，再设置循环模式，否则监听到的流会遗漏随机状态
     final enableShuffle = index == 0;
     await mPlayer.setShuffleModeEnabled(enableShuffle);
@@ -362,6 +361,10 @@ class PlayerLogic extends SuperController
     mPlayer.setLoopMode(
         loopModes[index] == LoopMode.off ? LoopMode.all : loopModes[index]);
     await SpUtil.put("loopMode", index);
+  }
+
+  removeMusic(int index) {
+    audioSourceList.removeAt(index);
   }
 
   @override

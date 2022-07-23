@@ -157,9 +157,9 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
       color: innerColor,
       borderRadius: BorderRadius.circular(radius.h),
       boxShadow: [
-        const BoxShadow(
-            color: Colors.white,
-            offset: Offset(-3, -3),
+        BoxShadow(
+            color: Get.isDarkMode ? const Color(0x1005080C) : Colors.white,
+            offset: const Offset(-3, -3),
             blurStyle: BlurStyle.inner,
             blurRadius: 6),
         BoxShadow(
@@ -174,9 +174,6 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
     child: ClipRRect(
       borderRadius: BorderRadius.circular(radius.h),
       child: Material(
-        color: Get.isDarkMode
-            ? Get.theme.primaryColorLight
-            : Get.theme.primaryColor,
         child: InkWell(
           splashColor: const Color(0xFFD3E0EC),
           highlightColor: const Color(0xFFD3E0EC),
@@ -221,7 +218,7 @@ Widget showGroupButton(String path,
             color: Get.isDarkMode
                 ? const Color(0xFF05080C)
                 : const Color(0xFFD3E0EC),
-            offset: Offset(5, 3),
+            offset: const Offset(5, 3),
             blurRadius: 6),
       ],
     ),

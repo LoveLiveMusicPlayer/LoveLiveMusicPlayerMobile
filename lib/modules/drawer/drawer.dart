@@ -165,6 +165,7 @@ class _DrawerPageState extends State<DrawerPage> {
                         SmartDialog.compatible
                             .showLoading(msg: "重置中...", backDismiss: false);
                         await DBLogic.to.clearAllAlbum();
+                        await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
                         SmartDialog.dismiss();
                         SmartDialog.compatible.showToast("清理成功",
                             time: const Duration(seconds: 5));

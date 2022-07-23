@@ -112,60 +112,20 @@ class _MiniPlayerState extends State<MiniPlayer> {
           SizedBox(width: 10.w),
 
           /// 播放按钮
-          StreamBuilder<PlayerState>(
-            stream: PlayerLogic.to.mPlayer.playerStateStream,
-            builder: (context, snapshot) {
-              final playerState = snapshot.data;
-              final processingState = playerState?.processingState;
-              final playing = playerState?.playing;
-              if (processingState == ProcessingState.loading ||
-                  processingState == ProcessingState.buffering) {
-                return Container(
-                  margin: const EdgeInsets.all(8.0),
-                  width: 16,
-                  height: 16,
-                  child: const CircularProgressIndicator(),
-                );
-              } else if (playing != true) {
-                return touchIconByAsset(
-                    path: Assets.playerPlayPlay,
-                    onTap: () => PlayerLogic.to.mPlayer.play(),
-                    width: 16,
-                    height: 16,
-                    color: const Color(0xFF333333));
-              } else if (processingState != ProcessingState.completed) {
-                return touchIconByAsset(
-                    path: Assets.playerPlayPause,
-                    onTap: () => PlayerLogic.to.mPlayer.pause(),
-                    width: 16,
-                    height: 16,
-                    color: const Color(0xFF333333));
-              } else {
-                return touchIconByAsset(
-                    path: Assets.playerPlayPlay,
-                    onTap: () => PlayerLogic.to.mPlayer.seek(Duration.zero,
-                        index: PlayerLogic.to.mPlayer.effectiveIndices!.first),
-                    width: 16,
-                    height: 16,
-                    color: const Color(0xFF333333));
-              }
-            },
-          ),
+          playButton(),
           SizedBox(width: 20.w),
 
           /// 播放列表按钮
-          GetBuilder<HomeController>(builder: (logic) {
-            return touchIconByAsset(
-                path: Assets.playerPlayPlaylist,
-                onTap: () {
-                  SmartDialog.compatible.show(
-                      widget: DialogPlaylist(),
-                      alignmentTemp: Alignment.bottomCenter);
-                },
-                width: 18,
-                height: 18,
-                color: const Color(0xFF333333));
-          }),
+          touchIconByAsset(
+              path: Assets.playerPlayPlaylist,
+              onTap: () {
+                SmartDialog.compatible.show(
+                    widget: DialogPlaylist(),
+                    alignmentTemp: Alignment.bottomCenter);
+              },
+              width: 18,
+              height: 18,
+              color: const Color(0xFF333333)),
           SizedBox(width: 20.w),
         ],
       ),
@@ -192,21 +152,66 @@ class _MiniPlayerState extends State<MiniPlayer> {
 
   Widget marqueeMusicName() {
     return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          InkWell(
-            onDoubleTap: () => PlayerLogic.to.togglePlay(),
-            child: MarqueeText(
+      child: InkWell(
+        onDoubleTap: () => PlayerLogic.to.togglePlay(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            MarqueeText(
                 text: TextSpan(
                     text:
                         PlayerLogic.to.playingMusic.value.musicName ?? "暂无歌曲"),
                 style: TextStyleMs.black_14,
-                speed: 15),
-          )
-        ],
+                speed: 15)
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget playButton() {
+    return Container(
+      padding: EdgeInsets.only(left: 10.w, top: 10.w, bottom: 10.w),
+      child: StreamBuilder<PlayerState>(
+        stream: PlayerLogic.to.mPlayer.playerStateStream,
+        builder: (context, snapshot) {
+          final playerState = snapshot.data;
+          final processingState = playerState?.processingState;
+          final playing = playerState?.playing;
+          if (processingState == ProcessingState.loading ||
+              processingState == ProcessingState.buffering) {
+            return Container(
+              margin: const EdgeInsets.all(8.0),
+              width: 16.h,
+              height: 16.h,
+              child: const CircularProgressIndicator(),
+            );
+          } else if (playing != true) {
+            return touchIconByAsset(
+                path: Assets.playerPlayPlay,
+                onTap: () => PlayerLogic.to.mPlayer.play(),
+                width: 16,
+                height: 16,
+                color: const Color(0xFF333333));
+          } else if (processingState != ProcessingState.completed) {
+            return touchIconByAsset(
+                path: Assets.playerPlayPause,
+                onTap: () => PlayerLogic.to.mPlayer.pause(),
+                width: 16,
+                height: 16,
+                color: const Color(0xFF333333));
+          } else {
+            return touchIconByAsset(
+                path: Assets.playerPlayPlay,
+                onTap: () => PlayerLogic.to.mPlayer.seek(Duration.zero,
+                    index: PlayerLogic.to.mPlayer.effectiveIndices!.first),
+                width: 16,
+                height: 16,
+                color: const Color(0xFF333333));
+          }
+        },
+      )
     );
   }
 }
