@@ -102,25 +102,24 @@ class PageViewComponent extends StatelessWidget {
         index: index,
         music: GlobalLogic.to.loveList[index],
         checked: HomeController.to.isItemChecked(index),
-        onItemTap: (index, checked) {
-          if (HomeController.to.state.isSelect.value) {
-            HomeController.to.selectItem(index, checked);
-            return;
-          }
-          PlayerLogic.to.playMusic(GlobalLogic.to.loveList, index: index);
-        },
         onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
         onMoreTap: (music) {
           SmartDialog.compatible.show(
               widget: DialogMore(music: music),
               alignmentTemp: Alignment.bottomCenter);
         },
-        onPlayNowTap: () {
+        onPlayNowTap: (index) {
           PlayerLogic.to.playMusic(GlobalLogic.to.loveList, index: index);
         },
       );
     } else if (page == 4) {
-      return ListViewItemSongSheet(onItemTap: (checked) {}, index: index);
+      return ListViewItemSongSheet(
+          index: index,
+          checked: HomeController.to.isItemChecked(index),
+          onItemTap: (index) {
+            print("jumpTo: $index");
+          }
+        );
     } else {
       return ListViewItemSong(
         index: index,

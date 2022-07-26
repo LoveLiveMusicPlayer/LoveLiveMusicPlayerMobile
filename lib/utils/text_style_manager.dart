@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class TextStyleMs {
   TextStyleMs._();
 
+  static TextStyle gray_12 =
+  TextStyle(color: const Color(0xFF999999), fontSize: 12.sp);
+
   static TextStyle black_12 =
       TextStyle(color: const Color(0xFF333333), fontSize: 12.sp);
   static TextStyle black_13 =

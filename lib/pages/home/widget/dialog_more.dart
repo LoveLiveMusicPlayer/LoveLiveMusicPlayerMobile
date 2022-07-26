@@ -43,7 +43,7 @@ class DialogMore extends StatelessWidget {
           _buildItem(Assets.dialogIcAddSongSheet, "添加到歌单", true, () {
             SmartDialog.dismiss();
             SmartDialog.compatible.show(
-                widget: DialogAddSongSheet(),
+                widget: DialogAddSongSheet(music: music),
                 alignmentTemp: Alignment.bottomCenter);
           }),
           _buildItem(Assets.dialogIcSongInfo, "歌曲信息", true, () {

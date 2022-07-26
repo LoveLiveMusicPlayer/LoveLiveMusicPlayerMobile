@@ -11,10 +11,9 @@ import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 
 ///歌曲
 class ListViewItemLove extends StatefulWidget {
-  Function(int, bool) onItemTap;
-  Function(Music) onPlayNextTap;
-  Function() onPlayNowTap;
-  Function(Music) onMoreTap;
+  Function(Music music) onPlayNextTap;
+  Function(int index) onPlayNowTap;
+  Function(Music music) onMoreTap;
 
   ///条目数据
   Music music;
@@ -27,7 +26,6 @@ class ListViewItemLove extends StatefulWidget {
   ListViewItemLove(
       {Key? key,
         required this.index,
-        required this.onItemTap,
         required this.onPlayNextTap,
         required this.onPlayNowTap,
         required this.onMoreTap,
@@ -49,9 +47,9 @@ class _ListViewItemLoveState extends State<ListViewItemLove>
         onTap: () {
           widget.checked = !widget.checked;
           if (HomeController.to.state.isSelect.value) {
-            widget.onItemTap(widget.index, widget.checked);
+            HomeController.to.selectItem(widget.index, widget.checked);
           } else {
-            widget.onPlayNowTap();
+            widget.onPlayNowTap(widget.index);
           }
           setState(() {});
         },
@@ -96,7 +94,7 @@ class _ListViewItemLoveState extends State<ListViewItemLove>
           checkd: widget.checked,
           onCheckd: (value) {
             widget.checked = value;
-            widget.onItemTap(widget.index, widget.checked);
+            HomeController.to.selectItem(widget.index, value);
           },
           checkIconColor: Color(0xFFF940A7),
           uncheckedIconColor: Color(0xFF999999),

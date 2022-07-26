@@ -1,11 +1,14 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/dao/database.dart';
 import 'package:lovelivemusicplayer/dao/lyric_dao.dart';
+import 'package:lovelivemusicplayer/dao/menu_dao.dart';
 import 'package:lovelivemusicplayer/dao/music_dao.dart';
 import 'package:lovelivemusicplayer/dao/playlistmusic_dao.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/models/PlayListMusic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
@@ -21,6 +24,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   late LyricDao lyricDao;
   late MusicDao musicDao;
   late PlayListMusicDao playListMusicDao;
+  late MenuDao menuDao;
   // 是否是第一次获取持久化播放列表
   bool isInit = true;
 
@@ -39,6 +43,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     lyricDao = database.lyricDao;
     musicDao = database.musicDao;
     playListMusicDao = database.playListMusicDao;
+    menuDao = database.menuDao;
     await findAllListByGroup("all");
     Future.delayed(const Duration(seconds: 3)).then((value) => findAllPlayListMusics());
     super.onInit();
@@ -62,6 +67,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     GlobalLogic.to.albumList.value = allAlbums;
     GlobalLogic.to.musicList.value = allMusics;
     findAllLoveListByGroup(group);
+    await findAllMenuList();
 
     GlobalLogic.to.databaseInitOver.value = true;
 
@@ -69,12 +75,18 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         "专辑: ${allAlbums.length}; 歌曲: ${allMusics.length}",
         time: const Duration(seconds: 5));
 
-    HomeController.to.scrollController1.jumpTo(0);
-    HomeController.to.scrollController2.jumpTo(0);
-    HomeController.to.scrollController3.jumpTo(0);
-    HomeController.to.scrollController4.jumpTo(0);
-    HomeController.to.scrollController5.jumpTo(0);
-    HomeController.to.scrollController6.jumpTo(0);
+    scrollToTop(HomeController.to.scrollController1);
+    scrollToTop(HomeController.to.scrollController2);
+    scrollToTop(HomeController.to.scrollController3);
+    scrollToTop(HomeController.to.scrollController4);
+    scrollToTop(HomeController.to.scrollController5);
+    scrollToTop(HomeController.to.scrollController6);
+  }
+
+  scrollToTop(ScrollController scrollController) {
+    try {
+      scrollController.jumpTo(0);
+    } catch (e) {}
   }
 
   /// 获取我喜欢列表
@@ -90,6 +102,12 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       loveList.add(music);
     });
     GlobalLogic.to.loveList.value = loveList;
+  }
+
+  /// 获取歌单列表
+  findAllMenuList() async {
+    final menuList = await menuDao.findAllMenus();
+    GlobalLogic.to.menuList.value = menuList;
   }
 
   /// 初始化数据库数据
@@ -167,8 +185,9 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     return await musicDao.findMusicByUId(musicId);
   }
 
-  Future<Music> updateLove(Music music) async {
-    music.isLove = !music.isLove;
+  /// 更新当前歌曲的喜欢状态
+  Future<Music> updateLove(Music music, {bool? isLove}) async {
+    music.isLove = isLove ?? !music.isLove;
     await musicDao.updateMusic(music);
     GlobalLogic.to.musicList.firstWhere((_music) => _music.musicId == music.musicId).isLove = music.isLove;
     return music;

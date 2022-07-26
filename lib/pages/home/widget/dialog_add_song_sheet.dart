@@ -3,11 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_song_sheet.dart';
 
 import '../../../modules/ext.dart';
 
 class DialogAddSongSheet extends StatelessWidget {
+  final Music music;
+  const DialogAddSongSheet({Key? key, required this.music}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,17 +41,15 @@ class DialogAddSongSheet extends StatelessWidget {
             height: 0.5.h,
             color: Get.theme.primaryColor,
           ),
-          _buildItem(Assets.dialogIcNewSongList, "加入播放列表", true, () {
-            SmartDialog.dismiss();
-          }),
           _buildItem(Assets.dialogIcNewSongList, "我喜欢", true, () {
+            DBLogic.to.updateLove(music, isLove: true);
             SmartDialog.dismiss();
           }),
           Expanded(
               child: Padding(
-            padding: EdgeInsets.only(left: 16.h, right: 16.h),
+            padding: EdgeInsets.only(left: 16.w, top: 12.h, right: 16.w),
             child: ListView.separated(
-                itemCount: 2,
+                itemCount: GlobalLogic.to.menuList.length,
                 padding: const EdgeInsets.all(0),
                 separatorBuilder: (BuildContext context, int index) {
                   return Container(
@@ -58,7 +62,7 @@ class DialogAddSongSheet extends StatelessWidget {
                     onItemTap: (checked) {
                       SmartDialog.dismiss();
                     },
-                    index: 0,
+                    index: index,
                   );
                 }),
           ))

@@ -49,7 +49,7 @@ class _AlbumDetailsPageState extends State<AlbumDetailsPage> {
   Widget _buildBody() {
     return Column(
       children: [
-        DetailsHeader(),
+        DetailsHeader(title: '专辑详情'),
         Expanded(
           child: ListView(
             padding: const EdgeInsets.all(0),

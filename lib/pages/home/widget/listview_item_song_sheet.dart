@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 
 ///歌单
 class ListViewItemSongSheet extends StatefulWidget {
-  Function(bool) onItemTap;
+  Function(int) onItemTap;
 
-  ///条目数据
+  ///当前选中状态
+  bool checked;
+
   int index;
 
-  ///全选
-  bool isSelect;
-
-  ListViewItemSongSheet(
-      {Key? key,
-      required this.onItemTap,
-      this.isSelect = false,
-      required this.index})
+  ListViewItemSongSheet({Key? key,
+    required this.onItemTap,
+    this.checked = false,
+    required this.index})
       : super(key: key);
 
   @override
@@ -30,28 +30,35 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return InkWell(
-      onTap: () {
-        HomeController.to.selectItem(
-            widget.index, !HomeController.to.isItemChecked(widget.index));
-        widget.onItemTap(HomeController.to.isItemChecked(widget.index));
-      },
-      child: Container(
-        color: const Color(0xFFF2F8FF),
-        child: Row(
-          children: [
-            ///缩列图
-            _buildIcon(),
-            SizedBox(
-              width: 10.w,
-            ),
+    return Obx(() {
+      return InkWell(
+        onTap: () {
+          widget.checked = !widget.checked;
+          if (HomeController.to.state.isSelect.value) {
+            HomeController.to.selectItem(widget.index, widget.checked);
+          } else {
+            widget.onItemTap(widget.index);
+          }
+          setState(() {});
+        },
+        child: Container(
+          color: const Color(0xFFF2F8FF),
+          child: Row(
+            children: [
+              ///缩列图
+              _buildIcon(),
 
-            ///中间标题部分
-            _buildContent(),
-          ],
+              SizedBox(
+                width: 10.w,
+              ),
+
+              ///中间标题部分
+              _buildContent(),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   ///缩列图
@@ -68,7 +75,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "歌单${widget.index}",
+            GlobalLogic.to.menuList[widget.index].name,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -80,7 +87,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
             height: 4.w,
           ),
           Text(
-            "10首",
+            "${GlobalLogic.to.menuList[widget.index].music?.length ?? 0}首",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
