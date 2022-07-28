@@ -8,7 +8,6 @@ import 'package:lovelivemusicplayer/dao/music_dao.dart';
 import 'package:lovelivemusicplayer/dao/playlistmusic_dao.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/models/PlayListMusic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
@@ -25,8 +24,6 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   late MusicDao musicDao;
   late PlayListMusicDao playListMusicDao;
   late MenuDao menuDao;
-  // 是否是第一次获取持久化播放列表
-  bool isInit = true;
 
   final globalLogic = Get.find<GlobalLogic>();
   final playLogic = Get.find<PlayerLogic>();
@@ -152,26 +149,21 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   Future<void> findAllPlayListMusics() async {
     final playList = await playListMusicDao.findAllPlayListMusics();
     final musicIds = <String>[];
-    for (var playListMusic in playList) {
-      musicIds.add(playListMusic.musicId);
-    }
     var willPlayMusicIndex = 0;
     for (var i = 0; i < playList.length; i++) {
+      musicIds.add(playList[i].musicId);
       if (playList[i].isPlaying) {
         willPlayMusicIndex = i;
       }
     }
+
     final musicList = await musicDao.findMusicsByMusicIds(musicIds);
     playLogic.playMusic(musicList, index: willPlayMusicIndex, needPlay: false);
   }
 
   /// 更新播放列表
   Future<void> updatePlayingList(List<PlayListMusic> playMusics) async {
-    if (isInit) {
-      isInit = false;
-      return;
-    }
-    if (playMusics.isNotEmpty && !isInit) {
+    if (playMusics.isNotEmpty) {
       await playListMusicDao.deleteAllPlayListMusics();
       await playListMusicDao.insertAllPlayListMusics(playMusics);
     }

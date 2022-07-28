@@ -23,8 +23,8 @@ class DialogMore extends StatelessWidget {
           boxShadow: [
             BoxShadow(
                 color: Get.theme.primaryColor,
-                blurRadius: 16.h,
-                spreadRadius: 16.h)
+                blurRadius: 4,
+                spreadRadius: 4)
           ],
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16.h), topRight: Radius.circular(16.h))),

@@ -336,6 +336,7 @@ class _MusicTransformState extends State<MusicTransform> {
     double percent = current / total * 100;
     return Stack(
       children: [
+        /// 里圈
         SizedBox(
           width: 190.w,
           height: 190.w,
@@ -354,6 +355,7 @@ class _MusicTransformState extends State<MusicTransform> {
             ),
           ),
         ),
+        /// 外圈
         CustomPaint(
           size: Size(190.w, 190.w),
           painter: CircleView(
@@ -363,6 +365,7 @@ class _MusicTransformState extends State<MusicTransform> {
             completeWidth: 8.w,
           ),
         ),
+        /// 中间文字
         drawInnerText(current, total)
       ],
     );

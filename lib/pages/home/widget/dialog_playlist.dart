@@ -21,7 +21,7 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-          color: const Color(0xFFF2F8FF),
+          color: Get.theme.primaryColor,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16.h), topRight: Radius.circular(16.h))),
       height: 560.h,
@@ -61,7 +61,7 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
             color: const Color(0xffe7f2ff),
           ),
           Expanded(
-              child: Padding(
+            child: Padding(
             padding: EdgeInsets.only(left: 16.h, right: 16.h),
             child: ListView.separated(
                 itemCount: mPlayList.length,
@@ -127,7 +127,7 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                     onTap: onTap,
                     width: 16.h,
                     height: 16.h,
-                    color: const Color(0xFF666666)),
+                    color: Get.isDarkMode ? const Color(0xFFCCCCCC) : const Color(0xFF666666)),
                 SizedBox(
                   width: 10.h,
                 ),
@@ -135,7 +135,7 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                   child: Text(
                     title,
                     style: TextStyle(
-                        color: const Color(0xff333333), fontSize: 15.sp),
+                        color: Get.isDarkMode ? Colors.white : const Color(0xff333333), fontSize: 15.sp),
                   ),
                 )
               ],

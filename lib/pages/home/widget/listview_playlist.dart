@@ -29,7 +29,7 @@ class _ListViewItemPlaylist extends State<ListViewItemPlaylist> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0xFFF2F8FF),
+      color: Get.theme.primaryColor,
       child: Row(
         children: [
           _buildContent(),
@@ -64,7 +64,7 @@ class _ListViewItemPlaylist extends State<ListViewItemPlaylist> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                        color: const Color(0xff333333),
+                        color: Get.isDarkMode ? Colors.white : const Color(0xff333333),
                         fontSize: 14.sp,
                         fontWeight: FontWeight.bold),
                   ),
