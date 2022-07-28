@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/FtpCmd.dart';
 import 'package:lovelivemusicplayer/models/FtpMusic.dart';
@@ -34,16 +35,25 @@ class MusicTransform extends StatefulWidget {
 
 class _MusicTransformState extends State<MusicTransform> {
   bool isPermission = false;
-  String message = "";
+  // 当前传输的歌曲
   DownloadMusic? currentMusic;
+  // 待下载的歌曲列表
   final musicList = <DownloadMusic>[];
   String port = "10000";
+  // 下载文件的进度
   int currentProgress = 0;
   bool isRunning = false;
+  // 可取消的网络请求token
   CancelToken? cancelToken;
+  // 传输的图片列表
   final picList = <String>[];
+  // 当前传输的索引
   int index = 0;
+  // 是否准备开始传输任务
   bool isStartDownload = false;
+  // 是否是无传输模式
+  bool isNoTrans = false;
+  // banner控制器，无作用，但是必须加，代码控制时也需要这个
   final controller = TransformerPageController();
 
   @override
@@ -54,8 +64,21 @@ class _MusicTransformState extends State<MusicTransform> {
       final ftpCmd = ftpCmdFromJson(msg as String);
       switch (ftpCmd.cmd) {
         case "noTrans":
-          Future.forEach<DownloadMusic>(downloadMusicFromJson(ftpCmd.body), (music) async {
+          isNoTrans = true;
+          musicList.addAll(downloadMusicFromJson(ftpCmd.body));
+          for (var music in musicList) {
+            final path = SDUtils.path + music.coverPath;
+            if (File(path).existsSync()) {
+              picList.add(path);
+            }
+          }
+          isStartDownload = true;
+          setState(() {});
+          Future.forEach<DownloadMusic>(musicList, (music) async {
             if (File(SDUtils.path + music.musicPath).existsSync()) {
+              currentMusic = music;
+              changeNextTaskView(true, music);
+              setState(() {});
               await DBLogic.to.insertMusicIntoAlbum(music);
             }
           }).then((_) {
@@ -109,8 +132,7 @@ class _MusicTransformState extends State<MusicTransform> {
                       isStartDownload = true;
                     }
                   }
-                  pushQueue(
-                      music, url, dest, isPic ? false : isLast);
+                  pushQueue(music, url, dest, isPic ? false : isLast);
                 });
               }
             } else {
@@ -133,8 +155,6 @@ class _MusicTransformState extends State<MusicTransform> {
           Get.back();
           break;
       }
-      message = msg;
-      setState(() {});
     });
 
     final system = {
@@ -242,74 +262,18 @@ class _MusicTransformState extends State<MusicTransform> {
 
   body() {
     if (isPermission) {
-      double percent = 0;
-      int current = 0;
-      int total = 0;
-      if (isStartDownload) {
-        current = index + 1;
-        total = picList.length;
-        percent = current / total * 100;
-      }
       return Scaffold(
-        body: Column(
-          children: [
-            DetailsHeader(title: '歌曲快传' ,onBack: () => showBackDialog()),
-            SizedBox(height: 35.h),
-            drawBody(),
-            SizedBox(height: 20.h),
-            drawMusicInfo(),
-            SizedBox(height: 50.h),
-            Stack(
-              children: [
-                SizedBox(
-                  width: 190.w,
-                  height: 190.w,
-                  child: Center(
-                    child: CustomPaint(
-                      size: Size(160.w, 160.w),
-                      painter: CircleView(
-                        completePercent: percent.roundToDouble(),
-                        completeColor: const Color(0xFFF940A7),
-                        lineColors: [const Color(0xFFF940A7)],
-                        completeWidth: 8.w,
-                        width: 1.w,
-                        isDividerRound: true,
-                        lineColor: const Color(0xFFF940A7),
-                      ),
-                    ),
-                  ),
-                ),
-                CustomPaint(
-                  size: Size(190.w, 190.w),
-                  painter: CircleView(
-                    completePercent: 100,
-                    completeColor: const Color(0x1AF940A7),
-                    lineColors: [],
-                    completeWidth: 8.w,
-                  ),
-                ),
-                SizedBox(
-                  width: 190.w,
-                  height: 190.w,
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text("$current", style: Get.isDarkMode ? TextStyleMs.white_15 : TextStyleMs.black_15),
-                        SizedBox(height: 15.h),
-                        HorizontalLine(dashedHeight: 1.h, dashedWidth: 70.w, color: const Color(0xFFCCDDF1)),
-                        SizedBox(height: 15.h),
-                        Text("$total", style: Get.isDarkMode ? TextStyleMs.white_15 : TextStyleMs.black_15)
-                      ],
-                    )
-                  ),
-                )
-              ],
-            )
-          ],
-        )
-      );
+          body: Column(
+        children: [
+          DetailsHeader(title: '歌曲快传', onBack: () => showBackDialog()),
+          SizedBox(height: 35.h),
+          drawBody(),
+          SizedBox(height: 20.h),
+          drawMusicInfo(),
+          SizedBox(height: 50.h),
+          drawProgressBar()
+        ],
+      ));
     } else {
       requestPermission();
       return Container();
@@ -318,14 +282,22 @@ class _MusicTransformState extends State<MusicTransform> {
 
   Widget drawMusicInfo() {
     if (currentMusic == null) {
-      return SizedBox(height: 40.h);
+      return SizedBox(height: 60.h);
     } else {
       return SizedBox(
-        height: 40.h,
+        height: 60.h,
         child: Column(
           children: [
-            Text(currentMusic!.musicName, style: Get.isDarkMode ? TextStyleMs.white_15 : TextStyleMs.black_15),
-            Text(currentMusic!.artist, style: TextStyleMs.gray_12),
+            Text(currentMusic!.musicName,
+                style: Get.isDarkMode
+                    ? TextStyleMs.white_15
+                    : TextStyleMs.black_15,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis),
+            Text(currentMusic!.artist,
+                style: TextStyleMs.gray_12,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis),
           ],
         ),
       );
@@ -333,12 +305,12 @@ class _MusicTransformState extends State<MusicTransform> {
   }
 
   Widget drawBody() {
-    if (picList.isEmpty) {
+    if (picList.isEmpty || isNoTrans) {
       return Container(
-        width: 300.w,
-        height: 300.w,
-        color: Get.theme.primaryColor,
-      );
+          width: 300.w,
+          height: 300.w,
+          color: Get.theme.primaryColor,
+          child: const Image(image: AssetImage(Assets.assetsLogo)));
     } else {
       return SizedBox(
         width: 300.w,
@@ -358,34 +330,111 @@ class _MusicTransformState extends State<MusicTransform> {
     }
   }
 
+  Widget drawProgressBar() {
+    int current = index + 1;
+    int total = picList.length;
+    double percent = current / total * 100;
+    return Stack(
+      children: [
+        SizedBox(
+          width: 190.w,
+          height: 190.w,
+          child: Center(
+            child: CustomPaint(
+              size: Size(160.w, 160.w),
+              painter: CircleView(
+                completePercent: isStartDownload ? percent.roundToDouble() : 0,
+                completeColor: const Color(0xFFF940A7),
+                lineColors: [const Color(0xFFF940A7)],
+                completeWidth: 8.w,
+                width: 1.w,
+                isDividerRound: true,
+                lineColor: const Color(0xFFF940A7),
+              ),
+            ),
+          ),
+        ),
+        CustomPaint(
+          size: Size(190.w, 190.w),
+          painter: CircleView(
+            completePercent: 100,
+            completeColor: const Color(0x1AF940A7),
+            lineColors: [],
+            completeWidth: 8.w,
+          ),
+        ),
+        drawInnerText(current, total)
+      ],
+    );
+  }
+
+  Widget drawInnerText(int current, int total) {
+    if (isStartDownload) {
+      return SizedBox(
+        width: 190.w,
+        height: 190.w,
+        child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text("$current",
+                    style: Get.isDarkMode
+                        ? TextStyleMs.white_15
+                        : TextStyleMs.black_15),
+                SizedBox(height: 15.h),
+                HorizontalLine(
+                    dashedHeight: 1.h,
+                    dashedWidth: 70.w,
+                    color: const Color(0xFFCCDDF1)),
+                SizedBox(height: 15.h),
+                Text("$total",
+                    style: Get.isDarkMode
+                        ? TextStyleMs.white_15
+                        : TextStyleMs.black_15)
+              ],
+            )),
+      );
+    } else {
+      return SizedBox(
+          width: 190.w,
+          height: 190.w,
+          child: Center(
+              child: Text("数据解析中...",
+                  style: Get.isDarkMode
+                      ? TextStyleMs.white_15
+                      : TextStyleMs.black_15)));
+    }
+  }
+
   showBackDialog() {
     SmartDialog.compatible.show(
         widget: Container(
-          width: 300.w,
-          height: 150.h,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20.w),
-          ),
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Container(
-              width: 250.w,
-              margin: EdgeInsets.only(bottom: 30.h),
-              child: Text("退出后会中断连接及传输，是否继续？", style: TextStyleMs.black_14),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                final message = ftpCmdToJson(FtpCmd(cmd: "stop", body: ""));
-                widget.channel.sink.add(message);
-                SmartDialog.dismiss();
-                await DBLogic.to.findAllListByGroup("all");
-                Get.back();
-              },
-              child: const Text('确定'),
-            )
-          ]),
-        ));
+      width: 300.w,
+      height: 150.h,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20.w),
+      ),
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+        Container(
+          width: 250.w,
+          margin: EdgeInsets.only(bottom: 30.h),
+          child: Text("退出后会中断连接及传输，是否继续？", style: TextStyleMs.black_14),
+        ),
+        ElevatedButton(
+          onPressed: () async {
+            final message = ftpCmdToJson(FtpCmd(cmd: "stop", body: ""));
+            widget.channel.sink.add(message);
+            SmartDialog.dismiss();
+            await DBLogic.to.findAllListByGroup("all");
+            Get.back();
+          },
+          child: const Text('确定'),
+        )
+      ]),
+    ));
   }
 
   requestPermission() async {

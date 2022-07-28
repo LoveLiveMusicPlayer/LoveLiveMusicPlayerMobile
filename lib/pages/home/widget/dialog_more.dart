@@ -19,7 +19,13 @@ class DialogMore extends StatelessWidget {
       height: 280.h,
       width: double.infinity,
       decoration: BoxDecoration(
-          color: const Color(0xFFF2F8FF),
+          color: Get.theme.primaryColor,
+          boxShadow: [
+            BoxShadow(
+                color: Get.theme.primaryColor,
+                blurRadius: 16.h,
+                spreadRadius: 16.h)
+          ],
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16.h), topRight: Radius.circular(16.h))),
       child: Column(
@@ -30,7 +36,7 @@ class DialogMore extends StatelessWidget {
               music.musicName!,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 17.sp, color: const Color(0xff333333)),
+              style: TextStyle(fontSize: 17.sp, color: Get.isDarkMode ? Colors.white : const Color(0xff333333)),
             ),
           ),
           Divider(
@@ -77,7 +83,7 @@ class DialogMore extends StatelessWidget {
                     onTap: () {},
                     width: 16.h,
                     height: 16.h,
-                    color: const Color(0xFF666666)),
+                    color: Get.isDarkMode ? Colors.white : const Color(0xFF666666)),
                 SizedBox(
                   width: 10.h,
                 ),
@@ -85,7 +91,9 @@ class DialogMore extends StatelessWidget {
                   child: Text(
                     title,
                     style: TextStyle(
-                        color: const Color(0xff333333), fontSize: 15.sp),
+                        color: Get.isDarkMode
+                            ? Colors.white
+                            : const Color(0xff666666), fontSize: 15.sp),
                   ),
                 )
               ],
@@ -97,7 +105,7 @@ class DialogMore extends StatelessWidget {
               visible: showLin,
               child: Divider(
                 height: 0.5.h,
-                color: Get.theme.primaryColor,
+                color: Get.isDarkMode ? const Color(0xFF2B3239) : Colors.white,
               ),
             )
           ],

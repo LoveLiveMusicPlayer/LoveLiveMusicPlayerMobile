@@ -106,8 +106,10 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
   /// 获取歌单列表
   findAllMenuList() async {
-    final menuList = await menuDao.findAllMenus();
-    GlobalLogic.to.menuList.value = menuList;
+    try {
+      final menuList = await menuDao.findAllMenus();
+      GlobalLogic.to.menuList.value = menuList;
+    } catch(e) {}
   }
 
   /// 初始化数据库数据
