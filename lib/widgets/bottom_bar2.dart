@@ -54,19 +54,13 @@ class BottomBar2 extends StatelessWidget {
           if (HomeController.to.state.currentIndex.value == index + 3) {
             switch (index + 3) {
               case 3:
-                HomeController.to.scrollController4.animateTo(0,
-                    duration: const Duration(milliseconds: 200),
-                    curve: Curves.ease);
+                scrollTo(HomeController.to.scrollController4);
                 break;
               case 4:
-                HomeController.to.scrollController5.animateTo(0,
-                    duration: const Duration(milliseconds: 200),
-                    curve: Curves.ease);
+                scrollTo(HomeController.to.scrollController5);
                 break;
               case 5:
-                HomeController.to.scrollController6.animateTo(0,
-                    duration: const Duration(milliseconds: 200),
-                    curve: Curves.ease);
+                scrollTo(HomeController.to.scrollController6);
                 break;
             }
           }
@@ -74,6 +68,14 @@ class BottomBar2 extends StatelessWidget {
         },
       );
     });
+  }
+
+  scrollTo(ScrollController controller) {
+    try {
+      controller.animateTo(0,
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.ease);
+    } catch (e) {}
   }
 
   int handlePage(int index) {

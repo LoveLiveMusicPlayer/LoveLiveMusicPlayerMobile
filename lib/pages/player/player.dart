@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
+import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/PositionData.dart';
@@ -24,6 +28,7 @@ class Player extends StatefulWidget {
 }
 
 class _PlayerState extends State<Player> {
+  StreamSubscription? loginSubscription;
   /// slider 正在被滑动
   var isTouch = false.obs;
 
@@ -34,6 +39,20 @@ class _PlayerState extends State<Player> {
           PlayerLogic.to.mPlayer.durationStream,
           (position, bufferedPosition, duration) => PositionData(
               position, bufferedPosition, duration ?? Duration.zero));
+
+  @override
+  void initState() {
+    loginSubscription = eventBus.on<PlayerClosableEvent>().listen((event) {
+      closeLyricWindow();
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    loginSubscription?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,11 +85,8 @@ class _PlayerState extends State<Player> {
 
           /// 头部
           PlayerHeader(onTap: () {
-            /// 点击关闭按钮后确定关闭掉全量歌词界面，防止cpu消耗过多
-            if (!widget.isCover.value) {
-              widget.isCover.value = true;
-            }
             widget.onTap();
+            eventBus.fire(PlayerClosableEvent(DateTime.now().millisecondsSinceEpoch));
           }),
 
           SizedBox(height: 10.h),
@@ -199,6 +215,13 @@ class _PlayerState extends State<Player> {
       //   children: buildReaderBackground(),
       // ),
     );
+  }
+
+  closeLyricWindow() {
+    /// 点击关闭按钮后确定关闭掉全量歌词界面，防止cpu消耗过多
+    if (!widget.isCover.value) {
+      widget.isCover.value = true;
+    }
   }
 
 // List<Widget> buildReaderBackground() {

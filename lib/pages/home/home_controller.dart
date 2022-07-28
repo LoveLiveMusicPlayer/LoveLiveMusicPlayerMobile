@@ -19,18 +19,6 @@ class HomeController extends GetxController {
 
   static HomeController get to => Get.find();
 
-  getData() {
-    Network.get(
-        'https://inventory.scionedev.ilabservice.cloud/api/labbase/v1/company/all?account=17826808739&type=saas',
-        success: (w) {
-      if (w != null && w is List) {
-        for (var element in w) {
-          // LogUtil.e(element);
-        }
-      }
-    });
-  }
-
   selectSongLibrary(bool value) {
     state.isSelectSongLibrary = value;
     refresh();
@@ -108,16 +96,16 @@ class HomeController extends GetxController {
   @override
   Future<void> onReady() async {
     super.onReady();
-    if (PlayerLogic.to.mPlayList.isNotEmpty) {
-      DBLogic.to
-          .findMusicByMusicId(PlayerLogic.to.mPlayList[0].musicId)
-          .then((playingMusic) {
-        if (playingMusic != null) {
-          PlayerLogic.to.playingMusic.value = playingMusic;
-        }
-      });
-    }
-    refresh();
+    // if (PlayerLogic.to.mPlayList.isNotEmpty) {
+    //   DBLogic.to
+    //       .findMusicByMusicId(PlayerLogic.to.mPlayList[0].musicId)
+    //       .then((playingMusic) {
+    //     if (playingMusic != null) {
+    //       PlayerLogic.to.playingMusic.value = playingMusic;
+    //     }
+    //   });
+    // }
+    // refresh();
   }
 
   ///-------------------------

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /**
  * @Author: Sky24n
@@ -65,7 +66,7 @@ class ImageUtil {
     Uint8List? result;
     try {
       result = await FlutterImageCompress.compressWithFile(path,
-          format: CompressFormat.jpeg);
+          format: CompressFormat.jpeg, quality: 20, minHeight: 60.h.toInt(), minWidth: ScreenUtil().screenWidth.toInt());
     } catch (e) {
       print(e);
     }

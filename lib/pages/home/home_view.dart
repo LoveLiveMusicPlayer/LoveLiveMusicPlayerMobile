@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
+import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
@@ -29,11 +31,18 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView>
     with SingleTickerProviderStateMixin {
   final logic = Get.find<HomeController>();
+  WeSlideController? controller;
 
   @override
   void initState() {
     super.initState();
     logic.tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    controller?.removeListener(addListener);
+    super.dispose();
   }
 
   @override
@@ -81,7 +90,15 @@ class _HomeViewState extends State<HomeView>
       overlayColor: Theme.of(context).primaryColor,
       panelBorderRadiusBegin: 10,
       panelBorderRadiusEnd: 10,
-      panelHeader: MiniPlayer(onTap: _controller.show),
+      panelHeader: MiniPlayer(onTap: () {
+        if (!HomeController.to.state.isSelect.value) {
+          _controller.show();
+          if (controller == null) {
+            controller = _controller;
+            controller?.addListener(addListener);
+          }
+        }
+      }),
       panel: Player(onTap: _controller.hide),
       footer: _buildTabBarView(),
       footerHeight: 84.h,
@@ -155,6 +172,12 @@ class _HomeViewState extends State<HomeView>
         SmartDialog.dismiss();
       },
     );
+  }
+
+  addListener() {
+    if (controller?.isOpened == false) {
+      eventBus.fire(PlayerClosableEvent(DateTime.now().millisecondsSinceEpoch));
+    }
   }
 
   showSelectDialog() {
