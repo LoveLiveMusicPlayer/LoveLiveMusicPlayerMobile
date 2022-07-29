@@ -85,7 +85,11 @@ class _HomeViewState extends State<HomeView>
       backgroundColor: Theme.of(context).primaryColor,
       overlay: true,
       isDismissible: true,
-      body: _getTabBarView(() => scaffoldKey.currentState?.openEndDrawer()),
+      body: _getTabBarView(() {
+        if (!HomeController.to.state.isSelect.value) {
+          scaffoldKey.currentState?.openEndDrawer();
+        }
+      }),
       blurColor: Theme.of(context).primaryColor,
       overlayColor: Theme.of(context).primaryColor,
       panelBorderRadiusBegin: 10,

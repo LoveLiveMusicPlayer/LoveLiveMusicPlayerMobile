@@ -22,7 +22,7 @@ class GlobalLogic extends SuperController
 
   static GlobalLogic get to => Get.find();
 
-  getListSize(int index, bool isDbInit) {
+  int getListSize(int index, bool isDbInit) {
     if (!isDbInit) {
       return 0;
     }
@@ -41,6 +41,50 @@ class GlobalLogic extends SuperController
         return recentlyList.length;
       default:
         return 0;
+    }
+  }
+
+  RxList getList(int index) {
+    switch (index) {
+      case 0:
+        return musicList;
+      case 1:
+        return albumList;
+      case 2:
+        return artistList;
+      case 3:
+        return loveList;
+      case 4:
+        return menuList;
+      case 5:
+        return recentlyList;
+      default:
+        return [].obs;
+    }
+  }
+
+  setList(int index, List<dynamic> itemList) {
+    switch (index) {
+      case 0:
+        musicList.value = itemList.cast();
+        break;
+      case 1:
+        albumList.value = itemList.cast();
+        break;
+      case 2:
+        artistList.value = itemList.cast();
+        break;
+      case 3:
+        loveList.value = itemList.cast();
+        break;
+      case 4:
+        menuList.value = itemList.cast();
+        break;
+      case 5:
+        recentlyList.value = itemList.cast();
+        break;
+      default:
+        break;
     }
   }
 

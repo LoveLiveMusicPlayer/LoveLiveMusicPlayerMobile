@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_state.dart';
 
@@ -25,89 +27,83 @@ class HomeController extends GetxController {
   }
 
   openSelect() {
+    if (state.isSelect.value) {
+      final tempList = state.items;
+      if (tempList.isNotEmpty) {
+        for (var element in tempList) {
+          element.checked = false;
+        }
+      }
+      state.selectAll = false;
+      refresh();
+    } else {
+      switch (state.currentIndex.value) {
+        case 0:
+          state.items = [...GlobalLogic.to.musicList];
+          break;
+        case 1:
+          state.items = [...GlobalLogic.to.albumList];
+          break;
+        case 2:
+          state.items = [...GlobalLogic.to.artistList];
+          break;
+        case 3:
+          state.items = [...GlobalLogic.to.loveList];
+          break;
+        case 4:
+          state.items = [...GlobalLogic.to.menuList];
+          break;
+        case 5:
+          state.items = [...GlobalLogic.to.recentlyList];
+          break;
+        default:
+          break;
+      }
+    }
     state.isSelect.value = !state.isSelect.value;
   }
 
   ///全选
   selectAll(bool checked) {
-    // for (var element in state.items) {
-    //   element.checked = checked;
-    // }
-    // refresh();
-  }
-
-  ///选中单个条目
-  selectItem(Object obj, bool checked) {
-    // state.items[index].checked = checked;
-    // bool select = true;
-    // for (var element in state.items) {
-    //   if (!element.checked) {
-    //     select = false;
-    //   }
-    // }
-    // state.selectAll = select;
-    //
-    // refresh();
-  }
-
-  isItemChecked(int index) {
-    return false;
-    // return state.items[index].checked;
-  }
-
-  int getCheckedSong() {
-    int num = 47;
-    // for (var element in state.items) {
-    //   if (element.checked) {
-    //     num++;
-    //   }
-    // }
-    return num;
-  }
-
-  changeTab(int index) {
-    final currentIndex = state.currentIndex.value;
-    if (index == 0) {
-      if (currentIndex < 3) {
-        return;
+    final tempList = state.items;
+    if (tempList.isNotEmpty) {
+      for (var element in tempList) {
+        element.checked = checked;
       }
-      state.currentIndex.value = currentIndex % 3;
-    } else {
-      if (currentIndex > 2) {
-        return;
-      }
-      state.currentIndex.value = currentIndex + 3;
+      GlobalLogic.to.setList(state.currentIndex.value, tempList);
     }
-    resetCheckedState();
+    state.selectAll = checked;
     refresh();
   }
 
-  ///重置选中状态
-  resetCheckedState() {
-    // state.isSelect = false;
-    // state.selectAll = false;
-    // for (var element in state.items) {
-    //   element.checked = false;
-    // }
+  ///选中单个条目
+  selectItem(int index, bool checked) {
+    state.items[index].checked = checked;
+    bool select = true;
+    for (var element in state.items) {
+      if (!element.checked) {
+        select = false;
+      }
+    }
+    state.selectAll = select;
+    refresh();
   }
 
-  ///-------------------------------
-
-  @override
-  Future<void> onReady() async {
-    super.onReady();
-    // if (PlayerLogic.to.mPlayList.isNotEmpty) {
-    //   DBLogic.to
-    //       .findMusicByMusicId(PlayerLogic.to.mPlayList[0].musicId)
-    //       .then((playingMusic) {
-    //     if (playingMusic != null) {
-    //       PlayerLogic.to.playingMusic.value = playingMusic;
-    //     }
-    //   });
-    // }
-    // refresh();
+  isItemChecked(int index) {
+    final tempList = state.items.cast();
+    if (index >= 0 && index < tempList.length) {
+      return tempList[index].checked;
+    }
+    return false;
   }
 
-  ///-------------------------
-
+  int getCheckedSong() {
+    int num = 0;
+    for (var element in state.items) {
+      if (element.checked) {
+        num++;
+      }
+    }
+    return num;
+  }
 }

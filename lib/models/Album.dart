@@ -15,6 +15,7 @@ class Album {
     this.coverPath, // 封面
     this.category, // 分类
     this.group, // 团组
+    this.checked = false
   });
 
   @primaryKey
@@ -24,6 +25,7 @@ class Album {
   String? coverPath;
   String? category;
   String? group;
+  bool checked;
 
   factory Album.fromJson(Map<String, dynamic> json) => Album(
         albumId: json["albumId"],

@@ -24,6 +24,7 @@ class Music {
     this.category,
     this.group,
     this.isLove = false,
+    this.checked = false
   });
 
   @primaryKey
@@ -42,6 +43,9 @@ class Music {
   String? category; // 分类
   String? group; // 团组
   bool isLove; // 是否我喜欢
+
+  @ignore
+  bool checked; // 是否已选中
 
   factory Music.fromJson(Map<String, dynamic> json) => Music(
         musicId: json["musicId"],

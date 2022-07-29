@@ -76,7 +76,7 @@ class PageViewComponent extends StatelessWidget {
         isSelect: HomeController.to.state.isSelect.value,
         onItemTap: (album, checked) {
           if (HomeController.to.state.isSelect.value) {
-            HomeController.to.selectItem(album, checked);
+            HomeController.to.selectItem(index, checked);
           } else {
             Get.toNamed(Routes.routeAlbumDetails,
                 arguments: GlobalLogic.to.albumList[index]);
@@ -90,7 +90,7 @@ class PageViewComponent extends StatelessWidget {
         isSelect: HomeController.to.state.isSelect.value,
         onItemTap: (artist, checked) {
           if (HomeController.to.state.isSelect.value) {
-            HomeController.to.selectItem(artist, checked);
+            HomeController.to.selectItem(index, checked);
           } else {
             Get.toNamed(Routes.routeSingerDetails,
                 arguments: GlobalLogic.to.albumList[index]);

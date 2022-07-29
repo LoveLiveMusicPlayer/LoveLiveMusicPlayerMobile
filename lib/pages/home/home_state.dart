@@ -21,4 +21,5 @@ class HomeState {
   var currentIndex = 0.obs;
 
   /// 0 歌曲  1 专辑  2 歌手  3 我喜欢  4 歌单  5  最近播放
+  var items = <dynamic>[];
 }

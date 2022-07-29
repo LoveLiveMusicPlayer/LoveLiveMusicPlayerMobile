@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
+import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 
 import '../../../utils/sd_utils.dart';
 
@@ -49,12 +50,32 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum>
           SizedBox(
             height: 5.h,
           ),
-          Text(
-            widget.album.albumName!,
-            maxLines: 2,
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            style: Get.isDarkMode ? TextStyleMs.white_12 : TextStyleMs.black_12,
+          Row(
+            children: [
+              Visibility(
+                visible: widget.isSelect,
+                child: Padding(
+                  padding: EdgeInsets.only(right: 2.w),
+                  child: CircularCheckBox(
+                      checkd: widget.checked,
+                      uncheckedIconColor: const Color(0xff999999),
+                      checkIconColor: const Color(0xFFF940A7),
+                      onCheckd: (checked) {
+                        widget.checked = checked;
+                        widget.onItemTap(widget.album,checked);
+                      }),
+                ),
+              ),
+              Expanded(
+                  child: Text(
+                    widget.album.albumName!,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: Get.isDarkMode ? TextStyleMs.white_12 : TextStyleMs.black_12,
+                  )
+              )
+            ],
           )
         ]));
   }
