@@ -45,45 +45,47 @@ class _ListViewItemSongState extends State<ListViewItemSong>
   Widget build(BuildContext context) {
     super.build(context);
     return Obx(() {
-      return InkWell(
-        onTap: () {
-          widget.checked = !widget.checked;
-          if (HomeController.to.state.isSelect.value) {
-            widget.onItemTap(widget.index, widget.checked);
-          } else {
-            widget.onPlayNowTap();
-          }
-          setState(() {});
-        },
-        child: Container(
-          color: Get.theme.primaryColor,
-          child: Row(
-            children: [
-              ///勾选按钮
-              _buildCheckBox(),
+      return Container(
+        color: Get.theme.primaryColor,
+        child: Row(
+          children: [
+            ///勾选按钮
+            _buildCheckBox(),
 
-              ///缩列图
-              _buildIcon(),
+            ///缩列图
+            _buildIcon(),
 
-              SizedBox(width: 10.w),
+            SizedBox(width: 10.w),
 
-              ///中间标题部分
-              _buildContent(),
+            ///中间标题部分
+            _buildContent(),
 
-              ///右侧操作按钮
-              _buildAction(),
-            ],
-          ),
+            ///右侧操作按钮
+            _buildAction(),
+          ],
         ),
       );
     });
   }
 
+  clickItem() {
+    widget.checked = !widget.checked;
+    if (HomeController.to.state.isSelect.value) {
+      widget.onItemTap(widget.index, widget.checked);
+    } else {
+      widget.onPlayNowTap();
+    }
+    setState(() {});
+  }
+
   ///缩列图
   Widget _buildIcon() {
-    return showImg(
-        SDUtils.getImgPath(widget.music.coverPath ?? "ic_head.jpg"), 48, 48,
-        hasShadow: false, radius: 8);
+    return InkWell(
+      onTap: clickItem,
+      child: showImg(
+          SDUtils.getImgPath(widget.music.coverPath ?? "ic_head.jpg"), 48, 48,
+          hasShadow: false, radius: 8),
+    );
   }
 
   ///勾选按钮
@@ -108,8 +110,8 @@ class _ListViewItemSongState extends State<ListViewItemSong>
   ///中间标题部分
   Widget _buildContent() {
     return Expanded(
-      child: Container(
-        // color: Color.green,
+      child: InkWell(
+        onTap: clickItem,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
