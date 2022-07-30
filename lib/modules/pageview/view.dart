@@ -114,12 +114,14 @@ class PageViewComponent extends StatelessWidget {
       );
     } else if (page == 4) {
       return ListViewItemSongSheet(
-          index: index,
-          checked: HomeController.to.isItemChecked(index),
-          onItemTap: (index) {
-            print("jumpTo: $index");
-          }
-        );
+        onItemTap: (menu) {
+          print("onItemTap: ${menu.name}");
+        },
+        onMoreTap: (menu) {
+          print("onMoreTap: ${menu.name}");
+        },
+        menu: GlobalLogic.to.menuList[index],
+      );
     } else {
       return ListViewItemSong(
         index: index,

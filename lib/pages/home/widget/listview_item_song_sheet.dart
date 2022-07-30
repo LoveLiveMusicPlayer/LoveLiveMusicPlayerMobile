@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/models/Menu.dart';
+import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 ///歌单
 class ListViewItemSongSheet extends StatefulWidget {
-  Function(int) onItemTap;
+  Function(Menu) onItemTap;
 
-  ///当前选中状态
-  bool checked;
+  ///条目数据
+  Menu menu;
 
-  int index;
+  Function(Menu)? onMoreTap;
 
-  ListViewItemSongSheet({Key? key,
-    required this.onItemTap,
-    this.checked = false,
-    required this.index})
+  ListViewItemSongSheet(
+      {Key? key,
+      required this.onItemTap,
+      this.onMoreTap,
+      required this.menu})
       : super(key: key);
 
   @override
@@ -30,41 +36,54 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Obx(() {
-      return InkWell(
-        onTap: () {
-          widget.checked = !widget.checked;
-          if (HomeController.to.state.isSelect.value) {
-            HomeController.to.selectItem(widget.index, widget.checked);
-          } else {
-            widget.onItemTap(widget.index);
-          }
-          setState(() {});
-        },
-        child: Container(
-          color: const Color(0xFFF2F8FF),
-          child: Row(
-            children: [
-              ///缩列图
-              _buildIcon(),
+    return InkWell(
+      onTap: () => widget.onItemTap(widget.menu),
+      child: Container(
+        color: Get.theme.primaryColor,
+        child: Row(
+          children: [
+            ///缩列图
+            _buildIcon(),
 
-              SizedBox(
-                width: 10.w,
-              ),
+            SizedBox(
+              width: 10.w,
+            ),
 
-              ///中间标题部分
-              _buildContent(),
-            ],
-          ),
+            ///中间标题部分
+            _buildContent(),
+
+            ///右侧操作按钮
+            _buildAction()
+          ],
         ),
-      );
-    });
+      ),
+    );
   }
 
   ///缩列图
   Widget _buildIcon() {
-    return showImg(SDUtils.getImgPath("ic_head.jpg"), 48, 48,
-        hasShadow: false, radius: 8);
+    return FutureBuilder<String>(
+      initialData: SDUtils.getImgPath("ic_head.jpg"),
+      builder:
+          (BuildContext context, AsyncSnapshot<String> snapshot) {
+        return showImg(snapshot.data, 48, 48,
+            hasShadow: false, radius: 8);
+      },
+      future: getMusicCoverPath(widget.menu.music?.last),
+    );
+  }
+
+  /// 异步获取歌单封面
+  Future<String> getMusicCoverPath(String? musicPath) async {
+    final defaultPath = SDUtils.getImgPath("ic_head.jpg");
+    if (musicPath == null) {
+      return defaultPath;
+    }
+    final music = await DBLogic.to.findMusicById(musicPath);
+    if (music == null) {
+      return defaultPath;
+    }
+    return SDUtils.path + music.coverPath!;
   }
 
   ///中间标题部分
@@ -74,20 +93,16 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            GlobalLogic.to.menuList[widget.index].name,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-                color: const Color(0xff333333),
-                fontSize: 15.sp,
-                fontWeight: FontWeight.bold),
-          ),
+          Text(widget.menu.name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style:
+                  Get.isDarkMode ? TextStyleMs.white_15 : TextStyleMs.black_15),
           SizedBox(
             height: 4.w,
           ),
           Text(
-            "${GlobalLogic.to.menuList[widget.index].music?.length ?? 0}首",
+            "${widget.menu.music?.length ?? 0}首",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -98,6 +113,33 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
           SizedBox(
             width: 16.w,
           )
+        ],
+      ),
+    );
+  }
+
+  ///右侧操作按钮
+  Widget _buildAction() {
+    return Visibility(
+      visible: widget.onMoreTap != null,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          InkWell(
+            onTap: () {
+              widget.onMoreTap!(widget.menu);
+            },
+            child: Container(
+              padding: EdgeInsets.only(
+                  left: 12.w, right: 10.w, top: 12.h, bottom: 12.h),
+              child: touchIconByAsset(
+                  path: Assets.mainIcMore,
+                  width: 10,
+                  height: 20,
+                  color: const Color(0xFFCCCCCC)),
+            ),
+          ),
+          SizedBox(width: 4.w)
         ],
       ),
     );

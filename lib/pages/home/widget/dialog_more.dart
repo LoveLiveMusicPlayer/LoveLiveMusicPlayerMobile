@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';
 
@@ -41,9 +42,10 @@ class DialogMore extends StatelessWidget {
           ),
           Divider(
             height: 0.5.h,
-            color: Get.theme.primaryColor,
+            color: Get.isDarkMode ? const Color(0xFF737373) : const Color(0xFFCFCFCF),
           ),
           _buildItem(Assets.dialogIcAddPlayList, "加入播放列表", true, () {
+            PlayerLogic.to.addNextMusic(music, isNext: false);
             SmartDialog.dismiss();
           }),
           _buildItem(Assets.dialogIcAddSongSheet, "添加到歌单", true, () {
@@ -105,7 +107,9 @@ class DialogMore extends StatelessWidget {
               visible: showLin,
               child: Divider(
                 height: 0.5.h,
-                color: Get.isDarkMode ? const Color(0xFF2B3239) : Colors.white,
+                color: Get.isDarkMode
+                    ? const Color(0xFF737373)
+                    : const Color(0xFFCFCFCF),
               ),
             )
           ],

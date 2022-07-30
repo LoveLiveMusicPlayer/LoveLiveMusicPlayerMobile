@@ -28,12 +28,13 @@ class PlayerLogic extends SuperController
   // 播放列表<AudioSource>
   final audioSourceList = ConcatenatingAudioSource(children: []);
 
-  // 播放列表<PlayingList>
+  // 播放列表
   var mPlayList = <PlayListMusic>[];
 
   // 当前播放的歌词
   var playingJPLrc = {"pre": "", "current": "", "next": ""}.obs;
 
+  // 全量歌词
   var fullLrc = {"jp": "", "zh": "", "roma": ""}.obs;
 
   // 播放状态
@@ -68,7 +69,9 @@ class PlayerLogic extends SuperController
 
     /// 当前播放监听
     mPlayer.currentIndexStream.listen((index) async {
-      if (index != null && mPlayList.isNotEmpty && !GlobalLogic.to.isHandlePlay) {
+      if (index != null &&
+          mPlayList.isNotEmpty &&
+          !GlobalLogic.to.isHandlePlay) {
         print("currentIndexStream: $index - ${mPlayList[index].musicName}");
         final currentMusic = mPlayList[index];
         await changePlayingMusic(currentMusic);
@@ -89,17 +92,18 @@ class PlayerLogic extends SuperController
           musicId: music.musicId!,
           musicName: music.musicName!,
           artist: music.artist!,
-          isPlaying: index == i
-      ));
+          isPlaying: index == i));
     }
     for (var playListMusic in mPlayList) {
-      playListMusic.isPlaying = playListMusic.musicId == musicList[index].musicId;
+      playListMusic.isPlaying =
+          playListMusic.musicId == musicList[index].musicId;
     }
     await DBLogic.to.updatePlayingList(mPlayList);
   }
 
   /// 持久化播放列表2
-  Future<void> persistencePLayList2(List<PlayListMusic> playList, int index) async {
+  Future<void> persistencePLayList2(
+      List<PlayListMusic> playList, int index) async {
     for (var i = 0; i < playList.length; i++) {
       playList[i].isPlaying = index == i;
     }
@@ -180,11 +184,11 @@ class PlayerLogic extends SuperController
         });
       });
     });
-
   }
 
   /// 插入到下一曲
-  addNextMusic(Music music) {
+  /// @param isNext true: 插入下一首; false: 插入末尾
+  addNextMusic(Music music, {bool isNext = true}) {
     if (music.musicId == playingMusic.value.musicId) {
       // 如果选中的歌曲是当前播放的歌曲
       return;
@@ -197,18 +201,22 @@ class PlayerLogic extends SuperController
         break;
       }
     }
-    // 将插入的歌曲放在当前播放歌曲的后面
-    for (var index = 0; index < mPlayList.length; index++) {
-      if (mPlayList[index].musicId == playingMusic.value.musicId) {
-        audioSourceList.insert(
-            index + 1, genAudioSourceUri(music));
-        final pMusic = PlayListMusic(
-            musicId: music.musicId!,
-            musicName: music.musicName!,
-            artist: music.artist!);
-        mPlayList.insert(index + 1, pMusic);
-        break;
+    final pMusic = PlayListMusic(
+        musicId: music.musicId!,
+        musicName: music.musicName!,
+        artist: music.artist!);
+    if (isNext) {
+      // 将插入的歌曲放在当前播放歌曲的后面
+      for (var index = 0; index < mPlayList.length; index++) {
+        if (mPlayList[index].musicId == playingMusic.value.musicId) {
+          audioSourceList.insert(index + 1, genAudioSourceUri(music));
+          mPlayList.insert(index + 1, pMusic);
+          break;
+        }
       }
+    } else {
+      audioSourceList.insert(mPlayList.length, genAudioSourceUri(music));
+      mPlayList.insert(mPlayList.length, pMusic);
     }
   }
 
@@ -338,9 +346,18 @@ class PlayerLogic extends SuperController
     }
   }
 
-  toggleLove() {
-    DBLogic.to.updateLove(playingMusic.value).then((value) {
-      playingMusic.value = Music.deepClone(value);
+  /// 切换我喜欢状态
+  /// @param isLove 默认不传为根据现有状态取反，传了就是指定状态
+  toggleLove({Music? music, bool? isLove}) {
+    Music? _music = music;
+    if (music == null) {
+      _music = playingMusic.value;
+    }
+    DBLogic.to.updateLove(_music!, isLove: isLove).then((value) {
+      // 切换的歌曲如果是当前播放的歌曲，需要手动深拷贝一下对象使得player界面状态正确
+      if (value.musicId == playingMusic.value.musicId) {
+        playingMusic.value = Music.deepClone(value);
+      }
       DBLogic.to.findAllLoveListByGroup(GlobalLogic.to.currentGroup.value);
     });
   }
@@ -364,15 +381,14 @@ class PlayerLogic extends SuperController
     await SpUtil.put("loopMode", index);
   }
 
+  /// 删除播放列表中的一首歌曲
   Future<void> removeMusic(int index) async {
     audioSourceList.removeAt(index);
-    if (mPlayList.length == index) {
-      final music = await DBLogic.to.findMusicByMusicId(mPlayList[0].musicId);
-      playingMusic.value = music!;
-    } else {
-      final music = await DBLogic.to.findMusicByMusicId(mPlayList[index].musicId);
-      playingMusic.value = music!;
-    }
+
+    // 删除的是最后一首歌，将播放列表第一首
+    final music = await DBLogic.to.findMusicByMusicId(
+        mPlayList[mPlayList.length == index ? 0 : index].musicId);
+    playingMusic.value = music!;
   }
 
   @override

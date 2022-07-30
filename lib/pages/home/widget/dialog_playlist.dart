@@ -58,7 +58,7 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
           ),
           Divider(
             height: 0.5.h,
-            color: const Color(0xffe7f2ff),
+            color: Get.isDarkMode ? const Color(0xFF737373) : const Color(0xFFCFCFCF),
           ),
           Expanded(
             child: Padding(

@@ -5,13 +5,16 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_song_sheet.dart';
+import 'package:lovelivemusicplayer/widgets/new_menu_dialog.dart';
 
 import '../../../modules/ext.dart';
 
 class DialogAddSongSheet extends StatelessWidget {
   final Music music;
+
   const DialogAddSongSheet({Key? key, required this.music}) : super(key: key);
 
   @override
@@ -19,7 +22,11 @@ class DialogAddSongSheet extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-          color: const Color(0xFFF2F8FF),
+          color: Get.theme.primaryColor,
+          boxShadow: [
+            BoxShadow(
+                color: Get.theme.primaryColor, blurRadius: 4, spreadRadius: 4)
+          ],
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16.h), topRight: Radius.circular(16.h))),
       height: 450.h,
@@ -34,17 +41,28 @@ class DialogAddSongSheet extends StatelessWidget {
               style: TextStyle(
                   fontSize: 17.sp,
                   fontWeight: FontWeight.bold,
-                  color: const Color(0xff333333)),
+                  color:
+                      Get.isDarkMode ? Colors.white : const Color(0xff333333)),
             ),
           ),
           Divider(
             height: 0.5.h,
-            color: Get.theme.primaryColor,
+            color: Get.isDarkMode
+                ? const Color(0xFF737373)
+                : const Color(0xFFCFCFCF),
           ),
-          _buildItem(Assets.dialogIcNewSongList, "我喜欢", true, () {
-            DBLogic.to.updateLove(music, isLove: true);
+          _buildItem("新建歌单", true, () {
             SmartDialog.dismiss();
-          }),
+            SmartDialog.compatible.show(
+                widget: NewMenuDialog(
+                    title: "新建歌单",
+                    onConfirm: (name) {
+                      DBLogic.to.addMenu(name, [music.musicId!]);
+                    }),
+                clickBgDismissTemp: false,
+                alignmentTemp: Alignment.center);
+          }, assetPath: Assets.dialogIcNewSongList),
+          renderLove(),
           Expanded(
               child: Padding(
             padding: EdgeInsets.only(left: 16.w, top: 12.h, right: 16.w),
@@ -59,10 +77,12 @@ class DialogAddSongSheet extends StatelessWidget {
                 },
                 itemBuilder: (cxt, index) {
                   return ListViewItemSongSheet(
-                    onItemTap: (checked) {
+                    onItemTap: (menu) {
+                      DBLogic.to.insertToMenu(
+                          GlobalLogic.to.menuList[index].id, [music.musicId!]);
                       SmartDialog.dismiss();
                     },
-                    index: index,
+                    menu: GlobalLogic.to.menuList[index],
                   );
                 }),
           ))
@@ -71,9 +91,22 @@ class DialogAddSongSheet extends StatelessWidget {
     );
   }
 
+  Widget renderLove() {
+    if (music.isLove) {
+      return _buildItem("我喜欢", true, () {
+        PlayerLogic.to.toggleLove(music: music, isLove: false);
+        SmartDialog.dismiss();
+      }, icon: Icons.favorite);
+    } else {
+      return _buildItem("我喜欢", true, () {
+        PlayerLogic.to.toggleLove(music: music, isLove: true);
+        SmartDialog.dismiss();
+      }, assetPath: Assets.playerPlayLove);
+    }
+  }
+
   ///单个条目
-  Widget _buildItem(
-      String path, String title, bool showLin, GestureTapCallback? onTap) {
+  Widget _buildItem(String title, bool showLin, GestureTapCallback? onTap, {String? assetPath, IconData? icon}) {
     return Padding(
       padding: EdgeInsets.only(left: 16.h, right: 16.h),
       child: InkWell(
@@ -86,12 +119,7 @@ class DialogAddSongSheet extends StatelessWidget {
             ),
             Row(
               children: [
-                touchIconByAsset(
-                    path: path,
-                    onTap: () {},
-                    width: 16.h,
-                    height: 16.h,
-                    color: const Color(0xFF666666)),
+                renderIcon(assetPath, icon),
                 SizedBox(
                   width: 10.h,
                 ),
@@ -99,7 +127,10 @@ class DialogAddSongSheet extends StatelessWidget {
                   child: Text(
                     title,
                     style: TextStyle(
-                        color: const Color(0xff333333), fontSize: 15.sp),
+                        color: Get.isDarkMode
+                            ? Colors.white
+                            : const Color(0xff666666),
+                        fontSize: 15.sp),
                   ),
                 )
               ],
@@ -111,12 +142,33 @@ class DialogAddSongSheet extends StatelessWidget {
               visible: showLin,
               child: Divider(
                 height: 0.5.h,
-                color: Get.theme.primaryColor,
+                color: Get.isDarkMode
+                    ? const Color(0xFF737373)
+                    : const Color(0xFFCFCFCF),
               ),
             )
           ],
         ),
       ),
     );
+  }
+
+  Widget renderIcon(String? assetPath, IconData? icon) {
+    if (assetPath != null) {
+      return touchIconByAsset(
+          path: assetPath,
+          width: 16.h,
+          height: 16.h,
+          color: Get.isDarkMode
+              ? Colors.white
+              : const Color(0xFF666666));
+    } else if (icon != null) {
+      return touchIcon(
+          icon, () {},
+          color: Colors.pinkAccent
+      );
+    } else {
+      return const SizedBox();
+    }
   }
 }

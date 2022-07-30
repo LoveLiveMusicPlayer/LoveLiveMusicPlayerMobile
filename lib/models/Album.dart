@@ -25,6 +25,7 @@ class Album {
   String? coverPath;
   String? category;
   String? group;
+  @ignore
   bool checked;
 
   factory Album.fromJson(Map<String, dynamic> json) => Album(
