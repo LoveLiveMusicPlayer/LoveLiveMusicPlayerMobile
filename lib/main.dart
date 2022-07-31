@@ -25,7 +25,7 @@ void main() async {
   // 启动屏开启
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   // 仅支持竖屏
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   // 初始化
   await initServices();

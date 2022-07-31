@@ -149,7 +149,7 @@ class _RefresherWidgetState extends State<RefresherWidget> {
             } else {
               body = const Text("没有更多数据了!");
             }
-            return Container(
+            return SizedBox(
               height: 55.h,
               child: Center(child: body),
             );

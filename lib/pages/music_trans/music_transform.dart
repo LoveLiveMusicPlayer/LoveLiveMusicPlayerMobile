@@ -10,8 +10,10 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/FtpCmd.dart';
 import 'package:lovelivemusicplayer/models/FtpMusic.dart';
+import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/album_details/widget/details_header.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
@@ -35,24 +37,30 @@ class MusicTransform extends StatefulWidget {
 
 class _MusicTransformState extends State<MusicTransform> {
   bool isPermission = false;
+
   // 当前传输的歌曲
   DownloadMusic? currentMusic;
+
   // 待下载的歌曲列表
   final musicList = <DownloadMusic>[];
   String port = "10000";
+
   // 下载文件的进度
   int currentProgress = 0;
   bool isRunning = false;
+
   // 可取消的网络请求token
   CancelToken? cancelToken;
-  // 传输的图片列表
-  final picList = <String>[];
+
   // 当前传输的索引
   int index = 0;
+
   // 是否准备开始传输任务
   bool isStartDownload = false;
+
   // 是否是无传输模式
   bool isNoTrans = false;
+
   // banner控制器，无作用，但是必须加，代码控制时也需要这个
   final controller = TransformerPageController();
 
@@ -66,18 +74,12 @@ class _MusicTransformState extends State<MusicTransform> {
         case "noTrans":
           isNoTrans = true;
           musicList.addAll(downloadMusicFromJson(ftpCmd.body));
-          for (var music in musicList) {
-            final path = SDUtils.path + music.coverPath;
-            if (File(path).existsSync()) {
-              picList.add(path);
-            }
-          }
           isStartDownload = true;
           setState(() {});
           Future.forEach<DownloadMusic>(musicList, (music) async {
             if (File(SDUtils.path + music.musicPath).existsSync()) {
               currentMusic = music;
-              changeNextTaskView(true, music);
+              changeNextTaskView(music);
               setState(() {});
               await DBLogic.to.insertMusicIntoAlbum(music);
             }
@@ -126,12 +128,6 @@ class _MusicTransformState extends State<MusicTransform> {
               if (music.musicUId == musicUId) {
                 genFileList(music).forEach((url, dest) {
                   final isPic = url.contains("jpg");
-                  if (isPic) {
-                    picList.add(dest);
-                    if (i == musicList.length - 1) {
-                      isStartDownload = true;
-                    }
-                  }
                   pushQueue(music, url, dest, isPic ? false : isLast);
                 });
               }
@@ -144,15 +140,8 @@ class _MusicTransformState extends State<MusicTransform> {
           }
           break;
         case "stop":
-          isRunning = false;
-          widget.queue.clear();
-          musicList.clear();
-          cancelToken?.cancel();
-          SmartDialog.dismiss();
-          DBLogic.to.findAllListByGroup("all").then((value) => Get.back());
-          break;
         case "back":
-          Get.back();
+          release();
           break;
       }
     });
@@ -187,25 +176,28 @@ class _MusicTransformState extends State<MusicTransform> {
       try {
         cancelToken = CancelToken();
         await Network.download(url, dest, (received, total) {
-          if (total != -1 && isMusic) {
+          if (total != -1) {
             final _progress = (received / total * 100).toStringAsFixed(0);
-            final p = double.parse(_progress).truncate();
-            if (currentProgress != p) {
-              currentProgress = p;
-              currentMusic = music;
-              if (_progress == "100") {
-                final message = ftpCmdToJson(
-                    FtpCmd(cmd: "download success", body: music.musicUId));
-                widget.channel.sink.add(message);
-                changeNextTaskView(isMusic, music);
-              } else {
-                if (isRunning) {
+            if (isMusic) {
+              final p = double.parse(_progress).truncate();
+              if (currentProgress != p) {
+                currentProgress = p;
+                currentMusic = music;
+                if (_progress == "100") {
                   final message = ftpCmdToJson(
-                      FtpCmd(cmd: "downloading", body: music.musicUId));
+                      FtpCmd(cmd: "download success", body: music.musicUId));
                   widget.channel.sink.add(message);
+                } else {
+                  if (isRunning) {
+                    final message = ftpCmdToJson(
+                        FtpCmd(cmd: "downloading", body: music.musicUId));
+                    widget.channel.sink.add(message);
+                  }
                 }
+                setState(() {});
               }
-              setState(() {});
+            } else if (_progress == "100") {
+              changeNextTaskView(music);
             }
           }
         }, cancelToken);
@@ -216,7 +208,7 @@ class _MusicTransformState extends State<MusicTransform> {
         final message =
             ftpCmdToJson(FtpCmd(cmd: "download fail", body: music.musicUId));
         widget.channel.sink.add(message);
-        changeNextTaskView(isMusic, music);
+        changeNextTaskView(music);
         setState(() {});
       }
     });
@@ -229,14 +221,13 @@ class _MusicTransformState extends State<MusicTransform> {
     }
   }
 
-  changeNextTaskView(bool isMusic, DownloadMusic music) {
-    if (isMusic) {
-      for (var i = 0; i < musicList.length; i++) {
-        if (musicList[i].musicUId == music.musicUId) {
-          if (index < picList.length - 1) {
-            index = i + 1;
-            break;
-          }
+  changeNextTaskView(DownloadMusic music) {
+    for (var i = 0; i < musicList.length; i++) {
+      if (musicList[i].musicUId == music.musicUId) {
+        if (index < musicList.length) {
+          index = i + 1;
+          isStartDownload = true;
+          break;
         }
       }
     }
@@ -244,10 +235,10 @@ class _MusicTransformState extends State<MusicTransform> {
 
   @override
   void dispose() {
-    super.dispose();
-    widget.channel.sink.close();
     musicList.clear();
     Wakelock.disable();
+    widget.channel.sink.close();
+    super.dispose();
   }
 
   @override
@@ -270,7 +261,7 @@ class _MusicTransformState extends State<MusicTransform> {
           drawBody(),
           SizedBox(height: 20.h),
           drawMusicInfo(),
-          SizedBox(height: 50.h),
+          SizedBox(height: 40.h),
           drawProgressBar()
         ],
       ));
@@ -305,44 +296,46 @@ class _MusicTransformState extends State<MusicTransform> {
   }
 
   Widget drawBody() {
-    if (picList.isEmpty || isNoTrans) {
+    if (isNoTrans || index <= 0 || musicList.length < index) {
       return Container(
-          width: 300.w,
-          height: 300.w,
+          width: 300.h,
+          height: 300.h,
           color: Get.theme.primaryColor,
           child: const Image(image: AssetImage(Assets.assetsLogo)));
     } else {
       return SizedBox(
-        width: 300.w,
-        height: 300.w,
+        width: 300.h,
+        height: 300.h,
         child: TransformerPageView(
-          index: index,
+          index: index - 1,
           viewportFraction: 0.8,
           pageController: controller,
           transformer: ScaleAndFadeTransformer(),
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
-            return Image.file(File(picList[index]), fit: BoxFit.fill);
+            return showImg(
+                SDUtils.getImgPath(musicList[index].coverPath), 400, 400,
+                hasShadow: false, radius: 12);
           },
-          itemCount: picList.length,
+          itemCount: musicList.length,
         ),
       );
     }
   }
 
   Widget drawProgressBar() {
-    int current = index + 1;
-    int total = picList.length;
+    int current = index;
+    int total = musicList.length;
     double percent = current / total * 100;
     return Stack(
       children: [
         /// 里圈
         SizedBox(
-          width: 190.w,
-          height: 190.w,
+          width: 190.h,
+          height: 190.h,
           child: Center(
             child: CustomPaint(
-              size: Size(160.w, 160.w),
+              size: Size(160.h, 160.h),
               painter: CircleView(
                 completePercent: isStartDownload ? percent.roundToDouble() : 0,
                 completeColor: const Color(0xFFF940A7),
@@ -355,9 +348,10 @@ class _MusicTransformState extends State<MusicTransform> {
             ),
           ),
         ),
+
         /// 外圈
         CustomPaint(
-          size: Size(190.w, 190.w),
+          size: Size(190.h, 190.h),
           painter: CircleView(
             completePercent: 100,
             completeColor: const Color(0x1AF940A7),
@@ -365,6 +359,7 @@ class _MusicTransformState extends State<MusicTransform> {
             completeWidth: 8.w,
           ),
         ),
+
         /// 中间文字
         drawInnerText(current, total)
       ],
@@ -374,34 +369,34 @@ class _MusicTransformState extends State<MusicTransform> {
   Widget drawInnerText(int current, int total) {
     if (isStartDownload) {
       return SizedBox(
-        width: 190.w,
-        height: 190.w,
+        width: 190.h,
+        height: 190.h,
         child: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text("$current",
-                    style: Get.isDarkMode
-                        ? TextStyleMs.white_15
-                        : TextStyleMs.black_15),
-                SizedBox(height: 15.h),
-                HorizontalLine(
-                    dashedHeight: 1.h,
-                    dashedWidth: 70.w,
-                    color: const Color(0xFFCCDDF1)),
-                SizedBox(height: 15.h),
-                Text("$total",
-                    style: Get.isDarkMode
-                        ? TextStyleMs.white_15
-                        : TextStyleMs.black_15)
-              ],
-            )),
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text("$current",
+                style: Get.isDarkMode
+                    ? TextStyleMs.white_15
+                    : TextStyleMs.black_15),
+            SizedBox(height: 15.h),
+            HorizontalLine(
+                dashedHeight: 1.h,
+                dashedWidth: 70.w,
+                color: const Color(0xFFCCDDF1)),
+            SizedBox(height: 15.h),
+            Text("$total",
+                style: Get.isDarkMode
+                    ? TextStyleMs.white_15
+                    : TextStyleMs.black_15)
+          ],
+        )),
       );
     } else {
       return SizedBox(
-          width: 190.w,
-          height: 190.w,
+          width: 190.h,
+          height: 190.h,
           child: Center(
               child: Text("数据解析中...",
                   style: Get.isDarkMode
@@ -430,14 +425,25 @@ class _MusicTransformState extends State<MusicTransform> {
           onPressed: () async {
             final message = ftpCmdToJson(FtpCmd(cmd: "stop", body: ""));
             widget.channel.sink.add(message);
-            SmartDialog.dismiss();
-            await DBLogic.to.findAllListByGroup("all");
-            Get.back();
+            release();
           },
           child: const Text('确定'),
         )
       ]),
     ));
+  }
+
+  release() {
+    isRunning = false;
+    if (widget.queue.size > 0) {
+      widget.queue.pause();
+      widget.queue.clear();
+    }
+    cancelToken?.cancel();
+    SmartDialog.dismiss();
+    DBLogic.to
+        .findAllListByGroup(GlobalLogic.to.currentGroup.value)
+        .then((value) => Get.back());
   }
 
   requestPermission() async {

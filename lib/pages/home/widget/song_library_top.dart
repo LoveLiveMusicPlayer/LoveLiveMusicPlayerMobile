@@ -30,7 +30,6 @@ class Song_libraryTop extends StatelessWidget {
     return Obx(() {
       return buildTopWidget();
     });
-    //
   }
 
   ///获取顶部显示布局
@@ -55,17 +54,18 @@ class Song_libraryTop extends StatelessWidget {
   ///播放歌曲条目
   Widget _buildPlaySong() {
     return Container(
-      height: 45.h,
+      padding: EdgeInsets.only(bottom: 10.h),
+      height: 35.h,
       color: Get.theme.primaryColor,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            width: 16.h,
+            width: 14.w,
           ),
           _buildPlayBtn(),
           SizedBox(
-            width: 10.h,
+            width: 10.w,
           ),
           _buildSongNumText(),
           _buildScreen(),

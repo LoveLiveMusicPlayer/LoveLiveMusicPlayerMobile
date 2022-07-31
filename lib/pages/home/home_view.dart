@@ -143,7 +143,7 @@ class _HomeViewState extends State<HomeView>
     return Column(
       children: [
         AppBar(
-          toolbarHeight: 54.w,
+          toolbarHeight: 60.h,
           elevation: 0,
           centerTitle: false,
           automaticallyImplyLeading: false,
