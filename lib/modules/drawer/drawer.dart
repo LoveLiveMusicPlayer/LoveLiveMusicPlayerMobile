@@ -156,7 +156,7 @@ class _DrawerPageState extends State<DrawerPage> {
                         }),
                     DrawerFunctionButton(
                         icon: Assets.drawerDrawerColorful,
-                        text: "炫彩主题",
+                        text: "炫彩主题(高性能)",
                         hasSwitch: true,
                         initSwitch: PlayerLogic.to.hasSkin.value,
                         callBack: (check) async {

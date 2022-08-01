@@ -8,7 +8,7 @@ import 'package:lovelivemusicplayer/modules/ext.dart';
 class ControlButtons extends StatelessWidget {
   final AudioPlayer player;
 
-  ControlButtons(this.player);
+  const ControlButtons(this.player, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,18 @@ class ControlButtons extends StatelessWidget {
                   final nextIndex =
                       (currentIndex + 1) % PlayerLogic.loopModes.length;
                   PlayerLogic.to.changeLoopMode(nextIndex);
-                }, width: 32, height: 32, radius: 6, iconSize: 15);
+                },
+                    width: 32,
+                    height: 32,
+                    radius: 6,
+                    iconSize: 15,
+                    iconColor:
+                        PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                    bgColor: PlayerLogic.to.hasSkin.value
+                        ? const Color(0xFF1E2328)
+                        : null,
+                    outerColor:
+                        PlayerLogic.to.hasSkin.value ? Colors.black : null);
               },
             ),
             StreamBuilder<SequenceState?>(
@@ -48,7 +59,13 @@ class ControlButtons extends StatelessWidget {
                   width: 60,
                   height: 60,
                   radius: 40,
-                  iconSize: 16),
+                  iconSize: 16,
+                  iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                  bgColor: PlayerLogic.to.hasSkin.value
+                      ? const Color(0xFF1E2328)
+                      : null,
+                  outerColor:
+                      PlayerLogic.to.hasSkin.value ? Colors.black : null),
             ),
             StreamBuilder<PlayerState>(
               stream: player.playerStateStream,
@@ -69,11 +86,32 @@ class ControlButtons extends StatelessWidget {
                     if (hasPlayingMusic.musicId != null) {
                       player.play();
                     }
-                  }, width: 80, height: 80, radius: 40, iconSize: 26);
+                  },
+                      width: 80,
+                      height: 80,
+                      radius: 40,
+                      iconSize: 26,
+                      iconColor:
+                          PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                      bgColor: PlayerLogic.to.hasSkin.value
+                          ? const Color(0xFF1E2328)
+                          : null,
+                      outerColor:
+                          PlayerLogic.to.hasSkin.value ? Colors.black : null);
                 } else if (processingState != ProcessingState.completed) {
                   return materialButton(
                       Assets.playerPlayPause, () => player.pause(),
-                      width: 80, height: 80, radius: 40, iconSize: 26);
+                      width: 80,
+                      height: 80,
+                      radius: 40,
+                      iconSize: 26,
+                      iconColor:
+                          PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                      bgColor: PlayerLogic.to.hasSkin.value
+                          ? const Color(0xFF1E2328)
+                          : null,
+                      outerColor:
+                          PlayerLogic.to.hasSkin.value ? Colors.black : null);
                 } else {
                   return materialButton(
                       Assets.playerPlayPlay,
@@ -82,7 +120,14 @@ class ControlButtons extends StatelessWidget {
                       width: 80,
                       height: 80,
                       radius: 40,
-                      iconSize: 26);
+                      iconSize: 26,
+                      iconColor:
+                          PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                      bgColor: PlayerLogic.to.hasSkin.value
+                          ? const Color(0xFF1E2328)
+                          : null,
+                      outerColor:
+                          PlayerLogic.to.hasSkin.value ? Colors.black : null);
                 }
               },
             ),
@@ -94,10 +139,24 @@ class ControlButtons extends StatelessWidget {
                   width: 60,
                   height: 60,
                   radius: 40,
-                  iconSize: 16),
+                  iconSize: 16,
+                  iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                  bgColor: PlayerLogic.to.hasSkin.value
+                      ? const Color(0xFF1E2328)
+                      : null,
+                  outerColor:
+                      PlayerLogic.to.hasSkin.value ? Colors.black : null),
             ),
             materialButton(Assets.playerPlayPlaylist, () => {},
-                width: 32, height: 32, radius: 6, iconSize: 15),
+                width: 32,
+                height: 32,
+                radius: 6,
+                iconSize: 15,
+                iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                bgColor: PlayerLogic.to.hasSkin.value
+                    ? const Color(0xFF1E2328)
+                    : null,
+                outerColor: PlayerLogic.to.hasSkin.value ? Colors.black : null),
           ],
         ),
       ),

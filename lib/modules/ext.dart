@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
-import 'package:lovelivemusicplayer/global/global_player.dart';
 
 import '../utils/sd_utils.dart';
 
@@ -19,6 +18,7 @@ import '../utils/sd_utils.dart';
 Widget showImg(String? path, double? width, double? height,
     {double radius = 20,
     bool hasShadow = true,
+    Color? shadowColor,
     String defPhoto = Const.logo,
     BoxFit fit = BoxFit.cover}) {
   ImageProvider<Object> noShadowImage;
@@ -51,9 +51,10 @@ Widget showImg(String? path, double? width, double? height,
         borderRadius: BorderRadius.circular(radius.h),
         boxShadow: [
           BoxShadow(
-              color: Get.isDarkMode
-                  ? const Color(0xFF05080C)
-                  : const Color(0xFFD3E0EC),
+              color: shadowColor ??
+                  (Get.isDarkMode
+                      ? const Color(0xFF05080C)
+                      : const Color(0xFFD3E0EC)),
               blurRadius: 4,
               offset: Offset(4.h, 8.h)),
         ],
@@ -133,20 +134,20 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
     double iconSize = 30,
     Color? iconColor,
     Color? bgColor,
+    Color? shadowColor,
     EdgeInsets offset = const EdgeInsets.all(0)}) {
   Widget child;
-  bool darkTheme = PlayerLogic.to.hasSkin.value || Get.isDarkMode;
   if (icon is IconData) {
     child = Icon(icon,
-        color:
-            iconColor ?? (darkTheme ? Colors.white : const Color(0xFF333333)),
+        color: iconColor ??
+            (Get.isDarkMode ? Colors.white : const Color(0xFF333333)),
         size: iconSize.h);
   } else if (icon is String &&
       icon.startsWith("assets") &&
       icon.endsWith(".svg")) {
     child = SvgPicture.asset(icon,
-        color:
-            iconColor ?? (darkTheme ? Colors.white : const Color(0xFF333333)),
+        color: iconColor ??
+            (Get.isDarkMode ? Colors.white : const Color(0xFF333333)),
         width: iconSize.h,
         height: iconSize.h);
   } else {
@@ -160,13 +161,16 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
       borderRadius: BorderRadius.circular(radius.h),
       boxShadow: [
         BoxShadow(
-            color: darkTheme ? const Color(0x1005080C) : Colors.white,
+            color: outerColor ??
+                (Get.isDarkMode ? const Color(0x1005080C) : Colors.white),
             offset: const Offset(-3, -3),
             blurStyle: BlurStyle.inner,
             blurRadius: 6),
         BoxShadow(
             color: outerColor ??
-                (darkTheme ? const Color(0xFF05080C) : const Color(0xFFD3E0EC)),
+                (Get.isDarkMode
+                    ? const Color(0xFF05080C)
+                    : const Color(0xFFD3E0EC)),
             offset: const Offset(5, 3),
             blurRadius: 6),
       ],
@@ -186,7 +190,7 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
                 height: height.h,
                 alignment: const Alignment(0, 0),
                 color: bgColor ??
-                    (darkTheme
+                    (Get.isDarkMode
                         ? const Color(0xFF1E2328)
                         : const Color(0xFFF2F8FF)),
               ),

@@ -37,6 +37,7 @@ class _CoverState extends State<Cover> {
                   273,
                   273,
                   radius: 24,
+                  shadowColor: PlayerLogic.to.hasSkin.value ? const Color(0xFF05080C) : null
                 );
               },
             ),

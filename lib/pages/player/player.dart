@@ -154,7 +154,15 @@ class _PlayerState extends State<Player> {
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             materialButton(
                 Icons.youtube_searched_for, () => PlayerLogic.to.getLrc(true),
-                width: 32, height: 32, radius: 6, iconSize: 20),
+                width: 32, height: 32, radius: 6, iconSize: 20,
+                iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                bgColor: PlayerLogic.to.hasSkin.value
+                    ? const Color(0xFF1E2328)
+                    : null,
+                outerColor: PlayerLogic.to.hasSkin.value
+                    ? Colors.black
+                    : null
+            ),
             Obx(() {
               var icon;
               switch (PlayerLogic.to.lrcType.value) {
@@ -170,7 +178,15 @@ class _PlayerState extends State<Player> {
               }
               return materialButton(
                   icon, () => PlayerLogic.to.toggleTranslate(),
-                  width: 32, height: 32, radius: 6, iconSize: 30);
+                  width: 32, height: 32, radius: 6, iconSize: 30,
+                  iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                  bgColor: PlayerLogic.to.hasSkin.value
+                      ? const Color(0xFF1E2328)
+                      : null,
+                  outerColor: PlayerLogic.to.hasSkin.value
+                      ? Colors.black
+                      : null
+              );
             })
           ]));
     }
@@ -189,10 +205,26 @@ class _PlayerState extends State<Player> {
                 height: 32,
                 radius: 6,
                 iconColor: Colors.pinkAccent,
-                iconSize: 15);
+                iconSize: 15,
+                // iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                bgColor: PlayerLogic.to.hasSkin.value
+                    ? const Color(0xFF1E2328)
+                    : null,
+                outerColor: PlayerLogic.to.hasSkin.value
+                    ? Colors.black
+                    : null
+            );
           }),
           materialButton(Icons.add, () => {},
-              width: 32, height: 32, radius: 6, iconSize: 20),
+              width: 32, height: 32, radius: 6, iconSize: 20,
+              iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
+              bgColor: PlayerLogic.to.hasSkin.value
+                  ? const Color(0xFF1E2328)
+                  : null,
+              outerColor: PlayerLogic.to.hasSkin.value
+                  ? Colors.black
+                  : null
+          ),
         ],
       ),
     );

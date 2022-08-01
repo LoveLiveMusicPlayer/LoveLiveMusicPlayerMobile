@@ -10,7 +10,8 @@ class PlayerHeader extends StatelessWidget {
   final GestureTapCallback onCloseTap;
   final Function() onMoreTap;
 
-  const PlayerHeader({Key? key, required this.onCloseTap, required this.onMoreTap})
+  const PlayerHeader(
+      {Key? key, required this.onCloseTap, required this.onMoreTap})
       : super(key: key);
 
   @override
@@ -24,7 +25,18 @@ class PlayerHeader extends StatelessWidget {
           children: <Widget>[
             /// 折叠向下箭头
             materialButton(Icons.keyboard_arrow_down, onCloseTap,
-                width: 32, height: 32, iconSize: 20, radius: 6),
+                width: 32,
+                height: 32,
+                iconSize: 20,
+                radius: 6,
+                iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                bgColor: PlayerLogic.to.hasSkin.value
+                    ? const Color(0xFF1E2328)
+                    : null,
+                outerColor: PlayerLogic.to.hasSkin.value
+                    ? Colors.black
+                    : null
+            ),
 
             /// 曲名 + 歌手
             Expanded(
@@ -57,7 +69,17 @@ class PlayerHeader extends StatelessWidget {
 
             /// 更多功能
             materialButton(Icons.more_horiz, onMoreTap,
-                width: 32, height: 32, iconSize: 18, radius: 6),
+                width: 32,
+                height: 32,
+                iconSize: 18,
+                radius: 6,
+                iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                bgColor: PlayerLogic.to.hasSkin.value
+                    ? const Color(0xFF1E2328)
+                    : null,
+                outerColor: PlayerLogic.to.hasSkin.value
+                    ? Colors.black
+                    : null),
           ],
         ),
       ),

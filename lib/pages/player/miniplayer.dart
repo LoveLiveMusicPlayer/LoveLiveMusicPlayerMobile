@@ -29,11 +29,6 @@ class _MiniPlayerState extends State<MiniPlayer> {
   ImageProvider? provider;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Obx(() {
       final music = PlayerLogic.to.playingMusic.value;
@@ -181,7 +176,9 @@ class _MiniPlayerState extends State<MiniPlayer> {
                 text: TextSpan(
                     text:
                         PlayerLogic.to.playingMusic.value.musicName ?? "暂无歌曲"),
-                style: Get.isDarkMode ? TextStyleMs.white_14.merge(textStyle) : TextStyleMs.black_14.merge(textStyle),
+                style: Get.isDarkMode
+                    ? TextStyleMs.white_14.merge(textStyle)
+                    : TextStyleMs.black_14.merge(textStyle),
                 speed: 15)
           ],
         ),
@@ -198,6 +195,9 @@ class _MiniPlayerState extends State<MiniPlayer> {
             final playerState = snapshot.data;
             final processingState = playerState?.processingState;
             final playing = playerState?.playing;
+            final color = Get.isDarkMode
+                ? const Color(0xFFCCCCCC)
+                : const Color(0xFF333333);
             if (processingState == ProcessingState.loading ||
                 processingState == ProcessingState.buffering) {
               return Container(
@@ -216,18 +216,14 @@ class _MiniPlayerState extends State<MiniPlayer> {
                   },
                   width: 16,
                   height: 16,
-                  color: Get.isDarkMode
-                      ? const Color(0xFFCCCCCC)
-                      : const Color(0xFF333333));
+                  color: color);
             } else if (processingState != ProcessingState.completed) {
               return touchIconByAsset(
                   path: Assets.playerPlayPause,
                   onTap: () => PlayerLogic.to.mPlayer.pause(),
                   width: 16,
                   height: 16,
-                  color: Get.isDarkMode
-                      ? const Color(0xFFCCCCCC)
-                      : const Color(0xFF333333));
+                  color: color);
             } else {
               return touchIconByAsset(
                   path: Assets.playerPlayPlay,
@@ -235,9 +231,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
                       index: PlayerLogic.to.mPlayer.effectiveIndices!.first),
                   width: 16,
                   height: 16,
-                  color: Get.isDarkMode
-                      ? const Color(0xFFCCCCCC)
-                      : const Color(0xFF333333));
+                  color: color);
             }
           },
         ));
