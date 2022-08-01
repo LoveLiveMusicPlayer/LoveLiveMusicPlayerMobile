@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
-
-import '../../../modules/ext.dart';
 
 class PlayerHeader extends StatelessWidget {
   final GestureTapCallback onCloseTap;
@@ -40,31 +39,29 @@ class PlayerHeader extends StatelessWidget {
 
             /// 曲名 + 歌手
             Expanded(
-              child: Obx(() {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      PlayerLogic.to.playingMusic.value.musicName ?? "暂无歌曲",
-                      overflow: TextOverflow.ellipsis,
-                      style: PlayerLogic.to.hasSkin.value || Get.isDarkMode
-                          ? TextStyleMs.whiteBold_15
-                          : TextStyleMs.blackBold_15,
-                      maxLines: 1,
-                    ),
-                    Text(
-                      PlayerLogic.to.playingMusic.value.artist ?? "",
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: PlayerLogic.to.hasSkin.value
-                              ? const Color(0xffdfdfdf)
-                              : const Color(0xFF999999),
-                          fontSize: 12.sp),
-                      maxLines: 1,
-                    )
-                  ],
-                );
-              }),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    PlayerLogic.to.playingMusic.value.musicName ?? "暂无歌曲",
+                    overflow: TextOverflow.ellipsis,
+                    style: PlayerLogic.to.hasSkin.value || Get.isDarkMode
+                        ? TextStyleMs.whiteBold_15
+                        : TextStyleMs.blackBold_15,
+                    maxLines: 1,
+                  ),
+                  Text(
+                    PlayerLogic.to.playingMusic.value.artist ?? "",
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: PlayerLogic.to.hasSkin.value
+                            ? const Color(0xffdfdfdf)
+                            : const Color(0xFF999999),
+                        fontSize: 12.sp),
+                    maxLines: 1,
+                  )
+                ],
+              )
             ),
 
             /// 更多功能

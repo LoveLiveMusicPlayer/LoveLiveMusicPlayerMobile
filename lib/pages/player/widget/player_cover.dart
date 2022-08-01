@@ -29,22 +29,18 @@ class _CoverState extends State<Cover> {
             SizedBox(height: 18.h),
 
             /// 封面
-            Obx(
-              () {
-                return showImg(
-                  SDUtils.getImgPath(
-                      PlayerLogic.to.playingMusic.value.coverPath ?? ""),
-                  273,
-                  273,
-                  radius: 24,
-                  shadowColor: PlayerLogic.to.hasSkin.value ? const Color(0xFF05080C) : null
-                );
-              },
+            showImg(
+                SDUtils.getImgPath(
+                    PlayerLogic.to.playingMusic.value.coverPath ?? ""),
+                273,
+                273,
+                radius: 24,
+                shadowColor: PlayerLogic.to.hasSkin.value ? const Color(0xFF05080C) : null
             ),
 
             /// 信息
             SizedBox(height: 18.h),
-            const PlayerInfo(),
+            const PlayerInfo()
           ],
         ),
       ),

@@ -100,12 +100,12 @@ class _PlayerState extends State<Player> {
           SizedBox(height: 10.h),
 
           /// 中间可切换的界面
-          Obx(() => stackBody()),
+          stackBody(),
 
           SizedBox(height: 10.h),
 
           /// 功能栏
-          Obx(() => funcButton())
+          funcButton()
         ],
       ),
     );
@@ -134,60 +134,53 @@ class _PlayerState extends State<Player> {
 
   Widget stackBody() {
     if (widget.isCover.value) {
-      return Cover(onTap: () {
-        widget.isCover.value = false;
-      });
+      return Cover(onTap: () => widget.isCover.value = false);
     } else {
       return Lyric(
           key: const Key("Lyric"),
-          onTap: () {
-            widget.isCover.value = true;
-          });
+          onTap: () => widget.isCover.value = true);
     }
   }
 
   Widget funcButton() {
     if (!widget.isCover.value) {
+      var icon;
+      switch (PlayerLogic.to.lrcType.value) {
+        case 0:
+          icon = Assets.playerPlayJp;
+          break;
+        case 1:
+          icon = Assets.playerPlayZh;
+          break;
+        case 2:
+          icon = Assets.playerPlayRoma;
+          break;
+      }
       return Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             materialButton(
                 Icons.youtube_searched_for, () => PlayerLogic.to.getLrc(true),
-                width: 32, height: 32, radius: 6, iconSize: 20,
+                width: 32,
+                height: 32,
+                radius: 6,
+                iconSize: 20,
                 iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
                 bgColor: PlayerLogic.to.hasSkin.value
                     ? const Color(0xFF1E2328)
                     : null,
-                outerColor: PlayerLogic.to.hasSkin.value
-                    ? Colors.black
-                    : null
-            ),
-            Obx(() {
-              var icon;
-              switch (PlayerLogic.to.lrcType.value) {
-                case 0:
-                  icon = Assets.playerPlayJp;
-                  break;
-                case 1:
-                  icon = Assets.playerPlayZh;
-                  break;
-                case 2:
-                  icon = Assets.playerPlayRoma;
-                  break;
-              }
-              return materialButton(
-                  icon, () => PlayerLogic.to.toggleTranslate(),
-                  width: 32, height: 32, radius: 6, iconSize: 30,
-                  iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
-                  bgColor: PlayerLogic.to.hasSkin.value
-                      ? const Color(0xFF1E2328)
-                      : null,
-                  outerColor: PlayerLogic.to.hasSkin.value
-                      ? Colors.black
-                      : null
-              );
-            })
+                outerColor: PlayerLogic.to.hasSkin.value ? Colors.black : null),
+            materialButton(icon, () => PlayerLogic.to.toggleTranslate(),
+                width: 32,
+                height: 32,
+                radius: 6,
+                iconSize: 30,
+                iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                bgColor: PlayerLogic.to.hasSkin.value
+                    ? const Color(0xFF1E2328)
+                    : null,
+                outerColor: PlayerLogic.to.hasSkin.value ? Colors.black : null)
           ]));
     }
     return Padding(
@@ -195,36 +188,30 @@ class _PlayerState extends State<Player> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Obx(() {
-            return materialButton(
-                PlayerLogic.to.playingMusic.value.isLove
-                    ? Icons.favorite
-                    : Assets.playerPlayLove,
-                () => PlayerLogic.to.toggleLove(),
-                width: 32,
-                height: 32,
-                radius: 6,
-                iconColor: Colors.pinkAccent,
-                iconSize: 15,
-                // iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
-                bgColor: PlayerLogic.to.hasSkin.value
-                    ? const Color(0xFF1E2328)
-                    : null,
-                outerColor: PlayerLogic.to.hasSkin.value
-                    ? Colors.black
-                    : null
-            );
-          }),
-          materialButton(Icons.add, () => {},
-              width: 32, height: 32, radius: 6, iconSize: 20,
-              iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
+          materialButton(
+              PlayerLogic.to.playingMusic.value.isLove
+                  ? Icons.favorite
+                  : Assets.playerPlayLove,
+                  () => PlayerLogic.to.toggleLove(),
+              width: 32,
+              height: 32,
+              radius: 6,
+              iconColor: Colors.pinkAccent,
+              iconSize: 15,
+              // iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
               bgColor: PlayerLogic.to.hasSkin.value
                   ? const Color(0xFF1E2328)
                   : null,
-              outerColor: PlayerLogic.to.hasSkin.value
-                  ? Colors.black
-                  : null
-          ),
+              outerColor: PlayerLogic.to.hasSkin.value ? Colors.black : null),
+          materialButton(Icons.add, () => {},
+              width: 32,
+              height: 32,
+              radius: 6,
+              iconSize: 20,
+              iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
+              bgColor:
+                  PlayerLogic.to.hasSkin.value ? const Color(0xFF1E2328) : null,
+              outerColor: PlayerLogic.to.hasSkin.value ? Colors.black : null),
         ],
       ),
     );
