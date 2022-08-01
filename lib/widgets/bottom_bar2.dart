@@ -73,8 +73,7 @@ class BottomBar2 extends StatelessWidget {
   scrollTo(ScrollController controller) {
     try {
       controller.animateTo(0,
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.ease);
+          duration: const Duration(milliseconds: 200), curve: Curves.ease);
     } catch (e) {}
   }
 

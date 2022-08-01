@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
+
 import '../models/Music.dart';
 
 class GlobalLogic extends SuperController

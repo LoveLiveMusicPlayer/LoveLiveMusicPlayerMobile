@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -16,7 +17,7 @@ import 'package:marquee_text/marquee_text.dart';
 import '../../modules/ext.dart';
 
 class MiniPlayer extends StatefulWidget {
-  MiniPlayer({Key? key, required this.onTap}) : super(key: key);
+  const MiniPlayer({Key? key, required this.onTap}) : super(key: key);
   final GestureTapCallback onTap;
 
   @override
@@ -54,7 +55,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
                   (BuildContext context, AsyncSnapshot<Decoration> snapshot) {
                 return Container(
                   height: 60.h,
-                  margin: EdgeInsets.only(left: 16.w, right: 16.w),
+                  margin: EdgeInsets.only(top: 2.h, left: 16.w, right: 16.w),
                   decoration: snapshot.requireData,
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(34),
@@ -76,12 +77,24 @@ class _MiniPlayerState extends State<MiniPlayer> {
 
   Future<Decoration> generateDecoration(Music music) async {
     Decoration decoration;
+    final color = Get.isDarkMode ? const Color(0xFF05080C) : Colors.white;
+    final boxShadow = [
+      BoxShadow(
+          color: color,
+          offset: Offset(-3.w, -3.h),
+          blurStyle: BlurStyle.inner,
+          blurRadius: 6.w),
+      BoxShadow(color: color, offset: Offset(-3.w, 3.h), blurRadius: 6.w),
+      BoxShadow(color: color, offset: Offset(3.w, -3.h), blurRadius: 6.w),
+    ];
     if (music.musicId == null ||
         music.coverPath == null ||
         music.coverPath!.isEmpty) {
       decoration = BoxDecoration(
-        color: const Color(0xFFEBF3FE),
+        color:
+            Get.isDarkMode ? const Color(0xFF1E2328) : const Color(0xFFEBF3FE),
         borderRadius: BorderRadius.circular(34),
+        boxShadow: boxShadow,
       );
     } else {
       final compressPic = await ImageUtil()
@@ -90,6 +103,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
         image:
             DecorationImage(image: MemoryImage(compressPic!), fit: BoxFit.fill),
         borderRadius: BorderRadius.circular(34),
+        boxShadow: boxShadow,
       );
     }
     return decoration;
@@ -123,7 +137,9 @@ class _MiniPlayerState extends State<MiniPlayer> {
               },
               width: 18,
               height: 18,
-              color: const Color(0xFF333333)),
+              color: Get.isDarkMode
+                  ? const Color(0xFFCCCCCC)
+                  : const Color(0xFF333333)),
           SizedBox(width: 20.w),
         ],
       ),
@@ -149,9 +165,14 @@ class _MiniPlayerState extends State<MiniPlayer> {
   }
 
   Widget marqueeMusicName() {
+    const textStyle = TextStyle(fontWeight: FontWeight.bold);
     return Expanded(
       child: InkWell(
-        onDoubleTap: () => PlayerLogic.to.togglePlay(),
+        onDoubleTap: () {
+          if (PlayerLogic.to.playingMusic.value.musicId != null) {
+            PlayerLogic.to.togglePlay();
+          }
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -160,7 +181,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
                 text: TextSpan(
                     text:
                         PlayerLogic.to.playingMusic.value.musicName ?? "暂无歌曲"),
-                style: TextStyleMs.black_14,
+                style: Get.isDarkMode ? TextStyleMs.white_14.merge(textStyle) : TextStyleMs.black_14.merge(textStyle),
                 speed: 15)
           ],
         ),
@@ -170,46 +191,55 @@ class _MiniPlayerState extends State<MiniPlayer> {
 
   Widget playButton() {
     return Container(
-      padding: EdgeInsets.only(left: 10.w, top: 10.w, bottom: 10.w),
-      child: StreamBuilder<PlayerState>(
-        stream: PlayerLogic.to.mPlayer.playerStateStream,
-        builder: (context, snapshot) {
-          final playerState = snapshot.data;
-          final processingState = playerState?.processingState;
-          final playing = playerState?.playing;
-          if (processingState == ProcessingState.loading ||
-              processingState == ProcessingState.buffering) {
-            return Container(
-              margin: const EdgeInsets.all(8.0),
-              width: 16.h,
-              height: 16.h,
-              child: const CircularProgressIndicator(),
-            );
-          } else if (playing != true) {
-            return touchIconByAsset(
-                path: Assets.playerPlayPlay,
-                onTap: () => PlayerLogic.to.mPlayer.play(),
-                width: 16,
-                height: 16,
-                color: const Color(0xFF333333));
-          } else if (processingState != ProcessingState.completed) {
-            return touchIconByAsset(
-                path: Assets.playerPlayPause,
-                onTap: () => PlayerLogic.to.mPlayer.pause(),
-                width: 16,
-                height: 16,
-                color: const Color(0xFF333333));
-          } else {
-            return touchIconByAsset(
-                path: Assets.playerPlayPlay,
-                onTap: () => PlayerLogic.to.mPlayer.seek(Duration.zero,
-                    index: PlayerLogic.to.mPlayer.effectiveIndices!.first),
-                width: 16,
-                height: 16,
-                color: const Color(0xFF333333));
-          }
-        },
-      )
-    );
+        padding: EdgeInsets.only(left: 10.w, top: 10.w, bottom: 10.w),
+        child: StreamBuilder<PlayerState>(
+          stream: PlayerLogic.to.mPlayer.playerStateStream,
+          builder: (context, snapshot) {
+            final playerState = snapshot.data;
+            final processingState = playerState?.processingState;
+            final playing = playerState?.playing;
+            if (processingState == ProcessingState.loading ||
+                processingState == ProcessingState.buffering) {
+              return Container(
+                margin: const EdgeInsets.all(8.0),
+                width: 16.h,
+                height: 16.h,
+                child: const CircularProgressIndicator(),
+              );
+            } else if (playing != true) {
+              return touchIconByAsset(
+                  path: Assets.playerPlayPlay,
+                  onTap: () {
+                    if (PlayerLogic.to.playingMusic.value.musicId != null) {
+                      PlayerLogic.to.mPlayer.play();
+                    }
+                  },
+                  width: 16,
+                  height: 16,
+                  color: Get.isDarkMode
+                      ? const Color(0xFFCCCCCC)
+                      : const Color(0xFF333333));
+            } else if (processingState != ProcessingState.completed) {
+              return touchIconByAsset(
+                  path: Assets.playerPlayPause,
+                  onTap: () => PlayerLogic.to.mPlayer.pause(),
+                  width: 16,
+                  height: 16,
+                  color: Get.isDarkMode
+                      ? const Color(0xFFCCCCCC)
+                      : const Color(0xFF333333));
+            } else {
+              return touchIconByAsset(
+                  path: Assets.playerPlayPlay,
+                  onTap: () => PlayerLogic.to.mPlayer.seek(Duration.zero,
+                      index: PlayerLogic.to.mPlayer.effectiveIndices!.first),
+                  width: 16,
+                  height: 16,
+                  color: Get.isDarkMode
+                      ? const Color(0xFFCCCCCC)
+                      : const Color(0xFF333333));
+            }
+          },
+        ));
   }
 }

@@ -7,9 +7,11 @@ import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import '../../../modules/ext.dart';
 
 class PlayerHeader extends StatelessWidget {
-  final GestureTapCallback onTap;
+  final GestureTapCallback onCloseTap;
+  final Function() onMoreTap;
 
-  PlayerHeader({Key? key, required this.onTap}) : super(key: key);
+  const PlayerHeader({Key? key, required this.onCloseTap, required this.onMoreTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +23,8 @@ class PlayerHeader extends StatelessWidget {
         child: Row(
           children: <Widget>[
             /// 折叠向下箭头
-            materialButton(Icons.keyboard_arrow_down, onTap,
-                width: 32,
-                height: 32,
-                iconSize: 20,
-                radius: 6,
-                bgColor: Get.isDarkMode ? Colors.white : Colors.black),
+            materialButton(Icons.keyboard_arrow_down, onCloseTap,
+                width: 32, height: 32, iconSize: 20, radius: 6),
 
             /// 曲名 + 歌手
             Expanded(
@@ -37,7 +35,7 @@ class PlayerHeader extends StatelessWidget {
                     Text(
                       PlayerLogic.to.playingMusic.value.musicName ?? "暂无歌曲",
                       overflow: TextOverflow.ellipsis,
-                      style: Get.isDarkMode
+                      style: PlayerLogic.to.hasSkin.value || Get.isDarkMode
                           ? TextStyleMs.whiteBold_15
                           : TextStyleMs.blackBold_15,
                       maxLines: 1,
@@ -46,7 +44,10 @@ class PlayerHeader extends StatelessWidget {
                       PlayerLogic.to.playingMusic.value.artist ?? "",
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          color: const Color(0xFF999999), fontSize: 12.sp),
+                          color: PlayerLogic.to.hasSkin.value
+                              ? const Color(0xffdfdfdf)
+                              : const Color(0xFF999999),
+                          fontSize: 12.sp),
                       maxLines: 1,
                     )
                   ],
@@ -55,7 +56,7 @@ class PlayerHeader extends StatelessWidget {
             ),
 
             /// 更多功能
-            materialButton(Icons.more_horiz, () => {},
+            materialButton(Icons.more_horiz, onMoreTap,
                 width: 32, height: 32, iconSize: 18, radius: 6),
           ],
         ),

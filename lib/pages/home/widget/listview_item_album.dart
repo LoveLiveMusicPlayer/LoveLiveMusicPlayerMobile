@@ -62,19 +62,20 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum>
                       checkIconColor: const Color(0xFFF940A7),
                       onCheckd: (checked) {
                         widget.checked = checked;
-                        widget.onItemTap(widget.album,checked);
+                        widget.onItemTap(widget.album, checked);
                       }),
                 ),
               ),
               Expanded(
                   child: Text(
-                    widget.album.albumName!,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    style: Get.isDarkMode ? TextStyleMs.white_12 : TextStyleMs.black_12,
-                  )
-              )
+                widget.album.albumName!,
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: Get.isDarkMode
+                    ? TextStyleMs.white_12
+                    : TextStyleMs.black_12,
+              ))
             ],
           )
         ]));

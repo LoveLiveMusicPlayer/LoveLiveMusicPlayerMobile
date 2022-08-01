@@ -106,7 +106,8 @@ class DialogAddSongSheet extends StatelessWidget {
   }
 
   ///单个条目
-  Widget _buildItem(String title, bool showLin, GestureTapCallback? onTap, {String? assetPath, IconData? icon}) {
+  Widget _buildItem(String title, bool showLin, GestureTapCallback? onTap,
+      {String? assetPath, IconData? icon}) {
     return Padding(
       padding: EdgeInsets.only(left: 16.h, right: 16.h),
       child: InkWell(
@@ -159,14 +160,9 @@ class DialogAddSongSheet extends StatelessWidget {
           path: assetPath,
           width: 16.h,
           height: 16.h,
-          color: Get.isDarkMode
-              ? Colors.white
-              : const Color(0xFF666666));
+          color: Get.isDarkMode ? Colors.white : const Color(0xFF666666));
     } else if (icon != null) {
-      return touchIcon(
-          icon, () {},
-          color: Colors.pinkAccent
-      );
+      return touchIcon(icon, () {}, color: Colors.pinkAccent);
     } else {
       return const SizedBox();
     }

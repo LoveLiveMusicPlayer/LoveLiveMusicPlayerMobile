@@ -6,6 +6,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/global/global_theme.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/routes.dart';
@@ -102,8 +103,8 @@ class _DrawerPageState extends State<DrawerPage> {
         Padding(
             padding: EdgeInsets.symmetric(horizontal: 12.w),
             child: Container(
-              width: 268.w,
-              height: 204.h,
+              width: 270.w,
+              height: 270.h,
               decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(8.w),
@@ -154,6 +155,15 @@ class _DrawerPageState extends State<DrawerPage> {
                           await SpUtil.put(Const.spDark, check);
                         }),
                     DrawerFunctionButton(
+                        icon: Assets.drawerDrawerColorful,
+                        text: "炫彩主题",
+                        hasSwitch: true,
+                        initSwitch: PlayerLogic.to.hasSkin.value,
+                        callBack: (check) async {
+                          PlayerLogic.to.hasSkin.value = check;
+                          await SpUtil.put(Const.spColorful, check);
+                        }),
+                    DrawerFunctionButton(
                       icon: Assets.drawerDrawerSecret,
                       text: "关于和隐私",
                       onTap: () {},
@@ -165,7 +175,8 @@ class _DrawerPageState extends State<DrawerPage> {
                         SmartDialog.compatible
                             .showLoading(msg: "重置中...", backDismiss: false);
                         await DBLogic.to.clearAllAlbum();
-                        await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
+                        await DBLogic.to.findAllListByGroup(
+                            GlobalLogic.to.currentGroup.value);
                         SmartDialog.dismiss();
                         SmartDialog.compatible.showToast("清理成功",
                             time: const Duration(seconds: 5));

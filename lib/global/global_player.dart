@@ -49,12 +49,17 @@ class PlayerLogic extends SuperController
   // 切换显示歌词类型 (0:原文; 1:翻译; 2:罗马音)
   var lrcType = 0.obs;
 
+  // 是否使用封面皮肤
+  var hasSkin = false.obs;
+
   static PlayerLogic get to => Get.find();
 
   @override
   void onInit() {
     super.onInit();
-    SpUtil.getInt("loopMode", 0).then((index) => changeLoopMode(index));
+    SpUtil.getInt(Const.spLoopMode, 0).then((index) => changeLoopMode(index));
+    SpUtil.getBoolean(Const.spColorful, false)
+        .then((skin) => hasSkin.value = skin);
 
     /// 播放状态监听
     mPlayer.playerStateStream.listen((state) {
@@ -378,7 +383,7 @@ class PlayerLogic extends SuperController
     // 特殊处理随机播放：当处于LoopMode.off模式时，更改为循环列表且随机洗牌
     mPlayer.setLoopMode(
         loopModes[index] == LoopMode.off ? LoopMode.all : loopModes[index]);
-    await SpUtil.put("loopMode", index);
+    await SpUtil.put(Const.spLoopMode, index);
   }
 
   /// 删除播放列表中的一首歌曲

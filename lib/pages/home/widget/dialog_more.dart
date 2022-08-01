@@ -23,9 +23,7 @@ class DialogMore extends StatelessWidget {
           color: Get.theme.primaryColor,
           boxShadow: [
             BoxShadow(
-                color: Get.theme.primaryColor,
-                blurRadius: 4,
-                spreadRadius: 4)
+                color: Get.theme.primaryColor, blurRadius: 4, spreadRadius: 4)
           ],
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16.h), topRight: Radius.circular(16.h))),
@@ -37,12 +35,17 @@ class DialogMore extends StatelessWidget {
               music.musicName!,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 17.sp, color: Get.isDarkMode ? Colors.white : const Color(0xff333333)),
+              style: TextStyle(
+                  fontSize: 17.sp,
+                  color:
+                      Get.isDarkMode ? Colors.white : const Color(0xff333333)),
             ),
           ),
           Divider(
             height: 0.5.h,
-            color: Get.isDarkMode ? const Color(0xFF737373) : const Color(0xFFCFCFCF),
+            color: Get.isDarkMode
+                ? const Color(0xFF737373)
+                : const Color(0xFFCFCFCF),
           ),
           _buildItem(Assets.dialogIcAddPlayList, "加入播放列表", true, () {
             PlayerLogic.to.addNextMusic(music, isNext: false);
@@ -85,7 +88,9 @@ class DialogMore extends StatelessWidget {
                     onTap: () {},
                     width: 16.h,
                     height: 16.h,
-                    color: Get.isDarkMode ? Colors.white : const Color(0xFF666666)),
+                    color: Get.isDarkMode
+                        ? Colors.white
+                        : const Color(0xFF666666)),
                 SizedBox(
                   width: 10.h,
                 ),
@@ -95,7 +100,8 @@ class DialogMore extends StatelessWidget {
                     style: TextStyle(
                         color: Get.isDarkMode
                             ? Colors.white
-                            : const Color(0xff666666), fontSize: 15.sp),
+                            : const Color(0xff666666),
+                        fontSize: 15.sp),
                   ),
                 )
               ],

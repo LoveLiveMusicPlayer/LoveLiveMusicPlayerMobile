@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +15,7 @@ import 'package:lovelivemusicplayer/pages/player/widget/player_cover.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_header.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_lyric.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/seekbar.dart';
+import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:rxdart/rxdart.dart' as RxDart;
 
 import '../../modules/ext.dart';
@@ -21,7 +24,7 @@ class Player extends StatefulWidget {
   final GestureTapCallback onTap;
   var isCover = true.obs;
 
-  Player({required this.onTap});
+  Player({Key? key, required this.onTap}) : super(key: key);
 
   @override
   _PlayerState createState() => _PlayerState();
@@ -29,8 +32,6 @@ class Player extends StatefulWidget {
 
 class _PlayerState extends State<Player> {
   StreamSubscription? loginSubscription;
-  /// slider 正在被滑动
-  var isTouch = false.obs;
 
   Stream<PositionData> get _positionDataStream =>
       RxDart.Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
@@ -60,34 +61,41 @@ class _PlayerState extends State<Player> {
       color: Colors.transparent,
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Stack(
-          children: <Widget>[
-            coverBg(),
-            Column(
-              children: <Widget>[
-                top(),
-                bottom(),
-              ],
-            ),
-          ],
-        ),
+        child: Obx(() {
+          return Stack(
+            children: <Widget>[
+              coverBg(),
+              Column(
+                children: <Widget>[
+                  top(),
+                  bottom(),
+                ],
+              ),
+            ],
+          );
+        }),
       ),
     );
   }
 
   Widget top() {
     return Container(
-      color: Get.theme.primaryColor,
+      color: PlayerLogic.to.hasSkin.value
+          ? Colors.transparent
+          : Get.theme.primaryColor,
       height: 557.h,
       child: Column(
         children: <Widget>[
           SizedBox(height: MediaQuery.of(context).padding.top + 14.56.h),
 
           /// 头部
-          PlayerHeader(onTap: () {
-            widget.onTap();
-            eventBus.fire(PlayerClosableEvent(DateTime.now().millisecondsSinceEpoch));
-          }),
+          PlayerHeader(
+              onCloseTap: () {
+                widget.onTap();
+                eventBus.fire(
+                    PlayerClosableEvent(DateTime.now().millisecondsSinceEpoch));
+              },
+              onMoreTap: () {}),
 
           SizedBox(height: 10.h),
 
@@ -106,7 +114,9 @@ class _PlayerState extends State<Player> {
   Widget bottom() {
     return Container(
       height: ScreenUtil().screenHeight - 560.h,
-      color: Get.theme.primaryColor,
+      color: PlayerLogic.to.hasSkin.value
+          ? Colors.transparent
+          : Get.theme.primaryColor,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -206,14 +216,38 @@ class _PlayerState extends State<Player> {
 
   /// 覆盖背景
   Widget coverBg() {
-    return Container(
+    final pic = PlayerLogic.to.playingMusic.value.coverPath;
+    if (pic == null || !PlayerLogic.to.hasSkin.value) {
+      return Container();
+    }
+    const radius = BorderRadius.only(
+        topLeft: Radius.circular(34), topRight: Radius.circular(34));
+    return SizedBox(
+      width: ScreenUtil().screenWidth,
       height: ScreenUtil().screenHeight,
-      decoration: BoxDecoration(
-          color: Get.theme.primaryColor,
-          borderRadius: BorderRadius.circular(34)),
-      // child: Stack(
-      //   children: buildReaderBackground(),
-      // ),
+      child: ClipRRect(
+        borderRadius: radius,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: radius,
+                  image: DecorationImage(
+                      image: FileImage(File(SDUtils.path + pic)),
+                      fit: BoxFit.cover)),
+            ),
+            Positioned.fill(
+                child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: radius, color: Colors.black.withOpacity(0.4)),
+              ),
+            ))
+          ],
+        ),
+      ),
     );
   }
 
@@ -223,22 +257,4 @@ class _PlayerState extends State<Player> {
       widget.isCover.value = true;
     }
   }
-
-// List<Widget> buildReaderBackground() {
-//   return [
-//     Positioned.fill(
-//         child: GetBuilder<MainLogic>(builder: (logic) {
-//           return showImg(logic.state.playingMusic.cover);
-//         })
-//     ),
-//     Positioned.fill(
-//       child: BackdropFilter(
-//         filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-//         child: Container(
-//           color: Colors.black.withOpacity(0.4),
-//         ),
-//       ),
-//     )
-//   ];
-// }
 }

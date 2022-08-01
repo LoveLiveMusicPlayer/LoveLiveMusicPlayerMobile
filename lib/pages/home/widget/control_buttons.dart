@@ -56,6 +56,7 @@ class ControlButtons extends StatelessWidget {
                 final playerState = snapshot.data;
                 final processingState = playerState?.processingState;
                 final playing = playerState?.playing;
+                final hasPlayingMusic = PlayerLogic.to.playingMusic.value;
                 if (processingState == ProcessingState.loading ||
                     processingState == ProcessingState.buffering) {
                   return SizedBox(
@@ -64,9 +65,11 @@ class ControlButtons extends StatelessWidget {
                     child: const CircularProgressIndicator(),
                   );
                 } else if (playing != true) {
-                  return materialButton(
-                      Assets.playerPlayPlay, () => player.play(),
-                      width: 80, height: 80, radius: 40, iconSize: 26);
+                  return materialButton(Assets.playerPlayPlay, () {
+                    if (hasPlayingMusic.musicId != null) {
+                      player.play();
+                    }
+                  }, width: 80, height: 80, radius: 40, iconSize: 26);
                 } else if (processingState != ProcessingState.completed) {
                   return materialButton(
                       Assets.playerPlayPause, () => player.pause(),

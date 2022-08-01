@@ -8,24 +8,23 @@ String albumToJson(Music data) => json.encode(data.toJson());
 
 @Entity(tableName: "Music")
 class Music {
-  Music({
-    this.musicId,
-    this.musicName,
-    this.artist,
-    this.artistBin,
-    this.albumId,
-    this.albumName,
-    this.coverPath,
-    this.musicPath,
-    this.time,
-    this.jpUrl,
-    this.zhUrl,
-    this.romaUrl,
-    this.category,
-    this.group,
-    this.isLove = false,
-    this.checked = false
-  });
+  Music(
+      {this.musicId,
+      this.musicName,
+      this.artist,
+      this.artistBin,
+      this.albumId,
+      this.albumName,
+      this.coverPath,
+      this.musicPath,
+      this.time,
+      this.jpUrl,
+      this.zhUrl,
+      this.romaUrl,
+      this.category,
+      this.group,
+      this.isLove = false,
+      this.checked = false});
 
   @primaryKey
   String? musicId; // id
@@ -84,20 +83,20 @@ class Music {
       };
 
   factory Music.deepClone(Music music) => Music(
-    musicId: music.musicId,
-    musicName: music.musicName,
-    artist: music.artist,
-    artistBin: music.artistBin,
-    albumId: music.albumId,
-    albumName: music.albumName,
-    coverPath: music.coverPath,
-    musicPath: music.musicPath,
-    time: music.time,
-    jpUrl: music.jpUrl,
-    zhUrl: music.zhUrl,
-    romaUrl: music.romaUrl,
-    category: music.category,
-    group: music.group,
-    isLove: music.isLove,
-  );
+        musicId: music.musicId,
+        musicName: music.musicName,
+        artist: music.artist,
+        artistBin: music.artistBin,
+        albumId: music.albumId,
+        albumName: music.albumName,
+        coverPath: music.coverPath,
+        musicPath: music.musicPath,
+        time: music.time,
+        jpUrl: music.jpUrl,
+        zhUrl: music.zhUrl,
+        romaUrl: music.romaUrl,
+        category: music.category,
+        group: music.group,
+        isLove: music.isLove,
+      );
 }

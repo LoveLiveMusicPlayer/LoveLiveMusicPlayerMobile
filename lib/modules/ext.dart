@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 
 import '../utils/sd_utils.dart';
 
@@ -130,21 +131,22 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
     Color? innerColor,
     Color? outerColor,
     double iconSize = 30,
-    Color bgColor = Colors.black,
     Color? iconColor,
+    Color? bgColor,
     EdgeInsets offset = const EdgeInsets.all(0)}) {
   Widget child;
+  bool darkTheme = PlayerLogic.to.hasSkin.value || Get.isDarkMode;
   if (icon is IconData) {
     child = Icon(icon,
-        color: iconColor ??
-            (Get.isDarkMode ? Colors.white : const Color(0xFF333333)),
+        color:
+            iconColor ?? (darkTheme ? Colors.white : const Color(0xFF333333)),
         size: iconSize.h);
   } else if (icon is String &&
       icon.startsWith("assets") &&
       icon.endsWith(".svg")) {
     child = SvgPicture.asset(icon,
-        color: iconColor ??
-            (Get.isDarkMode ? Colors.white : const Color(0xFF333333)),
+        color:
+            iconColor ?? (darkTheme ? Colors.white : const Color(0xFF333333)),
         width: iconSize.h,
         height: iconSize.h);
   } else {
@@ -158,15 +160,13 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
       borderRadius: BorderRadius.circular(radius.h),
       boxShadow: [
         BoxShadow(
-            color: Get.isDarkMode ? const Color(0x1005080C) : Colors.white,
+            color: darkTheme ? const Color(0x1005080C) : Colors.white,
             offset: const Offset(-3, -3),
             blurStyle: BlurStyle.inner,
             blurRadius: 6),
         BoxShadow(
             color: outerColor ??
-                (Get.isDarkMode
-                    ? const Color(0xFF05080C)
-                    : const Color(0xFFD3E0EC)),
+                (darkTheme ? const Color(0xFF05080C) : const Color(0xFFD3E0EC)),
             offset: const Offset(5, 3),
             blurRadius: 6),
       ],
@@ -175,17 +175,22 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
       borderRadius: BorderRadius.circular(radius.h),
       child: Material(
         child: InkWell(
-          splashColor: const Color(0xFFD3E0EC),
-          highlightColor: const Color(0xFFD3E0EC),
+          splashColor: Get.isDarkMode ? Colors.grey : const Color(0xFFD3E0EC),
+          highlightColor:
+              Get.isDarkMode ? Colors.grey : const Color(0xFFD3E0EC),
           onTap: onTap,
           child: Stack(
             children: [
-              Center(child: child),
               Container(
                 width: width.h,
                 height: height.h,
                 alignment: const Alignment(0, 0),
-              )
+                color: bgColor ??
+                    (darkTheme
+                        ? const Color(0xFF1E2328)
+                        : const Color(0xFFF2F8FF)),
+              ),
+              Center(child: child)
             ],
           ),
         ),

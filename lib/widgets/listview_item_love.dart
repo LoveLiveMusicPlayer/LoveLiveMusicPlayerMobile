@@ -25,12 +25,12 @@ class ListViewItemLove extends StatefulWidget {
 
   ListViewItemLove(
       {Key? key,
-        required this.index,
-        required this.onPlayNextTap,
-        required this.onPlayNowTap,
-        required this.onMoreTap,
-        required this.music,
-        this.checked = false})
+      required this.index,
+      required this.onPlayNextTap,
+      required this.onPlayNowTap,
+      required this.onMoreTap,
+      required this.music,
+      this.checked = false})
       : super(key: key);
 
   @override

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/models/Music.dart';
-import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_state.dart';
 
 class HomeController extends GetxController {

@@ -12,8 +12,8 @@ class TabBarComponent extends StatelessWidget {
     return TabBar(
       physics: const NeverScrollableScrollPhysics(),
       onTap: (index) {
-        PageViewLogic.to.controller
-            .jumpToPage(index * 3 + HomeController.to.state.currentIndex.value % 3);
+        PageViewLogic.to.controller.jumpToPage(
+            index * 3 + HomeController.to.state.currentIndex.value % 3);
       },
       indicatorWeight: 4.w,
       indicatorSize: TabBarIndicatorSize.label,

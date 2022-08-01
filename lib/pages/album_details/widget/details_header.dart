@@ -45,7 +45,8 @@ class DetailsHeader extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 15.sp,
-                  color: Get.isDarkMode ? Colors.white : const Color(0xFF333333),
+                  color:
+                      Get.isDarkMode ? Colors.white : const Color(0xFF333333),
                 ),
               )
             ],

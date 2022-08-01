@@ -9,7 +9,8 @@ class NewMenuDialog extends StatefulWidget {
   final Function()? onBack;
   final Function(String str)? onConfirm;
 
-  const NewMenuDialog({Key? key, this.title, this.onBack, this.onConfirm}) : super(key: key);
+  const NewMenuDialog({Key? key, this.title, this.onBack, this.onConfirm})
+      : super(key: key);
 
   @override
   State<NewMenuDialog> createState() => _NewMenuDialogState();
@@ -65,9 +66,9 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
                     }
 
                     controller.value = TextEditingValue(
-                      text: text,
-                      selection: TextSelection.collapsed(offset: text.length)
-                    );
+                        text: text,
+                        selection:
+                            TextSelection.collapsed(offset: text.length));
                     setState(() {});
                   },
                   textInputAction: TextInputAction.search),

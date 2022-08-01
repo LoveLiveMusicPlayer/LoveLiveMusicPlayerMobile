@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lyric/lyric_ui/lyric_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 
 ///Sample Netease style
 ///should be extends LyricUI implementation your own UI.
@@ -42,23 +43,36 @@ class MyLrcUI extends LyricUI {
 
   @override
   TextStyle getPlayingExtTextStyle() => TextStyle(
-      color: Get.isDarkMode ? Colors.orangeAccent : Colors.black,
+      color: PlayerLogic.to.hasSkin.value
+          ? Colors.white
+          : Get.isDarkMode
+              ? Colors.orangeAccent
+              : Colors.black,
       fontSize: defaultSize.sp,
       fontWeight: FontWeight.bold);
 
   @override
   TextStyle getOtherExtTextStyle() => TextStyle(
-        color: const Color(0xFF999999),
+        color: PlayerLogic.to.hasSkin.value
+            ? const Color(0xffdfdfdf)
+            : const Color(0xFF999999),
         fontSize: defaultSize.sp,
       );
 
   @override
-  TextStyle getOtherMainTextStyle() =>
-      TextStyle(color: const Color(0xFF999999), fontSize: otherMainSize.sp);
+  TextStyle getOtherMainTextStyle() => TextStyle(
+      color: PlayerLogic.to.hasSkin.value
+          ? const Color(0xffdfdfdf)
+          : const Color(0xFF999999),
+      fontSize: otherMainSize.sp);
 
   @override
   TextStyle getPlayingMainTextStyle() => TextStyle(
-      color: Get.isDarkMode ? Colors.orangeAccent : Colors.black,
+      color: PlayerLogic.to.hasSkin.value
+          ? Colors.white
+          : Get.isDarkMode
+              ? Colors.orangeAccent
+              : Colors.black,
       fontSize: otherMainSize.sp,
       fontWeight: FontWeight.bold);
 

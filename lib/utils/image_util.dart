@@ -66,7 +66,10 @@ class ImageUtil {
     Uint8List? result;
     try {
       result = await FlutterImageCompress.compressWithFile(path,
-          format: CompressFormat.jpeg, quality: 20, minHeight: 60.h.toInt(), minWidth: ScreenUtil().screenWidth.toInt());
+          format: CompressFormat.jpeg,
+          quality: 20,
+          minHeight: 60.h.toInt(),
+          minWidth: ScreenUtil().screenWidth.toInt());
     } catch (e) {
       print(e);
     }

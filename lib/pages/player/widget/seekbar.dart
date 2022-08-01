@@ -4,6 +4,7 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 
 class SeekBar extends StatefulWidget {
   final Duration duration;
@@ -45,9 +46,15 @@ class _SeekBarState extends State<SeekBar> {
           data: const SliderThemeData(
               trackHeight: 4, thumbShape: RoundSliderThumbShape()),
           child: Slider(
-            inactiveColor: Get.isDarkMode ? const Color(0x4D05080C) : const Color(0x99CCDDF1),
-            activeColor: Get.isDarkMode ? const Color(0x9905080C) : const Color(0x99CCDDF1),
-            thumbColor: Get.isDarkMode ? const Color(0xFF05080c) : Get.theme.primaryColor,
+            inactiveColor: Get.isDarkMode
+                ? const Color(0x4D05080C)
+                : const Color(0x99CCDDF1),
+            activeColor: Get.isDarkMode
+                ? const Color(0x9905080C)
+                : const Color(0x99CCDDF1),
+            thumbColor: Get.isDarkMode
+                ? const Color(0xFF05080c)
+                : Get.theme.primaryColor,
             min: 0.0,
             max: total.toDouble(),
             value: value,
@@ -72,12 +79,18 @@ class _SeekBarState extends State<SeekBar> {
                 Text(
                   currentMS,
                   style: TextStyle(
-                      fontSize: 12.sp, color: const Color(0xFF999999)),
+                      fontSize: 12.sp,
+                      color: PlayerLogic.to.hasSkin.value
+                          ? const Color(0xffdfdfdf)
+                          : const Color(0xFF999999)),
                 ),
                 Text(
                   totalMS,
                   style: TextStyle(
-                      fontSize: 12.sp, color: const Color(0xFF999999)),
+                      fontSize: 12.sp,
+                      color: PlayerLogic.to.hasSkin.value
+                          ? const Color(0xffdfdfdf)
+                          : const Color(0xFF999999)),
                 )
               ],
             ))

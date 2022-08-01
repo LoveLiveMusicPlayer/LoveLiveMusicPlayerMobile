@@ -8,24 +8,34 @@ import 'package:flutter/material.dart';
 class CircleView extends CustomPainter {
   //默认的线的背景颜色
   Color? lineColor;
+
   //默认的线的宽度
   double width;
+
   //已完成线的颜色
   Color completeColor;
+
   //已完成的百分比
   double completePercent;
+
   //已完成的线的宽度
   double completeWidth;
+
   // 从哪开始 1从下开始, 2 从上开始 3 从左开始 4 从右开始  默认从下开始
   double startType;
+
   //是不是虚线的圈
   bool isDividerRound;
+
   //中间的实圆 统计线条是不是渐变的圆
   bool isGradient;
+
   //结束的位置
   double endAngle;
+
   //默认的线的背景颜色
   List<Color> lineColors;
+
   //实心圆阴影颜色
   // Color shadowColor;
   //渐变圆  深色在下面 还是在左面  默认在下面
@@ -58,7 +68,7 @@ class CircleView extends CustomPainter {
         //背景的线
         Paint line = Paint()
           ..color = lineColor!
-        // ..strokeCap = StrokeCap.round
+          // ..strokeCap = StrokeCap.round
           ..style = PaintingStyle.stroke
           ..isAntiAlias = true
           ..strokeWidth = width;
@@ -78,7 +88,7 @@ class CircleView extends CustomPainter {
           ..strokeWidth = width;
 
         canvas.drawCircle(
-          //  画圆方法
+            //  画圆方法
             center,
             radius,
             line);

@@ -18,8 +18,10 @@ class PlayerInfo extends StatelessWidget {
             recentlyLrc(PlayerLogic.to.playingJPLrc["pre"]),
             SizedBox(height: 10.h),
             recentlyLrc(PlayerLogic.to.playingJPLrc["current"],
-                color: Get.isDarkMode ? Colors.white : Colors.black,
-                fontWeight: FontWeight.w900),
+                color: PlayerLogic.to.hasSkin.value || Get.isDarkMode
+                    ? Colors.white
+                    : Colors.black,
+                fontWeight: FontWeight.bold),
             SizedBox(height: 10.h),
             recentlyLrc(PlayerLogic.to.playingJPLrc["next"])
           ],
@@ -29,13 +31,18 @@ class PlayerInfo extends StatelessWidget {
   }
 
   Widget recentlyLrc(String? text,
-      {Color color = const Color(0xFF999999),
-      FontWeight fontWeight = FontWeight.normal}) {
+      {Color? color, FontWeight fontWeight = FontWeight.normal}) {
     if (text == null) {
       return Text("", style: TextStyle(color: color, fontSize: 15.sp));
     }
     return Text(text,
-        style: TextStyle(color: color, fontSize: 15.sp, fontWeight: fontWeight),
+        style: TextStyle(
+            color: color ??
+                (PlayerLogic.to.hasSkin.value || Get.isDarkMode
+                    ? const Color(0xffdfdfdf)
+                    : const Color(0xFFB7BCC1)),
+            fontSize: 15.sp,
+            fontWeight: fontWeight),
         maxLines: 1,
         overflow: TextOverflow.ellipsis);
   }

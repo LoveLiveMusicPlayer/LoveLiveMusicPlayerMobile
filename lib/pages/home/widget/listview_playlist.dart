@@ -64,7 +64,9 @@ class _ListViewItemPlaylist extends State<ListViewItemPlaylist> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                        color: Get.isDarkMode ? Colors.white : const Color(0xff333333),
+                        color: Get.isDarkMode
+                            ? Colors.white
+                            : const Color(0xff333333),
                         fontSize: 14.sp,
                         fontWeight: FontWeight.bold),
                   ),

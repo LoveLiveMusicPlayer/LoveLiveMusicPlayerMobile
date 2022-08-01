@@ -3,11 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
-import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
-import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
-import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
@@ -21,10 +18,7 @@ class ListViewItemSongSheet extends StatefulWidget {
   Function(Menu)? onMoreTap;
 
   ListViewItemSongSheet(
-      {Key? key,
-      required this.onItemTap,
-      this.onMoreTap,
-      required this.menu})
+      {Key? key, required this.onItemTap, this.onMoreTap, required this.menu})
       : super(key: key);
 
   @override
@@ -64,10 +58,8 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
   Widget _buildIcon() {
     return FutureBuilder<String>(
       initialData: SDUtils.getImgPath("ic_head.jpg"),
-      builder:
-          (BuildContext context, AsyncSnapshot<String> snapshot) {
-        return showImg(snapshot.data, 48, 48,
-            hasShadow: false, radius: 8);
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        return showImg(snapshot.data, 48, 48, hasShadow: false, radius: 8);
       },
       future: getMusicCoverPath(widget.menu.music?.last),
     );

@@ -24,18 +24,18 @@ class Menu {
   String name;
 
   factory Menu.fromJson(Map<String, dynamic> json) => Menu(
-    id: json["id"],
-    isPhone: json["isPhone"],
-    music: List<String>.from(json["music"].map((x) => x)),
-    date: json["date"],
-    name: json["name"],
-  );
+        id: json["id"],
+        isPhone: json["isPhone"],
+        music: List<String>.from(json["music"].map((x) => x)),
+        date: json["date"],
+        name: json["name"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "isPhone": isPhone,
-    "music": music,
-    "date": date,
-    "name": name,
-  };
+        "id": id,
+        "isPhone": isPhone,
+        "music": music,
+        "date": date,
+        "name": name,
+      };
 }

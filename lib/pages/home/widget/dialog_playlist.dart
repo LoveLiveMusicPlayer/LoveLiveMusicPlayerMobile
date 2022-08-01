@@ -16,6 +16,7 @@ class DialogPlaylist extends StatefulWidget {
 
 class _DialogPlaylistState extends State<DialogPlaylist> {
   var mPlayList = PlayerLogic.to.mPlayList;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,8 +48,8 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
               } else if (index == 2) {
                 header = "单曲循环";
               }
-              return _buildItem(icons[index],
-                  "$header - 共${mPlayList.length}首", true, () {
+              return _buildItem(
+                  icons[index], "$header - 共${mPlayList.length}首", true, () {
                 final currentIndex = PlayerLogic.loopModes.indexOf(loopMode);
                 final nextIndex =
                     (currentIndex + 1) % PlayerLogic.loopModes.length;
@@ -58,14 +59,17 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
           ),
           Divider(
             height: 0.5.h,
-            color: Get.isDarkMode ? const Color(0xFF737373) : const Color(0xFFCFCFCF),
+            color: Get.isDarkMode
+                ? const Color(0xFF737373)
+                : const Color(0xFFCFCFCF),
           ),
           Expanded(
-            child: Padding(
+              child: Padding(
             padding: EdgeInsets.only(left: 16.h, right: 16.h),
             child: ListView.separated(
                 itemCount: mPlayList.length,
-                padding: EdgeInsets.only(left: 0.w, top: 8.h, right: 0.w, bottom: 8.h),
+                padding: EdgeInsets.only(
+                    left: 0.w, top: 8.h, right: 0.w, bottom: 8.h),
                 separatorBuilder: (BuildContext context, int index) {
                   return Container(
                     color: Colors.transparent,
@@ -87,7 +91,9 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                         for (var playListMusic in mPlayList) {
                           musicIds.add(playListMusic.musicId);
                         }
-                        DBLogic.to.musicDao.findMusicsByMusicIds(musicIds).then((musicList) {
+                        DBLogic.to.musicDao
+                            .findMusicsByMusicIds(musicIds)
+                            .then((musicList) {
                           GlobalLogic.to.isHandlePlay = false;
                           PlayerLogic.to.playMusic(musicList, index: index);
                         });
@@ -127,7 +133,9 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                     onTap: onTap,
                     width: 16.h,
                     height: 16.h,
-                    color: Get.isDarkMode ? const Color(0xFFCCCCCC) : const Color(0xFF666666)),
+                    color: Get.isDarkMode
+                        ? const Color(0xFFCCCCCC)
+                        : const Color(0xFF666666)),
                 SizedBox(
                   width: 10.h,
                 ),
@@ -135,7 +143,10 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                   child: Text(
                     title,
                     style: TextStyle(
-                        color: Get.isDarkMode ? Colors.white : const Color(0xff333333), fontSize: 15.sp),
+                        color: Get.isDarkMode
+                            ? Colors.white
+                            : const Color(0xff333333),
+                        fontSize: 15.sp),
                   ),
                 )
               ],
