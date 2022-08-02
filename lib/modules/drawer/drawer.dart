@@ -155,8 +155,10 @@ class _DrawerPageState extends State<DrawerPage> {
                         callBack: (check) async {
                           Get.changeTheme(check ? darkTheme : lightTheme);
                           await SpUtil.put(Const.spDark, check);
-                          Future.delayed(const Duration(milliseconds: 500)).then((value) {
-                            PageViewLogic.to.controller.jumpToPage(HomeController.to.state.currentIndex.value);
+                          Future.delayed(const Duration(milliseconds: 500))
+                              .then((value) {
+                            PageViewLogic.to.controller.jumpToPage(
+                                HomeController.to.state.currentIndex.value);
                           });
                         }),
                     DrawerFunctionButton(

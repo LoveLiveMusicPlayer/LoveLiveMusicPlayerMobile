@@ -16,7 +16,6 @@ import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/models/PlayListMusic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
-import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 
 import '../dao/album_dao.dart';
 import '../models/Album.dart';

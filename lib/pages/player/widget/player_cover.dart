@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_info.dart';
@@ -31,12 +30,14 @@ class _CoverState extends State<Cover> {
             /// 封面
             showImg(
                 SDUtils.getImgPath(
-                    fileName: PlayerLogic.to.playingMusic.value.coverPath ?? ""),
+                    fileName:
+                        PlayerLogic.to.playingMusic.value.coverPath ?? ""),
                 273,
                 273,
                 radius: 24,
-                shadowColor: PlayerLogic.to.hasSkin.value ? const Color(0xFF05080C) : null
-            ),
+                shadowColor: PlayerLogic.to.hasSkin.value
+                    ? const Color(0xFF05080C)
+                    : null),
 
             /// 信息
             SizedBox(height: 18.h),

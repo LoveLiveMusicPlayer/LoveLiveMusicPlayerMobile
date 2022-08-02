@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
-import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 
 ///歌手 item
 class ListViewItemSinger extends StatefulWidget {
   Artist artist;
-
-  int index = 0;
 
   ///当前选中状态
   bool checked;
@@ -17,15 +15,14 @@ class ListViewItemSinger extends StatefulWidget {
   ///是否选择条目
   bool isSelect;
 
-  Function(int, bool) onItemTap;
+  Function(Artist, bool) onItemTap;
 
   ListViewItemSinger(
       {Key? key,
-      required this.index,
+      required this.artist,
       required this.onItemTap,
       this.checked = false,
-      this.isSelect = false,
-      required this.artist})
+      this.isSelect = false})
       : super(key: key);
 
   @override
@@ -47,7 +44,7 @@ class _ListViewItemSingerState extends State<ListViewItemSinger>
                 checkd: widget.checked,
                 onCheckd: (checked) {
                   widget.checked = checked;
-                  widget.onItemTap(widget.index, checked);
+                  widget.onItemTap(widget.artist, checked);
                 }),
           ),
         ),
@@ -60,7 +57,7 @@ class _ListViewItemSingerState extends State<ListViewItemSinger>
           child: InkWell(
             onTap: () {
               widget.checked = !widget.checked;
-              widget.onItemTap(widget.index, widget.checked);
+              widget.onItemTap(widget.artist, widget.checked);
               setState(() {});
             },
             child: Column(
@@ -73,7 +70,9 @@ class _ListViewItemSingerState extends State<ListViewItemSinger>
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       fontSize: 15.sp,
-                      color: const Color(0xFF333333),
+                      color: Get.isDarkMode
+                          ? Colors.white
+                          : const Color(0xFF333333),
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(

@@ -5,30 +5,25 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 
 import '../../modules/ext.dart';
-import '../../utils/sd_utils.dart';
 import '../../widgets/details_list_top.dart';
 import '../../widgets/listview_item_song.dart';
 import '../album_details/widget/details_header.dart';
 import '../home/widget/dialog_bottom_btn.dart';
 import '../home/widget/dialog_more.dart';
-import 'logic.dart';
 
 class SingerDetailsPage extends StatefulWidget {
+  const SingerDetailsPage({Key? key}) : super(key: key);
+
   @override
   State<SingerDetailsPage> createState() => _SingerDetailsPageState();
 }
 
 class _SingerDetailsPageState extends State<SingerDetailsPage> {
-  final logic = Get.put(SingerDetailsLogic());
-
-  final state = Get.find<SingerDetailsLogic>().state;
-
   final Artist artist = Get.arguments;
 
   final music = <Music>[];
@@ -49,7 +44,7 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF2F8FF),
+      backgroundColor: Get.theme.primaryColor,
       body: _buildBody(),
     );
   }
@@ -61,13 +56,10 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
           title: artist.name,
         ),
         Expanded(
-          child: GetBuilder<SingerDetailsLogic>(builder: (logic) {
-            return ListView(
-              padding: const EdgeInsets.all(0),
-              children: getListItems(),
-            );
-          }),
-        ),
+            child: ListView(
+          padding: const EdgeInsets.all(0),
+          children: getListItems(),
+        )),
       ],
     );
   }
@@ -79,10 +71,10 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
       height: 10.h,
     ));
     list.add(DetailsListTop(
-        selectAll: logic.state.selectAll,
-        isSelect: logic.state.isSelect,
+        selectAll: HomeController.to.state.selectAll,
+        isSelect: HomeController.to.state.isSelect.value,
         itemsLength: music.length,
-        checkedItemLength: logic.getCheckedSong(),
+        checkedItemLength: HomeController.to.getCheckedSong(),
         onPlayTap: () {
           PlayerLogic.to.playMusic(music);
         },
@@ -95,10 +87,10 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
           HomeController.to.openSelect();
         },
         onSelectAllTap: (checked) {
-          logic.selectAll(checked);
+          HomeController.to.selectAll(checked);
         },
         onCancelTap: () {
-          logic.openSelect();
+          HomeController.to.openSelect();
           SmartDialog.dismiss();
         }));
     list.add(SizedBox(
@@ -110,9 +102,9 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
         child: ListViewItemSong(
           index: index,
           music: music[index],
-          checked: logic.isItemChecked(music[index]),
+          checked: HomeController.to.isItemChecked(index),
           onItemTap: (index, checked) {
-            logic.selectItem(index, checked);
+            HomeController.to.selectItem(index, checked);
           },
           onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
           onMoreTap: (music) {

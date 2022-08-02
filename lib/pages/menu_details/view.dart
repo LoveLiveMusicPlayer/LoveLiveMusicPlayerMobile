@@ -17,12 +17,13 @@ import 'package:lovelivemusicplayer/widgets/details_list_top.dart';
 import 'package:lovelivemusicplayer/widgets/listview_item_song.dart';
 
 class MenuDetailsPage extends StatefulWidget {
+  const MenuDetailsPage({Key? key}) : super(key: key);
+
   @override
   State<MenuDetailsPage> createState() => _MenuDetailsPageState();
 }
 
 class _MenuDetailsPageState extends State<MenuDetailsPage> {
-
   Menu menu = Get.arguments;
   final music = <Music>[];
 
@@ -135,7 +136,14 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          showImg(SDUtils.getImgPath(fileName: music.isNotEmpty ? music[music.length - 1].coverPath! : null), 240, 240, radius: 120),
+          showImg(
+              SDUtils.getImgPath(
+                  fileName: music.isNotEmpty
+                      ? music[music.length - 1].coverPath!
+                      : null),
+              240,
+              240,
+              radius: 120),
         ],
       ),
     );

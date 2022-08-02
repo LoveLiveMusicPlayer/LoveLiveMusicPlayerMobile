@@ -23,9 +23,13 @@ class Routes {
           name: Routes.routeInitial,
           page: () => HomeView(),
           binding: HomeBinding()),
-      GetPage(name: Routes.routeAlbumDetails, page: () => AlbumDetailsPage()),
-      GetPage(name: Routes.routeSingerDetails, page: () => SingerDetailsPage()),
-      GetPage(name: Routes.routeMenuDetails, page: () => MenuDetailsPage()),
+      GetPage(
+          name: Routes.routeAlbumDetails, page: () => const AlbumDetailsPage()),
+      GetPage(
+          name: Routes.routeSingerDetails,
+          page: () => const SingerDetailsPage()),
+      GetPage(
+          name: Routes.routeMenuDetails, page: () => const MenuDetailsPage()),
       GetPage(name: Routes.routeScan, page: () => const Scanner()),
       GetPage(name: Routes.routeTransform, page: () => MusicTransform()),
       GetPage(name: Routes.routeDataSync, page: () => const DataSync()),

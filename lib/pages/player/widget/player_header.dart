@@ -32,37 +32,33 @@ class PlayerHeader extends StatelessWidget {
                 bgColor: PlayerLogic.to.hasSkin.value
                     ? const Color(0xFF1E2328)
                     : null,
-                outerColor: PlayerLogic.to.hasSkin.value
-                    ? Colors.black
-                    : null
-            ),
+                outerColor: PlayerLogic.to.hasSkin.value ? Colors.black : null),
 
             /// 曲名 + 歌手
             Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    PlayerLogic.to.playingMusic.value.musicName ?? "暂无歌曲",
-                    overflow: TextOverflow.ellipsis,
-                    style: PlayerLogic.to.hasSkin.value || Get.isDarkMode
-                        ? TextStyleMs.whiteBold_15
-                        : TextStyleMs.blackBold_15,
-                    maxLines: 1,
-                  ),
-                  Text(
-                    PlayerLogic.to.playingMusic.value.artist ?? "",
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        color: PlayerLogic.to.hasSkin.value
-                            ? const Color(0xffdfdfdf)
-                            : const Color(0xFF999999),
-                        fontSize: 12.sp),
-                    maxLines: 1,
-                  )
-                ],
-              )
-            ),
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  PlayerLogic.to.playingMusic.value.musicName ?? "暂无歌曲",
+                  overflow: TextOverflow.ellipsis,
+                  style: PlayerLogic.to.hasSkin.value || Get.isDarkMode
+                      ? TextStyleMs.whiteBold_15
+                      : TextStyleMs.blackBold_15,
+                  maxLines: 1,
+                ),
+                Text(
+                  PlayerLogic.to.playingMusic.value.artist ?? "",
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: PlayerLogic.to.hasSkin.value
+                          ? const Color(0xffdfdfdf)
+                          : const Color(0xFF999999),
+                      fontSize: 12.sp),
+                  maxLines: 1,
+                )
+              ],
+            )),
 
             /// 更多功能
             materialButton(Icons.more_horiz, onMoreTap,
@@ -74,9 +70,7 @@ class PlayerHeader extends StatelessWidget {
                 bgColor: PlayerLogic.to.hasSkin.value
                     ? const Color(0xFF1E2328)
                     : null,
-                outerColor: PlayerLogic.to.hasSkin.value
-                    ? Colors.black
-                    : null),
+                outerColor: PlayerLogic.to.hasSkin.value ? Colors.black : null),
           ],
         ),
       ),

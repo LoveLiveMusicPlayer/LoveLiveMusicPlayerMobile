@@ -17,6 +17,8 @@ import '../../widgets/listview_item_song.dart';
 import 'widget/details_header.dart';
 
 class AlbumDetailsPage extends StatefulWidget {
+  const AlbumDetailsPage({Key? key}) : super(key: key);
+
   @override
   State<AlbumDetailsPage> createState() => _AlbumDetailsPageState();
 }

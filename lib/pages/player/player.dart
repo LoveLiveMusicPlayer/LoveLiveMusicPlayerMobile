@@ -137,8 +137,7 @@ class _PlayerState extends State<Player> {
       return Cover(onTap: () => widget.isCover.value = false);
     } else {
       return Lyric(
-          key: const Key("Lyric"),
-          onTap: () => widget.isCover.value = true);
+          key: const Key("Lyric"), onTap: () => widget.isCover.value = true);
     }
   }
 
@@ -192,16 +191,15 @@ class _PlayerState extends State<Player> {
               PlayerLogic.to.playingMusic.value.isLove
                   ? Icons.favorite
                   : Assets.playerPlayLove,
-                  () => PlayerLogic.to.toggleLove(),
+              () => PlayerLogic.to.toggleLove(),
               width: 32,
               height: 32,
               radius: 6,
               iconColor: Colors.pinkAccent,
               iconSize: 15,
               // iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
-              bgColor: PlayerLogic.to.hasSkin.value
-                  ? const Color(0xFF1E2328)
-                  : null,
+              bgColor:
+                  PlayerLogic.to.hasSkin.value ? const Color(0xFF1E2328) : null,
               outerColor: PlayerLogic.to.hasSkin.value ? Colors.black : null),
           materialButton(Icons.add, () => {},
               width: 32,

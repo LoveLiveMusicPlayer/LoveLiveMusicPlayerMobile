@@ -85,7 +85,6 @@ class PageViewComponent extends StatelessWidget {
       );
     } else if (page == 2) {
       return ListViewItemSinger(
-        index: index,
         artist: GlobalLogic.to.artistList[index],
         checked: HomeController.to.isItemChecked(index),
         isSelect: HomeController.to.state.isSelect.value,

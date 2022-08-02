@@ -17,6 +17,7 @@ class ListViewItemAlbum extends StatefulWidget {
 
   ///是否选择条目
   bool isSelect;
+
   Function(Album, bool) onItemTap;
 
   ListViewItemAlbum(
@@ -44,8 +45,8 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum>
           setState(() {});
         },
         child: Column(children: [
-          showImg(SDUtils.getImgPath(fileName: widget.album.coverPath!), borderWidth,
-              borderWidth,
+          showImg(SDUtils.getImgPath(fileName: widget.album.coverPath!),
+              borderWidth, borderWidth,
               hasShadow: false),
           SizedBox(
             height: 5.h,

@@ -8,14 +8,13 @@ String menuToJson(Menu data) => json.encode(data.toJson());
 
 @Entity(tableName: "Menu")
 class Menu {
-  Menu({
-    required this.id,
-    this.isPhone = true,
-    this.music = const <String>[],
-    required this.date,
-    required this.name,
-    this.checked = false
-  });
+  Menu(
+      {required this.id,
+      this.isPhone = true,
+      this.music = const <String>[],
+      required this.date,
+      required this.name,
+      this.checked = false});
 
   @primaryKey
   int id;
