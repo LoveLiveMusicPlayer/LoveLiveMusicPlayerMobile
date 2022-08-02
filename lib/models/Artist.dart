@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'Music.dart';
-
 Artist artistFromJson(String str) => Artist.fromJson(json.decode(str));
 
 String artistToJson(Artist data) => json.encode(data.toJson());
@@ -11,25 +9,25 @@ class Artist {
     required this.name,
     required this.artistBin,
     required this.photo,
-    required this.music,
+    required this.count
   });
 
   String name;
   String artistBin;
   String photo;
-  List<Music> music;
+  int count;
 
   factory Artist.fromJson(Map<String, dynamic> json) => Artist(
         name: json["name"],
         artistBin: json["artistBin"],
         photo: json["photo"],
-        music: List<Music>.from(json["music"].map((x) => Music.fromJson(x))),
+        count: json["count"]
       );
 
   Map<String, dynamic> toJson() => {
         "name": name,
         "artistBin": artistBin,
         "photo": photo,
-        "music": List<dynamic>.from(music.map((x) => x.toJson())),
+        "count": count
       };
 }

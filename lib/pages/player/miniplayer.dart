@@ -149,7 +149,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
           SizedBox(width: 6.w),
           showImg(
               SDUtils.getImgPath(
-                  PlayerLogic.to.playingMusic.value.coverPath ?? ""),
+                  fileName: PlayerLogic.to.playingMusic.value.coverPath ?? ""),
               50,
               50,
               radius: 50,

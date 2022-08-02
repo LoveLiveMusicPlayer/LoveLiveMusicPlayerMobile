@@ -9,6 +9,8 @@ import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/global/global_theme.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
+import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
@@ -153,6 +155,9 @@ class _DrawerPageState extends State<DrawerPage> {
                         callBack: (check) async {
                           Get.changeTheme(check ? darkTheme : lightTheme);
                           await SpUtil.put(Const.spDark, check);
+                          Future.delayed(const Duration(milliseconds: 500)).then((value) {
+                            PageViewLogic.to.controller.jumpToPage(HomeController.to.state.currentIndex.value);
+                          });
                         }),
                     DrawerFunctionButton(
                         icon: Assets.drawerDrawerColorful,

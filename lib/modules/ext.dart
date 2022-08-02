@@ -24,7 +24,7 @@ Widget showImg(String? path, double? width, double? height,
   ImageProvider<Object> noShadowImage;
   ImageProvider<Object> shadowImage;
   if (hasShadow) {
-    if (path == null || path.isEmpty) {
+    if (path == null || path.isEmpty || Const.notExistAssetsMap.contains(path)) {
       shadowImage = AssetImage(defPhoto);
     } else if (path.startsWith("assets")) {
       shadowImage = AssetImage(path);
@@ -61,7 +61,7 @@ Widget showImg(String? path, double? width, double? height,
       ),
     );
   } else {
-    if (path == null || path.isEmpty) {
+    if (path == null || path.isEmpty || Const.notExistAssetsMap.contains(path)) {
       noShadowImage = Image.asset(
         defPhoto,
         width: width?.h,
@@ -264,7 +264,7 @@ Widget logoIcon(String path,
     EdgeInsetsGeometry? offset,
     GestureTapCallback? onTap}) {
   final margin = offset ?? const EdgeInsets.only(right: 0);
-  final image = path.startsWith("assets") ? path : SDUtils.getImgPath(path);
+  final image = path.startsWith("assets") ? path : SDUtils.getImgPath(fileName: path);
   return Center(
       child: Container(
           margin: margin,

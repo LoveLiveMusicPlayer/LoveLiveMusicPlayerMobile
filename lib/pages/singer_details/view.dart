@@ -6,6 +6,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
+import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 
@@ -28,7 +29,7 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
 
   final state = Get.find<SingerDetailsLogic>().state;
 
-  final Album album = Get.arguments;
+  final Artist artist = Get.arguments;
 
   final music = <Music>[];
 
@@ -42,13 +43,13 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
   }
 
   _load() async {
-    music.addAll(await DBLogic.to.findAllMusicsByAlbumId(album.albumId!));
+    music.addAll(await DBLogic.to.findAllMusicByArtistBin(artist.artistBin));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF2F8FF),
+      backgroundColor: const Color(0xFFF2F8FF),
       body: _buildBody(),
     );
   }
@@ -57,7 +58,7 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
     return Column(
       children: [
         DetailsHeader(
-          title: "Liella!",
+          title: artist.name,
         ),
         Expanded(
           child: GetBuilder<SingerDetailsLogic>(builder: (logic) {
@@ -82,7 +83,9 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
         isSelect: logic.state.isSelect,
         itemsLength: music.length,
         checkedItemLength: logic.getCheckedSong(),
-        onPlayTap: () {},
+        onPlayTap: () {
+          PlayerLogic.to.playMusic(music);
+        },
         onScreenTap: () {
           if (HomeController.to.state.isSelect.value) {
             SmartDialog.dismiss();
@@ -148,7 +151,7 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          showImg(SDUtils.getImgPath("ic_head.jpg"), 240, 240, radius: 120),
+          showImg(artist.photo, 240, 240, radius: 120),
         ],
       ),
     );

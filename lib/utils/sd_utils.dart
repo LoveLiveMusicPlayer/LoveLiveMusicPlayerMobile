@@ -23,8 +23,8 @@ class SDUtils {
   }
 
   ///获取图片文件
-  static String getImgPath(String fileName) {
-    return path + fileName;
+  static String getImgPath({String? fileName}) {
+    return path + (fileName ?? "");
   }
 
   static bool checkFileExist(String filePath) {

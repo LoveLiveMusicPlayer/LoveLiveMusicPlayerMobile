@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 
 ///歌手 item
 class ListViewItemSinger extends StatefulWidget {
+  Artist artist;
+
   int index = 0;
 
   ///当前选中状态
@@ -21,7 +24,8 @@ class ListViewItemSinger extends StatefulWidget {
       required this.index,
       required this.onItemTap,
       this.checked = false,
-      this.isSelect = false})
+      this.isSelect = false,
+      required this.artist})
       : super(key: key);
 
   @override
@@ -47,7 +51,7 @@ class _ListViewItemSingerState extends State<ListViewItemSinger>
                 }),
           ),
         ),
-        showImg(SDUtils.getImgPath("ic_head.jpg"), 48.h, 48.h,
+        showImg(widget.artist.photo, 48.h, 48.h,
             radius: 24.h, hasShadow: false),
         SizedBox(
           width: 10.h,
@@ -64,7 +68,7 @@ class _ListViewItemSingerState extends State<ListViewItemSinger>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "だから僕ら…",
+                  widget.artist.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -76,7 +80,7 @@ class _ListViewItemSingerState extends State<ListViewItemSinger>
                   height: 4.h,
                 ),
                 Text(
-                  "Liella!",
+                  "${widget.artist.count}首歌",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

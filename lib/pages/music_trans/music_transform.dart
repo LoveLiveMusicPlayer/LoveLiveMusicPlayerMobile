@@ -314,7 +314,7 @@ class _MusicTransformState extends State<MusicTransform> {
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
             return showImg(
-                SDUtils.getImgPath(musicList[index].coverPath), 400, 400,
+                SDUtils.getImgPath(fileName: musicList[index].coverPath), 400, 400,
                 hasShadow: false, radius: 12);
           },
           itemCount: musicList.length,

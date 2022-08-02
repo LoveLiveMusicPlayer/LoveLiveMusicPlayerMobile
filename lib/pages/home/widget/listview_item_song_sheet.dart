@@ -57,7 +57,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
   ///缩列图
   Widget _buildIcon() {
     return FutureBuilder<String>(
-      initialData: SDUtils.getImgPath("ic_head.jpg"),
+      initialData: SDUtils.getImgPath(),
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         return showImg(snapshot.data, 48, 48, hasShadow: false, radius: 8);
       },
@@ -67,7 +67,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
 
   /// 异步获取歌单封面
   Future<String> getMusicCoverPath(String? musicPath) async {
-    final defaultPath = SDUtils.getImgPath("ic_head.jpg");
+    final defaultPath = SDUtils.getImgPath();
     if (musicPath == null) {
       return defaultPath;
     }

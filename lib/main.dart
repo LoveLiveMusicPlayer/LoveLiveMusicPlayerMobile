@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,8 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:just_audio_background/just_audio_background.dart';
+import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
+import 'package:lovelivemusicplayer/eventbus/start_event.dart';
 import 'package:lovelivemusicplayer/global/global_binding.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -45,11 +49,6 @@ void main() async {
     appRunner: () => runApp(MyApp()),
   );
   setStatusBar();
-
-  await Future.delayed(const Duration(seconds: 2));
-
-  // 启动屏关闭
-  FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatefulWidget {
@@ -58,10 +57,22 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  StreamSubscription? subscription;
+
   @override
   void initState() {
     super.initState();
+    subscription = eventBus.on<StartEvent>().listen((event) {
+      // 初始化结束后，将启动屏关闭
+      FlutterNativeSplash.remove();
+    });
     PaintingBinding.instance.imageCache.maximumSizeBytes = 1024 * 1024 * 100;
+  }
+
+  @override
+  void dispose() {
+    subscription?.cancel();
+    super.dispose();
   }
 
   @override

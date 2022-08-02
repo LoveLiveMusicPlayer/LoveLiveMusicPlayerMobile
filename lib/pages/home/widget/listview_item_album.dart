@@ -44,7 +44,7 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum>
           setState(() {});
         },
         child: Column(children: [
-          showImg(SDUtils.getImgPath(widget.album.coverPath!), borderWidth,
+          showImg(SDUtils.getImgPath(fileName: widget.album.coverPath!), borderWidth,
               borderWidth,
               hasShadow: false),
           SizedBox(

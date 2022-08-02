@@ -7,12 +7,16 @@ import 'package:lovelivemusicplayer/dao/lyric_dao.dart';
 import 'package:lovelivemusicplayer/dao/menu_dao.dart';
 import 'package:lovelivemusicplayer/dao/music_dao.dart';
 import 'package:lovelivemusicplayer/dao/playlistmusic_dao.dart';
+import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
+import 'package:lovelivemusicplayer/eventbus/start_event.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/models/PlayListMusic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 
 import '../dao/album_dao.dart';
 import '../models/Album.dart';
@@ -44,8 +48,9 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     playListMusicDao = database.playListMusicDao;
     menuDao = database.menuDao;
     await findAllListByGroup("all");
-    Future.delayed(const Duration(seconds: 3))
-        .then((value) => findAllPlayListMusics());
+    await findAllPlayListMusics();
+    await Future.delayed(const Duration(seconds: 1));
+    eventBus.fire(StartEvent((DateTime.now().millisecondsSinceEpoch)));
     super.onInit();
   }
 
@@ -67,6 +72,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     GlobalLogic.to.albumList.value = allAlbums;
     GlobalLogic.to.musicList.value = allMusics;
     findAllLoveListByGroup(group);
+    await findAllArtistListByGroup(group);
     await findAllMenuList();
 
     GlobalLogic.to.databaseInitOver.value = true;
@@ -104,6 +110,34 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       loveList.add(music);
     });
     GlobalLogic.to.loveList.value = loveList;
+  }
+
+  findAllArtistListByGroup(String group) async {
+    final List<Map<String, Object?>> tempList;
+    if (group == "all") {
+      tempList = await database.database.rawQuery(
+          "SELECT artist, artistBin, COUNT(musicId) as count FROM Music GROUP BY artistBin");
+    } else {
+      tempList = await database.database.rawQuery(
+          "SELECT artist, artistBin, COUNT(musicId) as count FROM Music WHERE `group` = :group GROUP BY artistBin",
+          <dynamic>[group]);
+    }
+    final artistList = <Artist>[];
+    for (var element in tempList) {
+      String name = element['artist'].toString();
+      String artistBin = element['artistBin'].toString();
+      int count = int.parse(element['count'].toString());
+      artistList.add(Artist(
+          name: name,
+          artistBin: artistBin,
+          photo: "assets/artist/" + artistBin + ".jpg",
+          count: count));
+    }
+    GlobalLogic.to.artistList.value = artistList;
+  }
+
+  Future<List<Music>> findAllMusicByArtistBin(String artistBin) async {
+    return musicDao.findAllMusicsByArtistBin(artistBin);
   }
 
   /// 获取歌单列表

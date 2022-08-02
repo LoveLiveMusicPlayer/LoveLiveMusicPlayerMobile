@@ -86,6 +86,7 @@ class PageViewComponent extends StatelessWidget {
     } else if (page == 2) {
       return ListViewItemSinger(
         index: index,
+        artist: GlobalLogic.to.artistList[index],
         checked: HomeController.to.isItemChecked(index),
         isSelect: HomeController.to.state.isSelect.value,
         onItemTap: (artist, checked) {
@@ -93,7 +94,7 @@ class PageViewComponent extends StatelessWidget {
             HomeController.to.selectItem(index, checked);
           } else {
             Get.toNamed(Routes.routeSingerDetails,
-                arguments: GlobalLogic.to.albumList[index]);
+                arguments: GlobalLogic.to.artistList[index]);
           }
         },
       );
@@ -115,7 +116,7 @@ class PageViewComponent extends StatelessWidget {
     } else if (page == 4) {
       return ListViewItemSongSheet(
         onItemTap: (menu) {
-          print("onItemTap: ${menu.name}");
+          Get.toNamed(Routes.routeMenuDetails, arguments: menu);
         },
         onMoreTap: (menu) {
           print("onMoreTap: ${menu.name}");
