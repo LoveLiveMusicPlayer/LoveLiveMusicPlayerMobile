@@ -3,21 +3,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
-import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/models/Music.dart';
-import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
+import 'package:lovelivemusicplayer/models/Menu.dart';
+import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/widgets/new_menu_dialog.dart';
 
-import '../../../modules/ext.dart';
+class DialogMoreWithMenu extends StatelessWidget {
+  final Menu menu;
 
-class DialogMore extends StatelessWidget {
-  final Music music;
-
-  const DialogMore({Key? key, required this.music}) : super(key: key);
+  const DialogMoreWithMenu({Key? key, required this.menu}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 280.h,
+      height: 180.h,
       width: double.infinity,
       decoration: BoxDecoration(
           color: Get.theme.primaryColor,
@@ -32,7 +31,7 @@ class DialogMore extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(12.h),
             child: Text(
-              music.musicName!,
+              menu.name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -47,21 +46,20 @@ class DialogMore extends StatelessWidget {
                 ? const Color(0xFF737373)
                 : const Color(0xFFCFCFCF),
           ),
-          _buildItem(Assets.dialogIcAddPlayList, "加入播放列表", true, () {
-            PlayerLogic.to.addNextMusic(music, isNext: false);
-            SmartDialog.dismiss();
-          }),
-          _buildItem(Assets.dialogIcAddSongSheet, "添加到歌单", true, () {
+          _buildItem(Assets.dialogIcEdit, "重命名歌单", true, () {
             SmartDialog.dismiss();
             SmartDialog.compatible.show(
-                widget: DialogAddSongSheet(music: music),
-                alignmentTemp: Alignment.bottomCenter);
+                widget: NewMenuDialog(
+                    title: "重命名歌单",
+                    onConfirm: (name) {
+                      DBLogic.to.updateMenuName(name, menu.id);
+                    }),
+                clickBgDismissTemp: false,
+                alignmentTemp: Alignment.center);
           }),
-          _buildItem(Assets.dialogIcSongInfo, "歌曲信息", true, () {
+          _buildItem(Assets.dialogIcDelete2, "删除歌单", true, () {
             SmartDialog.dismiss();
-          }),
-          _buildItem(Assets.dialogIcSeeAlbum, "查看专辑", true, () {
-            SmartDialog.dismiss();
+            DBLogic.to.deleteMenuById(menu.id);
           }),
         ],
       ),

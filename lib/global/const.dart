@@ -13,21 +13,20 @@ class Const {
 
   /// 目前还没有头像的艺术家
   static const List<String> notExistAssetsMap = [
-    "assets/artist/0.jpg",
-    "assets/artist/1b20w.jpg",
-    "assets/artist/1ekg0.jpg",
-    "assets/artist/1r7k.jpg",
-    "assets/artist/2c8.jpg",
-    "assets/artist/2ew.jpg",
-    "assets/artist/2vy0w.jpg",
-    "assets/artist/34dfk.jpg",
-    "assets/artist/3qhvk.jpg",
-    "assets/artist/7.jpg",
-    "assets/artist/8feo.jpg",
-    "assets/artist/bl6o.jpg",
-    "assets/artist/d5jf162o.jpg",
-    "assets/artist/e13wtp1c.jpg",
-    "assets/artist/fs3wn40.jpg",
-    "assets/artist/n6dc.jpg"
+    "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/1b20w.jpg",
+    "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/1ekg0.jpg",
+    "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/1r7k.jpg",
+    "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/2c8.jpg",
+    "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/2ew.jpg",
+    "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/2vy0w.jpg",
+    "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/34dfk.jpg",
+    "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/3qhvk.jpg",
+    "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/7.jpg",
+    "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/8feo.jpg",
+    "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/bl6o.jpg",
+    "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/d5jf162o.jpg",
+    "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/e13wtp1c.jpg",
+    "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/fs3wn40.jpg",
+    "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/n6dc.jpg"
   ];
 }

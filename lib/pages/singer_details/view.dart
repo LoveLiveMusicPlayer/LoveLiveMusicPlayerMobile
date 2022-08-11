@@ -7,14 +7,14 @@ import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
-import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/pages/album_details/logic.dart';
 
 import '../../modules/ext.dart';
 import '../../widgets/details_list_top.dart';
 import '../../widgets/listview_item_song.dart';
 import '../album_details/widget/details_header.dart';
 import '../home/widget/dialog_bottom_btn.dart';
-import '../home/widget/dialog_more.dart';
+import '../home/widget/dialog_more_with_music.dart';
 
 class SingerDetailsPage extends StatefulWidget {
   const SingerDetailsPage({Key? key}) : super(key: key);
@@ -25,8 +25,8 @@ class SingerDetailsPage extends StatefulWidget {
 
 class _SingerDetailsPageState extends State<SingerDetailsPage> {
   final Artist artist = Get.arguments;
-
   final music = <Music>[];
+  final logic = Get.put(DetailController());
 
   @override
   void initState() {
@@ -39,6 +39,7 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
 
   _load() async {
     music.addAll(await DBLogic.to.findAllMusicByArtistBin(artist.artistBin));
+    logic.state.items = music;
   }
 
   @override
@@ -50,47 +51,49 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
   }
 
   Widget _buildBody() {
-    return Column(
-      children: [
-        DetailsHeader(
-          title: artist.name,
-        ),
-        Expanded(
-            child: ListView(
-          padding: const EdgeInsets.all(0),
-          children: getListItems(),
-        )),
-      ],
-    );
+    return GetBuilder<DetailController>(builder: (logic) {
+      return Column(
+        children: [
+          DetailsHeader(
+            title: artist.name,
+          ),
+          Expanded(
+              child: ListView(
+            padding: const EdgeInsets.all(0),
+            children: getListItems(logic),
+          )),
+        ],
+      );
+    });
   }
 
-  List<Widget> getListItems() {
+  List<Widget> getListItems(logic) {
     List<Widget> list = [];
     list.add(_buildCover());
     list.add(SizedBox(
       height: 10.h,
     ));
     list.add(DetailsListTop(
-        selectAll: HomeController.to.state.selectAll,
-        isSelect: HomeController.to.state.isSelect.value,
+        selectAll: logic.state.selectAll,
+        isSelect: logic.state.isSelect,
         itemsLength: music.length,
-        checkedItemLength: HomeController.to.getCheckedSong(),
+        checkedItemLength: logic.getCheckedSong(),
         onPlayTap: () {
           PlayerLogic.to.playMusic(music);
         },
         onScreenTap: () {
-          if (HomeController.to.state.isSelect.value) {
+          if (logic.state.isSelect) {
             SmartDialog.dismiss();
           } else {
-            showSelectDialog();
+            showSelectDialog(logic);
           }
-          HomeController.to.openSelect();
+          logic.openSelect();
         },
         onSelectAllTap: (checked) {
-          HomeController.to.selectAll(checked);
+          logic.selectAll(checked);
         },
         onCancelTap: () {
-          HomeController.to.openSelect();
+          logic.openSelect();
           SmartDialog.dismiss();
         }));
     list.add(SizedBox(
@@ -102,14 +105,14 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
         child: ListViewItemSong(
           index: index,
           music: music[index],
-          checked: HomeController.to.isItemChecked(index),
+          checked: logic.isItemChecked(index),
           onItemTap: (index, checked) {
-            HomeController.to.selectItem(index, checked);
+            logic.selectItem(index, checked);
           },
           onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
           onMoreTap: (music) {
             SmartDialog.compatible.show(
-                widget: DialogMore(music: music),
+                widget: DialogMoreWithMusic(music: music),
                 alignmentTemp: Alignment.bottomCenter);
           },
           onPlayNowTap: () {
@@ -121,12 +124,34 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
     return list;
   }
 
-  showSelectDialog() {
+  showSelectDialog(logic) {
     List<BtnItem> list = [];
     list.add(BtnItem(
-        imgPath: Assets.dialogIcAddPlayList2, title: "加入播放列表", onTap: () {}));
+        imgPath: Assets.dialogIcAddPlayList2,
+        title: "加入播放列表",
+        onTap: () async {
+          final musicList = logic.state.items;
+          await Future.forEach<Music>(musicList, (music) {
+            if (music.checked) {
+              print(music.musicName);
+              // todo: 添加到播放列表
+            }
+          });
+          logic.openSelect();
+        }));
     list.add(BtnItem(
-        imgPath: Assets.dialogIcAddPlayList, title: "添加到歌单", onTap: () {}));
+        imgPath: Assets.dialogIcAddPlayList,
+        title: "添加到歌单",
+        onTap: () async {
+          final musicList = logic.state.items;
+          await Future.forEach<Music>(musicList, (music) {
+            if (music.checked) {
+              print(music.musicName);
+              // todo: 添加到播放列表
+            }
+          });
+          logic.openSelect();
+        }));
     SmartDialog.compatible.show(
         widget: DialogBottomBtn(
           list: list,

@@ -145,10 +145,15 @@ Widget showImg(String? path, double? width, double? height,
                     width: width?.h.toInt() ?? 1,
                     height: height?.h.toInt() ?? 1)),
             placeholder: (context, url) {
-              return Image(image: AssetImage(defPhoto), width: width?.h, height: height?.h);
+              return Image(
+                  image: AssetImage(defPhoto),
+                  width: width?.h,
+                  height: height?.h);
             },
-            errorWidget: (context, url, error) =>
-                Image(image: AssetImage(defPhoto), width: width?.h, height: height?.h),
+            errorWidget: (context, url, error) => Image(
+                image: AssetImage(defPhoto),
+                width: width?.h,
+                height: height?.h),
           ));
     } else {
       return ClipRRect(

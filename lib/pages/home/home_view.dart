@@ -6,8 +6,11 @@ import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/models/Album.dart';
+import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/modules/pageview/view.dart';
 import 'package:lovelivemusicplayer/modules/tabbar/tabbar.dart';
@@ -188,19 +191,35 @@ class _HomeViewState extends State<HomeView>
     List<BtnItem> list = [];
     if (logic.state.currentIndex.value == 1) {
       list.add(BtnItem(
-          imgPath: Assets.dialogIcAddPlayList2, title: "专辑播放", onTap: () {}));
+          imgPath: Assets.dialogIcAddPlayList2,
+          title: "加入播放列表",
+          onTap: () async {
+            List<Album> albumList = HomeController.to.state.items.cast();
+            List<Music> tempList = [];
+            await Future.forEach<Album>(albumList, (album) async {
+              if (album.checked) {
+                tempList.addAll(
+                    await DBLogic.to.findAllMusicsByAlbumId(album.albumId!));
+              }
+            });
+            // todo: 将tempList添加到播放列表列表后面
+          }));
       list.add(BtnItem(
           imgPath: Assets.dialogIcAddSongSheet, title: "添加到歌单", onTap: () {}));
-      list.add(
-          BtnItem(imgPath: Assets.dialogIcDelete, title: "删除专辑", onTap: () {}));
-    } else if (logic.state.currentIndex.value == 1) {
-      list.add(BtnItem(
-          imgPath: Assets.dialogIcAddPlayList2, title: "全部播放", onTap: () {}));
-      list.add(BtnItem(
-          imgPath: Assets.dialogIcAddPlayList, title: "添加到歌单", onTap: () {}));
     } else {
       list.add(BtnItem(
-          imgPath: Assets.dialogIcAddPlayList2, title: "加入播放列表", onTap: () {}));
+          imgPath: Assets.dialogIcAddPlayList2,
+          title: "加入播放列表",
+          onTap: () async {
+            List<Music> musicList = HomeController.to.state.items.cast();
+            List<Music> tempList = [];
+            await Future.forEach<Music>(musicList, (music) {
+              if (music.checked) {
+                tempList.add(music);
+              }
+            });
+            // todo: 将tempList添加到播放列表列表后面
+          }));
       list.add(BtnItem(
           imgPath: Assets.dialogIcAddPlayList, title: "添加到歌单", onTap: () {}));
     }

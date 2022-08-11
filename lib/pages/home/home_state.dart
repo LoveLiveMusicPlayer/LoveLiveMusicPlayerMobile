@@ -14,9 +14,6 @@ class HomeState {
   ///全选
   bool selectAll = false;
 
-  ///选中歌曲数
-  int selectSongNum = 0;
-
   ///底部导航栏 index
   var currentIndex = 0.obs;
 

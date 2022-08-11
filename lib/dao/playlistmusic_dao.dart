@@ -9,6 +9,6 @@ abstract class PlayListMusicDao {
   @insert
   Future<void> insertAllPlayListMusics(List<PlayListMusic> playListMusic);
 
-  @Query("Delete FROM PlayListMusic")
+  @Query("DELETE FROM PlayListMusic")
   Future<void> deleteAllPlayListMusics();
 }

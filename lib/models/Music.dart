@@ -83,20 +83,20 @@ class Music {
       };
 
   factory Music.deepClone(Music music) => Music(
-        musicId: music.musicId,
-        musicName: music.musicName,
-        artist: music.artist,
-        artistBin: music.artistBin,
-        albumId: music.albumId,
-        albumName: music.albumName,
-        coverPath: music.coverPath,
-        musicPath: music.musicPath,
-        time: music.time,
-        jpUrl: music.jpUrl,
-        zhUrl: music.zhUrl,
-        romaUrl: music.romaUrl,
-        category: music.category,
-        group: music.group,
-        isLove: music.isLove,
-      );
+      musicId: music.musicId,
+      musicName: music.musicName,
+      artist: music.artist,
+      artistBin: music.artistBin,
+      albumId: music.albumId,
+      albumName: music.albumName,
+      coverPath: music.coverPath,
+      musicPath: music.musicPath,
+      time: music.time,
+      jpUrl: music.jpUrl,
+      zhUrl: music.zhUrl,
+      romaUrl: music.romaUrl,
+      category: music.category,
+      group: music.group,
+      isLove: music.isLove,
+      checked: music.checked);
 }

@@ -6,7 +6,7 @@ abstract class MenuDao {
   @Query('SELECT * FROM Menu')
   Future<List<Menu>> findAllMenus();
 
-  @Query('SELECT * FROM Menu where `id` = :menuId')
+  @Query('SELECT * FROM Menu WHERE `id` = :menuId')
   Future<Menu?> findMenuById(int menuId);
 
   @Query('SELECT `id` From Menu')
@@ -18,6 +18,9 @@ abstract class MenuDao {
   @update
   Future<void> updateMenu(Menu menu);
 
-  @Query("Delete FROM Menu")
+  @Query("DELETE FROM Menu WHERE `id` = :menuId")
+  Future<void> deleteMenuById(int menuId);
+
+  @Query("DELETE FROM Menu")
   Future<void> deleteAllMenus();
 }

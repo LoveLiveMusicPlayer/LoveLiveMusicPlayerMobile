@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
-import 'package:lovelivemusicplayer/pages/home/widget/dialog_more.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/dialog_more_with_menu.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/dialog_more_with_music.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_album.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_singer.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_song_sheet.dart';
@@ -86,15 +87,8 @@ class PageViewComponent extends StatelessWidget {
     } else if (page == 2) {
       return ListViewItemSinger(
         artist: GlobalLogic.to.artistList[index],
-        checked: HomeController.to.isItemChecked(index),
-        isSelect: HomeController.to.state.isSelect.value,
-        onItemTap: (artist, checked) {
-          if (HomeController.to.state.isSelect.value) {
-            HomeController.to.selectItem(index, checked);
-          } else {
-            Get.toNamed(Routes.routeSingerDetails,
-                arguments: GlobalLogic.to.artistList[index]);
-          }
+        onItemTap: (artist) {
+          Get.toNamed(Routes.routeSingerDetails, arguments: artist);
         },
       );
     } else if (page == 3) {
@@ -105,7 +99,7 @@ class PageViewComponent extends StatelessWidget {
         onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
         onMoreTap: (music) {
           SmartDialog.compatible.show(
-              widget: DialogMore(music: music),
+              widget: DialogMoreWithMusic(music: music),
               alignmentTemp: Alignment.bottomCenter);
         },
         onPlayNowTap: (index) {
@@ -118,7 +112,9 @@ class PageViewComponent extends StatelessWidget {
           Get.toNamed(Routes.routeMenuDetails, arguments: menu);
         },
         onMoreTap: (menu) {
-          print("onMoreTap: ${menu.name}");
+          SmartDialog.compatible.show(
+              widget: DialogMoreWithMenu(menu: menu),
+              alignmentTemp: Alignment.bottomCenter);
         },
         menu: GlobalLogic.to.menuList[index],
       );
@@ -137,7 +133,7 @@ class PageViewComponent extends StatelessWidget {
         onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
         onMoreTap: (music) {
           SmartDialog.compatible.show(
-              widget: DialogMore(music: music),
+              widget: DialogMoreWithMusic(music: music),
               alignmentTemp: Alignment.bottomCenter);
         },
         onPlayNowTap: () {

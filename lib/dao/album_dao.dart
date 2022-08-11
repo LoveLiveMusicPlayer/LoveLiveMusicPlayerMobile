@@ -9,9 +9,6 @@ abstract class AlbumDao {
   @Query('SELECT * FROM Album WHERE `group` = :group')
   Future<List<Album>> findAllAlbumsByGroup(String group);
 
-  @Query('SELECT * FROM Album WHERE name like "%ん%"')
-  Future<List<Album>> findAllAlbumsTest();
-
   @Query('SELECT * FROM Album WHERE albumId = :albumId')
   Future<Album?> findAlbumByUId(String albumId);
 
@@ -24,6 +21,6 @@ abstract class AlbumDao {
   @update
   Future<void> updateAlbum(Album album);
 
-  @Query("Delete FROM Album")
+  @Query("DELETE FROM Album")
   Future<void> deleteAllAlbums();
 }

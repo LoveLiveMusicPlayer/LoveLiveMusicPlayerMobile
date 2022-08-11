@@ -1,0 +1,69 @@
+import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/pages/album_details/state.dart';
+import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+
+class DetailController extends GetxController {
+  final AlbumDetailState state = AlbumDetailState();
+
+  static DetailController get to => Get.find();
+
+  openSelect() {
+    final isSelect = state.isSelect;
+    if (isSelect) {
+      final tempList = state.items;
+      if (tempList.isNotEmpty) {
+        for (var element in tempList) {
+          element.checked = false;
+        }
+      }
+      state.selectAll = false;
+    } else {
+      HomeController.to.state.isSelect.value = !isSelect;
+    }
+    state.isSelect = !isSelect;
+    refresh();
+  }
+
+  ///全选
+  selectAll(bool checked) {
+    final tempList = state.items;
+    if (tempList.isNotEmpty) {
+      for (var element in tempList) {
+        element.checked = checked;
+      }
+    }
+    state.selectAll = checked;
+    refresh();
+  }
+
+  ///选中单个条目
+  selectItem(int index, bool checked) {
+    state.items[index].checked = checked;
+    bool select = true;
+    for (var element in state.items) {
+      if (!element.checked) {
+        select = false;
+      }
+    }
+    state.selectAll = select;
+    refresh();
+  }
+
+  isItemChecked(int index) {
+    final tempList = state.items;
+    if (index >= 0 && index < tempList.length) {
+      return tempList[index].checked;
+    }
+    return false;
+  }
+
+  int getCheckedSong() {
+    int num = 0;
+    for (var element in state.items) {
+      if (element.checked) {
+        num++;
+      }
+    }
+    return num;
+  }
+}

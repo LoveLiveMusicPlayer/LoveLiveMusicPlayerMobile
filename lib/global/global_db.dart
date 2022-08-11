@@ -129,7 +129,10 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       artistList.add(Artist(
           name: name,
           artistBin: artistBin,
-          photo: "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/" + artistBin + ".jpg",
+          photo:
+              "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/" +
+                  artistBin +
+                  ".jpg",
           count: count));
     }
     GlobalLogic.to.artistList.value = artistList;
@@ -147,7 +150,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
   /// 初始化数据库数据
   Future<void> insertMusicIntoAlbum(DownloadMusic downloadMusic) async {
-    final album = await albumDao.findAlbumByUId(downloadMusic.albumUId);
+    final album = await findAlbumById(downloadMusic.albumUId);
     if (album == null) {
       final _album = Album(
           albumId: downloadMusic.albumUId,
@@ -180,8 +183,26 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     }
   }
 
+  Future<Album?> findAlbumById(String uid) async {
+    return await albumDao.findAlbumByUId(uid);
+  }
+
   Future<Music?> findMusicById(String uid) async {
     return await musicDao.findMusicByUId(uid);
+  }
+
+  Future<void> deleteMenuById(int menuId) async {
+    await menuDao.deleteMenuById(menuId);
+    await findAllMenuList();
+  }
+
+  Future<void> updateMenuName(String name, int menuId) async {
+    Menu? menu = await menuDao.findMenuById(menuId);
+    if (menu != null) {
+      menu.name = name;
+      await menuDao.updateMenu(menu);
+      await findAllMenuList();
+    }
   }
 
   /// 获取上一次持久化的播放列表并播放

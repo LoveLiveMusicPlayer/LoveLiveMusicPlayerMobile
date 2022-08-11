@@ -11,7 +11,7 @@ import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/album_details/widget/details_header.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';
-import 'package:lovelivemusicplayer/pages/home/widget/dialog_more.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/dialog_more_with_music.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/widgets/details_list_top.dart';
 import 'package:lovelivemusicplayer/widgets/listview_item_song.dart';
@@ -102,7 +102,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
           onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
           onMoreTap: (music) {
             SmartDialog.compatible.show(
-                widget: DialogMore(music: music),
+                widget: DialogMoreWithMusic(music: music),
                 alignmentTemp: Alignment.bottomCenter);
           },
           onPlayNowTap: () {

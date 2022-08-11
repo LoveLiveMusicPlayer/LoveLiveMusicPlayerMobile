@@ -3,26 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
-import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 
 ///歌手 item
 class ListViewItemSinger extends StatefulWidget {
   Artist artist;
 
-  ///当前选中状态
-  bool checked;
+  Function(Artist) onItemTap;
 
-  ///是否选择条目
-  bool isSelect;
-
-  Function(Artist, bool) onItemTap;
-
-  ListViewItemSinger(
-      {Key? key,
-      required this.artist,
-      required this.onItemTap,
-      this.checked = false,
-      this.isSelect = false})
+  ListViewItemSinger({Key? key, required this.artist, required this.onItemTap})
       : super(key: key);
 
   @override
@@ -36,18 +24,6 @@ class _ListViewItemSingerState extends State<ListViewItemSinger>
     super.build(context);
     return Row(
       children: [
-        Visibility(
-          visible: widget.isSelect,
-          child: Padding(
-            padding: EdgeInsets.only(right: 10.h),
-            child: CircularCheckBox(
-                checkd: widget.checked,
-                onCheckd: (checked) {
-                  widget.checked = checked;
-                  widget.onItemTap(widget.artist, checked);
-                }),
-          ),
-        ),
         showImg(widget.artist.photo, 48.h, 48.h,
             radius: 24.h, hasShadow: false),
         SizedBox(
@@ -56,9 +32,7 @@ class _ListViewItemSingerState extends State<ListViewItemSinger>
         Expanded(
           child: InkWell(
             onTap: () {
-              widget.checked = !widget.checked;
-              widget.onItemTap(widget.artist, widget.checked);
-              setState(() {});
+              widget.onItemTap(widget.artist);
             },
             child: Column(
               mainAxisSize: MainAxisSize.min,

@@ -36,6 +36,6 @@ abstract class MusicDao {
   @update
   Future<void> updateMusic(Music music);
 
-  @Query("Delete FROM Music")
+  @Query("DELETE FROM Music")
   Future<void> deleteAllMusics();
 }
