@@ -129,7 +129,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       artistList.add(Artist(
           name: name,
           artistBin: artistBin,
-          photo: "assets/artist/" + artistBin + ".jpg",
+          photo: "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/" + artistBin + ".jpg",
           count: count));
     }
     GlobalLogic.to.artistList.value = artistList;

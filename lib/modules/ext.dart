@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,6 +24,7 @@ Widget showImg(String? path, double? width, double? height,
     BoxFit fit = BoxFit.cover}) {
   ImageProvider<Object> noShadowImage;
   ImageProvider<Object> shadowImage;
+  bool isNetImage = false;
   if (hasShadow) {
     if (path == null ||
         path.isEmpty ||
@@ -31,7 +33,8 @@ Widget showImg(String? path, double? width, double? height,
     } else if (path.startsWith("assets")) {
       shadowImage = AssetImage(path);
     } else if (path.startsWith("http")) {
-      shadowImage = NetworkImage(path);
+      isNetImage = true;
+      shadowImage = CachedNetworkImageProvider(path);
     } else {
       final file = File(path);
       if (file.existsSync()) {
@@ -40,28 +43,59 @@ Widget showImg(String? path, double? width, double? height,
         shadowImage = AssetImage(defPhoto);
       }
     }
-
-    return Container(
-      width: width?.h,
-      height: height?.h,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            image: ResizeImage(shadowImage,
-                width: (width?.h.toInt() ?? 1) * 2,
-                height: (height?.h.toInt() ?? 1) * 2),
-            fit: BoxFit.fill),
-        borderRadius: BorderRadius.circular(radius.h),
-        boxShadow: [
-          BoxShadow(
-              color: shadowColor ??
-                  (Get.isDarkMode
-                      ? const Color(0xFF05080C)
-                      : const Color(0xFFD3E0EC)),
-              blurRadius: 4,
-              offset: Offset(4.h, 8.h)),
-        ],
-      ),
-    );
+    if (isNetImage) {
+      return CachedNetworkImage(
+        imageUrl: path!,
+        imageBuilder: (context, imageProvider) => Container(
+          width: width?.h,
+          height: height?.h,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: ResizeImage(imageProvider,
+                    width: (width?.h.toInt() ?? 1) * 2,
+                    height: (height?.h.toInt() ?? 1) * 2),
+                fit: BoxFit.fill),
+            borderRadius: BorderRadius.circular(radius.h),
+            boxShadow: [
+              BoxShadow(
+                  color: shadowColor ??
+                      (Get.isDarkMode
+                          ? const Color(0xFF05080C)
+                          : const Color(0xFFD3E0EC)),
+                  blurRadius: 4,
+                  offset: Offset(4.h, 8.h)),
+            ],
+          ),
+        ),
+        placeholder: (context, url) {
+          return Image(image: AssetImage(defPhoto));
+        },
+        errorWidget: (context, url, error) =>
+            Image(image: AssetImage(defPhoto)),
+      );
+    } else {
+      return Container(
+        width: width?.h,
+        height: height?.h,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: ResizeImage(shadowImage,
+                  width: (width?.h.toInt() ?? 1) * 2,
+                  height: (height?.h.toInt() ?? 1) * 2),
+              fit: BoxFit.fill),
+          borderRadius: BorderRadius.circular(radius.h),
+          boxShadow: [
+            BoxShadow(
+                color: shadowColor ??
+                    (Get.isDarkMode
+                        ? const Color(0xFF05080C)
+                        : const Color(0xFFD3E0EC)),
+                blurRadius: 4,
+                offset: Offset(4.h, 8.h)),
+          ],
+        ),
+      );
+    }
   } else {
     if (path == null ||
         path.isEmpty ||
@@ -80,12 +114,9 @@ Widget showImg(String? path, double? width, double? height,
         fit: fit,
       ).image;
     } else if (path.startsWith("http")) {
-      noShadowImage = Image.network(
-        path,
-        width: width?.h,
-        height: height?.h,
-        fit: fit,
-      ).image;
+      isNetImage = true;
+      noShadowImage = CachedNetworkImageProvider(path,
+          maxWidth: width?.h.toInt(), maxHeight: height?.h.toInt());
     } else {
       final file = File(path);
       if (file.existsSync()) {
@@ -104,15 +135,32 @@ Widget showImg(String? path, double? width, double? height,
         ).image;
       }
     }
-    return ClipRRect(
-        borderRadius: BorderRadius.circular(radius.h),
-        child: Image(
-          image: ResizeImage(noShadowImage,
-              width: (width?.h.toInt() ?? 1) * 2,
-              height: (height?.h.toInt() ?? 1) * 2),
-          width: width?.h,
-          height: height?.h,
-        ));
+    if (isNetImage) {
+      return ClipRRect(
+          borderRadius: BorderRadius.circular(radius.h),
+          child: CachedNetworkImage(
+            imageUrl: path!,
+            imageBuilder: (context, imageProvider) => Image(
+                image: ResizeImage(imageProvider,
+                    width: width?.h.toInt() ?? 1,
+                    height: height?.h.toInt() ?? 1)),
+            placeholder: (context, url) {
+              return Image(image: AssetImage(defPhoto), width: width?.h, height: height?.h);
+            },
+            errorWidget: (context, url, error) =>
+                Image(image: AssetImage(defPhoto), width: width?.h, height: height?.h),
+          ));
+    } else {
+      return ClipRRect(
+          borderRadius: BorderRadius.circular(radius.h),
+          child: Image(
+            image: ResizeImage(noShadowImage,
+                width: (width?.h.toInt() ?? 1) * 2,
+                height: (height?.h.toInt() ?? 1) * 2),
+            width: width?.h,
+            height: height?.h,
+          ));
+    }
   }
 }
 

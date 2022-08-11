@@ -73,6 +73,7 @@ dependencies:
   concurrent_queue: ^1.4.0 # 队列
   wakelock: ^0.6.1+2 # 屏幕常亮
   flutter_image_compress: ^1.1.0 # 图片压缩
+  cached_network_image: ^3.2.1
 
 dependency_overrides:
   path: ^1.8.1
