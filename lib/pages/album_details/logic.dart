@@ -8,19 +8,21 @@ class DetailController extends GetxController {
   static DetailController get to => Get.find();
 
   openSelect() {
-    final isSelect = state.isSelect;
-    if (isSelect) {
-      final tempList = state.items;
-      if (tempList.isNotEmpty) {
-        for (var element in tempList) {
-          element.checked = false;
-        }
+    state.isSelect = true;
+    HomeController.to.state.isSelect.value = true;
+    refresh();
+  }
+
+  closeSelect() {
+    final tempList = state.items;
+    if (tempList.isNotEmpty) {
+      for (var element in tempList) {
+        element.checked = false;
       }
-      state.selectAll = false;
-    } else {
-      HomeController.to.state.isSelect.value = !isSelect;
     }
-    state.isSelect = !isSelect;
+    state.selectAll = false;
+    HomeController.to.state.isSelect.value = false;
+    state.isSelect = false;
     refresh();
   }
 

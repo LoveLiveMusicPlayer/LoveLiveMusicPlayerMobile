@@ -82,17 +82,18 @@ class _AlbumDetailsPageState extends State<AlbumDetailsPage> {
         },
         onScreenTap: () {
           if (logic.state.isSelect) {
+            logic.closeSelect();
             SmartDialog.dismiss();
           } else {
+            logic.openSelect();
             showSelectDialog(logic);
           }
-          logic.openSelect();
         },
         onSelectAllTap: (checked) {
           logic.selectAll(checked);
         },
         onCancelTap: () {
-          logic.openSelect();
+          logic.closeSelect();
           SmartDialog.dismiss();
         }));
     list.add(SizedBox(
@@ -136,7 +137,7 @@ class _AlbumDetailsPageState extends State<AlbumDetailsPage> {
               // todo: 添加到播放列表
             }
           });
-          logic.openSelect();
+          logic.closeSelect();
         }));
     list.add(BtnItem(
         imgPath: Assets.dialogIcAddPlayList,
@@ -149,7 +150,7 @@ class _AlbumDetailsPageState extends State<AlbumDetailsPage> {
               // todo: 添加到歌单
             }
           });
-          logic.openSelect();
+          logic.closeSelect();
         }));
     SmartDialog.compatible.show(
         widget: DialogBottomBtn(
