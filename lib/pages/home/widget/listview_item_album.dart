@@ -39,15 +39,11 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum>
     super.build(context);
     final borderWidth = (ScreenUtil().screenWidth - 72.w) / 3;
     return InkWell(
-        onTap: () {
-          widget.checked = !widget.checked;
-          widget.onItemTap(widget.album, widget.checked);
-          setState(() {});
-        },
+        onTap: clickItem,
         child: Column(children: [
           showImg(SDUtils.getImgPath(fileName: widget.album.coverPath!),
               borderWidth, borderWidth,
-              hasShadow: false),
+              hasShadow: false, onTap: clickItem),
           SizedBox(
             height: 5.h,
           ),
@@ -80,6 +76,12 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum>
             ],
           )
         ]));
+  }
+
+  clickItem() {
+    widget.checked = !widget.checked;
+    widget.onItemTap(widget.album, widget.checked);
+    setState(() {});
   }
 
   @override

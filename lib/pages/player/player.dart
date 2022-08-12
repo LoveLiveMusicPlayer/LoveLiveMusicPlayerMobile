@@ -10,6 +10,7 @@ import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/PositionData.dart';
+import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/control_buttons.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_cover.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_header.dart';
@@ -17,8 +18,6 @@ import 'package:lovelivemusicplayer/pages/player/widget/player_lyric.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/seekbar.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:rxdart/rxdart.dart' as RxDart;
-
-import '../../modules/ext.dart';
 
 class Player extends StatefulWidget {
   final GestureTapCallback onTap;
@@ -197,7 +196,6 @@ class _PlayerState extends State<Player> {
               radius: 6,
               iconColor: Colors.pinkAccent,
               iconSize: 15,
-              // iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
               bgColor:
                   PlayerLogic.to.hasSkin.value ? const Color(0xFF1E2328) : null,
               outerColor: PlayerLogic.to.hasSkin.value ? Colors.black : null),

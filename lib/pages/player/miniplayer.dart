@@ -142,20 +142,17 @@ class _MiniPlayerState extends State<MiniPlayer> {
   }
 
   Widget miniCover() {
-    return InkWell(
-      onTap: () => widget.onTap(),
-      child: Row(
-        children: [
-          SizedBox(width: 6.w),
-          showImg(
-              SDUtils.getImgPath(
-                  fileName: PlayerLogic.to.playingMusic.value.coverPath ?? ""),
-              50,
-              50,
-              radius: 50,
-              hasShadow: false)
-        ],
-      ),
+    return Row(
+      children: [
+        SizedBox(width: 6.w),
+        showImg(
+            SDUtils.getImgPath(
+                fileName: PlayerLogic.to.playingMusic.value.coverPath ?? ""),
+            50,
+            50,
+            radius: 50,
+            hasShadow: false, onTap: () => widget.onTap())
+      ],
     );
   }
 

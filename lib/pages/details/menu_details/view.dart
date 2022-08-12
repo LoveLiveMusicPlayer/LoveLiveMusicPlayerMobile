@@ -8,6 +8,7 @@ import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/details/logic.dart';
 import 'package:lovelivemusicplayer/pages/details/widget/details_body.dart';
 import 'package:lovelivemusicplayer/pages/details/widget/details_header.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 
 class MenuDetailsPage extends StatefulWidget {
@@ -60,14 +61,13 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          showImg(
-              SDUtils.getImgPath(
-                  fileName: music.isNotEmpty
-                      ? music[music.length - 1].coverPath!
-                      : null),
-              240,
-              240,
-              radius: 120),
+          FutureBuilder<String>(
+            initialData: SDUtils.getImgPath(),
+            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+              return showImg(snapshot.data, 240, 240, radius: 120);
+            },
+            future: AppUtils.getMusicCoverPath(menu.music?.last),
+          )
         ],
       ),
     );

@@ -5,6 +5,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
@@ -59,23 +60,10 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
     return FutureBuilder<String>(
       initialData: SDUtils.getImgPath(),
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-        return showImg(snapshot.data, 48, 48, hasShadow: false, radius: 8);
+        return showImg(snapshot.data, 48, 48, hasShadow: false, radius: 8, onTap: () => widget.onItemTap(widget.menu));
       },
-      future: getMusicCoverPath(widget.menu.music?.last),
+      future: AppUtils.getMusicCoverPath(widget.menu.music?.last),
     );
-  }
-
-  /// 异步获取歌单封面
-  Future<String> getMusicCoverPath(String? musicPath) async {
-    final defaultPath = SDUtils.getImgPath();
-    if (musicPath == null) {
-      return defaultPath;
-    }
-    final music = await DBLogic.to.findMusicById(musicPath);
-    if (music == null) {
-      return defaultPath;
-    }
-    return SDUtils.path + music.coverPath!;
   }
 
   ///中间标题部分

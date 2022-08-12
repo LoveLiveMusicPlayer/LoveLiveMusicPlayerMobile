@@ -21,7 +21,8 @@ Widget showImg(String? path, double? width, double? height,
     bool hasShadow = true,
     Color? shadowColor,
     String defPhoto = Const.logo,
-    BoxFit fit = BoxFit.cover}) {
+    BoxFit fit = BoxFit.cover,
+    GestureTapCallback? onTap}) {
   ImageProvider<Object> noShadowImage;
   ImageProvider<Object> shadowImage;
   bool isNetImage = false;
@@ -136,27 +137,40 @@ Widget showImg(String? path, double? width, double? height,
       }
     }
     if (isNetImage) {
-      return ClipRRect(
-          borderRadius: BorderRadius.circular(radius.h),
-          child: CachedNetworkImage(
-            imageUrl: path!,
-            imageBuilder: (context, imageProvider) => Image(
-                image: ResizeImage(imageProvider,
-                    width: width?.h.toInt() ?? 1,
-                    height: height?.h.toInt() ?? 1)),
-            placeholder: (context, url) {
-              return Image(
+      return InkWell(
+        onTap: () {
+          if (onTap != null) {
+            onTap();
+          }
+        },
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(radius.h),
+            child: CachedNetworkImage(
+              imageUrl: path!,
+              imageBuilder: (context, imageProvider) => Image(
+                  image: ResizeImage(imageProvider,
+                      width: width?.h.toInt() ?? 1,
+                      height: height?.h.toInt() ?? 1)),
+              placeholder: (context, url) {
+                return Image(
+                    image: AssetImage(defPhoto),
+                    width: width?.h,
+                    height: height?.h);
+              },
+              errorWidget: (context, url, error) => Image(
                   image: AssetImage(defPhoto),
                   width: width?.h,
-                  height: height?.h);
-            },
-            errorWidget: (context, url, error) => Image(
-                image: AssetImage(defPhoto),
-                width: width?.h,
-                height: height?.h),
-          ));
+                  height: height?.h),
+            ))
+      );
     } else {
-      return ClipRRect(
+      return InkWell(
+          onTap: () {
+        if (onTap != null) {
+          onTap();
+        }
+      },
+      child: ClipRRect(
           borderRadius: BorderRadius.circular(radius.h),
           child: Image(
             image: ResizeImage(noShadowImage,
@@ -164,7 +178,8 @@ Widget showImg(String? path, double? width, double? height,
                 height: (height?.h.toInt() ?? 1) * 2),
             width: width?.h,
             height: height?.h,
-          ));
+          ))
+      );
     }
   }
 }
@@ -340,10 +355,8 @@ Widget logoIcon(String path,
                     blurRadius: 10,
                     offset: Offset(5.h, 3.h)),
               ]),
-          child: InkWell(
-              onTap: onTap,
-              child: showImg(image, width, height,
-                  radius: radius.h, hasShadow: false))));
+          child: showImg(image, width, height,
+              radius: radius.h, hasShadow: false, onTap: onTap)));
 }
 
 Widget touchIcon(IconData icon, GestureTapCallback onTap,

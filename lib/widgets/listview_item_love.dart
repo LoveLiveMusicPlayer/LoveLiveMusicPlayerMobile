@@ -82,7 +82,7 @@ class _ListViewItemLoveState extends State<ListViewItemLove>
       onTap: clickItem,
       child: showImg(
           SDUtils.getImgPath(fileName: widget.music.coverPath), 48, 48,
-          hasShadow: false, radius: 8),
+          hasShadow: false, radius: 8, onTap: clickItem),
     );
   }
 
