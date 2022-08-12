@@ -37,15 +37,21 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Get.theme.primaryColor,
-      body: Column(
-        children: [
-          DetailsHeader(title: menu.name),
-          DetailsBody(logic: logic, buildCover: _buildCover(), music: music)
-        ],
-      ),
-    );
+    return GetBuilder<DetailController>(builder: (logic) {
+      return Scaffold(
+        backgroundColor: Get.theme.primaryColor,
+        body: Column(
+          children: [
+            DetailsHeader(title: menu.name),
+            DetailsBody(
+                logic: logic,
+                buildCover: _buildCover(),
+                music: music
+            )
+          ],
+        ),
+      );
+    });
   }
 
   Widget _buildCover() {
