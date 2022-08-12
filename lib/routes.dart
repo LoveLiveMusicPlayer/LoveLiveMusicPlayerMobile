@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/pages/album_details/view.dart';
+import 'package:lovelivemusicplayer/pages/details/album_details/view.dart';
 import 'package:lovelivemusicplayer/pages/data_sync/data_sync.dart';
 import 'package:lovelivemusicplayer/pages/home/home_binding.dart';
 import 'package:lovelivemusicplayer/pages/home/home_view.dart';
-import 'package:lovelivemusicplayer/pages/menu_details/view.dart';
+import 'package:lovelivemusicplayer/pages/details/menu_details/view.dart';
 import 'package:lovelivemusicplayer/pages/music_trans/music_transform.dart';
 import 'package:lovelivemusicplayer/pages/scan/scanner.dart';
-import 'package:lovelivemusicplayer/pages/singer_details/view.dart';
+import 'package:lovelivemusicplayer/pages/details/singer_details/view.dart';
 
 class Routes {
   static const String routeInitial = "/";

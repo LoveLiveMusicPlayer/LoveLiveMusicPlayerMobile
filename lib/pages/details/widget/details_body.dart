@@ -1,75 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
-import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
-import 'package:lovelivemusicplayer/pages/album_details/logic.dart';
+import 'package:lovelivemusicplayer/pages/details/logic.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/dialog_more_with_music.dart';
+import 'package:lovelivemusicplayer/widgets/details_list_top.dart';
+import 'package:lovelivemusicplayer/widgets/listview_item_song.dart';
 
-import '../../modules/ext.dart';
-import '../../widgets/details_list_top.dart';
-import '../../widgets/listview_item_song.dart';
-import '../album_details/widget/details_header.dart';
-import '../home/widget/dialog_bottom_btn.dart';
-import '../home/widget/dialog_more_with_music.dart';
+class DetailsBody extends StatelessWidget {
+  final DetailController logic;
+  final Widget buildCover;
+  final List<Music> music;
 
-class SingerDetailsPage extends StatefulWidget {
-  const SingerDetailsPage({Key? key}) : super(key: key);
-
-  @override
-  State<SingerDetailsPage> createState() => _SingerDetailsPageState();
-}
-
-class _SingerDetailsPageState extends State<SingerDetailsPage> {
-  final Artist artist = Get.arguments;
-  final music = <Music>[];
-  final logic = Get.put(DetailController());
-
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () async {
-      await _load();
-      setState(() {});
-    });
-  }
-
-  _load() async {
-    music.addAll(await DBLogic.to.findAllMusicByArtistBin(artist.artistBin));
-    logic.state.items = music;
-  }
+  const DetailsBody(
+      {Key? key,
+      required this.logic,
+      required this.buildCover,
+      required this.music})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Get.theme.primaryColor,
-      body: _buildBody(),
-    );
-  }
-
-  Widget _buildBody() {
-    return GetBuilder<DetailController>(builder: (logic) {
-      return Column(
-        children: [
-          DetailsHeader(
-            title: artist.name,
-          ),
-          Expanded(
-              child: ListView(
-            padding: const EdgeInsets.all(0),
-            children: getListItems(logic),
-          )),
-        ],
-      );
-    });
+    return Expanded(
+        child: ListView(
+      padding: const EdgeInsets.all(0),
+      children: getListItems(logic),
+    ));
   }
 
   List<Widget> getListItems(logic) {
     List<Widget> list = [];
-    list.add(_buildCover());
+    list.add(buildCover);
     list.add(SizedBox(
       height: 10.h,
     ));
@@ -102,7 +66,7 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
     ));
     for (var index = 0; index < music.length; index++) {
       list.add(Padding(
-        padding: EdgeInsets.only(left: 16.h, bottom: 20.h),
+        padding: EdgeInsets.only(left: 16.w, bottom: 20.h, right: 16.w),
         child: ListViewItemSong(
           index: index,
           music: music[index],
@@ -161,17 +125,5 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
         clickBgDismissTemp: false,
         maskColorTemp: Colors.transparent,
         alignmentTemp: Alignment.bottomCenter);
-  }
-
-  Widget _buildCover() {
-    return Container(
-      padding: EdgeInsets.only(top: 20.h),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          showImg(artist.photo, 240, 240, radius: 120),
-        ],
-      ),
-    );
   }
 }

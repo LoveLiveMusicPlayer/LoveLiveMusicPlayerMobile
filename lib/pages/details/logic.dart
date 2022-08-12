@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/pages/album_details/state.dart';
+import 'package:lovelivemusicplayer/pages/details/state.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 
 class DetailController extends GetxController {

@@ -14,7 +14,7 @@ class DetailsCover extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 16.h, right: 16, top: 16.h),
+      padding: EdgeInsets.only(top: 16.h),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
