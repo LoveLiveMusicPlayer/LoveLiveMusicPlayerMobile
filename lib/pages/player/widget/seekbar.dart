@@ -52,9 +52,9 @@ class _SeekBarState extends State<SeekBar> {
             activeColor: PlayerLogic.to.hasSkin.value || Get.isDarkMode
                 ? const Color(0x9905080C)
                 : const Color(0x99CCDDF1),
-            thumbColor: PlayerLogic.to.hasSkin.value || Get.isDarkMode
-                ? const Color(0xFF05080c)
-                : Get.theme.primaryColor,
+            thumbColor: PlayerLogic.to.hasSkin.value
+                ? PlayerLogic.to.iconColor.value
+                : Get.isDarkMode ? const Color(0xFF05080c) : Get.theme.primaryColor,
             min: 0.0,
             max: total.toDouble(),
             value: value,

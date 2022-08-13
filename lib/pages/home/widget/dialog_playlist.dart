@@ -94,7 +94,6 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                         DBLogic.to.musicDao
                             .findMusicsByMusicIds(musicIds)
                             .then((musicList) {
-                          GlobalLogic.to.isHandlePlay = false;
                           PlayerLogic.to.playMusic(musicList, index: index);
                         });
                       },

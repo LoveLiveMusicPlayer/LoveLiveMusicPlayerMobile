@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 
@@ -43,29 +45,34 @@ class ControlButtons extends StatelessWidget {
                     radius: 6,
                     iconSize: 15,
                     iconColor:
-                        PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                    PlayerLogic.to.hasSkin.value ? Colors.white : null,
                     bgColor: PlayerLogic.to.hasSkin.value
-                        ? const Color(0xFF1E2328)
+                        ? PlayerLogic.to.iconColor.value
                         : null,
                     outerColor:
-                        PlayerLogic.to.hasSkin.value ? Colors.black : null);
+                    PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor
+                        .value : null);
               },
             ),
             StreamBuilder<SequenceState?>(
               stream: player.sequenceStateStream,
-              builder: (context, snapshot) => materialButton(
-                  Assets.playerPlayPrev,
-                  () => player.hasPrevious ? player.seekToPrevious() : null,
-                  width: 60,
-                  height: 60,
-                  radius: 40,
-                  iconSize: 16,
-                  iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
-                  bgColor: PlayerLogic.to.hasSkin.value
-                      ? const Color(0xFF1E2328)
-                      : null,
-                  outerColor:
-                      PlayerLogic.to.hasSkin.value ? Colors.black : null),
+              builder: (context, snapshot) =>
+                  materialButton(
+                      Assets.playerPlayPrev,
+                          () => player.hasPrevious ? player.seekToPrevious() : null,
+                      width: 60,
+                      height: 60,
+                      radius: 40,
+                      iconSize: 16,
+                      iconColor: PlayerLogic.to.hasSkin.value
+                          ? Colors.white
+                          : null,
+                      bgColor: PlayerLogic.to.hasSkin.value
+                          ? PlayerLogic.to.iconColor.value
+                          : null,
+                      outerColor:
+                      PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor
+                          .value : null),
             ),
             StreamBuilder<PlayerState>(
               stream: player.playerStateStream,
@@ -82,7 +89,7 @@ class ControlButtons extends StatelessWidget {
                     child: const CircularProgressIndicator(),
                   );
                 } else if (playing != true) {
-                  return materialButton(Assets.playerPlayPlay, () {
+                  return materialButton(Assets.playerPlayPlay, () async {
                     if (hasPlayingMusic.musicId != null) {
                       player.play();
                     }
@@ -92,12 +99,13 @@ class ControlButtons extends StatelessWidget {
                       radius: 40,
                       iconSize: 26,
                       iconColor:
-                          PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                      PlayerLogic.to.hasSkin.value ? Colors.white : null,
                       bgColor: PlayerLogic.to.hasSkin.value
-                          ? const Color(0xFF1E2328)
+                          ? PlayerLogic.to.iconColor.value
                           : null,
                       outerColor:
-                          PlayerLogic.to.hasSkin.value ? Colors.black : null);
+                      PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor
+                          .value : null);
                 } else if (processingState != ProcessingState.completed) {
                   return materialButton(
                       Assets.playerPlayPause, () => player.pause(),
@@ -106,57 +114,66 @@ class ControlButtons extends StatelessWidget {
                       radius: 40,
                       iconSize: 26,
                       iconColor:
-                          PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                      PlayerLogic.to.hasSkin.value ? Colors.white : null,
                       bgColor: PlayerLogic.to.hasSkin.value
-                          ? const Color(0xFF1E2328)
+                          ? PlayerLogic.to.iconColor.value
                           : null,
                       outerColor:
-                          PlayerLogic.to.hasSkin.value ? Colors.black : null);
+                      PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor
+                          .value : null);
                 } else {
                   return materialButton(
                       Assets.playerPlayPlay,
-                      () => player.seek(Duration.zero,
+                      () async => player.seek(Duration.zero,
                           index: player.effectiveIndices!.first),
                       width: 80,
                       height: 80,
                       radius: 40,
                       iconSize: 26,
                       iconColor:
-                          PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                      PlayerLogic.to.hasSkin.value ? Colors.white : null,
                       bgColor: PlayerLogic.to.hasSkin.value
-                          ? const Color(0xFF1E2328)
+                          ? PlayerLogic.to.iconColor.value
                           : null,
                       outerColor:
-                          PlayerLogic.to.hasSkin.value ? Colors.black : null);
+                      PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor
+                          .value : null);
                 }
               },
             ),
             StreamBuilder<SequenceState?>(
               stream: player.sequenceStateStream,
-              builder: (context, snapshot) => materialButton(
-                  Assets.playerPlayNext,
-                  () => player.hasNext ? player.seekToNext() : null,
-                  width: 60,
-                  height: 60,
-                  radius: 40,
-                  iconSize: 16,
-                  iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
-                  bgColor: PlayerLogic.to.hasSkin.value
-                      ? const Color(0xFF1E2328)
-                      : null,
-                  outerColor:
-                      PlayerLogic.to.hasSkin.value ? Colors.black : null),
+              builder: (context, snapshot) =>
+                  materialButton(
+                      Assets.playerPlayNext,
+                          () async => player.hasNext ? player.seekToNext() : null,
+                      width: 60,
+                      height: 60,
+                      radius: 40,
+                      iconSize: 16,
+                      iconColor: PlayerLogic.to.hasSkin.value
+                          ? Colors.white
+                          : null,
+                      bgColor: PlayerLogic.to.hasSkin.value
+                          ? PlayerLogic.to.iconColor.value
+                          : null,
+                      outerColor:
+                      PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor
+                          .value : null),
             ),
-            materialButton(Assets.playerPlayPlaylist, () => {},
+            materialButton(Assets.playerPlayPlaylist, () {
+
+            },
                 width: 32,
                 height: 32,
                 radius: 6,
                 iconSize: 15,
                 iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
                 bgColor: PlayerLogic.to.hasSkin.value
-                    ? const Color(0xFF1E2328)
+                    ? PlayerLogic.to.iconColor.value
                     : null,
-                outerColor: PlayerLogic.to.hasSkin.value ? Colors.black : null),
+                outerColor: PlayerLogic.to.hasSkin.value ? PlayerLogic.to
+                    .iconColor.value : null),
           ],
         ),
       ),

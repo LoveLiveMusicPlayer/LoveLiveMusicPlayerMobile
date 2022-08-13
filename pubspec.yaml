@@ -75,6 +75,7 @@ dependencies:
   wakelock: ^0.6.2 # 屏幕常亮
   flutter_image_compress: ^1.1.1 # 图片压缩
   cached_network_image: ^3.2.1 # 网络图片缓存库
+  palette_generator: ^0.3.3+1 # 取色器
 
 dependency_overrides:
   path: ^1.8.1

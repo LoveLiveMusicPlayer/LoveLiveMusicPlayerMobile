@@ -8,12 +8,12 @@ import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/Lyric.dart';
+import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/models/PlayListMusic.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
-
-import '../models/Music.dart';
 
 class PlayerLogic extends SuperController
     with GetSingleTickerProviderStateMixin {
@@ -51,6 +51,9 @@ class PlayerLogic extends SuperController
 
   // 是否使用封面皮肤
   var hasSkin = false.obs;
+
+  // 炫彩模式下的按钮皮肤
+  var iconColor = Get.theme.primaryColor.obs;
 
   static PlayerLogic get to => Get.find();
 
@@ -120,7 +123,7 @@ class PlayerLogic extends SuperController
     if (playingMusic.value.musicId != currentMusic.musicId) {
       final music = await DBLogic.to.findMusicByMusicId(currentMusic.musicId);
       if (music != null) {
-        playingMusic.value = music;
+        setCurrentMusic(music);
       }
     }
   }
@@ -182,11 +185,10 @@ class PlayerLogic extends SuperController
       }
       persistencePlayList(musicList, index).then((value) {
         if (playingMusic.value != musicList[index]) {
-          playingMusic.value = musicList[index];
+          setCurrentMusic(musicList[index]);
         }
-        getLrc(false).then((value) {
-          GlobalLogic.to.isHandlePlay = false;
-        });
+        GlobalLogic.to.isHandlePlay = false;
+        getLrc(false);
       });
     });
   }
@@ -354,14 +356,12 @@ class PlayerLogic extends SuperController
   /// 切换我喜欢状态
   /// @param isLove 默认不传为根据现有状态取反，传了就是指定状态
   toggleLove({Music? music, bool? isLove}) {
-    Music? _music = music;
-    if (music == null) {
-      _music = playingMusic.value;
-    }
-    DBLogic.to.updateLove(_music!, isLove: isLove).then((value) {
+    Music? mMusic = music;
+    mMusic ??= playingMusic.value;
+    DBLogic.to.updateLove(mMusic, isLove: isLove).then((value) {
       // 切换的歌曲如果是当前播放的歌曲，需要手动深拷贝一下对象使得player界面状态正确
       if (value.musicId == playingMusic.value.musicId) {
-        playingMusic.value = Music.deepClone(value);
+        setCurrentMusic(Music.deepClone(value));
       }
       DBLogic.to.findAllLoveListByGroup(GlobalLogic.to.currentGroup.value);
     });
@@ -393,7 +393,18 @@ class PlayerLogic extends SuperController
     // 删除的是最后一首歌，将播放列表第一首
     final music = await DBLogic.to.findMusicByMusicId(
         mPlayList[mPlayList.length == index ? 0 : index].musicId);
-    playingMusic.value = music!;
+    setCurrentMusic(music!);
+  }
+
+  /// 设置当前播放歌曲
+  setCurrentMusic(Music music) {
+    playingMusic.value = music;
+    final url = music.coverPath;
+    if (url != null) {
+      AppUtils.getImagePalette(url).then((color) {
+        iconColor.value = color ?? Get.theme.primaryColor;
+      });
+    }
   }
 
   @override

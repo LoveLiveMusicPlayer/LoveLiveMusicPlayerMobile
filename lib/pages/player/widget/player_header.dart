@@ -8,9 +8,10 @@ import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 class PlayerHeader extends StatelessWidget {
   final GestureTapCallback onCloseTap;
   final Function() onMoreTap;
+  final Color btnColor;
 
   const PlayerHeader(
-      {Key? key, required this.onCloseTap, required this.onMoreTap})
+      {Key? key, required this.onCloseTap, required this.onMoreTap, required this.btnColor})
       : super(key: key);
 
   @override
@@ -30,9 +31,9 @@ class PlayerHeader extends StatelessWidget {
                 radius: 6,
                 iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
                 bgColor: PlayerLogic.to.hasSkin.value
-                    ? const Color(0xFF1E2328)
+                    ? btnColor
                     : null,
-                outerColor: PlayerLogic.to.hasSkin.value ? Colors.black : null),
+                outerColor: PlayerLogic.to.hasSkin.value ? btnColor : null),
 
             /// 曲名 + 歌手
             Expanded(
@@ -68,9 +69,9 @@ class PlayerHeader extends StatelessWidget {
                 radius: 6,
                 iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
                 bgColor: PlayerLogic.to.hasSkin.value
-                    ? const Color(0xFF1E2328)
+                    ? btnColor
                     : null,
-                outerColor: PlayerLogic.to.hasSkin.value ? Colors.black : null),
+                outerColor: PlayerLogic.to.hasSkin.value ? btnColor : null),
           ],
         ),
       ),

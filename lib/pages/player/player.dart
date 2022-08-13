@@ -17,13 +17,12 @@ import 'package:lovelivemusicplayer/pages/player/widget/player_header.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_lyric.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/seekbar.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
-import 'package:rxdart/rxdart.dart' as RxDart;
+import 'package:rxdart/rxdart.dart' as rx_dart;
 
 class Player extends StatefulWidget {
   final GestureTapCallback onTap;
 
-
-  Player({Key? key, required this.onTap}) : super(key: key);
+  const Player({Key? key, required this.onTap}) : super(key: key);
 
   @override
   State<Player> createState() => _PlayerState();
@@ -36,7 +35,7 @@ class _PlayerState extends State<Player> {
   // 是否被隐藏
   var isOpen = false;
   Stream<PositionData> get _positionDataStream =>
-      RxDart.Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
+      rx_dart.Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
           PlayerLogic.to.mPlayer.positionStream,
           PlayerLogic.to.mPlayer.bufferedPositionStream,
           PlayerLogic.to.mPlayer.durationStream,
@@ -99,7 +98,7 @@ class _PlayerState extends State<Player> {
           SizedBox(height: MediaQuery.of(context).padding.top + 14.56.h),
 
           /// 头部
-          PlayerHeader(onCloseTap: () => widget.onTap(), onMoreTap: () {}),
+          PlayerHeader(btnColor: PlayerLogic.to.iconColor.value, onCloseTap: () => widget.onTap(), onMoreTap: () {}),
 
           SizedBox(height: 10.h),
 
@@ -157,7 +156,7 @@ class _PlayerState extends State<Player> {
 
   Widget funcButton() {
     if (!isCover) {
-      var icon;
+      dynamic icon;
       switch (PlayerLogic.to.lrcType.value) {
         case 0:
           icon = Assets.playerPlayJp;
@@ -181,9 +180,9 @@ class _PlayerState extends State<Player> {
                 iconSize: 20,
                 iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
                 bgColor: PlayerLogic.to.hasSkin.value
-                    ? const Color(0xFF1E2328)
+                    ? PlayerLogic.to.iconColor.value
                     : null,
-                outerColor: PlayerLogic.to.hasSkin.value ? Colors.black : null),
+                outerColor: PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor.value : null),
             materialButton(icon, () => PlayerLogic.to.toggleTranslate(),
                 width: 32,
                 height: 32,
@@ -191,9 +190,9 @@ class _PlayerState extends State<Player> {
                 iconSize: 30,
                 iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
                 bgColor: PlayerLogic.to.hasSkin.value
-                    ? const Color(0xFF1E2328)
+                    ? PlayerLogic.to.iconColor.value
                     : null,
-                outerColor: PlayerLogic.to.hasSkin.value ? Colors.black : null)
+                outerColor: PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor.value : null)
           ]));
     }
     return Padding(
@@ -212,8 +211,8 @@ class _PlayerState extends State<Player> {
               iconColor: Colors.pinkAccent,
               iconSize: 15,
               bgColor:
-                  PlayerLogic.to.hasSkin.value ? const Color(0xFF1E2328) : null,
-              outerColor: PlayerLogic.to.hasSkin.value ? Colors.black : null),
+                  PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor.value : null,
+              outerColor: PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor.value : null),
           materialButton(Icons.add, () => {},
               width: 32,
               height: 32,
@@ -221,8 +220,8 @@ class _PlayerState extends State<Player> {
               iconSize: 20,
               iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
               bgColor:
-                  PlayerLogic.to.hasSkin.value ? const Color(0xFF1E2328) : null,
-              outerColor: PlayerLogic.to.hasSkin.value ? Colors.black : null),
+                  PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor.value : null,
+              outerColor: PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor.value : null),
         ],
       ),
     );
