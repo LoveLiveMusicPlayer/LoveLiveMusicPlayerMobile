@@ -1,5 +1,5 @@
 class PlayerClosableEvent {
-  int timestamp;
+  bool isOpen;
 
-  PlayerClosableEvent(this.timestamp);
+  PlayerClosableEvent(this.isOpen);
 }

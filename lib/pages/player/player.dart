@@ -21,17 +21,20 @@ import 'package:rxdart/rxdart.dart' as RxDart;
 
 class Player extends StatefulWidget {
   final GestureTapCallback onTap;
-  var isCover = true.obs;
+
 
   Player({Key? key, required this.onTap}) : super(key: key);
 
   @override
-  _PlayerState createState() => _PlayerState();
+  State<Player> createState() => _PlayerState();
 }
 
 class _PlayerState extends State<Player> {
   StreamSubscription? loginSubscription;
-
+  // 是否是封面
+  var isCover = true;
+  // 是否被隐藏
+  var isOpen = false;
   Stream<PositionData> get _positionDataStream =>
       RxDart.Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
           PlayerLogic.to.mPlayer.positionStream,
@@ -43,7 +46,12 @@ class _PlayerState extends State<Player> {
   @override
   void initState() {
     loginSubscription = eventBus.on<PlayerClosableEvent>().listen((event) {
-      closeLyricWindow();
+      /// 点击关闭按钮后确定关闭掉全量歌词界面，防止cpu消耗过多
+      if (!isCover && event.isOpen) {
+        setStatus(cover: true, open: event.isOpen);
+      } else {
+        setStatus(open: event.isOpen);
+      }
     });
     super.initState();
   }
@@ -61,16 +69,19 @@ class _PlayerState extends State<Player> {
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Obx(() {
-          return Stack(
-            children: <Widget>[
-              coverBg(),
-              Column(
+          return Visibility(
+              visible: isOpen,
+              child: Stack(
                 children: <Widget>[
-                  top(),
-                  bottom(),
+                  coverBg(),
+                  Column(
+                    children: <Widget>[
+                      top(),
+                      bottom(),
+                    ],
+                  )
                 ],
-              ),
-            ],
+              )
           );
         }),
       ),
@@ -88,13 +99,7 @@ class _PlayerState extends State<Player> {
           SizedBox(height: MediaQuery.of(context).padding.top + 14.56.h),
 
           /// 头部
-          PlayerHeader(
-              onCloseTap: () {
-                widget.onTap();
-                eventBus.fire(
-                    PlayerClosableEvent(DateTime.now().millisecondsSinceEpoch));
-              },
-              onMoreTap: () {}),
+          PlayerHeader(onCloseTap: () => widget.onTap(), onMoreTap: () {}),
 
           SizedBox(height: 10.h),
 
@@ -131,17 +136,27 @@ class _PlayerState extends State<Player> {
     );
   }
 
+  setStatus({bool? cover, bool? open}) {
+    if (cover != null && cover != isCover) {
+      isCover = cover;
+    }
+    if (open != null && open != isOpen) {
+      isOpen = open;
+    }
+    setState(() {});
+  }
+
   Widget stackBody() {
-    if (widget.isCover.value) {
-      return Cover(onTap: () => widget.isCover.value = false);
+    if (isCover) {
+      return Cover(onTap: () => setStatus(cover: false));
     } else {
       return Lyric(
-          key: const Key("Lyric"), onTap: () => widget.isCover.value = true);
+          key: const Key("Lyric"), onTap: () => setStatus(cover: true));
     }
   }
 
   Widget funcButton() {
-    if (!widget.isCover.value) {
+    if (!isCover) {
       var icon;
       switch (PlayerLogic.to.lrcType.value) {
         case 0:
@@ -236,7 +251,7 @@ class _PlayerState extends State<Player> {
       return Container();
     }
     const radius = BorderRadius.only(
-        topLeft: Radius.circular(34), topRight: Radius.circular(34));
+        topLeft: Radius.circular(30), topRight: Radius.circular(30));
     return SizedBox(
       width: ScreenUtil().screenWidth,
       height: ScreenUtil().screenHeight,
@@ -264,12 +279,5 @@ class _PlayerState extends State<Player> {
         ),
       ),
     );
-  }
-
-  closeLyricWindow() {
-    /// 点击关闭按钮后确定关闭掉全量歌词界面，防止cpu消耗过多
-    if (!widget.isCover.value) {
-      widget.isCover.value = true;
-    }
   }
 }

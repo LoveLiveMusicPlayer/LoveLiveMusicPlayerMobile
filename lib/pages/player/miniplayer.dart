@@ -8,20 +8,19 @@ import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
+import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_playlist.dart';
 import 'package:lovelivemusicplayer/utils/image_util.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:marquee_text/marquee_text.dart';
 
-import '../../modules/ext.dart';
-
 class MiniPlayer extends StatefulWidget {
   const MiniPlayer({Key? key, required this.onTap}) : super(key: key);
   final GestureTapCallback onTap;
 
   @override
-  _MiniPlayerState createState() => _MiniPlayerState();
+  State<MiniPlayer> createState() => _MiniPlayerState();
 }
 
 class _MiniPlayerState extends State<MiniPlayer> {
@@ -31,57 +30,55 @@ class _MiniPlayerState extends State<MiniPlayer> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final music = PlayerLogic.to.playingMusic.value;
-
       return AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
           color: Get.theme.primaryColor,
           borderRadius: BorderRadius.circular(34),
         ),
-        child: Column(
-          children: [
-            FutureBuilder<Decoration>(
-              initialData: BoxDecoration(
-                color: const Color(0xFFEBF3FE),
-                borderRadius: BorderRadius.circular(34),
-              ),
-              builder:
-                  (BuildContext context, AsyncSnapshot<Decoration> snapshot) {
-                return Container(
-                  height: 60.h,
-                  margin: EdgeInsets.only(top: 2.h, left: 16.w, right: 16.w),
-                  decoration: snapshot.requireData,
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(34),
-                      child: BackdropFilter(
-                        //背景滤镜
-                        filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-                        //背景模糊化
-                        child: body(),
-                      )),
-                );
-              },
-              future: generateDecoration(music),
-            ),
-          ],
-        ),
+        child: renderPanel()
       );
     });
   }
 
+  Widget renderPanel() {
+    if (PlayerLogic.to.hasSkin.value) {
+      final music = PlayerLogic.to.playingMusic.value;
+      return FutureBuilder<Decoration>(
+        initialData: BoxDecoration(
+          color: const Color(0xFFEBF3FE),
+          borderRadius: BorderRadius.circular(34),
+        ),
+        builder:
+            (BuildContext context, AsyncSnapshot<Decoration> snapshot) {
+          return Container(
+            height: 60.h,
+            margin: EdgeInsets.only(top: 2.h, left: 16.w, right: 16.w),
+            decoration: snapshot.requireData,
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(34),
+                child: BackdropFilter(
+                  //背景滤镜
+                  filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+                  //背景模糊化
+                  child: body(),
+                )),
+          );
+        },
+        future: generateDecoration(music),
+      );
+    }
+    return Container(
+      height: 60.h,
+      margin: EdgeInsets.only(top: 2.h, left: 16.w, right: 16.w),
+      child: ClipRRect(
+          borderRadius: BorderRadius.circular(34),
+          child: body()),
+    );
+  }
+
   Future<Decoration> generateDecoration(Music music) async {
     Decoration decoration;
-    final color = Get.isDarkMode ? const Color(0xFF05080C) : Colors.white;
-    final boxShadow = [
-      BoxShadow(
-          color: color,
-          offset: Offset(-3.w, -3.h),
-          blurStyle: BlurStyle.inner,
-          blurRadius: 6.w),
-      BoxShadow(color: color, offset: Offset(-3.w, 3.h), blurRadius: 6.w),
-      BoxShadow(color: color, offset: Offset(3.w, -3.h), blurRadius: 6.w),
-    ];
     if (music.musicId == null ||
         music.coverPath == null ||
         music.coverPath!.isEmpty) {
@@ -89,7 +86,6 @@ class _MiniPlayerState extends State<MiniPlayer> {
         color:
             Get.isDarkMode ? const Color(0xFF1E2328) : const Color(0xFFEBF3FE),
         borderRadius: BorderRadius.circular(34),
-        boxShadow: boxShadow,
       );
     } else {
       final compressPic = await ImageUtil()
@@ -98,7 +94,6 @@ class _MiniPlayerState extends State<MiniPlayer> {
         image:
             DecorationImage(image: MemoryImage(compressPic!), fit: BoxFit.fill),
         borderRadius: BorderRadius.circular(34),
-        boxShadow: boxShadow,
       );
     }
     return decoration;
@@ -151,7 +146,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
             50,
             50,
             radius: 50,
-            hasShadow: false, onTap: () => widget.onTap())
+            hasShadow: false, onTap: widget.onTap)
       ],
     );
   }

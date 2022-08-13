@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
+import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
@@ -155,6 +157,7 @@ class _DrawerPageState extends State<DrawerPage> {
                         callBack: (check) async {
                           Get.changeTheme(check ? darkTheme : lightTheme);
                           await SpUtil.put(Const.spDark, check);
+                          eventBus.fire(PlayerClosableEvent(false));
                           Future.delayed(const Duration(milliseconds: 500))
                               .then((value) {
                             PageViewLogic.to.controller.jumpToPage(
@@ -167,6 +170,7 @@ class _DrawerPageState extends State<DrawerPage> {
                         hasSwitch: true,
                         initSwitch: PlayerLogic.to.hasSkin.value,
                         callBack: (check) async {
+                          eventBus.fire(PlayerClosableEvent(false));
                           PlayerLogic.to.hasSkin.value = check;
                           await SpUtil.put(Const.spColorful, check);
                         }),

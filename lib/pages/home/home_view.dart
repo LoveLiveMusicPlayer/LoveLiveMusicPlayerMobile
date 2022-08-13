@@ -11,22 +11,24 @@ import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
+import 'package:lovelivemusicplayer/modules/drawer/drawer.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/modules/pageview/view.dart';
 import 'package:lovelivemusicplayer/modules/tabbar/tabbar.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';
+import 'package:lovelivemusicplayer/pages/player/miniplayer.dart';
+import 'package:lovelivemusicplayer/pages/player/player.dart';
 import 'package:lovelivemusicplayer/utils/android_back_desktop.dart';
+import 'package:lovelivemusicplayer/widgets/bottom_bar1.dart';
 import 'package:lovelivemusicplayer/widgets/bottom_bar2.dart';
 import 'package:we_slide/we_slide.dart';
 
-import '../../modules/drawer/drawer.dart';
-import '../../widgets/bottom_bar1.dart';
-import '../player/miniplayer.dart';
-import '../player/player.dart';
 import 'widget/song_library_top.dart';
 
 class HomeView extends StatefulWidget {
+  const HomeView({Key? key}) : super(key: key);
+
   @override
   State<HomeView> createState() => _HomeViewState();
 }
@@ -76,14 +78,14 @@ class _HomeViewState extends State<HomeView>
   }
 
   Widget _weSlider(GlobalKey<ScaffoldState> scaffoldKey) {
-    final WeSlideController _controller = WeSlideController();
-    const double _panelMinSize = 150;
-    final double _panelMaxSize = ScreenUtil().screenHeight;
+    controller = WeSlideController();
+    const double panelMinSize = 150;
+    final double panelMaxSize = ScreenUtil().screenHeight;
 
     return WeSlide(
-      controller: _controller,
-      panelMinSize: _panelMinSize.h,
-      panelMaxSize: _panelMaxSize,
+      controller: controller,
+      panelMinSize: panelMinSize.h,
+      panelMaxSize: panelMaxSize,
       overlayOpacity: 0.9,
       backgroundColor: Theme.of(context).primaryColor,
       overlay: true,
@@ -99,14 +101,13 @@ class _HomeViewState extends State<HomeView>
       panelBorderRadiusEnd: 10,
       panelHeader: MiniPlayer(onTap: () {
         if (!HomeController.to.state.isSelect.value) {
-          _controller.show();
-          if (controller == null) {
-            controller = _controller;
+          if (addListener() == null) {
             controller?.addListener(addListener);
           }
+          controller?.show();
         }
       }),
-      panel: Player(onTap: _controller.hide),
+      panel: Player(onTap: () => controller?.hide()),
       footer: _buildTabBarView(),
       footerHeight: 84.h,
       blur: true,
@@ -182,9 +183,7 @@ class _HomeViewState extends State<HomeView>
   }
 
   addListener() {
-    if (controller?.isOpened == false) {
-      eventBus.fire(PlayerClosableEvent(DateTime.now().millisecondsSinceEpoch));
-    }
+    eventBus.fire(PlayerClosableEvent(controller?.isOpened ?? false));
   }
 
   showSelectDialog() {
@@ -235,9 +234,9 @@ class _HomeViewState extends State<HomeView>
 
   Widget _buildTabBarView() {
     return TabBarView(
-      children: const [BottomBar(), BottomBar2()],
       controller: logic.tabController,
       physics: const NeverScrollableScrollPhysics(),
+      children: const [BottomBar(), BottomBar2()],
     );
   }
 }
