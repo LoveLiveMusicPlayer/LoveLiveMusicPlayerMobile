@@ -27,9 +27,7 @@ class DownloadMusic {
       required this.artist,
       required this.artistBin,
       required this.totalTime,
-      required this.jpUrl,
-      required this.zhUrl,
-      required this.romaUrl});
+      required this.baseUrl});
 
   String albumUId;
   int albumId;
@@ -45,9 +43,7 @@ class DownloadMusic {
   String artist;
   String artistBin;
   String totalTime;
-  String jpUrl;
-  String zhUrl;
-  String romaUrl;
+  String baseUrl;
 
   factory DownloadMusic.fromJson(Map<String, dynamic> json) => DownloadMusic(
       albumUId: json["albumUId"],
@@ -64,9 +60,8 @@ class DownloadMusic {
       artist: json["artist"],
       artistBin: json["artistBin"],
       totalTime: json["totalTime"],
-      jpUrl: json["jpUrl"],
-      zhUrl: json["zhUrl"],
-      romaUrl: json["romaUrl"]);
+      baseUrl: json["baseUrl"]
+  );
 
   Map<String, dynamic> toJson() => {
         "albumUId": albumUId,
@@ -83,8 +78,6 @@ class DownloadMusic {
         "artist": artist,
         "artistBin": artistBin,
         "totalTime": totalTime,
-        "jpUrl": jpUrl,
-        "zhUrl": zhUrl,
-        "romaUrl": romaUrl
+        "baseUrl": baseUrl
       };
 }

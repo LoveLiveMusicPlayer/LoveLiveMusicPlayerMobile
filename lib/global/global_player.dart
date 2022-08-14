@@ -230,7 +230,7 @@ class PlayerLogic extends SuperController
   /// 生成一个播放URI
   UriAudioSource genAudioSourceUri(Music music) {
     return AudioSource.uri(
-      Uri.file('${SDUtils.path}${music.musicPath}'),
+      Uri.file('${SDUtils.path}${music.baseUrl}${music.musicPath}'),
       tag: MediaItem(
         id: music.musicId!,
         title: music.musicName!,
@@ -238,7 +238,7 @@ class PlayerLogic extends SuperController
         artist: music.artist,
         artUri: (music.coverPath == null || music.coverPath!.isEmpty)
             ? Uri.parse(Const.logo)
-            : Uri.file(SDUtils.path + music.coverPath!),
+            : Uri.file(SDUtils.path + music.baseUrl! + music.coverPath!),
       ),
     );
   }
@@ -259,18 +259,20 @@ class PlayerLogic extends SuperController
     var romaLrc = "";
 
     final uid = playingMusic.value.musicId;
+    final baseUrl = playingMusic.value.baseUrl!;
+    final lyric = playingMusic.value.musicPath!.replaceAll("flac", "lrc").replaceAll("wav", "lrc");
     final jp =
-        await handleLRC("jp", playingMusic.value.jpUrl, uid, forceRefresh);
+        await handleLRC("jp", "${Const.ossUrl}JP/$baseUrl$lyric", uid, forceRefresh);
     if (jp != null) {
       jpLrc = jp;
     }
     final zh =
-        await handleLRC("zh", playingMusic.value.zhUrl, uid, forceRefresh);
+        await handleLRC("zh", "${Const.ossUrl}ZH/$baseUrl$lyric", uid, forceRefresh);
     if (zh != null) {
       zhLrc = zh;
     }
     final roma =
-        await handleLRC("roma", playingMusic.value.romaUrl, uid, forceRefresh);
+        await handleLRC("roma", "${Const.ossUrl}ROMA/$baseUrl$lyric", uid, forceRefresh);
     if (roma != null) {
       romaLrc = roma;
     }
@@ -399,12 +401,10 @@ class PlayerLogic extends SuperController
   /// 设置当前播放歌曲
   setCurrentMusic(Music music) {
     playingMusic.value = music;
-    final url = music.coverPath;
-    if (url != null) {
-      AppUtils.getImagePalette(url).then((color) {
-        iconColor.value = color ?? Get.theme.primaryColor;
-      });
-    }
+    final url = music.baseUrl! + music.coverPath!;
+    AppUtils.getImagePalette(url).then((color) {
+      iconColor.value = color ?? Get.theme.primaryColor;
+    });
   }
 
   @override

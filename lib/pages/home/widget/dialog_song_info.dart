@@ -64,7 +64,7 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
           ),
           _buildItem("专辑: ", widget.music.albumName, true),
           _buildItem("时长: ", widget.music.time, true),
-          _buildItem("位置: ", widget.music.musicPath, true),
+          _buildItem("位置: ", "${widget.music.baseUrl}${widget.music.musicPath}", true),
           _buildItem("发行日期: ", date, true),
           _buildItem("分类: ", category, false)
         ],

@@ -70,7 +70,7 @@ class SDUtils {
       }
     }
     buffer.write("专辑数目: ${albumList.length}; 歌曲数目: $musicCount\n");
-    final filePath = path + "log" + Platform.pathSeparator + time + ".txt";
+    final filePath = "${path}log${Platform.pathSeparator}$time.txt";
     touchFile(filePath);
     File(filePath).writeAsStringSync(buffer.toString(), flush: true);
   }

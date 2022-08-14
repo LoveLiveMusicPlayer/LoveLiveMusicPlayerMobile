@@ -245,8 +245,9 @@ class _PlayerState extends State<Player> {
 
   /// 覆盖背景
   Widget coverBg() {
-    final pic = PlayerLogic.to.playingMusic.value.coverPath;
-    if (pic == null || !PlayerLogic.to.hasSkin.value) {
+    final currentMusic = PlayerLogic.to.playingMusic.value;
+    final pic = (currentMusic.baseUrl ?? "") + (currentMusic.coverPath ?? "");
+    if (pic.isEmpty || !PlayerLogic.to.hasSkin.value) {
       return Container();
     }
     const radius = BorderRadius.only(

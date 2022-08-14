@@ -9,6 +9,7 @@ import 'package:lovelivemusicplayer/dao/music_dao.dart';
 import 'package:lovelivemusicplayer/dao/playlistmusic_dao.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/start_event.dart';
+import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
@@ -129,10 +130,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       artistList.add(Artist(
           name: name,
           artistBin: artistBin,
-          photo:
-              "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/" +
-                  artistBin +
-                  ".jpg",
+          photo: "${Const.ossUrl}/LLMP/artist/$artistBin.jpg",
           count: count));
     }
     GlobalLogic.to.artistList.value = artistList;
@@ -156,7 +154,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
           albumId: downloadMusic.albumUId,
           albumName: downloadMusic.albumName,
           date: downloadMusic.date,
-          coverPath: downloadMusic.coverPath,
+          coverPath: downloadMusic.baseUrl + downloadMusic.coverPath,
           category: downloadMusic.category,
           group: downloadMusic.group);
       await albumDao.insertAlbum(_album);
@@ -172,10 +170,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
           artistBin: downloadMusic.artistBin,
           albumName: downloadMusic.albumName,
           musicPath: downloadMusic.musicPath,
+          baseUrl: downloadMusic.baseUrl,
           time: downloadMusic.totalTime,
-          jpUrl: downloadMusic.jpUrl,
-          zhUrl: downloadMusic.zhUrl,
-          romaUrl: downloadMusic.romaUrl,
           group: downloadMusic.group,
           category: downloadMusic.category,
           isLove: false);

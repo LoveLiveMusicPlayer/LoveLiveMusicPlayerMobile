@@ -78,10 +78,11 @@ class _ListViewItemLoveState extends State<ListViewItemLove>
 
   ///缩列图
   Widget _buildIcon() {
+
     return InkWell(
       onTap: clickItem,
       child: showImg(
-          SDUtils.getImgPath(fileName: widget.music.coverPath), 48, 48,
+          SDUtils.getImgPath(fileName: "${widget.music.baseUrl}${widget.music.coverPath}"), 48, 48,
           hasShadow: false, radius: 8, onTap: clickItem),
     );
   }

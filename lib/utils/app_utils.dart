@@ -16,7 +16,7 @@ class AppUtils {
     if (music == null) {
       return defaultPath;
     }
-    return SDUtils.path + music.coverPath!;
+    return SDUtils.path + music.baseUrl! + music.coverPath!;
   }
 
   static Future<Color?> getImagePalette(String url) async {

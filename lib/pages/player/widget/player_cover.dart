@@ -17,6 +17,7 @@ class Cover extends StatefulWidget {
 class _CoverState extends State<Cover> {
   @override
   Widget build(BuildContext context) {
+    final currentMusic = PlayerLogic.to.playingMusic.value;
     return InkWell(
       splashColor: Colors.red,
       onTap: widget.onTap,
@@ -30,8 +31,7 @@ class _CoverState extends State<Cover> {
             /// 封面
             showImg(
                 SDUtils.getImgPath(
-                    fileName:
-                        PlayerLogic.to.playingMusic.value.coverPath ?? ""),
+                    fileName: currentMusic.baseUrl! + currentMusic.coverPath!),
                 273,
                 273,
                 radius: 24,

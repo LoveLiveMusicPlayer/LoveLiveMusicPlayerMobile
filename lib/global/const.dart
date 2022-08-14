@@ -11,6 +11,8 @@ class Const {
 
   static const String logo = Assets.assetsLogo;
 
+  static const String ossUrl = "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/";
+
   /// 目前还没有头像的艺术家
   static const List<String> notExistAssetsMap = [
     "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/1b20w.jpg",

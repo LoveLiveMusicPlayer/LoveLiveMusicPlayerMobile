@@ -18,11 +18,9 @@ class Music {
       this.coverPath,
       this.musicPath,
       this.time,
-      this.jpUrl,
-      this.zhUrl,
-      this.romaUrl,
       this.category,
       this.group,
+      this.baseUrl,
       this.isLove = false,
       this.checked = false});
 
@@ -36,9 +34,10 @@ class Music {
   String? coverPath; // 封面路径
   String? musicPath; // 歌曲路径
   String? time; // 时长
-  String? jpUrl; // 日文歌词 URL
-  String? zhUrl; // 中文歌词 URL
-  String? romaUrl; // 罗马音歌词 URL
+  String? baseUrl; // 基础路径
+  // String? jpUrl; // 日文歌词 URL
+  // String? zhUrl; // 中文歌词 URL
+  // String? romaUrl; // 罗马音歌词 URL
   String? category; // 分类
   String? group; // 团组
   bool isLove; // 是否我喜欢
@@ -56,9 +55,7 @@ class Music {
         coverPath: json["coverPath"],
         musicPath: json["musicPath"],
         time: json["time"],
-        jpUrl: json["jpUrl"],
-        zhUrl: json["zhUrl"],
-        romaUrl: json["romaUrl"],
+        baseUrl: json["baseUrl"],
         category: json["category"],
         group: json["group"],
         isLove: json["isLove"],
@@ -74,9 +71,7 @@ class Music {
         "coverPath": coverPath,
         "musicPath": musicPath,
         "time": time,
-        "jpUrl": jpUrl,
-        "zhUrl": zhUrl,
-        "romaUrl": romaUrl,
+        "baseUrl": baseUrl,
         "category": category,
         "group": group,
         "isLove": isLove,
@@ -92,9 +87,7 @@ class Music {
       coverPath: music.coverPath,
       musicPath: music.musicPath,
       time: music.time,
-      jpUrl: music.jpUrl,
-      zhUrl: music.zhUrl,
-      romaUrl: music.romaUrl,
+      baseUrl: music.baseUrl,
       category: music.category,
       group: music.group,
       isLove: music.isLove,

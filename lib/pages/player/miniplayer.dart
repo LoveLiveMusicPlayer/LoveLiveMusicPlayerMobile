@@ -88,8 +88,9 @@ class _MiniPlayerState extends State<MiniPlayer> {
         borderRadius: BorderRadius.circular(34),
       );
     } else {
+      final coverPath = (music.baseUrl ?? "") + (music.coverPath ?? "");
       final compressPic = await ImageUtil()
-          .compressAndTryCatch(SDUtils.getImgFile(music.coverPath!).path);
+          .compressAndTryCatch(SDUtils.getImgFile(coverPath).path);
       decoration = BoxDecoration(
         image:
             DecorationImage(image: MemoryImage(compressPic!), fit: BoxFit.fill),
@@ -137,12 +138,13 @@ class _MiniPlayerState extends State<MiniPlayer> {
   }
 
   Widget miniCover() {
+    final currentMusic = PlayerLogic.to.playingMusic.value;
+    final coverPath = (currentMusic.baseUrl ?? "") + (currentMusic.coverPath ?? "");
     return Row(
       children: [
         SizedBox(width: 6.w),
         showImg(
-            SDUtils.getImgPath(
-                fileName: PlayerLogic.to.playingMusic.value.coverPath ?? ""),
+            SDUtils.getImgPath(fileName: coverPath),
             50,
             50,
             radius: 50,

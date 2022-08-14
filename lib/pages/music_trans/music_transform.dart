@@ -77,7 +77,7 @@ class _MusicTransformState extends State<MusicTransform> {
           isStartDownload = true;
           setState(() {});
           Future.forEach<DownloadMusic>(musicList, (music) async {
-            if (File(SDUtils.path + music.musicPath).existsSync()) {
+            if (File(SDUtils.path + music.baseUrl + music.musicPath).existsSync()) {
               currentMusic = music;
               changeNextTaskView(music);
               setState(() {});
@@ -102,7 +102,7 @@ class _MusicTransformState extends State<MusicTransform> {
               if (needTransAll) {
                 musicIdList.add(music.musicUId);
               } else if (!SDUtils.checkFileExist(
-                  SDUtils.path + music.musicPath)) {
+                  SDUtils.path + music.baseUrl + music.musicPath)) {
                 musicIdList.add(music.musicUId);
               }
             }
@@ -154,10 +154,10 @@ class _MusicTransformState extends State<MusicTransform> {
   }
 
   Map<String, String> genFileList(DownloadMusic music) {
-    final musicUrl = "http://${Get.arguments}:$port/${music.musicPath}";
-    final picUrl = "http://${Get.arguments}:$port/${music.coverPath}";
-    final musicDest = SDUtils.path + music.musicPath;
-    final picDest = SDUtils.path + music.coverPath;
+    final musicUrl = "http://${Get.arguments}:$port/${music.baseUrl}${music.musicPath}";
+    final picUrl = "http://${Get.arguments}:$port/${music.baseUrl}${music.coverPath}";
+    final musicDest = SDUtils.path + music.baseUrl + music.musicPath;
+    final picDest = SDUtils.path + music.baseUrl + music.coverPath;
     final tempList = musicDest.split(Platform.pathSeparator);
     var destDir = "";
     for (var i = 0; i < tempList.length - 1; i++) {
@@ -202,7 +202,7 @@ class _MusicTransformState extends State<MusicTransform> {
           }
         }, cancelToken);
         if (isMusic) {
-          DBLogic.to.insertMusicIntoAlbum(music);
+          await DBLogic.to.insertMusicIntoAlbum(music);
         }
       } catch (e) {
         final message =
@@ -313,8 +313,9 @@ class _MusicTransformState extends State<MusicTransform> {
           transformer: ScaleAndFadeTransformer(),
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
+            final mCoverPath = musicList[index].baseUrl + musicList[index].coverPath;
             return showImg(
-                SDUtils.getImgPath(fileName: musicList[index].coverPath),
+                SDUtils.getImgPath(fileName: mCoverPath),
                 400,
                 400,
                 hasShadow: false,
