@@ -6,16 +6,15 @@ import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
+import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 
-import '../../../widgets/circular_check_box.dart';
-
-class Song_libraryTop extends StatelessWidget {
+class SongLibraryTop extends StatelessWidget {
   final Function onPlayTap;
   final GestureTapCallback onScreenTap;
   final Function(bool) onSelectAllTap;
   final Function onCancelTap;
 
-  Song_libraryTop({
+  SongLibraryTop({
     Key? key,
     required this.onPlayTap,
     required this.onScreenTap,

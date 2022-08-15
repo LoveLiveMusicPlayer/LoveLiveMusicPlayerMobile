@@ -22,7 +22,7 @@ class DrawerPage extends StatefulWidget {
   const DrawerPage({Key? key}) : super(key: key);
 
   @override
-  _DrawerPageState createState() => _DrawerPageState();
+  State<DrawerPage> createState() => _DrawerPageState();
 }
 
 class _DrawerPageState extends State<DrawerPage> {
@@ -32,18 +32,21 @@ class _DrawerPageState extends State<DrawerPage> {
   Widget build(BuildContext context) {
     return Drawer(
         child: SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [topView(), groupView(), functionView()],
-      ),
-    ));
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [topView(), groupView(), functionView()],
+          ),
+        ));
   }
 
   Widget topView() {
     return Column(
       children: [
         SizedBox(height: 12.h),
-        logoIcon(Const.logo, width: 96, height: 96, radius: 96),
+        Obx(() {
+          return logoIcon(
+              global.getCurrentGroupIcon(global.currentGroup.value), width: 96, height: 96, radius: 96);
+        }),
         SizedBox(height: 12.h),
         Text("LoveLiveMusicPlayer",
             style: TextStyle(fontSize: 17.sp, color: const Color(0xFF333333))),
@@ -110,7 +113,9 @@ class _DrawerPageState extends State<DrawerPage> {
               width: 270.w,
               height: 270.h,
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
+                color: Theme
+                    .of(context)
+                    .primaryColor,
                 borderRadius: BorderRadius.circular(8.w),
                 boxShadow: [
                   BoxShadow(
@@ -147,7 +152,10 @@ class _DrawerPageState extends State<DrawerPage> {
                     DrawerFunctionButton(
                       icon: Assets.drawerDrawerDataSync,
                       text: "数据同步",
-                      onTap: () {},
+                      onTap: () {
+                        Get.back();
+                        Get.toNamed(Routes.routeDataSync);
+                      },
                     ),
                     DrawerFunctionButton(
                         icon: Assets.drawerDrawerDayNight,

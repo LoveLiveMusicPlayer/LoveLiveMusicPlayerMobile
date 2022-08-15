@@ -52,4 +52,7 @@ class TextStyleMs {
       TextStyle(color: const Color(0xFFFFFFFF), fontSize: 17.sp);
   static TextStyle white_18 =
       TextStyle(color: const Color(0xFFFFFFFF), fontSize: 18.sp);
+
+  static TextStyle pink_15 =
+  TextStyle(color: const Color(0xFFF940A7), fontSize: 15.sp);
 }

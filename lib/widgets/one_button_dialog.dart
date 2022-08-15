@@ -12,12 +12,12 @@ class OneButtonDialog extends StatelessWidget {
   Callback? _onBackListener;
 
   OneButtonDialog(
-      {String imgAsset = Const.logo,
+      {Key? key, String imgAsset = Const.logo,
       String title = "标题",
       String msg = "网络异常!",
       bool isShowTitle = true,
       bool isShowMsg = true,
-      Callback? onBackListener}) {
+      Callback? onBackListener}) : super(key: key) {
     _imgAsset = imgAsset;
     _title = title;
     _msg = msg;

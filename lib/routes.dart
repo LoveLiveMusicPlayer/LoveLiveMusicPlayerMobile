@@ -21,7 +21,7 @@ class Routes {
     return [
       GetPage(
           name: Routes.routeInitial,
-          page: () => HomeView(),
+          page: () => const HomeView(),
           binding: HomeBinding()),
       GetPage(
           name: Routes.routeAlbumDetails, page: () => const AlbumDetailsPage()),
@@ -31,7 +31,7 @@ class Routes {
       GetPage(
           name: Routes.routeMenuDetails, page: () => const MenuDetailsPage()),
       GetPage(name: Routes.routeScan, page: () => const Scanner()),
-      GetPage(name: Routes.routeTransform, page: () => MusicTransform()),
+      GetPage(name: Routes.routeTransform, page: () => const MusicTransform()),
       GetPage(name: Routes.routeDataSync, page: () => const DataSync()),
     ];
   }

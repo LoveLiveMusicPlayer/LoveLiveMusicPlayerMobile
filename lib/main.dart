@@ -46,14 +46,16 @@ void main() async {
           'https://dbb1e416963545c5893b40d85793e081@o1185358.ingest.sentry.io/6303906';
       options.tracesSampleRate = 1.0;
     },
-    appRunner: () => runApp(MyApp()),
+    appRunner: () => runApp(const MyApp()),
   );
   setStatusBar();
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -85,7 +87,7 @@ class _MyAppState extends State<MyApp> {
       builder: (context, _) {
         return GetMaterialApp(
             debugShowCheckedModeBanner: false,
-            enableLog: true,
+            enableLog: kDebugMode,
             defaultTransition: Transition.fade,
             theme: isDark ? darkTheme : lightTheme,
             themeMode: ThemeMode.light,
@@ -97,8 +99,7 @@ class _MyAppState extends State<MyApp> {
             translations: Translation(),
             builder: FlutterSmartDialog.init(builder: (context, widget) {
               return MediaQuery(
-
-                  ///设置文字大小不随系统设置改变
+                  // 设置文字大小不随系统设置改变
                   data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
                   child: widget!);
             }));

@@ -11,7 +11,7 @@ class Cover extends StatefulWidget {
   const Cover({Key? key, required this.onTap}) : super(key: key);
 
   @override
-  _CoverState createState() => _CoverState();
+  State<Cover> createState() => _CoverState();
 }
 
 class _CoverState extends State<Cover> {

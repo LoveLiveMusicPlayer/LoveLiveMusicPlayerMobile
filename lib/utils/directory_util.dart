@@ -56,7 +56,7 @@ void setInitDir({
 class DirectoryUtil {
   static DirectoryUtil? _singleton;
 
-  static Lock _lock = Lock();
+  static final Lock _lock = Lock();
 
   static Directory? _tempDir;
   static Directory? _appDocDir;
@@ -81,7 +81,6 @@ class DirectoryUtil {
   DirectoryUtil._();
 
   Future _init() async {
-    int old = DateTime.now().millisecondsSinceEpoch;
     if (_initTempDir) {
       await initTempDir();
     }
@@ -94,28 +93,20 @@ class DirectoryUtil {
     if (_initStorageDir) {
       await initStorageDir();
     }
-    print(
-        "thll DirectoryUtil init : ${DateTime.now().millisecondsSinceEpoch - old}");
   }
 
   static Future<Directory?> initTempDir() async {
-    if (_tempDir == null) {
-      _tempDir = await getTemporaryDirectory();
-    }
+    _tempDir ??= await getTemporaryDirectory();
     return _tempDir;
   }
 
   static Future<Directory?> initAppDocDir() async {
-    if (_appDocDir == null) {
-      _appDocDir = await getApplicationDocumentsDirectory();
-    }
+    _appDocDir ??= await getApplicationDocumentsDirectory();
     return _appDocDir;
   }
 
   static Future<Directory?> initAppSupportDir() async {
-    if (_appSupportDir == null) {
-      _appSupportDir = await getApplicationSupportDirectory();
-    }
+    _appSupportDir ??= await getApplicationSupportDirectory();
     return _appSupportDir;
   }
 
@@ -161,7 +152,7 @@ class DirectoryUtil {
     String? format,
   }) {
     if (dir == null) return null;
-    StringBuffer sb = StringBuffer("${dir.path}");
+    StringBuffer sb = StringBuffer(dir.path);
     if (category != null) sb.write("/$category");
     if (fileName != null) sb.write("/$fileName");
     if (format != null) sb.write(".$format");

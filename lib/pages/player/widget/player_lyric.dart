@@ -1,12 +1,12 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lyric/lyrics_model_builder.dart';
+import 'package:flutter_lyric/lyrics_reader_model.dart';
 import 'package:flutter_lyric/lyrics_reader_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-
-import 'my_lyric_ui.dart';
+import 'package:lovelivemusicplayer/pages/player/widget/my_lyric_ui.dart';
 
 class Lyric extends StatefulWidget {
   final GestureTapCallback onTap;
@@ -14,7 +14,7 @@ class Lyric extends StatefulWidget {
   const Lyric({Key? key, required this.onTap}) : super(key: key);
 
   @override
-  _LyricState createState() => _LyricState();
+  State<Lyric> createState() => _LyricState();
 }
 
 class _LyricState extends State<Lyric> {
@@ -23,7 +23,7 @@ class _LyricState extends State<Lyric> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      var model;
+      LyricsReaderModel? model;
       switch (PlayerLogic.to.lrcType.value) {
         case 0:
           model = LyricsModelBuilder.create()

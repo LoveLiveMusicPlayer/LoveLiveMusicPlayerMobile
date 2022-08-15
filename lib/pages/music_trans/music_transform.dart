@@ -25,17 +25,17 @@ import 'package:wakelock/wakelock.dart';
 import 'package:web_socket_channel/io.dart';
 
 class MusicTransform extends StatefulWidget {
-  final IOWebSocketChannel channel =
-      IOWebSocketChannel.connect(Uri.parse("ws://${Get.arguments}:4388"));
-  final queue = ConcurrentQueue(concurrency: 1);
-
-  MusicTransform({Key? key}) : super(key: key);
+  const MusicTransform({Key? key}) : super(key: key);
 
   @override
   State<MusicTransform> createState() => _MusicTransformState();
 }
 
 class _MusicTransformState extends State<MusicTransform> {
+  final IOWebSocketChannel channel =
+      IOWebSocketChannel.connect(Uri.parse("ws://${Get.arguments}:4388"));
+  final queue = ConcurrentQueue(concurrency: 1);
+
   bool isPermission = false;
 
   // 当前传输的歌曲
@@ -68,7 +68,7 @@ class _MusicTransformState extends State<MusicTransform> {
   void initState() {
     super.initState();
     Wakelock.enable();
-    widget.channel.stream.listen((msg) {
+    channel.stream.listen((msg) {
       final ftpCmd = ftpCmdFromJson(msg as String);
       switch (ftpCmd.cmd) {
         case "noTrans":
@@ -77,7 +77,8 @@ class _MusicTransformState extends State<MusicTransform> {
           isStartDownload = true;
           setState(() {});
           Future.forEach<DownloadMusic>(musicList, (music) async {
-            if (File(SDUtils.path + music.baseUrl + music.musicPath).existsSync()) {
+            if (File(SDUtils.path + music.baseUrl + music.musicPath)
+                .existsSync()) {
               currentMusic = music;
               changeNextTaskView(music);
               setState(() {});
@@ -110,7 +111,7 @@ class _MusicTransformState extends State<MusicTransform> {
               "cmd": "musicList",
               "body": convert.jsonEncode(musicIdList)
             };
-            widget.channel.sink.add(convert.jsonEncode(message));
+            channel.sink.add(convert.jsonEncode(message));
           }
           break;
         case "ready":
@@ -134,7 +135,7 @@ class _MusicTransformState extends State<MusicTransform> {
             } else {
               final message = ftpCmdToJson(
                   FtpCmd(cmd: "download fail", body: music.musicUId));
-              widget.channel.sink.add(message);
+              channel.sink.add(message);
               Get.back();
             }
           }
@@ -144,18 +145,20 @@ class _MusicTransformState extends State<MusicTransform> {
           release();
           break;
       }
-    });
+    }, onError: (e) { print("connected is error"); });
 
     final system = {
       "cmd": "system",
       "body": Platform.isAndroid ? "android" : "ios"
     };
-    widget.channel.sink.add(convert.jsonEncode(system));
+    channel.sink.add(convert.jsonEncode(system));
   }
 
   Map<String, String> genFileList(DownloadMusic music) {
-    final musicUrl = "http://${Get.arguments}:$port/${music.baseUrl}${music.musicPath}";
-    final picUrl = "http://${Get.arguments}:$port/${music.baseUrl}${music.coverPath}";
+    final musicUrl =
+        "http://${Get.arguments}:$port/${music.baseUrl}${music.musicPath}";
+    final picUrl =
+        "http://${Get.arguments}:$port/${music.baseUrl}${music.coverPath}";
     final musicDest = SDUtils.path + music.baseUrl + music.musicPath;
     final picDest = SDUtils.path + music.baseUrl + music.coverPath;
     final tempList = musicDest.split(Platform.pathSeparator);
@@ -172,31 +175,31 @@ class _MusicTransformState extends State<MusicTransform> {
 
   pushQueue(DownloadMusic music, String url, String dest, bool isLast) async {
     final isMusic = url.endsWith("flac") || url.endsWith("wav");
-    await widget.queue.add(() async {
+    await queue.add(() async {
       try {
         cancelToken = CancelToken();
         await Network.download(url, dest, (received, total) {
           if (total != -1) {
-            final _progress = (received / total * 100).toStringAsFixed(0);
+            final progress = (received / total * 100).toStringAsFixed(0);
             if (isMusic) {
-              final p = double.parse(_progress).truncate();
+              final p = double.parse(progress).truncate();
               if (currentProgress != p) {
                 currentProgress = p;
                 currentMusic = music;
-                if (_progress == "100") {
+                if (progress == "100") {
                   final message = ftpCmdToJson(
                       FtpCmd(cmd: "download success", body: music.musicUId));
-                  widget.channel.sink.add(message);
+                  channel.sink.add(message);
                 } else {
                   if (isRunning) {
                     final message = ftpCmdToJson(
                         FtpCmd(cmd: "downloading", body: music.musicUId));
-                    widget.channel.sink.add(message);
+                    channel.sink.add(message);
                   }
                 }
                 setState(() {});
               }
-            } else if (_progress == "100") {
+            } else if (progress == "100") {
               changeNextTaskView(music);
             }
           }
@@ -207,15 +210,15 @@ class _MusicTransformState extends State<MusicTransform> {
       } catch (e) {
         final message =
             ftpCmdToJson(FtpCmd(cmd: "download fail", body: music.musicUId));
-        widget.channel.sink.add(message);
+        channel.sink.add(message);
         changeNextTaskView(music);
         setState(() {});
       }
     });
     if (isLast) {
-      await widget.queue.onIdle();
+      await queue.onIdle();
       final message = ftpCmdToJson(FtpCmd(cmd: "finish", body: ""));
-      widget.channel.sink.add(message);
+      channel.sink.add(message);
       await DBLogic.to.findAllListByGroup("all");
       Get.back();
     }
@@ -237,7 +240,7 @@ class _MusicTransformState extends State<MusicTransform> {
   void dispose() {
     musicList.clear();
     Wakelock.disable();
-    widget.channel.sink.close();
+    channel.sink.close();
     super.dispose();
   }
 
@@ -251,7 +254,7 @@ class _MusicTransformState extends State<MusicTransform> {
         });
   }
 
-  body() {
+  Widget body() {
     if (isPermission) {
       return Scaffold(
           body: Column(
@@ -301,7 +304,7 @@ class _MusicTransformState extends State<MusicTransform> {
           width: 300.h,
           height: 300.h,
           color: Get.theme.primaryColor,
-          child: const Image(image: AssetImage(Assets.assetsLogo)));
+          child: const Image(image: AssetImage(Assets.logoLogo)));
     } else {
       return SizedBox(
         width: 300.h,
@@ -313,13 +316,10 @@ class _MusicTransformState extends State<MusicTransform> {
           transformer: ScaleAndFadeTransformer(),
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
-            final mCoverPath = musicList[index].baseUrl + musicList[index].coverPath;
-            return showImg(
-                SDUtils.getImgPath(fileName: mCoverPath),
-                400,
-                400,
-                hasShadow: false,
-                radius: 12);
+            final mCoverPath =
+                musicList[index].baseUrl + musicList[index].coverPath;
+            return showImg(SDUtils.getImgPath(fileName: mCoverPath), 400, 400,
+                hasShadow: false, radius: 12);
           },
           itemCount: musicList.length,
         ),
@@ -428,7 +428,7 @@ class _MusicTransformState extends State<MusicTransform> {
         ElevatedButton(
           onPressed: () async {
             final message = ftpCmdToJson(FtpCmd(cmd: "stop", body: ""));
-            widget.channel.sink.add(message);
+            channel.sink.add(message);
             release();
           },
           child: const Text('确定'),
@@ -439,9 +439,9 @@ class _MusicTransformState extends State<MusicTransform> {
 
   release() {
     isRunning = false;
-    if (widget.queue.size > 0) {
-      widget.queue.pause();
-      widget.queue.clear();
+    if (queue.size > 0) {
+      queue.pause();
+      queue.clear();
     }
     cancelToken?.cancel();
     SmartDialog.dismiss();

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
@@ -94,21 +95,38 @@ class GlobalLogic extends SuperController
       case 0:
         return musicList;
       case 1:
-        List<Music> _musicList = [];
+        List<Music> tempList = [];
         for (var album in albumList) {
           for (var music in musicList) {
             if (music.albumId == album.albumId) {
-              _musicList.add(music);
+              tempList.add(music);
             }
           }
         }
-        return _musicList;
+        return tempList;
       case 3:
         return loveList;
       case 5:
         return recentlyList;
       default:
         return [];
+    }
+  }
+
+  String getCurrentGroupIcon(String currentGroup) {
+    switch (currentGroup) {
+      case "μ's":
+        return Assets.logoLogoUs;
+      case "Aqours":
+        return Assets.logoLogoAqours;
+      case "Nijigasaki":
+        return Assets.logoLogoNiji;
+      case "Liella!":
+        return Assets.logoLogoLiella;
+      case "Combine":
+        return Assets.logoLogoCombine;
+      default:
+        return Assets.logoLogo;
     }
   }
 
