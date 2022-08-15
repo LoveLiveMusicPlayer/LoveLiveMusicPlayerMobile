@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
-import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 

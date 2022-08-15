@@ -304,7 +304,7 @@ class _MusicTransformState extends State<MusicTransform> {
           width: 300.h,
           height: 300.h,
           color: Get.theme.primaryColor,
-          child: const Image(image: AssetImage(Assets.assetsLogo)));
+          child: const Image(image: AssetImage(Assets.logoLogo)));
     } else {
       return SizedBox(
         width: 300.h,

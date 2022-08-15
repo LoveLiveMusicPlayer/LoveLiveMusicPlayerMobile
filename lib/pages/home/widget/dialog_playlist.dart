@@ -10,6 +10,8 @@ import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_playlist.dart';
 
 class DialogPlaylist extends StatefulWidget {
+  const DialogPlaylist({Key? key}) : super(key: key);
+
   @override
   State<DialogPlaylist> createState() => _DialogPlaylistState();
 }

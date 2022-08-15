@@ -9,7 +9,7 @@ class Const {
   static const String spColorful = "SP_IS_COLORFUL";
   static const String spLoopMode = "loopMode";
 
-  static const String logo = Assets.assetsLogo;
+  static const String logo = Assets.logoLogo;
 
   static const String ossUrl = "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/";
 }

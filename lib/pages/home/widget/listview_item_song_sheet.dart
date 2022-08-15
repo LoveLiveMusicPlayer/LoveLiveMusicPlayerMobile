@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
-import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';

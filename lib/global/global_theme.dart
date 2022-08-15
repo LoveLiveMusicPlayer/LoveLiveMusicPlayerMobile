@@ -9,7 +9,6 @@ final ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: const Color(0xFFF2F8FF),
     bottomAppBarColor: Colors.black,
     textTheme: TextTheme(
-        // bodyMedium: TextStyle(fontSize: 15.sp, color: const Color(0xFF333333)),
         titleSmall: TextStyle(fontSize: 14.sp, color: const Color(0xFF333333))),
     iconTheme: IconThemeData(color: Colors.grey[800]),
     canvasColor: const Color(0xFFF2F8FF),
@@ -25,7 +24,6 @@ final ThemeData darkTheme = ThemeData(
     canvasColor: Colors.grey[850],
     scaffoldBackgroundColor: Colors.grey[850],
     textTheme: TextTheme(
-        // bodyMedium: TextStyle(fontSize: 15.sp, color: Colors.white),
         titleSmall: TextStyle(fontSize: 14.sp, color: Colors.white)),
     iconTheme: IconThemeData(color: Colors.grey[300]),
     appBarTheme: AppBarTheme(

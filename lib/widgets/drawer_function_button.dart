@@ -24,7 +24,7 @@ class DrawerFunctionButton extends StatefulWidget {
   final Callback? callBack;
 
   @override
-  _DrawerFunctionButtonState createState() => _DrawerFunctionButtonState();
+  State<DrawerFunctionButton> createState() => _DrawerFunctionButtonState();
 }
 
 typedef Callback = void Function(bool check);

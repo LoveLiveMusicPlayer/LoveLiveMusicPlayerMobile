@@ -123,7 +123,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
               path: Assets.playerPlayPlaylist,
               onTap: () {
                 SmartDialog.compatible.show(
-                    widget: DialogPlaylist(),
+                    widget: const DialogPlaylist(),
                     alignmentTemp: Alignment.bottomCenter);
               },
               width: 18,

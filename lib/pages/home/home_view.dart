@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
-import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
@@ -139,8 +138,12 @@ class _HomeViewState extends State<HomeView>
 
   ///顶部头像
   Widget _getTopHead(GestureTapCallback? onTap) {
-    return logoIcon(Const.logo,
-        offset: EdgeInsets.only(right: 16.w), onTap: onTap);
+    return Obx(() {
+      return logoIcon(
+          GlobalLogic.to.getCurrentGroupIcon(GlobalLogic.to.currentGroup.value),
+          offset: EdgeInsets.only(right: 16.w),
+          onTap: onTap);
+    });
   }
 
   Widget _getTabBarView(GestureTapCallback? onTap) {
@@ -163,7 +166,7 @@ class _HomeViewState extends State<HomeView>
 
   ///顶部歌曲总数栏
   Widget _buildListTop() {
-    return Song_libraryTop(
+    return SongLibraryTop(
       onPlayTap: () {
         PlayerLogic.to.playMusic(GlobalLogic.to
             .filterMusicListByAlbums(logic.state.currentIndex.value));

@@ -1,7 +1,7 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/dao/album_dao.dart';
 import 'package:lovelivemusicplayer/dao/database.dart';
 import 'package:lovelivemusicplayer/dao/lyric_dao.dart';
 import 'package:lovelivemusicplayer/dao/menu_dao.dart';
@@ -12,16 +12,13 @@ import 'package:lovelivemusicplayer/eventbus/start_event.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
+import 'package:lovelivemusicplayer/models/FtpMusic.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/models/PlayListMusic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
-
-import '../dao/album_dao.dart';
-import '../models/Album.dart';
-import '../models/FtpMusic.dart';
-import '../models/Music.dart';
 
 class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   late MusicDatabase database;
@@ -55,8 +52,6 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   }
 
   Future<void> findAllListByGroup(String group) async {
-    print(group);
-
     /// 设置专辑、歌曲数据
     final allAlbums = <Album>[];
     final allMusics = <Music>[];
@@ -76,10 +71,6 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     await findAllMenuList();
 
     GlobalLogic.to.databaseInitOver.value = true;
-
-    SmartDialog.compatible.showToast(
-        "专辑: ${allAlbums.length}; 歌曲: ${allMusics.length}",
-        time: const Duration(seconds: 5));
 
     try {
       scrollToTop(HomeController.to.scrollController1);

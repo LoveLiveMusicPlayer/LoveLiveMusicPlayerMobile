@@ -5,11 +5,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 class LoadingDialog extends Dialog {
   String mag = "加载中...";
 
-  LoadingDialog(this.mag);
+  LoadingDialog(this.mag, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (mag == null || mag.isEmpty) {
+    if (mag.isEmpty) {
       mag = "加载中...";
     }
     //创建透明层
