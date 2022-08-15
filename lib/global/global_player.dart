@@ -120,6 +120,7 @@ class PlayerLogic extends SuperController
 
   /// 修改当前播放的歌曲
   Future<void> changePlayingMusic(PlayListMusic currentMusic) async {
+    playingJPLrc.value = {"pre": "", "current": "", "next": ""};
     if (playingMusic.value.musicId != currentMusic.musicId) {
       final music = await DBLogic.to.findMusicByMusicId(currentMusic.musicId);
       if (music != null) {
@@ -260,19 +261,21 @@ class PlayerLogic extends SuperController
 
     final uid = playingMusic.value.musicId;
     final baseUrl = playingMusic.value.baseUrl!;
-    final lyric = playingMusic.value.musicPath!.replaceAll("flac", "lrc").replaceAll("wav", "lrc");
-    final jp =
-        await handleLRC("jp", "${Const.ossUrl}JP/$baseUrl$lyric", uid, forceRefresh);
+    final lyric = playingMusic.value.musicPath!
+        .replaceAll("flac", "lrc")
+        .replaceAll("wav", "lrc");
+    final jp = await handleLRC(
+        "jp", "JP/$baseUrl$lyric", uid, forceRefresh);
     if (jp != null) {
       jpLrc = jp;
     }
-    final zh =
-        await handleLRC("zh", "${Const.ossUrl}ZH/$baseUrl$lyric", uid, forceRefresh);
+    final zh = await handleLRC(
+        "zh", "ZH/$baseUrl$lyric", uid, forceRefresh);
     if (zh != null) {
       zhLrc = zh;
     }
-    final roma =
-        await handleLRC("roma", "${Const.ossUrl}ROMA/$baseUrl$lyric", uid, forceRefresh);
+    final roma = await handleLRC(
+        "roma", "ROMA/$baseUrl$lyric", uid, forceRefresh);
     if (roma != null) {
       romaLrc = roma;
     }
@@ -306,31 +309,36 @@ class PlayerLogic extends SuperController
           }
         }
         if (storageLrc == null || storageLrc.isEmpty || forceRefresh) {
-          final netLrc = await Network.getSync(lrcUrl) ?? "";
-          if (netLrc != null && netLrc.isNotEmpty) {
-            if (storageLrc == null) {
-              lyric = Lyric(uid: uid, jp: null, zh: null, roma: null);
-            }
-            if (lyric != null) {
-              switch (type) {
-                case "jp":
-                  lyric.jp = netLrc;
-                  break;
-                case "zh":
-                  lyric.zh = netLrc;
-                  break;
-                case "roma":
-                  lyric.roma = netLrc;
-                  break;
-              }
-
+          try {
+            final encodeUrl = Uri.encodeComponent(lrcUrl);
+            final netLrc = await Network.getSync("${Const.ossUrl}$encodeUrl") ?? "";
+            if (netLrc != null && netLrc.isNotEmpty) {
               if (storageLrc == null) {
-                await DBLogic.to.lyricDao.insertLyric(lyric);
-              } else {
-                await DBLogic.to.lyricDao.updateLrc(lyric);
+                lyric = Lyric(uid: uid, jp: null, zh: null, roma: null);
               }
+              if (lyric != null) {
+                switch (type) {
+                  case "jp":
+                    lyric.jp = netLrc;
+                    break;
+                  case "zh":
+                    lyric.zh = netLrc;
+                    break;
+                  case "roma":
+                    lyric.roma = netLrc;
+                    break;
+                }
+
+                if (storageLrc == null) {
+                  await DBLogic.to.lyricDao.insertLyric(lyric);
+                } else {
+                  await DBLogic.to.lyricDao.updateLrc(lyric);
+                }
+              }
+              return netLrc;
             }
-            return netLrc;
+          } catch (error) {
+            return null;
           }
         } else {
           return storageLrc;
@@ -405,6 +413,22 @@ class PlayerLogic extends SuperController
     AppUtils.getImagePalette(url).then((color) {
       iconColor.value = color ?? Get.theme.primaryColor;
     });
+  }
+
+  /// 按钮点击上一曲
+  playPrev() {
+    if (mPlayer.hasPrevious) {
+      playingJPLrc.value = {"pre": "", "current": "", "next": ""};
+      mPlayer.seekToPrevious();
+    }
+  }
+
+  /// 按钮点击下一曲
+  playNext() {
+    if (mPlayer.hasNext) {
+      playingJPLrc.value = {"pre": "", "current": "", "next": ""};
+      mPlayer.seekToNext();
+    }
   }
 
   @override

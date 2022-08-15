@@ -43,34 +43,30 @@ class ControlButtons extends StatelessWidget {
                     radius: 6,
                     iconSize: 15,
                     iconColor:
-                    PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                        PlayerLogic.to.hasSkin.value ? Colors.white : null,
                     bgColor: PlayerLogic.to.hasSkin.value
                         ? PlayerLogic.to.iconColor.value
                         : null,
-                    outerColor:
-                    PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor
-                        .value : null);
+                    outerColor: PlayerLogic.to.hasSkin.value
+                        ? PlayerLogic.to.iconColor.value
+                        : null);
               },
             ),
             StreamBuilder<SequenceState?>(
               stream: player.sequenceStateStream,
-              builder: (context, snapshot) =>
-                  materialButton(
-                      Assets.playerPlayPrev,
-                          () => player.hasPrevious ? player.seekToPrevious() : null,
-                      width: 60,
-                      height: 60,
-                      radius: 40,
-                      iconSize: 16,
-                      iconColor: PlayerLogic.to.hasSkin.value
-                          ? Colors.white
-                          : null,
-                      bgColor: PlayerLogic.to.hasSkin.value
-                          ? PlayerLogic.to.iconColor.value
-                          : null,
-                      outerColor:
-                      PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor
-                          .value : null),
+              builder: (context, snapshot) => materialButton(
+                  Assets.playerPlayPrev, () => PlayerLogic.to.playPrev(),
+                  width: 60,
+                  height: 60,
+                  radius: 40,
+                  iconSize: 16,
+                  iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                  bgColor: PlayerLogic.to.hasSkin.value
+                      ? PlayerLogic.to.iconColor.value
+                      : null,
+                  outerColor: PlayerLogic.to.hasSkin.value
+                      ? PlayerLogic.to.iconColor.value
+                      : null),
             ),
             StreamBuilder<PlayerState>(
               stream: player.playerStateStream,
@@ -97,13 +93,13 @@ class ControlButtons extends StatelessWidget {
                       radius: 40,
                       iconSize: 26,
                       iconColor:
-                      PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                          PlayerLogic.to.hasSkin.value ? Colors.white : null,
                       bgColor: PlayerLogic.to.hasSkin.value
                           ? PlayerLogic.to.iconColor.value
                           : null,
-                      outerColor:
-                      PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor
-                          .value : null);
+                      outerColor: PlayerLogic.to.hasSkin.value
+                          ? PlayerLogic.to.iconColor.value
+                          : null);
                 } else if (processingState != ProcessingState.completed) {
                   return materialButton(
                       Assets.playerPlayPause, () => player.pause(),
@@ -112,13 +108,13 @@ class ControlButtons extends StatelessWidget {
                       radius: 40,
                       iconSize: 26,
                       iconColor:
-                      PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                          PlayerLogic.to.hasSkin.value ? Colors.white : null,
                       bgColor: PlayerLogic.to.hasSkin.value
                           ? PlayerLogic.to.iconColor.value
                           : null,
-                      outerColor:
-                      PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor
-                          .value : null);
+                      outerColor: PlayerLogic.to.hasSkin.value
+                          ? PlayerLogic.to.iconColor.value
+                          : null);
                 } else {
                   return materialButton(
                       Assets.playerPlayPlay,
@@ -129,39 +125,34 @@ class ControlButtons extends StatelessWidget {
                       radius: 40,
                       iconSize: 26,
                       iconColor:
-                      PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                          PlayerLogic.to.hasSkin.value ? Colors.white : null,
                       bgColor: PlayerLogic.to.hasSkin.value
                           ? PlayerLogic.to.iconColor.value
                           : null,
-                      outerColor:
-                      PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor
-                          .value : null);
+                      outerColor: PlayerLogic.to.hasSkin.value
+                          ? PlayerLogic.to.iconColor.value
+                          : null);
                 }
               },
             ),
             StreamBuilder<SequenceState?>(
               stream: player.sequenceStateStream,
-              builder: (context, snapshot) =>
-                  materialButton(
-                      Assets.playerPlayNext,
-                          () async => player.hasNext ? player.seekToNext() : null,
-                      width: 60,
-                      height: 60,
-                      radius: 40,
-                      iconSize: 16,
-                      iconColor: PlayerLogic.to.hasSkin.value
-                          ? Colors.white
-                          : null,
-                      bgColor: PlayerLogic.to.hasSkin.value
-                          ? PlayerLogic.to.iconColor.value
-                          : null,
-                      outerColor:
-                      PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor
-                          .value : null),
+              builder: (context, snapshot) => materialButton(
+                  Assets.playerPlayNext,
+                  () => PlayerLogic.to.playNext(),
+                  width: 60,
+                  height: 60,
+                  radius: 40,
+                  iconSize: 16,
+                  iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
+                  bgColor: PlayerLogic.to.hasSkin.value
+                      ? PlayerLogic.to.iconColor.value
+                      : null,
+                  outerColor: PlayerLogic.to.hasSkin.value
+                      ? PlayerLogic.to.iconColor.value
+                      : null),
             ),
-            materialButton(Assets.playerPlayPlaylist, () {
-
-            },
+            materialButton(Assets.playerPlayPlaylist, () {},
                 width: 32,
                 height: 32,
                 radius: 6,
@@ -170,8 +161,9 @@ class ControlButtons extends StatelessWidget {
                 bgColor: PlayerLogic.to.hasSkin.value
                     ? PlayerLogic.to.iconColor.value
                     : null,
-                outerColor: PlayerLogic.to.hasSkin.value ? PlayerLogic.to
-                    .iconColor.value : null),
+                outerColor: PlayerLogic.to.hasSkin.value
+                    ? PlayerLogic.to.iconColor.value
+                    : null),
           ],
         ),
       ),

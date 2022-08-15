@@ -52,7 +52,7 @@ class Network {
           isShowMsg: false,
         ));
       }
-      return Future.error(error.toString());
+      throw Future.error(error.toString());
     });
     if (isShowDialog) {
       SmartDialog.dismiss();
