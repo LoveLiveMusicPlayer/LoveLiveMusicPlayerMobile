@@ -27,9 +27,7 @@ Widget showImg(String? path, double? width, double? height,
   ImageProvider<Object> shadowImage;
   bool isNetImage = false;
   if (hasShadow) {
-    if (path == null ||
-        path.isEmpty ||
-        Const.notExistAssetsMap.contains(path)) {
+    if (path == null || path.isEmpty) {
       shadowImage = AssetImage(defPhoto);
     } else if (path.startsWith("assets")) {
       shadowImage = AssetImage(path);
@@ -98,9 +96,7 @@ Widget showImg(String? path, double? width, double? height,
       );
     }
   } else {
-    if (path == null ||
-        path.isEmpty ||
-        Const.notExistAssetsMap.contains(path)) {
+    if (path == null || path.isEmpty) {
       noShadowImage = Image.asset(
         defPhoto,
         width: width?.h,

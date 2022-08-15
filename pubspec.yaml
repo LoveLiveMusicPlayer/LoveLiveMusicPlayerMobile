@@ -112,6 +112,7 @@ flutter:
     - assets/player/
     - assets/tab/
     - assets/dialog/
+    - assets/sync/
 
   fonts:
     - family: KaTong

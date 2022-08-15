@@ -147,7 +147,10 @@ class _DrawerPageState extends State<DrawerPage> {
                     DrawerFunctionButton(
                       icon: Assets.drawerDrawerDataSync,
                       text: "数据同步",
-                      onTap: () {},
+                      onTap: () {
+                        Get.back();
+                        Get.toNamed(Routes.routeDataSync);
+                      },
                     ),
                     DrawerFunctionButton(
                         icon: Assets.drawerDrawerDayNight,

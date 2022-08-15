@@ -53,16 +53,16 @@ class _HomeViewState extends State<HomeView>
   @override
   Widget build(BuildContext context) {
     DateTime? lastPressTime;
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return WillPopScope(
         child: Scaffold(
-            key: _scaffoldKey,
+            key: scaffoldKey,
             backgroundColor: Colors.white,
             endDrawer: SizedBox(
               width: 300.w,
               child: const DrawerPage(),
             ),
-            body: _weSlider(_scaffoldKey)),
+            body: _weSlider(scaffoldKey)),
         onWillPop: () async {
           if (lastPressTime == null ||
               DateTime.now().difference(lastPressTime!) >
