@@ -228,6 +228,25 @@ class PlayerLogic extends SuperController
     }
   }
 
+  /// 将音乐列表插入到当前播放列表末尾
+  addMusicList(List<Music> musicList) {
+    // 从音乐列表中重复的歌曲删除 O(m*n)?
+    for (var index = 0; index < musicList.length; index++) {
+      for (var element in mPlayList) {
+        if (musicList[index].musicId == element.musicId) {
+          musicList.removeAt(index);
+          index = index - 1;
+          break;
+        }
+      }
+    }
+    // 将音乐列表插入到播放列表队尾
+    for (Music music in musicList) {
+      audioSourceList.add(genAudioSourceUri(music));
+      mPlayList.add(PlayListMusic(musicId: music.musicId!, musicName: music.musicName!, artist: music.artist!));
+    }
+  }
+
   /// 生成一个播放URI
   UriAudioSource genAudioSourceUri(Music music) {
     return AudioSource.uri(
