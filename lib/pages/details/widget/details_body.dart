@@ -5,45 +5,53 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/pages/details/logic.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_more_with_music.dart';
 import 'package:lovelivemusicplayer/widgets/details_list_top.dart';
 import 'package:lovelivemusicplayer/widgets/listview_item_song.dart';
 
-class DetailsBody extends StatelessWidget {
+class DetailsBody extends StatefulWidget {
   final DetailController logic;
   final Widget buildCover;
   final List<Music> music;
+  final Function(Music)? onRemove;
 
   const DetailsBody(
       {Key? key,
       required this.logic,
       required this.buildCover,
-      required this.music})
+      required this.music,
+      this.onRemove})
       : super(key: key);
 
+  @override
+  State<DetailsBody> createState() => _DetailsBodyState();
+}
+
+class _DetailsBodyState extends State<DetailsBody> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
         child: ListView(
       padding: const EdgeInsets.all(0),
-      children: getListItems(logic),
+      children: getListItems(widget.logic),
     ));
   }
 
   List<Widget> getListItems(logic) {
     List<Widget> list = [];
-    list.add(buildCover);
+    list.add(widget.buildCover);
     list.add(SizedBox(
       height: 10.h,
     ));
     list.add(DetailsListTop(
         selectAll: logic.state.selectAll,
         isSelect: logic.state.isSelect,
-        itemsLength: music.length,
+        itemsLength: widget.music.length,
         checkedItemLength: logic.getCheckedSong(),
         onPlayTap: () {
-          PlayerLogic.to.playMusic(music);
+          PlayerLogic.to.playMusic(widget.music);
         },
         onScreenTap: () {
           if (logic.state.isSelect) {
@@ -64,12 +72,12 @@ class DetailsBody extends StatelessWidget {
     list.add(SizedBox(
       height: 10.h,
     ));
-    for (var index = 0; index < music.length; index++) {
+    for (var index = 0; index < widget.music.length; index++) {
       list.add(Padding(
         padding: EdgeInsets.only(left: 16.w, bottom: 20.h, right: 16.w),
         child: ListViewItemSong(
           index: index,
-          music: music[index],
+          music: widget.music[index],
           checked: logic.isItemChecked(index),
           onItemTap: (index, checked) {
             logic.selectItem(index, checked);
@@ -77,11 +85,15 @@ class DetailsBody extends StatelessWidget {
           onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
           onMoreTap: (music) {
             SmartDialog.compatible.show(
-                widget: DialogMoreWithMusic(music: music),
+                widget: DialogMoreWithMusic(music: music, onRemove: (music) {
+                  if (widget.onRemove != null) {
+                    widget.onRemove!(music);
+                  }
+                }),
                 alignmentTemp: Alignment.bottomCenter);
           },
           onPlayNowTap: () {
-            PlayerLogic.to.playMusic(music, index: index);
+            PlayerLogic.to.playMusic(widget.music, index: index);
           },
         ),
       ));
@@ -96,12 +108,13 @@ class DetailsBody extends StatelessWidget {
         title: "加入播放列表",
         onTap: () async {
           final musicList = logic.state.items;
+          final tempList = <Music>[];
           await Future.forEach<Music>(musicList, (music) {
             if (music.checked) {
-              print(music.musicName);
-              // todo: 添加到播放列表
+              tempList.add(music);
             }
           });
+          PlayerLogic.to.addMusicList(tempList);
           logic.closeSelect();
         }));
     list.add(BtnItem(
@@ -109,12 +122,16 @@ class DetailsBody extends StatelessWidget {
         title: "添加到歌单",
         onTap: () async {
           final musicList = logic.state.items;
+          final tempList = <Music>[];
           await Future.forEach<Music>(musicList, (music) {
             if (music.checked) {
-              print(music.musicName);
-              // todo: 添加到播放列表
+              tempList.add(music);
             }
           });
+          SmartDialog.compatible.show(
+            widget: DialogAddSongSheet(musicList: tempList),
+              alignmentTemp: Alignment.bottomCenter
+          );
           logic.closeSelect();
         }));
     SmartDialog.compatible.show(

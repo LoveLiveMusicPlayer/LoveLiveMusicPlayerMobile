@@ -236,6 +236,34 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     return music;
   }
 
+  Future<void> updateLoveList(List<Music> musicList) async {
+    // 未喜欢的列表
+    final unLovedList = <String>[];
+    // 全部歌曲的id列表
+    final idList = <String>[];
+    for (var music in musicList) {
+      if (!music.isLove) {
+        // 歌曲属性不是我喜欢则加入未喜欢列表
+        unLovedList.add(music.musicId!);
+      }
+      idList.add(music.musicId!);
+    }
+    if (unLovedList.isEmpty) {
+      // 全是喜欢的话，就将全部列表都变成不喜欢
+      await musicDao.updateLoveStatus(false, idList);
+      GlobalLogic.to.musicList
+          .firstWhere((music) => idList.contains(music.musicId))
+          .isLove = false;
+    } else {
+      // 将未喜欢的列表歌曲变成喜欢
+      await musicDao.updateLoveStatus(true, unLovedList);
+
+      GlobalLogic.to.musicList
+          .firstWhere((music) => unLovedList.contains(music.musicId))
+          .isLove = true;
+    }
+  }
+
   /// 新增一个歌单
   Future<bool> addMenu(String name, List<String> musicIds) async {
     final idList = await menuDao.findMenuIds() ?? [];
@@ -273,6 +301,38 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     await menuDao.updateMenu(menu);
     await findAllMenuList();
     return true;
+  }
+
+  /// 删除歌单中的歌曲
+  /// @param 歌单id
+  /// @param 要删除的歌曲id列表
+  /// @return 1: 刷新界面 ;2: 需要返回上一页
+  Future<int> removeItemFromMenu(int menuId, List<String> musicIds) async {
+    var menu = await menuDao.findMenuById(menuId);
+    if (menu == null) {
+      return -1;
+    }
+    final musicIdList = menu.music;
+    if (musicIdList == null || musicIdList.isEmpty) {
+      return -1;
+    }
+    final tempList = <String>[];
+    for (var musicId in musicIdList) {
+      if (!musicIds.contains(musicId)) {
+        tempList.add(musicId);
+      }
+    }
+    if (tempList.isEmpty) {
+      await menuDao.deleteMenuById(menuId);
+      await findAllMenuList();
+      return 2;
+    } else {
+      menu.music?.clear();
+      menu.music?.addAll(tempList);
+      await menuDao.updateMenu(menu);
+      await findAllMenuList();
+      return 1;
+    }
   }
 
   /// 清空全部专辑

@@ -15,6 +15,7 @@ import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/modules/pageview/view.dart';
 import 'package:lovelivemusicplayer/modules/tabbar/tabbar.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';
 import 'package:lovelivemusicplayer/pages/player/miniplayer.dart';
 import 'package:lovelivemusicplayer/pages/player/player.dart';
@@ -204,10 +205,18 @@ class _HomeViewState extends State<HomeView>
                     await DBLogic.to.findAllMusicsByAlbumId(album.albumId!));
               }
             });
-            // todo: 将tempList添加到播放列表列表后面
+            PlayerLogic.to.addMusicList(tempList);
           }));
       list.add(BtnItem(
-          imgPath: Assets.dialogIcAddSongSheet, title: "添加到歌单", onTap: () {}));
+          imgPath: Assets.dialogIcAddSongSheet,
+          title: "添加到歌单",
+          onTap: () {
+            SmartDialog.dismiss();
+            List<Music> musicList = HomeController.to.state.items.cast();
+            SmartDialog.compatible
+                .show(widget: DialogAddSongSheet(musicList: musicList),
+                alignmentTemp: Alignment.bottomCenter);
+          }));
     } else {
       list.add(BtnItem(
           imgPath: Assets.dialogIcAddPlayList2,
@@ -220,10 +229,18 @@ class _HomeViewState extends State<HomeView>
                 tempList.add(music);
               }
             });
-            // todo: 将tempList添加到播放列表列表后面
+            PlayerLogic.to.addMusicList(tempList);
           }));
       list.add(BtnItem(
-          imgPath: Assets.dialogIcAddPlayList, title: "添加到歌单", onTap: () {}));
+          imgPath: Assets.dialogIcAddPlayList,
+          title: "添加到歌单",
+          onTap: () {
+            SmartDialog.dismiss();
+            List<Music> musicList = HomeController.to.state.items.cast();
+            SmartDialog.compatible
+                .show(widget: DialogAddSongSheet(musicList: musicList),
+                alignmentTemp: Alignment.bottomCenter);
+          }));
     }
     SmartDialog.compatible.show(
         widget: DialogBottomBtn(

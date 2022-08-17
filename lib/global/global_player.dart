@@ -396,6 +396,14 @@ class PlayerLogic extends SuperController
     });
   }
 
+  /// 切换我喜欢状态（列表）
+  /// @hint 列表中只要有一个没有加入我喜欢的，就全部加入；否则从我喜欢中全部删除
+  toggleLoveList(List<Music> musicList) {
+    DBLogic.to.updateLoveList(musicList).then((value) {
+      DBLogic.to.findAllLoveListByGroup(GlobalLogic.to.currentGroup.value);
+    });
+  }
+
   /// 拖拽到指定位置播放
   seekTo(int ms) {
     mPlayer.seek(Duration(milliseconds: ms));
@@ -417,8 +425,15 @@ class PlayerLogic extends SuperController
 
   /// 删除播放列表中的一首歌曲
   Future<void> removeMusic(int index) async {
-    audioSourceList.removeAt(index);
-
+    await audioSourceList.removeAt(index);
+    // 播放列表为空则停止播放，清空状态
+    if (audioSourceList.length == 0) {
+      setCurrentMusic(null);
+      playingJPLrc.value = {"pre": "", "current": "", "next": ""};
+      fullLrc.value = {"jp": "", "zh": "", "roma": ""};
+      await mPlayer.stop();
+      return;
+    }
     // 删除的是最后一首歌，将播放列表第一首
     final music = await DBLogic.to.findMusicByMusicId(
         mPlayList[mPlayList.length == index ? 0 : index].musicId);
@@ -426,12 +441,16 @@ class PlayerLogic extends SuperController
   }
 
   /// 设置当前播放歌曲
-  setCurrentMusic(Music music) {
-    playingMusic.value = music;
-    final url = music.baseUrl! + music.coverPath!;
-    AppUtils.getImagePalette(url).then((color) {
-      iconColor.value = color ?? Get.theme.primaryColor;
-    });
+  setCurrentMusic(Music? music) {
+    if (music == null) {
+      playingMusic.value = Music();
+    } else {
+      playingMusic.value = music;
+      final url = music.baseUrl! + music.coverPath!;
+      AppUtils.getImagePalette(url).then((color) {
+        iconColor.value = color ?? Get.theme.primaryColor;
+      });
+    }
   }
 
   /// 按钮点击上一曲

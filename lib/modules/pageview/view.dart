@@ -109,7 +109,7 @@ class PageViewComponent extends StatelessWidget {
     } else if (page == 4) {
       return ListViewItemSongSheet(
         onItemTap: (menu) {
-          Get.toNamed(Routes.routeMenuDetails, arguments: menu);
+          Get.toNamed(Routes.routeMenuDetails, arguments: menu.id);
         },
         onMoreTap: (menu) {
           SmartDialog.compatible.show(

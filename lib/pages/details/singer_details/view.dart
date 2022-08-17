@@ -45,9 +45,9 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
         children: [
           DetailsHeader(title: artist.name),
           DetailsBody(
-              logic: logic,
-              buildCover: _buildCover(),
-              music: music
+            logic: logic,
+            buildCover: _buildCover(),
+            music: music
           )
         ],
       );

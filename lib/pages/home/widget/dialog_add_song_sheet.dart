@@ -7,15 +7,14 @@ import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
+import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_song_sheet.dart';
 import 'package:lovelivemusicplayer/widgets/new_menu_dialog.dart';
 
-import '../../../modules/ext.dart';
-
 class DialogAddSongSheet extends StatelessWidget {
-  final Music music;
+  final List<Music> musicList;
 
-  const DialogAddSongSheet({Key? key, required this.music}) : super(key: key);
+  const DialogAddSongSheet({Key? key, required this.musicList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +56,14 @@ class DialogAddSongSheet extends StatelessWidget {
                 widget: NewMenuDialog(
                     title: "新建歌单",
                     onConfirm: (name) {
-                      DBLogic.to.addMenu(name, [music.musicId!]);
+                      final idList = <String>[];
+                      for (var music in musicList) {
+                        final id = music.musicId;
+                        if (id != null) {
+                          idList.add(id);
+                        }
+                      }
+                      DBLogic.to.addMenu(name, idList);
                     }),
                 clickBgDismissTemp: false,
                 alignmentTemp: Alignment.center);
@@ -78,8 +84,15 @@ class DialogAddSongSheet extends StatelessWidget {
                 itemBuilder: (cxt, index) {
                   return ListViewItemSongSheet(
                     onItemTap: (menu) {
+                      final idList = <String>[];
+                      for (var music in musicList) {
+                        final id = music.musicId;
+                        if (id != null) {
+                          idList.add(id);
+                        }
+                      }
                       DBLogic.to.insertToMenu(
-                          GlobalLogic.to.menuList[index].id, [music.musicId!]);
+                          GlobalLogic.to.menuList[index].id, idList);
                       SmartDialog.dismiss();
                     },
                     menu: GlobalLogic.to.menuList[index],
@@ -92,14 +105,15 @@ class DialogAddSongSheet extends StatelessWidget {
   }
 
   Widget renderLove() {
-    if (music.isLove) {
+    bool notAllLove = musicList.any((music) => music.isLove == false);
+    if (!notAllLove) {
       return _buildItem("我喜欢", true, () {
-        PlayerLogic.to.toggleLove(music: music, isLove: false);
+        PlayerLogic.to.toggleLoveList(musicList);
         SmartDialog.dismiss();
       }, icon: Icons.favorite);
     } else {
       return _buildItem("我喜欢", true, () {
-        PlayerLogic.to.toggleLove(music: music, isLove: true);
+        PlayerLogic.to.toggleLoveList(musicList);
         SmartDialog.dismiss();
       }, assetPath: Assets.playerPlayLove);
     }

@@ -36,6 +36,9 @@ abstract class MusicDao {
   @update
   Future<void> updateMusic(Music music);
 
+  @Query("UPDATE Music SET isLove = :isLove WHERE musicId IN (:musicIds)")
+  Future<void> updateLoveStatus(bool isLove, List<String> musicIds);
+
   @Query("DELETE FROM Music")
   Future<void> deleteAllMusics();
 }

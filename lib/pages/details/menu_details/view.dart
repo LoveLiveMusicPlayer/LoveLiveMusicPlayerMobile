@@ -19,15 +19,22 @@ class MenuDetailsPage extends StatefulWidget {
 }
 
 class _MenuDetailsPageState extends State<MenuDetailsPage> {
-  final Menu menu = Get.arguments;
+  final int menuId = Get.arguments;
   final music = <Music>[];
+  Menu? menu;
   final logic = Get.put(DetailController());
 
   @override
   void initState() {
     super.initState();
+    refreshData();
+  }
+
+  refreshData() {
     Future.delayed(Duration.zero, () async {
-      final musicList = menu.music;
+      menu = await DBLogic.to.menuDao.findMenuById(menuId);
+      final musicList = menu?.music;
+      music.clear();
       if (musicList != null && musicList.isNotEmpty) {
         music.addAll(await DBLogic.to.musicDao.findMusicsByMusicIds(musicList));
       }
@@ -43,11 +50,27 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
         backgroundColor: Get.theme.primaryColor,
         body: Column(
           children: [
-            DetailsHeader(title: menu.name),
+            DetailsHeader(title: menu?.name ?? ""),
             DetailsBody(
-                logic: logic,
-                buildCover: _buildCover(),
-                music: music
+              logic: logic,
+              buildCover: _buildCover(),
+              music: music,
+              onRemove: (music) async {
+                if (menu == null || menu!.id == 0) {
+                  return;
+                }
+                final status = await DBLogic.to.removeItemFromMenu(menu!.id, [music.musicId!]);
+                switch (status) {
+                  case 1:
+                    refreshData();
+                    break;
+                  case 2:
+                    Get.back();
+                    break;
+                  default:
+                    break;
+                }
+              }
             )
           ],
         ),
@@ -56,6 +79,9 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
   }
 
   Widget _buildCover() {
+    if (menu == null || menu!.music == null || menu!.music!.isEmpty) {
+      return showImg(SDUtils.getImgPath(), 240, 240, radius: 120);
+    }
     return Container(
       padding: EdgeInsets.only(top: 16.h),
       child: Column(
@@ -66,7 +92,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
               return showImg(snapshot.data, 240, 240, radius: 120);
             },
-            future: AppUtils.getMusicCoverPath(menu.music?.last),
+            future: AppUtils.getMusicCoverPath(menu!.music!.last),
           )
         ],
       ),

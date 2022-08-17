@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_info.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
@@ -17,7 +18,7 @@ class Cover extends StatefulWidget {
 class _CoverState extends State<Cover> {
   @override
   Widget build(BuildContext context) {
-    final currentMusic = PlayerLogic.to.playingMusic.value;
+    Music? currentMusic = PlayerLogic.to.playingMusic.value;
     return InkWell(
       splashColor: Colors.red,
       onTap: widget.onTap,
@@ -31,7 +32,7 @@ class _CoverState extends State<Cover> {
             /// 封面
             showImg(
                 SDUtils.getImgPath(
-                    fileName: currentMusic.baseUrl! + currentMusic.coverPath!),
+                    fileName: "${currentMusic.baseUrl}${currentMusic.coverPath}"),
                 273,
                 273,
                 radius: 24,

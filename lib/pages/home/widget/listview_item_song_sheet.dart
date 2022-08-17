@@ -38,7 +38,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
           children: [
             ///缩列图
             _buildIcon(),
-
+            //
             SizedBox(
               width: 10.w,
             ),

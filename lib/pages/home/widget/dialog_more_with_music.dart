@@ -15,8 +15,9 @@ import '../../../modules/ext.dart';
 
 class DialogMoreWithMusic extends StatefulWidget {
   final Music music;
+  Function(Music)? onRemove;
 
-  const DialogMoreWithMusic({Key? key, required this.music}) : super(key: key);
+  DialogMoreWithMusic({Key? key, required this.music, this.onRemove}) : super(key: key);
 
   @override
   State<DialogMoreWithMusic> createState() => _DialogMoreWithMusicState();
@@ -37,7 +38,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 280.h,
+      height: widget.onRemove == null ? 280.h : 330.h,
       width: double.infinity,
       decoration: BoxDecoration(
           color: Get.theme.primaryColor,
@@ -74,7 +75,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
           _buildItem(Assets.dialogIcAddSongSheet, "添加到歌单", true, () {
             SmartDialog.dismiss();
             SmartDialog.compatible.show(
-                widget: DialogAddSongSheet(music: widget.music),
+                widget: DialogAddSongSheet(musicList: [widget.music]),
                 alignmentTemp: Alignment.bottomCenter);
           }),
           _buildItem(Assets.dialogIcSongInfo, "歌曲信息", true, () {
@@ -89,9 +90,20 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
               Get.toNamed(Routes.routeAlbumDetails, arguments: album);
             }
           }),
+          renderRemoveItem()
         ],
       ),
     );
+  }
+
+  Widget renderRemoveItem() {
+    if (widget.onRemove != null) {
+      return _buildItem(Assets.dialogIcDelete2, "删除歌曲", true, () {
+        SmartDialog.dismiss();
+        widget.onRemove!(widget.music);
+      });
+    }
+    return Container();
   }
 
   ///单个条目

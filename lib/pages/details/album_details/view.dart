@@ -39,9 +39,10 @@ class _AlbumDetailsPageState extends State<AlbumDetailsPage> {
           children: [
             DetailsHeader(title: album.albumName!),
             DetailsBody(
-                logic: logic,
-                buildCover: DetailsCover(album: album),
-                music: music)
+              logic: logic,
+              buildCover: DetailsCover(album: album),
+              music: music
+            )
           ],
         );
       })
