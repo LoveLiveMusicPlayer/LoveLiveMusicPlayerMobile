@@ -41,7 +41,7 @@ dependencies:
   path_provider: ^2.0.11 # 路径提供
   pull_to_refresh:  # 下拉刷新上拉加载
     git:
-      url: https://github.com/zhushenwudi/flutter_pulltorefresh
+      url: https://gitee.com/zhushenwudi/flutter_pulltorefresh
       ref: 6d7fbdd
   web_socket_channel: ^2.2.0 # webSocket
   connectivity_plus: ^2.3.6+1 # 网络监测
@@ -57,11 +57,11 @@ dependencies:
   flutter_native_splash: ^2.2.7 # 启动页
   marquee_text: # 走马灯滚动文字
     git:
-      url: https://github.com/zhushenwudi/flutter-marquee-text
+      url: https://gitee.com/zhushenwudi/flutter-marquee-text
       ref: 015bdeb
   flutter_lyric: # 歌词
     git:
-      url: https://github.com/zhushenwudi/flutter_lyric
+      url: https://gitee.com/zhushenwudi/flutter_lyric
       ref: c2d6485
   flutter_svg: ^1.1.3 # svg图片支持
   just_audio: ^0.9.28 # 音频播放
@@ -75,7 +75,10 @@ dependencies:
   wakelock: ^0.6.2 # 屏幕常亮
   flutter_image_compress: ^1.1.1 # 图片压缩
   cached_network_image: ^3.2.1 # 网络图片缓存库
-  palette_generator: ^0.3.3+1 # 取色器
+  color_thief_flutter: # 取色器
+    git:
+      url: https://gitee.com/zhushenwudi/color_thief_flutter
+      ref: e9da75b
 
 dependency_overrides:
   path: ^1.8.1

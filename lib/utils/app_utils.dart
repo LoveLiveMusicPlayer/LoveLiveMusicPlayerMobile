@@ -1,9 +1,9 @@
 import 'dart:io';
 
+import 'package:color_thief_flutter/color_thief_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
-import 'package:palette_generator/palette_generator.dart';
 
 class AppUtils {
   /// 异步获取歌单封面
@@ -19,10 +19,12 @@ class AppUtils {
     return SDUtils.path + music.baseUrl! + music.coverPath!;
   }
 
-  static Future<Color?> getImagePalette(String url) async {
-    final PaletteGenerator paletteGenerator =
-        await PaletteGenerator.fromImageProvider(
-            FileImage(File(SDUtils.path + url)));
-    return paletteGenerator.mutedColor?.color;
+  /// 图片提取主色
+  static Future<Color?> getImagePalette2(String url) async {
+    final image =
+        await getImageFromProvider(FileImage(File(SDUtils.path + url)));
+    final rgb = await getColorFromImage(image);
+    return Color.fromARGB(255, rgb?.elementAt(0) ?? 0, rgb?.elementAt(1) ?? 0,
+        rgb?.elementAt(2) ?? 0);
   }
 }

@@ -447,7 +447,7 @@ class PlayerLogic extends SuperController
     } else {
       playingMusic.value = music;
       final url = music.baseUrl! + music.coverPath!;
-      AppUtils.getImagePalette(url).then((color) {
+      AppUtils.getImagePalette2(url).then((color) {
         iconColor.value = color ?? Get.theme.primaryColor;
       });
     }
