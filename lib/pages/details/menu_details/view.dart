@@ -51,27 +51,28 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
         body: Column(
           children: [
             DetailsHeader(title: menu?.name ?? ""),
+            SizedBox(height: 8.h),
             DetailsBody(
-              logic: logic,
-              buildCover: _buildCover(),
-              music: music,
-              onRemove: (music) async {
-                if (menu == null || menu!.id == 0) {
-                  return;
-                }
-                final status = await DBLogic.to.removeItemFromMenu(menu!.id, [music.musicId!]);
-                switch (status) {
-                  case 1:
-                    refreshData();
-                    break;
-                  case 2:
-                    Get.back();
-                    break;
-                  default:
-                    break;
-                }
-              }
-            )
+                logic: logic,
+                buildCover: _buildCover(),
+                music: music,
+                onRemove: (music) async {
+                  if (menu == null || menu!.id == 0) {
+                    return;
+                  }
+                  final status = await DBLogic.to
+                      .removeItemFromMenu(menu!.id, [music.musicId!]);
+                  switch (status) {
+                    case 1:
+                      refreshData();
+                      break;
+                    case 2:
+                      Get.back();
+                      break;
+                    default:
+                      break;
+                  }
+                })
           ],
         ),
       );

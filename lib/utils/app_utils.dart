@@ -24,7 +24,7 @@ class AppUtils {
     final image =
         await getImageFromProvider(FileImage(File(SDUtils.path + url)));
     final rgb = await getColorFromImage(image);
-    return Color.fromARGB(255, rgb?.elementAt(0) ?? 0, rgb?.elementAt(1) ?? 0,
+    return Color.fromARGB(150, rgb?.elementAt(0) ?? 0, rgb?.elementAt(1) ?? 0,
         rgb?.elementAt(2) ?? 0);
   }
 }

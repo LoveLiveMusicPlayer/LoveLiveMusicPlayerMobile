@@ -17,7 +17,8 @@ class DialogMoreWithMusic extends StatefulWidget {
   final Music music;
   Function(Music)? onRemove;
 
-  DialogMoreWithMusic({Key? key, required this.music, this.onRemove}) : super(key: key);
+  DialogMoreWithMusic({Key? key, required this.music, this.onRemove})
+      : super(key: key);
 
   @override
   State<DialogMoreWithMusic> createState() => _DialogMoreWithMusicState();

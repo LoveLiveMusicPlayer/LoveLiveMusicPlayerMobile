@@ -1,7 +1,10 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:common_utils/common_utils.dart';
-import 'package:lovelivemusicplayer/global/global_db.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:log4f/log4f.dart';
+import 'package:lovelivemusicplayer/models/Device.dart';
 import 'package:path_provider/path_provider.dart';
 
 class SDUtils {
@@ -14,7 +17,7 @@ class SDUtils {
     }
     appDocDir ??= await getApplicationDocumentsDirectory();
     path = appDocDir.path + Platform.pathSeparator;
-    LogUtil.e(path);
+    Log4f.d(msg: path);
   }
 
   ///获取图片文件
@@ -40,7 +43,7 @@ class SDUtils {
         file.createSync(recursive: true);
       }
     } catch (e) {
-      print(e);
+      Log4f.e(msg: e.toString(), writeFile: true);
     }
   }
 
@@ -52,26 +55,49 @@ class SDUtils {
         file.createSync(recursive: true);
       }
     } catch (e) {
-      print(e);
+      Log4f.e(msg: e.toString(), writeFile: true);
     }
   }
 
-  static writeDBToFile() async {
+  static uploadLog() async {
     final time = DateUtil.getNowDateStr();
-    final albumList = await DBLogic.to.albumDao.findAllAlbums();
-    var buffer = StringBuffer();
-    var musicCount = 0;
-    for (var album in albumList) {
-      buffer.write("    专辑: ${album.albumId} - ${album.albumName}\n");
-      final musicList = await DBLogic.to.findAllMusicsByAlbumId(album.albumId!);
-      for (var music in musicList) {
-        musicCount++;
-        buffer.write("        歌曲: ${music.musicId} - ${music.musicName}\n");
-      }
+    final loggerFile =
+        File(await FlutterLogan.getUploadPath(time.split(" ")[0]));
+    if (loggerFile.existsSync()) {
+      final filePath = "${path}log${Platform.pathSeparator}$time.txt";
+      touchFile(filePath);
+      loggerFile.copySync(filePath);
     }
-    buffer.write("专辑数目: ${albumList.length}; 歌曲数目: $musicCount\n");
-    final filePath = "${path}log${Platform.pathSeparator}$time.txt";
-    touchFile(filePath);
-    File(filePath).writeAsStringSync(buffer.toString(), flush: true);
+    final device = await getDeviceInfo();
+    final deviceFilePath = "${path}log${Platform.pathSeparator}device.txt";
+    if (!File(deviceFilePath).existsSync()) {
+      touchFile(deviceFilePath);
+    }
+    final deviceJson = deviceToJson(device).codeUnits;
+    File(deviceFilePath)
+        .writeAsBytesSync(Uint8List.fromList(deviceJson), flush: true);
+  }
+
+  static Future<Device> getDeviceInfo() async {
+    final deviceInfoPlugin = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      final AndroidDeviceInfo info = await deviceInfoPlugin.androidInfo;
+      return Device(
+          physicalDevice: info.isPhysicalDevice ?? false,
+          serialNo: info.device ?? "",
+          brand: info.brand ?? "",
+          model: info.model ?? "",
+          osName: info.version.baseOS ?? "",
+          osVersion: "${info.version.sdkInt}");
+    } else {
+      final info = await deviceInfoPlugin.iosInfo;
+      return Device(
+          physicalDevice: info.isPhysicalDevice,
+          serialNo: info.identifierForVendor ?? "",
+          brand: info.localizedModel ?? "",
+          model: info.utsname.machine ?? "",
+          osName: info.utsname.sysname ?? "",
+          osVersion: info.systemVersion ?? "");
+    }
   }
 }

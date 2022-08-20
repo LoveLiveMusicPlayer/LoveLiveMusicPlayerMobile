@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
@@ -33,19 +34,18 @@ class _AlbumDetailsPageState extends State<AlbumDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Get.theme.primaryColor,
-      body: GetBuilder<DetailController>(builder: (logic) {
-        return Column(
-          children: [
-            DetailsHeader(title: album.albumName!),
-            DetailsBody(
-              logic: logic,
-              buildCover: DetailsCover(album: album),
-              music: music
-            )
-          ],
-        );
-      })
-    );
+        backgroundColor: Get.theme.primaryColor,
+        body: GetBuilder<DetailController>(builder: (logic) {
+          return Column(
+            children: [
+              DetailsHeader(title: album.albumName!),
+              SizedBox(height: 8.h),
+              DetailsBody(
+                  logic: logic,
+                  buildCover: DetailsCover(album: album),
+                  music: music)
+            ],
+          );
+        }));
   }
 }

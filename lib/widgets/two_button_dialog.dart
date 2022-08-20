@@ -13,7 +13,8 @@ class TwoButtonDialog extends StatelessWidget {
   Callback? _onBackListener;
   Callback? _onConfirmListener;
 
-  TwoButtonDialog({Key? key,
+  TwoButtonDialog({
+    Key? key,
     String imgAsset = "assets/ic_err.png",
     String title = "标题",
     String msg = "网络异常!",

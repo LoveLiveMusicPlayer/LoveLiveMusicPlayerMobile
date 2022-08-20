@@ -4,6 +4,9 @@ class Const {
   static const double uiWidth = 375; //设计图宽度 dp
   static const double uiHeight = 812; //设计图高度 dp
 
+  static const String aesKey = "0123456789012345";
+  static const String iV = "0123456789012345";
+
   /// sp
   static const String spDark = "SP_IS_DARK";
   static const String spColorful = "SP_IS_COLORFUL";
@@ -11,5 +14,6 @@ class Const {
 
   static const String logo = Assets.logoLogo;
 
-  static const String ossUrl = "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/";
+  static const String ossUrl =
+      "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/";
 }

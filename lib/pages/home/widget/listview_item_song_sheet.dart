@@ -59,7 +59,10 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
     return FutureBuilder<String>(
       initialData: SDUtils.getImgPath(),
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-        return showImg(snapshot.data, 48, 48, hasShadow: false, radius: 8, onTap: () => widget.onItemTap(widget.menu));
+        return showImg(snapshot.data, 48, 48,
+            hasShadow: false,
+            radius: 8,
+            onTap: () => widget.onItemTap(widget.menu));
       },
       future: AppUtils.getMusicCoverPath(widget.menu.music?.last),
     );

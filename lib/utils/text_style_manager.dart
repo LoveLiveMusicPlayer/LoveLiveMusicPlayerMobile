@@ -54,5 +54,5 @@ class TextStyleMs {
       TextStyle(color: const Color(0xFFFFFFFF), fontSize: 18.sp);
 
   static TextStyle pink_15 =
-  TextStyle(color: const Color(0xFFF940A7), fontSize: 15.sp);
+      TextStyle(color: const Color(0xFFF940A7), fontSize: 15.sp);
 }

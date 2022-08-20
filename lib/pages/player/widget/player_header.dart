@@ -11,7 +11,10 @@ class PlayerHeader extends StatelessWidget {
   final Color btnColor;
 
   const PlayerHeader(
-      {Key? key, required this.onCloseTap, required this.onMoreTap, required this.btnColor})
+      {Key? key,
+      required this.onCloseTap,
+      required this.onMoreTap,
+      required this.btnColor})
       : super(key: key);
 
   @override
@@ -29,10 +32,9 @@ class PlayerHeader extends StatelessWidget {
                 height: 32,
                 iconSize: 20,
                 radius: 6,
+                hasShadow: false,
                 iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
-                bgColor: PlayerLogic.to.hasSkin.value
-                    ? btnColor
-                    : null,
+                bgColor: PlayerLogic.to.hasSkin.value ? btnColor : null,
                 outerColor: PlayerLogic.to.hasSkin.value ? btnColor : null),
 
             /// 曲名 + 歌手
@@ -67,10 +69,9 @@ class PlayerHeader extends StatelessWidget {
                 height: 32,
                 iconSize: 18,
                 radius: 6,
+                hasShadow: false,
                 iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
-                bgColor: PlayerLogic.to.hasSkin.value
-                    ? btnColor
-                    : null,
+                bgColor: PlayerLogic.to.hasSkin.value ? btnColor : null,
                 outerColor: PlayerLogic.to.hasSkin.value ? btnColor : null),
           ],
         ),

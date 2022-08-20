@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:log4f/log4f.dart';
 
 /**
  * @Author: Sky24n
@@ -71,7 +72,7 @@ class ImageUtil {
           minHeight: 60.h.toInt(),
           minWidth: ScreenUtil().screenWidth.toInt());
     } catch (e) {
-      print(e);
+      Log4f.e(msg: e.toString(), writeFile: true);
     }
     return result;
   }

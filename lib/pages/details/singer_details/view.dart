@@ -44,11 +44,8 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
       return Column(
         children: [
           DetailsHeader(title: artist.name),
-          DetailsBody(
-            logic: logic,
-            buildCover: _buildCover(),
-            music: music
-          )
+          SizedBox(height: 8.h),
+          DetailsBody(logic: logic, buildCover: _buildCover(), music: music)
         ],
       );
     });

@@ -4,6 +4,7 @@ import 'package:flutter_lyric/lyric_parser/parser_smart.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
+import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
@@ -80,7 +81,8 @@ class PlayerLogic extends SuperController
       if (index != null &&
           mPlayList.isNotEmpty &&
           !GlobalLogic.to.isHandlePlay) {
-        print("currentIndexStream: $index - ${mPlayList[index].musicName}");
+        Log4f.d(
+            msg: "currentIndexStream: $index - ${mPlayList[index].musicName}");
         final currentMusic = mPlayList[index];
         await changePlayingMusic(currentMusic);
         persistencePLayList2(mPlayList, index).then((value) {
@@ -243,7 +245,10 @@ class PlayerLogic extends SuperController
     // 将音乐列表插入到播放列表队尾
     for (Music music in musicList) {
       audioSourceList.add(genAudioSourceUri(music));
-      mPlayList.add(PlayListMusic(musicId: music.musicId!, musicName: music.musicName!, artist: music.artist!));
+      mPlayList.add(PlayListMusic(
+          musicId: music.musicId!,
+          musicName: music.musicName!,
+          artist: music.artist!));
     }
   }
 
@@ -283,18 +288,16 @@ class PlayerLogic extends SuperController
     final lyric = playingMusic.value.musicPath!
         .replaceAll("flac", "lrc")
         .replaceAll("wav", "lrc");
-    final jp = await handleLRC(
-        "jp", "JP/$baseUrl$lyric", uid, forceRefresh);
+    final jp = await handleLRC("jp", "JP/$baseUrl$lyric", uid, forceRefresh);
     if (jp != null) {
       jpLrc = jp;
     }
-    final zh = await handleLRC(
-        "zh", "ZH/$baseUrl$lyric", uid, forceRefresh);
+    final zh = await handleLRC("zh", "ZH/$baseUrl$lyric", uid, forceRefresh);
     if (zh != null) {
       zhLrc = zh;
     }
-    final roma = await handleLRC(
-        "roma", "ROMA/$baseUrl$lyric", uid, forceRefresh);
+    final roma =
+        await handleLRC("roma", "ROMA/$baseUrl$lyric", uid, forceRefresh);
     if (roma != null) {
       romaLrc = roma;
     }
@@ -330,7 +333,8 @@ class PlayerLogic extends SuperController
         if (storageLrc == null || storageLrc.isEmpty || forceRefresh) {
           try {
             final encodeUrl = Uri.encodeComponent(lrcUrl);
-            final netLrc = await Network.getSync("${Const.ossUrl}$encodeUrl") ?? "";
+            final netLrc =
+                await Network.getSync("${Const.ossUrl}$encodeUrl") ?? "";
             if (netLrc != null && netLrc.isNotEmpty) {
               if (storageLrc == null) {
                 lyric = Lyric(uid: uid, jp: null, zh: null, roma: null);

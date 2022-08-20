@@ -83,8 +83,7 @@ class _ListViewItemSongState extends State<ListViewItemSong>
     final coverPath = widget.music.baseUrl! + widget.music.coverPath!;
     return InkWell(
       onTap: clickItem,
-      child: showImg(
-          SDUtils.getImgPath(fileName: coverPath), 48, 48,
+      child: showImg(SDUtils.getImgPath(fileName: coverPath), 48, 48,
           hasShadow: false, radius: 8, onTap: clickItem),
     );
   }

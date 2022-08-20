@@ -23,8 +23,8 @@ final ThemeData darkTheme = ThemeData(
     primaryColor: Colors.grey[850],
     canvasColor: Colors.grey[850],
     scaffoldBackgroundColor: Colors.grey[850],
-    textTheme: TextTheme(
-        titleSmall: TextStyle(fontSize: 14.sp, color: Colors.white)),
+    textTheme:
+        TextTheme(titleSmall: TextStyle(fontSize: 14.sp, color: Colors.white)),
     iconTheme: IconThemeData(color: Colors.grey[300]),
     appBarTheme: AppBarTheme(
       shadowColor: Colors.blue[300]?.withOpacity(.1),

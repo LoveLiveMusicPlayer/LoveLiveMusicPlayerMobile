@@ -134,48 +134,46 @@ Widget showImg(String? path, double? width, double? height,
     }
     if (isNetImage) {
       return InkWell(
-        onTap: () {
-          if (onTap != null) {
-            onTap();
-          }
-        },
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(radius.h),
-            child: CachedNetworkImage(
-              imageUrl: path!,
-              imageBuilder: (context, imageProvider) => Image(
-                  image: ResizeImage(imageProvider,
-                      width: width?.h.toInt() ?? 1,
-                      height: height?.h.toInt() ?? 1)),
-              placeholder: (context, url) {
-                return Image(
+          onTap: () {
+            if (onTap != null) {
+              onTap();
+            }
+          },
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(radius.h),
+              child: CachedNetworkImage(
+                imageUrl: path!,
+                imageBuilder: (context, imageProvider) => Image(
+                    image: ResizeImage(imageProvider,
+                        width: width?.h.toInt() ?? 1,
+                        height: height?.h.toInt() ?? 1)),
+                placeholder: (context, url) {
+                  return Image(
+                      image: AssetImage(defPhoto),
+                      width: width?.h,
+                      height: height?.h);
+                },
+                errorWidget: (context, url, error) => Image(
                     image: AssetImage(defPhoto),
                     width: width?.h,
-                    height: height?.h);
-              },
-              errorWidget: (context, url, error) => Image(
-                  image: AssetImage(defPhoto),
-                  width: width?.h,
-                  height: height?.h),
-            ))
-      );
+                    height: height?.h),
+              )));
     } else {
       return InkWell(
           onTap: () {
-        if (onTap != null) {
-          onTap();
-        }
-      },
-      child: ClipRRect(
-          borderRadius: BorderRadius.circular(radius.h),
-          child: Image(
-            image: ResizeImage(noShadowImage,
-                width: (width?.h.toInt() ?? 1) * 2,
-                height: (height?.h.toInt() ?? 1) * 2),
-            width: width?.h,
-            height: height?.h,
-          ))
-      );
+            if (onTap != null) {
+              onTap();
+            }
+          },
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(radius.h),
+              child: Image(
+                image: ResizeImage(noShadowImage,
+                    width: (width?.h.toInt() ?? 1) * 2,
+                    height: (height?.h.toInt() ?? 1) * 2),
+                width: width?.h,
+                height: height?.h,
+              )));
     }
   }
 }
@@ -203,6 +201,7 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
     Color? iconColor,
     Color? bgColor,
     Color? shadowColor,
+    bool hasShadow = true,
     EdgeInsets offset = const EdgeInsets.all(0)}) {
   Widget child;
   if (icon is IconData) {
@@ -221,31 +220,34 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
   } else {
     child = Container();
   }
+  final shadow = <BoxShadow>[];
+  if (hasShadow) {
+    shadow.add(BoxShadow(
+        color: outerColor ??
+            (Get.isDarkMode ? const Color(0x1005080C) : Colors.white),
+        offset: const Offset(-3, -3),
+        blurStyle: BlurStyle.inner,
+        blurRadius: 6));
+    shadow.add(BoxShadow(
+        color: outerColor ??
+            (Get.isDarkMode
+                ? const Color(0xFF05080C)
+                : const Color(0xFFD3E0EC)),
+        offset: const Offset(5, 3),
+        blurRadius: 6));
+  }
   return Container(
     width: width.h,
     height: height.h,
     decoration: BoxDecoration(
       color: innerColor,
       borderRadius: BorderRadius.circular(radius.h),
-      boxShadow: [
-        BoxShadow(
-            color: outerColor ??
-                (Get.isDarkMode ? const Color(0x1005080C) : Colors.white),
-            offset: const Offset(-3, -3),
-            blurStyle: BlurStyle.inner,
-            blurRadius: 6),
-        BoxShadow(
-            color: outerColor ??
-                (Get.isDarkMode
-                    ? const Color(0xFF05080C)
-                    : const Color(0xFFD3E0EC)),
-            offset: const Offset(5, 3),
-            blurRadius: 6),
-      ],
+      boxShadow: shadow,
     ),
     child: ClipRRect(
       borderRadius: BorderRadius.circular(radius.h),
       child: Material(
+        color: Colors.transparent,
         child: InkWell(
           splashColor: Get.isDarkMode ? Colors.grey : const Color(0xFFD3E0EC),
           highlightColor:

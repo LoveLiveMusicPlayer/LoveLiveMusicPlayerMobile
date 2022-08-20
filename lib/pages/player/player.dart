@@ -30,10 +30,13 @@ class Player extends StatefulWidget {
 
 class _PlayerState extends State<Player> {
   StreamSubscription? loginSubscription;
+
   // 是否是封面
   var isCover = true;
+
   // 是否被隐藏
   var isOpen = false;
+
   Stream<PositionData> get _positionDataStream =>
       rx_dart.Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
           PlayerLogic.to.mPlayer.positionStream,
@@ -80,8 +83,7 @@ class _PlayerState extends State<Player> {
                     ],
                   )
                 ],
-              )
-          );
+              ));
         }),
       ),
     );
@@ -98,7 +100,10 @@ class _PlayerState extends State<Player> {
           SizedBox(height: MediaQuery.of(context).padding.top + 14.56.h),
 
           /// 头部
-          PlayerHeader(btnColor: PlayerLogic.to.iconColor.value, onCloseTap: () => widget.onTap(), onMoreTap: () {}),
+          PlayerHeader(
+              btnColor: PlayerLogic.to.iconColor.value,
+              onCloseTap: () => widget.onTap(),
+              onMoreTap: () {}),
 
           SizedBox(height: 10.h),
 
@@ -178,21 +183,27 @@ class _PlayerState extends State<Player> {
                 height: 32,
                 radius: 6,
                 iconSize: 20,
+                hasShadow: false,
                 iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
                 bgColor: PlayerLogic.to.hasSkin.value
                     ? PlayerLogic.to.iconColor.value
                     : null,
-                outerColor: PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor.value : null),
+                outerColor: PlayerLogic.to.hasSkin.value
+                    ? PlayerLogic.to.iconColor.value
+                    : null),
             materialButton(icon, () => PlayerLogic.to.toggleTranslate(),
                 width: 32,
                 height: 32,
                 radius: 6,
                 iconSize: 30,
+                hasShadow: false,
                 iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
                 bgColor: PlayerLogic.to.hasSkin.value
                     ? PlayerLogic.to.iconColor.value
                     : null,
-                outerColor: PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor.value : null)
+                outerColor: PlayerLogic.to.hasSkin.value
+                    ? PlayerLogic.to.iconColor.value
+                    : null)
           ]));
     }
     return Padding(
@@ -210,18 +221,26 @@ class _PlayerState extends State<Player> {
               radius: 6,
               iconColor: Colors.pinkAccent,
               iconSize: 15,
-              bgColor:
-                  PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor.value : null,
-              outerColor: PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor.value : null),
+              hasShadow: false,
+              bgColor: PlayerLogic.to.hasSkin.value
+                  ? PlayerLogic.to.iconColor.value
+                  : null,
+              outerColor: PlayerLogic.to.hasSkin.value
+                  ? PlayerLogic.to.iconColor.value
+                  : null),
           materialButton(Icons.add, () => {},
               width: 32,
               height: 32,
               radius: 6,
               iconSize: 20,
+              hasShadow: false,
               iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
-              bgColor:
-                  PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor.value : null,
-              outerColor: PlayerLogic.to.hasSkin.value ? PlayerLogic.to.iconColor.value : null),
+              bgColor: PlayerLogic.to.hasSkin.value
+                  ? PlayerLogic.to.iconColor.value
+                  : null,
+              outerColor: PlayerLogic.to.hasSkin.value
+                  ? PlayerLogic.to.iconColor.value
+                  : null),
         ],
       ),
     );

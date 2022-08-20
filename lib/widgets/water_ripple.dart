@@ -10,12 +10,14 @@ class WaterRipple extends StatefulWidget {
   State<WaterRipple> createState() => WaterRippleState();
 }
 
-class WaterRippleState extends State<WaterRipple> with TickerProviderStateMixin, WidgetsBindingObserver {
-
+class WaterRippleState extends State<WaterRipple>
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   //动画控制器
   final List<AnimationController> controllers = [];
+
   //动画控件集合
   final List<Widget> children = [];
+
   //添加动画计时器
   Timer? timer;
 
@@ -30,13 +32,12 @@ class WaterRippleState extends State<WaterRipple> with TickerProviderStateMixin,
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 343.w,
-      width: 343.w,
-      child: Stack(
-        alignment: Alignment.center,
-        children: children,
-      )
-    );
+        height: 343.w,
+        width: 343.w,
+        child: Stack(
+          alignment: Alignment.center,
+          children: children,
+        ));
   }
 
   startAnimation() {
@@ -47,16 +48,16 @@ class WaterRippleState extends State<WaterRipple> with TickerProviderStateMixin,
     addSearchAnimation(true);
     //以后每隔1秒，再次添加一个缩放动画，总共添加4个
     timer = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
-          if (!mounted) {
-            timer.cancel();
-            return;
-          }
-          addSearchAnimation(true);
-          count++;
-          if (count >= 4) {
-            timer.cancel();
-          }
-        });
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+      addSearchAnimation(true);
+      count++;
+      if (count >= 4) {
+        timer.cancel();
+      }
+    });
   }
 
   ///init: 首次添加5个基本控件时，=true，

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
@@ -145,7 +146,10 @@ class _MusicTransformState extends State<MusicTransform> {
           release();
           break;
       }
-    }, onError: (e) { print("connected is error"); });
+    }, onError: (e) {
+      Log4f.w(msg: "连接失败");
+      Log4f.e(msg: e.toString(), writeFile: true);
+    });
 
     final system = {
       "cmd": "system",

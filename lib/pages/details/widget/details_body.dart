@@ -85,11 +85,13 @@ class _DetailsBodyState extends State<DetailsBody> {
           onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
           onMoreTap: (music) {
             SmartDialog.compatible.show(
-                widget: DialogMoreWithMusic(music: music, onRemove: (music) {
-                  if (widget.onRemove != null) {
-                    widget.onRemove!(music);
-                  }
-                }),
+                widget: DialogMoreWithMusic(
+                    music: music,
+                    onRemove: (music) {
+                      if (widget.onRemove != null) {
+                        widget.onRemove!(music);
+                      }
+                    }),
                 alignmentTemp: Alignment.bottomCenter);
           },
           onPlayNowTap: () {
@@ -129,9 +131,8 @@ class _DetailsBodyState extends State<DetailsBody> {
             }
           });
           SmartDialog.compatible.show(
-            widget: DialogAddSongSheet(musicList: tempList),
-              alignmentTemp: Alignment.bottomCenter
-          );
+              widget: DialogAddSongSheet(musicList: tempList),
+              alignmentTemp: Alignment.bottomCenter);
           logic.closeSelect();
         }));
     SmartDialog.compatible.show(

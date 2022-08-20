@@ -14,7 +14,8 @@ import 'package:lovelivemusicplayer/widgets/new_menu_dialog.dart';
 class DialogAddSongSheet extends StatelessWidget {
   final List<Music> musicList;
 
-  const DialogAddSongSheet({Key? key, required this.musicList}) : super(key: key);
+  const DialogAddSongSheet({Key? key, required this.musicList})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -57,6 +57,7 @@ class _HomeViewState extends State<HomeView>
     return WillPopScope(
         child: Scaffold(
             key: scaffoldKey,
+            resizeToAvoidBottomInset: false,
             backgroundColor: Colors.white,
             endDrawer: SizedBox(
               width: 300.w,
@@ -213,8 +214,8 @@ class _HomeViewState extends State<HomeView>
           onTap: () {
             SmartDialog.dismiss();
             List<Music> musicList = HomeController.to.state.items.cast();
-            SmartDialog.compatible
-                .show(widget: DialogAddSongSheet(musicList: musicList),
+            SmartDialog.compatible.show(
+                widget: DialogAddSongSheet(musicList: musicList),
                 alignmentTemp: Alignment.bottomCenter);
           }));
     } else {
@@ -237,8 +238,8 @@ class _HomeViewState extends State<HomeView>
           onTap: () {
             SmartDialog.dismiss();
             List<Music> musicList = HomeController.to.state.items.cast();
-            SmartDialog.compatible
-                .show(widget: DialogAddSongSheet(musicList: musicList),
+            SmartDialog.compatible.show(
+                widget: DialogAddSongSheet(musicList: musicList),
                 alignmentTemp: Alignment.bottomCenter);
           }));
     }

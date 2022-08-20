@@ -42,6 +42,7 @@ class ControlButtons extends StatelessWidget {
                     height: 32,
                     radius: 6,
                     iconSize: 15,
+                    hasShadow: false,
                     iconColor:
                         PlayerLogic.to.hasSkin.value ? Colors.white : null,
                     bgColor: PlayerLogic.to.hasSkin.value
@@ -60,6 +61,7 @@ class ControlButtons extends StatelessWidget {
                   height: 60,
                   radius: 40,
                   iconSize: 16,
+                  hasShadow: false,
                   iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
                   bgColor: PlayerLogic.to.hasSkin.value
                       ? PlayerLogic.to.iconColor.value
@@ -92,6 +94,7 @@ class ControlButtons extends StatelessWidget {
                       height: 80,
                       radius: 40,
                       iconSize: 26,
+                      hasShadow: false,
                       iconColor:
                           PlayerLogic.to.hasSkin.value ? Colors.white : null,
                       bgColor: PlayerLogic.to.hasSkin.value
@@ -107,6 +110,7 @@ class ControlButtons extends StatelessWidget {
                       height: 80,
                       radius: 40,
                       iconSize: 26,
+                      hasShadow: false,
                       iconColor:
                           PlayerLogic.to.hasSkin.value ? Colors.white : null,
                       bgColor: PlayerLogic.to.hasSkin.value
@@ -124,6 +128,7 @@ class ControlButtons extends StatelessWidget {
                       height: 80,
                       radius: 40,
                       iconSize: 26,
+                      hasShadow: false,
                       iconColor:
                           PlayerLogic.to.hasSkin.value ? Colors.white : null,
                       bgColor: PlayerLogic.to.hasSkin.value
@@ -138,12 +143,12 @@ class ControlButtons extends StatelessWidget {
             StreamBuilder<SequenceState?>(
               stream: player.sequenceStateStream,
               builder: (context, snapshot) => materialButton(
-                  Assets.playerPlayNext,
-                  () => PlayerLogic.to.playNext(),
+                  Assets.playerPlayNext, () => PlayerLogic.to.playNext(),
                   width: 60,
                   height: 60,
                   radius: 40,
                   iconSize: 16,
+                  hasShadow: false,
                   iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
                   bgColor: PlayerLogic.to.hasSkin.value
                       ? PlayerLogic.to.iconColor.value
@@ -157,6 +162,7 @@ class ControlButtons extends StatelessWidget {
                 height: 32,
                 radius: 6,
                 iconSize: 15,
+                hasShadow: false,
                 iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
                 bgColor: PlayerLogic.to.hasSkin.value
                     ? PlayerLogic.to.iconColor.value

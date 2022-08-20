@@ -60,8 +60,7 @@ class DownloadMusic {
       artist: json["artist"],
       artistBin: json["artistBin"],
       totalTime: json["totalTime"],
-      baseUrl: json["baseUrl"]
-  );
+      baseUrl: json["baseUrl"]);
 
   Map<String, dynamic> toJson() => {
         "albumUId": albumUId,

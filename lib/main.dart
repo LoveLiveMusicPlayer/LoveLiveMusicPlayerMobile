@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +9,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:just_audio_background/just_audio_background.dart';
+import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/start_event.dart';
 import 'package:lovelivemusicplayer/global/global_binding.dart';
@@ -117,11 +117,11 @@ setStatusBar() {
 
 /// 初始化服务等一系列耗时任务
 initServices() async {
+  await FlutterLogan.init(Const.aesKey, Const.iV, 1024 * 1024 * 10);
   await GetStorage.init();
-  await SpUtil.getInstance();
+  SpUtil.getInstance();
   Network.getInstance();
-  await SDUtils.init();
   PlayerBinding().dependencies();
-  LogUtil.init(tag: "zhu", isDebug: kDebugMode);
-  LogUtil.d('All services started...');
+  await SDUtils.init();
+  Log4f.d(msg: 'All services started...');
 }

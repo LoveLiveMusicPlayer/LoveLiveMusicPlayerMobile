@@ -8,12 +8,12 @@ class SpUtil {
   static GetStorage? _sp;
   static final Lock _lock = Lock();
 
-  static Future<SpUtil> getInstance() async {
+  static SpUtil getInstance() {
     if (_singleton == null) {
-      await _lock.synchronized(() async {
+      _lock.synchronized(() {
         if (_singleton == null) {
           var singleton = SpUtil._();
-          await singleton._init();
+          singleton._init();
           _singleton = singleton;
         }
       });
@@ -23,7 +23,7 @@ class SpUtil {
 
   SpUtil._();
 
-  Future _init() async {
+  _init() {
     _sp = GetStorage();
   }
 

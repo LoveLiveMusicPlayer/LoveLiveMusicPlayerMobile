@@ -32,11 +32,11 @@ class _DrawerPageState extends State<DrawerPage> {
   Widget build(BuildContext context) {
     return Drawer(
         child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [topView(), groupView(), functionView()],
-          ),
-        ));
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [topView(), groupView(), functionView()],
+      ),
+    ));
   }
 
   Widget topView() {
@@ -44,8 +44,8 @@ class _DrawerPageState extends State<DrawerPage> {
       children: [
         SizedBox(height: 12.h),
         Obx(() {
-          return logoIcon(
-              global.getCurrentGroupIcon(global.currentGroup.value), width: 96, height: 96, radius: 96);
+          return logoIcon(global.getCurrentGroupIcon(global.currentGroup.value),
+              width: 96, height: 96, radius: 96);
         }),
         SizedBox(height: 12.h),
         Text("LoveLiveMusicPlayer",
@@ -113,9 +113,7 @@ class _DrawerPageState extends State<DrawerPage> {
               width: 270.w,
               height: 270.h,
               decoration: BoxDecoration(
-                color: Theme
-                    .of(context)
-                    .primaryColor,
+                color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(8.w),
                 boxShadow: [
                   BoxShadow(
@@ -205,7 +203,7 @@ class _DrawerPageState extends State<DrawerPage> {
                       icon: Assets.drawerDrawerDebug,
                       text: "保存日志",
                       onTap: () async {
-                        await SDUtils.writeDBToFile();
+                        await SDUtils.uploadLog();
                         SmartDialog.compatible.showToast("导出成功",
                             time: const Duration(seconds: 5));
                       },

@@ -79,6 +79,8 @@ dependencies:
     git:
       url: https://gitee.com/zhushenwudi/color_thief_flutter
       ref: e9da75b
+  log4f: ^0.0.3
+  device_info_plus: ^4.1.2
 
 dependency_overrides:
   path: ^1.8.1

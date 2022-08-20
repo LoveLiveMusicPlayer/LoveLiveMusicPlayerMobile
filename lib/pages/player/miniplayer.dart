@@ -31,13 +31,12 @@ class _MiniPlayerState extends State<MiniPlayer> {
   Widget build(BuildContext context) {
     return Obx(() {
       return AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        decoration: BoxDecoration(
-          color: Get.theme.primaryColor,
-          borderRadius: BorderRadius.circular(34),
-        ),
-        child: renderPanel()
-      );
+          duration: const Duration(milliseconds: 200),
+          decoration: BoxDecoration(
+            color: Get.theme.primaryColor,
+            borderRadius: BorderRadius.circular(34),
+          ),
+          child: renderPanel());
     });
   }
 
@@ -49,8 +48,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
           color: const Color(0xFFEBF3FE),
           borderRadius: BorderRadius.circular(34),
         ),
-        builder:
-            (BuildContext context, AsyncSnapshot<Decoration> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<Decoration> snapshot) {
           return Container(
             height: 60.h,
             margin: EdgeInsets.only(top: 2.h, left: 16.w, right: 16.w),
@@ -71,9 +69,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
     return Container(
       height: 60.h,
       margin: EdgeInsets.only(top: 2.h, left: 16.w, right: 16.w),
-      child: ClipRRect(
-          borderRadius: BorderRadius.circular(34),
-          child: body()),
+      child: ClipRRect(borderRadius: BorderRadius.circular(34), child: body()),
     );
   }
 
@@ -139,16 +135,13 @@ class _MiniPlayerState extends State<MiniPlayer> {
 
   Widget miniCover() {
     final currentMusic = PlayerLogic.to.playingMusic.value;
-    final coverPath = (currentMusic.baseUrl ?? "") + (currentMusic.coverPath ?? "");
+    final coverPath =
+        (currentMusic.baseUrl ?? "") + (currentMusic.coverPath ?? "");
     return Row(
       children: [
         SizedBox(width: 6.w),
-        showImg(
-            SDUtils.getImgPath(fileName: coverPath),
-            50,
-            50,
-            radius: 50,
-            hasShadow: false, onTap: widget.onTap)
+        showImg(SDUtils.getImgPath(fileName: coverPath), 50, 50,
+            radius: 50, hasShadow: false, onTap: widget.onTap)
       ],
     );
   }
