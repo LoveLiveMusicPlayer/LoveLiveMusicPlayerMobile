@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_lyric/lyric_parser/parser_smart.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
@@ -8,6 +9,7 @@ import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/global/global_theme.dart';
 import 'package:lovelivemusicplayer/models/Lyric.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/models/PlayListMusic.dart';
@@ -50,8 +52,14 @@ class PlayerLogic extends SuperController
   // 切换显示歌词类型 (0:原文; 1:翻译; 2:罗马音)
   var lrcType = 0.obs;
 
+  // 是否手动选择的是暗色主题
+  var manualIsDark = false.obs;
+
   // 是否使用封面皮肤
   var hasSkin = false.obs;
+
+  // 是否跟随系统主题色
+  var withSystemTheme = false.obs;
 
   // 炫彩模式下的按钮皮肤
   var iconColor = Get.theme.primaryColor.obs;
@@ -61,9 +69,20 @@ class PlayerLogic extends SuperController
   @override
   void onInit() {
     super.onInit();
-    SpUtil.getInt(Const.spLoopMode, 0).then((index) => changeLoopMode(index));
-    SpUtil.getBoolean(Const.spColorful, false)
-        .then((skin) => hasSkin.value = skin);
+    initSp();
+
+    /// 监听系统主题色改变
+    final window = WidgetsBinding.instance.window;
+    window.onPlatformBrightnessChanged = () {
+      WidgetsBinding.instance.handlePlatformBrightnessChanged();
+      SpUtil.getBoolean(Const.spWithSystemTheme, false).then((isWith) {
+        if (isWith && Get.context != null) {
+          bool isDark = window.platformBrightness == Brightness.dark;
+          Get.changeTheme(isDark ? darkTheme : lightTheme);
+        }
+        withSystemTheme.value = isWith;
+      });
+    };
 
     /// 播放状态监听
     mPlayer.playerStateStream.listen((state) {
@@ -471,6 +490,23 @@ class PlayerLogic extends SuperController
       playingJPLrc.value = {"pre": "", "current": "", "next": ""};
       mPlayer.seekToNext();
     }
+  }
+
+  /// 初始化SP
+  initSp() {
+    SpUtil.getInt(Const.spLoopMode, 0).then((index) => changeLoopMode(index));
+    SpUtil.getBoolean(Const.spColorful, false)
+        .then((skin) => hasSkin.value = skin);
+    SpUtil.getBoolean(Const.spDark, false)
+        .then((isDark) => manualIsDark.value = isDark);
+    SpUtil.getBoolean(Const.spWithSystemTheme, false).then((isWith) {
+      if (isWith && Get.context != null) {
+        bool isDark =
+            MediaQuery.of(Get.context!).platformBrightness == Brightness.dark;
+        Get.changeTheme(isDark ? darkTheme : lightTheme);
+      }
+      withSystemTheme.value = isWith;
+    });
   }
 
   @override

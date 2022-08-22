@@ -10,6 +10,7 @@ class Const {
   /// sp
   static const String spDark = "SP_IS_DARK";
   static const String spColorful = "SP_IS_COLORFUL";
+  static const String spWithSystemTheme = "SP_With_System_Theme";
   static const String spLoopMode = "loopMode";
 
   static const String logo = Assets.logoLogo;

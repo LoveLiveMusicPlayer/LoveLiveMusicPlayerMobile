@@ -13,6 +13,7 @@ class DrawerFunctionButton extends StatefulWidget {
       this.onTap,
       this.hasSwitch = false,
       this.initSwitch = false,
+      this.enableSwitch = true,
       this.callBack})
       : super(key: key);
 
@@ -21,6 +22,7 @@ class DrawerFunctionButton extends StatefulWidget {
   final GestureTapCallback? onTap;
   final bool hasSwitch;
   final bool initSwitch;
+  final bool enableSwitch;
   final Callback? callBack;
 
   @override
@@ -50,21 +52,36 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
                         : TextStyleMs.black_15)
               ],
             ),
-            widget.hasSwitch
-                ? Transform.scale(
-                    scale: 0.9,
-                    child: CupertinoSwitch(
-                        value: switchValue,
-                        onChanged: (value) {
-                          switchValue = value;
-                          if (widget.callBack != null) {
-                            widget.callBack!(value);
-                          }
-                          setState(() {});
-                        }),
-                  )
-                : Container(),
+            renderSwitchButton()
           ]),
         ));
+  }
+
+  Widget renderSwitchButton() {
+    if (widget.hasSwitch) {
+      if (widget.enableSwitch) {
+        return Transform.scale(
+          scale: 0.9,
+          child: CupertinoSwitch(
+              value: switchValue,
+              onChanged: (value) {
+                switchValue = value;
+                if (widget.callBack != null) {
+                  widget.callBack!(value);
+                }
+                setState(() {});
+              }),
+        );
+      } else {
+        return Transform.scale(
+            scale: 0.9,
+            child: CupertinoSwitch(
+              value: switchValue,
+              onChanged: null,
+            ));
+      }
+    } else {
+      return Container();
+    }
   }
 }

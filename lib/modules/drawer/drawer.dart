@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
-import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
@@ -34,7 +32,7 @@ class _DrawerPageState extends State<DrawerPage> {
         child: SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [topView(), groupView(), functionView()],
+        children: [topView(), groupView(), functionView(context)],
       ),
     ));
   }
@@ -104,14 +102,14 @@ class _DrawerPageState extends State<DrawerPage> {
     );
   }
 
-  Widget functionView() {
+  Widget functionView(BuildContext context) {
     return Column(
       children: [
         Padding(
             padding: EdgeInsets.symmetric(horizontal: 12.w),
             child: Container(
               width: 270.w,
-              height: 270.h,
+              height: 300.h,
               decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(8.w),
@@ -133,83 +131,120 @@ class _DrawerPageState extends State<DrawerPage> {
               ),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 18.w),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    DrawerFunctionButton(
-                      icon: Assets.drawerDrawerQuickTrans,
-                      text: "歌曲快传",
-                      onTap: () async {
-                        Get.back();
-                        var data = await Get.toNamed(Routes.routeScan);
-                        if (data != null) {
-                          Get.toNamed(Routes.routeTransform, arguments: data);
-                        }
-                      },
-                    ),
-                    DrawerFunctionButton(
-                      icon: Assets.drawerDrawerDataSync,
-                      text: "数据同步",
-                      onTap: () {
-                        Get.back();
-                        Get.toNamed(Routes.routeDataSync);
-                      },
-                    ),
-                    DrawerFunctionButton(
-                        icon: Assets.drawerDrawerDayNight,
-                        text: "夜间模式",
-                        hasSwitch: true,
-                        initSwitch: Get.isDarkMode,
-                        callBack: (check) async {
-                          Get.changeTheme(check ? darkTheme : lightTheme);
-                          await SpUtil.put(Const.spDark, check);
-                          eventBus.fire(PlayerClosableEvent(false));
-                          Future.delayed(const Duration(milliseconds: 500))
-                              .then((value) {
-                            PageViewLogic.to.controller.jumpToPage(
-                                HomeController.to.state.currentIndex.value);
-                          });
-                        }),
-                    DrawerFunctionButton(
-                        icon: Assets.drawerDrawerColorful,
-                        text: "炫彩主题(高性能)",
-                        hasSwitch: true,
-                        initSwitch: PlayerLogic.to.hasSkin.value,
-                        callBack: (check) async {
-                          eventBus.fire(PlayerClosableEvent(false));
-                          PlayerLogic.to.hasSkin.value = check;
-                          await SpUtil.put(Const.spColorful, check);
-                        }),
-                    DrawerFunctionButton(
-                      icon: Assets.drawerDrawerSecret,
-                      text: "关于和隐私",
-                      onTap: () {},
-                    ),
-                    DrawerFunctionButton(
-                      icon: Assets.drawerDrawerReset,
-                      text: "清理数据",
-                      onTap: () async {
-                        SmartDialog.compatible
-                            .showLoading(msg: "重置中...", backDismiss: false);
-                        await DBLogic.to.clearAllAlbum();
-                        await DBLogic.to.findAllListByGroup(
-                            GlobalLogic.to.currentGroup.value);
-                        SmartDialog.dismiss();
-                        SmartDialog.compatible.showToast("清理成功",
-                            time: const Duration(seconds: 5));
-                      },
-                    ),
-                    DrawerFunctionButton(
-                      icon: Assets.drawerDrawerDebug,
-                      text: "保存日志",
-                      onTap: () async {
-                        await SDUtils.uploadLog();
-                        SmartDialog.compatible.showToast("导出成功",
-                            time: const Duration(seconds: 5));
-                      },
-                    )
-                  ],
-                ),
+                child: Obx(() {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      DrawerFunctionButton(
+                        icon: Assets.drawerDrawerQuickTrans,
+                        text: "歌曲快传",
+                        onTap: () async {
+                          Get.back();
+                          var data = await Get.toNamed(Routes.routeScan);
+                          if (data != null) {
+                            Get.toNamed(Routes.routeTransform, arguments: data);
+                          }
+                        },
+                      ),
+                      DrawerFunctionButton(
+                        icon: Assets.drawerDrawerDataSync,
+                        text: "数据同步",
+                        onTap: () {
+                          Get.back();
+                          Get.toNamed(Routes.routeDataSync);
+                        },
+                      ),
+                      DrawerFunctionButton(
+                          icon: Assets.drawerDrawerSystemTheme,
+                          text: "跟随系统主题",
+                          hasSwitch: true,
+                          initSwitch: PlayerLogic.to.withSystemTheme.value,
+                          callBack: (check) async {
+                            // 获取当前系统主题色
+                            bool isDark =
+                                MediaQuery.of(context).platformBrightness ==
+                                    Brightness.dark;
+                            if (check) {
+                              // 设置为系统主题色
+                              Get.changeTheme(isDark ? darkTheme : lightTheme);
+                            } else {
+                              // 设置为原来手动设置的主题色
+                              Get.changeTheme(PlayerLogic.to.manualIsDark.value
+                                  ? darkTheme
+                                  : lightTheme);
+                            }
+                            // 将全局变量设置为所选值
+                            PlayerLogic.to.withSystemTheme.value = check;
+                            // 修改sp值
+                            await SpUtil.put(Const.spWithSystemTheme, check);
+                            // 恢复原来操作的界面
+                            Future.delayed(const Duration(milliseconds: 500))
+                                .then((value) {
+                              PageViewLogic.to.controller.jumpToPage(
+                                  HomeController.to.state.currentIndex.value);
+                            });
+                          }),
+                      DrawerFunctionButton(
+                          icon: Assets.drawerDrawerDayNight,
+                          text: "夜间模式",
+                          hasSwitch: true,
+                          initSwitch: PlayerLogic.to.manualIsDark.value,
+                          enableSwitch: !PlayerLogic.to.withSystemTheme.value,
+                          callBack: (check) async {
+                            Get.changeTheme(check ? darkTheme : lightTheme);
+                            // 将全局变量设置为所选值
+                            PlayerLogic.to.manualIsDark.value = check;
+                            // 修改sp值
+                            await SpUtil.put(Const.spDark, check);
+                            // 恢复原来操作的界面
+                            Future.delayed(const Duration(milliseconds: 500))
+                                .then((value) {
+                              PageViewLogic.to.controller.jumpToPage(
+                                  HomeController.to.state.currentIndex.value);
+                            });
+                          }),
+                      DrawerFunctionButton(
+                          icon: Assets.drawerDrawerColorful,
+                          text: "炫彩主题(高性能)",
+                          hasSwitch: true,
+                          initSwitch: PlayerLogic.to.hasSkin.value,
+                          callBack: (check) async {
+                            // 将全局变量设置为所选值
+                            PlayerLogic.to.hasSkin.value = check;
+                            // 修改sp值
+                            await SpUtil.put(Const.spColorful, check);
+                          }),
+                      DrawerFunctionButton(
+                        icon: Assets.drawerDrawerSecret,
+                        text: "关于和隐私",
+                        onTap: () {},
+                      ),
+                      DrawerFunctionButton(
+                        icon: Assets.drawerDrawerReset,
+                        text: "清理数据",
+                        onTap: () async {
+                          SmartDialog.compatible
+                              .showLoading(msg: "重置中...", backDismiss: false);
+                          await DBLogic.to.clearAllAlbum();
+                          await DBLogic.to.findAllListByGroup(
+                              GlobalLogic.to.currentGroup.value);
+                          SmartDialog.dismiss();
+                          SmartDialog.compatible.showToast("清理成功",
+                              time: const Duration(seconds: 5));
+                        },
+                      ),
+                      DrawerFunctionButton(
+                        icon: Assets.drawerDrawerDebug,
+                        text: "保存日志",
+                        onTap: () async {
+                          await SDUtils.uploadLog();
+                          SmartDialog.compatible.showToast("导出成功",
+                              time: const Duration(seconds: 5));
+                        },
+                      )
+                    ],
+                  );
+                }),
               ),
             ))
       ],
