@@ -90,6 +90,7 @@ class _MyAppState extends State<MyApp> {
     subscription = eventBus.on<StartEvent>().listen((event) {
       // 初始化结束后，将启动屏关闭
       FlutterNativeSplash.remove();
+      Log4f.d(msg: 'Splash page remove...');
     });
     PaintingBinding.instance.imageCache.maximumSizeBytes = 1024 * 1024 * 100;
   }
@@ -141,10 +142,20 @@ setStatusBar() {
 /// 初始化服务等一系列耗时任务
 initServices() async {
   await FlutterLogan.init(Const.aesKey, Const.iV, 1024 * 1024 * 10);
+  Get.log = defaultLogWriterCallback;
   await GetStorage.init();
   SpUtil.getInstance();
   Network.getInstance();
   PlayerBinding().dependencies();
   await SDUtils.init();
   Log4f.d(msg: 'All services started...');
+}
+
+/// GetX 日志重定向
+void defaultLogWriterCallback(String value, {bool isError = false}) {
+  if (isError) {
+    Log4f.w(msg: value);
+  } else {
+    Log4f.v(msg: value);
+  }
 }
