@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/dao/album_dao.dart';
 import 'package:lovelivemusicplayer/dao/database.dart';
 import 'package:lovelivemusicplayer/dao/lyric_dao.dart';
@@ -19,6 +21,7 @@ import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/models/PlayListMusic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 
 class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   late MusicDatabase database;
@@ -44,6 +47,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     musicDao = database.musicDao;
     playListMusicDao = database.playListMusicDao;
     menuDao = database.menuDao;
+    CachedNetworkImage.logLevel = CacheManagerLogLevel.debug;
+    AppUtils.removeNetImageCache("https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/120.jpg");
     await findAllListByGroup("all");
     await findAllPlayListMusics();
     await Future.delayed(const Duration(seconds: 1));
@@ -52,26 +57,29 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   }
 
   Future<void> findAllListByGroup(String group) async {
-    /// 设置专辑、歌曲数据
-    final allAlbums = <Album>[];
-    final allMusics = <Music>[];
-    if (group == "all") {
-      allAlbums.addAll(await albumDao.findAllAlbums());
-      allMusics.addAll(await musicDao.findAllMusics());
-    } else {
-      allAlbums.addAll(await albumDao.findAllAlbumsByGroup(group));
-      allMusics.addAll(await musicDao.findAllMusicsByGroup(group));
+    try {
+      /// 设置专辑、歌曲数据
+      final allAlbums = <Album>[];
+      final allMusics = <Music>[];
+      if (group == "all") {
+        allAlbums.addAll(await albumDao.findAllAlbums());
+        allMusics.addAll(await musicDao.findAllMusics());
+      } else {
+        allAlbums.addAll(await albumDao.findAllAlbumsByGroup(group));
+        allMusics.addAll(await musicDao.findAllMusicsByGroup(group));
+      }
+      allAlbums.sort((a, b) => a.date!.compareTo(b.date!));
+
+      GlobalLogic.to.albumList.value = allAlbums;
+      GlobalLogic.to.musicList.value = allMusics;
+      findAllLoveListByGroup(group);
+      await findAllArtistListByGroup(group);
+      await findAllMenuList();
+
+      GlobalLogic.to.databaseInitOver.value = true;
+    } catch (e) {
+      Log4f.e(msg: e.toString(), writeFile: true);
     }
-    allAlbums.sort((a, b) => a.date!.compareTo(b.date!));
-
-    GlobalLogic.to.albumList.value = allAlbums;
-    GlobalLogic.to.musicList.value = allMusics;
-    findAllLoveListByGroup(group);
-    await findAllArtistListByGroup(group);
-    await findAllMenuList();
-
-    GlobalLogic.to.databaseInitOver.value = true;
-
     try {
       scrollToTop(HomeController.to.scrollController1);
       scrollToTop(HomeController.to.scrollController2);
@@ -90,41 +98,49 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
   /// 获取我喜欢列表
   findAllLoveListByGroup(String group) {
-    final loveList = <Music>[];
-    GlobalLogic.to.musicList.where((music) {
-      if (group == "all") {
-        return music.isLove;
-      } else {
-        return music.isLove && music.group == group;
-      }
-    }).forEach((music) {
-      loveList.add(music);
-    });
-    GlobalLogic.to.loveList.value = loveList;
+    try {
+      final loveList = <Music>[];
+      GlobalLogic.to.musicList.where((music) {
+        if (group == "all") {
+          return music.isLove;
+        } else {
+          return music.isLove && music.group == group;
+        }
+      }).forEach((music) {
+        loveList.add(music);
+      });
+      GlobalLogic.to.loveList.value = loveList;
+    } catch (e) {
+      Log4f.e(msg: e.toString(), writeFile: true);
+    }
   }
 
   findAllArtistListByGroup(String group) async {
-    final List<Map<String, Object?>> tempList;
-    if (group == "all") {
-      tempList = await database.database.rawQuery(
-          "SELECT artist, artistBin, COUNT(musicId) as count FROM Music GROUP BY artistBin");
-    } else {
-      tempList = await database.database.rawQuery(
-          "SELECT artist, artistBin, COUNT(musicId) as count FROM Music WHERE `group` = :group GROUP BY artistBin",
-          <dynamic>[group]);
+    try {
+      final List<Map<String, Object?>> tempList;
+      if (group == "all") {
+        tempList = await database.database.rawQuery(
+            "SELECT artist, artistBin, COUNT(musicId) as count FROM Music GROUP BY artistBin");
+      } else {
+        tempList = await database.database.rawQuery(
+            "SELECT artist, artistBin, COUNT(musicId) as count FROM Music WHERE `group` = :group GROUP BY artistBin",
+            <dynamic>[group]);
+      }
+      final artistList = <Artist>[];
+      for (var element in tempList) {
+        String name = element['artist'].toString();
+        String artistBin = element['artistBin'].toString();
+        int count = int.parse(element['count'].toString());
+        artistList.add(Artist(
+            name: name,
+            artistBin: artistBin,
+            photo: "${Const.ossUrl}LLMP/artist/$artistBin.jpg",
+            count: count));
+      }
+      GlobalLogic.to.artistList.value = artistList;
+    } catch (e) {
+      Log4f.e(msg: e.toString(), writeFile: true);
     }
-    final artistList = <Artist>[];
-    for (var element in tempList) {
-      String name = element['artist'].toString();
-      String artistBin = element['artistBin'].toString();
-      int count = int.parse(element['count'].toString());
-      artistList.add(Artist(
-          name: name,
-          artistBin: artistBin,
-          photo: "${Const.ossUrl}LLMP/artist/$artistBin.jpg",
-          count: count));
-    }
-    GlobalLogic.to.artistList.value = artistList;
   }
 
   Future<List<Music>> findAllMusicByArtistBin(String artistBin) async {
@@ -139,34 +155,38 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
   /// 初始化数据库数据
   Future<void> insertMusicIntoAlbum(DownloadMusic downloadMusic) async {
-    final album = await findAlbumById(downloadMusic.albumUId);
-    if (album == null) {
-      final _album = Album(
-          albumId: downloadMusic.albumUId,
-          albumName: downloadMusic.albumName,
-          date: downloadMusic.date,
-          coverPath: downloadMusic.baseUrl + downloadMusic.coverPath,
-          category: downloadMusic.category,
-          group: downloadMusic.group);
-      await albumDao.insertAlbum(_album);
-    }
-    final music = await findMusicById(downloadMusic.musicUId);
-    if (music == null) {
-      final _music = Music(
-          musicId: downloadMusic.musicUId,
-          musicName: downloadMusic.musicName,
-          albumId: downloadMusic.albumUId,
-          coverPath: downloadMusic.coverPath,
-          artist: downloadMusic.artist,
-          artistBin: downloadMusic.artistBin,
-          albumName: downloadMusic.albumName,
-          musicPath: downloadMusic.musicPath,
-          baseUrl: downloadMusic.baseUrl,
-          time: downloadMusic.totalTime,
-          group: downloadMusic.group,
-          category: downloadMusic.category,
-          isLove: false);
-      await musicDao.insertMusic(_music);
+    try {
+      final album = await findAlbumById(downloadMusic.albumUId);
+      if (album == null) {
+        final mAlbum = Album(
+            albumId: downloadMusic.albumUId,
+            albumName: downloadMusic.albumName,
+            date: downloadMusic.date,
+            coverPath: downloadMusic.baseUrl + downloadMusic.coverPath,
+            category: downloadMusic.category,
+            group: downloadMusic.group);
+        await albumDao.insertAlbum(mAlbum);
+      }
+      final music = await findMusicById(downloadMusic.musicUId);
+      if (music == null) {
+        final mMusic = Music(
+            musicId: downloadMusic.musicUId,
+            musicName: downloadMusic.musicName,
+            albumId: downloadMusic.albumUId,
+            coverPath: downloadMusic.coverPath,
+            artist: downloadMusic.artist,
+            artistBin: downloadMusic.artistBin,
+            albumName: downloadMusic.albumName,
+            musicPath: downloadMusic.musicPath,
+            baseUrl: downloadMusic.baseUrl,
+            time: downloadMusic.totalTime,
+            group: downloadMusic.group,
+            category: downloadMusic.category,
+            isLove: false);
+        await musicDao.insertMusic(mMusic);
+      }
+    } catch (e) {
+      Log4f.e(msg: e.toString(), writeFile: true);
     }
   }
 
@@ -179,40 +199,56 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   }
 
   Future<void> deleteMenuById(int menuId) async {
-    await menuDao.deleteMenuById(menuId);
-    await findAllMenuList();
+    try {
+      await menuDao.deleteMenuById(menuId);
+      await findAllMenuList();
+    } catch (e) {
+      Log4f.e(msg: e.toString(), writeFile: true);
+    }
   }
 
   Future<void> updateMenuName(String name, int menuId) async {
-    Menu? menu = await menuDao.findMenuById(menuId);
-    if (menu != null) {
-      menu.name = name;
-      await menuDao.updateMenu(menu);
-      await findAllMenuList();
+    try {
+      Menu? menu = await menuDao.findMenuById(menuId);
+      if (menu != null) {
+        menu.name = name;
+        await menuDao.updateMenu(menu);
+        await findAllMenuList();
+      }
+    } catch (e) {
+      Log4f.e(msg: e.toString(), writeFile: true);
     }
   }
 
   /// 获取上一次持久化的播放列表并播放
   Future<void> findAllPlayListMusics() async {
-    final playList = await playListMusicDao.findAllPlayListMusics();
-    final musicIds = <String>[];
-    var willPlayMusicIndex = 0;
-    for (var i = 0; i < playList.length; i++) {
-      musicIds.add(playList[i].musicId);
-      if (playList[i].isPlaying) {
-        willPlayMusicIndex = i;
+    try {
+      final playList = await playListMusicDao.findAllPlayListMusics();
+      final musicIds = <String>[];
+      var willPlayMusicIndex = 0;
+      for (var i = 0; i < playList.length; i++) {
+        musicIds.add(playList[i].musicId);
+        if (playList[i].isPlaying) {
+          willPlayMusicIndex = i;
+        }
       }
-    }
 
-    final musicList = await musicDao.findMusicsByMusicIds(musicIds);
-    playLogic.playMusic(musicList, index: willPlayMusicIndex, needPlay: false);
+      final musicList = await musicDao.findMusicsByMusicIds(musicIds);
+      playLogic.playMusic(musicList, index: willPlayMusicIndex, needPlay: false);
+    } catch (e) {
+      Log4f.e(msg: e.toString(), writeFile: true);
+    }
   }
 
   /// 更新播放列表
   Future<void> updatePlayingList(List<PlayListMusic> playMusics) async {
-    if (playMusics.isNotEmpty) {
-      await playListMusicDao.deleteAllPlayListMusics();
-      await playListMusicDao.insertAllPlayListMusics(playMusics);
+    try {
+      if (playMusics.isNotEmpty) {
+        await playListMusicDao.deleteAllPlayListMusics();
+        await playListMusicDao.insertAllPlayListMusics(playMusics);
+      }
+    } catch (e) {
+      Log4f.e(msg: e.toString(), writeFile: true);
     }
   }
 
@@ -227,80 +263,99 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   }
 
   /// 更新当前歌曲的喜欢状态
-  Future<Music> updateLove(Music music, {bool? isLove}) async {
-    music.isLove = isLove ?? !music.isLove;
-    await musicDao.updateMusic(music);
-    GlobalLogic.to.musicList
-        .firstWhere((_music) => _music.musicId == music.musicId)
-        .isLove = music.isLove;
-    return music;
+  Future<Music?> updateLove(Music music, {bool? isLove}) async {
+    try {
+      music.isLove = isLove ?? !music.isLove;
+      await musicDao.updateMusic(music);
+      GlobalLogic.to.musicList
+          .firstWhere((mMusic) => mMusic.musicId == music.musicId)
+          .isLove = music.isLove;
+      return music;
+    } catch (e) {
+      Log4f.e(msg: e.toString(), writeFile: true);
+    }
+    return null;
   }
 
   Future<void> updateLoveList(List<Music> musicList) async {
-    // 未喜欢的列表
-    final unLovedList = <String>[];
-    // 全部歌曲的id列表
-    final idList = <String>[];
-    for (var music in musicList) {
-      if (!music.isLove) {
-        // 歌曲属性不是我喜欢则加入未喜欢列表
-        unLovedList.add(music.musicId!);
+    try {
+      // 未喜欢的列表
+      final unLovedList = <String>[];
+      // 全部歌曲的id列表
+      final idList = <String>[];
+      for (var music in musicList) {
+        if (!music.isLove) {
+          // 歌曲属性不是我喜欢则加入未喜欢列表
+          unLovedList.add(music.musicId!);
+        }
+        idList.add(music.musicId!);
       }
-      idList.add(music.musicId!);
-    }
-    if (unLovedList.isEmpty) {
-      // 全是喜欢的话，就将全部列表都变成不喜欢
-      await musicDao.updateLoveStatus(false, idList);
-      GlobalLogic.to.musicList
-          .firstWhere((music) => idList.contains(music.musicId))
-          .isLove = false;
-    } else {
-      // 将未喜欢的列表歌曲变成喜欢
-      await musicDao.updateLoveStatus(true, unLovedList);
+      if (unLovedList.isEmpty) {
+        // 全是喜欢的话，就将全部列表都变成不喜欢
+        await musicDao.updateLoveStatus(false, idList);
+        GlobalLogic.to.musicList
+            .firstWhere((music) => idList.contains(music.musicId))
+            .isLove = false;
+      } else {
+        // 将未喜欢的列表歌曲变成喜欢
+        await musicDao.updateLoveStatus(true, unLovedList);
 
-      GlobalLogic.to.musicList
-          .firstWhere((music) => unLovedList.contains(music.musicId))
-          .isLove = true;
+        GlobalLogic.to.musicList
+            .firstWhere((music) => unLovedList.contains(music.musicId))
+            .isLove = true;
+      }
+    } catch (e) {
+      Log4f.e(msg: e.toString(), writeFile: true);
     }
   }
 
   /// 新增一个歌单
   Future<bool> addMenu(String name, List<String> musicIds) async {
-    final idList = await menuDao.findMenuIds() ?? [];
-    final id = calcSmallAtIntArr(idList);
-    if (id == -1) {
-      return false;
+    try {
+      final idList = await menuDao.findMenuIds() ?? [];
+      final id = calcSmallAtIntArr(idList);
+      if (id == -1) {
+        return false;
+      }
+      final menu = Menu(
+          id: id,
+          date: DateUtil.formatDate(DateTime.now(), format: DateFormats.y_mo_d),
+          name: name,
+          music: musicIds);
+      await menuDao.insertMenu(menu);
+      await findAllMenuList();
+      return true;
+    } catch (e) {
+      Log4f.e(msg: e.toString(), writeFile: true);
     }
-    final menu = Menu(
-        id: id,
-        date: DateUtil.formatDate(DateTime.now(), format: DateFormats.y_mo_d),
-        name: name,
-        music: musicIds);
-    await menuDao.insertMenu(menu);
-    await findAllMenuList();
-    return true;
+    return false;
   }
 
   /// 向歌单添加歌曲
   Future<bool> insertToMenu(int menuId, List<String> musicIds) async {
-    var menu = await menuDao.findMenuById(menuId);
-    if (menu == null) {
-      return false;
-    }
-    if (menu.music == null) {
-      menu.music = musicIds;
-    } else {
-      final insertList = <String>[];
-      for (var musicId in musicIds) {
-        if (!menu.music!.contains(musicId)) {
-          insertList.add(musicId);
-        }
+    try {
+      var menu = await menuDao.findMenuById(menuId);
+      if (menu == null) {
+        return false;
       }
-      menu.music!.addAll(insertList);
+      if (menu.music == null) {
+        menu.music = musicIds;
+      } else {
+        final insertList = <String>[];
+        for (var musicId in musicIds) {
+          if (!menu.music!.contains(musicId)) {
+            insertList.add(musicId);
+          }
+        }
+        menu.music!.addAll(insertList);
+      }
+      await menuDao.updateMenu(menu);
+      await findAllMenuList();
+      return true;
+    } catch (e) {
+      Log4f.e(msg: e.toString(), writeFile: true);
     }
-    await menuDao.updateMenu(menu);
-    await findAllMenuList();
-    return true;
+    return false;
   }
 
   /// 删除歌单中的歌曲
@@ -308,39 +363,48 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   /// @param 要删除的歌曲id列表
   /// @return 1: 刷新界面 ;2: 需要返回上一页
   Future<int> removeItemFromMenu(int menuId, List<String> musicIds) async {
-    var menu = await menuDao.findMenuById(menuId);
-    if (menu == null) {
-      return -1;
-    }
-    final musicIdList = menu.music;
-    if (musicIdList == null || musicIdList.isEmpty) {
-      return -1;
-    }
-    final tempList = <String>[];
-    for (var musicId in musicIdList) {
-      if (!musicIds.contains(musicId)) {
-        tempList.add(musicId);
+    try {
+      var menu = await menuDao.findMenuById(menuId);
+      if (menu == null) {
+        return -1;
       }
+      final musicIdList = menu.music;
+      if (musicIdList == null || musicIdList.isEmpty) {
+        return -1;
+      }
+      final tempList = <String>[];
+      for (var musicId in musicIdList) {
+        if (!musicIds.contains(musicId)) {
+          tempList.add(musicId);
+        }
+      }
+      if (tempList.isEmpty) {
+        await menuDao.deleteMenuById(menuId);
+        await findAllMenuList();
+        return 2;
+      } else {
+        menu.music?.clear();
+        menu.music?.addAll(tempList);
+        await menuDao.updateMenu(menu);
+        await findAllMenuList();
+        return 1;
+      }
+    } catch (e) {
+      Log4f.e(msg: e.toString(), writeFile: true);
     }
-    if (tempList.isEmpty) {
-      await menuDao.deleteMenuById(menuId);
-      await findAllMenuList();
-      return 2;
-    } else {
-      menu.music?.clear();
-      menu.music?.addAll(tempList);
-      await menuDao.updateMenu(menu);
-      await findAllMenuList();
-      return 1;
-    }
+    return -1;
   }
 
   /// 清空全部专辑
   clearAllAlbum() async {
-    await albumDao.deleteAllAlbums();
-    await musicDao.deleteAllMusics();
-    await lyricDao.deleteAllLyrics();
-    await playListMusicDao.deleteAllPlayListMusics();
+    try {
+      await albumDao.deleteAllAlbums();
+      await musicDao.deleteAllMusics();
+      await lyricDao.deleteAllLyrics();
+      await playListMusicDao.deleteAllPlayListMusics();
+    } catch (e) {
+      Log4f.e(msg: e.toString(), writeFile: true);
+    }
   }
 
   /// 计算101...200中，数组内不存在的最小值

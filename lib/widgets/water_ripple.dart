@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:log4f/log4f.dart';
 
 class WaterRipple extends StatefulWidget {
   const WaterRipple({Key? key}) : super(key: key);
@@ -92,6 +93,7 @@ class WaterRippleState extends State<WaterRipple>
           controller.forward();
           setState(() {});
         } catch (e) {
+          Log4f.e(msg: e.toString(), writeFile: true);
           return;
         }
       });

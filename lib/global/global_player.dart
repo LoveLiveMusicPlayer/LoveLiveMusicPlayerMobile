@@ -154,38 +154,42 @@ class PlayerLogic extends SuperController
 
   /// 播放指定列表的歌曲
   playMusic(List<Music> musicList, {int index = 0, bool needPlay = true}) {
-    // 如果上一次处理没有结束，直接跳过
-    if (GlobalLogic.to.isHandlePlay) {
-      return;
-    }
-    GlobalLogic.to.isHandlePlay = true;
-    if (musicList.isEmpty) {
-      GlobalLogic.to.isHandlePlay = false;
-      return;
-    }
-
-    // 设置新的播放列表
-    final audioList = <AudioSource>[];
-    for (var music in musicList) {
-      audioList.add(genAudioSourceUri(music));
-    }
-    mPlayer.stop();
-    audioSourceList.clear();
-    audioSourceList.addAll(audioList);
-    audioList.clear();
-
-    mPlayer.setAudioSource(audioSourceList, initialIndex: index).then((value) {
-      if (needPlay) {
-        mPlayer.play();
+    try {
+      // 如果上一次处理没有结束，直接跳过
+      if (GlobalLogic.to.isHandlePlay) {
+        return;
       }
-      persistencePlayList(musicList, index).then((value) {
-        if (playingMusic.value != musicList[index]) {
-          setCurrentMusic(musicList[index]);
-        }
+      GlobalLogic.to.isHandlePlay = true;
+      if (musicList.isEmpty) {
         GlobalLogic.to.isHandlePlay = false;
-        getLrc(false);
+        return;
+      }
+
+      // 设置新的播放列表
+      final audioList = <AudioSource>[];
+      for (var music in musicList) {
+        audioList.add(genAudioSourceUri(music));
+      }
+      mPlayer.stop();
+      audioSourceList.clear();
+      audioSourceList.addAll(audioList);
+      audioList.clear();
+
+      mPlayer.setAudioSource(audioSourceList, initialIndex: index).then((value) {
+        if (needPlay) {
+          mPlayer.play();
+        }
+        persistencePlayList(musicList, index).then((value) {
+          if (playingMusic.value != musicList[index]) {
+            setCurrentMusic(musicList[index]);
+          }
+          GlobalLogic.to.isHandlePlay = false;
+          getLrc(false);
+        });
       });
-    });
+    } catch (e) {
+      Log4f.e(msg: e.toString(), writeFile: true);
+    }
   }
 
   /// 插入到下一曲
@@ -383,10 +387,10 @@ class PlayerLogic extends SuperController
   toggleLove({Music? music, bool? isLove}) {
     Music? mMusic = music;
     mMusic ??= playingMusic.value;
-    DBLogic.to.updateLove(mMusic, isLove: isLove).then((value) {
+    DBLogic.to.updateLove(mMusic, isLove: isLove).then((music) {
       // 切换的歌曲如果是当前播放的歌曲，需要手动深拷贝一下对象使得player界面状态正确
-      if (value.musicId == playingMusic.value.musicId) {
-        setCurrentMusic(Music.deepClone(value));
+      if (music != null && music.musicId == playingMusic.value.musicId) {
+        setCurrentMusic(Music.deepClone(music));
       }
       DBLogic.to.findAllLoveListByGroup(GlobalLogic.to.currentGroup.value);
     });

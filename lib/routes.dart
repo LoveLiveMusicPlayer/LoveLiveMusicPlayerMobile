@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/pages/data_sync/data_sync.dart';
 import 'package:lovelivemusicplayer/pages/details/album_details/view.dart';
 import 'package:lovelivemusicplayer/pages/details/menu_details/view.dart';
@@ -16,6 +17,7 @@ class Routes {
   static const String routeAlbumDetails = "/album_details";
   static const String routeSingerDetails = "/singer_details";
   static const String routeMenuDetails = "/menu_details";
+  static const String routeLogger = "/logger";
 
   static List<GetPage> getRoutes() {
     return [
@@ -33,6 +35,7 @@ class Routes {
       GetPage(name: Routes.routeScan, page: () => const Scanner()),
       GetPage(name: Routes.routeTransform, page: () => const MusicTransform()),
       GetPage(name: Routes.routeDataSync, page: () => const DataSync()),
+      GetPage(name: Routes.routeLogger, page: () => const LogConsole()),
     ];
   }
 }

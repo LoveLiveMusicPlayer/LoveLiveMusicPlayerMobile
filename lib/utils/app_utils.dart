@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:color_thief_flutter/color_thief_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
@@ -26,5 +27,10 @@ class AppUtils {
     final rgb = await getColorFromImage(image);
     return Color.fromARGB(150, rgb?.elementAt(0) ?? 0, rgb?.elementAt(1) ?? 0,
         rgb?.elementAt(2) ?? 0);
+  }
+
+  /// 删除网络图片缓存
+  static Future<dynamic> removeNetImageCache(String url) async {
+    return await CachedNetworkImage.evictFromCache(url);
   }
 }

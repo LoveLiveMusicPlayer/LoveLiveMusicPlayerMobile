@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
@@ -74,7 +75,9 @@ class BottomBar2 extends StatelessWidget {
     try {
       controller.animateTo(0,
           duration: const Duration(milliseconds: 200), curve: Curves.ease);
-    } catch (e) {}
+    } catch (e) {
+      Log4f.e(msg: e.toString(), writeFile: true);
+    }
   }
 
   int handlePage(int index) {
