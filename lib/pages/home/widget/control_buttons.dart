@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 
@@ -44,12 +45,12 @@ class ControlButtons extends StatelessWidget {
                     iconSize: 15,
                     hasShadow: false,
                     iconColor:
-                        PlayerLogic.to.hasSkin.value ? Colors.white : null,
-                    bgColor: PlayerLogic.to.hasSkin.value
-                        ? PlayerLogic.to.iconColor.value
+                        GlobalLogic.to.hasSkin.value ? Colors.white : null,
+                    bgColor: GlobalLogic.to.hasSkin.value
+                        ? GlobalLogic.to.iconColor.value
                         : null,
-                    outerColor: PlayerLogic.to.hasSkin.value
-                        ? PlayerLogic.to.iconColor.value
+                    outerColor: GlobalLogic.to.hasSkin.value
+                        ? GlobalLogic.to.iconColor.value
                         : null);
               },
             ),
@@ -62,12 +63,12 @@ class ControlButtons extends StatelessWidget {
                   radius: 40,
                   iconSize: 16,
                   hasShadow: false,
-                  iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
-                  bgColor: PlayerLogic.to.hasSkin.value
-                      ? PlayerLogic.to.iconColor.value
+                  iconColor: GlobalLogic.to.hasSkin.value ? Colors.white : null,
+                  bgColor: GlobalLogic.to.hasSkin.value
+                      ? GlobalLogic.to.iconColor.value
                       : null,
-                  outerColor: PlayerLogic.to.hasSkin.value
-                      ? PlayerLogic.to.iconColor.value
+                  outerColor: GlobalLogic.to.hasSkin.value
+                      ? GlobalLogic.to.iconColor.value
                       : null),
             ),
             StreamBuilder<PlayerState>(
@@ -96,12 +97,12 @@ class ControlButtons extends StatelessWidget {
                       iconSize: 26,
                       hasShadow: false,
                       iconColor:
-                          PlayerLogic.to.hasSkin.value ? Colors.white : null,
-                      bgColor: PlayerLogic.to.hasSkin.value
-                          ? PlayerLogic.to.iconColor.value
+                          GlobalLogic.to.hasSkin.value ? Colors.white : null,
+                      bgColor: GlobalLogic.to.hasSkin.value
+                          ? GlobalLogic.to.iconColor.value
                           : null,
-                      outerColor: PlayerLogic.to.hasSkin.value
-                          ? PlayerLogic.to.iconColor.value
+                      outerColor: GlobalLogic.to.hasSkin.value
+                          ? GlobalLogic.to.iconColor.value
                           : null);
                 } else if (processingState != ProcessingState.completed) {
                   return materialButton(
@@ -112,12 +113,12 @@ class ControlButtons extends StatelessWidget {
                       iconSize: 26,
                       hasShadow: false,
                       iconColor:
-                          PlayerLogic.to.hasSkin.value ? Colors.white : null,
-                      bgColor: PlayerLogic.to.hasSkin.value
-                          ? PlayerLogic.to.iconColor.value
+                          GlobalLogic.to.hasSkin.value ? Colors.white : null,
+                      bgColor: GlobalLogic.to.hasSkin.value
+                          ? GlobalLogic.to.iconColor.value
                           : null,
-                      outerColor: PlayerLogic.to.hasSkin.value
-                          ? PlayerLogic.to.iconColor.value
+                      outerColor: GlobalLogic.to.hasSkin.value
+                          ? GlobalLogic.to.iconColor.value
                           : null);
                 } else {
                   return materialButton(
@@ -130,12 +131,12 @@ class ControlButtons extends StatelessWidget {
                       iconSize: 26,
                       hasShadow: false,
                       iconColor:
-                          PlayerLogic.to.hasSkin.value ? Colors.white : null,
-                      bgColor: PlayerLogic.to.hasSkin.value
-                          ? PlayerLogic.to.iconColor.value
+                          GlobalLogic.to.hasSkin.value ? Colors.white : null,
+                      bgColor: GlobalLogic.to.hasSkin.value
+                          ? GlobalLogic.to.iconColor.value
                           : null,
-                      outerColor: PlayerLogic.to.hasSkin.value
-                          ? PlayerLogic.to.iconColor.value
+                      outerColor: GlobalLogic.to.hasSkin.value
+                          ? GlobalLogic.to.iconColor.value
                           : null);
                 }
               },
@@ -149,12 +150,12 @@ class ControlButtons extends StatelessWidget {
                   radius: 40,
                   iconSize: 16,
                   hasShadow: false,
-                  iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
-                  bgColor: PlayerLogic.to.hasSkin.value
-                      ? PlayerLogic.to.iconColor.value
+                  iconColor: GlobalLogic.to.hasSkin.value ? Colors.white : null,
+                  bgColor: GlobalLogic.to.hasSkin.value
+                      ? GlobalLogic.to.iconColor.value
                       : null,
-                  outerColor: PlayerLogic.to.hasSkin.value
-                      ? PlayerLogic.to.iconColor.value
+                  outerColor: GlobalLogic.to.hasSkin.value
+                      ? GlobalLogic.to.iconColor.value
                       : null),
             ),
             materialButton(Assets.playerPlayPlaylist, () {},
@@ -163,12 +164,12 @@ class ControlButtons extends StatelessWidget {
                 radius: 6,
                 iconSize: 15,
                 hasShadow: false,
-                iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
-                bgColor: PlayerLogic.to.hasSkin.value
-                    ? PlayerLogic.to.iconColor.value
+                iconColor: GlobalLogic.to.hasSkin.value ? Colors.white : null,
+                bgColor: GlobalLogic.to.hasSkin.value
+                    ? GlobalLogic.to.iconColor.value
                     : null,
-                outerColor: PlayerLogic.to.hasSkin.value
-                    ? PlayerLogic.to.iconColor.value
+                outerColor: GlobalLogic.to.hasSkin.value
+                    ? GlobalLogic.to.iconColor.value
                     : null),
           ],
         ),

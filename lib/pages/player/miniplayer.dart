@@ -6,6 +6,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
@@ -41,7 +42,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
   }
 
   Widget renderPanel() {
-    if (PlayerLogic.to.hasSkin.value) {
+    if (GlobalLogic.to.hasSkin.value) {
       final music = PlayerLogic.to.playingMusic.value;
       return FutureBuilder<Decoration>(
         initialData: BoxDecoration(

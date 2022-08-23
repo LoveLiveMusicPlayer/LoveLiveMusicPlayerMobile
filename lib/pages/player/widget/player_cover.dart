@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
@@ -37,7 +38,7 @@ class _CoverState extends State<Cover> {
                 273,
                 273,
                 radius: 24,
-                shadowColor: PlayerLogic.to.hasSkin.value
+                shadowColor: GlobalLogic.to.hasSkin.value
                     ? const Color(0xFF05080C)
                     : null),
 

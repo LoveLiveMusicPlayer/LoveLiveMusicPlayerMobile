@@ -1,8 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/const.dart';
+import 'package:lovelivemusicplayer/global/global_theme.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
+import 'package:lovelivemusicplayer/utils/sp_util.dart';
 
 import '../models/Music.dart';
 
@@ -22,7 +26,49 @@ class GlobalLogic extends SuperController
   /// 是否正在处理播放逻辑
   var isHandlePlay = false;
 
+  /// 是否手动选择的是暗色主题
+  var manualIsDark = false.obs;
+
+  /// 是否使用封面皮肤
+  var hasSkin = false.obs;
+
+  /// 是否跟随系统主题色
+  var withSystemTheme = false.obs;
+
+  /// 炫彩模式下的按钮皮肤
+  var iconColor = Get.theme.primaryColor.obs;
+
   static GlobalLogic get to => Get.find();
+
+  @override
+  void onInit() {
+    super.onInit();
+    SpUtil.getBoolean(Const.spColorful, false)
+        .then((skin) => hasSkin.value = skin);
+    SpUtil.getBoolean(Const.spDark, false)
+        .then((isDark) => manualIsDark.value = isDark);
+    SpUtil.getBoolean(Const.spWithSystemTheme, false).then((isWith) {
+      if (isWith && Get.context != null) {
+        bool isDark =
+            MediaQuery.of(Get.context!).platformBrightness == Brightness.dark;
+        Get.changeTheme(isDark ? darkTheme : lightTheme);
+      }
+      withSystemTheme.value = isWith;
+    });
+
+    /// 监听系统主题色改变
+    final window = WidgetsBinding.instance.window;
+    window.onPlatformBrightnessChanged = () {
+      WidgetsBinding.instance.handlePlatformBrightnessChanged();
+      SpUtil.getBoolean(Const.spWithSystemTheme, false).then((isWith) {
+        if (isWith && Get.context != null) {
+          bool isDark = window.platformBrightness == Brightness.dark;
+          Get.changeTheme(isDark ? darkTheme : lightTheme);
+        }
+        withSystemTheme.value = isWith;
+      });
+    };
+  }
 
   int getListSize(int index, bool isDbInit) {
     if (!isDbInit) {

@@ -6,7 +6,6 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/global/global_theme.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
@@ -158,7 +157,7 @@ class _DrawerPageState extends State<DrawerPage> {
                           icon: Assets.drawerDrawerSystemTheme,
                           text: "跟随系统主题",
                           hasSwitch: true,
-                          initSwitch: PlayerLogic.to.withSystemTheme.value,
+                          initSwitch: GlobalLogic.to.withSystemTheme.value,
                           callBack: (check) async {
                             // 获取当前系统主题色
                             bool isDark =
@@ -169,12 +168,12 @@ class _DrawerPageState extends State<DrawerPage> {
                               Get.changeTheme(isDark ? darkTheme : lightTheme);
                             } else {
                               // 设置为原来手动设置的主题色
-                              Get.changeTheme(PlayerLogic.to.manualIsDark.value
+                              Get.changeTheme(GlobalLogic.to.manualIsDark.value
                                   ? darkTheme
                                   : lightTheme);
                             }
                             // 将全局变量设置为所选值
-                            PlayerLogic.to.withSystemTheme.value = check;
+                            GlobalLogic.to.withSystemTheme.value = check;
                             // 修改sp值
                             await SpUtil.put(Const.spWithSystemTheme, check);
                             // 恢复原来操作的界面
@@ -188,12 +187,12 @@ class _DrawerPageState extends State<DrawerPage> {
                           icon: Assets.drawerDrawerDayNight,
                           text: "夜间模式",
                           hasSwitch: true,
-                          initSwitch: PlayerLogic.to.manualIsDark.value,
-                          enableSwitch: !PlayerLogic.to.withSystemTheme.value,
+                          initSwitch: GlobalLogic.to.manualIsDark.value,
+                          enableSwitch: !GlobalLogic.to.withSystemTheme.value,
                           callBack: (check) async {
                             Get.changeTheme(check ? darkTheme : lightTheme);
                             // 将全局变量设置为所选值
-                            PlayerLogic.to.manualIsDark.value = check;
+                            GlobalLogic.to.manualIsDark.value = check;
                             // 修改sp值
                             await SpUtil.put(Const.spDark, check);
                             // 恢复原来操作的界面
@@ -207,10 +206,10 @@ class _DrawerPageState extends State<DrawerPage> {
                           icon: Assets.drawerDrawerColorful,
                           text: "炫彩主题(高性能)",
                           hasSwitch: true,
-                          initSwitch: PlayerLogic.to.hasSkin.value,
+                          initSwitch: GlobalLogic.to.hasSkin.value,
                           callBack: (check) async {
                             // 将全局变量设置为所选值
-                            PlayerLogic.to.hasSkin.value = check;
+                            GlobalLogic.to.hasSkin.value = check;
                             // 修改sp值
                             await SpUtil.put(Const.spColorful, check);
                           }),

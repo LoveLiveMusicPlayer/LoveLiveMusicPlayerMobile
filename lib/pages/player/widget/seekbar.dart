@@ -4,7 +4,7 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 
 class SeekBar extends StatefulWidget {
   final Duration duration;
@@ -46,14 +46,14 @@ class _SeekBarState extends State<SeekBar> {
           data: const SliderThemeData(
               trackHeight: 4, thumbShape: RoundSliderThumbShape()),
           child: Slider(
-            inactiveColor: PlayerLogic.to.hasSkin.value || Get.isDarkMode
+            inactiveColor: GlobalLogic.to.hasSkin.value || Get.isDarkMode
                 ? const Color(0x4D05080C)
                 : const Color(0x99CCDDF1),
-            activeColor: PlayerLogic.to.hasSkin.value || Get.isDarkMode
+            activeColor: GlobalLogic.to.hasSkin.value || Get.isDarkMode
                 ? const Color(0x9905080C)
                 : const Color(0x99CCDDF1),
-            thumbColor: PlayerLogic.to.hasSkin.value
-                ? PlayerLogic.to.iconColor.value
+            thumbColor: GlobalLogic.to.hasSkin.value
+                ? GlobalLogic.to.iconColor.value
                 : Get.isDarkMode
                     ? const Color(0xFF05080c)
                     : Get.theme.primaryColor,
@@ -82,7 +82,7 @@ class _SeekBarState extends State<SeekBar> {
                   currentMS,
                   style: TextStyle(
                       fontSize: 12.sp,
-                      color: PlayerLogic.to.hasSkin.value
+                      color: GlobalLogic.to.hasSkin.value
                           ? const Color(0xffdfdfdf)
                           : const Color(0xFF999999)),
                 ),
@@ -90,7 +90,7 @@ class _SeekBarState extends State<SeekBar> {
                   totalMS,
                   style: TextStyle(
                       fontSize: 12.sp,
-                      color: PlayerLogic.to.hasSkin.value
+                      color: GlobalLogic.to.hasSkin.value
                           ? const Color(0xffdfdfdf)
                           : const Color(0xFF999999)),
                 )

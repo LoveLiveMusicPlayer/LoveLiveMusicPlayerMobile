@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/PositionData.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
@@ -91,7 +92,7 @@ class _PlayerState extends State<Player> {
 
   Widget top() {
     return Container(
-      color: PlayerLogic.to.hasSkin.value
+      color: GlobalLogic.to.hasSkin.value
           ? Colors.transparent
           : Get.theme.primaryColor,
       height: 557.h,
@@ -101,7 +102,7 @@ class _PlayerState extends State<Player> {
 
           /// 头部
           PlayerHeader(
-              btnColor: PlayerLogic.to.iconColor.value,
+              btnColor: GlobalLogic.to.iconColor.value,
               onCloseTap: () => widget.onTap(),
               onMoreTap: () {}),
 
@@ -122,7 +123,7 @@ class _PlayerState extends State<Player> {
   Widget bottom() {
     return Container(
       height: ScreenUtil().screenHeight - 560.h,
-      color: PlayerLogic.to.hasSkin.value
+      color: GlobalLogic.to.hasSkin.value
           ? Colors.transparent
           : Get.theme.primaryColor,
       child: Column(
@@ -184,12 +185,12 @@ class _PlayerState extends State<Player> {
                 radius: 6,
                 iconSize: 20,
                 hasShadow: false,
-                iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
-                bgColor: PlayerLogic.to.hasSkin.value
-                    ? PlayerLogic.to.iconColor.value
+                iconColor: GlobalLogic.to.hasSkin.value ? Colors.white : null,
+                bgColor: GlobalLogic.to.hasSkin.value
+                    ? GlobalLogic.to.iconColor.value
                     : null,
-                outerColor: PlayerLogic.to.hasSkin.value
-                    ? PlayerLogic.to.iconColor.value
+                outerColor: GlobalLogic.to.hasSkin.value
+                    ? GlobalLogic.to.iconColor.value
                     : null),
             materialButton(icon, () => PlayerLogic.to.toggleTranslate(),
                 width: 32,
@@ -197,12 +198,12 @@ class _PlayerState extends State<Player> {
                 radius: 6,
                 iconSize: 30,
                 hasShadow: false,
-                iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
-                bgColor: PlayerLogic.to.hasSkin.value
-                    ? PlayerLogic.to.iconColor.value
+                iconColor: GlobalLogic.to.hasSkin.value ? Colors.white : null,
+                bgColor: GlobalLogic.to.hasSkin.value
+                    ? GlobalLogic.to.iconColor.value
                     : null,
-                outerColor: PlayerLogic.to.hasSkin.value
-                    ? PlayerLogic.to.iconColor.value
+                outerColor: GlobalLogic.to.hasSkin.value
+                    ? GlobalLogic.to.iconColor.value
                     : null)
           ]));
     }
@@ -222,11 +223,11 @@ class _PlayerState extends State<Player> {
               iconColor: Colors.pinkAccent,
               iconSize: 15,
               hasShadow: false,
-              bgColor: PlayerLogic.to.hasSkin.value
-                  ? PlayerLogic.to.iconColor.value
+              bgColor: GlobalLogic.to.hasSkin.value
+                  ? GlobalLogic.to.iconColor.value
                   : null,
-              outerColor: PlayerLogic.to.hasSkin.value
-                  ? PlayerLogic.to.iconColor.value
+              outerColor: GlobalLogic.to.hasSkin.value
+                  ? GlobalLogic.to.iconColor.value
                   : null),
           materialButton(Icons.add, () => {},
               width: 32,
@@ -234,12 +235,12 @@ class _PlayerState extends State<Player> {
               radius: 6,
               iconSize: 20,
               hasShadow: false,
-              iconColor: PlayerLogic.to.hasSkin.value ? Colors.white : null,
-              bgColor: PlayerLogic.to.hasSkin.value
-                  ? PlayerLogic.to.iconColor.value
+              iconColor: GlobalLogic.to.hasSkin.value ? Colors.white : null,
+              bgColor: GlobalLogic.to.hasSkin.value
+                  ? GlobalLogic.to.iconColor.value
                   : null,
-              outerColor: PlayerLogic.to.hasSkin.value
-                  ? PlayerLogic.to.iconColor.value
+              outerColor: GlobalLogic.to.hasSkin.value
+                  ? GlobalLogic.to.iconColor.value
                   : null),
         ],
       ),
@@ -266,7 +267,7 @@ class _PlayerState extends State<Player> {
   Widget coverBg() {
     final currentMusic = PlayerLogic.to.playingMusic.value;
     final pic = (currentMusic.baseUrl ?? "") + (currentMusic.coverPath ?? "");
-    if (pic.isEmpty || !PlayerLogic.to.hasSkin.value) {
+    if (pic.isEmpty || !GlobalLogic.to.hasSkin.value) {
       return Container();
     }
     const radius = BorderRadius.only(

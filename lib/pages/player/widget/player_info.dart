@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 
 class PlayerInfo extends StatelessWidget {
@@ -17,7 +18,7 @@ class PlayerInfo extends StatelessWidget {
             recentlyLrc(PlayerLogic.to.playingJPLrc["pre"]),
             SizedBox(height: 10.h),
             recentlyLrc(PlayerLogic.to.playingJPLrc["current"],
-                color: PlayerLogic.to.hasSkin.value || Get.isDarkMode
+                color: GlobalLogic.to.hasSkin.value || Get.isDarkMode
                     ? Colors.white
                     : Colors.black,
                 fontWeight: FontWeight.bold),
@@ -37,7 +38,7 @@ class PlayerInfo extends StatelessWidget {
     return Text(text,
         style: TextStyle(
             color: color ??
-                (PlayerLogic.to.hasSkin.value || Get.isDarkMode
+                (GlobalLogic.to.hasSkin.value || Get.isDarkMode
                     ? const Color(0xffdfdfdf)
                     : const Color(0xFFB7BCC1)),
             fontSize: 15.sp,
