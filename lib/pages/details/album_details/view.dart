@@ -49,19 +49,18 @@ class _AlbumDetailsPageState extends State<AlbumDetailsPage> {
                 },
           child: Scaffold(
               backgroundColor: Get.theme.primaryColor,
-              body: Column(
-                children: [
-                  DetailsHeader(title: album.albumName!),
-                  SizedBox(height: 8.h),
-                  DetailsBody(
-                      logic: logic,
-                      isAlbum: true,
-                      buildCover: DetailsCover(album: album),
-                      // onRemove: (music) =>
-                      //     Log4f.d(msg: "remove: ${music.musicName}"),
-                      music: music)
-                ],
-              )));
+              body: Column(children: [
+                DetailsHeader(title: album.albumName!),
+                SizedBox(height: 8.h),
+                DetailsBody(
+                  logic: logic,
+                  isAlbum: true,
+                  buildCover: DetailsCover(album: album),
+                  music: music,
+                  // onRemove: (music) =>
+                  //     Log4f.d(msg: "remove: ${music.musicName}"),
+                )
+              ])));
     });
   }
 }

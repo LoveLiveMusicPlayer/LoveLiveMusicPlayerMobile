@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
@@ -157,6 +158,7 @@ class _ListViewItemSongState extends State<ListViewItemSong>
                   path: Assets.mainIcAddNext,
                   onTap: () {
                     widget.onPlayNextTap(widget.music);
+                    SmartDialog.showToast("添加成功");
                   },
                   width: 20,
                   height: 20,

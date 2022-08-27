@@ -206,6 +206,18 @@ class PlayerLogic extends SuperController
       // 如果选中的歌曲是当前播放的歌曲
       return;
     }
+
+    final pMusic = PlayListMusic(
+        musicId: music.musicId!,
+        musicName: music.musicName!,
+        artist: music.artist!);
+
+    // 如果列表为空则直接播放
+    if (mPlayList.isEmpty) {
+      playMusic([music]);
+      return;
+    }
+
     // 搜索并删除当前要插入的歌曲
     for (var index = 0; index < mPlayList.length; index++) {
       if (mPlayList[index].musicId == music.musicId) {
@@ -214,10 +226,7 @@ class PlayerLogic extends SuperController
         break;
       }
     }
-    final pMusic = PlayListMusic(
-        musicId: music.musicId!,
-        musicName: music.musicName!,
-        artist: music.artist!);
+
     if (isNext) {
       // 将插入的歌曲放在当前播放歌曲的后面
       for (var index = 0; index < mPlayList.length; index++) {
@@ -235,6 +244,12 @@ class PlayerLogic extends SuperController
 
   /// 将音乐列表插入到当前播放列表末尾
   addMusicList(List<Music> musicList) {
+    // 如果列表为空则直接播放
+    if (mPlayList.isEmpty) {
+      playMusic(musicList);
+      return;
+    }
+
     // 从音乐列表中重复的歌曲删除 O(m*n)?
     for (var index = 0; index < musicList.length; index++) {
       for (var element in mPlayList) {

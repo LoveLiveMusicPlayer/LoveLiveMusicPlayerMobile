@@ -84,7 +84,10 @@ class _DetailsBodyState extends State<DetailsBody> {
           onItemTap: (index, checked) {
             logic.selectItem(index, checked);
           },
-          onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
+          onPlayNextTap: (music) {
+            PlayerLogic.to.addNextMusic(music);
+            SmartDialog.showToast("添加成功");
+          },
           onMoreTap: (music) {
             SmartDialog.compatible.show(
                 widget: showDialogMoreWithMusic(music),
@@ -126,6 +129,7 @@ class _DetailsBodyState extends State<DetailsBody> {
           });
           PlayerLogic.to.addMusicList(tempList);
           logic.closeSelect();
+          SmartDialog.showToast("添加成功");
         }));
     list.add(BtnItem(
         imgPath: Assets.dialogIcAddPlayList,

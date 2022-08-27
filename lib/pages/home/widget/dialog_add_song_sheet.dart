@@ -65,6 +65,7 @@ class DialogAddSongSheet extends StatelessWidget {
                         }
                       }
                       DBLogic.to.addMenu(name, idList);
+                      SmartDialog.showToast("新建成功");
                     }),
                 clickBgDismissTemp: false,
                 alignmentTemp: Alignment.center);
@@ -95,6 +96,7 @@ class DialogAddSongSheet extends StatelessWidget {
                       DBLogic.to.insertToMenu(
                           GlobalLogic.to.menuList[index].id, idList);
                       SmartDialog.dismiss();
+                      SmartDialog.showToast("已插入歌单中");
                     },
                     menu: GlobalLogic.to.menuList[index],
                   );

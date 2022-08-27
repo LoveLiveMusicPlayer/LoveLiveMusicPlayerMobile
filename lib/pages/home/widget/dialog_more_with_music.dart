@@ -81,6 +81,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
           _buildItem(Assets.dialogIcAddPlayList, "加入播放列表", true, () {
             SmartDialog.dismiss();
             PlayerLogic.to.addNextMusic(widget.music, isNext: false);
+            SmartDialog.showToast("添加成功");
           }),
           _buildItem(Assets.dialogIcAddSongSheet, "添加到歌单", true, () {
             SmartDialog.dismiss();

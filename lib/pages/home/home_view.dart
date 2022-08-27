@@ -203,6 +203,7 @@ class _HomeViewState extends State<HomeView>
             }
           });
           PlayerLogic.to.addMusicList(tempList);
+          SmartDialog.showToast("添加成功");
         }));
     list.add(BtnItem(
         imgPath: Assets.dialogIcAddPlayList,
