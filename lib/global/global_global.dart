@@ -46,6 +46,7 @@ class GlobalLogic extends SuperController
   @override
   void onInit() {
     super.onInit();
+
     /// widget树构建完毕后执行
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       SpUtil.getBoolean(Const.spColorful, false)

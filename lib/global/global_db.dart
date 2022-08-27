@@ -48,7 +48,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     playListMusicDao = database.playListMusicDao;
     menuDao = database.menuDao;
     CachedNetworkImage.logLevel = CacheManagerLogLevel.debug;
-    AppUtils.removeNetImageCache("https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/120.jpg");
+    AppUtils.removeNetImageCache(
+        "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP/artist/120.jpg");
     await findAllListByGroup("all");
     await findAllPlayListMusics();
     await Future.delayed(const Duration(seconds: 1));
@@ -234,7 +235,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       }
 
       final musicList = await musicDao.findMusicsByMusicIds(musicIds);
-      playLogic.playMusic(musicList, index: willPlayMusicIndex, needPlay: false);
+      playLogic.playMusic(musicList,
+          index: willPlayMusicIndex, needPlay: false);
     } catch (e) {
       Log4f.e(msg: e.toString(), writeFile: true);
     }

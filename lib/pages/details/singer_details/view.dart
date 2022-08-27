@@ -45,7 +45,12 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
         children: [
           DetailsHeader(title: artist.name),
           SizedBox(height: 8.h),
-          DetailsBody(logic: logic, buildCover: _buildCover(), music: music)
+          DetailsBody(
+            logic: logic,
+            buildCover: _buildCover(),
+            music: music,
+            // onRemove: (music) => Log4f.d(msg: "remove: ${music.musicName}"),
+          )
         ],
       );
     });

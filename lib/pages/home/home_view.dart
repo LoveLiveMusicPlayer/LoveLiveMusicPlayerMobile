@@ -5,10 +5,8 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
-import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/modules/drawer/drawer.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
@@ -181,7 +179,7 @@ class _HomeViewState extends State<HomeView>
         logic.selectAll(checked);
       },
       onCancelTap: () {
-        logic.openSelect();
+        logic.closeSelect();
         SmartDialog.dismiss();
       },
     );
@@ -193,56 +191,35 @@ class _HomeViewState extends State<HomeView>
 
   showSelectDialog() {
     List<BtnItem> list = [];
-    if (logic.state.currentIndex.value == 1) {
-      list.add(BtnItem(
-          imgPath: Assets.dialogIcAddPlayList2,
-          title: "加入播放列表",
-          onTap: () async {
-            List<Album> albumList = HomeController.to.state.items.cast();
-            List<Music> tempList = [];
-            await Future.forEach<Album>(albumList, (album) async {
-              if (album.checked) {
-                tempList.addAll(
-                    await DBLogic.to.findAllMusicsByAlbumId(album.albumId!));
-              }
-            });
-            PlayerLogic.to.addMusicList(tempList);
-          }));
-      list.add(BtnItem(
-          imgPath: Assets.dialogIcAddSongSheet,
-          title: "添加到歌单",
-          onTap: () {
-            SmartDialog.dismiss();
-            List<Music> musicList = HomeController.to.state.items.cast();
-            SmartDialog.compatible.show(
-                widget: DialogAddSongSheet(musicList: musicList),
-                alignmentTemp: Alignment.bottomCenter);
-          }));
-    } else {
-      list.add(BtnItem(
-          imgPath: Assets.dialogIcAddPlayList2,
-          title: "加入播放列表",
-          onTap: () async {
-            List<Music> musicList = HomeController.to.state.items.cast();
-            List<Music> tempList = [];
-            await Future.forEach<Music>(musicList, (music) {
-              if (music.checked) {
-                tempList.add(music);
-              }
-            });
-            PlayerLogic.to.addMusicList(tempList);
-          }));
-      list.add(BtnItem(
-          imgPath: Assets.dialogIcAddPlayList,
-          title: "添加到歌单",
-          onTap: () {
-            SmartDialog.dismiss();
-            List<Music> musicList = HomeController.to.state.items.cast();
-            SmartDialog.compatible.show(
-                widget: DialogAddSongSheet(musicList: musicList),
-                alignmentTemp: Alignment.bottomCenter);
-          }));
-    }
+    list.add(BtnItem(
+        imgPath: Assets.dialogIcAddPlayList2,
+        title: "加入播放列表",
+        onTap: () async {
+          List<Music> musicList = HomeController.to.state.items.cast();
+          List<Music> tempList = [];
+          await Future.forEach<Music>(musicList, (music) {
+            if (music.checked) {
+              tempList.add(music);
+            }
+          });
+          PlayerLogic.to.addMusicList(tempList);
+        }));
+    list.add(BtnItem(
+        imgPath: Assets.dialogIcAddPlayList,
+        title: "添加到歌单",
+        onTap: () async {
+          SmartDialog.dismiss();
+          List<Music> musicList = HomeController.to.state.items.cast();
+          List<Music> tempList = [];
+          await Future.forEach<Music>(musicList, (music) {
+            if (music.checked) {
+              tempList.add(music);
+            }
+          });
+          SmartDialog.compatible.show(
+              widget: DialogAddSongSheet(musicList: tempList),
+              alignmentTemp: Alignment.bottomCenter);
+        }));
     SmartDialog.compatible.show(
         widget: DialogBottomBtn(
           list: list,
@@ -250,7 +227,8 @@ class _HomeViewState extends State<HomeView>
         isPenetrateTemp: true,
         clickBgDismissTemp: false,
         maskColorTemp: Colors.transparent,
-        alignmentTemp: Alignment.bottomCenter);
+        alignmentTemp: Alignment.bottomCenter,
+        onDismiss: () => logic.closeSelect());
   }
 
   Widget _buildTabBarView() {

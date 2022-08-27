@@ -154,14 +154,19 @@ class PlayerLogic extends SuperController
 
   /// 播放指定列表的歌曲
   playMusic(List<Music> musicList, {int index = 0, bool needPlay = true}) {
+    Log4f.d(
+        msg:
+            "event: playMusic: ${musicList[index].musicName} - total: ${musicList.length}");
     try {
       // 如果上一次处理没有结束，直接跳过
       if (GlobalLogic.to.isHandlePlay) {
+        Log4f.d(msg: "event: handlePlaying");
         return;
       }
       GlobalLogic.to.isHandlePlay = true;
       if (musicList.isEmpty) {
         GlobalLogic.to.isHandlePlay = false;
+        Log4f.d(msg: "event: musicList empty");
         return;
       }
 
@@ -174,8 +179,10 @@ class PlayerLogic extends SuperController
       audioSourceList.clear();
       audioSourceList.addAll(audioList);
       audioList.clear();
-
-      mPlayer.setAudioSource(audioSourceList, initialIndex: index).then((value) {
+      Log4f.d(msg: "event: audioSourceList length: ${audioSourceList.length}");
+      mPlayer
+          .setAudioSource(audioSourceList, initialIndex: index)
+          .then((value) {
         if (needPlay) {
           mPlayer.play();
         }

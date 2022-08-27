@@ -44,7 +44,7 @@ class DialogBottomBtn extends StatelessWidget {
         child: InkWell(
       onTap: () {
         onTap();
-        HomeController.to.openSelect();
+        HomeController.to.closeSelect();
         SmartDialog.dismiss();
       },
       child: Column(

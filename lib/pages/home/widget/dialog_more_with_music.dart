@@ -7,17 +7,18 @@ import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
+import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_song_info.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 
-import '../../../modules/ext.dart';
-
 class DialogMoreWithMusic extends StatefulWidget {
   final Music music;
   Function(Music)? onRemove;
+  bool? isAlbum;
 
-  DialogMoreWithMusic({Key? key, required this.music, this.onRemove})
+  DialogMoreWithMusic(
+      {Key? key, required this.music, this.onRemove, this.isAlbum})
       : super(key: key);
 
   @override
@@ -30,16 +31,24 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
   @override
   void initState() {
     super.initState();
-    DBLogic.to.findAlbumById(widget.music.albumId!).then((album) {
-      this.album = album;
+    DBLogic.to.findAlbumById(widget.music.albumId!).then((mAlbum) {
+      album = mAlbum;
       setState(() {});
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    var length = 4;
+    if (widget.onRemove != null) {
+      length++;
+    }
+
+    if (widget.isAlbum == null || widget.isAlbum == false) {
+      length++;
+    }
     return Container(
-      height: widget.onRemove == null ? 280.h : 330.h,
+      height: length * 55.h,
       width: double.infinity,
       decoration: BoxDecoration(
           color: Get.theme.primaryColor,
@@ -79,27 +88,35 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
                 widget: DialogAddSongSheet(musicList: [widget.music]),
                 alignmentTemp: Alignment.bottomCenter);
           }),
-          _buildItem(Assets.dialogIcSongInfo, "歌曲信息", true, () {
+          _buildItem(Assets.dialogIcSongInfo, "歌曲信息", length > 4, () {
             SmartDialog.dismiss();
             SmartDialog.compatible.show(
                 widget: DialogSongInfo(music: widget.music),
                 alignmentTemp: Alignment.bottomCenter);
           }),
-          _buildItem(Assets.dialogIcSeeAlbum, "查看专辑", true, () {
-            SmartDialog.dismiss();
-            if (album != null) {
-              Get.toNamed(Routes.routeAlbumDetails, arguments: album);
-            }
-          }),
+          renderWatchAlbum(),
           renderRemoveItem()
         ],
       ),
     );
   }
 
+  Widget renderWatchAlbum() {
+    if (widget.isAlbum != null && widget.isAlbum == true) {
+      return Container();
+    }
+    return _buildItem(Assets.dialogIcSeeAlbum, "查看专辑", widget.onRemove != null,
+        () {
+      SmartDialog.dismiss();
+      if (album != null) {
+        Get.toNamed(Routes.routeAlbumDetails, arguments: album);
+      }
+    });
+  }
+
   Widget renderRemoveItem() {
     if (widget.onRemove != null) {
-      return _buildItem(Assets.dialogIcDelete2, "删除歌曲", true, () {
+      return _buildItem(Assets.dialogIcDelete2, "删除歌曲", false, () {
         SmartDialog.dismiss();
         widget.onRemove!(widget.music);
       });

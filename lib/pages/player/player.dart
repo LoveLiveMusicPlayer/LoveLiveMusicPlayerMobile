@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
@@ -13,6 +14,8 @@ import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/PositionData.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/control_buttons.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/dialog_more_with_music.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_cover.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_header.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_lyric.dart';
@@ -104,7 +107,12 @@ class _PlayerState extends State<Player> {
           PlayerHeader(
               btnColor: GlobalLogic.to.iconColor.value,
               onCloseTap: () => widget.onTap(),
-              onMoreTap: () {}),
+              onMoreTap: () {
+                SmartDialog.compatible.show(
+                    widget: DialogMoreWithMusic(
+                        music: PlayerLogic.to.playingMusic.value),
+                    alignmentTemp: Alignment.bottomCenter);
+              }),
 
           SizedBox(height: 10.h),
 
@@ -229,7 +237,12 @@ class _PlayerState extends State<Player> {
               outerColor: GlobalLogic.to.hasSkin.value
                   ? GlobalLogic.to.iconColor.value
                   : null),
-          materialButton(Icons.add, () => {},
+          materialButton(Icons.add, () {
+            SmartDialog.compatible.show(
+                widget: DialogAddSongSheet(
+                    musicList: [PlayerLogic.to.playingMusic.value]),
+                alignmentTemp: Alignment.bottomCenter);
+          },
               width: 32,
               height: 32,
               radius: 6,

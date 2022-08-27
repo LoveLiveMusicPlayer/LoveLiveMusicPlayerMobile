@@ -16,12 +16,14 @@ class DetailsBody extends StatefulWidget {
   final Widget buildCover;
   final List<Music> music;
   final Function(Music)? onRemove;
+  final bool? isAlbum;
 
   const DetailsBody(
       {Key? key,
       required this.logic,
       required this.buildCover,
       required this.music,
+      this.isAlbum,
       this.onRemove})
       : super(key: key);
 
@@ -85,13 +87,7 @@ class _DetailsBodyState extends State<DetailsBody> {
           onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
           onMoreTap: (music) {
             SmartDialog.compatible.show(
-                widget: DialogMoreWithMusic(
-                    music: music,
-                    onRemove: (music) {
-                      if (widget.onRemove != null) {
-                        widget.onRemove!(music);
-                      }
-                    }),
+                widget: showDialogMoreWithMusic(music),
                 alignmentTemp: Alignment.bottomCenter);
           },
           onPlayNowTap: () {
@@ -101,6 +97,18 @@ class _DetailsBodyState extends State<DetailsBody> {
       ));
     }
     return list;
+  }
+
+  Widget showDialogMoreWithMusic(Music music) {
+    if (widget.onRemove == null) {
+      return DialogMoreWithMusic(music: music, isAlbum: widget.isAlbum);
+    }
+    return DialogMoreWithMusic(
+        music: music,
+        isAlbum: widget.isAlbum,
+        onRemove: (music) {
+          widget.onRemove!(music);
+        });
   }
 
   showSelectDialog(logic) {
@@ -142,6 +150,7 @@ class _DetailsBodyState extends State<DetailsBody> {
         isPenetrateTemp: true,
         clickBgDismissTemp: false,
         maskColorTemp: Colors.transparent,
-        alignmentTemp: Alignment.bottomCenter);
+        alignmentTemp: Alignment.bottomCenter,
+        onDismiss: () => logic.closeSelect());
   }
 }

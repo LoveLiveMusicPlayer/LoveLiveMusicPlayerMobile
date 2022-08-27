@@ -125,6 +125,9 @@ class SongLibraryTop extends StatelessWidget {
 
   ///筛选按钮
   Widget _buildScreen() {
+    if (HomeController.to.state.currentIndex.value == 1) {
+      return Container();
+    }
     return Padding(
       padding: EdgeInsets.only(right: 16.h, top: 5.h, bottom: 5.h, left: 30.h),
       child: touchIconByAsset(

@@ -23,40 +23,41 @@ class HomeController extends GetxController {
   }
 
   openSelect() {
-    if (state.isSelect.value) {
-      final tempList = state.items;
-      if (tempList.isNotEmpty) {
-        for (var element in tempList) {
-          element.checked = false;
-        }
-      }
-      state.selectAll = false;
-      refresh();
-    } else {
-      switch (state.currentIndex.value) {
-        case 0:
-          state.items = [...GlobalLogic.to.musicList];
-          break;
-        case 1:
-          state.items = [...GlobalLogic.to.albumList];
-          break;
-        case 2:
-          state.items = [...GlobalLogic.to.artistList];
-          break;
-        case 3:
-          state.items = [...GlobalLogic.to.loveList];
-          break;
-        case 4:
-          state.items = [...GlobalLogic.to.menuList];
-          break;
-        case 5:
-          state.items = [...GlobalLogic.to.recentlyList];
-          break;
-        default:
-          break;
+    switch (state.currentIndex.value) {
+      case 0:
+        state.items = [...GlobalLogic.to.musicList];
+        break;
+      case 1:
+        state.items = [...GlobalLogic.to.albumList];
+        break;
+      case 2:
+        state.items = [...GlobalLogic.to.artistList];
+        break;
+      case 3:
+        state.items = [...GlobalLogic.to.loveList];
+        break;
+      case 4:
+        state.items = [...GlobalLogic.to.menuList];
+        break;
+      case 5:
+        state.items = [...GlobalLogic.to.recentlyList];
+        break;
+      default:
+        break;
+    }
+    state.isSelect.value = true;
+  }
+
+  closeSelect() {
+    final tempList = state.items;
+    if (tempList.isNotEmpty) {
+      for (var element in tempList) {
+        element.checked = false;
       }
     }
-    state.isSelect.value = !state.isSelect.value;
+    state.selectAll = false;
+    refresh();
+    state.isSelect.value = false;
   }
 
   ///全选

@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
@@ -33,19 +36,32 @@ class _AlbumDetailsPageState extends State<AlbumDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Get.theme.primaryColor,
-        body: GetBuilder<DetailController>(builder: (logic) {
-          return Column(
-            children: [
-              DetailsHeader(title: album.albumName!),
-              SizedBox(height: 8.h),
-              DetailsBody(
-                  logic: logic,
-                  buildCover: DetailsCover(album: album),
-                  music: music)
-            ],
-          );
-        }));
+    return GetBuilder<DetailController>(builder: (logic) {
+      return WillPopScope(
+          onWillPop: !logic.state.isSelect
+              ? null
+              : () async {
+                  if (Platform.isIOS) {
+                    SmartDialog.dismiss();
+                    Get.back();
+                  }
+                  return true;
+                },
+          child: Scaffold(
+              backgroundColor: Get.theme.primaryColor,
+              body: Column(
+                children: [
+                  DetailsHeader(title: album.albumName!),
+                  SizedBox(height: 8.h),
+                  DetailsBody(
+                      logic: logic,
+                      isAlbum: true,
+                      buildCover: DetailsCover(album: album),
+                      // onRemove: (music) =>
+                      //     Log4f.d(msg: "remove: ${music.musicName}"),
+                      music: music)
+                ],
+              )));
+    });
   }
 }

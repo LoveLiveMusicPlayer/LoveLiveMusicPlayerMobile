@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/dialog_playlist.dart';
 
 class ControlButtons extends StatelessWidget {
   final AudioPlayer player;
@@ -158,7 +160,11 @@ class ControlButtons extends StatelessWidget {
                       ? GlobalLogic.to.iconColor.value
                       : null),
             ),
-            materialButton(Assets.playerPlayPlaylist, () {},
+            materialButton(Assets.playerPlayPlaylist, () {
+              SmartDialog.compatible.show(
+                  widget: const DialogPlaylist(),
+                  alignmentTemp: Alignment.bottomCenter);
+            },
                 width: 32,
                 height: 32,
                 radius: 6,
