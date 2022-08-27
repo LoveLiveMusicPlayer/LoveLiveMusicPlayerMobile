@@ -43,7 +43,7 @@ class ControlButtons extends StatelessWidget {
                     height: 32,
                     radius: 6,
                     iconSize: 15,
-                    hasShadow: false,
+                    hasShadow: !GlobalLogic.to.hasSkin.value,
                     iconColor:
                         GlobalLogic.to.hasSkin.value ? Colors.white : null,
                     bgColor: GlobalLogic.to.hasSkin.value
@@ -62,7 +62,7 @@ class ControlButtons extends StatelessWidget {
                   height: 60,
                   radius: 40,
                   iconSize: 16,
-                  hasShadow: false,
+                  hasShadow: !GlobalLogic.to.hasSkin.value,
                   iconColor: GlobalLogic.to.hasSkin.value ? Colors.white : null,
                   bgColor: GlobalLogic.to.hasSkin.value
                       ? GlobalLogic.to.iconColor.value
@@ -95,7 +95,7 @@ class ControlButtons extends StatelessWidget {
                       height: 80,
                       radius: 40,
                       iconSize: 26,
-                      hasShadow: false,
+                      hasShadow: !GlobalLogic.to.hasSkin.value,
                       iconColor:
                           GlobalLogic.to.hasSkin.value ? Colors.white : null,
                       bgColor: GlobalLogic.to.hasSkin.value
@@ -111,7 +111,7 @@ class ControlButtons extends StatelessWidget {
                       height: 80,
                       radius: 40,
                       iconSize: 26,
-                      hasShadow: false,
+                      hasShadow: !GlobalLogic.to.hasSkin.value,
                       iconColor:
                           GlobalLogic.to.hasSkin.value ? Colors.white : null,
                       bgColor: GlobalLogic.to.hasSkin.value
@@ -129,7 +129,7 @@ class ControlButtons extends StatelessWidget {
                       height: 80,
                       radius: 40,
                       iconSize: 26,
-                      hasShadow: false,
+                      hasShadow: !GlobalLogic.to.hasSkin.value,
                       iconColor:
                           GlobalLogic.to.hasSkin.value ? Colors.white : null,
                       bgColor: GlobalLogic.to.hasSkin.value
@@ -149,7 +149,7 @@ class ControlButtons extends StatelessWidget {
                   height: 60,
                   radius: 40,
                   iconSize: 16,
-                  hasShadow: false,
+                  hasShadow: !GlobalLogic.to.hasSkin.value,
                   iconColor: GlobalLogic.to.hasSkin.value ? Colors.white : null,
                   bgColor: GlobalLogic.to.hasSkin.value
                       ? GlobalLogic.to.iconColor.value
@@ -163,7 +163,7 @@ class ControlButtons extends StatelessWidget {
                 height: 32,
                 radius: 6,
                 iconSize: 15,
-                hasShadow: false,
+                hasShadow: !GlobalLogic.to.hasSkin.value,
                 iconColor: GlobalLogic.to.hasSkin.value ? Colors.white : null,
                 bgColor: GlobalLogic.to.hasSkin.value
                     ? GlobalLogic.to.iconColor.value

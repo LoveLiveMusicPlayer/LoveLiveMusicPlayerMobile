@@ -46,7 +46,11 @@ class _DrawerPageState extends State<DrawerPage> {
         }),
         SizedBox(height: 12.h),
         Text("LoveLiveMusicPlayer",
-            style: TextStyle(fontSize: 17.sp, color: const Color(0xFF333333))),
+            style: TextStyle(
+                fontSize: 17.sp,
+                fontWeight: FontWeight.bold,
+                color:
+                    Get.isDarkMode ? Colors.white : const Color(0xff333333))),
         SizedBox(height: 20.h)
       ],
     );
@@ -104,28 +108,26 @@ class _DrawerPageState extends State<DrawerPage> {
   Widget functionView(BuildContext context) {
     return ListTile(
         title: Container(
-        width: 270.w,
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-          borderRadius: BorderRadius.circular(8.w),
-          boxShadow: [
-            BoxShadow(
-                color: Get.isDarkMode
-                    ? const Color(0x1005080C)
-                    : Colors.white,
-                offset: Offset(-3.w, -3.h),
-                blurStyle: BlurStyle.inner,
-                blurRadius: 6.w),
-            BoxShadow(
-                color: Get.isDarkMode
-                    ? const Color(0xFF05080C)
-                    : const Color(0xFFD3E0EC),
-                offset: Offset(5.w, 3.h),
-                blurRadius: 6.w),
-          ],
-        ),
-        child: scrollView()
-    ));
+            width: 270.w,
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+              borderRadius: BorderRadius.circular(8.w),
+              boxShadow: [
+                BoxShadow(
+                    color:
+                        Get.isDarkMode ? const Color(0x1005080C) : Colors.white,
+                    offset: Offset(-3.w, -3.h),
+                    blurStyle: BlurStyle.inner,
+                    blurRadius: 6.w),
+                BoxShadow(
+                    color: Get.isDarkMode
+                        ? const Color(0xFF05080C)
+                        : const Color(0xFFD3E0EC),
+                    offset: Offset(5.w, 3.h),
+                    blurRadius: 6.w),
+              ],
+            ),
+            child: scrollView()));
   }
 
   Widget scrollView() {
@@ -166,9 +168,8 @@ class _DrawerPageState extends State<DrawerPage> {
                     initSwitch: GlobalLogic.to.withSystemTheme.value,
                     callBack: (check) async {
                       // 获取当前系统主题色
-                      bool isDark =
-                          MediaQuery.of(context).platformBrightness ==
-                              Brightness.dark;
+                      bool isDark = MediaQuery.of(context).platformBrightness ==
+                          Brightness.dark;
                       if (check) {
                         // 设置为系统主题色
                         Get.changeTheme(isDark ? darkTheme : lightTheme);
@@ -235,11 +236,11 @@ class _DrawerPageState extends State<DrawerPage> {
                     SmartDialog.compatible
                         .showLoading(msg: "重置中...", backDismiss: false);
                     await DBLogic.to.clearAllAlbum();
-                    await DBLogic.to.findAllListByGroup(
-                        GlobalLogic.to.currentGroup.value);
+                    await DBLogic.to
+                        .findAllListByGroup(GlobalLogic.to.currentGroup.value);
                     SmartDialog.dismiss();
-                    SmartDialog.compatible.showToast("清理成功",
-                        time: const Duration(seconds: 5));
+                    SmartDialog.compatible
+                        .showToast("清理成功", time: const Duration(seconds: 5));
                   },
                 ),
                 SizedBox(height: 8.h),
@@ -248,8 +249,8 @@ class _DrawerPageState extends State<DrawerPage> {
                   text: "保存日志",
                   onTap: () async {
                     await SDUtils.uploadLog();
-                    SmartDialog.compatible.showToast("导出成功",
-                        time: const Duration(seconds: 5));
+                    SmartDialog.compatible
+                        .showToast("导出成功", time: const Duration(seconds: 5));
                   },
                 ),
                 SizedBox(height: 8.h),
@@ -264,7 +265,6 @@ class _DrawerPageState extends State<DrawerPage> {
               ],
             );
           }),
-        )
-    );
+        ));
   }
 }

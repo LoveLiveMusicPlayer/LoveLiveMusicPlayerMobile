@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_theme.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
+import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
+import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 
 import '../models/Music.dart';
@@ -43,17 +46,20 @@ class GlobalLogic extends SuperController
   @override
   void onInit() {
     super.onInit();
-    SpUtil.getBoolean(Const.spColorful, false)
-        .then((skin) => hasSkin.value = skin);
-    SpUtil.getBoolean(Const.spDark, false)
-        .then((isDark) => manualIsDark.value = isDark);
-    SpUtil.getBoolean(Const.spWithSystemTheme, false).then((isWith) {
-      if (isWith && Get.context != null) {
-        bool isDark =
-            MediaQuery.of(Get.context!).platformBrightness == Brightness.dark;
-        Get.changeTheme(isDark ? darkTheme : lightTheme);
-      }
-      withSystemTheme.value = isWith;
+    /// widget树构建完毕后执行
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      SpUtil.getBoolean(Const.spColorful, false)
+          .then((skin) => hasSkin.value = skin);
+      SpUtil.getBoolean(Const.spDark, false)
+          .then((isDark) => manualIsDark.value = isDark);
+      SpUtil.getBoolean(Const.spWithSystemTheme, false).then((isWith) {
+        if (isWith) {
+          bool isDark =
+              MediaQuery.of(Get.context!).platformBrightness == Brightness.dark;
+          Get.changeTheme(isDark ? darkTheme : lightTheme);
+        }
+        withSystemTheme.value = isWith;
+      });
     });
 
     /// 监听系统主题色改变
@@ -186,5 +192,38 @@ class GlobalLogic extends SuperController
   void onPaused() {}
 
   @override
-  void onResumed() {}
+  void onResumed() {
+    /// 防止长时间熄屏 PageView 重建回到首页
+    switch (HomeController.to.state.currentIndex.value) {
+      case 0:
+        scrollTo(HomeController.to.scrollController1);
+        break;
+      case 1:
+        scrollTo(HomeController.to.scrollController2);
+        break;
+      case 2:
+        scrollTo(HomeController.to.scrollController3);
+        break;
+      case 3:
+        scrollTo(HomeController.to.scrollController4);
+        break;
+      case 4:
+        scrollTo(HomeController.to.scrollController5);
+        break;
+      case 5:
+        scrollTo(HomeController.to.scrollController6);
+        break;
+    }
+    PageViewLogic.to.controller
+        .jumpToPage(HomeController.to.state.currentIndex.value);
+  }
+
+  scrollTo(ScrollController controller) {
+    try {
+      controller.animateTo(0,
+          duration: const Duration(milliseconds: 200), curve: Curves.ease);
+    } catch (e) {
+      Log4f.e(msg: e.toString());
+    }
+  }
 }
