@@ -56,31 +56,31 @@ android {
         applicationId "com.zhushenwudi.lovelivemusicplayer"
         minSdkVersion 23
         targetSdkVersion 31
-        versionCode 7
-        versionName "1.0.6"
+        versionCode 9
+        versionName "1.0.8"
     }
 
     signingConfigs {
         // debug 模式或使用模拟器请注释这里
-//        release {
-//            keyAlias keystoreProperties["keyAlias"]
-//            keyPassword keystoreProperties["storePassword"]
-//            storeFile file(keystoreProperties["storeFile"])
-//            storePassword keystoreProperties["keyPassword"]
-//        }
+        release {
+            keyAlias keystoreProperties["keyAlias"]
+            keyPassword keystoreProperties["storePassword"]
+            storeFile file(keystoreProperties["storeFile"])
+            storePassword keystoreProperties["keyPassword"]
+        }
     }
 
     buildTypes {
         // debug 模式或使用模拟器请注释这里
-//        release {
-//            minifyEnabled true
-//            zipAlignEnabled true
-//            signingConfig signingConfigs.release
-//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-//            ndk {
-//                abiFilters "arm64-v8a", "armeabi-v7a"
-//            }
-//        }
+        release {
+            minifyEnabled true
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            ndk {
+                abiFilters "arm64-v8a", "armeabi-v7a"
+            }
+        }
     }
 
     lintOptions {
