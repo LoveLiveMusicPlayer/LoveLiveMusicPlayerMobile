@@ -61,8 +61,8 @@ Widget showImg(String? path, double? width, double? height,
                       (Get.isDarkMode
                           ? const Color(0xFF05080C)
                           : const Color(0xFFD3E0EC)),
-                  blurRadius: 4,
-                  offset: Offset(4.h, 8.h)),
+                  blurRadius: radius.h,
+                  offset: Offset(4.w, 8.h)),
             ],
           ),
         ),
@@ -89,7 +89,7 @@ Widget showImg(String? path, double? width, double? height,
                     (Get.isDarkMode
                         ? const Color(0xFF05080C)
                         : const Color(0xFFD3E0EC)),
-                blurRadius: 4,
+                blurRadius: radius.h,
                 offset: Offset(4.h, 8.h)),
           ],
         ),

@@ -39,7 +39,7 @@ class _CoverState extends State<Cover> {
                 273,
                 radius: 24,
                 shadowColor: GlobalLogic.to.hasSkin.value
-                    ? const Color(0xFF05080C)
+                    ? GlobalLogic.to.iconColor.value.withAlpha(255)
                     : null),
 
             /// 信息
