@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
@@ -57,18 +58,16 @@ class _DetailsBodyState extends State<DetailsBody> {
         },
         onScreenTap: () {
           if (logic.state.isSelect) {
-            logic.closeSelect();
             SmartDialog.dismiss();
           } else {
             logic.openSelect();
-            showSelectDialog(logic);
+            showSelectDialog();
           }
         },
         onSelectAllTap: (checked) {
           logic.selectAll(checked);
         },
         onCancelTap: () {
-          logic.closeSelect();
           SmartDialog.dismiss();
         }));
     list.add(SizedBox(
@@ -114,38 +113,49 @@ class _DetailsBodyState extends State<DetailsBody> {
         });
   }
 
-  showSelectDialog(logic) {
+  showSelectDialog() {
     List<BtnItem> list = [];
     list.add(BtnItem(
         imgPath: Assets.dialogIcAddPlayList2,
         title: "加入播放列表",
         onTap: () async {
-          final musicList = logic.state.items;
+          final musicList = widget.logic.state.items;
           final tempList = <Music>[];
           await Future.forEach<Music>(musicList, (music) {
             if (music.checked) {
               tempList.add(music);
             }
           });
-          PlayerLogic.to.addMusicList(tempList);
-          logic.closeSelect();
-          SmartDialog.showToast("添加成功");
+          final isSuccess = PlayerLogic.to.addMusicList(tempList);
+          if (isSuccess) {
+            SmartDialog.showToast("添加成功");
+          }
+          SmartDialog.dismiss();
         }));
     list.add(BtnItem(
         imgPath: Assets.dialogIcAddPlayList,
         title: "添加到歌单",
         onTap: () async {
-          final musicList = logic.state.items;
-          final tempList = <Music>[];
+          List<Music> musicList = widget.logic.state.items.cast();
+          var isHasChosen = widget.logic.state.items.any((element) => element.checked == true);
+          if (!isHasChosen) {
+            SmartDialog.dismiss();
+            return;
+          }
+          List<Music> tempList = [];
           await Future.forEach<Music>(musicList, (music) {
             if (music.checked) {
               tempList.add(music);
             }
           });
+          SmartDialog.dismiss();
           SmartDialog.compatible.show(
-              widget: DialogAddSongSheet(musicList: tempList),
+              widget: DialogAddSongSheet(
+                  musicList: tempList,
+                  changeLoveStatusCallback: (status) {
+                    widget.logic.changeLoveStatus(tempList, status);
+              }),
               alignmentTemp: Alignment.bottomCenter);
-          logic.closeSelect();
         }));
     SmartDialog.compatible.show(
         widget: DialogBottomBtn(
@@ -155,6 +165,6 @@ class _DetailsBodyState extends State<DetailsBody> {
         clickBgDismissTemp: false,
         maskColorTemp: Colors.transparent,
         alignmentTemp: Alignment.bottomCenter,
-        onDismiss: () => logic.closeSelect());
+        onDismiss: () => widget.logic.closeSelect());
   }
 }

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 
 class DialogBottomBtn extends StatelessWidget {
   List<BtnItem> list;
@@ -42,11 +40,7 @@ class DialogBottomBtn extends StatelessWidget {
   Widget _buildItem(String path, String title, GestureTapCallback onTap) {
     return Expanded(
         child: InkWell(
-      onTap: () {
-        onTap();
-        HomeController.to.closeSelect();
-        SmartDialog.dismiss();
-      },
+      onTap: onTap,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

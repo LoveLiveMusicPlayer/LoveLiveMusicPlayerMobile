@@ -243,11 +243,14 @@ class PlayerLogic extends SuperController
   }
 
   /// 将音乐列表插入到当前播放列表末尾
-  addMusicList(List<Music> musicList) {
+  bool addMusicList(List<Music> musicList) {
+    if (musicList.isEmpty) {
+      return false;
+    }
     // 如果列表为空则直接播放
     if (mPlayList.isEmpty) {
       playMusic(musicList);
-      return;
+      return true;
     }
 
     // 从音乐列表中重复的歌曲删除 O(m*n)?
@@ -268,6 +271,7 @@ class PlayerLogic extends SuperController
           musicName: music.musicName!,
           artist: music.artist!));
     }
+    return true;
   }
 
   /// 生成一个播放URI
@@ -419,9 +423,10 @@ class PlayerLogic extends SuperController
   }
 
   /// 切换我喜欢状态（列表）
-  /// @hint 列表中只要有一个没有加入我喜欢的，就全部加入；否则从我喜欢中全部删除
-  toggleLoveList(List<Music> musicList) {
-    DBLogic.to.updateLoveList(musicList).then((value) {
+  /// @param musicList 选中的歌曲列表
+  /// @param changeStatus 要修改的状态
+  toggleLoveList(List<Music> musicList, bool changeStatus) {
+    DBLogic.to.updateLoveList(musicList, changeStatus).then((value) {
       DBLogic.to.findAllLoveListByGroup(GlobalLogic.to.currentGroup.value);
     });
   }

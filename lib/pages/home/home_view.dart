@@ -179,7 +179,6 @@ class _HomeViewState extends State<HomeView>
         logic.selectAll(checked);
       },
       onCancelTap: () {
-        logic.closeSelect();
         SmartDialog.dismiss();
       },
     );
@@ -195,28 +194,36 @@ class _HomeViewState extends State<HomeView>
         imgPath: Assets.dialogIcAddPlayList2,
         title: "加入播放列表",
         onTap: () async {
-          List<Music> musicList = HomeController.to.state.items.cast();
+          List<Music> musicList = logic.state.items.cast();
           List<Music> tempList = [];
           await Future.forEach<Music>(musicList, (music) {
             if (music.checked) {
               tempList.add(music);
             }
           });
-          PlayerLogic.to.addMusicList(tempList);
-          SmartDialog.showToast("添加成功");
+          final isSuccess = PlayerLogic.to.addMusicList(tempList);
+          if (isSuccess) {
+            SmartDialog.showToast("添加成功");
+          }
+          SmartDialog.dismiss();
         }));
     list.add(BtnItem(
         imgPath: Assets.dialogIcAddPlayList,
         title: "添加到歌单",
         onTap: () async {
-          SmartDialog.dismiss();
-          List<Music> musicList = HomeController.to.state.items.cast();
+          List<Music> musicList = logic.state.items.cast();
+          var isHasChosen = logic.state.items.any((element) => element.checked == true);
+          if (!isHasChosen) {
+            SmartDialog.dismiss();
+            return;
+          }
           List<Music> tempList = [];
           await Future.forEach<Music>(musicList, (music) {
             if (music.checked) {
               tempList.add(music);
             }
           });
+          SmartDialog.dismiss();
           SmartDialog.compatible.show(
               widget: DialogAddSongSheet(musicList: tempList),
               alignmentTemp: Alignment.bottomCenter);

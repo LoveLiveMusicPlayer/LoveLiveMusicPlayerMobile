@@ -13,8 +13,9 @@ import 'package:lovelivemusicplayer/widgets/new_menu_dialog.dart';
 
 class DialogAddSongSheet extends StatelessWidget {
   final List<Music> musicList;
+  final Function(bool)? changeLoveStatusCallback;
 
-  const DialogAddSongSheet({Key? key, required this.musicList})
+  const DialogAddSongSheet({Key? key, required this.musicList, this.changeLoveStatusCallback})
       : super(key: key);
 
   @override
@@ -94,9 +95,10 @@ class DialogAddSongSheet extends StatelessWidget {
                         }
                       }
                       DBLogic.to.insertToMenu(
-                          GlobalLogic.to.menuList[index].id, idList);
-                      SmartDialog.dismiss();
-                      SmartDialog.showToast("已插入歌单中");
+                          GlobalLogic.to.menuList[index].id, idList).then((isSuccess) {
+                        SmartDialog.dismiss();
+                        SmartDialog.showToast(isSuccess ? "添加成功" : "添加失败");
+                      });
                     },
                     menu: GlobalLogic.to.menuList[index],
                   );
@@ -109,17 +111,16 @@ class DialogAddSongSheet extends StatelessWidget {
 
   Widget renderLove() {
     bool notAllLove = musicList.any((music) => music.isLove == false);
-    if (!notAllLove) {
-      return _buildItem("我喜欢", true, () {
-        PlayerLogic.to.toggleLoveList(musicList);
-        SmartDialog.dismiss();
-      }, icon: Icons.favorite);
-    } else {
-      return _buildItem("我喜欢", true, () {
-        PlayerLogic.to.toggleLoveList(musicList);
-        SmartDialog.dismiss();
-      }, assetPath: Assets.playerPlayLove);
-    }
+    return _buildItem("我喜欢", true, () {
+      PlayerLogic.to.toggleLoveList(musicList, notAllLove);
+      SmartDialog.dismiss();
+      SmartDialog.showToast(notAllLove ? "已加入我喜欢" : "已取消我喜欢");
+      if (changeLoveStatusCallback != null) {
+        changeLoveStatusCallback!(notAllLove);
+      }
+    },
+        assetPath: notAllLove ? Assets.playerPlayLove : null,
+        icon: notAllLove ? null : Icons.favorite);
   }
 
   ///单个条目

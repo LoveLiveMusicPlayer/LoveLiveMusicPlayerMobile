@@ -235,8 +235,10 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       }
 
       final musicList = await musicDao.findMusicsByMusicIds(musicIds);
-      playLogic.playMusic(musicList,
-          index: willPlayMusicIndex, needPlay: false);
+      if (musicList.isNotEmpty) {
+        playLogic.playMusic(musicList,
+            index: willPlayMusicIndex, needPlay: false);
+      }
     } catch (e) {
       Log4f.e(msg: e.toString(), writeFile: true);
     }
@@ -279,33 +281,20 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     return null;
   }
 
-  Future<void> updateLoveList(List<Music> musicList) async {
+  Future<void> updateLoveList(List<Music> musicList, bool changeStatus) async {
     try {
-      // 未喜欢的列表
-      final unLovedList = <String>[];
-      // 全部歌曲的id列表
-      final idList = <String>[];
+      final changeIdList = <String>[];
       for (var music in musicList) {
-        if (!music.isLove) {
-          // 歌曲属性不是我喜欢则加入未喜欢列表
-          unLovedList.add(music.musicId!);
+        if (music.isLove != changeStatus) {
+          changeIdList.add(music.musicId!);
         }
-        idList.add(music.musicId!);
       }
-      if (unLovedList.isEmpty) {
-        // 全是喜欢的话，就将全部列表都变成不喜欢
-        await musicDao.updateLoveStatus(false, idList);
-        GlobalLogic.to.musicList
-            .firstWhere((music) => idList.contains(music.musicId))
-            .isLove = false;
-      } else {
-        // 将未喜欢的列表歌曲变成喜欢
-        await musicDao.updateLoveStatus(true, unLovedList);
-
-        GlobalLogic.to.musicList
-            .firstWhere((music) => unLovedList.contains(music.musicId))
-            .isLove = true;
-      }
+      await musicDao.updateLoveStatus(changeStatus, changeIdList);
+      GlobalLogic.to.musicList
+          .where((music) => changeIdList.contains(music.musicId))
+          .forEach((element) {
+        element.isLove = changeStatus;
+      });
     } catch (e) {
       Log4f.e(msg: e.toString(), writeFile: true);
     }
