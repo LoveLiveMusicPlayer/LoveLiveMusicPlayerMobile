@@ -350,7 +350,6 @@ class _DrawerPageState extends State<DrawerPage> {
       if (music.export && checkFileExist(music)) {
         int albumId = music.albumId;
         InnerAlbum mAlbum = album.us.firstWhere((album) => album.id == albumId);
-        String mMusicPath = music.musicPath;
         DownloadMusic downloadMusic = DownloadMusic(
             albumUId: mAlbum.albumUId,
             albumId: albumId,
@@ -362,7 +361,7 @@ class _DrawerPageState extends State<DrawerPage> {
             musicUId: music.musicUId,
             musicId: music.id,
             musicName: music.name,
-            musicPath: mMusicPath,
+            musicPath: music.musicPath,
             artist: music.artist,
             artistBin: music.artistBin,
             totalTime: music.time,
