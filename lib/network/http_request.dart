@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/models/apiResponse.dart';
 import 'package:lovelivemusicplayer/network/api_service.dart';
 import 'package:lovelivemusicplayer/widgets/one_button_dialog.dart';
@@ -55,7 +56,7 @@ class Network {
       throw Future.error(error.toString());
     });
     if (isShowDialog) {
-      SmartDialog.dismiss();
+      SmartDialog.compatible.dismiss();
     }
     return resp.data;
   }
@@ -106,7 +107,7 @@ class Network {
       bool isShowDialog = true,
       bool isShowError = true,
       String loadingMessage = "请求网络中..."}) async {
-    // if (SmartDialog.compatible.config.isLoading) SmartDialog.dismiss();
+    // if (SmartDialog.compatible.config.isLoading) SmartDialog.compatible.dismiss();
     if (dio == null) {
       return throw "请先在实例化网络";
     }
@@ -181,11 +182,23 @@ class Network {
   }
 
   static _handlerSuccess(dynamic t, Function(dynamic t)? success) {
-    SmartDialog.dismiss();
+    SmartDialog.compatible.dismiss();
     if (success != null) {
-      if (t is Map<String, dynamic>) {
+      if (t is List) {
+        final hashMap = <String, dynamic>{};
+        for (var element in t) {
+          if (element is Map<String, dynamic>) {
+            for (var index = 0; index < element.length; index++) {
+              hashMap[element.keys.elementAt(index)] = element.values.elementAt(index);
+            }
+          }
+        }
+        success(hashMap);
+      } else if (t is Map<String, dynamic>) {
         success(ApiResponse().fromJson(t).data);
       } else if (t is String) {
+        success(t);
+      } else {
         success(t);
       }
     }
@@ -193,7 +206,7 @@ class Network {
 
   static _handlerError(
       bool isShowError, String msg, Function(String msg)? error) {
-    SmartDialog.dismiss();
+    SmartDialog.compatible.dismiss();
     if (isShowError) {
       SmartDialog.compatible.show(
           widget: OneButtonDialog(

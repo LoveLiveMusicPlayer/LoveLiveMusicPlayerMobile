@@ -58,7 +58,7 @@ class _DetailsBodyState extends State<DetailsBody> {
         },
         onScreenTap: () {
           if (logic.state.isSelect) {
-            SmartDialog.dismiss();
+            SmartDialog.compatible.dismiss();
           } else {
             logic.openSelect();
             showSelectDialog();
@@ -68,7 +68,7 @@ class _DetailsBodyState extends State<DetailsBody> {
           logic.selectAll(checked);
         },
         onCancelTap: () {
-          SmartDialog.dismiss();
+          SmartDialog.compatible.dismiss();
         }));
     list.add(SizedBox(
       height: 10.h,
@@ -85,7 +85,7 @@ class _DetailsBodyState extends State<DetailsBody> {
           },
           onPlayNextTap: (music) {
             PlayerLogic.to.addNextMusic(music);
-            SmartDialog.showToast("添加成功");
+            SmartDialog.compatible.showToast("添加成功");
           },
           onMoreTap: (music) {
             SmartDialog.compatible.show(
@@ -128,9 +128,9 @@ class _DetailsBodyState extends State<DetailsBody> {
           });
           final isSuccess = PlayerLogic.to.addMusicList(tempList);
           if (isSuccess) {
-            SmartDialog.showToast("添加成功");
+            SmartDialog.compatible.showToast("添加成功");
           }
-          SmartDialog.dismiss();
+          SmartDialog.compatible.dismiss();
         }));
     list.add(BtnItem(
         imgPath: Assets.dialogIcAddPlayList,
@@ -139,7 +139,7 @@ class _DetailsBodyState extends State<DetailsBody> {
           List<Music> musicList = widget.logic.state.items.cast();
           var isHasChosen = widget.logic.state.items.any((element) => element.checked == true);
           if (!isHasChosen) {
-            SmartDialog.dismiss();
+            SmartDialog.compatible.dismiss();
             return;
           }
           List<Music> tempList = [];
@@ -148,7 +148,7 @@ class _DetailsBodyState extends State<DetailsBody> {
               tempList.add(music);
             }
           });
-          SmartDialog.dismiss();
+          SmartDialog.compatible.dismiss();
           SmartDialog.compatible.show(
               widget: DialogAddSongSheet(
                   musicList: tempList,

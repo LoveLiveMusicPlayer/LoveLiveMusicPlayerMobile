@@ -54,7 +54,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
               ? null
               : () async {
                   if (Platform.isIOS) {
-                    SmartDialog.dismiss();
+                    SmartDialog.compatible.dismiss();
                     Get.back();
                   }
                   return true;

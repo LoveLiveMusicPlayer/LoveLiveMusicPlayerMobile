@@ -179,7 +179,7 @@ class _HomeViewState extends State<HomeView>
         logic.selectAll(checked);
       },
       onCancelTap: () {
-        SmartDialog.dismiss();
+        SmartDialog.compatible.dismiss();
       },
     );
   }
@@ -203,9 +203,9 @@ class _HomeViewState extends State<HomeView>
           });
           final isSuccess = PlayerLogic.to.addMusicList(tempList);
           if (isSuccess) {
-            SmartDialog.showToast("添加成功");
+            SmartDialog.compatible.showToast("添加成功");
           }
-          SmartDialog.dismiss();
+          SmartDialog.compatible.dismiss();
         }));
     list.add(BtnItem(
         imgPath: Assets.dialogIcAddPlayList,
@@ -214,7 +214,7 @@ class _HomeViewState extends State<HomeView>
           List<Music> musicList = logic.state.items.cast();
           var isHasChosen = logic.state.items.any((element) => element.checked == true);
           if (!isHasChosen) {
-            SmartDialog.dismiss();
+            SmartDialog.compatible.dismiss();
             return;
           }
           List<Music> tempList = [];
@@ -223,7 +223,7 @@ class _HomeViewState extends State<HomeView>
               tempList.add(music);
             }
           });
-          SmartDialog.dismiss();
+          SmartDialog.compatible.dismiss();
           SmartDialog.compatible.show(
               widget: DialogAddSongSheet(musicList: tempList),
               alignmentTemp: Alignment.bottomCenter);

@@ -158,7 +158,7 @@ class _ListViewItemSongState extends State<ListViewItemSong>
                   path: Assets.mainIcAddNext,
                   onTap: () {
                     widget.onPlayNextTap(widget.music);
-                    SmartDialog.showToast("添加成功");
+                    SmartDialog.compatible.showToast("添加成功");
                   },
                   width: 20,
                   height: 20,

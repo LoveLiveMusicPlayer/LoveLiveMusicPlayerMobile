@@ -23,23 +23,25 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Get.theme.primaryColor,
-      width: 250.w,
-      height: 180.h,
+      width: 303.w,
+      height: 230.h,
+      decoration: BoxDecoration(
+          color: Get.isDarkMode ? Get.theme.primaryColor : Colors.white,
+          borderRadius: BorderRadius.circular(16.w)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
-            padding: EdgeInsets.only(top: 12.h, bottom: 8.h),
+            padding: EdgeInsets.only(top: 26.h, bottom: 8.h),
             child: Text(widget.title ?? "标题",
                 style: Get.isDarkMode
                     ? TextStyleMs.white_18
                     : TextStyleMs.black_18),
           ),
           SizedBox(
-            width: 200.w,
+            width: 220.w,
             child: Center(
-              widthFactor: 200.w,
+              widthFactor: 220.w,
               child: TextField(
                   controller: controller,
                   cursorColor: Colors.blue,
@@ -75,38 +77,55 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
             ),
           ),
           Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              InkWell(
-                onTap: () {
-                  if (widget.onBack != null) {
-                    widget.onBack!();
-                  }
-                  SmartDialog.dismiss();
-                },
+              Expanded(
                 child: Container(
-                  color: Colors.red,
-                  width: 125.w,
-                  height: 45.h,
-                  child: const Center(
-                    child: Text("取消"),
-                  ),
+                  height: 44.w,
+                  decoration: BoxDecoration(
+                      color: Get.isDarkMode
+                          ? Colors.grey
+                          : const Color(0xFFEDF5FF),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(16.w),
+                      )),
+                  child: TextButton(
+                      onPressed: () {
+                        if (widget.onBack != null) {
+                          widget.onBack!();
+                        }
+                        SmartDialog.compatible.dismiss();
+                      },
+                      child: Text(
+                        "取消",
+                        style: TextStyle(
+                            fontSize: 16.sp,
+                            color: Get.isDarkMode
+                                ? Colors.white
+                                : const Color(0xFF999999)),
+                      )),
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  if (widget.onConfirm != null) {
-                    widget.onConfirm!(text);
-                  }
-                  SmartDialog.dismiss();
-                },
+              Expanded(
                 child: Container(
-                    color: Colors.green,
-                    width: 125.w,
-                    height: 45.h,
-                    child: const Center(
-                      child: Text("确定"),
-                    )),
+                  height: 44.w,
+                  decoration: BoxDecoration(
+                      color: Get.isDarkMode
+                          ? const Color(0xFF0093DF)
+                          : const Color(0xFF28B3F7),
+                      borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(16.w))),
+                  child: TextButton(
+                      onPressed: () {
+                        if (widget.onConfirm != null) {
+                          widget.onConfirm!(text);
+                        }
+                        SmartDialog.compatible.dismiss();
+                      },
+                      child: Text(
+                        "确定",
+                        style: TextStyle(fontSize: 16.sp, color: Colors.white),
+                      )),
+                ),
               )
             ],
           )

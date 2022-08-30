@@ -81,6 +81,7 @@ dependencies:
       ref: e9da75b
   log4f: ^0.0.3
   device_info_plus: ^4.1.2
+  package_info_plus: ^1.4.3+1
 
 dependency_overrides:
   path: ^1.8.1

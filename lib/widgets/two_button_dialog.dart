@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class TwoButtonDialog extends StatelessWidget {
@@ -15,9 +16,9 @@ class TwoButtonDialog extends StatelessWidget {
 
   TwoButtonDialog({
     Key? key,
-    String imgAsset = "assets/ic_err.png",
+    String imgAsset = Assets.mainIcErr,
     String title = "标题",
-    String msg = "网络异常!",
+    String msg = "消息",
     bool isShowTitle = true,
     bool isShowMsg = true,
     Callback? onBackListener,
@@ -38,7 +39,8 @@ class TwoButtonDialog extends StatelessWidget {
         child: Container(
       width: 303.w,
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(16.w)),
+          color: Get.isDarkMode ? Get.theme.primaryColor : Colors.white,
+          borderRadius: BorderRadius.circular(16.w)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -62,8 +64,8 @@ class TwoButtonDialog extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Get.isDarkMode
-                      ? TextStyleMs.black_18
-                      : TextStyleMs.white_18),
+                      ? TextStyleMs.white_18
+                      : TextStyleMs.black_18),
             ),
           ),
           SizedBox(
@@ -90,19 +92,24 @@ class TwoButtonDialog extends StatelessWidget {
                 child: Container(
                   height: 44.w,
                   decoration: BoxDecoration(
-                      color: Color(0xFFEDF5FF),
+                      color: Get.isDarkMode
+                          ? Colors.grey
+                          : const Color(0xFFEDF5FF),
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(16.w),
                       )),
                   child: TextButton(
                       onPressed: () {
-                        SmartDialog.dismiss();
+                        SmartDialog.compatible.dismiss();
                         if (_onBackListener != null) _onBackListener!();
                       },
                       child: Text(
                         "取消",
                         style: TextStyle(
-                            fontSize: 16.sp, color: Color(0xFF999999)),
+                            fontSize: 16.sp,
+                            color: Get.isDarkMode
+                                ? Colors.white
+                                : const Color(0xFF999999)),
                       )),
                 ),
               ),
@@ -110,12 +117,14 @@ class TwoButtonDialog extends StatelessWidget {
                 child: Container(
                   height: 44.w,
                   decoration: BoxDecoration(
-                      color: Color(0xFF28B3F7),
+                      color: Get.isDarkMode
+                          ? const Color(0xFF0093DF)
+                          : const Color(0xFF28B3F7),
                       borderRadius: BorderRadius.only(
                           bottomRight: Radius.circular(16.w))),
                   child: TextButton(
                       onPressed: () {
-                        SmartDialog.dismiss();
+                        SmartDialog.compatible.dismiss();
                         if (_onConfirmListener != null) _onConfirmListener!();
                       },
                       child: Text(

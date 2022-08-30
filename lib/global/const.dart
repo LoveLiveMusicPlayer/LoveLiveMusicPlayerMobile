@@ -11,10 +11,13 @@ class Const {
   static const String spDark = "SP_IS_DARK";
   static const String spColorful = "SP_IS_COLORFUL";
   static const String spWithSystemTheme = "SP_With_System_Theme";
-  static const String spLoopMode = "loopMode";
+  static const String spLoopMode = "SP_LOOP_MODE";
+  static const String spDataVersion = "SP_DATA_VERSION";
 
   static const String logo = Assets.logoLogo;
 
   static const String ossUrl =
       "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/";
+
+  static const String dataUrl = "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/data/data.json";
 }
