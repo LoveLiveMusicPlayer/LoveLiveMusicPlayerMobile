@@ -303,7 +303,10 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   /// 新增一个歌单
   Future<bool> addMenu(String name, List<String> musicIds) async {
     try {
-      final idList = await menuDao.findMenuIds() ?? [];
+      final idList = <int>[];
+      Future.forEach<Menu>(await menuDao.findAllMenus(), (menu) {
+        idList.add(menu.id);
+      });
       final id = calcSmallAtIntArr(idList);
       if (id == -1) {
         return false;

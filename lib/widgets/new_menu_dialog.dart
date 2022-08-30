@@ -60,6 +60,10 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
                       border: const OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.red))),
                   onChanged: (str) {
+                    if (controller.value.isComposingRangeValid) {
+                      // ios自带输入法bug修复
+                      return;
+                    }
                     final len = str.length;
                     if (len < 12) {
                       text = str.substring(0, len);
