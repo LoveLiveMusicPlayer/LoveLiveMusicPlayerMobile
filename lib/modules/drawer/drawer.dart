@@ -374,11 +374,9 @@ class _DrawerPageState extends State<DrawerPage> {
   }
 
   bool checkFileExist(InnerMusic music) {
-    String path = '${SDUtils.path}${music.baseUrl}${music.musicPath}';
     if (Platform.isIOS) {
-      path = path.replaceAll(".flac", ".wav");
-      music.musicPath = path;
+      music.musicPath = music.musicPath.replaceAll(".flac", ".wav");
     }
-    return File(path).existsSync();
+    return File('${SDUtils.path}${music.baseUrl}${music.musicPath}').existsSync();
   }
 }
