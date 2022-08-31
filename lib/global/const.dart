@@ -1,11 +1,17 @@
 import 'package:lovelivemusicplayer/generated/assets.dart';
 
 class Const {
-  static const double uiWidth = 375; //设计图宽度 dp
-  static const double uiHeight = 812; //设计图高度 dp
+  // 设计图宽度 dp
+  static const double uiWidth = 375;
+  // 设计图高度 dp
+  static const double uiHeight = 812;
 
+  // Logan 加密键值对
   static const String aesKey = "0123456789012345";
   static const String iV = "0123456789012345";
+
+  // 暂无歌曲时使用炫彩模式要显示的颜色值
+  static const int noMusicColorfulSkin = 0xFFE8CFC0;
 
   /// sp
   static const String spDark = "SP_IS_DARK";

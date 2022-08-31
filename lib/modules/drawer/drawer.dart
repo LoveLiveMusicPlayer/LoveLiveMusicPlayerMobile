@@ -9,6 +9,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/global/global_theme.dart';
 import 'package:lovelivemusicplayer/models/CloudData.dart';
 import 'package:lovelivemusicplayer/models/FtpMusic.dart';
@@ -17,6 +18,7 @@ import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/routes.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
@@ -281,15 +283,18 @@ class _DrawerPageState extends State<DrawerPage> {
             enableSwitch: !GlobalLogic.to.withSystemTheme.value,
             callBack: (check) async {
               Get.changeTheme(check ? darkTheme : lightTheme);
+              if (GlobalLogic.to.hasSkin.value &&
+                  PlayerLogic.to.playingMusic.value.musicId == null) {
+                GlobalLogic.to.iconColor.value = const Color(Const.noMusicColorfulSkin);
+              }
               // 将全局变量设置为所选值
               GlobalLogic.to.manualIsDark.value = check;
               // 修改sp值
               await SpUtil.put(Const.spDark, check);
               // 恢复原来操作的界面
-              Future.delayed(const Duration(milliseconds: 500))
-                  .then((value) {
-                PageViewLogic.to.controller.jumpToPage(
-                    HomeController.to.state.currentIndex.value);
+              Future.delayed(const Duration(milliseconds: 500)).then((value) {
+                PageViewLogic.to.controller
+                    .jumpToPage(HomeController.to.state.currentIndex.value);
               });
             }),
         SizedBox(height: 8.h)
@@ -316,12 +321,12 @@ class _DrawerPageState extends State<DrawerPage> {
             if (currentVersion == data.version) {
               SmartDialog.compatible.show(
                   widget: TwoButtonDialog(
-                    title: "已是最新版本，是否覆盖？",
-                    isShowMsg: false,
-                    onConfirmListener: () {
-                      parseUpdateDataSource(data);
-                    },
-                  ));
+                title: "已是最新版本，是否覆盖？",
+                isShowMsg: false,
+                onConfirmListener: () {
+                  parseUpdateDataSource(data);
+                },
+              ));
             } else if (currentVersion < data.version) {
               parseUpdateDataSource(data);
             }
@@ -335,28 +340,30 @@ class _DrawerPageState extends State<DrawerPage> {
 
   parseUpdateDataSource(CloudData data) async {
     SmartDialog.compatible.showLoading(msg: "导入中...");
-    await loopParseData(data.music.us, data.album, "μ's");
-    await loopParseData(data.music.aqours, data.album, "Aqours");
-    await loopParseData(data.music.nijigasaki, data.album, "Nijigasaki");
-    await loopParseData(data.music.liella, data.album, "Liella!");
-    await loopParseData(data.music.combine, data.album, "Combine");
+    await loopParseData(data.music.us, data.album.us, "μ's");
+    await loopParseData(data.music.aqours, data.album.aqours, "Aqours");
+    await loopParseData(
+        data.music.nijigasaki, data.album.nijigasaki, "Nijigasaki");
+    await loopParseData(data.music.liella, data.album.liella, "Liella!");
+    await loopParseData(data.music.combine, data.album.combine, "Combine");
     SmartDialog.compatible.dismiss();
     DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
     SpUtil.put(Const.spDataVersion, data.version);
   }
 
-  Future<void> loopParseData(List<InnerMusic> musicList, Album album, String group) async {
+  Future<void> loopParseData(List<InnerMusic> musicList,
+      List<InnerAlbum> albumList, String group) async {
     await Future.forEach<InnerMusic>(musicList, (music) async {
       if (music.export && checkFileExist(music)) {
         int albumId = music.albumId;
-        InnerAlbum mAlbum = album.us.firstWhere((album) => album.id == albumId);
+        InnerAlbum album = albumList.firstWhere((album) => album.id == albumId);
         DownloadMusic downloadMusic = DownloadMusic(
-            albumUId: mAlbum.albumUId,
+            albumUId: album.albumUId,
             albumId: albumId,
-            albumName: mAlbum.name,
+            albumName: album.name,
             coverPath: music.coverPath,
-            date: mAlbum.date,
-            category: mAlbum.category,
+            date: album.date,
+            category: album.category,
             group: group,
             musicUId: music.musicUId,
             musicId: music.id,
@@ -365,8 +372,7 @@ class _DrawerPageState extends State<DrawerPage> {
             artist: music.artist,
             artistBin: music.artistBin,
             totalTime: music.time,
-            baseUrl: music.baseUrl
-        );
+            baseUrl: music.baseUrl);
         await DBLogic.to.insertMusicIntoAlbum(downloadMusic);
       }
     });
@@ -376,6 +382,7 @@ class _DrawerPageState extends State<DrawerPage> {
     if (Platform.isIOS) {
       music.musicPath = music.musicPath.replaceAll(".flac", ".wav");
     }
-    return File('${SDUtils.path}${music.baseUrl}${music.musicPath}').existsSync();
+    return File('${SDUtils.path}${music.baseUrl}${music.musicPath}')
+        .existsSync();
   }
 }

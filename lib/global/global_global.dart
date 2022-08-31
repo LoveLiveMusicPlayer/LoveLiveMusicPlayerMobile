@@ -39,7 +39,7 @@ class GlobalLogic extends SuperController
   var withSystemTheme = false.obs;
 
   /// 炫彩模式下的按钮皮肤
-  var iconColor = Get.theme.primaryColor.obs;
+  var iconColor = Get.theme.primaryColorDark.obs;
 
   static GlobalLogic get to => Get.find();
 
@@ -48,32 +48,29 @@ class GlobalLogic extends SuperController
     super.onInit();
 
     /// widget树构建完毕后执行
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      SpUtil.getBoolean(Const.spColorful, false)
-          .then((skin) => hasSkin.value = skin);
-      SpUtil.getBoolean(Const.spDark, false)
-          .then((isDark) => manualIsDark.value = isDark);
-      SpUtil.getBoolean(Const.spWithSystemTheme, false).then((isWith) {
-        if (isWith) {
-          bool isDark =
-              MediaQuery.of(Get.context!).platformBrightness == Brightness.dark;
-          Get.changeTheme(isDark ? darkTheme : lightTheme);
-        }
-        withSystemTheme.value = isWith;
-      });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      hasSkin.value = await SpUtil.getBoolean(Const.spColorful, false);
+      manualIsDark.value = await SpUtil.getBoolean(Const.spDark, false);
+      bool isWith = await SpUtil.getBoolean(Const.spWithSystemTheme, false);
+      bool isDark =
+          MediaQuery.of(Get.context!).platformBrightness == Brightness.dark;
+      if (isWith) {
+        Get.changeTheme(isDark ? darkTheme : lightTheme);
+      }
+      iconColor.value = isDark ? const Color(0xFF1E2328) : const Color(Const.noMusicColorfulSkin);
+      withSystemTheme.value = isWith;
     });
 
     /// 监听系统主题色改变
     final window = WidgetsBinding.instance.window;
-    window.onPlatformBrightnessChanged = () {
+    window.onPlatformBrightnessChanged = () async {
       WidgetsBinding.instance.handlePlatformBrightnessChanged();
-      SpUtil.getBoolean(Const.spWithSystemTheme, false).then((isWith) {
-        if (isWith && Get.context != null) {
-          bool isDark = window.platformBrightness == Brightness.dark;
-          Get.changeTheme(isDark ? darkTheme : lightTheme);
-        }
-        withSystemTheme.value = isWith;
-      });
+      bool isWith = await SpUtil.getBoolean(Const.spWithSystemTheme, false);
+      bool isDark = window.platformBrightness == Brightness.dark;
+      if (isWith && Get.context != null) {
+        Get.changeTheme(isDark ? darkTheme : lightTheme);
+      }
+      withSystemTheme.value = isWith;
     };
   }
 

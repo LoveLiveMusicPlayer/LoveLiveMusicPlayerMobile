@@ -301,11 +301,15 @@ class PlayerLogic extends SuperController
 
   /// 获取中/日/罗马歌词
   Future<void> getLrc(bool forceRefresh) async {
+    final uid = playingMusic.value.musicId;
+    if (uid == null) {
+      return;
+    }
+
     var jpLrc = "";
     var zhLrc = "";
     var romaLrc = "";
 
-    final uid = playingMusic.value.musicId;
     final baseUrl = playingMusic.value.baseUrl!;
     final lyric = playingMusic.value.musicPath!
         .replaceAll("flac", "lrc")
@@ -413,6 +417,9 @@ class PlayerLogic extends SuperController
   toggleLove({Music? music, bool? isLove}) {
     Music? mMusic = music;
     mMusic ??= playingMusic.value;
+    if (mMusic.musicId == null) {
+      return;
+    }
     DBLogic.to.updateLove(mMusic, isLove: isLove).then((music) {
       // 切换的歌曲如果是当前播放的歌曲，需要手动深拷贝一下对象使得player界面状态正确
       if (music != null && music.musicId == playingMusic.value.musicId) {
@@ -474,7 +481,7 @@ class PlayerLogic extends SuperController
     } else {
       playingMusic.value = music;
       final url = music.baseUrl! + music.coverPath!;
-      AppUtils.getImagePalette2(url).then((color) {
+      AppUtils.getImagePalette(url).then((color) {
         GlobalLogic.to.iconColor.value = color ?? Get.theme.primaryColor;
       });
     }

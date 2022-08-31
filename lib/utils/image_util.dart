@@ -66,11 +66,19 @@ class ImageUtil {
   Future<Uint8List?> compressAndTryCatch(String path) async {
     Uint8List? result;
     try {
-      result = await FlutterImageCompress.compressWithFile(path,
-          format: CompressFormat.jpeg,
-          quality: 20,
-          minHeight: 60.h.toInt(),
-          minWidth: ScreenUtil().screenWidth.toInt());
+      if (path.startsWith("assets")) {
+        result = await FlutterImageCompress.compressAssetImage(path,
+            format: CompressFormat.jpeg,
+            quality: 20,
+            minHeight: 60.h.toInt(),
+            minWidth: ScreenUtil().screenWidth.toInt());
+      } else {
+        result = await FlutterImageCompress.compressWithFile(path,
+            format: CompressFormat.jpeg,
+            quality: 20,
+            minHeight: 60.h.toInt(),
+            minWidth: ScreenUtil().screenWidth.toInt());
+      }
     } catch (e) {
       Log4f.e(msg: e.toString(), writeFile: true);
     }

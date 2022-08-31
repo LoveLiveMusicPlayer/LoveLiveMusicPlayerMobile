@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
@@ -80,13 +81,13 @@ class _HomeViewState extends State<HomeView>
     controller = WeSlideController();
     const double panelMinSize = 150;
     final double panelMaxSize = ScreenUtil().screenHeight;
-
+    final color = Theme.of(context).primaryColor;
     return WeSlide(
       controller: controller,
       panelMinSize: panelMinSize.h,
       panelMaxSize: panelMaxSize,
       overlayOpacity: 0.9,
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: color,
       overlay: true,
       isDismissible: true,
       body: _getTabBarView(() {
@@ -94,8 +95,8 @@ class _HomeViewState extends State<HomeView>
           scaffoldKey.currentState?.openEndDrawer();
         }
       }),
-      blurColor: Theme.of(context).primaryColor,
-      overlayColor: Theme.of(context).primaryColor,
+      blurColor: color,
+      overlayColor: color,
       panelBorderRadiusBegin: 10,
       panelBorderRadiusEnd: 10,
       panelHeader: MiniPlayer(onTap: () {

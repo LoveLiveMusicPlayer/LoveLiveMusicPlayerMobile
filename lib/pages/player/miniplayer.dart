@@ -75,26 +75,18 @@ class _MiniPlayerState extends State<MiniPlayer> {
   }
 
   Future<Decoration> generateDecoration(Music music) async {
-    Decoration decoration;
-    if (music.musicId == null ||
-        music.coverPath == null ||
-        music.coverPath!.isEmpty) {
-      decoration = BoxDecoration(
-        color:
-            Get.isDarkMode ? const Color(0xFF1E2328) : const Color(0xFFEBF3FE),
-        borderRadius: BorderRadius.circular(34),
-      );
+    String coverPath = (music.baseUrl ?? "") + (music.coverPath ?? "");
+    if (coverPath.isEmpty) {
+      coverPath = Assets.logoLogo;
     } else {
-      final coverPath = (music.baseUrl ?? "") + (music.coverPath ?? "");
-      final compressPic = await ImageUtil()
-          .compressAndTryCatch(SDUtils.getImgFile(coverPath).path);
-      decoration = BoxDecoration(
-        image:
-            DecorationImage(image: MemoryImage(compressPic!), fit: BoxFit.fill),
-        borderRadius: BorderRadius.circular(34),
-      );
+      coverPath = SDUtils.getImgFile(coverPath).path;
     }
-    return decoration;
+    final compressPic = await ImageUtil().compressAndTryCatch(coverPath);
+    return BoxDecoration(
+      image:
+      DecorationImage(image: MemoryImage(compressPic!), fit: BoxFit.fill),
+      borderRadius: BorderRadius.circular(34),
+    );
   }
 
   Widget body() {
