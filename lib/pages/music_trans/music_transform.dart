@@ -86,7 +86,9 @@ class _MusicTransformState extends State<MusicTransform> {
               await DBLogic.to.insertMusicIntoAlbum(music);
             }
           }).then((_) {
-            DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value).then((value) => Get.back());
+            DBLogic.to
+                .findAllListByGroup(GlobalLogic.to.currentGroup.value)
+                .then((value) => Get.back());
           });
           break;
         case "port":

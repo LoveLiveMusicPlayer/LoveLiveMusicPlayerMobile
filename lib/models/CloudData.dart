@@ -16,16 +16,16 @@ class CloudData {
   Music music;
 
   factory CloudData.fromJson(Map<String, dynamic> json) => CloudData(
-    version: json["version"],
-    album: Album.fromJson(json["album"]),
-    music: Music.fromJson(json["music"]),
-  );
+        version: json["version"],
+        album: Album.fromJson(json["album"]),
+        music: Music.fromJson(json["music"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "version": version,
-    "album": album.toJson(),
-    "music": music.toJson(),
-  };
+        "version": version,
+        "album": album.toJson(),
+        "music": music.toJson(),
+      };
 }
 
 class Album {
@@ -44,20 +44,25 @@ class Album {
   List<InnerAlbum> combine;
 
   factory Album.fromJson(Map<String, dynamic> json) => Album(
-    us: List<InnerAlbum>.from(json["μ's"].map((x) => InnerAlbum.fromJson(x))),
-    aqours: List<InnerAlbum>.from(json["Aqours"].map((x) => InnerAlbum.fromJson(x))),
-    nijigasaki: List<InnerAlbum>.from(json["Nijigasaki"].map((x) => InnerAlbum.fromJson(x))),
-    liella: List<InnerAlbum>.from(json["Liella!"].map((x) => InnerAlbum.fromJson(x))),
-    combine: List<InnerAlbum>.from(json["Combine"].map((x) => InnerAlbum.fromJson(x))),
-  );
+        us: List<InnerAlbum>.from(
+            json["μ's"].map((x) => InnerAlbum.fromJson(x))),
+        aqours: List<InnerAlbum>.from(
+            json["Aqours"].map((x) => InnerAlbum.fromJson(x))),
+        nijigasaki: List<InnerAlbum>.from(
+            json["Nijigasaki"].map((x) => InnerAlbum.fromJson(x))),
+        liella: List<InnerAlbum>.from(
+            json["Liella!"].map((x) => InnerAlbum.fromJson(x))),
+        combine: List<InnerAlbum>.from(
+            json["Combine"].map((x) => InnerAlbum.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "μ's": List<dynamic>.from(us.map((x) => x.toJson())),
-    "Aqours": List<dynamic>.from(aqours.map((x) => x.toJson())),
-    "Nijigasaki": List<dynamic>.from(nijigasaki.map((x) => x.toJson())),
-    "Liella!": List<dynamic>.from(liella.map((x) => x.toJson())),
-    "Combine": List<dynamic>.from(combine.map((x) => x.toJson())),
-  };
+        "μ's": List<dynamic>.from(us.map((x) => x.toJson())),
+        "Aqours": List<dynamic>.from(aqours.map((x) => x.toJson())),
+        "Nijigasaki": List<dynamic>.from(nijigasaki.map((x) => x.toJson())),
+        "Liella!": List<dynamic>.from(liella.map((x) => x.toJson())),
+        "Combine": List<dynamic>.from(combine.map((x) => x.toJson())),
+      };
 }
 
 class InnerAlbum {
@@ -80,24 +85,24 @@ class InnerAlbum {
   List<int> music;
 
   factory InnerAlbum.fromJson(Map<String, dynamic> json) => InnerAlbum(
-    albumUId: json["_id"],
-    id: json["id"],
-    name: json["name"],
-    date: json["date"],
-    coverPath: List<String>.from(json["cover_path"].map((x) => x)),
-    category: json["category"],
-    music: List<int>.from(json["music"].map((x) => x)),
-  );
+        albumUId: json["_id"],
+        id: json["id"],
+        name: json["name"],
+        date: json["date"],
+        coverPath: List<String>.from(json["cover_path"].map((x) => x)),
+        category: json["category"],
+        music: List<int>.from(json["music"].map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-    "_id": albumUId,
-    "id": id,
-    "name": name,
-    "date": date,
-    "cover_path": List<String>.from(coverPath.map((x) => x)),
-    "category": category,
-    "music": List<dynamic>.from(music.map((x) => x)),
-  };
+        "_id": albumUId,
+        "id": id,
+        "name": name,
+        "date": date,
+        "cover_path": List<String>.from(coverPath.map((x) => x)),
+        "category": category,
+        "music": List<dynamic>.from(music.map((x) => x)),
+      };
 }
 
 class Music {
@@ -116,20 +121,25 @@ class Music {
   List<InnerMusic> combine;
 
   factory Music.fromJson(Map<String, dynamic> json) => Music(
-    us: List<InnerMusic>.from(json["μ's"].map((x) => InnerMusic.fromJson(x))),
-    aqours: List<InnerMusic>.from(json["Aqours"].map((x) => InnerMusic.fromJson(x))),
-    nijigasaki: List<InnerMusic>.from(json["Nijigasaki"].map((x) => InnerMusic.fromJson(x))),
-    liella: List<InnerMusic>.from(json["Liella!"].map((x) => InnerMusic.fromJson(x))),
-    combine: List<InnerMusic>.from(json["Combine"].map((x) => InnerMusic.fromJson(x))),
-  );
+        us: List<InnerMusic>.from(
+            json["μ's"].map((x) => InnerMusic.fromJson(x))),
+        aqours: List<InnerMusic>.from(
+            json["Aqours"].map((x) => InnerMusic.fromJson(x))),
+        nijigasaki: List<InnerMusic>.from(
+            json["Nijigasaki"].map((x) => InnerMusic.fromJson(x))),
+        liella: List<InnerMusic>.from(
+            json["Liella!"].map((x) => InnerMusic.fromJson(x))),
+        combine: List<InnerMusic>.from(
+            json["Combine"].map((x) => InnerMusic.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "μ's": List<dynamic>.from(us.map((x) => x.toJson())),
-    "Aqours": List<dynamic>.from(aqours.map((x) => x.toJson())),
-    "Nijigasaki": List<dynamic>.from(nijigasaki.map((x) => x.toJson())),
-    "Liella!": List<dynamic>.from(liella.map((x) => x.toJson())),
-    "Combine": List<dynamic>.from(combine.map((x) => x.toJson())),
-  };
+        "μ's": List<dynamic>.from(us.map((x) => x.toJson())),
+        "Aqours": List<dynamic>.from(aqours.map((x) => x.toJson())),
+        "Nijigasaki": List<dynamic>.from(nijigasaki.map((x) => x.toJson())),
+        "Liella!": List<dynamic>.from(liella.map((x) => x.toJson())),
+        "Combine": List<dynamic>.from(combine.map((x) => x.toJson())),
+      };
 }
 
 class InnerMusic {
@@ -179,17 +189,17 @@ class InnerMusic {
   }
 
   Map<String, dynamic> toJson() => {
-    "_id": musicUId,
-    "id": id,
-    "name": name,
-    "album": albumId,
-    "cover_path": coverPath,
-    "music_path": musicPath,
-    "artist": artist,
-    "artist_bin": artistBin,
-    "time": time,
-    "albumName": albumName,
-    "export": export,
-    "base_url": baseUrl,
-  };
+        "_id": musicUId,
+        "id": id,
+        "name": name,
+        "album": albumId,
+        "cover_path": coverPath,
+        "music_path": musicPath,
+        "artist": artist,
+        "artist_bin": artistBin,
+        "time": time,
+        "albumName": albumName,
+        "export": export,
+        "base_url": baseUrl,
+      };
 }

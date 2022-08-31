@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/models/apiResponse.dart';
 import 'package:lovelivemusicplayer/network/api_service.dart';
 import 'package:lovelivemusicplayer/widgets/one_button_dialog.dart';
@@ -189,7 +188,8 @@ class Network {
         for (var element in t) {
           if (element is Map<String, dynamic>) {
             for (var index = 0; index < element.length; index++) {
-              hashMap[element.keys.elementAt(index)] = element.values.elementAt(index);
+              hashMap[element.keys.elementAt(index)] =
+                  element.values.elementAt(index);
             }
           }
         }

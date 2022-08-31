@@ -18,7 +18,6 @@ import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/routes.dart';
-import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
@@ -285,7 +284,8 @@ class _DrawerPageState extends State<DrawerPage> {
               Get.changeTheme(check ? darkTheme : lightTheme);
               if (GlobalLogic.to.hasSkin.value &&
                   PlayerLogic.to.playingMusic.value.musicId == null) {
-                GlobalLogic.to.iconColor.value = const Color(Const.noMusicColorfulSkin);
+                GlobalLogic.to.iconColor.value =
+                    const Color(Const.noMusicColorfulSkin);
               }
               // 将全局变量设置为所选值
               GlobalLogic.to.manualIsDark.value = check;

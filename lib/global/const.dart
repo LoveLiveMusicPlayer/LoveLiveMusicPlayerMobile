@@ -3,6 +3,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 class Const {
   // 设计图宽度 dp
   static const double uiWidth = 375;
+
   // 设计图高度 dp
   static const double uiHeight = 812;
 
@@ -25,5 +26,6 @@ class Const {
   static const String ossUrl =
       "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/";
 
-  static const String dataUrl = "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/data/data.json";
+  static const String dataUrl =
+      "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/data/data.json";
 }

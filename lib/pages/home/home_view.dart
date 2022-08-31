@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
-import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
@@ -213,7 +212,8 @@ class _HomeViewState extends State<HomeView>
         title: "添加到歌单",
         onTap: () async {
           List<Music> musicList = logic.state.items.cast();
-          var isHasChosen = logic.state.items.any((element) => element.checked == true);
+          var isHasChosen =
+              logic.state.items.any((element) => element.checked == true);
           if (!isHasChosen) {
             SmartDialog.compatible.dismiss();
             return;

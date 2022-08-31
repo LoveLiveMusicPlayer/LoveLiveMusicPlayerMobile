@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
@@ -137,7 +136,8 @@ class _DetailsBodyState extends State<DetailsBody> {
         title: "添加到歌单",
         onTap: () async {
           List<Music> musicList = widget.logic.state.items.cast();
-          var isHasChosen = widget.logic.state.items.any((element) => element.checked == true);
+          var isHasChosen = widget.logic.state.items
+              .any((element) => element.checked == true);
           if (!isHasChosen) {
             SmartDialog.compatible.dismiss();
             return;
@@ -154,7 +154,7 @@ class _DetailsBodyState extends State<DetailsBody> {
                   musicList: tempList,
                   changeLoveStatusCallback: (status) {
                     widget.logic.changeLoveStatus(tempList, status);
-              }),
+                  }),
               alignmentTemp: Alignment.bottomCenter);
         }));
     SmartDialog.compatible.show(

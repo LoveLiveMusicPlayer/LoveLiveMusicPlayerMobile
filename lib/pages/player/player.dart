@@ -309,9 +309,7 @@ class _PlayerState extends State<Player> {
             Container(
               decoration: BoxDecoration(
                   borderRadius: radius,
-                  image: DecorationImage(
-                      image: provider,
-                      fit: BoxFit.cover)),
+                  image: DecorationImage(image: provider, fit: BoxFit.cover)),
             ),
             Positioned.fill(
                 child: BackdropFilter(

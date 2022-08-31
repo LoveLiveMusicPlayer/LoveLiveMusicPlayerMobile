@@ -73,8 +73,7 @@ class PlayerLogic extends SuperController
       if (index != null &&
           mPlayList.isNotEmpty &&
           !GlobalLogic.to.isHandlePlay) {
-        Log4f.d(
-            msg: "currentIndexStream: $index - ${mPlayList[index].musicName}");
+        Log4f.d(msg: "当前播放: $index - ${mPlayList[index].musicName}");
         final currentMusic = mPlayList[index];
         await changePlayingMusic(currentMusic);
         persistencePLayList2(mPlayList, index).then((value) {

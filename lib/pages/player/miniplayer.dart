@@ -84,7 +84,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
     final compressPic = await ImageUtil().compressAndTryCatch(coverPath);
     return BoxDecoration(
       image:
-      DecorationImage(image: MemoryImage(compressPic!), fit: BoxFit.fill),
+          DecorationImage(image: MemoryImage(compressPic!), fit: BoxFit.fill),
       borderRadius: BorderRadius.circular(34),
     );
   }

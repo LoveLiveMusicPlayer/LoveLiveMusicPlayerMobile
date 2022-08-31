@@ -15,7 +15,8 @@ class DialogAddSongSheet extends StatelessWidget {
   final List<Music> musicList;
   final Function(bool)? changeLoveStatusCallback;
 
-  const DialogAddSongSheet({Key? key, required this.musicList, this.changeLoveStatusCallback})
+  const DialogAddSongSheet(
+      {Key? key, required this.musicList, this.changeLoveStatusCallback})
       : super(key: key);
 
   @override
@@ -94,10 +95,13 @@ class DialogAddSongSheet extends StatelessWidget {
                           idList.add(id);
                         }
                       }
-                      DBLogic.to.insertToMenu(
-                          GlobalLogic.to.menuList[index].id, idList).then((isSuccess) {
+                      DBLogic.to
+                          .insertToMenu(
+                              GlobalLogic.to.menuList[index].id, idList)
+                          .then((isSuccess) {
                         SmartDialog.compatible.dismiss();
-                        SmartDialog.compatible.showToast(isSuccess ? "添加成功" : "添加失败");
+                        SmartDialog.compatible
+                            .showToast(isSuccess ? "添加成功" : "添加失败");
                       });
                     },
                     menu: GlobalLogic.to.menuList[index],
