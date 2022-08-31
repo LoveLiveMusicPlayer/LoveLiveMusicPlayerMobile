@@ -38,6 +38,8 @@ class PlayerLogic extends SuperController
   // 全量歌词
   var fullLrc = {"jp": "", "zh": "", "roma": ""}.obs;
 
+  var needRefreshLyric = false.obs;
+
   // 播放状态
   var isPlaying = false.obs;
 
@@ -328,6 +330,8 @@ class PlayerLogic extends SuperController
     }
 
     fullLrc.value = {"jp": jpLrc, "zh": zhLrc, "roma": romaLrc};
+    Future.delayed(
+        const Duration(milliseconds: 200), () => needRefreshLyric.value = true);
   }
 
   /// 处理歌词二级缓存
@@ -409,6 +413,7 @@ class PlayerLogic extends SuperController
         lrcType.value = 0;
         break;
     }
+    needRefreshLyric.value = true;
   }
 
   /// 切换我喜欢状态
@@ -464,6 +469,7 @@ class PlayerLogic extends SuperController
       setCurrentMusic(null);
       playingJPLrc.value = {"pre": "", "current": "", "next": ""};
       fullLrc.value = {"jp": "", "zh": "", "roma": ""};
+      needRefreshLyric.value = true;
       await mPlayer.stop();
       return;
     }
@@ -512,5 +518,7 @@ class PlayerLogic extends SuperController
   void onPaused() {}
 
   @override
-  void onResumed() {}
+  void onResumed() {
+    needRefreshLyric.value = true;
+  }
 }

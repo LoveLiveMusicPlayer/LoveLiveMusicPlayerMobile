@@ -164,7 +164,10 @@ class _PlayerState extends State<Player> {
 
   Widget stackBody() {
     if (isCover) {
-      return Cover(onTap: () => setStatus(cover: false));
+      return Cover(onTap: () {
+        setStatus(cover: false);
+        PlayerLogic.to.needRefreshLyric.value = true;
+      });
     } else {
       return Lyric(
           key: const Key("Lyric"), onTap: () => setStatus(cover: true));

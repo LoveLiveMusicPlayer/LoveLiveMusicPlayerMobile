@@ -18,30 +18,34 @@ class Lyric extends StatefulWidget {
 }
 
 class _LyricState extends State<Lyric> {
-  var lyricUI = MyLrcUI();
+  final lyricUI = MyLrcUI();
 
   @override
   Widget build(BuildContext context) {
+    LyricsReaderModel? model;
     return Obx(() {
-      LyricsReaderModel? model;
-      switch (PlayerLogic.to.lrcType.value) {
-        case 0:
-          model = LyricsModelBuilder.create()
-              .bindLyricToMain(PlayerLogic.to.fullLrc['jp']!)
-              .getModel();
-          break;
-        case 1:
-          model = LyricsModelBuilder.create()
-              .bindLyricToMain(PlayerLogic.to.fullLrc['jp']!)
-              .bindLyricToExt(PlayerLogic.to.fullLrc['zh']!)
-              .getModel();
-          break;
-        case 2:
-          model = LyricsModelBuilder.create()
-              .bindLyricToMain(PlayerLogic.to.fullLrc['jp']!)
-              .bindLyricToExt(PlayerLogic.to.fullLrc['roma']!)
-              .getModel();
-          break;
+      if (PlayerLogic.to.needRefreshLyric.value) {
+        PlayerLogic.to.needRefreshLyric.value = false;
+        final lyric = PlayerLogic.to.fullLrc;
+        switch (PlayerLogic.to.lrcType.value) {
+          case 0:
+            model = LyricsModelBuilder.create()
+                .bindLyricToMain(lyric['jp']!)
+                .getModel();
+            break;
+          case 1:
+            model = LyricsModelBuilder.create()
+                .bindLyricToMain(lyric['jp']!)
+                .bindLyricToExt(lyric['zh']!)
+                .getModel();
+            break;
+          case 2:
+            model = LyricsModelBuilder.create()
+                .bindLyricToMain(lyric['jp']!)
+                .bindLyricToExt(lyric['roma']!)
+                .getModel();
+            break;
+        }
       }
       return LyricsReader(
         size: Size(ScreenUtil().screenWidth, 400.h),
@@ -49,7 +53,7 @@ class _LyricState extends State<Lyric> {
         model: model,
         position: PlayerLogic.to.playingPosition.value.inMilliseconds,
         lyricUi: lyricUI,
-        playing: false,
+        playing: PlayerLogic.to.isPlaying.value,
         onTap: widget.onTap,
         selectLineBuilder: (progress, confirm) {
           return Row(
