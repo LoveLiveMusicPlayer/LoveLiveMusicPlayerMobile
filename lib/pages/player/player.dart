@@ -108,6 +108,9 @@ class _PlayerState extends State<Player> {
               btnColor: GlobalLogic.to.iconColor.value,
               onCloseTap: () => widget.onTap(),
               onMoreTap: () {
+                if (PlayerLogic.to.playingMusic.value.musicId == null) {
+                  return;
+                }
                 SmartDialog.compatible.show(
                     widget: DialogMoreWithMusic(
                         music: PlayerLogic.to.playingMusic.value),
@@ -161,7 +164,10 @@ class _PlayerState extends State<Player> {
 
   Widget stackBody() {
     if (isCover) {
-      return Cover(onTap: () => setStatus(cover: false));
+      return Cover(onTap: () {
+        setStatus(cover: false);
+        PlayerLogic.to.needRefreshLyric.value = true;
+      });
     } else {
       return Lyric(
           key: const Key("Lyric"), onTap: () => setStatus(cover: true));
@@ -238,6 +244,9 @@ class _PlayerState extends State<Player> {
                   ? GlobalLogic.to.iconColor.value
                   : null),
           materialButton(Icons.add, () {
+            if (PlayerLogic.to.playingMusic.value.musicId == null) {
+              return;
+            }
             SmartDialog.compatible.show(
                 widget: DialogAddSongSheet(
                     musicList: [PlayerLogic.to.playingMusic.value]),
@@ -280,11 +289,18 @@ class _PlayerState extends State<Player> {
   Widget coverBg() {
     final currentMusic = PlayerLogic.to.playingMusic.value;
     final pic = (currentMusic.baseUrl ?? "") + (currentMusic.coverPath ?? "");
-    if (pic.isEmpty || !GlobalLogic.to.hasSkin.value) {
+    if (!GlobalLogic.to.hasSkin.value) {
       return Container();
     }
     const radius = BorderRadius.only(
         topLeft: Radius.circular(30), topRight: Radius.circular(30));
+
+    ImageProvider provider;
+    if (pic.isEmpty) {
+      provider = const AssetImage(Assets.logoLogo);
+    } else {
+      provider = FileImage(File(SDUtils.path + pic));
+    }
     return SizedBox(
       width: ScreenUtil().screenWidth,
       height: ScreenUtil().screenHeight,
@@ -296,9 +312,7 @@ class _PlayerState extends State<Player> {
             Container(
               decoration: BoxDecoration(
                   borderRadius: radius,
-                  image: DecorationImage(
-                      image: FileImage(File(SDUtils.path + pic)),
-                      fit: BoxFit.cover)),
+                  image: DecorationImage(image: provider, fit: BoxFit.cover)),
             ),
             Positioned.fill(
                 child: BackdropFilter(

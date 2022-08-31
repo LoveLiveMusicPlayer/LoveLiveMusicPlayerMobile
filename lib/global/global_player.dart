@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:log4f/log4f.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
@@ -37,6 +38,9 @@ class PlayerLogic extends SuperController
 
   // 全量歌词
   var fullLrc = {"jp": "", "zh": "", "roma": ""}.obs;
+
+  // 是否需要刷新歌词UI
+  var needRefreshLyric = false.obs;
 
   // 播放状态
   var isPlaying = false.obs;
@@ -73,8 +77,7 @@ class PlayerLogic extends SuperController
       if (index != null &&
           mPlayList.isNotEmpty &&
           !GlobalLogic.to.isHandlePlay) {
-        Log4f.d(
-            msg: "currentIndexStream: $index - ${mPlayList[index].musicName}");
+        Log4f.d(msg: "当前播放: $index - ${mPlayList[index].musicName}");
         final currentMusic = mPlayList[index];
         await changePlayingMusic(currentMusic);
         persistencePLayList2(mPlayList, index).then((value) {
@@ -154,19 +157,17 @@ class PlayerLogic extends SuperController
 
   /// 播放指定列表的歌曲
   playMusic(List<Music> musicList, {int index = 0, bool needPlay = true}) {
-    Log4f.d(
-        msg:
-            "event: playMusic: ${musicList[index].musicName} - total: ${musicList.length}");
+    Log4f.d(msg: "播放曲目: ${musicList[index].musicName}");
     try {
       // 如果上一次处理没有结束，直接跳过
       if (GlobalLogic.to.isHandlePlay) {
-        Log4f.d(msg: "event: handlePlaying");
+        Log4f.d(msg: "事件：正在处理中，跳过...");
         return;
       }
       GlobalLogic.to.isHandlePlay = true;
       if (musicList.isEmpty) {
         GlobalLogic.to.isHandlePlay = false;
-        Log4f.d(msg: "event: musicList empty");
+        Log4f.d(msg: "事件：列表为空");
         return;
       }
 
@@ -179,7 +180,7 @@ class PlayerLogic extends SuperController
       audioSourceList.clear();
       audioSourceList.addAll(audioList);
       audioList.clear();
-      Log4f.d(msg: "event: audioSourceList length: ${audioSourceList.length}");
+      Log4f.d(msg: "播放列表长度: ${audioSourceList.length}");
       mPlayer
           .setAudioSource(audioSourceList, initialIndex: index)
           .then((value) {
@@ -243,11 +244,14 @@ class PlayerLogic extends SuperController
   }
 
   /// 将音乐列表插入到当前播放列表末尾
-  addMusicList(List<Music> musicList) {
+  bool addMusicList(List<Music> musicList) {
+    if (musicList.isEmpty) {
+      return false;
+    }
     // 如果列表为空则直接播放
     if (mPlayList.isEmpty) {
       playMusic(musicList);
-      return;
+      return true;
     }
 
     // 从音乐列表中重复的歌曲删除 O(m*n)?
@@ -268,6 +272,7 @@ class PlayerLogic extends SuperController
           musicName: music.musicName!,
           artist: music.artist!));
     }
+    return true;
   }
 
   /// 生成一个播放URI
@@ -280,7 +285,7 @@ class PlayerLogic extends SuperController
         album: music.albumName!,
         artist: music.artist,
         artUri: (music.coverPath == null || music.coverPath!.isEmpty)
-            ? Uri.parse(Const.logo)
+            ? Uri.parse(Assets.logoLogo)
             : Uri.file(SDUtils.path + music.baseUrl! + music.coverPath!),
       ),
     );
@@ -297,11 +302,15 @@ class PlayerLogic extends SuperController
 
   /// 获取中/日/罗马歌词
   Future<void> getLrc(bool forceRefresh) async {
+    final uid = playingMusic.value.musicId;
+    if (uid == null) {
+      return;
+    }
+
     var jpLrc = "";
     var zhLrc = "";
     var romaLrc = "";
 
-    final uid = playingMusic.value.musicId;
     final baseUrl = playingMusic.value.baseUrl!;
     final lyric = playingMusic.value.musicPath!
         .replaceAll("flac", "lrc")
@@ -321,6 +330,8 @@ class PlayerLogic extends SuperController
     }
 
     fullLrc.value = {"jp": jpLrc, "zh": zhLrc, "roma": romaLrc};
+    Future.delayed(
+        const Duration(milliseconds: 200), () => needRefreshLyric.value = true);
   }
 
   /// 处理歌词二级缓存
@@ -402,6 +413,7 @@ class PlayerLogic extends SuperController
         lrcType.value = 0;
         break;
     }
+    needRefreshLyric.value = true;
   }
 
   /// 切换我喜欢状态
@@ -409,6 +421,9 @@ class PlayerLogic extends SuperController
   toggleLove({Music? music, bool? isLove}) {
     Music? mMusic = music;
     mMusic ??= playingMusic.value;
+    if (mMusic.musicId == null) {
+      return;
+    }
     DBLogic.to.updateLove(mMusic, isLove: isLove).then((music) {
       // 切换的歌曲如果是当前播放的歌曲，需要手动深拷贝一下对象使得player界面状态正确
       if (music != null && music.musicId == playingMusic.value.musicId) {
@@ -419,9 +434,16 @@ class PlayerLogic extends SuperController
   }
 
   /// 切换我喜欢状态（列表）
-  /// @hint 列表中只要有一个没有加入我喜欢的，就全部加入；否则从我喜欢中全部删除
-  toggleLoveList(List<Music> musicList) {
-    DBLogic.to.updateLoveList(musicList).then((value) {
+  /// @param musicList 选中的歌曲列表
+  /// @param changeStatus 要修改的状态
+  toggleLoveList(List<Music> musicList, bool changeStatus) {
+    DBLogic.to.updateLoveList(musicList, changeStatus).then((value) {
+      final music = playingMusic.value;
+      final hasPlayingMusic =
+          musicList.any((element) => element.musicId == music.musicId);
+      if (hasPlayingMusic) {
+        playingMusic.value.isLove = !playingMusic.value.isLove;
+      }
       DBLogic.to.findAllLoveListByGroup(GlobalLogic.to.currentGroup.value);
     });
   }
@@ -453,6 +475,7 @@ class PlayerLogic extends SuperController
       setCurrentMusic(null);
       playingJPLrc.value = {"pre": "", "current": "", "next": ""};
       fullLrc.value = {"jp": "", "zh": "", "roma": ""};
+      needRefreshLyric.value = true;
       await mPlayer.stop();
       return;
     }
@@ -469,7 +492,7 @@ class PlayerLogic extends SuperController
     } else {
       playingMusic.value = music;
       final url = music.baseUrl! + music.coverPath!;
-      AppUtils.getImagePalette2(url).then((color) {
+      AppUtils.getImagePalette(url).then((color) {
         GlobalLogic.to.iconColor.value = color ?? Get.theme.primaryColor;
       });
     }
@@ -501,5 +524,7 @@ class PlayerLogic extends SuperController
   void onPaused() {}
 
   @override
-  void onResumed() {}
+  void onResumed() {
+    needRefreshLyric.value = true;
+  }
 }

@@ -21,9 +21,17 @@ class AppUtils {
   }
 
   /// 图片提取主色
-  static Future<Color?> getImagePalette2(String url) async {
+  static Future<Color?> getImagePalette(String url) async {
     final image =
         await getImageFromProvider(FileImage(File(SDUtils.path + url)));
+    final rgb = await getColorFromImage(image);
+    return Color.fromARGB(150, rgb?.elementAt(0) ?? 0, rgb?.elementAt(1) ?? 0,
+        rgb?.elementAt(2) ?? 0);
+  }
+
+  /// 图片提取主色
+  static Future<Color?> getImagePalette2(String url) async {
+    final image = await getImageFromProvider(AssetImage(url));
     final rgb = await getColorFromImage(image);
     return Color.fromARGB(150, rgb?.elementAt(0) ?? 0, rgb?.elementAt(1) ?? 0,
         rgb?.elementAt(2) ?? 0);

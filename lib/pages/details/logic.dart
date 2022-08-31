@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/pages/details/state.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 
@@ -67,5 +68,16 @@ class DetailController extends GetxController {
       }
     }
     return num;
+  }
+
+  changeLoveStatus(List<Music> changeList, bool status) {
+    for (var music in state.items) {
+      for (var cMusic in changeList) {
+        if (music.musicId == cMusic.musicId) {
+          music.isLove = status;
+        }
+      }
+    }
+    refresh();
   }
 }

@@ -1,19 +1,28 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/global/global_theme.dart';
+import 'package:lovelivemusicplayer/models/CloudData.dart';
+import 'package:lovelivemusicplayer/models/FtpMusic.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
+import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
+import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class DrawerPage extends StatefulWidget {
   const DrawerPage({Key? key}) : super(key: key);
@@ -109,6 +118,7 @@ class _DrawerPageState extends State<DrawerPage> {
     return ListTile(
         title: Container(
             width: 270.w,
+            height: 350.h,
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
               borderRadius: BorderRadius.circular(8.w),
@@ -191,26 +201,7 @@ class _DrawerPageState extends State<DrawerPage> {
                       });
                     }),
                 SizedBox(height: 8.h),
-                DrawerFunctionButton(
-                    icon: Assets.drawerDrawerDayNight,
-                    text: "夜间模式",
-                    hasSwitch: true,
-                    initSwitch: GlobalLogic.to.manualIsDark.value,
-                    enableSwitch: !GlobalLogic.to.withSystemTheme.value,
-                    callBack: (check) async {
-                      Get.changeTheme(check ? darkTheme : lightTheme);
-                      // 将全局变量设置为所选值
-                      GlobalLogic.to.manualIsDark.value = check;
-                      // 修改sp值
-                      await SpUtil.put(Const.spDark, check);
-                      // 恢复原来操作的界面
-                      Future.delayed(const Duration(milliseconds: 500))
-                          .then((value) {
-                        PageViewLogic.to.controller.jumpToPage(
-                            HomeController.to.state.currentIndex.value);
-                      });
-                    }),
-                SizedBox(height: 8.h),
+                renderDayOrNightSwitch(),
                 DrawerFunctionButton(
                     icon: Assets.drawerDrawerColorful,
                     text: "炫彩主题(高性能)",
@@ -224,9 +215,11 @@ class _DrawerPageState extends State<DrawerPage> {
                     }),
                 SizedBox(height: 8.h),
                 DrawerFunctionButton(
-                  icon: Assets.drawerDrawerSecret,
-                  text: "关于和隐私",
-                  onTap: () {},
+                  icon: Assets.drawerDrawerDataDownload,
+                  text: "数据更新",
+                  onTap: () {
+                    handleUpdateData();
+                  },
                 ),
                 SizedBox(height: 8.h),
                 DrawerFunctionButton(
@@ -236,9 +229,10 @@ class _DrawerPageState extends State<DrawerPage> {
                     SmartDialog.compatible
                         .showLoading(msg: "重置中...", backDismiss: false);
                     await DBLogic.to.clearAllAlbum();
+                    await SpUtil.clear();
                     await DBLogic.to
                         .findAllListByGroup(GlobalLogic.to.currentGroup.value);
-                    SmartDialog.dismiss();
+                    SmartDialog.compatible.dismiss();
                     SmartDialog.compatible
                         .showToast("清理成功", time: const Duration(seconds: 5));
                   },
@@ -262,9 +256,141 @@ class _DrawerPageState extends State<DrawerPage> {
                   },
                 ),
                 SizedBox(height: 8.h),
+                DrawerFunctionButton(
+                  icon: Assets.drawerDrawerSecret,
+                  text: "关于和隐私",
+                  onTap: () {},
+                ),
+                SizedBox(height: 8.h),
               ],
             );
           }),
         ));
+  }
+
+  Widget renderDayOrNightSwitch() {
+    if (GlobalLogic.to.withSystemTheme.value) {
+      return Container();
+    }
+    return Column(
+      children: [
+        DrawerFunctionButton(
+            icon: Assets.drawerDrawerDayNight,
+            text: "夜间模式",
+            hasSwitch: true,
+            initSwitch: GlobalLogic.to.manualIsDark.value,
+            enableSwitch: !GlobalLogic.to.withSystemTheme.value,
+            callBack: (check) async {
+              Get.changeTheme(check ? darkTheme : lightTheme);
+              if (GlobalLogic.to.hasSkin.value &&
+                  PlayerLogic.to.playingMusic.value.musicId == null) {
+                GlobalLogic.to.iconColor.value =
+                    const Color(Const.noMusicColorfulSkin);
+              }
+              // 将全局变量设置为所选值
+              GlobalLogic.to.manualIsDark.value = check;
+              // 修改sp值
+              await SpUtil.put(Const.spDark, check);
+              // 恢复原来操作的界面
+              Future.delayed(const Duration(milliseconds: 500)).then((value) {
+                PageViewLogic.to.controller
+                    .jumpToPage(HomeController.to.state.currentIndex.value);
+              });
+            }),
+        SizedBox(height: 8.h)
+      ],
+    );
+  }
+
+  handleUpdateData() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    int currentNumber = int.tryParse(packageInfo.buildNumber) ?? 0;
+    SmartDialog.compatible.showLoading(msg: "下载数据中");
+    Network.get(Const.dataUrl, success: (result) {
+      if (result is Map<String, dynamic>) {
+        int maxNumber = 0;
+        result.forEach((key, value) {
+          int number = int.tryParse(key) ?? 0;
+          if (number > maxNumber && number <= currentNumber) {
+            maxNumber = number;
+          }
+        });
+        String latestDataUrl = result[maxNumber.toString()];
+        Network.dio?.request(latestDataUrl).then((value) {
+          CloudData data = CloudData.fromJson(value.data);
+          SpUtil.getInt(Const.spDataVersion).then((currentVersion) {
+            if (currentVersion == data.version) {
+              SmartDialog.compatible.dismiss();
+              SmartDialog.compatible.show(
+                  widget: TwoButtonDialog(
+                title: "已是最新版本，是否覆盖？",
+                isShowMsg: false,
+                onConfirmListener: () {
+                  parseUpdateDataSource(data);
+                },
+              ));
+            } else if (currentVersion < data.version) {
+              SmartDialog.compatible.dismiss();
+              parseUpdateDataSource(data);
+            }
+          });
+        });
+      } else {
+        SmartDialog.compatible.dismiss();
+        SmartDialog.compatible.showToast("数据异常");
+      }
+    }, error: (err) {
+      Log4f.e(msg: err, writeFile: true);
+      SmartDialog.compatible.dismiss();
+      SmartDialog.compatible.showToast("数据更新失败");
+    }, isShowDialog: false, isShowError: false);
+  }
+
+  parseUpdateDataSource(CloudData data) async {
+    SmartDialog.compatible.showLoading(msg: "导入中...");
+    await loopParseData(data.music.us, data.album.us, "μ's");
+    await loopParseData(data.music.aqours, data.album.aqours, "Aqours");
+    await loopParseData(
+        data.music.nijigasaki, data.album.nijigasaki, "Nijigasaki");
+    await loopParseData(data.music.liella, data.album.liella, "Liella!");
+    await loopParseData(data.music.combine, data.album.combine, "Combine");
+    SmartDialog.compatible.dismiss();
+    DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
+    SpUtil.put(Const.spDataVersion, data.version);
+  }
+
+  Future<void> loopParseData(List<InnerMusic> musicList,
+      List<InnerAlbum> albumList, String group) async {
+    await Future.forEach<InnerMusic>(musicList, (music) async {
+      if (music.export && checkFileExist(music)) {
+        int albumId = music.albumId;
+        InnerAlbum album = albumList.firstWhere((album) => album.id == albumId);
+        DownloadMusic downloadMusic = DownloadMusic(
+            albumUId: album.albumUId,
+            albumId: albumId,
+            albumName: album.name,
+            coverPath: music.coverPath,
+            date: album.date,
+            category: album.category,
+            group: group,
+            musicUId: music.musicUId,
+            musicId: music.id,
+            musicName: music.name,
+            musicPath: music.musicPath,
+            artist: music.artist,
+            artistBin: music.artistBin,
+            totalTime: music.time,
+            baseUrl: music.baseUrl);
+        await DBLogic.to.insertMusicIntoAlbum(downloadMusic);
+      }
+    });
+  }
+
+  bool checkFileExist(InnerMusic music) {
+    if (Platform.isIOS) {
+      music.musicPath = music.musicPath.replaceAll(".flac", ".wav");
+    }
+    return File('${SDUtils.path}${music.baseUrl}${music.musicPath}')
+        .existsSync();
   }
 }

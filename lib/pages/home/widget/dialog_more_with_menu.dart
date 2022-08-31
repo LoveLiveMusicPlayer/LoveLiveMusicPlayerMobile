@@ -47,7 +47,7 @@ class DialogMoreWithMenu extends StatelessWidget {
                 : const Color(0xFFCFCFCF),
           ),
           _buildItem(Assets.dialogIcEdit, "重命名歌单", true, () {
-            SmartDialog.dismiss();
+            SmartDialog.compatible.dismiss();
             SmartDialog.compatible.show(
                 widget: NewMenuDialog(
                     title: "重命名歌单",
@@ -58,7 +58,7 @@ class DialogMoreWithMenu extends StatelessWidget {
                 alignmentTemp: Alignment.center);
           }),
           _buildItem(Assets.dialogIcDelete2, "删除歌单", true, () {
-            SmartDialog.dismiss();
+            SmartDialog.compatible.dismiss();
             DBLogic.to.deleteMenuById(menu.id);
           }),
         ],

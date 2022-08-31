@@ -136,7 +136,7 @@ class _DataSyncState extends State<DataSync> {
         ),
         ElevatedButton(
           onPressed: () async {
-            SmartDialog.dismiss();
+            SmartDialog.compatible.dismiss();
             Get.back();
           },
           child: const Text('确定'),

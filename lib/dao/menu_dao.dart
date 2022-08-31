@@ -9,9 +9,6 @@ abstract class MenuDao {
   @Query('SELECT * FROM Menu WHERE `id` = :menuId')
   Future<Menu?> findMenuById(int menuId);
 
-  @Query('SELECT `id` From Menu')
-  Future<List<int>?> findMenuIds();
-
   @insert
   Future<void> insertMenu(Menu menu);
 

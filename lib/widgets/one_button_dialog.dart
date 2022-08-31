@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:lovelivemusicplayer/global/const.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 
 class OneButtonDialog extends StatelessWidget {
   String _imgAsset = "";
@@ -13,7 +13,7 @@ class OneButtonDialog extends StatelessWidget {
 
   OneButtonDialog(
       {Key? key,
-      String imgAsset = Const.logo,
+      String imgAsset = Assets.logoLogo,
       String title = "标题",
       String msg = "网络异常!",
       bool isShowTitle = true,
@@ -90,7 +90,7 @@ class OneButtonDialog extends StatelessWidget {
                     bottomRight: Radius.circular(16.w))),
             child: TextButton(
                 onPressed: () {
-                  SmartDialog.dismiss();
+                  SmartDialog.compatible.dismiss();
                   if (_onBackListener != null) _onBackListener!();
                 },
                 child: Text(

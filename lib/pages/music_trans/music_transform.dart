@@ -86,7 +86,9 @@ class _MusicTransformState extends State<MusicTransform> {
               await DBLogic.to.insertMusicIntoAlbum(music);
             }
           }).then((_) {
-            DBLogic.to.findAllListByGroup("all").then((value) => Get.back());
+            DBLogic.to
+                .findAllListByGroup(GlobalLogic.to.currentGroup.value)
+                .then((value) => Get.back());
           });
           break;
         case "port":
@@ -223,7 +225,7 @@ class _MusicTransformState extends State<MusicTransform> {
       await queue.onIdle();
       final message = ftpCmdToJson(FtpCmd(cmd: "finish", body: ""));
       channel.sink.add(message);
-      await DBLogic.to.findAllListByGroup("all");
+      await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
       Get.back();
     }
   }
@@ -448,7 +450,7 @@ class _MusicTransformState extends State<MusicTransform> {
       queue.clear();
     }
     cancelToken?.cancel();
-    SmartDialog.dismiss();
+    SmartDialog.compatible.dismiss();
     DBLogic.to
         .findAllListByGroup(GlobalLogic.to.currentGroup.value)
         .then((value) => Get.back());

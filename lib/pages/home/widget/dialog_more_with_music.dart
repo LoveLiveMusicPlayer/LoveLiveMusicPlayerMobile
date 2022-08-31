@@ -79,18 +79,18 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
                 : const Color(0xFFCFCFCF),
           ),
           _buildItem(Assets.dialogIcAddPlayList, "加入播放列表", true, () {
-            SmartDialog.dismiss();
+            SmartDialog.compatible.dismiss();
             PlayerLogic.to.addNextMusic(widget.music, isNext: false);
-            SmartDialog.showToast("添加成功");
+            SmartDialog.compatible.showToast("添加成功");
           }),
           _buildItem(Assets.dialogIcAddSongSheet, "添加到歌单", true, () {
-            SmartDialog.dismiss();
+            SmartDialog.compatible.dismiss();
             SmartDialog.compatible.show(
                 widget: DialogAddSongSheet(musicList: [widget.music]),
                 alignmentTemp: Alignment.bottomCenter);
           }),
           _buildItem(Assets.dialogIcSongInfo, "歌曲信息", length > 4, () {
-            SmartDialog.dismiss();
+            SmartDialog.compatible.dismiss();
             SmartDialog.compatible.show(
                 widget: DialogSongInfo(music: widget.music),
                 alignmentTemp: Alignment.bottomCenter);
@@ -108,7 +108,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
     }
     return _buildItem(Assets.dialogIcSeeAlbum, "查看专辑", widget.onRemove != null,
         () {
-      SmartDialog.dismiss();
+      SmartDialog.compatible.dismiss();
       if (album != null) {
         Get.toNamed(Routes.routeAlbumDetails, arguments: album);
       }
@@ -118,7 +118,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
   Widget renderRemoveItem() {
     if (widget.onRemove != null) {
       return _buildItem(Assets.dialogIcDelete2, "删除歌曲", false, () {
-        SmartDialog.dismiss();
+        SmartDialog.compatible.dismiss();
         widget.onRemove!(widget.music);
       });
     }

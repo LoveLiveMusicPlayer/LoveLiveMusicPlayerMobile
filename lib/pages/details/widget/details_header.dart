@@ -16,7 +16,7 @@ class DetailsHeader extends StatelessWidget {
     return Container(
         color: Get.theme.primaryColor,
         child: Column(children: [
-          SizedBox(height: MediaQuery.of(context).padding.top + 14.56.h),
+          SizedBox(height: MediaQuery.of(Get.context!).padding.top + 14.56.h),
           Stack(alignment: Alignment.center, children: [
             Row(children: [
               Padding(
@@ -24,7 +24,7 @@ class DetailsHeader extends StatelessWidget {
                   child: materialButton(Icons.keyboard_arrow_left, () {
                     if (onBack == null) {
                       HomeController.to.state.isSelect.value = false;
-                      SmartDialog.dismiss();
+                      SmartDialog.compatible.dismiss();
                       Get.back();
                     } else {
                       onBack!();
