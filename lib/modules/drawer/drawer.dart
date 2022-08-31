@@ -305,6 +305,7 @@ class _DrawerPageState extends State<DrawerPage> {
   handleUpdateData() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     int currentNumber = int.tryParse(packageInfo.buildNumber) ?? 0;
+    SmartDialog.compatible.showLoading(msg: "下载数据中");
     Network.get(Const.dataUrl, success: (result) {
       if (result is Map<String, dynamic>) {
         int maxNumber = 0;
@@ -319,6 +320,7 @@ class _DrawerPageState extends State<DrawerPage> {
           CloudData data = CloudData.fromJson(value.data);
           SpUtil.getInt(Const.spDataVersion).then((currentVersion) {
             if (currentVersion == data.version) {
+              SmartDialog.compatible.dismiss();
               SmartDialog.compatible.show(
                   widget: TwoButtonDialog(
                 title: "已是最新版本，是否覆盖？",
@@ -328,14 +330,20 @@ class _DrawerPageState extends State<DrawerPage> {
                 },
               ));
             } else if (currentVersion < data.version) {
+              SmartDialog.compatible.dismiss();
               parseUpdateDataSource(data);
             }
           });
         });
+      } else {
+        SmartDialog.compatible.dismiss();
+        SmartDialog.compatible.showToast("数据异常");
       }
     }, error: (err) {
       Log4f.e(msg: err, writeFile: true);
-    });
+      SmartDialog.compatible.dismiss();
+      SmartDialog.compatible.showToast("数据更新失败");
+    }, isShowDialog: false, isShowError: false);
   }
 
   parseUpdateDataSource(CloudData data) async {

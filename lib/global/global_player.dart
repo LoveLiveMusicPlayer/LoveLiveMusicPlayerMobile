@@ -438,6 +438,12 @@ class PlayerLogic extends SuperController
   /// @param changeStatus 要修改的状态
   toggleLoveList(List<Music> musicList, bool changeStatus) {
     DBLogic.to.updateLoveList(musicList, changeStatus).then((value) {
+      final music = playingMusic.value;
+      final hasPlayingMusic =
+          musicList.any((element) => element.musicId == music.musicId);
+      if (hasPlayingMusic) {
+        playingMusic.value.isLove = !playingMusic.value.isLove;
+      }
       DBLogic.to.findAllLoveListByGroup(GlobalLogic.to.currentGroup.value);
     });
   }
