@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:log4f/log4f.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
@@ -38,6 +39,7 @@ class PlayerLogic extends SuperController
   // 全量歌词
   var fullLrc = {"jp": "", "zh": "", "roma": ""}.obs;
 
+  // 是否需要刷新歌词UI
   var needRefreshLyric = false.obs;
 
   // 播放状态
@@ -159,13 +161,13 @@ class PlayerLogic extends SuperController
     try {
       // 如果上一次处理没有结束，直接跳过
       if (GlobalLogic.to.isHandlePlay) {
-        Log4f.d(msg: "event: handlePlaying");
+        Log4f.d(msg: "事件：正在处理中，跳过...");
         return;
       }
       GlobalLogic.to.isHandlePlay = true;
       if (musicList.isEmpty) {
         GlobalLogic.to.isHandlePlay = false;
-        Log4f.d(msg: "event: musicList empty");
+        Log4f.d(msg: "事件：列表为空");
         return;
       }
 
@@ -283,7 +285,7 @@ class PlayerLogic extends SuperController
         album: music.albumName!,
         artist: music.artist,
         artUri: (music.coverPath == null || music.coverPath!.isEmpty)
-            ? Uri.parse(Const.logo)
+            ? Uri.parse(Assets.logoLogo)
             : Uri.file(SDUtils.path + music.baseUrl! + music.coverPath!),
       ),
     );

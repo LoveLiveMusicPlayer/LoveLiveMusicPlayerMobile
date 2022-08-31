@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/global/const.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 
 import '../utils/sd_utils.dart';
 
@@ -20,7 +20,7 @@ Widget showImg(String? path, double? width, double? height,
     {double radius = 20,
     bool hasShadow = true,
     Color? shadowColor,
-    String defPhoto = Const.logo,
+    String defPhoto = Assets.logoLogo,
     BoxFit fit = BoxFit.cover,
     GestureTapCallback? onTap}) {
   ImageProvider<Object> noShadowImage;

@@ -75,10 +75,10 @@ dependencies:
     git:
       url: https://gitee.com/zhushenwudi/color_thief_flutter
       ref: e9da75b
-  log4f: ^0.0.3
-  device_info_plus: ^4.1.2
-  package_info_plus: ^1.4.3+1
-  flutter_lyric: ^2.0.4+3
+  log4f: ^0.0.3 # 日志
+  device_info_plus: ^4.1.2 # 设备信息
+  package_info_plus: ^1.4.3+1 # 安装包信息
+  flutter_lyric: ^2.0.4+4 # 歌词显示
 
 dependency_overrides:
   path: ^1.8.1

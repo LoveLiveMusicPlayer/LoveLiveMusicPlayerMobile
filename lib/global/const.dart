@@ -1,5 +1,3 @@
-import 'package:lovelivemusicplayer/generated/assets.dart';
-
 class Const {
   // 设计图宽度 dp
   static const double uiWidth = 375;
@@ -20,8 +18,6 @@ class Const {
   static const String spWithSystemTheme = "SP_With_System_Theme";
   static const String spLoopMode = "SP_LOOP_MODE";
   static const String spDataVersion = "SP_DATA_VERSION";
-
-  static const String logo = Assets.logoLogo;
 
   static const String ossUrl =
       "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/";
