@@ -41,6 +41,9 @@ class GlobalLogic extends SuperController
   /// 炫彩模式下的按钮皮肤
   var iconColor = Get.theme.primaryColorDark.obs;
 
+  /// 程序是否在后台（因为这个回调进入后台时也会被调用，所以该变量用于判断系统更改主题后，只有回到前台后才能修改）
+  var isBackground = false;
+
   static GlobalLogic get to => Get.find();
 
   @override
@@ -66,6 +69,10 @@ class GlobalLogic extends SuperController
     /// 监听系统主题色改变
     final window = WidgetsBinding.instance.window;
     window.onPlatformBrightnessChanged = () async {
+      if (isBackground) {
+        // 后台不允许执行下面的方法
+        return;
+      }
       WidgetsBinding.instance.handlePlatformBrightnessChanged();
       bool isWith = await SpUtil.getBoolean(Const.spWithSystemTheme, false);
       bool isDark = window.platformBrightness == Brightness.dark;
@@ -186,13 +193,22 @@ class GlobalLogic extends SuperController
   void onDetached() {}
 
   @override
-  void onInactive() {}
+  void onInactive() {
+    // 这个函数进入前台还是进入后台都会被调用
+    isBackground = false;
+  }
 
   @override
-  void onPaused() {}
+  void onPaused() {
+    // 在 onInactive 之后被调用
+    isBackground = true;
+  }
 
   @override
   void onResumed() {
+    // 在 onInactive 之后被调用
+    isBackground = false;
+
     /// 防止长时间熄屏 PageView 重建回到首页
     switch (HomeController.to.state.currentIndex.value) {
       case 0:
