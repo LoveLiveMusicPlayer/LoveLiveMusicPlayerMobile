@@ -97,6 +97,11 @@ class _DetailsBodyState extends State<DetailsBody> {
         ),
       ));
     }
+    if (logic.state.isSelect) {
+      list.add(SizedBox(
+        height: 102.h,
+      ));
+    }
     return list;
   }
 
