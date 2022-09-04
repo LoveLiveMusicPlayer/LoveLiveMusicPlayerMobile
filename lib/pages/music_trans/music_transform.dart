@@ -101,20 +101,26 @@ class _MusicTransformState extends State<MusicTransform> {
             final needTransAll = array[1] == "true" ? true : false;
             final downloadList = downloadMusicFromJson(json);
             final musicIdList = <String>[];
-
-            for (var music in downloadList) {
+            Future.forEach<DownloadMusic>(downloadList, (music) async {
               if (needTransAll) {
+                // 强制传输则添加到预下载列表
                 musicIdList.add(music.musicUId);
-              } else if (!SDUtils.checkFileExist(
-                  SDUtils.path + music.baseUrl + music.musicPath)) {
-                musicIdList.add(music.musicUId);
+              } else {
+                if (SDUtils.checkFileExist(SDUtils.path + music.baseUrl + music.musicPath)) {
+                  // 文件存在则尝试插入
+                  await DBLogic.to.importMusic(music);
+                } else {
+                  // 文件不存在则添加到预下载列表
+                  musicIdList.add(music.musicUId);
+                }
               }
-            }
-            final message = {
-              "cmd": "musicList",
-              "body": convert.jsonEncode(musicIdList)
-            };
-            channel.sink.add(convert.jsonEncode(message));
+            }).then((value) {
+              final message = {
+                "cmd": "musicList",
+                "body": convert.jsonEncode(musicIdList)
+              };
+              channel.sink.add(convert.jsonEncode(message));
+            });
           }
           break;
         case "ready":
