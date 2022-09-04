@@ -35,9 +35,6 @@ class Music {
   String? musicPath; // 歌曲路径
   String? time; // 时长
   String? baseUrl; // 基础路径
-  // String? jpUrl; // 日文歌词 URL
-  // String? zhUrl; // 中文歌词 URL
-  // String? romaUrl; // 罗马音歌词 URL
   String? category; // 分类
   String? group; // 团组
   bool isLove; // 是否我喜欢

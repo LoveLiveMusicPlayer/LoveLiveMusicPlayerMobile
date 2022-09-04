@@ -83,7 +83,7 @@ class _MusicTransformState extends State<MusicTransform> {
               currentMusic = music;
               changeNextTaskView(music);
               setState(() {});
-              await DBLogic.to.insertMusicIntoAlbum(music);
+              await DBLogic.to.importMusic(music);
             }
           }).then((_) {
             DBLogic.to
@@ -211,7 +211,7 @@ class _MusicTransformState extends State<MusicTransform> {
           }
         }, cancelToken);
         if (isMusic) {
-          await DBLogic.to.insertMusicIntoAlbum(music);
+          await DBLogic.to.importMusic(music);
         }
       } catch (e) {
         final message =

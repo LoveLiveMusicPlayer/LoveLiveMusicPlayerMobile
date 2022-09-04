@@ -1,27 +1,40 @@
 import 'dart:convert';
 
-Artist artistFromJson(String str) => Artist.fromJson(json.decode(str));
+import 'package:floor/floor.dart';
 
-String artistToJson(Artist data) => json.encode(data.toJson());
+Artist artistDaoFromJson(String str) => Artist.fromJson(json.decode(str));
 
+String artistDaoToJson(Artist data) => json.encode(data.toJson());
+
+@Entity(tableName: "Artist")
 class Artist {
   Artist(
-      {required this.name,
-      required this.artistBin,
+      {required this.uid,
+      required this.name,
       required this.photo,
-      required this.count});
+      required this.music,
+      required this.group});
 
+  @primaryKey
+  String uid;
   String name;
-  String artistBin;
   String photo;
-  int count;
+  String group;
+  List<String> music;
 
   factory Artist.fromJson(Map<String, dynamic> json) => Artist(
-      name: json["name"],
-      artistBin: json["artistBin"],
-      photo: json["photo"],
-      count: json["count"]);
+        uid: json["uid"],
+        name: json["name"],
+        photo: json["photo"],
+        group: json["group"],
+        music: List<String>.from(json["music"].map((x) => x)),
+      );
 
-  Map<String, dynamic> toJson() =>
-      {"name": name, "artistBin": artistBin, "photo": photo, "count": count};
+  Map<String, dynamic> toJson() => {
+        "uid": uid,
+        "name": name,
+        "photo": photo,
+        "group": group,
+        "music": List<String>.from(music.map((x) => x)),
+      };
 }

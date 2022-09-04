@@ -64,7 +64,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
             radius: 8,
             onTap: () => widget.onItemTap(widget.menu));
       },
-      future: AppUtils.getMusicCoverPath(widget.menu.music?.last),
+      future: AppUtils.getMusicCoverPath(widget.menu.music.last),
     );
   }
 
@@ -84,7 +84,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
             height: 4.w,
           ),
           Text(
-            "${widget.menu.music?.length ?? 0}首",
+            "${widget.menu.music.length}首",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(

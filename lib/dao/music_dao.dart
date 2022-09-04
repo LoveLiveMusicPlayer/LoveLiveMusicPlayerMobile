@@ -24,9 +24,6 @@ abstract class MusicDao {
   @Query("SELECT * FROM Music WHERE musicId IN (:musicIds)")
   Future<List<Music>> findMusicsByMusicIds(List<String> musicIds);
 
-  @Query("SELECT * FROM Music WHERE artistBin = :artistBin")
-  Future<List<Music>> findAllMusicsByArtistBin(String artistBin);
-
   @insert
   Future<void> insertMusic(Music music);
 

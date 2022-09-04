@@ -90,7 +90,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
   }
 
   Widget _buildCover() {
-    if (menu == null || menu!.music == null || menu!.music!.isEmpty) {
+    if (menu == null || menu!.music.isEmpty) {
       return showImg(SDUtils.getImgPath(), 240, 240, radius: 120);
     }
     return Container(
@@ -103,7 +103,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
               return showImg(snapshot.data, 240, 240, radius: 120);
             },
-            future: AppUtils.getMusicCoverPath(menu!.music!.last),
+            future: AppUtils.getMusicCoverPath(menu!.music.last),
           )
         ],
       ),

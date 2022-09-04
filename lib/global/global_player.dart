@@ -119,7 +119,7 @@ class PlayerLogic extends SuperController
   Future<void> changePlayingMusic(PlayListMusic currentMusic) async {
     playingJPLrc.value = {"pre": "", "current": "", "next": ""};
     if (playingMusic.value.musicId != currentMusic.musicId) {
-      final music = await DBLogic.to.findMusicByMusicId(currentMusic.musicId);
+      final music = await DBLogic.to.findMusicById(currentMusic.musicId);
       if (music != null) {
         setCurrentMusic(music);
       }
@@ -480,7 +480,7 @@ class PlayerLogic extends SuperController
       return;
     }
     // 删除的是最后一首歌，将播放列表第一首
-    final music = await DBLogic.to.findMusicByMusicId(
+    final music = await DBLogic.to.findMusicById(
         mPlayList[mPlayList.length == index ? 0 : index].musicId);
     setCurrentMusic(music!);
   }

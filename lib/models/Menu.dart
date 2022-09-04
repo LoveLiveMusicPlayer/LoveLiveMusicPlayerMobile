@@ -19,7 +19,7 @@ class Menu {
   @primaryKey
   int id;
   bool isPhone;
-  List<String>? music;
+  List<String> music;
   String date;
   String name;
 

@@ -28,7 +28,7 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
-      music.addAll(await DBLogic.to.findAllMusicByArtistBin(artist.artistBin));
+      music.addAll(await DBLogic.to.findAllMusicsByArtistBin(artist.uid));
       logic.state.items = music;
       setState(() {});
     });

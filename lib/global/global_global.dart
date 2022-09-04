@@ -62,8 +62,9 @@ class GlobalLogic extends SuperController
       }
       iconColor.value = hasSkin.value
           ? const Color(Const.noMusicColorfulSkin)
-          : isDark ? const Color(0xFF1E2328)
-          : const Color(0xFFF2F8FF);
+          : isDark
+              ? const Color(0xFF1E2328)
+              : const Color(0xFFF2F8FF);
       withSystemTheme.value = isWith;
     });
 

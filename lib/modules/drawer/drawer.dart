@@ -381,7 +381,7 @@ class _DrawerPageState extends State<DrawerPage> {
             artistBin: music.artistBin,
             totalTime: music.time,
             baseUrl: music.baseUrl);
-        await DBLogic.to.insertMusicIntoAlbum(downloadMusic);
+        await DBLogic.to.importMusic(downloadMusic);
       }
     });
   }
