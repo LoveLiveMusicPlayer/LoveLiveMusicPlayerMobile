@@ -3,10 +3,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/models/FtpCmd.dart';
+import 'package:lovelivemusicplayer/models/Menu.dart';
+import 'package:lovelivemusicplayer/models/Music.dart';
+import 'package:lovelivemusicplayer/models/TransData.dart';
 import 'package:lovelivemusicplayer/pages/details/widget/details_header.dart';
+import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/water_ripple.dart';
+import 'package:wakelock/wakelock.dart';
+import 'package:web_socket_channel/io.dart';
 
 class DataSync extends StatefulWidget {
   const DataSync({Key? key}) : super(key: key);
@@ -18,9 +28,15 @@ class DataSync extends StatefulWidget {
 class _DataSyncState extends State<DataSync> {
   final GlobalKey<WaterRippleState> waterRippleKey =
       GlobalKey<WaterRippleState>();
+  IOWebSocketChannel? channel;
 
-  var isTransferring = false;
   var isConnected = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Wakelock.enable();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +46,13 @@ class _DataSyncState extends State<DataSync> {
           showBackDialog();
           return false;
         });
+  }
+
+  @override
+  void dispose() {
+    Wakelock.disable();
+    channel?.sink.close();
+    super.dispose();
   }
 
   Widget body() {
@@ -44,7 +67,7 @@ class _DataSyncState extends State<DataSync> {
                   maintainState: true,
                   maintainAnimation: true,
                   maintainSize: true,
-                  visible: !isTransferring,
+                  visible: !isConnected,
                   child: Center(
                       child: SvgPicture.asset(Assets.syncIconDataSync,
                           width: 300.w, height: 300.w))),
@@ -52,7 +75,7 @@ class _DataSyncState extends State<DataSync> {
                   maintainState: true,
                   maintainAnimation: true,
                   maintainSize: true,
-                  visible: isTransferring,
+                  visible: isConnected,
                   child: Center(child: WaterRipple(key: waterRippleKey)))
             ],
           ),
@@ -67,21 +90,18 @@ class _DataSyncState extends State<DataSync> {
           Visibility(
               visible: isConnected,
               child: Column(children: [
-                btnFunc(Assets.syncIconPhone, "手机 ≫ 电脑", () {
-                  isTransferring = true;
-                  setState(() {});
+                btnFunc(Assets.syncIconPhone, "手机 ≫ 电脑", () async {
+                  await sendPhone2pc();
                 }),
                 SizedBox(height: 28.h),
-                btnFunc(Assets.syncIconComputer, "电脑 ≫ 手机", () {
-                  isTransferring = false;
-                  setState(() {});
+                btnFunc(Assets.syncIconComputer, "电脑 ≫ 手机", () async {
+                  await sendPc2phone();
                 })
               ])),
           Visibility(
               visible: !isConnected,
-              child: btnFunc(Assets.syncIconScanQr, "设备配对", () {
-                isConnected = true;
-                setState(() {});
+              child: btnFunc(Assets.syncIconScanQr, "设备配对", () async {
+                openWS(await Get.toNamed(Routes.routeScan));
               })),
         ],
       ),
@@ -136,12 +156,108 @@ class _DataSyncState extends State<DataSync> {
         ),
         ElevatedButton(
           onPressed: () async {
+            final message = ftpCmdToJson(FtpCmd(cmd: "stop", body: ""));
+            channel?.sink.add(message);
             SmartDialog.compatible.dismiss();
-            Get.back();
+            DBLogic.to
+                .findAllListByGroup(GlobalLogic.to.currentGroup.value)
+                .then((value) => Get.back());
           },
           child: const Text('确定'),
         )
       ]),
     ));
+  }
+
+  sendPhone2pc() async {
+    // 传输我喜欢列表 + 手机歌单列表
+    final body =
+        transDataToJson(await DBLogic.to.getTransPhoneData(needMenuList: true));
+    final cmd = FtpCmd(cmd: "phone2pc", body: body);
+    channel?.sink.add(ftpCmdToJson(cmd));
+  }
+
+  sendPc2phone() async {
+    // 传输我喜欢列表
+    final body = transDataToJson(await DBLogic.to.getTransPhoneData());
+    final cmd = FtpCmd(cmd: "pc2phone", body: body);
+    channel?.sink.add(ftpCmdToJson(cmd));
+  }
+
+  openWS(String ip) {
+    channel = IOWebSocketChannel.connect(Uri.parse("ws://$ip:4389"));
+    channel!.stream.listen((msg) async {
+      final ftpCmd = ftpCmdFromJson(msg as String);
+      switch (ftpCmd.cmd) {
+        case "phone2pc":
+          final data = transDataFromJson(ftpCmd.body);
+          await replaceLoveList(data);
+          finish();
+          break;
+        case "pc2phone":
+          final data = transDataFromJson(ftpCmd.body);
+          await replaceLoveList(data);
+          await replacePcMenuList(data);
+          finish();
+          break;
+      }
+    }, onError: (e) {
+      Log4f.w(msg: "连接失败");
+      Log4f.e(msg: e.toString(), writeFile: true);
+    }, cancelOnError: true);
+    isConnected = true;
+    setState(() {});
+  }
+
+  replaceLoveList(TransData data) async {
+    final musicList = await DBLogic.to.musicDao.findLovedMusic();
+    final localLoveSet = <String>{};
+    await Future.forEach<Music>(musicList, (music) {
+      final musicId = music.musicId!;
+      localLoveSet.add(musicId);
+    });
+    final remoteLoveSet = data.love.toSet();
+    final needDisEnableLoveSet = localLoveSet.difference(remoteLoveSet);
+    final needEnableLoveList = <String>[];
+
+    await Future.forEach<String>(remoteLoveSet.difference(localLoveSet),
+        (musicId) async {
+      if (await DBLogic.to.musicDao.findMusicByUId(musicId) != null) {
+        needEnableLoveList.add(musicId);
+      }
+    });
+
+    await DBLogic.to.musicDao
+        .updateLoveStatus(false, needDisEnableLoveSet.toList(growable: false));
+    await DBLogic.to.musicDao.updateLoveStatus(true, needEnableLoveList);
+  }
+
+  replacePcMenuList(TransData data) async {
+    final menuList = data.menu;
+    await DBLogic.to.menuDao.deletePcMenu();
+    await Future.forEach<TransMenu>(menuList, (menu) async {
+      final musicList = <String>[];
+      await Future.forEach<String>(menu.musicList, (musicUId) async {
+        final music = await DBLogic.to.musicDao.findMusicByUId(musicUId);
+        if (music != null) {
+          musicList.add(musicUId);
+        }
+      });
+      if (musicList.isNotEmpty) {
+        await DBLogic.to.menuDao.insertMenu(Menu(
+            id: menu.menuId,
+            date: menu.date,
+            name: menu.name,
+            music: musicList));
+      }
+    });
+  }
+
+  finish() {
+    final message = ftpCmdToJson(FtpCmd(cmd: "finish", body: ""));
+    channel?.sink.add(message);
+    DBLogic.to
+        .findAllListByGroup(GlobalLogic.to.currentGroup.value)
+        .then((value) => Get.back());
   }
 }

@@ -22,6 +22,7 @@ import 'package:lovelivemusicplayer/models/FtpMusic.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/models/PlayListMusic.dart';
+import 'package:lovelivemusicplayer/models/TransData.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
@@ -187,6 +188,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       await musicDao.deleteAllMusics();
       await lyricDao.deleteAllLyrics();
       await artistDao.deleteAllArtists();
+      await menuDao.deleteAllMenus();
       await playListMusicDao.deleteAllPlayListMusics();
     } catch (e) {
       Log4f.e(msg: e.toString(), writeFile: true);
@@ -431,6 +433,24 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     try {
       scrollController.jumpTo(0);
     } catch (e) {}
+  }
+
+  /****************  Transfer  ****************/
+
+  Future<TransData> getTransPhoneData({bool needMenuList = false}) async {
+    final loveList = <String>[];
+    final menuList = <TransMenu>[];
+    GlobalLogic.to.musicList.where((music) => music.isLove).forEach((music) {
+      loveList.add(music.musicId!);
+    });
+    if (needMenuList) {
+      for (var menu in GlobalLogic.to.menuList) {
+        if (menu.id > 100) {
+          menuList.add(TransMenu(menuId: menu.id, musicList: menu.music, name: menu.name, date: menu.date));
+        }
+      }
+    }
+    return TransData(love: loveList, menu: menuList);
   }
 
   @override

@@ -56,16 +56,23 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
 
   ///缩列图
   Widget _buildIcon() {
-    return FutureBuilder<String>(
-      initialData: SDUtils.getImgPath(),
-      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-        return showImg(snapshot.data, 48, 48,
-            hasShadow: false,
-            radius: 8,
-            onTap: () => widget.onItemTap(widget.menu));
-      },
-      future: AppUtils.getMusicCoverPath(widget.menu.music.last),
-    );
+    if (widget.menu.music.isNotEmpty) {
+      return FutureBuilder<String>(
+        initialData: SDUtils.getImgPath(),
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          return showImg(snapshot.data, 48, 48,
+              hasShadow: false,
+              radius: 8,
+              onTap: () => widget.onItemTap(widget.menu));
+        },
+        future: AppUtils.getMusicCoverPath(widget.menu.music.last),
+      );
+    } else {
+      return showImg(null, 48, 48,
+          hasShadow: false,
+          radius: 8,
+          onTap: () => widget.onItemTap(widget.menu));
+    }
   }
 
   ///中间标题部分

@@ -18,6 +18,9 @@ abstract class MenuDao {
   @Query("DELETE FROM Menu WHERE `id` = :menuId")
   Future<void> deleteMenuById(int menuId);
 
+  @Query("DELETE FROM Menu WHERE `id` <= 100")
+  Future<void> deletePcMenu();
+
   @Query("DELETE FROM Menu")
   Future<void> deleteAllMenus();
 }

@@ -58,7 +58,7 @@ class DialogAddSongSheet extends StatelessWidget {
             SmartDialog.compatible.show(
                 widget: NewMenuDialog(
                     title: "新建歌单",
-                    onConfirm: (name) {
+                    onConfirm: (name) async {
                       final idList = <String>[];
                       for (var music in musicList) {
                         final id = music.musicId;
@@ -66,8 +66,8 @@ class DialogAddSongSheet extends StatelessWidget {
                           idList.add(id);
                         }
                       }
-                      DBLogic.to.addMenu(name, idList);
-                      SmartDialog.compatible.showToast("新建成功");
+                      bool isSuccess = await DBLogic.to.addMenu(name, idList);
+                      SmartDialog.compatible.showToast(isSuccess ? "新建成功" : "超出最大数量");
                     }),
                 clickBgDismissTemp: false,
                 alignmentTemp: Alignment.center);

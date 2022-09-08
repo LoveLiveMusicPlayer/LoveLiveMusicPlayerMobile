@@ -106,7 +106,8 @@ class _MusicTransformState extends State<MusicTransform> {
                 // 强制传输则添加到预下载列表
                 musicIdList.add(music.musicUId);
               } else {
-                if (SDUtils.checkFileExist(SDUtils.path + music.baseUrl + music.musicPath)) {
+                if (SDUtils.checkFileExist(
+                    SDUtils.path + music.baseUrl + music.musicPath)) {
                   // 文件存在则尝试插入
                   await DBLogic.to.importMusic(music);
                 } else {
