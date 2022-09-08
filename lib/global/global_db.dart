@@ -69,22 +69,18 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     try {
       /// 设置专辑、歌曲数据
       final allAlbums = <Album>[];
-      final allMusics = <Music>[];
-      final allArtists = <Artist>[];
       if (group == "all") {
         allAlbums.addAll(await albumDao.findAllAlbums());
-        allMusics.addAll(await musicDao.findAllMusics());
-        allArtists.addAll(await artistDao.findAllArtists());
+        GlobalLogic.to.musicList.value = await musicDao.findAllMusics();
+        GlobalLogic.to.artistList.value = await artistDao.findAllArtists();
       } else {
         allAlbums.addAll(await albumDao.findAllAlbumsByGroup(group));
-        allMusics.addAll(await musicDao.findAllMusicsByGroup(group));
-        allArtists.addAll(await artistDao.findAllArtistsByGroup(group));
+        GlobalLogic.to.musicList.value = await musicDao.findAllMusicsByGroup(group);
+        GlobalLogic.to.artistList.value = await artistDao.findAllArtistsByGroup(group);
       }
+      GlobalLogic.to.recentList.value = await musicDao.findRecentMusics();
       allAlbums.sort((a, b) => a.date!.compareTo(b.date!));
-
       GlobalLogic.to.albumList.value = allAlbums;
-      GlobalLogic.to.musicList.value = allMusics;
-      GlobalLogic.to.artistList.value = allArtists;
 
       findAllLoveListByGroup(group);
       await findAllMenuList();
@@ -203,6 +199,19 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   /// 通过musicUId获取歌曲
   Future<Music?> findMusicById(String uid) async {
     return await musicDao.findMusicByUId(uid);
+  }
+
+  /// 更新歌曲最后一次的播放时间
+  Future<void> refreshMusicTimestamp(String musicId) async {
+    final music = await musicDao.findMusicByUId(musicId);
+    if (music == null) {
+      return;
+    }
+    music.timestamp = DateTime.now().millisecondsSinceEpoch;
+    Log4f.d(msg: "${music.musicName} - ${music.timestamp}");
+    await musicDao.updateMusic(music);
+    GlobalLogic.to.recentList.value = await musicDao.findRecentMusics();
+    return;
   }
 
   /****************  Menu  ****************/
@@ -446,7 +455,11 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     if (needMenuList) {
       for (var menu in GlobalLogic.to.menuList) {
         if (menu.id > 100) {
-          menuList.add(TransMenu(menuId: menu.id, musicList: menu.music, name: menu.name, date: menu.date));
+          menuList.add(TransMenu(
+              menuId: menu.id,
+              musicList: menu.music,
+              name: menu.name,
+              date: menu.date));
         }
       }
     }

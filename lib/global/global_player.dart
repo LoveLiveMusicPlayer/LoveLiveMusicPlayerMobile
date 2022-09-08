@@ -81,7 +81,10 @@ class PlayerLogic extends SuperController
         final currentMusic = mPlayList[index];
         await changePlayingMusic(currentMusic);
         persistencePLayList2(mPlayList, index).then((value) {
-          GlobalLogic.to.isHandlePlay = false;
+          Log4f.e(msg: currentMusic.musicName);
+          DBLogic.to.refreshMusicTimestamp(currentMusic.musicId).then((value) {
+            GlobalLogic.to.isHandlePlay = false;
+          });
         });
         getLrc(false);
       }
@@ -191,7 +194,9 @@ class PlayerLogic extends SuperController
           if (playingMusic.value != musicList[index]) {
             setCurrentMusic(musicList[index]);
           }
-          GlobalLogic.to.isHandlePlay = false;
+          DBLogic.to.refreshMusicTimestamp(musicList[index].musicId!).then((value) {
+            GlobalLogic.to.isHandlePlay = false;
+          });
           getLrc(false);
         });
       });

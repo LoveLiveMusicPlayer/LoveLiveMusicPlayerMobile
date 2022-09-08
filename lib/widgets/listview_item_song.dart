@@ -101,8 +101,8 @@ class _ListViewItemSongState extends State<ListViewItemSong>
             widget.checked = value;
             widget.onItemTap(widget.index, widget.checked);
           },
-          checkIconColor: Color(0xFFF940A7),
-          uncheckedIconColor: Color(0xFF999999),
+          checkIconColor: const Color(0xFFF940A7),
+          uncheckedIconColor: const Color(0xFF999999),
         ),
       ),
     );

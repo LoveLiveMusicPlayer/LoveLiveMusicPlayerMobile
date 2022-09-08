@@ -21,6 +21,14 @@ class DialogAddSongSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final menuList = [];
+    for (var menu in GlobalLogic.to.menuList) {
+      if (menu.id > 100) {
+        menuList.add(menu);
+      }
+    }
+
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -77,7 +85,7 @@ class DialogAddSongSheet extends StatelessWidget {
               child: Padding(
             padding: EdgeInsets.only(left: 16.w, top: 12.h, right: 16.w),
             child: ListView.separated(
-                itemCount: GlobalLogic.to.menuList.length,
+                itemCount: menuList.length,
                 padding: const EdgeInsets.all(0),
                 separatorBuilder: (BuildContext context, int index) {
                   return Container(
@@ -96,15 +104,15 @@ class DialogAddSongSheet extends StatelessWidget {
                         }
                       }
                       DBLogic.to
-                          .insertToMenu(
-                              GlobalLogic.to.menuList[index].id, idList)
+                          .insertToMenu(menuList[index].id, idList)
                           .then((isSuccess) {
                         SmartDialog.compatible.dismiss();
                         SmartDialog.compatible
                             .showToast(isSuccess ? "添加成功" : "添加失败");
                       });
                     },
-                    menu: GlobalLogic.to.menuList[index],
+                    menu: menuList[index],
+
                   );
                 }),
           ))

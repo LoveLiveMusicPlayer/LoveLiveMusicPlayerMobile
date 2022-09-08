@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
@@ -70,7 +71,29 @@ class PageViewComponent extends StatelessWidget {
 
   Widget _buildListItem(int index, int page) {
     /// 0 歌曲  1 专辑  2 歌手  3 我喜欢  4 歌单  5  最近播放
-    if (page == 1) {
+    if (page == 0) {
+      return ListViewItemSong(
+        index: index,
+        music: GlobalLogic.to.musicList[index],
+        checked: HomeController.to.isItemChecked(index),
+        onItemTap: (index, checked) {
+          if (HomeController.to.state.isSelect.value) {
+            HomeController.to.selectItem(index, checked);
+            return;
+          }
+          PlayerLogic.to.playMusic(GlobalLogic.to.musicList, index: index);
+        },
+        onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
+        onMoreTap: (music) {
+          SmartDialog.compatible.show(
+              widget: DialogMoreWithMusic(music: music),
+              alignmentTemp: Alignment.bottomCenter);
+        },
+        onPlayNowTap: () {
+          PlayerLogic.to.playMusic(GlobalLogic.to.musicList, index: index);
+        },
+      );
+    } else if (page == 1) {
       return ListViewItemAlbum(
         album: GlobalLogic.to.albumList[index],
         checked: HomeController.to.isItemChecked(index),
@@ -117,11 +140,12 @@ class PageViewComponent extends StatelessWidget {
               alignmentTemp: Alignment.bottomCenter);
         },
         menu: GlobalLogic.to.menuList[index],
+        showDevicePic: true,
       );
     } else {
       return ListViewItemSong(
         index: index,
-        music: GlobalLogic.to.musicList[index],
+        music: GlobalLogic.to.recentList[index],
         checked: HomeController.to.isItemChecked(index),
         onItemTap: (index, checked) {
           if (HomeController.to.state.isSelect.value) {
@@ -137,7 +161,7 @@ class PageViewComponent extends StatelessWidget {
               alignmentTemp: Alignment.bottomCenter);
         },
         onPlayNowTap: () {
-          PlayerLogic.to.playMusic(GlobalLogic.to.musicList, index: index);
+          PlayerLogic.to.playMusic(GlobalLogic.to.recentList, index: index);
         },
       );
     }

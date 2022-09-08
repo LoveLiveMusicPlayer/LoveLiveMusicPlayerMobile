@@ -40,7 +40,7 @@ class HomeController extends GetxController {
         state.items = [...GlobalLogic.to.menuList];
         break;
       case 5:
-        state.items = [...GlobalLogic.to.recentlyList];
+        state.items = [...GlobalLogic.to.recentList];
         break;
       default:
         break;

@@ -24,7 +24,7 @@ class GlobalLogic extends SuperController
   final artistList = <Artist>[].obs;
   final loveList = <Music>[].obs;
   final menuList = <Menu>[].obs;
-  final recentlyList = <Music>[].obs;
+  final recentList = <Music>[].obs;
 
   /// 是否正在处理播放逻辑
   var isHandlePlay = false;
@@ -101,7 +101,7 @@ class GlobalLogic extends SuperController
       case 4:
         return menuList.length;
       case 5:
-        return recentlyList.length;
+        return recentList.length;
       default:
         return 0;
     }
@@ -120,7 +120,7 @@ class GlobalLogic extends SuperController
       case 4:
         return menuList;
       case 5:
-        return recentlyList;
+        return recentList;
       default:
         return [].obs;
     }
@@ -144,7 +144,7 @@ class GlobalLogic extends SuperController
         menuList.value = itemList.cast();
         break;
       case 5:
-        recentlyList.value = itemList.cast();
+        recentList.value = itemList.cast();
         break;
       default:
         break;
@@ -168,7 +168,7 @@ class GlobalLogic extends SuperController
       case 3:
         return loveList;
       case 5:
-        return recentlyList;
+        return recentList;
       default:
         return [];
     }

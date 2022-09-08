@@ -24,6 +24,9 @@ abstract class MusicDao {
   @Query("SELECT * FROM Music WHERE musicId IN (:musicIds)")
   Future<List<Music>> findMusicsByMusicIds(List<String> musicIds);
 
+  @Query("SELECT * FROM Music WHERE `timestamp` > 0 ORDER BY `timestamp` DESC LIMIT 100")
+  Future<List<Music>> findRecentMusics();
+
   @insert
   Future<void> insertMusic(Music music);
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
@@ -17,8 +18,10 @@ class ListViewItemSongSheet extends StatefulWidget {
 
   Function(Menu)? onMoreTap;
 
+  final bool? showDevicePic;
+
   ListViewItemSongSheet(
-      {Key? key, required this.onItemTap, this.onMoreTap, required this.menu})
+      {Key? key, required this.onItemTap, this.onMoreTap, required this.menu, this.showDevicePic})
       : super(key: key);
 
   @override
@@ -38,11 +41,17 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
           children: [
             ///缩列图
             _buildIcon(),
-            //
+
             SizedBox(
-              width: 10.w,
+              width: 5.w,
             ),
 
+            _buildDevicePic(),
+
+            SizedBox(
+              width: 5.w,
+            ),
+            
             ///中间标题部分
             _buildContent(),
 
@@ -73,6 +82,19 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
           radius: 8,
           onTap: () => widget.onItemTap(widget.menu));
     }
+  }
+  
+  Widget _buildDevicePic() {
+    if (widget.showDevicePic == true) {
+      if (widget.menu.id <= 100) {
+        return SvgPicture.asset(Assets.syncIconComputer,
+            color: const Color(0xFFF940A7), width: 13.h, height: 20.h);
+      } else {
+        return SvgPicture.asset(Assets.syncIconPhone,
+            color: const Color(0xFFF940A7), width: 13.h, height: 20.h);
+      }
+    }
+    return Container();
   }
 
   ///中间标题部分
