@@ -11,10 +11,8 @@ import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
-import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:updater/updater.dart';
 
 import '../models/Music.dart';
@@ -283,8 +281,7 @@ class GlobalLogic extends SuperController
           titleText: '版本升级',
           confirmText: "升级",
           cancelText: "不升级",
-          controller: controller
-      );
+          controller: controller);
       updater!.check();
     } else if (manual) {
       SmartDialog.compatible.showToast("IOS请前往商店查看");

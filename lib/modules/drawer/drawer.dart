@@ -12,6 +12,7 @@ import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/global/global_theme.dart';
 import 'package:lovelivemusicplayer/models/CloudData.dart';
+import 'package:lovelivemusicplayer/models/CloudUpdate.dart';
 import 'package:lovelivemusicplayer/models/FtpMusic.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
@@ -317,41 +318,53 @@ class _DrawerPageState extends State<DrawerPage> {
     int currentNumber = int.tryParse(packageInfo.buildNumber) ?? 0;
     SmartDialog.compatible.showLoading(msg: "下载数据中");
     Network.get(Const.dataUrl, success: (result) {
-      if (result is Map<String, dynamic>) {
+      if (result is List) {
+        int index = -1;
         int maxNumber = 0;
-        result.forEach((key, value) {
-          int number = int.tryParse(key) ?? 0;
-          if (number > maxNumber && number <= currentNumber) {
-            maxNumber = number;
+        for (var i = 0; i < result.length; i++) {
+          final map = CloudUpdate.fromJson(result[i]);
+          if (currentNumber > maxNumber && currentNumber <= map.maxVersion) {
+            maxNumber = map.maxVersion;
+            index = i;
           }
-        });
-        String latestDataUrl = result[maxNumber.toString()];
+        }
+        if (index == -1) {
+          return;
+        }
+        String latestDataUrl = CloudUpdate.fromJson(result[index]).url;
         Network.dio?.request(latestDataUrl).then((value) {
           CloudData data = CloudData.fromJson(value.data);
           SpUtil.getInt(Const.spDataVersion).then((currentVersion) {
             if (currentVersion == data.version) {
-              SmartDialog.compatible.dismiss();
+              SmartDialog.compatible.dismiss(status: SmartStatus.loading);
               SmartDialog.compatible.show(
                   widget: TwoButtonDialog(
                 title: "已是最新版本，是否覆盖？",
                 isShowMsg: false,
                 onConfirmListener: () {
-                  parseUpdateDataSource(data);
+                  SmartDialog.compatible
+                      .dismiss(status: SmartStatus.allDialog)
+                      .then((value) {
+                    parseUpdateDataSource(data);
+                  });
                 },
               ));
             } else if (currentVersion < data.version) {
-              SmartDialog.compatible.dismiss();
-              parseUpdateDataSource(data);
+              SmartDialog.compatible
+                  .dismiss(status: SmartStatus.loading)
+                  .then((value) {
+                parseUpdateDataSource(data);
+              });
             }
           });
         });
       } else {
-        SmartDialog.compatible.dismiss();
+        SmartDialog.compatible.dismiss(status: SmartStatus.loading);
         SmartDialog.compatible.showToast("数据异常");
       }
     }, error: (err) {
       Log4f.e(msg: err, writeFile: true);
-      SmartDialog.compatible.dismiss();
+      SmartDialog.compatible.dismiss(status: SmartStatus.loading);
       SmartDialog.compatible.showToast("数据更新失败");
     }, isShowDialog: false, isShowError: false);
   }
@@ -364,8 +377,8 @@ class _DrawerPageState extends State<DrawerPage> {
         data.music.nijigasaki, data.album.nijigasaki, "Nijigasaki");
     await loopParseData(data.music.liella, data.album.liella, "Liella!");
     await loopParseData(data.music.combine, data.album.combine, "Combine");
-    SmartDialog.compatible.dismiss();
-    DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
+    await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
+    SmartDialog.compatible.dismiss(status: SmartStatus.loading);
     SpUtil.put(Const.spDataVersion, data.version);
   }
 

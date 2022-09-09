@@ -92,7 +92,7 @@ class _MyAppState extends State<MyApp> {
       // 初始化结束后，将启动屏关闭
       FlutterNativeSplash.remove();
       Log4f.d(msg: '移除开屏页面...');
-      Future.delayed(const Duration(seconds: 1), (){
+      Future.delayed(const Duration(seconds: 1), () {
         GlobalLogic.to.checkUpdate();
       });
     });

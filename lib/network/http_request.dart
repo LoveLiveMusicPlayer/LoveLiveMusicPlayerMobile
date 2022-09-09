@@ -183,18 +183,7 @@ class Network {
   static _handlerSuccess(dynamic t, Function(dynamic t)? success) {
     SmartDialog.compatible.dismiss();
     if (success != null) {
-      if (t is List) {
-        final hashMap = <String, dynamic>{};
-        for (var element in t) {
-          if (element is Map<String, dynamic>) {
-            for (var index = 0; index < element.length; index++) {
-              hashMap[element.keys.elementAt(index)] =
-                  element.values.elementAt(index);
-            }
-          }
-        }
-        success(hashMap);
-      } else if (t is Map<String, dynamic>) {
+      if (t is Map<String, dynamic>) {
         success(ApiResponse().fromJson(t).data);
       } else if (t is String) {
         success(t);
