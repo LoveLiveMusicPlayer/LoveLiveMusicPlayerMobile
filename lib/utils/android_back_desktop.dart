@@ -12,7 +12,6 @@ class AndroidBackDesktop {
     //通知安卓返回到手机桌面
     try {
       await platform.invokeMethod(eventBackDesktop);
-      Log4f.d(msg: "通信成功");
     } on PlatformException catch (e) {
       Log4f.w(msg: "通信失败，设置回退到安卓手机桌面失败");
       Log4f.e(msg: e.toString(), writeFile: true);

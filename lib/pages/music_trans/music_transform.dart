@@ -460,7 +460,6 @@ class _MusicTransformState extends State<MusicTransform> {
       Log4f.w(msg: "连接失败");
       Log4f.e(msg: e.toString(), writeFile: true);
     }, cancelOnError: true);
-    print("wdadipoadjioa djoiad noaidn oaid na d");
     isConnected = true;
     setState(() {});
     final system = {

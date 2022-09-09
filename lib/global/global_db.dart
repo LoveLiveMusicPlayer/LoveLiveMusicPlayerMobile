@@ -210,7 +210,6 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       return;
     }
     music.timestamp = DateTime.now().millisecondsSinceEpoch;
-    Log4f.d(msg: "${music.musicName} - ${music.timestamp}");
     await musicDao.updateMusic(music);
     GlobalLogic.to.recentList.value = await musicDao.findRecentMusics();
     return;
