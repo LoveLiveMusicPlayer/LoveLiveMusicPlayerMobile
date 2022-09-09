@@ -56,6 +56,10 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                 final nextIndex =
                     (currentIndex + 1) % PlayerLogic.loopModes.length;
                 PlayerLogic.to.changeLoopMode(nextIndex);
+              }, () {
+                mPlayList.removeRange(0, mPlayList.length);
+                setState(() {});
+                PlayerLogic.to.removeAllMusics();
               });
             },
           ),
@@ -84,21 +88,7 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                       index: index,
                       name: mPlayList[index].musicName,
                       artist: mPlayList[index].artist,
-                      onPlayTap: (index) {
-                        if (GlobalLogic.to.isHandlePlay) {
-                          return;
-                        }
-                        GlobalLogic.to.isHandlePlay = true;
-                        final musicIds = <String>[];
-                        for (var playListMusic in mPlayList) {
-                          musicIds.add(playListMusic.musicId);
-                        }
-                        DBLogic.to.musicDao
-                            .findMusicsByMusicIds(musicIds)
-                            .then((musicList) {
-                          PlayerLogic.to.playMusic(musicList, index: index);
-                        });
-                      },
+                      onPlayTap: (index) {},
                       onDelTap: (index) {
                         mPlayList.removeAt(index);
                         setState(() {});
@@ -116,7 +106,7 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
   }
 
   Widget _buildItem(
-      String path, String title, bool showLin, GestureTapCallback? onTap) {
+      String path, String title, bool showLin, GestureTapCallback? onTap, GestureTapCallback? onRemove) {
     return Padding(
       padding: EdgeInsets.only(left: 16.h, right: 16.h),
       child: InkWell(
@@ -149,7 +139,15 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                             : const Color(0xff333333),
                         fontSize: 15.sp),
                   ),
-                )
+                ),
+                touchIconByAsset(
+                    path: Assets.dialogIcDelete2,
+                    onTap: onRemove,
+                    width: 16.h,
+                    height: 16.h,
+                    color: Get.isDarkMode
+                        ? const Color(0xFFCCCCCC)
+                        : const Color(0xFF666666)),
               ],
             ),
             SizedBox(

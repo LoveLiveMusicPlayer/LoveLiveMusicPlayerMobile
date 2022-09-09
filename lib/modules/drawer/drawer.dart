@@ -212,6 +212,11 @@ class _DrawerPageState extends State<DrawerPage> {
                       GlobalLogic.to.hasSkin.value = check;
                       // 修改sp值
                       await SpUtil.put(Const.spColorful, check);
+                      if (GlobalLogic.to.hasSkin.value &&
+                          PlayerLogic.to.playingMusic.value.musicId == null) {
+                        GlobalLogic.to.iconColor.value =
+                        const Color(Const.noMusicColorfulSkin);
+                      }
                     }),
                 SizedBox(height: 8.h),
                 DrawerFunctionButton(

@@ -39,17 +39,17 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
         color: Get.theme.primaryColor,
         child: Row(
           children: [
-            ///缩列图
-            _buildIcon(),
+            _buildDevicePic(),
 
             SizedBox(
               width: 5.w,
             ),
 
-            _buildDevicePic(),
+            ///缩列图
+            _buildIcon(),
 
             SizedBox(
-              width: 5.w,
+              width: 10.w,
             ),
             
             ///中间标题部分

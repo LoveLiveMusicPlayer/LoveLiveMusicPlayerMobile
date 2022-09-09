@@ -81,7 +81,6 @@ class PlayerLogic extends SuperController
         final currentMusic = mPlayList[index];
         await changePlayingMusic(currentMusic);
         persistencePLayList2(mPlayList, index).then((value) {
-          Log4f.e(msg: currentMusic.musicName);
           DBLogic.to.refreshMusicTimestamp(currentMusic.musicId).then((value) {
             GlobalLogic.to.isHandlePlay = false;
           });
@@ -488,6 +487,17 @@ class PlayerLogic extends SuperController
     final music = await DBLogic.to.findMusicById(
         mPlayList[mPlayList.length == index ? 0 : index].musicId);
     setCurrentMusic(music!);
+  }
+
+  /// 删除播放列表中全部歌曲
+  Future<void> removeAllMusics() async {
+    await audioSourceList.removeRange(0, audioSourceList.length);
+    // 播放列表为空则停止播放，清空状态
+    setCurrentMusic(null);
+    playingJPLrc.value = {"pre": "", "current": "", "next": ""};
+    fullLrc.value = {"jp": "", "zh": "", "roma": ""};
+    needRefreshLyric.value = true;
+    await mPlayer.stop();
   }
 
   /// 设置当前播放歌曲

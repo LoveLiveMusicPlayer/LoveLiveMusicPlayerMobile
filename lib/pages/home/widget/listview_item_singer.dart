@@ -24,8 +24,8 @@ class _ListViewItemSingerState extends State<ListViewItemSinger>
     super.build(context);
     return Row(
       children: [
-        showImg(widget.artist.photo, 48.h, 48.h,
-            radius: 24.h,
+        showImg(widget.artist.photo, 48, 48,
+            radius: 24,
             hasShadow: false,
             onTap: () => widget.onItemTap(widget.artist)),
         SizedBox(

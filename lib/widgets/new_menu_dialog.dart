@@ -19,6 +19,7 @@ class NewMenuDialog extends StatefulWidget {
 class _NewMenuDialogState extends State<NewMenuDialog> {
   final controller = TextEditingController();
   String text = "";
+  int maxLength = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,7 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
                   cursorWidth: 2,
                   showCursor: true,
                   obscureText: false,
-                  maxLength: 12,
+                  maxLength: maxLength,
                   decoration: InputDecoration(
                       isCollapsed: false,
                       labelText: "请输入歌单名",
@@ -65,10 +66,10 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
                       return;
                     }
                     final len = str.length;
-                    if (len < 12) {
+                    if (len < maxLength) {
                       text = str.substring(0, len);
                     } else {
-                      text = str.substring(0, 12);
+                      text = str.substring(0, maxLength);
                     }
 
                     controller.value = TextEditingValue(

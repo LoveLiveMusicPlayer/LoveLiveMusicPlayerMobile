@@ -43,8 +43,12 @@ class _DataSyncState extends State<DataSync> {
     return WillPopScope(
         child: body(),
         onWillPop: () async {
-          showBackDialog();
-          return false;
+          if (isConnected) {
+            showBackDialog();
+            return false;
+          } else {
+            return true;
+          }
         });
   }
 
@@ -59,7 +63,13 @@ class _DataSyncState extends State<DataSync> {
     return Scaffold(
       body: Column(
         children: [
-          DetailsHeader(title: '数据同步', onBack: () => showBackDialog()),
+          DetailsHeader(title: '数据同步', onBack: () {
+            if (isConnected) {
+              showBackDialog();
+            } else {
+              Get.back();
+            }
+          }),
           SizedBox(height: 15.h),
           Stack(
             children: [
@@ -84,7 +94,7 @@ class _DataSyncState extends State<DataSync> {
             SvgPicture.asset(Assets.drawerDrawerSecret,
                 width: 15.w, height: 15.w),
             SizedBox(width: 2.w),
-            Text("请保持手机和电脑处于同一局域网内", style: TextStyleMs.gray_12)
+            Text("请保持手机和电脑处于同一局域网内，扫描PC端二维码", style: TextStyleMs.gray_12)
           ]),
           SizedBox(height: 90.h),
           Visibility(
