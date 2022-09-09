@@ -78,9 +78,14 @@ dependencies:
   device_info_plus: ^4.1.2 # 设备信息
   package_info_plus: ^1.4.3+1 # 安装包信息
   flutter_lyric: ^2.0.4+5 # 歌词显示
+  updater:
+    git:
+      url: https://github.com/zhushenwudi/flutter_updater
+      ref: 1b05edda
 
 dependency_overrides:
   path: ^1.8.1
+  ffi: ^2.0.1
 
 dev_dependencies:
   flutter_test:

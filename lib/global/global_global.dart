@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
@@ -8,8 +11,11 @@ import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
+import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:updater/updater.dart';
 
 import '../models/Music.dart';
 
@@ -45,6 +51,9 @@ class GlobalLogic extends SuperController
   var isBackground = false;
 
   static GlobalLogic get to => Get.find();
+
+  Updater? updater;
+  UpdaterController? controller;
 
   @override
   void onInit() {
@@ -83,6 +92,21 @@ class GlobalLogic extends SuperController
       }
       withSystemTheme.value = isWith;
     };
+
+    controller = UpdaterController(
+      listener: (UpdateStatus status) {
+        if (status == UpdateStatus.Failed) {
+          SmartDialog.compatible.showToast("更新失败");
+        }
+        Log4f.d(msg: 'Listener: $status');
+      },
+      progress: (current, total) {
+        Log4f.d(msg: 'Progress: $current -- $total');
+      },
+      onError: (status) {
+        Log4f.d(msg: 'Error: $status');
+      },
+    );
   }
 
   int getListSize(int index, bool isDbInit) {
@@ -192,6 +216,12 @@ class GlobalLogic extends SuperController
   }
 
   @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
+  }
+
+  @override
   void onDetached() {}
 
   @override
@@ -242,6 +272,22 @@ class GlobalLogic extends SuperController
           duration: const Duration(milliseconds: 200), curve: Curves.ease);
     } catch (e) {
       Log4f.e(msg: e.toString());
+    }
+  }
+
+  checkUpdate({bool manual = false}) async {
+    if (Platform.isAndroid) {
+      updater ??= Updater(
+          context: Get.context!,
+          url: Const.updateUrl,
+          titleText: '版本升级',
+          confirmText: "升级",
+          cancelText: "不升级",
+          controller: controller
+      );
+      updater!.check();
+    } else if (manual) {
+      SmartDialog.compatible.showToast("IOS请前往商店查看");
     }
   }
 }

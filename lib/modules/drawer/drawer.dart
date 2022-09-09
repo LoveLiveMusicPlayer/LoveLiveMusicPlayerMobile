@@ -264,6 +264,14 @@ class _DrawerPageState extends State<DrawerPage> {
                   onTap: () {},
                 ),
                 SizedBox(height: 8.h),
+                DrawerFunctionButton(
+                  icon: Assets.drawerDrawerSecret,
+                  text: "版本升级",
+                  onTap: () {
+                    GlobalLogic.to.checkUpdate(manual: true);
+                  },
+                ),
+                SizedBox(height: 8.h),
               ],
             );
           }),

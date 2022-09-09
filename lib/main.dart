@@ -13,6 +13,7 @@ import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/start_event.dart';
 import 'package:lovelivemusicplayer/global/global_binding.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'global/const.dart';
@@ -91,6 +92,9 @@ class _MyAppState extends State<MyApp> {
       // 初始化结束后，将启动屏关闭
       FlutterNativeSplash.remove();
       Log4f.d(msg: '移除开屏页面...');
+      Future.delayed(const Duration(seconds: 1), (){
+        GlobalLogic.to.checkUpdate();
+      });
     });
     PaintingBinding.instance.imageCache.maximumSizeBytes = 1024 * 1024 * 100;
   }

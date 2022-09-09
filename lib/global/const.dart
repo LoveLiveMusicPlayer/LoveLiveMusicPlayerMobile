@@ -27,4 +27,7 @@ class Const {
 
   static const String artistModelUrl =
       "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/data/artist.json";
+
+  static const String updateUrl =
+      "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/version/version.json";
 }
