@@ -28,7 +28,6 @@ class DialogAddSongSheet extends StatelessWidget {
       }
     }
 
-
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -75,7 +74,8 @@ class DialogAddSongSheet extends StatelessWidget {
                         }
                       }
                       bool isSuccess = await DBLogic.to.addMenu(name, idList);
-                      SmartDialog.compatible.showToast(isSuccess ? "新建成功" : "超出最大数量");
+                      SmartDialog.compatible
+                          .showToast(isSuccess ? "新建成功" : "超出最大数量");
                     }),
                 clickBgDismissTemp: false,
                 alignmentTemp: Alignment.center);
@@ -112,7 +112,6 @@ class DialogAddSongSheet extends StatelessWidget {
                       });
                     },
                     menu: menuList[index],
-
                   );
                 }),
           ))

@@ -155,10 +155,7 @@ class _DrawerPageState extends State<DrawerPage> {
                   text: "歌曲快传",
                   onTap: () async {
                     Get.back();
-                    var data = await Get.toNamed(Routes.routeScan);
-                    if (data != null) {
-                      Get.toNamed(Routes.routeTransform, arguments: data);
-                    }
+                    Get.toNamed(Routes.routeTransform);
                   },
                 ),
                 SizedBox(height: 8.h),
@@ -215,7 +212,7 @@ class _DrawerPageState extends State<DrawerPage> {
                       if (GlobalLogic.to.hasSkin.value &&
                           PlayerLogic.to.playingMusic.value.musicId == null) {
                         GlobalLogic.to.iconColor.value =
-                        const Color(Const.noMusicColorfulSkin);
+                            const Color(Const.noMusicColorfulSkin);
                       }
                     }),
                 SizedBox(height: 8.h),

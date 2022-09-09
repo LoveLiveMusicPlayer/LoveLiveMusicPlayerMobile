@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
@@ -17,11 +18,11 @@ import 'package:lovelivemusicplayer/models/FtpMusic.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/details/widget/details_header.dart';
+import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/circle_widget.dart';
 import 'package:lovelivemusicplayer/widgets/horizontal_line.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -33,11 +34,10 @@ class MusicTransform extends StatefulWidget {
 }
 
 class _MusicTransformState extends State<MusicTransform> {
-  final IOWebSocketChannel channel =
-      IOWebSocketChannel.connect(Uri.parse("ws://${Get.arguments}:4388"));
+  IOWebSocketChannel? channel;
   final queue = ConcurrentQueue(concurrency: 1);
 
-  bool isPermission = false;
+  var isConnected = false;
 
   // 当前传输的歌曲
   DownloadMusic? currentMusic;
@@ -69,102 +69,6 @@ class _MusicTransformState extends State<MusicTransform> {
   void initState() {
     super.initState();
     Wakelock.enable();
-    channel.stream.listen((msg) {
-      final ftpCmd = ftpCmdFromJson(msg as String);
-      switch (ftpCmd.cmd) {
-        case "noTrans":
-          isNoTrans = true;
-          musicList.addAll(downloadMusicFromJson(ftpCmd.body));
-          isStartDownload = true;
-          setState(() {});
-          Future.forEach<DownloadMusic>(musicList, (music) async {
-            if (File(SDUtils.path + music.baseUrl + music.musicPath)
-                .existsSync()) {
-              currentMusic = music;
-              changeNextTaskView(music);
-              setState(() {});
-              await DBLogic.to.importMusic(music);
-            }
-          }).then((_) {
-            DBLogic.to
-                .findAllListByGroup(GlobalLogic.to.currentGroup.value)
-                .then((value) => Get.back());
-          });
-          break;
-        case "port":
-          port = ftpCmd.body;
-          break;
-        case "prepare":
-          if (ftpCmd.body.contains(" === ")) {
-            final array = ftpCmd.body.split(" === ");
-            final json = array[0];
-            final needTransAll = array[1] == "true" ? true : false;
-            final downloadList = downloadMusicFromJson(json);
-            final musicIdList = <String>[];
-            Future.forEach<DownloadMusic>(downloadList, (music) async {
-              if (needTransAll) {
-                // 强制传输则添加到预下载列表
-                musicIdList.add(music.musicUId);
-              } else {
-                if (SDUtils.checkFileExist(
-                    SDUtils.path + music.baseUrl + music.musicPath)) {
-                  // 文件存在则尝试插入
-                  await DBLogic.to.importMusic(music);
-                } else {
-                  // 文件不存在则添加到预下载列表
-                  musicIdList.add(music.musicUId);
-                }
-              }
-            }).then((value) {
-              final message = {
-                "cmd": "musicList",
-                "body": convert.jsonEncode(musicIdList)
-              };
-              channel.sink.add(convert.jsonEncode(message));
-            });
-          }
-          break;
-        case "ready":
-          final downloadList = downloadMusicFromJson(ftpCmd.body);
-          musicList.addAll(downloadList);
-          isRunning = true;
-          break;
-        case "download":
-          for (var i = 0; i < musicList.length; i++) {
-            final music = musicList[i];
-            if (ftpCmd.body.contains(" === ")) {
-              final array = ftpCmd.body.split(" === ");
-              final musicUId = array[0];
-              final isLast = array[1] == "true" ? true : false;
-              if (music.musicUId == musicUId) {
-                genFileList(music).forEach((url, dest) {
-                  final isPic = url.contains("jpg");
-                  pushQueue(music, url, dest, isPic ? false : isLast);
-                });
-              }
-            } else {
-              final message = ftpCmdToJson(
-                  FtpCmd(cmd: "download fail", body: music.musicUId));
-              channel.sink.add(message);
-              Get.back();
-            }
-          }
-          break;
-        case "stop":
-        case "back":
-          release();
-          break;
-      }
-    }, onError: (e) {
-      Log4f.w(msg: "连接失败");
-      Log4f.e(msg: e.toString(), writeFile: true);
-    });
-
-    final system = {
-      "cmd": "system",
-      "body": Platform.isAndroid ? "android" : "ios"
-    };
-    channel.sink.add(convert.jsonEncode(system));
   }
 
   Map<String, String> genFileList(DownloadMusic music) {
@@ -202,12 +106,12 @@ class _MusicTransformState extends State<MusicTransform> {
                 if (progress == "100") {
                   final message = ftpCmdToJson(
                       FtpCmd(cmd: "download success", body: music.musicUId));
-                  channel.sink.add(message);
+                  channel?.sink.add(message);
                 } else {
                   if (isRunning) {
                     final message = ftpCmdToJson(
                         FtpCmd(cmd: "downloading", body: music.musicUId));
-                    channel.sink.add(message);
+                    channel?.sink.add(message);
                   }
                 }
                 setState(() {});
@@ -223,7 +127,7 @@ class _MusicTransformState extends State<MusicTransform> {
       } catch (e) {
         final message =
             ftpCmdToJson(FtpCmd(cmd: "download fail", body: music.musicUId));
-        channel.sink.add(message);
+        channel?.sink.add(message);
         changeNextTaskView(music);
         setState(() {});
       }
@@ -231,7 +135,7 @@ class _MusicTransformState extends State<MusicTransform> {
     if (isLast) {
       await queue.onIdle();
       final message = ftpCmdToJson(FtpCmd(cmd: "finish", body: ""));
-      channel.sink.add(message);
+      channel?.sink.add(message);
       await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
       Get.back();
     }
@@ -250,41 +154,83 @@ class _MusicTransformState extends State<MusicTransform> {
   }
 
   @override
-  void dispose() {
-    musicList.clear();
-    Wakelock.disable();
-    channel.sink.close();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        child: body(),
-        onWillPop: () async {
-          showBackDialog();
-          return false;
-        });
+        onWillPop: isConnected
+            ? () async {
+                showBackDialog();
+                return false;
+              }
+            : null,
+        child: body());
   }
 
   Widget body() {
-    if (isPermission) {
-      return Scaffold(
-          body: Column(
-        children: [
-          DetailsHeader(title: '歌曲快传', onBack: () => showBackDialog()),
-          SizedBox(height: 35.h),
-          drawBody(),
-          SizedBox(height: 20.h),
-          drawMusicInfo(),
-          SizedBox(height: 40.h),
-          drawProgressBar()
-        ],
-      ));
-    } else {
-      requestPermission();
-      return Container();
-    }
+    return Scaffold(
+        body: Column(
+      children: [
+        DetailsHeader(
+            title: '歌曲快传',
+            onBack: () {
+              if (isConnected) {
+                showBackDialog();
+              } else {
+                Get.back();
+              }
+            }),
+        Visibility(visible: isConnected, child: renderTransView()),
+        Visibility(visible: !isConnected, child: renderNoTransView())
+      ],
+    ));
+  }
+
+  Widget renderTransView() {
+    return Column(
+      children: [
+        SizedBox(height: 35.h),
+        drawBody(),
+        SizedBox(height: 20.h),
+        drawMusicInfo(),
+        SizedBox(height: 40.h),
+        drawProgressBar()
+      ],
+    );
+  }
+
+  Widget renderNoTransView() {
+    return Column(
+      children: [
+        SizedBox(height: 15.h),
+        Visibility(
+            maintainState: true,
+            maintainAnimation: true,
+            maintainSize: true,
+            visible: !isConnected,
+            child: Center(
+                child: SvgPicture.asset(Assets.syncIconDataSync,
+                    width: 300.w, height: 300.w))),
+        SizedBox(height: 65.h),
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          SvgPicture.asset(Assets.drawerDrawerSecret,
+              width: 15.w, height: 15.w),
+          SizedBox(width: 2.w),
+          Text("请保持手机和电脑处于同一局域网内", style: TextStyleMs.gray_12)
+        ]),
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          SizedBox(width: 15.w),
+          Text("保持屏幕常亮，并扫描PC端二维码", style: TextStyleMs.gray_12)
+        ]),
+        SizedBox(height: 90.h),
+        Visibility(
+            visible: !isConnected,
+            child: btnFunc(Assets.syncIconScanQr, "设备配对", () async {
+              final ip = await Get.toNamed(Routes.routeScan);
+              if (ip != null) {
+                openWS(ip);
+              }
+            }))
+      ],
+    );
   }
 
   Widget drawMusicInfo() {
@@ -422,6 +368,108 @@ class _MusicTransformState extends State<MusicTransform> {
     }
   }
 
+  openWS(String ip) {
+    channel = IOWebSocketChannel.connect(Uri.parse("ws://$ip:4388"));
+    channel!.stream.listen((msg) async {
+      final ftpCmd = ftpCmdFromJson(msg as String);
+      switch (ftpCmd.cmd) {
+        case "noTrans":
+          isNoTrans = true;
+          musicList.addAll(downloadMusicFromJson(ftpCmd.body));
+          isStartDownload = true;
+          setState(() {});
+          Future.forEach<DownloadMusic>(musicList, (music) async {
+            if (File(SDUtils.path + music.baseUrl + music.musicPath)
+                .existsSync()) {
+              currentMusic = music;
+              changeNextTaskView(music);
+              setState(() {});
+              await DBLogic.to.importMusic(music);
+            }
+          }).then((_) {
+            DBLogic.to
+                .findAllListByGroup(GlobalLogic.to.currentGroup.value)
+                .then((value) => Get.back());
+          });
+          break;
+        case "port":
+          port = ftpCmd.body;
+          break;
+        case "prepare":
+          if (ftpCmd.body.contains(" === ")) {
+            final array = ftpCmd.body.split(" === ");
+            final json = array[0];
+            final needTransAll = array[1] == "true" ? true : false;
+            final downloadList = downloadMusicFromJson(json);
+            final musicIdList = <String>[];
+            Future.forEach<DownloadMusic>(downloadList, (music) async {
+              if (needTransAll) {
+                // 强制传输则添加到预下载列表
+                musicIdList.add(music.musicUId);
+              } else {
+                if (SDUtils.checkFileExist(
+                    SDUtils.path + music.baseUrl + music.musicPath)) {
+                  // 文件存在则尝试插入
+                  await DBLogic.to.importMusic(music);
+                } else {
+                  // 文件不存在则添加到预下载列表
+                  musicIdList.add(music.musicUId);
+                }
+              }
+            }).then((value) {
+              final message = {
+                "cmd": "musicList",
+                "body": convert.jsonEncode(musicIdList)
+              };
+              channel?.sink.add(convert.jsonEncode(message));
+            });
+          }
+          break;
+        case "ready":
+          final downloadList = downloadMusicFromJson(ftpCmd.body);
+          musicList.addAll(downloadList);
+          isRunning = true;
+          break;
+        case "download":
+          for (var i = 0; i < musicList.length; i++) {
+            final music = musicList[i];
+            if (ftpCmd.body.contains(" === ")) {
+              final array = ftpCmd.body.split(" === ");
+              final musicUId = array[0];
+              final isLast = array[1] == "true" ? true : false;
+              if (music.musicUId == musicUId) {
+                genFileList(music).forEach((url, dest) {
+                  final isPic = url.contains("jpg");
+                  pushQueue(music, url, dest, isPic ? false : isLast);
+                });
+              }
+            } else {
+              final message = ftpCmdToJson(
+                  FtpCmd(cmd: "download fail", body: music.musicUId));
+              channel?.sink.add(message);
+              Get.back();
+            }
+          }
+          break;
+        case "stop":
+        case "back":
+          release();
+          break;
+      }
+    }, onError: (e) {
+      Log4f.w(msg: "连接失败");
+      Log4f.e(msg: e.toString(), writeFile: true);
+    }, cancelOnError: true);
+    print("wdadipoadjioa djoiad noaidn oaid na d");
+    isConnected = true;
+    setState(() {});
+    final system = {
+      "cmd": "system",
+      "body": Platform.isAndroid ? "android" : "ios"
+    };
+    channel?.sink.add(convert.jsonEncode(system));
+  }
+
   showBackDialog() {
     SmartDialog.compatible.show(
         widget: Container(
@@ -441,13 +489,43 @@ class _MusicTransformState extends State<MusicTransform> {
         ElevatedButton(
           onPressed: () async {
             final message = ftpCmdToJson(FtpCmd(cmd: "stop", body: ""));
-            channel.sink.add(message);
+            channel?.sink.add(message);
             release();
           },
           child: const Text('确定'),
         )
       ]),
     ));
+  }
+
+  Widget btnFunc(String asset, String title, GestureTapCallback onTap) {
+    return InkWell(
+        onTap: onTap,
+        child: Container(
+            width: 220.w,
+            height: 46.h,
+            decoration: BoxDecoration(
+              color: Get.isDarkMode
+                  ? const Color(0xFF1E2328)
+                  : const Color(0xFFF2F8FF),
+              borderRadius: BorderRadius.circular(6.h),
+              boxShadow: [
+                BoxShadow(
+                    color: Get.isDarkMode
+                        ? const Color(0xFF1E2328)
+                        : const Color(0xFFD3E0EC),
+                    offset: const Offset(5, 3),
+                    blurRadius: 6),
+              ],
+            ),
+            child: Center(
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              SvgPicture.asset(asset,
+                  color: const Color(0xFFF940A7), width: 13.h, height: 20.h),
+              SizedBox(width: 11.w),
+              Text(title, style: TextStyleMs.pink_15)
+            ]))));
   }
 
   release() {
@@ -463,15 +541,12 @@ class _MusicTransformState extends State<MusicTransform> {
         .then((value) => Get.back());
   }
 
-  requestPermission() async {
-    if (await Permission.storage.request().isGranted) {
-      isPermission = true;
-      setState(() {
-        body();
-      });
-    } else {
-      isPermission = false;
-    }
+  @override
+  void dispose() {
+    musicList.clear();
+    Wakelock.disable();
+    channel?.sink.close();
+    super.dispose();
   }
 }
 

@@ -41,35 +41,28 @@ class _DataSyncState extends State<DataSync> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        child: body(),
-        onWillPop: () async {
-          if (isConnected) {
-            showBackDialog();
-            return false;
-          } else {
-            return true;
-          }
-        });
-  }
-
-  @override
-  void dispose() {
-    Wakelock.disable();
-    channel?.sink.close();
-    super.dispose();
+        onWillPop: isConnected
+            ? () async {
+                showBackDialog();
+                return false;
+              }
+            : null,
+        child: body());
   }
 
   Widget body() {
     return Scaffold(
       body: Column(
         children: [
-          DetailsHeader(title: '数据同步', onBack: () {
-            if (isConnected) {
-              showBackDialog();
-            } else {
-              Get.back();
-            }
-          }),
+          DetailsHeader(
+              title: '数据同步',
+              onBack: () {
+                if (isConnected) {
+                  showBackDialog();
+                } else {
+                  Get.back();
+                }
+              }),
           SizedBox(height: 15.h),
           Stack(
             children: [
@@ -94,7 +87,11 @@ class _DataSyncState extends State<DataSync> {
             SvgPicture.asset(Assets.drawerDrawerSecret,
                 width: 15.w, height: 15.w),
             SizedBox(width: 2.w),
-            Text("请保持手机和电脑处于同一局域网内，扫描PC端二维码", style: TextStyleMs.gray_12)
+            Text("请保持手机和电脑处于同一局域网内", style: TextStyleMs.gray_12)
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            SizedBox(width: 15.w),
+            Text("保持屏幕常亮，并扫描PC端二维码", style: TextStyleMs.gray_12)
           ]),
           SizedBox(height: 90.h),
           Visibility(
@@ -111,7 +108,10 @@ class _DataSyncState extends State<DataSync> {
           Visibility(
               visible: !isConnected,
               child: btnFunc(Assets.syncIconScanQr, "设备配对", () async {
-                openWS(await Get.toNamed(Routes.routeScan));
+                final ip = await Get.toNamed(Routes.routeScan);
+                if (ip != null) {
+                  openWS(ip);
+                }
               })),
         ],
       ),
@@ -202,13 +202,13 @@ class _DataSyncState extends State<DataSync> {
         case "phone2pc":
           final data = transDataFromJson(ftpCmd.body);
           await replaceLoveList(data);
-          finish();
+          release();
           break;
         case "pc2phone":
           final data = transDataFromJson(ftpCmd.body);
           await replaceLoveList(data);
           await replacePcMenuList(data);
-          finish();
+          release();
           break;
       }
     }, onError: (e) {
@@ -263,11 +263,18 @@ class _DataSyncState extends State<DataSync> {
     });
   }
 
-  finish() {
+  release() {
     final message = ftpCmdToJson(FtpCmd(cmd: "finish", body: ""));
     channel?.sink.add(message);
     DBLogic.to
         .findAllListByGroup(GlobalLogic.to.currentGroup.value)
         .then((value) => Get.back());
+  }
+
+  @override
+  void dispose() {
+    Wakelock.disable();
+    channel?.sink.close();
+    super.dispose();
   }
 }

@@ -21,7 +21,11 @@ class ListViewItemSongSheet extends StatefulWidget {
   final bool? showDevicePic;
 
   ListViewItemSongSheet(
-      {Key? key, required this.onItemTap, this.onMoreTap, required this.menu, this.showDevicePic})
+      {Key? key,
+      required this.onItemTap,
+      this.onMoreTap,
+      required this.menu,
+      this.showDevicePic})
       : super(key: key);
 
   @override
@@ -51,7 +55,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
             SizedBox(
               width: 10.w,
             ),
-            
+
             ///中间标题部分
             _buildContent(),
 
@@ -83,7 +87,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet>
           onTap: () => widget.onItemTap(widget.menu));
     }
   }
-  
+
   Widget _buildDevicePic() {
     if (widget.showDevicePic == true) {
       if (widget.menu.id <= 100) {

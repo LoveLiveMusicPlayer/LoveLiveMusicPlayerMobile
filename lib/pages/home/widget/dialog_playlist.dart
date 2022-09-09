@@ -3,8 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
-import 'package:lovelivemusicplayer/global/global_db.dart';
-import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_playlist.dart';
@@ -105,8 +103,8 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
     );
   }
 
-  Widget _buildItem(
-      String path, String title, bool showLin, GestureTapCallback? onTap, GestureTapCallback? onRemove) {
+  Widget _buildItem(String path, String title, bool showLin,
+      GestureTapCallback? onTap, GestureTapCallback? onRemove) {
     return Padding(
       padding: EdgeInsets.only(left: 16.h, right: 16.h),
       child: InkWell(

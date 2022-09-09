@@ -93,6 +93,5 @@ class Music {
       group: music.group,
       isLove: music.isLove,
       checked: music.checked,
-      timestamp: music.timestamp
-  );
+      timestamp: music.timestamp);
 }

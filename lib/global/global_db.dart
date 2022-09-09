@@ -75,8 +75,10 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         GlobalLogic.to.artistList.value = await artistDao.findAllArtists();
       } else {
         allAlbums.addAll(await albumDao.findAllAlbumsByGroup(group));
-        GlobalLogic.to.musicList.value = await musicDao.findAllMusicsByGroup(group);
-        GlobalLogic.to.artistList.value = await artistDao.findAllArtistsByGroup(group);
+        GlobalLogic.to.musicList.value =
+            await musicDao.findAllMusicsByGroup(group);
+        GlobalLogic.to.artistList.value =
+            await artistDao.findAllArtistsByGroup(group);
       }
       GlobalLogic.to.recentList.value = await musicDao.findRecentMusics();
       allAlbums.sort((a, b) => a.date!.compareTo(b.date!));

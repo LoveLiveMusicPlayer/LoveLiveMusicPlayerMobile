@@ -14,14 +14,15 @@ class TransData {
   List<TransMenu> menu;
 
   factory TransData.fromJson(Map<String, dynamic> json) => TransData(
-    love: List<String>.from(json["love"].map((x) => x)),
-    menu: List<TransMenu>.from(json["menu"].map((x) => TransMenu.fromJson(x))),
-  );
+        love: List<String>.from(json["love"].map((x) => x)),
+        menu: List<TransMenu>.from(
+            json["menu"].map((x) => TransMenu.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "love": List<dynamic>.from(love.map((x) => x)),
-    "menu": List<dynamic>.from(menu.map((x) => x.toJson())),
-  };
+        "love": List<dynamic>.from(love.map((x) => x)),
+        "menu": List<dynamic>.from(menu.map((x) => x.toJson())),
+      };
 }
 
 class TransMenu {
@@ -38,16 +39,16 @@ class TransMenu {
   List<String> musicList;
 
   factory TransMenu.fromJson(Map<String, dynamic> json) => TransMenu(
-    menuId: json["menuId"],
-    name: json["name"],
-    date: json["date"],
-    musicList: List<String>.from(json["musicList"].map((x) => x)),
-  );
+        menuId: json["menuId"],
+        name: json["name"],
+        date: json["date"],
+        musicList: List<String>.from(json["musicList"].map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-    "menuId": menuId,
-    "name": name,
-    "date": date,
-    "musicList": List<dynamic>.from(musicList.map((x) => x)),
-  };
+        "menuId": menuId,
+        "name": name,
+        "date": date,
+        "musicList": List<dynamic>.from(musicList.map((x) => x)),
+      };
 }

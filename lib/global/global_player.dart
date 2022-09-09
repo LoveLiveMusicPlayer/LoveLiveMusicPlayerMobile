@@ -193,7 +193,9 @@ class PlayerLogic extends SuperController
           if (playingMusic.value != musicList[index]) {
             setCurrentMusic(musicList[index]);
           }
-          DBLogic.to.refreshMusicTimestamp(musicList[index].musicId!).then((value) {
+          DBLogic.to
+              .refreshMusicTimestamp(musicList[index].musicId!)
+              .then((value) {
             GlobalLogic.to.isHandlePlay = false;
           });
           getLrc(false);
