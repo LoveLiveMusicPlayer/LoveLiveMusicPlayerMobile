@@ -11,6 +11,16 @@ if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
+def flutterVersionName = localProperties.getProperty("flutter.versionName")
+if (flutterVersionName == null) {
+    flutterVersionName = "1.0.0"
+}
+
+def flutterVersionCode = localProperties.getProperty("flutter.versionCode")
+if (flutterVersionCode == null) {
+    flutterVersionCode = "1"
+}
+
 // 判断是否为release模式
 boolean isReleaseBuildType(){
     for(String s : gradle.startParameter.taskNames) {
@@ -56,31 +66,31 @@ android {
         applicationId "com.zhushenwudi.lovelivemusicplayer"
         minSdkVersion 23
         targetSdkVersion 33
-        versionCode 10
-        versionName "1.0.9"
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
     }
 
     signingConfigs {
         // debug 模式或使用模拟器请注释这里
-//        release {
-//            keyAlias keystoreProperties["keyAlias"]
-//            keyPassword keystoreProperties["storePassword"]
-//            storeFile file(keystoreProperties["storeFile"])
-//            storePassword keystoreProperties["keyPassword"]
-//        }
+        release {
+            keyAlias keystoreProperties["keyAlias"]
+            keyPassword keystoreProperties["storePassword"]
+            storeFile file(keystoreProperties["storeFile"])
+            storePassword keystoreProperties["keyPassword"]
+        }
     }
 
     buildTypes {
         // debug 模式或使用模拟器请注释这里
-//        release {
-//            minifyEnabled true
-//            zipAlignEnabled true
-//            signingConfig signingConfigs.release
-//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-//            ndk {
-//                abiFilters "arm64-v8a", "armeabi-v7a"
-//            }
-//        }
+        release {
+            minifyEnabled true
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            ndk {
+                abiFilters "arm64-v8a"
+            }
+        }
     }
 
     lintOptions {

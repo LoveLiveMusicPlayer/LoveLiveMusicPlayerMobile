@@ -98,9 +98,6 @@ class GlobalLogic extends SuperController
         }
         Log4f.d(msg: 'Listener: $status');
       },
-      progress: (current, total) {
-        Log4f.d(msg: 'Progress: $current -- $total');
-      },
       onError: (status) {
         Log4f.d(msg: 'Error: $status');
       },
