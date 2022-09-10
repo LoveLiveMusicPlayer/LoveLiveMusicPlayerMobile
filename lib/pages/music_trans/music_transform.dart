@@ -62,6 +62,8 @@ class _MusicTransformState extends State<MusicTransform> {
   // 是否是无传输模式
   bool isNoTrans = false;
 
+  String? ipAddress;
+
   // banner控制器，无作用，但是必须加，代码控制时也需要这个
   final controller = TransformerPageController();
 
@@ -73,9 +75,8 @@ class _MusicTransformState extends State<MusicTransform> {
 
   Map<String, String> genFileList(DownloadMusic music) {
     final musicUrl =
-        "http://${Get.arguments}:$port/${music.baseUrl}${music.musicPath}";
-    final picUrl =
-        "http://${Get.arguments}:$port/${music.baseUrl}${music.coverPath}";
+        "http://$ipAddress:$port/${music.baseUrl}${music.musicPath}";
+    final picUrl = "http://$ipAddress:$port/${music.baseUrl}${music.coverPath}";
     final musicDest = SDUtils.path + music.baseUrl + music.musicPath;
     final picDest = SDUtils.path + music.baseUrl + music.coverPath;
     final tempList = musicDest.split(Platform.pathSeparator);
@@ -226,7 +227,8 @@ class _MusicTransformState extends State<MusicTransform> {
             child: btnFunc(Assets.syncIconScanQr, "设备配对", () async {
               final ip = await Get.toNamed(Routes.routeScan);
               if (ip != null) {
-                openWS(ip);
+                ipAddress = ip;
+                openWS();
               }
             }))
       ],
@@ -368,8 +370,8 @@ class _MusicTransformState extends State<MusicTransform> {
     }
   }
 
-  openWS(String ip) {
-    channel = IOWebSocketChannel.connect(Uri.parse("ws://$ip:4388"));
+  openWS() {
+    channel = IOWebSocketChannel.connect(Uri.parse("ws://$ipAddress:4388"));
     channel!.stream.listen((msg) async {
       final ftpCmd = ftpCmdFromJson(msg as String);
       switch (ftpCmd.cmd) {
