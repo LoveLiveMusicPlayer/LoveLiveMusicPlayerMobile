@@ -292,8 +292,6 @@ class _PlayerState extends State<Player> {
     if (!GlobalLogic.to.hasSkin.value) {
       return Container();
     }
-    const radius = BorderRadius.only(
-        topLeft: Radius.circular(30), topRight: Radius.circular(30));
 
     ImageProvider provider;
     if (pic.isEmpty) {
@@ -305,21 +303,18 @@ class _PlayerState extends State<Player> {
       width: ScreenUtil().screenWidth,
       height: ScreenUtil().screenHeight,
       child: ClipRRect(
-        borderRadius: radius,
         child: Stack(
           alignment: Alignment.center,
           children: [
             Container(
               decoration: BoxDecoration(
-                  borderRadius: radius,
                   image: DecorationImage(image: provider, fit: BoxFit.cover)),
             ),
             Positioned.fill(
                 child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
               child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: radius, color: Colors.black.withOpacity(0.4)),
+                decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
               ),
             ))
           ],

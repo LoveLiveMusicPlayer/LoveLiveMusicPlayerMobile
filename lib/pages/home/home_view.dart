@@ -96,8 +96,6 @@ class _HomeViewState extends State<HomeView>
       }),
       blurColor: color,
       overlayColor: color,
-      panelBorderRadiusBegin: 10,
-      panelBorderRadiusEnd: 10,
       panelHeader: MiniPlayer(onTap: () {
         if (!HomeController.to.state.isSelect.value) {
           if (addListener() == null) {
