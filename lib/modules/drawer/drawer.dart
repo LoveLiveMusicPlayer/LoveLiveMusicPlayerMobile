@@ -61,7 +61,7 @@ class _DrawerPageState extends State<DrawerPage> {
                 fontWeight: FontWeight.bold,
                 color:
                     Get.isDarkMode ? Colors.white : const Color(0xff333333))),
-        SizedBox(height: 20.h)
+        SizedBox(height: 16.h)
       ],
     );
   }
@@ -110,7 +110,7 @@ class _DrawerPageState extends State<DrawerPage> {
             }, innerWidth: 88, innerHeight: 44),
           ],
         ),
-        SizedBox(height: 20.h)
+        SizedBox(height: 12.h)
       ],
     );
   }
@@ -266,7 +266,7 @@ class _DrawerPageState extends State<DrawerPage> {
                 ),
                 SizedBox(height: 8.h),
                 DrawerFunctionButton(
-                  icon: Assets.drawerDrawerSecret,
+                  icon: Assets.drawerDrawerUpdate,
                   text: "版本升级",
                   onTap: () {
                     GlobalLogic.to.checkUpdate(manual: true);

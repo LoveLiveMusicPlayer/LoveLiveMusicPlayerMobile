@@ -23,13 +23,15 @@ class DetailsCover extends StatelessWidget {
           SizedBox(
             height: 20.h,
           ),
-          Text(
-            album.albumName!,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Get.isDarkMode
-                ? TextStyleMs.whiteBold_15
-                : TextStyleMs.blackBold_15,
+          Padding(padding: EdgeInsets.only(left: 20.w, right: 20.w),
+            child: Text(
+              album.albumName!,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Get.isDarkMode
+                  ? TextStyleMs.whiteBold_15
+                  : TextStyleMs.blackBold_15,
+            ),
           ),
           SizedBox(
             height: 5.h,

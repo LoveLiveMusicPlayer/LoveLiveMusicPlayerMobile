@@ -98,7 +98,7 @@ class _PlayerState extends State<Player> {
       color: GlobalLogic.to.hasSkin.value
           ? Colors.transparent
           : Get.theme.primaryColor,
-      height: 557.h,
+      height: 580.h,
       child: Column(
         children: <Widget>[
           SizedBox(height: MediaQuery.of(context).padding.top + 14.56.h),
@@ -133,7 +133,7 @@ class _PlayerState extends State<Player> {
 
   Widget bottom() {
     return Container(
-      height: ScreenUtil().screenHeight - 560.h,
+      height: 170.h,
       color: GlobalLogic.to.hasSkin.value
           ? Colors.transparent
           : Get.theme.primaryColor,
