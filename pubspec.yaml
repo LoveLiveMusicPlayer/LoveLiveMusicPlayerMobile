@@ -53,7 +53,10 @@ dependencies:
   get_storage: ^2.0.3 # sp存储
   common_utils: ^2.1.0 # 工具类
   flutter_screenutil: ^5.5.3+2 # 屏幕适配方案
-  we_slide: ^2.3.0 # 播放器屏幕操作组件
+  we_slide: # 播放器屏幕操作组件
+    git:
+      url: https://github.com/ProjectAnni/we_slide
+      ref: b5ab788
   flutter_native_splash: ^2.2.7 # 启动页
   marquee_text: # 走马灯滚动文字
     git:

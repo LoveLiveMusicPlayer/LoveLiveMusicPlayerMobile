@@ -35,6 +35,8 @@ class _HomeViewState extends State<HomeView>
     with SingleTickerProviderStateMixin {
   final logic = Get.find<HomeController>();
   WeSlideController? controller;
+  WeSlideController? footController;
+  bool isInitListener = true;
 
   @override
   void initState() {
@@ -78,11 +80,13 @@ class _HomeViewState extends State<HomeView>
 
   Widget _weSlider(GlobalKey<ScaffoldState> scaffoldKey) {
     controller = WeSlideController();
+    footController = WeSlideController(true);
     const double panelMinSize = 150;
     final double panelMaxSize = ScreenUtil().screenHeight;
     final color = Theme.of(context).primaryColor;
     return WeSlide(
       controller: controller,
+      footerController: footController,
       panelMinSize: panelMinSize.h,
       panelMaxSize: panelMaxSize,
       overlayOpacity: 0.9,
@@ -98,7 +102,8 @@ class _HomeViewState extends State<HomeView>
       overlayColor: color,
       panelHeader: MiniPlayer(onTap: () {
         if (!HomeController.to.state.isSelect.value) {
-          if (addListener() == null) {
+          if (isInitListener) {
+            isInitListener = false;
             controller?.addListener(addListener);
           }
           controller?.show();
@@ -183,6 +188,13 @@ class _HomeViewState extends State<HomeView>
   }
 
   addListener() {
+    if (controller?.isOpened == true) {
+      footController?.hide();
+    } else {
+      Future.delayed(const Duration(milliseconds: 500)).then((value) {
+        footController?.show();
+      });
+    }
     eventBus.fire(PlayerClosableEvent(controller?.isOpened ?? false));
   }
 
