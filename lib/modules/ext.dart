@@ -47,12 +47,12 @@ Widget showImg(String? path, double? width, double? height,
         imageUrl: path!,
         imageBuilder: (context, imageProvider) => Container(
           width: width?.h,
-          height: height?.h,
+          height: width?.h,
           decoration: BoxDecoration(
             image: DecorationImage(
                 image: ResizeImage(imageProvider,
                     width: (width?.h.toInt() ?? 1) * 2,
-                    height: (height?.h.toInt() ?? 1) * 2),
+                    height: (width?.h.toInt() ?? 1) * 2),
                 fit: BoxFit.fill),
             borderRadius: BorderRadius.circular(radius.h),
             boxShadow: [
@@ -75,12 +75,12 @@ Widget showImg(String? path, double? width, double? height,
     } else {
       return Container(
         width: width?.h,
-        height: height?.h,
+        height: width?.h,
         decoration: BoxDecoration(
           image: DecorationImage(
               image: ResizeImage(shadowImage,
                   width: (width?.h.toInt() ?? 1) * 2,
-                  height: (height?.h.toInt() ?? 1) * 2),
+                  height: (width?.h.toInt() ?? 1) * 2),
               fit: BoxFit.fill),
           borderRadius: BorderRadius.circular(radius.h),
           boxShadow: [
@@ -100,34 +100,34 @@ Widget showImg(String? path, double? width, double? height,
       noShadowImage = Image.asset(
         defPhoto,
         width: width?.h,
-        height: height?.h,
+        height: width?.h,
         fit: fit,
       ).image;
     } else if (path.startsWith("assets")) {
       noShadowImage = Image.asset(
         path,
         width: width?.h,
-        height: height?.h,
+        height: width?.h,
         fit: fit,
       ).image;
     } else if (path.startsWith("http")) {
       isNetImage = true;
       noShadowImage = CachedNetworkImageProvider(path,
-          maxWidth: width?.h.toInt(), maxHeight: height?.h.toInt());
+          maxWidth: width?.h.toInt(), maxHeight: width?.h.toInt());
     } else {
       final file = File(path);
       if (file.existsSync()) {
         noShadowImage = Image.file(
           File(path),
           width: width?.h,
-          height: height?.h,
+          height: width?.h,
           fit: fit,
         ).image;
       } else {
         noShadowImage = Image.asset(
           defPhoto,
           width: width?.h,
-          height: height?.h,
+          height: width?.h,
           fit: fit,
         ).image;
       }
@@ -146,17 +146,17 @@ Widget showImg(String? path, double? width, double? height,
                 imageBuilder: (context, imageProvider) => Image(
                     image: ResizeImage(imageProvider,
                         width: width?.h.toInt() ?? 1,
-                        height: height?.h.toInt() ?? 1)),
+                        height: width?.h.toInt() ?? 1)),
                 placeholder: (context, url) {
                   return Image(
                       image: AssetImage(defPhoto),
                       width: width?.h,
-                      height: height?.h);
+                      height: width?.h);
                 },
                 errorWidget: (context, url, error) => Image(
                     image: AssetImage(defPhoto),
                     width: width?.h,
-                    height: height?.h),
+                    height: width?.h),
               )));
     } else {
       return InkWell(
@@ -170,10 +170,11 @@ Widget showImg(String? path, double? width, double? height,
               child: Image(
                 image: ResizeImage(noShadowImage,
                     width: (width?.h.toInt() ?? 1) * 2,
-                    height: (height?.h.toInt() ?? 1) * 2),
+                    height: (width?.h.toInt() ?? 1) * 2),
                 width: width?.h,
-                height: height?.h,
-              )));
+                height: width?.h,
+              ))
+      );
     }
   }
 }
