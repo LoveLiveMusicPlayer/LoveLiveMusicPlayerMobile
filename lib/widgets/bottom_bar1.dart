@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 
@@ -12,8 +13,6 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorTheme = Get.theme.colorScheme;
-
     return Obx(() {
       final mIndex = handlePage(HomeController.to.state.currentIndex.value);
       return BottomNavigationBar(
@@ -46,7 +45,8 @@ class BottomBar extends StatelessWidget {
               label: '歌手'),
         ],
         elevation: 0,
-        backgroundColor: colorTheme.surface,
+        backgroundColor: GlobalLogic.to
+            .getThemeColor(const Color(0xFF4e4e4e), const Color(0xFFF2F8FF)),
         selectedItemColor: const Color(0xFFF940A7),
         unselectedItemColor: const Color(0xFFD1E0F3),
         onTap: (index) {

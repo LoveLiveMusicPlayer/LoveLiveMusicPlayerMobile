@@ -11,6 +11,7 @@ import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/details/logic.dart';
 import 'package:lovelivemusicplayer/pages/details/widget/details_body.dart';
 import 'package:lovelivemusicplayer/pages/details/widget/details_header.dart';
+import 'package:lovelivemusicplayer/pages/home/nested_page/nested_controller.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 
@@ -22,7 +23,7 @@ class MenuDetailsPage extends StatefulWidget {
 }
 
 class _MenuDetailsPageState extends State<MenuDetailsPage> {
-  final int menuId = Get.arguments;
+  final int menuId = NestedController.to.menu.id;
   final music = <Music>[];
   Menu? menu;
   final logic = Get.put(DetailController());
@@ -84,7 +85,8 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
                         default:
                           break;
                       }
-                    })
+                    }),
+                SizedBox(height: 30.h)
               ])));
     });
   }

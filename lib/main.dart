@@ -14,6 +14,7 @@ import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/start_event.dart';
 import 'package:lovelivemusicplayer/global/global_binding.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'global/const.dart';
@@ -72,7 +73,7 @@ void main() async {
       },
     );
   });
-  setStatusBar();
+  AppUtils.setStatusBar(isDark);
 }
 
 class MyApp extends StatefulWidget {
@@ -134,13 +135,6 @@ class _MyAppState extends State<MyApp> {
       },
     );
   }
-}
-
-/// 设置状态栏
-setStatusBar() {
-  SystemChrome.setSystemUIOverlayStyle(
-      (isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark)
-          .copyWith(statusBarColor: Colors.transparent));
 }
 
 /// 初始化服务等一系列耗时任务

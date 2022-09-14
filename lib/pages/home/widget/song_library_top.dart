@@ -8,21 +8,19 @@ import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 
-class SongLibraryTop extends StatelessWidget {
+class SongLibraryTop extends GetView<GlobalLogic> {
   final Function onPlayTap;
   final GestureTapCallback onScreenTap;
   final Function(bool) onSelectAllTap;
   final Function onCancelTap;
 
-  SongLibraryTop({
+  const SongLibraryTop({
     Key? key,
     required this.onPlayTap,
     required this.onScreenTap,
     required this.onSelectAllTap,
     required this.onCancelTap,
   }) : super(key: key);
-
-  final global = Get.find<GlobalLogic>();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +53,7 @@ class SongLibraryTop extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(bottom: 10.h),
       height: 35.h,
-      color: Get.theme.primaryColor,
+      color: Colors.transparent,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -94,9 +92,8 @@ class SongLibraryTop extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.h),
               boxShadow: [
                 BoxShadow(
-                    color: Get.isDarkMode
-                        ? const Color(0xFF05080C)
-                        : const Color(0xFFD3E0EC),
+                    color: GlobalLogic.to.getThemeColor(
+                        const Color(0xFF05080C), const Color(0xFFD3E0EC)),
                     blurRadius: 6,
                     offset: const Offset(5, 3)),
               ]),
@@ -114,7 +111,7 @@ class SongLibraryTop extends StatelessWidget {
     return Expanded(
       child: Obx(() {
         return Text(
-            "${global.getListSize(index, global.databaseInitOver.value)}${index == 1 ? "张专辑" : "首歌曲"}",
+            "${controller.getListSize(index, controller.databaseInitOver.value)}${index == 1 ? "张专辑" : "首歌曲"}",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style:

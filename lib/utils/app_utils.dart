@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:color_thief_flutter/color_thief_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/ArtistModel.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
@@ -121,5 +122,12 @@ class AppUtils {
       count++;
     }
     return count > 1;
+  }
+
+  /// 设置状态栏
+  static setStatusBar(bool isDark) {
+    SystemChrome.setSystemUIOverlayStyle(
+        (isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark)
+            .copyWith(statusBarColor: Colors.transparent));
   }
 }

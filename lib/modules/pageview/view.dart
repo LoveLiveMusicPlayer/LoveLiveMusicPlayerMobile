@@ -102,7 +102,7 @@ class PageViewComponent extends StatelessWidget {
             HomeController.to.selectItem(index, checked);
           } else {
             Get.toNamed(Routes.routeAlbumDetails,
-                arguments: GlobalLogic.to.albumList[index]);
+                arguments: GlobalLogic.to.albumList[index], id: 1);
           }
         },
       );
@@ -110,7 +110,7 @@ class PageViewComponent extends StatelessWidget {
       return ListViewItemSinger(
         artist: GlobalLogic.to.artistList[index],
         onItemTap: (artist) {
-          Get.toNamed(Routes.routeSingerDetails, arguments: artist);
+          Get.toNamed(Routes.routeSingerDetails, arguments: artist, id: 1);
         },
       );
     } else if (page == 3) {
@@ -131,7 +131,7 @@ class PageViewComponent extends StatelessWidget {
     } else if (page == 4) {
       return ListViewItemSongSheet(
         onItemTap: (menu) {
-          Get.toNamed(Routes.routeMenuDetails, arguments: menu.id);
+          Get.toNamed(Routes.routeMenuDetails, arguments: menu.id, id: 1);
         },
         onMoreTap: (menu) {
           SmartDialog.compatible.show(

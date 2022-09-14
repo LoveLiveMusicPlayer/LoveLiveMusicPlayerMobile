@@ -99,25 +99,6 @@ class _RefresherWidgetState extends State<RefresherWidget> {
         enablePullDown: widget.enablePullDown,
         enablePullUp: widget.enablePullUp,
         controller: _controller,
-        child: !widget.isGridView
-            ? ListView.separated(
-                itemCount: widget.itemCount,
-                itemBuilder: widget.listItem,
-                controller: widget.scrollController,
-                separatorBuilder: (BuildContext context, int index) {
-                  return Container(
-                    color: widget.spacingColor,
-                    height: widget.mainAxisSpacing,
-                  );
-                },
-              )
-            : AlignedGridView.count(
-                controller: widget.scrollController,
-                itemCount: widget.itemCount,
-                crossAxisCount: widget.columnNum,
-                mainAxisSpacing: widget.mainAxisSpacing,
-                crossAxisSpacing: widget.crossAxisSpacing,
-                itemBuilder: widget.listItem),
         onRefresh: () async {
           if (widget.onRefresh != null) {
             widget.onRefresh!(_controller);
@@ -155,6 +136,25 @@ class _RefresherWidgetState extends State<RefresherWidget> {
             );
           },
         ),
+        child: !widget.isGridView
+            ? ListView.separated(
+                itemCount: widget.itemCount,
+                itemBuilder: widget.listItem,
+                controller: widget.scrollController,
+                separatorBuilder: (BuildContext context, int index) {
+                  return Container(
+                    color: widget.spacingColor,
+                    height: widget.mainAxisSpacing,
+                  );
+                },
+              )
+            : AlignedGridView.count(
+                controller: widget.scrollController,
+                itemCount: widget.itemCount,
+                crossAxisCount: widget.columnNum,
+                mainAxisSpacing: widget.mainAxisSpacing,
+                crossAxisSpacing: widget.crossAxisSpacing,
+                itemBuilder: widget.listItem),
       ),
     );
   }

@@ -14,6 +14,7 @@ import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:updater/updater.dart';
+import 'package:we_slide/we_slide.dart';
 
 import '../models/Music.dart';
 
@@ -30,6 +31,14 @@ class GlobalLogic extends SuperController
   final menuList = <Menu>[].obs;
   final recentList = <Music>[].obs;
 
+  GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
+
+  static final mobileWeSlideController = WeSlideController();
+  static final mobileWeSlideFooterController = WeSlideController(true);
+
+  /// 主页是否需要预留底部安全区域
+  var needHomeSafeArea = false.obs;
+
   /// 是否正在处理播放逻辑
   var isHandlePlay = false;
 
@@ -41,6 +50,8 @@ class GlobalLogic extends SuperController
 
   /// 是否跟随系统主题色
   var withSystemTheme = false.obs;
+
+  var isDarkTheme = false.obs;
 
   /// 炫彩模式下的按钮皮肤
   var iconColor = Get.theme.primaryColorDark.obs;
@@ -73,6 +84,7 @@ class GlobalLogic extends SuperController
               ? const Color(0xFF1E2328)
               : const Color(0xFFF2F8FF);
       withSystemTheme.value = isWith;
+      isThemeDark();
     });
 
     /// 监听系统主题色改变
@@ -282,6 +294,31 @@ class GlobalLogic extends SuperController
       updater!.check();
     } else if (manual) {
       SmartDialog.compatible.showToast("IOS请前往商店查看");
+    }
+  }
+
+  Color getThemeColor(Color? darkColor, Color? lightColor) {
+    Color? color;
+    final withSystemTheme = GlobalLogic.to.withSystemTheme.value;
+    final manualIsDark = GlobalLogic.to.manualIsDark.value;
+    if (withSystemTheme) {
+      bool isDark =
+          MediaQuery.of(Get.context!).platformBrightness == Brightness.dark;
+      color = isDark ? darkColor : lightColor;
+    } else {
+      color = manualIsDark ? darkColor : lightColor;
+    }
+    return color!;
+  }
+
+  isThemeDark() {
+    final withSystemTheme = GlobalLogic.to.withSystemTheme.value;
+    final manualIsDark = GlobalLogic.to.manualIsDark.value;
+    if (withSystemTheme) {
+      isDarkTheme.value =
+          MediaQuery.of(Get.context!).platformBrightness == Brightness.dark;
+    } else {
+      isDarkTheme.value = manualIsDark;
     }
   }
 }

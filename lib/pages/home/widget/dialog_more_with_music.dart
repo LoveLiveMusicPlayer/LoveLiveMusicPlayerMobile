@@ -110,7 +110,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
         () {
       SmartDialog.compatible.dismiss();
       if (album != null) {
-        Get.toNamed(Routes.routeAlbumDetails, arguments: album);
+        Get.toNamed(Routes.routeAlbumDetails, arguments: album, id: 1);
       }
     });
   }

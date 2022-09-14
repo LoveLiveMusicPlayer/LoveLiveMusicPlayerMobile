@@ -5,11 +5,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 final ThemeData lightTheme = ThemeData(
     accentColor: Colors.green[300],
     brightness: Brightness.light,
+    colorScheme: const ColorScheme.light(
+        primary: Colors.white,
+        onPrimary: Colors.white,
+        onBackground: Colors.white,
+        secondary: Colors.amber),
     primaryColor: const Color(0xFFF2F8FF),
     scaffoldBackgroundColor: const Color(0xFFF2F8FF),
-    bottomAppBarColor: Colors.black,
+    bottomAppBarColor: Colors.white,
     textTheme: TextTheme(
-        titleSmall: TextStyle(fontSize: 14.sp, color: const Color(0xFF333333))),
+        titleSmall: TextStyle(fontSize: 15.sp, color: const Color(0xFF333333))),
     iconTheme: IconThemeData(color: Colors.grey[800]),
     canvasColor: const Color(0xFFF2F8FF),
     appBarTheme: AppBarTheme(
@@ -19,12 +24,17 @@ final ThemeData lightTheme = ThemeData(
 final ThemeData darkTheme = ThemeData(
     accentColor: Colors.blue[300],
     brightness: Brightness.dark,
-    bottomAppBarColor: Colors.white,
+    colorScheme: const ColorScheme.dark(
+        primary: Colors.black,
+        onPrimary: Colors.black,
+        onBackground: Colors.black,
+        secondary: Colors.amber),
+    bottomAppBarColor: const Color(0xFF1E2328),
     primaryColor: Colors.grey[850],
     canvasColor: Colors.grey[850],
     scaffoldBackgroundColor: Colors.grey[850],
     textTheme:
-        TextTheme(titleSmall: TextStyle(fontSize: 14.sp, color: Colors.white)),
+        TextTheme(titleSmall: TextStyle(fontSize: 15.sp, color: Colors.white)),
     iconTheme: IconThemeData(color: Colors.grey[300]),
     appBarTheme: AppBarTheme(
       shadowColor: Colors.blue[300]?.withOpacity(.1),

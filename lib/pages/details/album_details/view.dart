@@ -10,6 +10,7 @@ import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/pages/details/logic.dart';
 import 'package:lovelivemusicplayer/pages/details/widget/details_body.dart';
 import 'package:lovelivemusicplayer/pages/details/widget/details_header.dart';
+import 'package:lovelivemusicplayer/pages/home/nested_page/nested_controller.dart';
 import 'package:lovelivemusicplayer/widgets/details_cover.dart';
 
 class AlbumDetailsPage extends StatefulWidget {
@@ -20,7 +21,7 @@ class AlbumDetailsPage extends StatefulWidget {
 }
 
 class _AlbumDetailsPageState extends State<AlbumDetailsPage> {
-  final Album album = Get.arguments;
+  final Album album = NestedController.to.album;
   final music = <Music>[];
   final logic = Get.put(DetailController());
 
@@ -59,7 +60,8 @@ class _AlbumDetailsPageState extends State<AlbumDetailsPage> {
                   music: music,
                   // onRemove: (music) =>
                   //     Log4f.d(msg: "remove: ${music.musicName}"),
-                )
+                ),
+                SizedBox(height: 30.h)
               ])));
     });
   }

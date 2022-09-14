@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/pages/home/nested_page/nested_controller.dart';
 
 class DetailsHeader extends StatelessWidget {
   final String title;
@@ -25,7 +27,8 @@ class DetailsHeader extends StatelessWidget {
                     if (onBack == null) {
                       HomeController.to.state.isSelect.value = false;
                       SmartDialog.compatible.dismiss();
-                      Get.back();
+                      GlobalLogic.mobileWeSlideFooterController.show();
+                      NestedController.to.goBack();
                     } else {
                       onBack!();
                     }

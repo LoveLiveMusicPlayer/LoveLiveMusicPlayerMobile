@@ -51,8 +51,14 @@ class _DrawerPageState extends State<DrawerPage> {
       children: [
         SizedBox(height: 12.h),
         Obx(() {
-          return logoIcon(global.getCurrentGroupIcon(global.currentGroup.value),
-              width: 96, height: 96, radius: 96);
+          return logoIcon(
+            global.getCurrentGroupIcon(global.currentGroup.value),
+            width: 96,
+            height: 96,
+            radius: 96,
+            color: GlobalLogic.to.getThemeColor(
+                const Color(0xFF05080C), const Color(0xFFD3E0EC)),
+          );
         }),
         SizedBox(height: 12.h),
         Text("LoveLiveMusicPlayer",
@@ -187,15 +193,20 @@ class _DrawerPageState extends State<DrawerPage> {
                             ? darkTheme
                             : lightTheme);
                       }
+
                       // 将全局变量设置为所选值
                       GlobalLogic.to.withSystemTheme.value = check;
                       // 修改sp值
                       await SpUtil.put(Const.spWithSystemTheme, check);
+                      GlobalLogic.to.isThemeDark();
+
                       // 恢复原来操作的界面
-                      Future.delayed(const Duration(milliseconds: 500))
+                      Future.delayed(const Duration(milliseconds: 300))
                           .then((value) {
-                        PageViewLogic.to.controller.jumpToPage(
-                            HomeController.to.state.currentIndex.value);
+                        Get.forceAppUpdate().then((value) {
+                          PageViewLogic.to.controller.jumpToPage(
+                              HomeController.to.state.currentIndex.value);
+                        });
                       });
                     }),
                 SizedBox(height: 8.h),
@@ -240,16 +251,16 @@ class _DrawerPageState extends State<DrawerPage> {
                         .showToast("清理成功", time: const Duration(seconds: 5));
                   },
                 ),
-                SizedBox(height: 8.h),
-                DrawerFunctionButton(
-                  icon: Assets.drawerDrawerDebug,
-                  text: "保存日志",
-                  onTap: () async {
-                    await SDUtils.uploadLog();
-                    SmartDialog.compatible
-                        .showToast("导出成功", time: const Duration(seconds: 5));
-                  },
-                ),
+                // SizedBox(height: 8.h),
+                // DrawerFunctionButton(
+                //   icon: Assets.drawerDrawerDebug,
+                //   text: "保存日志",
+                //   onTap: () async {
+                //     await SDUtils.uploadLog();
+                //     SmartDialog.compatible
+                //         .showToast("导出成功", time: const Duration(seconds: 5));
+                //   },
+                // ),
                 SizedBox(height: 8.h),
                 DrawerFunctionButton(
                   icon: Assets.drawerDrawerInspect,
@@ -260,17 +271,17 @@ class _DrawerPageState extends State<DrawerPage> {
                 ),
                 SizedBox(height: 8.h),
                 DrawerFunctionButton(
-                  icon: Assets.drawerDrawerSecret,
-                  text: "关于和隐私",
-                  onTap: () {},
-                ),
-                SizedBox(height: 8.h),
-                DrawerFunctionButton(
                   icon: Assets.drawerDrawerUpdate,
                   text: "版本升级",
                   onTap: () {
                     GlobalLogic.to.checkUpdate(manual: true);
                   },
+                ),
+                SizedBox(height: 8.h),
+                DrawerFunctionButton(
+                  icon: Assets.drawerDrawerSecret,
+                  text: "关于和隐私",
+                  onTap: () {},
                 ),
                 SizedBox(height: 8.h),
               ],
@@ -292,6 +303,7 @@ class _DrawerPageState extends State<DrawerPage> {
             initSwitch: GlobalLogic.to.manualIsDark.value,
             enableSwitch: !GlobalLogic.to.withSystemTheme.value,
             callBack: (check) async {
+              Get.changeThemeMode(check ? ThemeMode.dark : ThemeMode.light);
               Get.changeTheme(check ? darkTheme : lightTheme);
               if (GlobalLogic.to.hasSkin.value &&
                   PlayerLogic.to.playingMusic.value.musicId == null) {
@@ -302,10 +314,13 @@ class _DrawerPageState extends State<DrawerPage> {
               GlobalLogic.to.manualIsDark.value = check;
               // 修改sp值
               await SpUtil.put(Const.spDark, check);
+              GlobalLogic.to.isThemeDark();
               // 恢复原来操作的界面
-              Future.delayed(const Duration(milliseconds: 500)).then((value) {
-                PageViewLogic.to.controller
-                    .jumpToPage(HomeController.to.state.currentIndex.value);
+              Future.delayed(const Duration(milliseconds: 300)).then((value) {
+                Get.forceAppUpdate().then((value) {
+                  PageViewLogic.to.controller
+                      .jumpToPage(HomeController.to.state.currentIndex.value);
+                });
               });
             }),
         SizedBox(height: 8.h)

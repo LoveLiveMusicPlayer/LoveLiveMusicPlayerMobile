@@ -173,8 +173,7 @@ Widget showImg(String? path, double? width, double? height,
                     height: (width?.h.toInt() ?? 1) * 2),
                 width: width?.h,
                 height: width?.h,
-              ))
-      );
+              )));
     }
   }
 }
@@ -332,6 +331,7 @@ Widget logoIcon(String path,
     {double width = 36,
     double height = 36,
     double radius = 18,
+    required Color color,
     EdgeInsetsGeometry? offset,
     GestureTapCallback? onTap}) {
   final margin = offset ?? const EdgeInsets.only(right: 0);
@@ -348,11 +348,7 @@ Widget logoIcon(String path,
               borderRadius: BorderRadius.circular(radius.h),
               boxShadow: [
                 BoxShadow(
-                    color: Get.isDarkMode
-                        ? const Color(0xFF05080C)
-                        : const Color(0xFFD3E0EC),
-                    blurRadius: 10,
-                    offset: Offset(5.h, 3.h)),
+                    color: color, blurRadius: 10, offset: Offset(5.h, 3.h)),
               ]),
           child: showImg(image, width, height,
               radius: radius.h, hasShadow: false, onTap: onTap)));

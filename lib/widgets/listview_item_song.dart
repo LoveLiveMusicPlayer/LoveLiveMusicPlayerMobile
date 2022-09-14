@@ -7,7 +7,6 @@ import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
-import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 
 ///歌曲
@@ -47,7 +46,7 @@ class _ListViewItemSongState extends State<ListViewItemSong>
     super.build(context);
     return Obx(() {
       return Container(
-        color: Get.theme.primaryColor,
+        color: Colors.transparent,
         child: Row(
           children: [
             ///勾选按钮
@@ -118,11 +117,7 @@ class _ListViewItemSongState extends State<ListViewItemSong>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(widget.music.musicName ?? "",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Get.isDarkMode
-                    ? TextStyleMs.white_15
-                    : TextStyleMs.black_15),
+                maxLines: 1, overflow: TextOverflow.ellipsis),
             SizedBox(
               height: 4.w,
             ),

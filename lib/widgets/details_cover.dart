@@ -23,7 +23,8 @@ class DetailsCover extends StatelessWidget {
           SizedBox(
             height: 20.h,
           ),
-          Padding(padding: EdgeInsets.only(left: 20.w, right: 20.w),
+          Padding(
+            padding: EdgeInsets.only(left: 20.w, right: 20.w),
             child: Text(
               album.albumName!,
               maxLines: 1,
