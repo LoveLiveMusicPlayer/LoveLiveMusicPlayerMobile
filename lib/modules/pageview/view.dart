@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/pages/home/page_view/KeepAliveWrapper.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_more_with_menu.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_more_with_music.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_album.dart';
@@ -35,12 +36,18 @@ class PageViewComponent extends StatelessWidget {
           HomeController.to.state.currentIndex.value = index;
         },
         children: [
-          _buildList(0, HomeController.to.scrollController1),
-          _buildList(1, HomeController.to.scrollController2),
-          _buildList(2, HomeController.to.scrollController3),
-          _buildList(3, HomeController.to.scrollController4),
-          _buildList(4, HomeController.to.scrollController5),
-          _buildList(5, HomeController.to.scrollController6)
+          KeepAliveWrapper(
+              child: _buildList(0, HomeController.to.scrollController1)),
+          KeepAliveWrapper(
+              child: _buildList(1, HomeController.to.scrollController2)),
+          KeepAliveWrapper(
+              child: _buildList(2, HomeController.to.scrollController3)),
+          KeepAliveWrapper(
+              child: _buildList(3, HomeController.to.scrollController4)),
+          KeepAliveWrapper(
+              child: _buildList(4, HomeController.to.scrollController5)),
+          KeepAliveWrapper(
+              child: _buildList(5, HomeController.to.scrollController6))
         ],
       );
     });

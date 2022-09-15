@@ -39,11 +39,15 @@ class ListViewItemSong extends StatefulWidget {
   State<ListViewItemSong> createState() => _ListViewItemSongState();
 }
 
-class _ListViewItemSongState extends State<ListViewItemSong>
-    with AutomaticKeepAliveClientMixin {
+class _ListViewItemSongState extends State<ListViewItemSong> {
+
+  @override
+  void initState() {
+    print("into here");
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Obx(() {
       return Container(
         color: Colors.transparent,
@@ -177,7 +181,4 @@ class _ListViewItemSongState extends State<ListViewItemSong>
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

@@ -17,11 +17,9 @@ class ListViewItemSinger extends StatefulWidget {
   State<ListViewItemSinger> createState() => _ListViewItemSingerState();
 }
 
-class _ListViewItemSingerState extends State<ListViewItemSinger>
-    with AutomaticKeepAliveClientMixin {
+class _ListViewItemSingerState extends State<ListViewItemSinger> {
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Row(
       children: [
         showImg(widget.artist.photo, 48, 48,
@@ -73,7 +71,4 @@ class _ListViewItemSingerState extends State<ListViewItemSinger>
       ],
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

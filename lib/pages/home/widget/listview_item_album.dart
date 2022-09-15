@@ -32,11 +32,9 @@ class ListViewItemAlbum extends StatefulWidget {
   State<ListViewItemAlbum> createState() => _ListViewItemAlbumState();
 }
 
-class _ListViewItemAlbumState extends State<ListViewItemAlbum>
-    with AutomaticKeepAliveClientMixin {
+class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     final borderWidth = (ScreenUtil().screenWidth - 72.w) / 3;
     return InkWell(
         onTap: clickItem,
@@ -90,7 +88,4 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum>
     widget.onItemTap(widget.album, widget.checked);
     setState(() {});
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

@@ -113,7 +113,11 @@ class _PlayerState extends State<Player> {
                 }
                 SmartDialog.compatible.show(
                     widget: DialogMoreWithMusic(
-                        music: PlayerLogic.to.playingMusic.value),
+                      music: PlayerLogic.to.playingMusic.value,
+                      onClosePanel: () {
+                        GlobalLogic.mobileWeSlideController.hide();
+                      },
+                    ),
                     alignmentTemp: Alignment.bottomCenter);
               }),
 

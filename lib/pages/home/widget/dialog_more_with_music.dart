@@ -15,10 +15,11 @@ import 'package:lovelivemusicplayer/routes.dart';
 class DialogMoreWithMusic extends StatefulWidget {
   final Music music;
   Function(Music)? onRemove;
+  Function()? onClosePanel;
   bool? isAlbum;
 
   DialogMoreWithMusic(
-      {Key? key, required this.music, this.onRemove, this.isAlbum})
+      {Key? key, required this.music, this.onRemove, this.isAlbum, this.onClosePanel})
       : super(key: key);
 
   @override
@@ -109,6 +110,9 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
     return _buildItem(Assets.dialogIcSeeAlbum, "查看专辑", widget.onRemove != null,
         () {
       SmartDialog.compatible.dismiss();
+      if (widget.onClosePanel != null) {
+        widget.onClosePanel!();
+      }
       if (album != null) {
         Get.toNamed(Routes.routeAlbumDetails, arguments: album, id: 1);
       }

@@ -37,11 +37,9 @@ class ListViewItemLove extends StatefulWidget {
   State<ListViewItemLove> createState() => _ListViewItemLoveState();
 }
 
-class _ListViewItemLoveState extends State<ListViewItemLove>
-    with AutomaticKeepAliveClientMixin {
+class _ListViewItemLoveState extends State<ListViewItemLove> {
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Obx(() {
       return Container(
         color: Get.theme.primaryColor,
@@ -186,7 +184,4 @@ class _ListViewItemLoveState extends State<ListViewItemLove>
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
