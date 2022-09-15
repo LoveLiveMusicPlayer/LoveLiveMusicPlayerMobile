@@ -84,7 +84,7 @@ class GlobalLogic extends SuperController
               ? const Color(0xFF1E2328)
               : const Color(0xFFF2F8FF);
       withSystemTheme.value = isWith;
-      isThemeDark();
+      Future.delayed(const Duration(milliseconds: 500)).then((value) => isThemeDark(init: true));
     });
 
     /// 监听系统主题色改变
@@ -311,7 +311,7 @@ class GlobalLogic extends SuperController
     return color!;
   }
 
-  isThemeDark() {
+  isThemeDark({bool init = false}) {
     final withSystemTheme = GlobalLogic.to.withSystemTheme.value;
     final manualIsDark = GlobalLogic.to.manualIsDark.value;
     if (withSystemTheme) {
@@ -319,6 +319,9 @@ class GlobalLogic extends SuperController
           MediaQuery.of(Get.context!).platformBrightness == Brightness.dark;
     } else {
       isDarkTheme.value = manualIsDark;
+    }
+    if (init) {
+      Get.forceAppUpdate();
     }
   }
 }

@@ -84,7 +84,7 @@ class _ListViewItemSongState extends State<ListViewItemSong>
     return InkWell(
       onTap: clickItem,
       child: showImg(SDUtils.getImgPath(fileName: coverPath), 48, 48,
-          hasShadow: false, radius: 8, onTap: clickItem),
+          hasShadow: false, radius: 12, onTap: clickItem),
     );
   }
 

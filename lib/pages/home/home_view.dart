@@ -8,6 +8,7 @@ import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/modules/drawer/drawer.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/nested_page/nested_controller.dart';
+import 'package:lovelivemusicplayer/pages/home/nested_page/nested_observer.dart';
 import 'package:lovelivemusicplayer/pages/player/miniplayer.dart';
 import 'package:lovelivemusicplayer/pages/player/player.dart';
 import 'package:lovelivemusicplayer/routes.dart';
@@ -60,15 +61,21 @@ class _HomeViewState extends State<HomeView>
               child: _weSlider(),
             )),
         onWillPop: () async {
-          if (lastPressTime == null ||
-              DateTime.now().difference(lastPressTime!) >
-                  const Duration(seconds: 1)) {
-            //间隔时间大于1秒 则重新赋值
-            lastPressTime = DateTime.now();
-            SmartDialog.compatible.showToast("再次点击回到桌面");
-            return false;
+          if (NestedController.to.currentIndex == Routes.routeHome) {
+            // 首页则提示回到桌面
+            if (lastPressTime == null ||
+                DateTime.now().difference(lastPressTime!) >
+                    const Duration(seconds: 1)) {
+              //间隔时间大于1秒 则重新赋值
+              lastPressTime = DateTime.now();
+              SmartDialog.compatible.showToast("再次点击回到桌面");
+              return false;
+            }
+            AndroidBackDesktop.backToDesktop();
+          } else {
+            // 返回首页
+            Get.back(id: 1);
           }
-          AndroidBackDesktop.backToDesktop();
           return false;
         });
   }
@@ -95,8 +102,9 @@ class _HomeViewState extends State<HomeView>
         key: Get.nestedKey(1),
         initialRoute: Routes.routeHome,
         onGenerateRoute: NestedController.to.onGenerateRoute,
+        observers: [MyNavigator()],
       ),
-      blurColor: color,
+      blurColor: Colors.transparent,
       overlayColor: color,
       panelHeader: MiniPlayer(onTap: () {
         if (!HomeController.to.state.isSelect.value) {

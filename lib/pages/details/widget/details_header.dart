@@ -27,7 +27,6 @@ class DetailsHeader extends StatelessWidget {
                     if (onBack == null) {
                       HomeController.to.state.isSelect.value = false;
                       SmartDialog.compatible.dismiss();
-                      GlobalLogic.mobileWeSlideFooterController.show();
                       NestedController.to.goBack();
                     } else {
                       onBack!();

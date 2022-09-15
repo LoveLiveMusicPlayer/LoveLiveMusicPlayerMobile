@@ -26,6 +26,7 @@ class NestedController extends GetxController {
   ];
 
   goBack() {
+    GlobalLogic.mobileWeSlideFooterController.show();
     currentIndex = Routes.routeHome;
     GlobalLogic.to.needHomeSafeArea.value = false;
     Get.back(id: 1);

@@ -46,7 +46,7 @@ class BottomBar2 extends StatelessWidget {
         ],
         elevation: 0,
         backgroundColor: GlobalLogic.to
-            .getThemeColor(const Color(0xFF4e4e4e), const Color(0xFFF2F8FF)),
+            .getThemeColor(const Color(0xFF4e4e4e), const Color(0xFFFAFAFA)),
         selectedFontSize: 13.sp,
         unselectedFontSize: 13.sp,
         selectedItemColor: const Color(0xFFD91F86),

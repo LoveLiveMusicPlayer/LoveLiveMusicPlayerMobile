@@ -38,31 +38,29 @@ class _AlbumDetailsPageState extends State<AlbumDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DetailController>(builder: (logic) {
-      return WillPopScope(
-          onWillPop: !logic.state.isSelect
-              ? null
-              : () async {
-                  if (Platform.isIOS) {
-                    SmartDialog.compatible.dismiss();
-                    Get.back();
-                  }
-                  return true;
-                },
-          child: Scaffold(
-              backgroundColor: Get.theme.primaryColor,
-              body: Column(children: [
-                DetailsHeader(title: album.albumName!),
-                SizedBox(height: 8.h),
-                DetailsBody(
-                  logic: logic,
-                  isAlbum: true,
-                  buildCover: DetailsCover(album: album),
-                  music: music,
-                  // onRemove: (music) =>
-                  //     Log4f.d(msg: "remove: ${music.musicName}"),
-                ),
-                SizedBox(height: 30.h)
-              ])));
+      return Scaffold(
+          backgroundColor: Get.theme.primaryColor,
+          body: Column(children: [
+            DetailsHeader(title: album.albumName!),
+            SizedBox(height: 8.h),
+            DetailsBody(
+              logic: logic,
+              isAlbum: true,
+              buildCover: DetailsCover(album: album),
+              music: music,
+              // onRemove: (music) =>
+              //     Log4f.d(msg: "remove: ${music.musicName}"),
+            ),
+            renderBottom()
+          ]));
     });
+  }
+
+  Widget renderBottom() {
+    if (Platform.isIOS) {
+      return Container(height: 24.h);
+    } else {
+      return Container();
+    }
   }
 }

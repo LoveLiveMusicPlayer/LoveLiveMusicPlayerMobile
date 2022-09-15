@@ -50,44 +50,34 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DetailController>(builder: (logic) {
-      return WillPopScope(
-          onWillPop: !logic.state.isSelect
-              ? null
-              : () async {
-                  if (Platform.isIOS) {
-                    SmartDialog.compatible.dismiss();
-                    Get.back();
+      return Scaffold(
+          backgroundColor: Get.theme.primaryColor,
+          body: Column(children: [
+            DetailsHeader(title: menu?.name ?? ""),
+            SizedBox(height: 8.h),
+            DetailsBody(
+                logic: logic,
+                buildCover: _buildCover(),
+                music: music,
+                onRemove: (music) async {
+                  if (menu == null || menu!.id == 0) {
+                    return;
                   }
-                  return true;
-                },
-          child: Scaffold(
-              backgroundColor: Get.theme.primaryColor,
-              body: Column(children: [
-                DetailsHeader(title: menu?.name ?? ""),
-                SizedBox(height: 8.h),
-                DetailsBody(
-                    logic: logic,
-                    buildCover: _buildCover(),
-                    music: music,
-                    onRemove: (music) async {
-                      if (menu == null || menu!.id == 0) {
-                        return;
-                      }
-                      final status = await DBLogic.to
-                          .removeItemFromMenu(menu!.id, [music.musicId!]);
-                      switch (status) {
-                        case 1:
-                          refreshData();
-                          break;
-                        case 2:
-                          Get.back();
-                          break;
-                        default:
-                          break;
-                      }
-                    }),
-                SizedBox(height: 30.h)
-              ])));
+                  final status = await DBLogic.to
+                      .removeItemFromMenu(menu!.id, [music.musicId!]);
+                  switch (status) {
+                    case 1:
+                      refreshData();
+                      break;
+                    case 2:
+                      Get.back();
+                      break;
+                    default:
+                      break;
+                  }
+                }),
+            renderBottom()
+          ]));
     });
   }
 
@@ -110,5 +100,13 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
         ],
       ),
     );
+  }
+
+  Widget renderBottom() {
+    if (Platform.isIOS) {
+      return Container(height: 24.h);
+    } else {
+      return Container();
+    }
   }
 }

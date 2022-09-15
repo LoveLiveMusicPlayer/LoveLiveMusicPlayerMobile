@@ -80,7 +80,7 @@ dependencies:
   log4f: ^0.0.3 # 日志
   device_info_plus: ^4.1.2 # 设备信息
   package_info_plus: ^1.4.3+1 # 安装包信息
-  flutter_lyric: ^2.0.4+5 # 歌词显示
+  flutter_lyric: ^2.0.4+6 # 歌词显示
   updater:
     git:
       url: https://github.com/zhushenwudi/flutter_updater
