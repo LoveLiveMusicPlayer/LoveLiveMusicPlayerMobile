@@ -63,7 +63,11 @@ dependencies:
       url: https://gitee.com/zhushenwudi/flutter-marquee-text
       ref: 015bdeb
   flutter_svg: ^1.1.3 # svg图片支持
-  just_audio: ^0.9.28 # 音频播放
+#  just_audio: ^0.9.28 # 音频播放
+  just_audio: # 音频播放
+    git:
+      url: https://github.com/zhushenwudi/just_audio
+      path: just_audio
   just_audio_background: ^0.0.1-beta.7 # 音频播放后台服务
   event_bus: ^2.0.0 # 事件总线通信
   floor: ^1.3.0 # 数据库服务
