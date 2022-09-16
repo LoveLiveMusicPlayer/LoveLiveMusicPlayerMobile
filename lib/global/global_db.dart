@@ -92,12 +92,12 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       Log4f.e(msg: e.toString(), writeFile: true);
     }
     try {
-      scrollToTop(HomeController.to.scrollController1);
-      scrollToTop(HomeController.to.scrollController2);
-      scrollToTop(HomeController.to.scrollController3);
-      scrollToTop(HomeController.to.scrollController4);
-      scrollToTop(HomeController.to.scrollController5);
-      scrollToTop(HomeController.to.scrollController6);
+      scrollToTop(HomeController.scrollController1);
+      scrollToTop(HomeController.scrollController2);
+      scrollToTop(HomeController.scrollController3);
+      scrollToTop(HomeController.scrollController4);
+      scrollToTop(HomeController.scrollController5);
+      scrollToTop(HomeController.scrollController6);
     } catch (e) {}
   }
 

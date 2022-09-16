@@ -42,11 +42,6 @@ class ListViewItemSong extends StatefulWidget {
 class _ListViewItemSongState extends State<ListViewItemSong> {
 
   @override
-  void initState() {
-    print("into here");
-    super.initState();
-  }
-  @override
   Widget build(BuildContext context) {
     return Obx(() {
       return Container(

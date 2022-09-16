@@ -18,8 +18,73 @@ import 'package:lovelivemusicplayer/widgets/refresher_widget.dart';
 
 import 'logic.dart';
 
-class PageViewComponent extends StatelessWidget {
+class PageViewComponent extends StatefulWidget {
   const PageViewComponent({Key? key}) : super(key: key);
+
+  @override
+  State<PageViewComponent> createState() => _PageViewComponentState();
+}
+
+class _PageViewComponentState extends State<PageViewComponent> with WidgetsBindingObserver {
+  var controller1Offset = 0.0;
+  var controller2Offset = 0.0;
+  var controller3Offset = 0.0;
+  var controller4Offset = 0.0;
+  var controller5Offset = 0.0;
+  var controller6Offset = 0.0;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+
+    HomeController.scrollController1.addListener(() {
+      controller1Offset = HomeController.scrollController1.offset;
+    });
+    HomeController.scrollController2.addListener(() {
+      controller2Offset = HomeController.scrollController2.offset;
+    });
+    HomeController.scrollController3.addListener(() {
+      controller3Offset = HomeController.scrollController3.offset;
+    });
+    HomeController.scrollController4.addListener(() {
+      controller4Offset = HomeController.scrollController4.offset;
+    });
+    HomeController.scrollController5.addListener(() {
+      controller5Offset = HomeController.scrollController5.offset;
+    });
+    HomeController.scrollController6.addListener(() {
+      controller6Offset = HomeController.scrollController6.offset;
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.resumed:
+        HomeController.scrollController1.jumpTo(controller1Offset);
+        HomeController.scrollController2.jumpTo(controller2Offset);
+        HomeController.scrollController3.jumpTo(controller3Offset);
+        HomeController.scrollController4.jumpTo(controller4Offset);
+        HomeController.scrollController5.jumpTo(controller5Offset);
+        HomeController.scrollController6.jumpTo(controller6Offset);
+        break;
+      case AppLifecycleState.inactive:
+        break;
+      case AppLifecycleState.detached:
+        break;
+      case AppLifecycleState.paused:
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,17 +102,17 @@ class PageViewComponent extends StatelessWidget {
         },
         children: [
           KeepAliveWrapper(
-              child: _buildList(0, HomeController.to.scrollController1)),
+              child: _buildList(0, HomeController.scrollController1)),
           KeepAliveWrapper(
-              child: _buildList(1, HomeController.to.scrollController2)),
+              child: _buildList(1, HomeController.scrollController2)),
           KeepAliveWrapper(
-              child: _buildList(2, HomeController.to.scrollController3)),
+              child: _buildList(2, HomeController.scrollController3)),
           KeepAliveWrapper(
-              child: _buildList(3, HomeController.to.scrollController4)),
+              child: _buildList(3, HomeController.scrollController4)),
           KeepAliveWrapper(
-              child: _buildList(4, HomeController.to.scrollController5)),
+              child: _buildList(4, HomeController.scrollController5)),
           KeepAliveWrapper(
-              child: _buildList(5, HomeController.to.scrollController6))
+              child: _buildList(5, HomeController.scrollController6))
         ],
       );
     });

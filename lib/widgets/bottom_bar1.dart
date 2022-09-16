@@ -53,13 +53,13 @@ class BottomBar extends StatelessWidget {
           if (HomeController.to.state.currentIndex.value == index) {
             switch (index) {
               case 0:
-                scrollTo(HomeController.to.scrollController1);
+                scrollTo(HomeController.scrollController1);
                 break;
               case 1:
-                scrollTo(HomeController.to.scrollController2);
+                scrollTo(HomeController.scrollController2);
                 break;
               case 2:
-                scrollTo(HomeController.to.scrollController3);
+                scrollTo(HomeController.scrollController3);
                 break;
             }
           }
