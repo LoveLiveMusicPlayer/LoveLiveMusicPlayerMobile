@@ -18,6 +18,9 @@ class NestedController extends GetxController {
   late Menu menu;
   String currentIndex = Routes.routeHome;
 
+  // 是否能够延时隐藏bottomBar
+  bool canHideFooterController = true;
+
   final pages = <String>[
     Routes.routeHome,
     Routes.routeAlbumDetails,

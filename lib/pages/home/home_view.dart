@@ -131,7 +131,12 @@ class _HomeViewState extends State<HomeView>
       GlobalLogic.mobileWeSlideFooterController.hide();
     } else if (NestedController.to.currentIndex == Routes.routeHome) {
       Future.delayed(const Duration(milliseconds: 300)).then((value) {
-        GlobalLogic.mobileWeSlideFooterController.show();
+        if (NestedController.to.canHideFooterController) {
+          GlobalLogic.mobileWeSlideFooterController.show();
+        } else {
+          // 单独适配主界面歌曲详情页点击查看专辑，消费一次后再重置
+          NestedController.to.canHideFooterController = true;
+        }
       });
     }
 
