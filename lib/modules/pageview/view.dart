@@ -25,7 +25,8 @@ class PageViewComponent extends StatefulWidget {
   State<PageViewComponent> createState() => _PageViewComponentState();
 }
 
-class _PageViewComponentState extends State<PageViewComponent> with WidgetsBindingObserver {
+class _PageViewComponentState extends State<PageViewComponent>
+    with WidgetsBindingObserver {
   var controller1Offset = 0.0;
   var controller2Offset = 0.0;
   var controller3Offset = 0.0;

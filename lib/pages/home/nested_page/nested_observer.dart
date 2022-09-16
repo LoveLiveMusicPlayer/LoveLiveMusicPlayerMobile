@@ -4,8 +4,7 @@ import 'package:lovelivemusicplayer/pages/home/nested_page/nested_controller.dar
 import 'package:lovelivemusicplayer/routes.dart';
 
 /// 嵌套导航栈的变化监听
-class MyNavigator extends NavigatorObserver{
-
+class MyNavigator extends NavigatorObserver {
   @override
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPop(route, previousRoute);

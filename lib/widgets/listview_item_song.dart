@@ -40,7 +40,6 @@ class ListViewItemSong extends StatefulWidget {
 }
 
 class _ListViewItemSongState extends State<ListViewItemSong> {
-
   @override
   Widget build(BuildContext context) {
     return Obx(() {

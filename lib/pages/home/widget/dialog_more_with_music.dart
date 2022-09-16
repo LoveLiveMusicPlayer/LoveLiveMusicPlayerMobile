@@ -19,7 +19,11 @@ class DialogMoreWithMusic extends StatefulWidget {
   bool? isAlbum;
 
   DialogMoreWithMusic(
-      {Key? key, required this.music, this.onRemove, this.isAlbum, this.onClosePanel})
+      {Key? key,
+      required this.music,
+      this.onRemove,
+      this.isAlbum,
+      this.onClosePanel})
       : super(key: key);
 
   @override

@@ -48,7 +48,9 @@ void main() async {
     options.tracesSampleRate = 1.0;
   }, appRunner: () {
     void reportErrorAndLog(FlutterErrorDetails details) {
-      if (details.exceptionAsString().contains("ScrollController not attached to any scroll views")) {
+      if (details
+          .exceptionAsString()
+          .contains("ScrollController not attached to any scroll views")) {
         return;
       }
       final errorMsg = {

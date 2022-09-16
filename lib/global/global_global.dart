@@ -84,7 +84,8 @@ class GlobalLogic extends SuperController
               ? const Color(0xFF1E2328)
               : const Color(0xFFF2F8FF);
       withSystemTheme.value = isWith;
-      Future.delayed(const Duration(milliseconds: 500)).then((value) => isThemeDark(init: true));
+      Future.delayed(const Duration(milliseconds: 500))
+          .then((value) => isThemeDark(init: true));
     });
 
     /// 监听系统主题色改变
