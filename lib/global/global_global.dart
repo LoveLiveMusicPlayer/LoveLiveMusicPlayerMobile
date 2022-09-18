@@ -292,7 +292,11 @@ class GlobalLogic extends SuperController
           confirmText: "升级",
           cancelText: "不升级",
           controller: controller);
-      updater!.check();
+      updater!.check().then((hasNewVersion) {
+        if (manual && !hasNewVersion) {
+          SmartDialog.compatible.showToast("当前已是最新版本");
+        }
+      });
     } else if (manual) {
       SmartDialog.compatible.showToast("IOS请前往商店查看");
     }

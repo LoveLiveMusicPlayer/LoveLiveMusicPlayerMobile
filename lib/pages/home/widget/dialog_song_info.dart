@@ -17,6 +17,7 @@ class DialogSongInfo extends StatefulWidget {
 class _DialogSongInfoState extends State<DialogSongInfo> {
   String? date;
   String? category;
+  double textSpeed = 15;
 
   @override
   void initState() {
@@ -96,15 +97,20 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
                 width: 10.w,
               ),
               Expanded(
-                  child: MarqueeText(
-                text: TextSpan(text: message ?? "未知"),
-                style: TextStyle(
-                    color:
-                        Get.isDarkMode ? Colors.white : const Color(0xff666666),
-                    fontSize: 15.sp),
-                speed: 15,
-                // alwaysScroll: true
-              ))
+                  child: GestureDetector(
+                    onTapDown: (detail) {
+                      textSpeed = textSpeed == 1 ? 15 : 1;
+                      setState(() {});
+                    },
+                    child: MarqueeText(
+                      text: TextSpan(text: message ?? "未知"),
+                      style: TextStyle(
+                          color:
+                          Get.isDarkMode ? Colors.white : const Color(0xff666666),
+                          fontSize: 15.sp),
+                      speed: textSpeed,
+                    ),
+                  ))
             ],
           ),
           SizedBox(

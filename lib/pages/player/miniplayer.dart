@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -28,7 +27,7 @@ class MiniPlayer extends StatefulWidget {
 class _MiniPlayerState extends State<MiniPlayer> {
   final scrollList = <Widget>[];
   ImageProvider? provider;
-  int moveDirection = -1; // -1: 未触发点击; 0: 已触发点击; 1: 左; 1: 右
+  double startPosition = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -141,35 +140,30 @@ class _MiniPlayerState extends State<MiniPlayer> {
     );
   }
 
-  void swipe(PointerMoveEvent moveEvent) {
-    if (moveDirection != -1) {
-      double angle = ((moveEvent.delta.direction * 180) / pi);
-      if (angle >= -45 && angle <= 45) {
-        moveDirection = 2;
-      } else if (angle >= 45 && angle <= 135) {
-      } else if (angle <= -45 && angle >= -135) {
-      } else {
-        moveDirection = 1;
-      }
-    }
-  }
-
   Widget marqueeMusicName() {
     return Expanded(
         child: Listener(
       onPointerDown: (event) {
-        moveDirection = 0;
-      },
-      onPointerMove: (event) {
-        swipe(event);
+        startPosition = event.position.dx;
       },
       onPointerUp: (event) {
-        if (moveDirection == 1) {
-          PlayerLogic.to.playNext();
-        } else if (moveDirection == 2) {
-          PlayerLogic.to.playPrev();
+        final playlistSize = PlayerLogic.to.mPlayList.length;
+        if (playlistSize <= 1) {
+          return;
         }
-        moveDirection = -1;
+        final loopMode = PlayerLogic.to.mPlayer.loopMode;
+        if (loopMode == LoopMode.one) {
+          return;
+        }
+        final endPosition = event.position.dx;
+        if ((endPosition - startPosition).abs() > 50) {
+          // 距离大于50认为滑动切歌有效
+          if (endPosition > startPosition) {
+            PlayerLogic.to.playPrev();
+          } else {
+            PlayerLogic.to.playNext();
+          }
+        }
       },
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
