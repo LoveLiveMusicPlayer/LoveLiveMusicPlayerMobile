@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
-import 'package:lovelivemusicplayer/pages/home/page_view/KeepAliveWrapper.dart';
+import 'package:lovelivemusicplayer/pages/home/page_view/keep_alive_wrapper.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_more_with_menu.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_more_with_music.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_album.dart';

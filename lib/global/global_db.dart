@@ -62,6 +62,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     await Future.delayed(const Duration(seconds: 1));
     eventBus.fire(StartEvent((DateTime.now().millisecondsSinceEpoch)));
     super.onInit();
+    PlayerLogic.to.initLoopMode();
   }
 
   /// 初始化数据库数据

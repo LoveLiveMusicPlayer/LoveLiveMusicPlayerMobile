@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
-import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/pages/details/album_details/view.dart';
 import 'package:lovelivemusicplayer/pages/details/menu_details/view.dart';
 import 'package:lovelivemusicplayer/pages/details/singer_details/view.dart';
@@ -15,7 +14,7 @@ class NestedController extends GetxController {
 
   late Album album;
   late Artist artist;
-  late Menu menu;
+  late int menuId;
   String currentIndex = Routes.routeHome;
 
   // 是否能够延时隐藏bottomBar
@@ -60,7 +59,7 @@ class NestedController extends GetxController {
     } else if (settings.name == Routes.routeMenuDetails) {
       currentIndex = Routes.routeMenuDetails;
       GlobalLogic.mobileWeSlideFooterController.hide();
-      menu = settings.arguments as Menu;
+      menuId = settings.arguments as int;
       return GetPageRoute(
         settings: settings,
         page: () => const MenuDetailsPage(),

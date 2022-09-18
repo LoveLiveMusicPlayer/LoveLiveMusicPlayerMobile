@@ -22,7 +22,6 @@ class MenuDetailsPage extends StatefulWidget {
 }
 
 class _MenuDetailsPageState extends State<MenuDetailsPage> {
-  final int menuId = NestedController.to.menu.id;
   final music = <Music>[];
   Menu? menu;
   final logic = Get.put(DetailController());
@@ -35,7 +34,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
 
   refreshData() {
     Future.delayed(Duration.zero, () async {
-      menu = await DBLogic.to.menuDao.findMenuById(menuId);
+      menu = await DBLogic.to.menuDao.findMenuById(NestedController.to.menuId);
       final musicList = menu?.music;
       music.clear();
       if (musicList != null && musicList.isNotEmpty) {

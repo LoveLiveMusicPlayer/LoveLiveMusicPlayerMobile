@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class MiniPlayer extends StatefulWidget {
 class _MiniPlayerState extends State<MiniPlayer> {
   final scrollList = <Widget>[];
   ImageProvider? provider;
+  int moveDirection = -1; // -1: 未触发点击; 0: 已触发点击; 1: 左; 1: 右
 
   @override
   Widget build(BuildContext context) {
@@ -139,9 +141,49 @@ class _MiniPlayerState extends State<MiniPlayer> {
     );
   }
 
+  void swipe(PointerMoveEvent moveEvent) {
+    if (moveDirection != -1) {
+      double angle = ((moveEvent.delta.direction * 180) / pi);
+      if (angle >= -45 && angle <= 45) {
+        moveDirection = 2;
+      } else if (angle >= 45 && angle <= 135) {
+      } else if (angle <= -45 && angle >= -135) {
+      } else {
+        moveDirection = 1;
+      }
+    }
+  }
+
   Widget marqueeMusicName() {
-    const textStyle = TextStyle(fontWeight: FontWeight.bold);
     return Expanded(
+        child: Listener(
+      onPointerDown: (event) {
+        moveDirection = 0;
+      },
+      onPointerMove: (event) {
+        swipe(event);
+      },
+      onPointerUp: (event) {
+        if (moveDirection == 1) {
+          PlayerLogic.to.playNext();
+        } else if (moveDirection == 2) {
+          PlayerLogic.to.playPrev();
+        }
+        moveDirection = -1;
+      },
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
+        child: renderPlayingWidget(PlayerLogic.to.playingMusic.value.musicName),
+      ),
+    ));
+  }
+
+  Widget renderPlayingWidget(String? musicName) {
+    const textStyle = TextStyle(fontWeight: FontWeight.bold);
+    return SizedBox(
+      width: 180.w,
       child: InkWell(
         onDoubleTap: () {
           if (PlayerLogic.to.playingMusic.value.musicId != null) {
@@ -153,9 +195,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             MarqueeText(
-                text: TextSpan(
-                    text:
-                        PlayerLogic.to.playingMusic.value.musicName ?? "暂无歌曲"),
+                text: TextSpan(text: musicName ?? "暂无歌曲"),
                 style: Get.isDarkMode
                     ? TextStyleMs.white_14.merge(textStyle)
                     : TextStyleMs.black_14.merge(textStyle),

@@ -3,7 +3,7 @@ import 'package:lovelivemusicplayer/models/Music.dart';
 
 @dao
 abstract class MusicDao {
-  @Query('SELECT * FROM Music')
+  @Query('SELECT * FROM Music ORDER BY musicId')
   Future<List<Music>> findAllMusics();
 
   @Query('SELECT * FROM Music WHERE `group` = :group')

@@ -48,6 +48,8 @@ class PlayerLogic extends SuperController
   // 播放位置
   var playingPosition = const Duration(milliseconds: 0).obs;
 
+  var miniPlayerList = <Music>[].obs;
+
   // 当前播放歌曲
   var playingMusic = Music().obs;
 
@@ -59,7 +61,6 @@ class PlayerLogic extends SuperController
   @override
   void onInit() {
     super.onInit();
-    SpUtil.getInt(Const.spLoopMode, 0).then((index) => changeLoopMode(index));
 
     /// 播放状态监听
     mPlayer.playerStateStream.listen((state) {
@@ -86,8 +87,13 @@ class PlayerLogic extends SuperController
           });
         });
         getLrc(false);
+        checkPrevAndNextMusic();
       }
     });
+  }
+
+  initLoopMode() {
+    SpUtil.getInt(Const.spLoopMode, 0).then((index) => changeLoopMode(index));
   }
 
   /// 持久化播放列表
@@ -157,6 +163,19 @@ class PlayerLogic extends SuperController
     }
   }
 
+  checkPrevAndNextMusic() async {
+    final musicList = <Music>[];
+    final prev = await DBLogic.to.musicDao
+        .findMusicByUId(mPlayList[mPlayer.previousIndex ?? 0].musicId);
+    final current = playingMusic.value;
+    final next = await DBLogic.to.musicDao
+        .findMusicByUId(mPlayList[mPlayer.nextIndex ?? 0].musicId);
+    musicList.add(prev!);
+    musicList.add(current);
+    musicList.add(next!);
+    miniPlayerList.value = musicList;
+  }
+
   /// 播放指定列表的歌曲
   playMusic(List<Music> musicList, {int index = 0, bool needPlay = true}) {
     Log4f.d(msg: "播放曲目: ${musicList[index].musicName}");
@@ -199,6 +218,7 @@ class PlayerLogic extends SuperController
             GlobalLogic.to.isHandlePlay = false;
           });
           getLrc(false);
+          checkPrevAndNextMusic();
         });
       });
     } catch (e) {
@@ -468,8 +488,12 @@ class PlayerLogic extends SuperController
       await mPlayer.shuffle();
     }
     // 特殊处理随机播放：当处于LoopMode.off模式时，更改为循环列表且随机洗牌
-    mPlayer.setLoopMode(
-        loopModes[index] == LoopMode.off ? LoopMode.all : loopModes[index]);
+    mPlayer
+        .setLoopMode(
+            loopModes[index] == LoopMode.off ? LoopMode.all : loopModes[index])
+        .then((value) {
+      checkPrevAndNextMusic();
+    });
     await SpUtil.put(Const.spLoopMode, index);
   }
 
