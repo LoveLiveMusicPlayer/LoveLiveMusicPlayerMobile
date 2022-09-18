@@ -156,7 +156,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
           return;
         }
         final endPosition = event.position.dx;
-        if ((endPosition - startPosition).abs() > 50) {
+        if ((endPosition - startPosition).abs() > 130.w) {
           // 距离大于50认为滑动切歌有效
           if (endPosition > startPosition) {
             PlayerLogic.to.playPrev();
