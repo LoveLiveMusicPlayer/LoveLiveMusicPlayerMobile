@@ -87,7 +87,6 @@ class PlayerLogic extends SuperController
           });
         });
         getLrc(false);
-        checkPrevAndNextMusic();
       }
     });
   }
@@ -163,19 +162,6 @@ class PlayerLogic extends SuperController
     }
   }
 
-  checkPrevAndNextMusic() async {
-    final musicList = <Music>[];
-    final prev = await DBLogic.to.musicDao
-        .findMusicByUId(mPlayList[mPlayer.previousIndex ?? 0].musicId);
-    final current = playingMusic.value;
-    final next = await DBLogic.to.musicDao
-        .findMusicByUId(mPlayList[mPlayer.nextIndex ?? 0].musicId);
-    musicList.add(prev!);
-    musicList.add(current);
-    musicList.add(next!);
-    miniPlayerList.value = musicList;
-  }
-
   /// 播放指定列表的歌曲
   playMusic(List<Music> musicList, {int index = 0, bool needPlay = true}) {
     Log4f.d(msg: "播放曲目: ${musicList[index].musicName}");
@@ -218,7 +204,6 @@ class PlayerLogic extends SuperController
             GlobalLogic.to.isHandlePlay = false;
           });
           getLrc(false);
-          checkPrevAndNextMusic();
         });
       });
     } catch (e) {
@@ -492,7 +477,6 @@ class PlayerLogic extends SuperController
         .setLoopMode(
             loopModes[index] == LoopMode.off ? LoopMode.all : loopModes[index])
         .then((value) {
-      checkPrevAndNextMusic();
     });
     await SpUtil.put(Const.spLoopMode, index);
   }
