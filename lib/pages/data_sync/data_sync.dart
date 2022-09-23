@@ -210,6 +210,11 @@ class _DataSyncState extends State<DataSync> {
           await replacePcMenuList(data);
           release();
           break;
+        case "back":
+          isConnected = false;
+          setState(() {});
+          channel?.sink.close();
+          break;
       }
     }, onError: (e) {
       Log4f.w(msg: "连接失败");
@@ -217,6 +222,8 @@ class _DataSyncState extends State<DataSync> {
     }, cancelOnError: true);
     isConnected = true;
     setState(() {});
+    final cmd = FtpCmd(cmd: "connected", body: '');
+    channel?.sink.add(ftpCmdToJson(cmd));
   }
 
   replaceLoveList(TransData data) async {

@@ -45,7 +45,7 @@ class NestedController extends GetxController {
       return GetPageRoute(
         settings: settings,
         page: () => const AlbumDetailsPage(),
-        transition: Transition.topLevel,
+        transition: Transition.rightToLeftWithFade,
       );
     } else if (settings.name == Routes.routeSingerDetails) {
       currentIndex = Routes.routeSingerDetails;
@@ -63,7 +63,7 @@ class NestedController extends GetxController {
       return GetPageRoute(
         settings: settings,
         page: () => const MenuDetailsPage(),
-        transition: Transition.fadeIn,
+        transition: Transition.rightToLeftWithFade,
       );
     }
 

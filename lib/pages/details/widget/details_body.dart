@@ -10,6 +10,7 @@ import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_more_with_music.dart';
 import 'package:lovelivemusicplayer/widgets/details_list_top.dart';
 import 'package:lovelivemusicplayer/widgets/listview_item_song.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 
 class DetailsBody extends StatefulWidget {
   final DetailController logic;
@@ -34,11 +35,17 @@ class DetailsBody extends StatefulWidget {
 class _DetailsBodyState extends State<DetailsBody> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: ListView(
-      padding: const EdgeInsets.all(0),
-      children: getListItems(widget.logic),
-    ));
+    return WillPopScope(
+        onWillPop: widget.logic.state.isSelect
+            ? () async {
+                return false;
+              }
+            : null,
+        child: Expanded(
+            child: ListView(
+          padding: const EdgeInsets.all(0),
+          children: getListItems(widget.logic),
+        )));
   }
 
   List<Widget> getListItems(logic) {
@@ -47,28 +54,38 @@ class _DetailsBodyState extends State<DetailsBody> {
     list.add(SizedBox(
       height: 10.h,
     ));
-    list.add(DetailsListTop(
-        selectAll: logic.state.selectAll,
-        isSelect: logic.state.isSelect,
-        itemsLength: widget.music.length,
-        checkedItemLength: logic.getCheckedSong(),
-        onPlayTap: () {
-          PlayerLogic.to.playMusic(widget.music);
-        },
-        onScreenTap: () {
-          if (logic.state.isSelect) {
+    list.add(StickyHeader(
+      header: DetailsListTop(
+          selectAll: logic.state.selectAll,
+          isSelect: logic.state.isSelect,
+          itemsLength: widget.music.length,
+          checkedItemLength: logic.getCheckedSong(),
+          onPlayTap: () {
+            PlayerLogic.to.playMusic(widget.music);
+          },
+          onScreenTap: () {
+            if (logic.state.isSelect) {
+              SmartDialog.compatible.dismiss();
+            } else {
+              logic.openSelect();
+              showSelectDialog();
+            }
+          },
+          onSelectAllTap: (checked) {
+            logic.selectAll(checked);
+          },
+          onCancelTap: () {
             SmartDialog.compatible.dismiss();
-          } else {
-            logic.openSelect();
-            showSelectDialog();
-          }
-        },
-        onSelectAllTap: (checked) {
-          logic.selectAll(checked);
-        },
-        onCancelTap: () {
-          SmartDialog.compatible.dismiss();
-        }));
+          }),
+      content: Column(
+        children: renderMusicList(logic),
+      ),
+    ));
+    return list;
+  }
+
+  List<Widget> renderMusicList(logic) {
+    List<Widget> list = [];
     list.add(SizedBox(
       height: 10.h,
     ));
