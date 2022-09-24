@@ -476,8 +476,7 @@ class PlayerLogic extends SuperController
     mPlayer
         .setLoopMode(
             loopModes[index] == LoopMode.off ? LoopMode.all : loopModes[index])
-        .then((value) {
-    });
+        .then((value) {});
     await SpUtil.put(Const.spLoopMode, index);
   }
 

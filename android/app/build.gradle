@@ -8,7 +8,7 @@ if (localPropertiesFile.exists()) {
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    throw GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
 def flutterVersionName = localProperties.getProperty("flutter.versionName")
@@ -38,7 +38,7 @@ if (isReleaseBuildType()) {
     if (keystorePropertiesFile.exists()) {
         keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
     } else {
-        throw new GradleException("release模式需要在 app目录下创建 key.properties")
+        throw GradleException("release模式需要在 app目录下创建 key.properties")
     }
 }
 
@@ -70,27 +70,42 @@ android {
         versionName flutterVersionName
     }
 
+    splits {
+        abi {
+            reset()
+            enable releaseBuildType
+            universalApk false
+            include "armeabi-v7a", "arm64-v8a"
+        }
+    }
+
     signingConfigs {
-        // debug 模式或使用模拟器请注释这里
-//        release {
-//            keyAlias keystoreProperties["keyAlias"]
-//            keyPassword keystoreProperties["storePassword"]
-//            storeFile file(keystoreProperties["storeFile"])
-//            storePassword keystoreProperties["keyPassword"]
-//        }
+        if (releaseBuildType) {
+            release {
+                keyAlias keystoreProperties["keyAlias"]
+                keyPassword keystoreProperties["storePassword"]
+                storeFile file(keystoreProperties["storeFile"])
+                storePassword keystoreProperties["keyPassword"]
+            }
+        }
     }
 
     buildTypes {
-        // debug 模式或使用模拟器请注释这里
-//        release {
-//            minifyEnabled true
-//            zipAlignEnabled true
-//            signingConfig signingConfigs.release
-//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-//            ndk {
-//                abiFilters "arm64-v8a"
-//            }
-//        }
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled false
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        if (releaseBuildType) {
+            release {
+                minifyEnabled true
+                zipAlignEnabled true
+                signingConfig signingConfigs.release
+                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            }
+        }
     }
 
     lintOptions {
