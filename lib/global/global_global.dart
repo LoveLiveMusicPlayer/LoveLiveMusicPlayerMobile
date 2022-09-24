@@ -34,7 +34,7 @@ class GlobalLogic extends SuperController
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
   static final mobileWeSlideController = WeSlideController();
-  static final mobileWeSlideFooterController = WeSlideController(true);
+  static final mobileWeSlideFooterController = WeSlideController(initial: true);
 
   /// 主页是否需要预留底部安全区域
   var needHomeSafeArea = false.obs;
