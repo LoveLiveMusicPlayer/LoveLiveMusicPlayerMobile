@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
-import 'package:marquee_text/marquee_text.dart';
 
 class DialogSongInfo extends StatefulWidget {
   final Music music;
@@ -17,7 +16,6 @@ class DialogSongInfo extends StatefulWidget {
 class _DialogSongInfoState extends State<DialogSongInfo> {
   String? date;
   String? category;
-  double textSpeed = 15;
 
   @override
   void initState() {
@@ -97,20 +95,14 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
                 width: 10.w,
               ),
               Expanded(
-                  child: GestureDetector(
-                onTapDown: (detail) {
-                  textSpeed = textSpeed == 1 ? 15 : 1;
-                  setState(() {});
-                },
-                child: MarqueeText(
-                  text: TextSpan(text: message ?? "未知"),
-                  style: TextStyle(
-                      color: Get.isDarkMode
-                          ? Colors.white
-                          : const Color(0xff666666),
-                      fontSize: 15.sp),
-                  speed: textSpeed,
-                ),
+                  child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Text(message ?? "未知",
+                    style: TextStyle(
+                        color: Get.isDarkMode
+                            ? Colors.white
+                            : const Color(0xff666666),
+                        fontSize: 15.sp)),
               ))
             ],
           ),
