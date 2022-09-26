@@ -14,7 +14,7 @@ class MyNavigator extends NavigatorObserver {
     }
     Log4f.v(msg: "didPop: from ${route.settings.name} to $previousName");
     if (previousName == Routes.routeHome) {
-      NestedController.to.goBack();
+      NestedController.to.reduceNav();
     }
   }
 

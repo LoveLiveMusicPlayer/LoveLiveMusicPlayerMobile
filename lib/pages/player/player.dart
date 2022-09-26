@@ -117,7 +117,6 @@ class _PlayerState extends State<Player> {
                       music: PlayerLogic.to.playingMusic.value,
                       onClosePanel: () {
                         GlobalLogic.mobileWeSlideController.hide();
-                        NestedController.to.canHideFooterController = false;
                         GlobalLogic.to.needHomeSafeArea.value = true;
                         GlobalLogic.mobileWeSlideFooterController.hide();
                       },

@@ -16,9 +16,7 @@ class NestedController extends GetxController {
   late Artist artist;
   late int menuId;
   String currentIndex = Routes.routeHome;
-
-  // 是否能够延时隐藏bottomBar
-  bool canHideFooterController = true;
+  final routeList = <String>[];
 
   final pages = <String>[
     Routes.routeHome,
@@ -27,20 +25,35 @@ class NestedController extends GetxController {
     Routes.routeMenuDetails
   ];
 
+  addNav(String route) {
+    routeList.add(route);
+    currentIndex = route;
+    if (route != Routes.routeHome) {
+      GlobalLogic.to.needHomeSafeArea.value = true;
+      GlobalLogic.mobileWeSlideFooterController.hide();
+    }
+  }
+
+  reduceNav() {
+    if (currentIndex == Routes.routeHome) {
+      GlobalLogic.mobileWeSlideFooterController.show();
+    }
+    GlobalLogic.to.needHomeSafeArea.value = routeList.last != Routes.routeHome;
+  }
+
   goBack() {
-    GlobalLogic.mobileWeSlideFooterController.show();
-    currentIndex = Routes.routeHome;
-    GlobalLogic.to.needHomeSafeArea.value = false;
+    routeList.removeLast();
+    currentIndex = routeList.last;
+    reduceNav();
     Get.back(id: 1);
   }
 
   Route? onGenerateRoute(RouteSettings settings) {
     if (settings.name == Routes.routeHome) {
-      currentIndex = Routes.routeHome;
+      addNav(Routes.routeHome);
       return GetPageRoute(settings: settings, page: () => const HomePageView());
     } else if (settings.name == Routes.routeAlbumDetails) {
-      currentIndex = Routes.routeAlbumDetails;
-      GlobalLogic.mobileWeSlideFooterController.hide();
+      addNav(Routes.routeAlbumDetails);
       album = settings.arguments as Album;
       return GetPageRoute(
         settings: settings,
@@ -48,8 +61,7 @@ class NestedController extends GetxController {
         transition: Transition.rightToLeftWithFade,
       );
     } else if (settings.name == Routes.routeSingerDetails) {
-      currentIndex = Routes.routeSingerDetails;
-      GlobalLogic.mobileWeSlideFooterController.hide();
+      addNav(Routes.routeSingerDetails);
       artist = settings.arguments as Artist;
       return GetPageRoute(
         settings: settings,
@@ -57,8 +69,7 @@ class NestedController extends GetxController {
         transition: Transition.rightToLeftWithFade,
       );
     } else if (settings.name == Routes.routeMenuDetails) {
-      currentIndex = Routes.routeMenuDetails;
-      GlobalLogic.mobileWeSlideFooterController.hide();
+      addNav(Routes.routeMenuDetails);
       menuId = settings.arguments as int;
       return GetPageRoute(
         settings: settings,
