@@ -13,9 +13,14 @@ class MyNavigator extends NavigatorObserver {
       previousName = previousRoute.settings.name;
     }
     Log4f.v(msg: "didPop: from ${route.settings.name} to $previousName");
+    if (NestedController.to.fromGestureBack) {
+      NestedController.to.goBack(fromBtnBack: false);
+      return;
+    }
     if (previousName == Routes.routeHome) {
       NestedController.to.reduceNav();
     }
+    NestedController.to.fromGestureBack = true;
   }
 
   @override

@@ -17,6 +17,7 @@ class NestedController extends GetxController {
   late int menuId;
   String currentIndex = Routes.routeHome;
   final routeList = <String>[];
+  bool fromGestureBack = true;
 
   final pages = <String>[
     Routes.routeHome,
@@ -41,11 +42,13 @@ class NestedController extends GetxController {
     GlobalLogic.to.needHomeSafeArea.value = routeList.last != Routes.routeHome;
   }
 
-  goBack() {
+  goBack({bool fromBtnBack = false}) {
     routeList.removeLast();
     currentIndex = routeList.last;
     reduceNav();
-    Get.back(id: 1);
+    if (fromBtnBack) {
+      Get.back(id: 1);
+    }
   }
 
   Route? onGenerateRoute(RouteSettings settings) {

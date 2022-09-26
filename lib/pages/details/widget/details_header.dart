@@ -26,7 +26,8 @@ class DetailsHeader extends StatelessWidget {
                     if (onBack == null) {
                       HomeController.to.state.isSelect.value = false;
                       SmartDialog.compatible.dismiss();
-                      NestedController.to.goBack();
+                      NestedController.to.fromGestureBack = false;
+                      NestedController.to.goBack(fromBtnBack: true);
                     } else {
                       onBack!();
                     }
