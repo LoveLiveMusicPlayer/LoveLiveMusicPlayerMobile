@@ -77,7 +77,10 @@ class _MusicTransformState extends State<MusicTransform> {
     final musicUrl =
         "http://$ipAddress:$port/${music.baseUrl}${music.musicPath}";
     final picUrl = "http://$ipAddress:$port/${music.baseUrl}${music.coverPath}";
-    final musicDest = SDUtils.path + music.baseUrl + music.musicPath;
+    String musicDest = SDUtils.path + music.baseUrl + music.musicPath;
+    if (Platform.isIOS) {
+      musicDest = musicDest.replaceAll(".flac", ".wav");
+    }
     final picDest = SDUtils.path + music.baseUrl + music.coverPath;
     final tempList = musicDest.split(Platform.pathSeparator);
     var destDir = "";
