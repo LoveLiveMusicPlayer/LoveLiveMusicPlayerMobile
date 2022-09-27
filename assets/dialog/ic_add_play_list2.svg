@@ -1,10 +1,10 @@
 <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
     <g fill="none" fill-rule="evenodd">
         <path d="m0 0h24v24h-24z" />
-        <g stroke="#666" stroke-linejoin="round" stroke-width="1.4">
+        <g stroke="#666" stroke-linejoin="round" stroke-width="2">
             <path
                 d="m12 22.5c-5.7989925 0-10.5-4.7010075-10.5-10.5s4.7010075-10.5 10.5-10.5 10.5 4.7010075 10.5 10.5"
-                stroke-linecap="round" />
+                stroke-linecap="round"/>
             <path
                 d="m9.9 12v-3.637305l3.15 1.8186525 3.15 1.8186525-3.15 1.8186525-3.15 1.8186525z" />
             <path d="m18.85167 16.2v5.25" stroke-linecap="round" />

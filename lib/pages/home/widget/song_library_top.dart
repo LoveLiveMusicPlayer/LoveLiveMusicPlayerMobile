@@ -126,9 +126,9 @@ class SongLibraryTop extends GetView<GlobalLogic> {
       return Container();
     }
     return Padding(
-      padding: EdgeInsets.only(right: 16.h, top: 5.h, bottom: 5.h, left: 30.h),
+      padding: EdgeInsets.only(right: 22.w, top: 3.h, bottom: 3.h),
       child: touchIconByAsset(
-          path: Assets.mainIcScreen, onTap: onScreenTap, width: 15, height: 15),
+          path: Assets.mainIcScreen, onTap: onScreenTap, width: 20, height: 20, color: const Color(0xFFCCCCCC)),
     );
   }
 

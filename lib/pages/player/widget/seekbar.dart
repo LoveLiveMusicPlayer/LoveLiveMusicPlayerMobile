@@ -50,7 +50,7 @@ class _SeekBarState extends State<SeekBar> {
                 ? const Color(0x4D05080C)
                 : const Color(0x99CCDDF1),
             activeColor: GlobalLogic.to.hasSkin.value || Get.isDarkMode
-                ? const Color(0x9905080C)
+                ? GlobalLogic.to.iconColor.value
                 : const Color(0x99CCDDF1),
             thumbColor: GlobalLogic.to.hasSkin.value
                 ? GlobalLogic.to.iconColor.value.withAlpha(255)

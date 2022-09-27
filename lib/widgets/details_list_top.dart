@@ -108,7 +108,7 @@ class DetailsListTop extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(right: 16.h, top: 5.h, bottom: 5.h, left: 30.h),
       child: touchIconByAsset(
-          path: Assets.mainIcScreen, onTap: onScreenTap, width: 18, height: 18),
+          path: Assets.mainIcScreen, onTap: onScreenTap, width: 20, height: 20),
     );
   }
 
