@@ -21,7 +21,7 @@ import '../models/Music.dart';
 class GlobalLogic extends SuperController
     with GetSingleTickerProviderStateMixin {
   /// all、μ's、Aqours、Nijigasaki、Liella!、Combine
-  final currentGroup = "all".obs;
+  final currentGroup = Const.groupAll.obs;
   final databaseInitOver = false.obs;
 
   final musicList = <Music>[].obs;
@@ -208,15 +208,15 @@ class GlobalLogic extends SuperController
 
   String getCurrentGroupIcon(String currentGroup) {
     switch (currentGroup) {
-      case "μ's":
+      case Const.groupUs:
         return Assets.logoLogoUs;
-      case "Aqours":
+      case Const.groupAqours:
         return Assets.logoLogoAqours;
-      case "Nijigasaki":
+      case Const.groupSaki:
         return Assets.logoLogoNiji;
-      case "Liella!":
+      case Const.groupLiella:
         return Assets.logoLogoLiella;
-      case "Combine":
+      case Const.groupCombine:
         return Assets.logoLogoCombine;
       default:
         return Assets.logoLogo;

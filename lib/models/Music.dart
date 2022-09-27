@@ -21,6 +21,7 @@ class Music {
       this.category,
       this.group,
       this.baseUrl,
+      this.date,
       this.timestamp = 0,
       this.isLove = false,
       this.checked = false});
@@ -40,6 +41,7 @@ class Music {
   String? group; // 团组
   bool isLove; // 是否我喜欢
   int timestamp; // 最后一次播放的时间戳
+  String? date; // 出版日期
 
   @ignore
   bool checked; // 是否已选中
@@ -59,6 +61,7 @@ class Music {
         group: json["group"],
         isLove: json["isLove"],
         timestamp: json["timestamp"],
+        date: json["date"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -76,22 +79,25 @@ class Music {
         "group": group,
         "isLove": isLove,
         "timestamp": timestamp,
+        "date": date,
       };
 
   factory Music.deepClone(Music music) => Music(
-      musicId: music.musicId,
-      musicName: music.musicName,
-      artist: music.artist,
-      artistBin: music.artistBin,
-      albumId: music.albumId,
-      albumName: music.albumName,
-      coverPath: music.coverPath,
-      musicPath: music.musicPath,
-      time: music.time,
-      baseUrl: music.baseUrl,
-      category: music.category,
-      group: music.group,
-      isLove: music.isLove,
-      checked: music.checked,
-      timestamp: music.timestamp);
+        musicId: music.musicId,
+        musicName: music.musicName,
+        artist: music.artist,
+        artistBin: music.artistBin,
+        albumId: music.albumId,
+        albumName: music.albumName,
+        coverPath: music.coverPath,
+        musicPath: music.musicPath,
+        time: music.time,
+        baseUrl: music.baseUrl,
+        category: music.category,
+        group: music.group,
+        isLove: music.isLove,
+        checked: music.checked,
+        timestamp: music.timestamp,
+        date: music.date,
+      );
 }

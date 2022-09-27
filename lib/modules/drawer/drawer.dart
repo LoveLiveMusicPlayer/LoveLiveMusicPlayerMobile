@@ -79,12 +79,12 @@ class _DrawerPageState extends State<DrawerPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             showGroupButton(Assets.drawerLogoLovelive, onTap: () {
-              global.currentGroup.value = "all";
-              DBLogic.to.findAllListByGroup("all");
+              global.currentGroup.value = Const.groupAll;
+              DBLogic.to.findAllListByGroup(Const.groupAll);
             }, innerWidth: 107, innerHeight: 27),
             showGroupButton(Assets.drawerLogoUs, onTap: () {
-              global.currentGroup.value = "μ's";
-              DBLogic.to.findAllListByGroup("μ's");
+              global.currentGroup.value = Const.groupUs;
+              DBLogic.to.findAllListByGroup(Const.groupUs);
             }, innerWidth: 74, innerHeight: 58),
           ],
         ),
@@ -93,12 +93,12 @@ class _DrawerPageState extends State<DrawerPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             showGroupButton(Assets.drawerLogoAqours, onTap: () {
-              global.currentGroup.value = "Aqours";
-              DBLogic.to.findAllListByGroup("Aqours");
+              global.currentGroup.value = Const.groupAqours;
+              DBLogic.to.findAllListByGroup(Const.groupAqours);
             }, innerWidth: 90, innerHeight: 36),
             showGroupButton(Assets.drawerLogoNijigasaki, onTap: () {
-              global.currentGroup.value = "Nijigasaki";
-              DBLogic.to.findAllListByGroup("Nijigasaki");
+              global.currentGroup.value = Const.groupSaki;
+              DBLogic.to.findAllListByGroup(Const.groupSaki);
             }, innerWidth: 101, innerHeight: 40)
           ],
         ),
@@ -107,12 +107,12 @@ class _DrawerPageState extends State<DrawerPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             showGroupButton(Assets.drawerLogoLiella, onTap: () {
-              global.currentGroup.value = "Liella!";
-              DBLogic.to.findAllListByGroup("Liella!");
+              global.currentGroup.value = Const.groupLiella;
+              DBLogic.to.findAllListByGroup(Const.groupLiella);
             }, innerWidth: 100, innerHeight: 35),
             showGroupButton(Assets.drawerLogoAllstars, onTap: () {
-              global.currentGroup.value = "Combine";
-              DBLogic.to.findAllListByGroup("Combine");
+              global.currentGroup.value = Const.groupCombine;
+              DBLogic.to.findAllListByGroup(Const.groupCombine);
             }, innerWidth: 88, innerHeight: 44),
           ],
         ),
@@ -386,12 +386,15 @@ class _DrawerPageState extends State<DrawerPage> {
 
   parseUpdateDataSource(CloudData data) async {
     SmartDialog.compatible.showLoading(msg: "导入中...");
-    await loopParseData(data.music.us, data.album.us, "μ's");
-    await loopParseData(data.music.aqours, data.album.aqours, "Aqours");
+    await loopParseData(data.music.us, data.album.us, Const.groupUs);
     await loopParseData(
-        data.music.nijigasaki, data.album.nijigasaki, "Nijigasaki");
-    await loopParseData(data.music.liella, data.album.liella, "Liella!");
-    await loopParseData(data.music.combine, data.album.combine, "Combine");
+        data.music.aqours, data.album.aqours, Const.groupAqours);
+    await loopParseData(
+        data.music.nijigasaki, data.album.nijigasaki, Const.groupSaki);
+    await loopParseData(
+        data.music.liella, data.album.liella, Const.groupLiella);
+    await loopParseData(
+        data.music.combine, data.album.combine, Const.groupCombine);
     await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
     SmartDialog.compatible.dismiss(status: SmartStatus.loading);
     SpUtil.put(Const.spDataVersion, data.version);

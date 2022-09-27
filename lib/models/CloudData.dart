@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:lovelivemusicplayer/global/const.dart';
+
 CloudData cloudDataFromJson(String str) => CloudData.fromJson(json.decode(str));
 
 String cloudDataToJson(CloudData data) => json.encode(data.toJson());
@@ -45,23 +47,23 @@ class Album {
 
   factory Album.fromJson(Map<String, dynamic> json) => Album(
         us: List<InnerAlbum>.from(
-            json["μ's"].map((x) => InnerAlbum.fromJson(x))),
+            json[Const.groupUs].map((x) => InnerAlbum.fromJson(x))),
         aqours: List<InnerAlbum>.from(
-            json["Aqours"].map((x) => InnerAlbum.fromJson(x))),
+            json[Const.groupAqours].map((x) => InnerAlbum.fromJson(x))),
         nijigasaki: List<InnerAlbum>.from(
-            json["Nijigasaki"].map((x) => InnerAlbum.fromJson(x))),
+            json[Const.groupSaki].map((x) => InnerAlbum.fromJson(x))),
         liella: List<InnerAlbum>.from(
-            json["Liella!"].map((x) => InnerAlbum.fromJson(x))),
+            json[Const.groupLiella].map((x) => InnerAlbum.fromJson(x))),
         combine: List<InnerAlbum>.from(
-            json["Combine"].map((x) => InnerAlbum.fromJson(x))),
+            json[Const.groupCombine].map((x) => InnerAlbum.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "μ's": List<dynamic>.from(us.map((x) => x.toJson())),
-        "Aqours": List<dynamic>.from(aqours.map((x) => x.toJson())),
-        "Nijigasaki": List<dynamic>.from(nijigasaki.map((x) => x.toJson())),
-        "Liella!": List<dynamic>.from(liella.map((x) => x.toJson())),
-        "Combine": List<dynamic>.from(combine.map((x) => x.toJson())),
+        Const.groupUs: List<dynamic>.from(us.map((x) => x.toJson())),
+        Const.groupAqours: List<dynamic>.from(aqours.map((x) => x.toJson())),
+        Const.groupSaki: List<dynamic>.from(nijigasaki.map((x) => x.toJson())),
+        Const.groupLiella: List<dynamic>.from(liella.map((x) => x.toJson())),
+        Const.groupCombine: List<dynamic>.from(combine.map((x) => x.toJson())),
       };
 }
 
@@ -122,23 +124,23 @@ class Music {
 
   factory Music.fromJson(Map<String, dynamic> json) => Music(
         us: List<InnerMusic>.from(
-            json["μ's"].map((x) => InnerMusic.fromJson(x))),
+            json[Const.groupUs].map((x) => InnerMusic.fromJson(x))),
         aqours: List<InnerMusic>.from(
-            json["Aqours"].map((x) => InnerMusic.fromJson(x))),
+            json[Const.groupAqours].map((x) => InnerMusic.fromJson(x))),
         nijigasaki: List<InnerMusic>.from(
-            json["Nijigasaki"].map((x) => InnerMusic.fromJson(x))),
+            json[Const.groupSaki].map((x) => InnerMusic.fromJson(x))),
         liella: List<InnerMusic>.from(
-            json["Liella!"].map((x) => InnerMusic.fromJson(x))),
+            json[Const.groupLiella].map((x) => InnerMusic.fromJson(x))),
         combine: List<InnerMusic>.from(
-            json["Combine"].map((x) => InnerMusic.fromJson(x))),
+            json[Const.groupCombine].map((x) => InnerMusic.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "μ's": List<dynamic>.from(us.map((x) => x.toJson())),
-        "Aqours": List<dynamic>.from(aqours.map((x) => x.toJson())),
-        "Nijigasaki": List<dynamic>.from(nijigasaki.map((x) => x.toJson())),
-        "Liella!": List<dynamic>.from(liella.map((x) => x.toJson())),
-        "Combine": List<dynamic>.from(combine.map((x) => x.toJson())),
+        Const.groupUs: List<dynamic>.from(us.map((x) => x.toJson())),
+        Const.groupAqours: List<dynamic>.from(aqours.map((x) => x.toJson())),
+        Const.groupSaki: List<dynamic>.from(nijigasaki.map((x) => x.toJson())),
+        Const.groupLiella: List<dynamic>.from(liella.map((x) => x.toJson())),
+        Const.groupCombine: List<dynamic>.from(combine.map((x) => x.toJson())),
       };
 }
 

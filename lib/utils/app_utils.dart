@@ -57,6 +57,34 @@ class AppUtils {
     return result;
   }
 
+  static int comparePeopleNumber(String one, String two) {
+    final firstOneChar = one.substring(0, 1);
+    if (firstOneChar == "U") {
+      return 1;
+    }
+    final firstTwoChar = two.substring(0, 1);
+    if (firstTwoChar == "U") {
+      return -1;
+    }
+    final firstOneNum = int.parse(firstOneChar);
+    final firstTwoNum = int.parse(firstTwoChar);
+    if (firstOneNum != firstTwoNum) {
+      return firstOneNum - firstTwoNum;
+    }
+
+    final otherOneBinNum = int.parse(one.substring(1, one.length), radix: 36);
+    final otherTwoBinNum = int.parse(two.substring(1, two.length), radix: 36);
+    final oneCount = _getBinCountWithOne(otherOneBinNum);
+    final twoCount = _getBinCountWithOne(otherTwoBinNum);
+    if (oneCount != twoCount) {
+      return oneCount - twoCount;
+    }
+
+    final otherOneDecNum = int.parse(otherOneBinNum.toRadixString(2));
+    final otherTwoDecNum = int.parse(otherTwoBinNum.toRadixString(2));
+    return otherOneDecNum - otherTwoDecNum;
+  }
+
   static List<ArtistModel> parseArtistBin(String? musicBin,
       List<ArtistModel> artistList, Map<String, String> singleMap) {
     if (musicBin == null) {
@@ -113,6 +141,15 @@ class AppUtils {
       }
     }
     return tempList;
+  }
+
+  static _getBinCountWithOne(int number) {
+    var count = 0;
+    while (number != 0) {
+      number = number & (number - 1);
+      count++;
+    }
+    return count;
   }
 
   static _isMultiSong(int number) {

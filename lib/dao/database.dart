@@ -21,7 +21,7 @@ part 'database.g.dart';
 
 @TypeConverters([StringListConverter])
 @Database(
-    version: 1, entities: [Album, Lyric, Music, PlayListMusic, Menu, Artist])
+    version: 2, entities: [Album, Lyric, Music, PlayListMusic, Menu, Artist])
 abstract class MusicDatabase extends FloorDatabase {
   AlbumDao get albumDao;
 
@@ -36,13 +36,9 @@ abstract class MusicDatabase extends FloorDatabase {
   ArtistDao get artistDao;
 }
 
-// final migration1to2 = Migration(1, 2, (database) async {
-//   const createTableSql_relation = '''
-//     CREATE TABLE IF NOT EXISTS Lyric (
-//     uid TEXT PRIMARY KEY UNIQUE,
-//     jp TEXT,
-//     zh TEXT,
-//     roma TEXT);
-//     ''';
-//   await database.execute(createTableSql_relation);
-// });
+final migration1to2 = Migration(1, 2, (database) async {
+  const alterMusicTableSql = '''
+    ALTER TABLE Music ADD `date` varchar(10)
+    ''';
+  await database.execute(alterMusicTableSql);
+});

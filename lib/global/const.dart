@@ -5,6 +5,13 @@ class Const {
   // 设计图高度 dp
   static const double uiHeight = 812;
 
+  static const String groupAll = "all";
+  static const String groupUs = "μ's";
+  static const String groupAqours = "Aqours";
+  static const String groupSaki = "Nijigasaki";
+  static const String groupLiella = "Liella!";
+  static const String groupCombine = "Combine";
+
   // Logan 加密键值对
   static const String aesKey = "0123456789012345";
   static const String iV = "0123456789012345";
