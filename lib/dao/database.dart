@@ -38,7 +38,7 @@ abstract class MusicDatabase extends FloorDatabase {
 
 final migration1to2 = Migration(1, 2, (database) async {
   const alterMusicTableSql = '''
-    ALTER TABLE Music ADD `date` varchar(10)
+    ALTER TABLE Music ADD COLUMN `date` TEXT
     ''';
   await database.execute(alterMusicTableSql);
 });
