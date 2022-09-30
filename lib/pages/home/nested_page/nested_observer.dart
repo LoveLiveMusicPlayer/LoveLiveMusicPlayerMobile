@@ -12,7 +12,7 @@ class MyNavigator extends NavigatorObserver {
     if (previousRoute != null) {
       previousName = previousRoute.settings.name;
     }
-    Log4f.v(msg: "didPop: from ${route.settings.name} to $previousName");
+    // Log4f.v(msg: "didPop: from ${route.settings.name} to $previousName");
     if (NestedController.to.fromGestureBack) {
       NestedController.to.goBack(fromBtnBack: false);
       return;
@@ -30,6 +30,6 @@ class MyNavigator extends NavigatorObserver {
     if (previousRoute != null) {
       previousName = previousRoute.settings.name;
     }
-    Log4f.v(msg: "didPush: from $previousName to ${route.settings.name}");
+    // Log4f.v(msg: "didPush: from $previousName to ${route.settings.name}");
   }
 }

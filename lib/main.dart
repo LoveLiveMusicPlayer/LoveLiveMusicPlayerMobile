@@ -158,7 +158,5 @@ initServices() async {
 void defaultLogWriterCallback(String value, {bool isError = false}) {
   if (isError) {
     Log4f.w(msg: value);
-  } else {
-    Log4f.v(msg: value);
   }
 }

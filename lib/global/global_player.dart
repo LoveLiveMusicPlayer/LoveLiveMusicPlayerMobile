@@ -62,6 +62,15 @@ class PlayerLogic extends SuperController
   void onInit() {
     super.onInit();
 
+    mPlayer.playbackEventStream.listen((event) {}, onError: (Object e, StackTrace st) {
+      if (e is PlayerException) {
+        Log4f.e(msg: 'player error code: ${e.code}');
+        Log4f.e(msg: 'player error message: ${e.message}');
+      } else {
+        Log4f.e(msg: e.toString());
+      }
+    });
+
     /// 播放状态监听
     mPlayer.playerStateStream.listen((state) {
       isPlaying.value = state.playing;

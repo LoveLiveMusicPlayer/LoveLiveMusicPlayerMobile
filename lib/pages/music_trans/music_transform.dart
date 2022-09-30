@@ -126,6 +126,9 @@ class _MusicTransformState extends State<MusicTransform> {
           }
         }, cancelToken);
         if (isMusic) {
+          if (Platform.isIOS && music.musicPath.endsWith(".flac")) {
+            music.musicPath = music.musicPath.replaceAll(".flac", ".wav");
+          }
           await DBLogic.to.importMusic(music);
         }
       } catch (e) {
