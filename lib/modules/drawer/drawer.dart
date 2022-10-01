@@ -177,7 +177,7 @@ class _DrawerPageState extends State<DrawerPage> {
                 SizedBox(height: 8.h),
                 DrawerFunctionButton(
                     icon: Assets.drawerDrawerSystemTheme,
-                    text: "跟随系统主题",
+                    text: "跟随系统",
                     hasSwitch: true,
                     initSwitch: GlobalLogic.to.withSystemTheme.value,
                     callBack: (check) async {
@@ -213,7 +213,7 @@ class _DrawerPageState extends State<DrawerPage> {
                 renderDayOrNightSwitch(),
                 DrawerFunctionButton(
                     icon: Assets.drawerDrawerColorful,
-                    text: "炫彩主题(高性能)",
+                    text: "炫彩模式",
                     hasSwitch: true,
                     initSwitch: GlobalLogic.to.hasSkin.value,
                     callBack: (check) async {
