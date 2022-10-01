@@ -40,7 +40,7 @@ class _AlbumDetailsPageState extends State<AlbumDetailsPage> {
       return Scaffold(
           backgroundColor: Get.theme.primaryColor,
           body: Column(children: [
-            DetailsHeader(title: album.albumName!),
+            DetailsHeader(title: '专辑详情'),
             SizedBox(height: 8.h),
             DetailsBody(
               logic: logic,

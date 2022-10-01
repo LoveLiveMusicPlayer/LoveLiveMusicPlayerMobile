@@ -70,7 +70,21 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       /// 设置专辑、歌曲数据
       final allAlbums = <Album>[];
       if (group == Const.groupAll) {
-        allAlbums.addAll(await albumDao.findAllAlbums());
+        // 获取全部专辑列表
+        final tempAlbumList = <Album>[];
+        tempAlbumList
+            .addAll(await albumDao.findAllAlbumsByGroup(Const.groupUs));
+        tempAlbumList
+            .addAll(await albumDao.findAllAlbumsByGroup(Const.groupAqours));
+        tempAlbumList
+            .addAll(await albumDao.findAllAlbumsByGroup(Const.groupSaki));
+        tempAlbumList
+            .addAll(await albumDao.findAllAlbumsByGroup(Const.groupLiella));
+        tempAlbumList
+            .addAll(await albumDao.findAllAlbumsByGroup(Const.groupCombine));
+        allAlbums.addAll(tempAlbumList);
+
+        // 获取全部歌曲列表
         final tempMusicList = <Music>[];
         tempMusicList
             .addAll(await musicDao.findAllMusicsByGroup(Const.groupUs));
@@ -191,6 +205,16 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   /// 根据albumUId获取专辑
   Future<Album?> findAlbumById(String uid) async {
     return await albumDao.findAlbumByUId(uid);
+  }
+
+  Future<void> clearAllMusic() async {
+    try {
+      await albumDao.deleteAllAlbums();
+      await musicDao.deleteAllMusics();
+      await artistDao.deleteAllArtists();
+    } catch (e) {
+      Log4f.e(msg: e.toString(), writeFile: true);
+    }
   }
 
   /// 清空全部专辑
