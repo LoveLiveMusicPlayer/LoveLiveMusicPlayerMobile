@@ -186,9 +186,11 @@ class _DrawerPageState extends State<DrawerPage> {
                           Brightness.dark;
                       if (check) {
                         // 设置为系统主题色
+                        Get.changeThemeMode(isDark ? ThemeMode.dark : ThemeMode.light);
                         Get.changeTheme(isDark ? darkTheme : lightTheme);
                       } else {
                         // 设置为原来手动设置的主题色
+                        Get.changeThemeMode(GlobalLogic.to.manualIsDark.value ? ThemeMode.dark : ThemeMode.light);
                         Get.changeTheme(GlobalLogic.to.manualIsDark.value
                             ? darkTheme
                             : lightTheme);
