@@ -73,15 +73,23 @@ class _MusicTransformState extends State<MusicTransform> {
     Wakelock.enable();
   }
 
-  Map<String, String> genFileList(DownloadMusic music) {
-    final musicUrl =
-        "http://$ipAddress:$port/${music.baseUrl}${music.musicPath}";
+  List<Map<String, String>> genFileList(DownloadMusic music) {
     final picUrl = "http://$ipAddress:$port/${music.baseUrl}${music.coverPath}";
+    String musicUrl =
+        "http://$ipAddress:$port/${music.baseUrl}${music.musicPath}";
+
+    final picDest = SDUtils.path + music.baseUrl + music.coverPath;
     String musicDest = SDUtils.path + music.baseUrl + music.musicPath;
     if (Platform.isIOS) {
+      musicUrl = musicUrl.replaceAll(".flac", ".wav");
       musicDest = musicDest.replaceAll(".flac", ".wav");
     }
-    final picDest = SDUtils.path + music.baseUrl + music.coverPath;
+
+    final List<Map<String, String>> array = [];
+
+    array.add({"url": picUrl, "dest": picDest});
+    array.add({"url": musicUrl, "dest": musicDest});
+
     final tempList = musicDest.split(Platform.pathSeparator);
     var destDir = "";
     for (var i = 0; i < tempList.length - 1; i++) {
@@ -89,13 +97,14 @@ class _MusicTransformState extends State<MusicTransform> {
     }
     SDUtils.makeDir(destDir);
     if (!isRunning) {
-      return {};
+      return [];
     }
-    return {picUrl: picDest, musicUrl: musicDest};
+
+    return array;
   }
 
-  pushQueue(DownloadMusic music, String url, String dest, bool isLast) async {
-    final isMusic = url.endsWith("flac") || url.endsWith("wav");
+  pushQueue(DownloadMusic music, String url, String dest, bool isMusic,
+      bool isLast) async {
     await queue.add(() async {
       try {
         cancelToken = CancelToken();
@@ -415,7 +424,8 @@ class _MusicTransformState extends State<MusicTransform> {
                 // 强制传输则添加到预下载列表
                 musicIdList.add(music.musicUId);
               } else {
-                String filePath = SDUtils.path + music.baseUrl + music.musicPath;
+                String filePath =
+                    SDUtils.path + music.baseUrl + music.musicPath;
                 if (Platform.isIOS) {
                   filePath = filePath.replaceAll(".flac", ".wav");
                 }
@@ -449,9 +459,11 @@ class _MusicTransformState extends State<MusicTransform> {
               final musicUId = array[0];
               final isLast = array[1] == "true" ? true : false;
               if (music.musicUId == musicUId) {
-                genFileList(music).forEach((url, dest) {
-                  final isPic = url.contains("jpg");
-                  pushQueue(music, url, dest, isPic ? false : isLast);
+                genFileList(music).forEach((map) {
+                  final url = map["url"] ?? "";
+                  final isMusic = url.contains(".flac") || url.contains(".wav");
+                  pushQueue(music, url, map["dest"] ?? "", isMusic,
+                      (!isMusic) ? false : isLast);
                 });
               }
             } else {
