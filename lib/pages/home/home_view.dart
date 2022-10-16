@@ -4,6 +4,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
+import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/modules/drawer/drawer.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
@@ -13,8 +14,10 @@ import 'package:lovelivemusicplayer/pages/player/miniplayer.dart';
 import 'package:lovelivemusicplayer/pages/player/player.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/android_back_desktop.dart';
+import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/bottom_bar1.dart';
 import 'package:lovelivemusicplayer/widgets/bottom_bar2.dart';
+import 'package:lovelivemusicplayer/widgets/permission_dialog.dart';
 import 'package:we_slide/we_slide.dart';
 
 class HomeView extends StatefulWidget {
@@ -33,6 +36,23 @@ class _HomeViewState extends State<HomeView>
   void initState() {
     super.initState();
     logic.tabController = TabController(length: 2, vsync: this);
+    handlePermission();
+  }
+
+  void handlePermission() {
+    SpUtil.getBoolean(Const.spAllowPermission).then((hasPermission) {
+      if (!hasPermission) {
+        SmartDialog.compatible.show(
+            widget: PermissionDialog(readPermission: () async {
+              await Get.toNamed(Routes.routePermission);
+              handlePermission();
+            }, confirm: () {
+              SpUtil.put(Const.spAllowPermission, true);
+            }),
+            backDismiss: false,
+            clickBgDismissTemp: false);
+      }
+    });
   }
 
   @override

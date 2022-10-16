@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class DrawerFunctionButton extends StatefulWidget {
   const DrawerFunctionButton(
@@ -46,10 +44,7 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
               children: [
                 SvgPicture.asset(widget.icon, height: 20.h, width: 20.h),
                 SizedBox(width: 8.w),
-                Text(widget.text,
-                    style: Get.isDarkMode
-                        ? TextStyleMs.white_15
-                        : TextStyleMs.black_15)
+                Text(widget.text, style: TextStyle(fontSize: 15.sp))
               ],
             ),
             renderSwitchButton()

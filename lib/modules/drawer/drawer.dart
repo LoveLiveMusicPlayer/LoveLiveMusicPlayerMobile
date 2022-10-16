@@ -11,6 +11,7 @@ import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/global/global_theme.dart';
+import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/CloudData.dart';
 import 'package:lovelivemusicplayer/models/CloudUpdate.dart';
 import 'package:lovelivemusicplayer/models/FtpMusic.dart';
@@ -41,7 +42,12 @@ class _DrawerPageState extends State<DrawerPage> {
         child: SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [topView(), groupView(), functionView(context)],
+        children: [
+          topView(),
+          groupView(),
+          functionView(context),
+          versionView()
+        ],
       ),
     ));
   }
@@ -49,7 +55,7 @@ class _DrawerPageState extends State<DrawerPage> {
   Widget topView() {
     return Column(
       children: [
-        SizedBox(height: 12.h),
+        SizedBox(height: 16.h),
         Obx(() {
           return logoIcon(
             global.getCurrentGroupIcon(global.currentGroup.value),
@@ -60,13 +66,9 @@ class _DrawerPageState extends State<DrawerPage> {
                 const Color(0xFF05080C), const Color(0xFFD3E0EC)),
           );
         }),
-        SizedBox(height: 12.h),
+        SizedBox(height: 16.h),
         Text("LoveLiveMusicPlayer",
-            style: TextStyle(
-                fontSize: 17.sp,
-                fontWeight: FontWeight.bold,
-                color:
-                    Get.isDarkMode ? Colors.white : const Color(0xff333333))),
+            style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold)),
         SizedBox(height: 16.h)
       ],
     );
@@ -116,7 +118,7 @@ class _DrawerPageState extends State<DrawerPage> {
             }, innerWidth: 88, innerHeight: 44),
           ],
         ),
-        SizedBox(height: 12.h)
+        SizedBox(height: 16.h)
       ],
     );
   }
@@ -124,8 +126,8 @@ class _DrawerPageState extends State<DrawerPage> {
   Widget functionView(BuildContext context) {
     return ListTile(
         title: Container(
-            width: 270.w,
-            height: 350.h,
+            height: 310.h,
+            margin: EdgeInsets.only(left: 8.w, right: 8.w),
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
               borderRadius: BorderRadius.circular(8.w),
@@ -186,11 +188,14 @@ class _DrawerPageState extends State<DrawerPage> {
                           Brightness.dark;
                       if (check) {
                         // 设置为系统主题色
-                        Get.changeThemeMode(isDark ? ThemeMode.dark : ThemeMode.light);
+                        Get.changeThemeMode(
+                            isDark ? ThemeMode.dark : ThemeMode.light);
                         Get.changeTheme(isDark ? darkTheme : lightTheme);
                       } else {
                         // 设置为原来手动设置的主题色
-                        Get.changeThemeMode(GlobalLogic.to.manualIsDark.value ? ThemeMode.dark : ThemeMode.light);
+                        Get.changeThemeMode(GlobalLogic.to.manualIsDark.value
+                            ? ThemeMode.dark
+                            : ThemeMode.light);
                         Get.changeTheme(GlobalLogic.to.manualIsDark.value
                             ? darkTheme
                             : lightTheme);
@@ -282,8 +287,10 @@ class _DrawerPageState extends State<DrawerPage> {
                 SizedBox(height: 8.h),
                 DrawerFunctionButton(
                   icon: Assets.drawerDrawerSecret,
-                  text: "关于和隐私",
-                  onTap: () {},
+                  text: "隐私协议",
+                  onTap: () {
+                    Get.toNamed(Routes.routePermission);
+                  },
                 ),
                 SizedBox(height: 8.h),
               ],
@@ -428,6 +435,13 @@ class _DrawerPageState extends State<DrawerPage> {
         await DBLogic.to.importMusic(downloadMusic);
       }
     });
+  }
+
+  Widget versionView() {
+    return Expanded(
+        child: Center(
+      child: Text("Ver.$appVersion"),
+    ));
   }
 
   bool checkFileExist(InnerMusic music) {

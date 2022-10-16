@@ -32,25 +32,24 @@ class _CoverState extends State<Cover> {
             SizedBox(height: 18.h),
 
             SizedBox(
-              width: 273.h,
-              height: 273.h,
-              child: Stack(
-                children: [
-                  /// 封面
-                  showImg(
-                      SDUtils.getImgPath(
-                          fileName:
-                          "${currentMusic.baseUrl}${currentMusic.coverPath}"),
-                      273,
-                      273,
-                      radius: 24,
-                      shadowColor: GlobalLogic.to.hasSkin.value
-                          ? GlobalLogic.to.iconColor.value.withAlpha(255)
-                          : null),
-                  renderBlackFilter()
-                ],
-              )
-            ),
+                width: 273.h,
+                height: 273.h,
+                child: Stack(
+                  children: [
+                    /// 封面
+                    showImg(
+                        SDUtils.getImgPath(
+                            fileName:
+                                "${currentMusic.baseUrl}${currentMusic.coverPath}"),
+                        273,
+                        273,
+                        radius: 24,
+                        shadowColor: GlobalLogic.to.hasSkin.value
+                            ? GlobalLogic.to.iconColor.value.withAlpha(255)
+                            : null),
+                    renderBlackFilter()
+                  ],
+                )),
 
             /// 信息
             SizedBox(height: 18.h),
@@ -67,8 +66,7 @@ class _CoverState extends State<Cover> {
           borderRadius: BorderRadius.circular(24.h),
           child: Container(
             color: Colors.black.withOpacity(0.2),
-          )
-      );
+          ));
     } else {
       return Container();
     }

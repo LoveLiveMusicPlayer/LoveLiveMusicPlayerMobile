@@ -20,6 +20,7 @@ class Const {
   static const int noMusicColorfulSkin = 0xFFE8CFC0;
 
   /// sp
+  static const String spAllowPermission = "SP_ALLOW_PERMISSION";
   static const String spDark = "SP_IS_DARK";
   static const String spColorful = "SP_IS_COLORFUL";
   static const String spWithSystemTheme = "SP_With_System_Theme";

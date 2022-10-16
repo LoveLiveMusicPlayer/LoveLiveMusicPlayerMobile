@@ -85,6 +85,7 @@ dependencies:
       url: https://github.com/zhushenwudi/flutter_updater
       ref: 74fcfe56
   sticky_headers: ^0.3.0+2
+  url_launcher: ^6.1.6
 
 dependency_overrides:
   path: ^1.8.1

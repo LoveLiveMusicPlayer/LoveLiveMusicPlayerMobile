@@ -31,6 +31,10 @@ class TextStyleMs {
       TextStyle(color: const Color(0xFF333333), fontSize: 17.sp);
   static TextStyle black_18 =
       TextStyle(color: const Color(0xFF333333), fontSize: 18.sp);
+  static TextStyle black_18_bold = TextStyle(
+      color: const Color(0xFF333333),
+      fontSize: 18.sp,
+      fontWeight: FontWeight.bold);
 
   static TextStyle white_12 =
       TextStyle(color: const Color(0xFFFFFFFF), fontSize: 12.sp);
@@ -54,6 +58,13 @@ class TextStyleMs {
       TextStyle(color: const Color(0xFFFFFFFF), fontSize: 17.sp);
   static TextStyle white_18 =
       TextStyle(color: const Color(0xFFFFFFFF), fontSize: 18.sp);
+  static TextStyle white_18_bold = TextStyle(
+      color: const Color(0xFFFFFFFF),
+      fontSize: 18.sp,
+      fontWeight: FontWeight.bold);
+
+  static TextStyle blue_12 =
+      TextStyle(color: const Color(0xFF28B3F7), fontSize: 12.sp);
 
   static TextStyle pink_15 =
       TextStyle(color: const Color(0xFFF940A7), fontSize: 15.sp);

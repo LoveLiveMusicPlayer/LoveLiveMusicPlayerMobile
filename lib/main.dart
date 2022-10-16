@@ -15,6 +15,7 @@ import 'package:lovelivemusicplayer/eventbus/start_event.dart';
 import 'package:lovelivemusicplayer/global/global_binding.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'global/const.dart';
@@ -26,6 +27,7 @@ import 'utils/sd_utils.dart';
 import 'utils/sp_util.dart';
 
 var isDark = false;
+var appVersion = "1.0.0";
 
 void main() async {
   // 启动屏开启
@@ -144,6 +146,7 @@ class _MyAppState extends State<MyApp> {
 
 /// 初始化服务等一系列耗时任务
 initServices() async {
+  appVersion = (await PackageInfo.fromPlatform()).version;
   await FlutterLogan.init(Const.aesKey, Const.iV, 1024 * 1024 * 10);
   Get.log = defaultLogWriterCallback;
   await GetStorage.init();

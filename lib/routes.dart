@@ -5,11 +5,13 @@ import 'package:lovelivemusicplayer/pages/home/home_binding.dart';
 import 'package:lovelivemusicplayer/pages/home/home_view.dart';
 import 'package:lovelivemusicplayer/pages/home/nested_page/nested_binding.dart';
 import 'package:lovelivemusicplayer/pages/music_trans/music_transform.dart';
+import 'package:lovelivemusicplayer/pages/permission/permission.dart';
 import 'package:lovelivemusicplayer/pages/scan/scanner.dart';
 
 class Routes {
   static const String routeInitial = "/";
   static const String routeHome = "/home";
+  static const String routePermission = "/permission";
   static const String routeScan = "/scan";
   static const String routeTransform = "/transform";
   static const String routeDataSync = "/data_sync";
@@ -24,6 +26,7 @@ class Routes {
           name: Routes.routeInitial,
           page: () => const HomeView(),
           bindings: [HomeBinding(), NestedBinding()]),
+      GetPage(name: Routes.routePermission, page: () => const Permission()),
       GetPage(name: Routes.routeScan, page: () => const Scanner()),
       GetPage(name: Routes.routeTransform, page: () => const MusicTransform()),
       GetPage(name: Routes.routeDataSync, page: () => const DataSync()),
