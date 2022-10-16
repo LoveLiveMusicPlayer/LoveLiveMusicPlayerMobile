@@ -7,9 +7,11 @@ import 'package:lovelivemusicplayer/pages/home/nested_page/nested_binding.dart';
 import 'package:lovelivemusicplayer/pages/music_trans/music_transform.dart';
 import 'package:lovelivemusicplayer/pages/permission/permission.dart';
 import 'package:lovelivemusicplayer/pages/scan/scanner.dart';
+import 'package:lovelivemusicplayer/pages/splash/splash.dart';
 
 class Routes {
   static const String routeInitial = "/";
+  static const String routeSplash = "/splash";
   static const String routeHome = "/home";
   static const String routePermission = "/permission";
   static const String routeScan = "/scan";
@@ -22,6 +24,7 @@ class Routes {
 
   static List<GetPage> getRoutes() {
     return [
+      GetPage(name: Routes.routeSplash, page: () => const Splash()),
       GetPage(
           name: Routes.routeInitial,
           page: () => const HomeView(),

@@ -236,6 +236,15 @@ class _DrawerPageState extends State<DrawerPage> {
                     }),
                 SizedBox(height: 8.h),
                 DrawerFunctionButton(
+                    icon: Assets.drawerDrawerAiPic,
+                    text: "开屏美图",
+                    hasSwitch: true,
+                    initSwitch: hasAIPic,
+                    callBack: (check) async {
+                      SpUtil.put(Const.spAIPicture, check);
+                    }),
+                SizedBox(height: 8.h),
+                DrawerFunctionButton(
                   icon: Assets.drawerDrawerDataDownload,
                   text: "数据更新",
                   onTap: () {

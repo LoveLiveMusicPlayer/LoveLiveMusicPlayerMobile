@@ -28,6 +28,7 @@ import 'utils/sp_util.dart';
 
 var isDark = false;
 var appVersion = "1.0.0";
+var hasAIPic = false;
 
 void main() async {
   // 启动屏开启
@@ -128,7 +129,7 @@ class _MyAppState extends State<MyApp> {
             theme: isDark ? darkTheme : lightTheme,
             themeMode: ThemeMode.light,
             darkTheme: darkTheme,
-            initialRoute: Routes.routeInitial,
+            initialRoute: hasAIPic ? Routes.routeSplash : Routes.routeInitial,
             getPages: Routes.getRoutes(),
             locale: Translation.locale,
             fallbackLocale: Translation.fallbackLocale,
@@ -154,6 +155,7 @@ initServices() async {
   Network.getInstance();
   PlayerBinding().dependencies();
   await SDUtils.init();
+  hasAIPic = await SpUtil.getBoolean(Const.spAIPicture);
   Log4f.d(msg: '程序初始化完毕...');
 }
 

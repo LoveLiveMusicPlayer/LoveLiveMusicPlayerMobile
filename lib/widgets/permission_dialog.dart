@@ -29,7 +29,7 @@ class PermissionDialog extends StatelessWidget {
     return Center(
       child: Container(
           width: 300.w,
-          height: 320.h,
+          height: 330.h,
           padding: EdgeInsets.only(left: 16.w, right: 16.w),
           decoration: BoxDecoration(
               color: Get.theme.primaryColor,
@@ -37,7 +37,7 @@ class PermissionDialog extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: 28.h),
+              SizedBox(height: 26.h),
               Text("隐私保护政策", style: titleColor),
               SizedBox(height: 16.h),
               Text(mainMsg, style: textColor),

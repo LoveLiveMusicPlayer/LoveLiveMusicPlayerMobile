@@ -21,6 +21,10 @@ class TextStyleMs {
       fontWeight: FontWeight.bold);
   static TextStyle black_15 =
       TextStyle(color: const Color(0xFF333333), fontSize: 15.sp);
+  static TextStyle black_15_500 = TextStyle(
+      color: const Color(0xFF333333),
+      fontSize: 15.sp,
+      fontWeight: FontWeight.w500);
   static TextStyle blackBold_15 = TextStyle(
       color: const Color(0xFF333333),
       fontSize: 15.sp,
@@ -48,6 +52,10 @@ class TextStyleMs {
       fontWeight: FontWeight.bold);
   static TextStyle white_15 =
       TextStyle(color: const Color(0xFFFFFFFF), fontSize: 15.sp);
+  static TextStyle white_15_500 = TextStyle(
+      color: const Color(0xFFFFFFFF),
+      fontSize: 15.sp,
+      fontWeight: FontWeight.w500);
   static TextStyle whiteBold_15 = TextStyle(
       color: const Color(0xFFFFFFFF),
       fontSize: 15.sp,
