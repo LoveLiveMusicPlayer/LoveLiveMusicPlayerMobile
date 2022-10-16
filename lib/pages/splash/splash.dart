@@ -24,7 +24,8 @@ class _SplashState extends State<Splash> {
     "${frontUrl}yohane/bg_yohane_1.png",
     "${frontUrl}maki/bg_maki_1.png",
     "${frontUrl}shizuku/bg_shizuku_1.png",
-    "${frontUrl}you/bg_you_1.png"
+    "${frontUrl}you/bg_you_1.png",
+    "${frontUrl}chisato/bg_chisato_1.png",
   ];
 
   @override
