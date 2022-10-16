@@ -25,6 +25,7 @@ import 'network/http_request.dart';
 import 'routes.dart';
 import 'utils/sd_utils.dart';
 import 'utils/sp_util.dart';
+import 'package:umeng_common_sdk/umeng_common_sdk.dart';
 
 var isDark = false;
 var appVersion = "1.0.0";
@@ -106,6 +107,15 @@ class _MyAppState extends State<MyApp> {
       });
     });
     PaintingBinding.instance.imageCache.maximumSizeBytes = 1024 * 1024 * 100;
+    initUmeng();
+  }
+
+  Future<void> initUmeng() async {
+    await UmengCommonSdk.initCommon(
+      '634bd9c688ccdf4b7e4ac67b',
+      '634bdfd305844627b56670a1',
+      'Umeng'
+    );
   }
 
   @override

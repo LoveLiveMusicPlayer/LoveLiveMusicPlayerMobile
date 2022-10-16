@@ -80,12 +80,13 @@ dependencies:
   device_info_plus: ^4.1.2 # 设备信息
   package_info_plus: ^1.4.3+1 # 安装包信息
   flutter_lyric: ^2.0.4+6 # 歌词显示
-  updater:
+  updater: # 版本升级
     git:
       url: https://github.com/zhushenwudi/flutter_updater
       ref: 74fcfe56
-  sticky_headers: ^0.3.0+2
-  url_launcher: ^6.1.6
+  sticky_headers: ^0.3.0+2 # 粘性头
+  url_launcher: ^6.1.6 # url跳转
+  umeng_common_sdk: 1.2.4 # 友盟sdk
 
 dependency_overrides:
   path: ^1.8.1
