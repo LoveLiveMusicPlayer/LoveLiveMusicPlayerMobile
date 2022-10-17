@@ -38,9 +38,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
       final musicList = menu?.music;
       music.clear();
       if (musicList != null && musicList.isNotEmpty) {
-        final joinStr = "',${musicList.join(",")},', ',' || musicId || ','";
-        music.addAll(
-            await DBLogic.to.musicDao.findMusicsByMusicIds(musicList, joinStr));
+        music.addAll(await DBLogic.to.findMusicByMusicIds(musicList));
       }
       logic.state.items = music;
       setState(() {});

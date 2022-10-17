@@ -200,6 +200,12 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     }
   }
 
+  /// 批量通过musicId查找歌曲列表
+  Future<List<Music>> findMusicByMusicIds(List<String> musicList) async {
+    final joinStr = "',${musicList.join(",")},', ',' || musicId || ','";
+    return DBLogic.to.musicDao.findMusicsByMusicIds(musicList, joinStr);
+  }
+
   /****************  Album  ****************/
 
   /// 根据albumUId获取专辑
@@ -389,8 +395,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         }
       }
 
-      final joinStr = "',${musicIds.join(",")},', ',' || musicId || ','";
-      final musicList = await musicDao.findMusicsByMusicIds(musicIds, joinStr);
+      final musicList = await findMusicByMusicIds(musicIds);
       if (musicList.isNotEmpty) {
         playLogic.playMusic(musicList,
             index: willPlayMusicIndex, needPlay: false);
@@ -475,8 +480,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     if (artist == null) {
       return [];
     }
-    final joinStr = "',${artist.music.join(",")},', ',' || musicId || ','";
-    return await musicDao.findMusicsByMusicIds(artist.music, joinStr);
+    return await findMusicByMusicIds(artist.music);
   }
 
   scrollToTop(ScrollController scrollController) {
