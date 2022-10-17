@@ -3,7 +3,7 @@ import 'package:lovelivemusicplayer/models/Menu.dart';
 
 @dao
 abstract class MenuDao {
-  @Query('SELECT * FROM Menu')
+  @Query('SELECT * FROM Menu ORDER BY `date`')
   Future<List<Menu>> findAllMenus();
 
   @Query('SELECT * FROM Menu WHERE `id` = :menuId')

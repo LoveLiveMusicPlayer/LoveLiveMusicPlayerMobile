@@ -17,6 +17,7 @@ import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:umeng_common_sdk/umeng_common_sdk.dart';
 
 import 'global/const.dart';
 import 'global/global_theme.dart';
@@ -25,7 +26,6 @@ import 'network/http_request.dart';
 import 'routes.dart';
 import 'utils/sd_utils.dart';
 import 'utils/sp_util.dart';
-import 'package:umeng_common_sdk/umeng_common_sdk.dart';
 
 var isDark = false;
 var appVersion = "1.0.0";
@@ -112,10 +112,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> initUmeng() async {
     await UmengCommonSdk.initCommon(
-      '634bd9c688ccdf4b7e4ac67b',
-      '634bdfd305844627b56670a1',
-      'Umeng'
-    );
+        '634bd9c688ccdf4b7e4ac67b', '634bdfd305844627b56670a1', 'Umeng');
   }
 
   @override

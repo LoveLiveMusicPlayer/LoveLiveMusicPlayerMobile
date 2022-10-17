@@ -389,7 +389,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         }
       }
 
-      final musicList = await musicDao.findMusicsByMusicIds(musicIds);
+      final joinStr = "',${musicIds.join(",")},', ',' || musicId || ','";
+      final musicList = await musicDao.findMusicsByMusicIds(musicIds, joinStr);
       if (musicList.isNotEmpty) {
         playLogic.playMusic(musicList,
             index: willPlayMusicIndex, needPlay: false);
@@ -474,7 +475,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     if (artist == null) {
       return [];
     }
-    return await musicDao.findMusicsByMusicIds(artist.music);
+    final joinStr = "',${artist.music.join(",")},', ',' || musicId || ','";
+    return await musicDao.findMusicsByMusicIds(artist.music, joinStr);
   }
 
   scrollToTop(ScrollController scrollController) {

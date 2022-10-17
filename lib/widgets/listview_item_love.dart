@@ -148,39 +148,36 @@ class _ListViewItemLoveState extends State<ListViewItemLove> {
   Widget _buildAction() {
     return Visibility(
       visible: !HomeController.to.state.isSelect.value,
-      child: Container(
-        // color: Colors.red,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-                padding: EdgeInsets.only(
-                    left: 12.w, right: 12.w, top: 12.h, bottom: 12.h),
-                child: touchIconByAsset(
-                    path: Assets.mainIcAddNext,
-                    onTap: () {
-                      widget.onPlayNextTap(widget.music);
-                    },
-                    width: 20,
-                    height: 20,
-                    color: const Color(0xFFCCCCCC))),
-            InkWell(
-              onTap: () {
-                widget.onMoreTap(widget.music);
-              },
-              child: Container(
-                padding: EdgeInsets.only(
-                    left: 12.w, right: 10.w, top: 12.h, bottom: 12.h),
-                child: touchIconByAsset(
-                    path: Assets.mainIcMore,
-                    width: 10,
-                    height: 20,
-                    color: const Color(0xFFCCCCCC)),
-              ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+              padding: EdgeInsets.only(
+                  left: 12.w, right: 12.w, top: 12.h, bottom: 12.h),
+              child: touchIconByAsset(
+                  path: Assets.mainIcAddNext,
+                  onTap: () {
+                    widget.onPlayNextTap(widget.music);
+                  },
+                  width: 20,
+                  height: 20,
+                  color: const Color(0xFFCCCCCC))),
+          InkWell(
+            onTap: () {
+              widget.onMoreTap(widget.music);
+            },
+            child: Container(
+              padding: EdgeInsets.only(
+                  left: 12.w, right: 10.w, top: 12.h, bottom: 12.h),
+              child: touchIconByAsset(
+                  path: Assets.mainIcMore,
+                  width: 10,
+                  height: 20,
+                  color: const Color(0xFFCCCCCC)),
             ),
-            SizedBox(width: 4.w)
-          ],
-        ),
+          ),
+          SizedBox(width: 4.w)
+        ],
       ),
     );
   }
