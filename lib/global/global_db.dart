@@ -207,9 +207,12 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       arr.add("'$element'");
     }
     final joinStr = "',${musicList.join(",")},', ',' || musicId || ','";
-    List<Map<String, dynamic>> aaa = await DBLogic.to.database.database.rawQuery('SELECT * FROM Music WHERE musicId IN (${arr.join(",")}) ORDER BY INSTR($joinStr)');
+    List<
+        Map<String,
+            dynamic>> tempList = await DBLogic.to.database.database.rawQuery(
+        'SELECT * FROM Music WHERE musicId IN (${arr.join(",")}) ORDER BY INSTR($joinStr)');
     final musicArr = <Music>[];
-    for (var row in aaa) {
+    for (var row in tempList) {
       final music = Music(
           musicId: row['musicId'] as String?,
           musicName: row['musicName'] as String?,
