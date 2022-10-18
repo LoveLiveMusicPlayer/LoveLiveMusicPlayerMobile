@@ -202,8 +202,33 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
   /// 批量通过musicId查找歌曲列表
   Future<List<Music>> findMusicByMusicIds(List<String> musicList) async {
+    final arr = [];
+    for (var element in musicList) {
+      arr.add("'$element'");
+    }
     final joinStr = "',${musicList.join(",")},', ',' || musicId || ','";
-    return DBLogic.to.musicDao.findMusicsByMusicIds(musicList, joinStr);
+    List<Map<String, dynamic>> aaa = await DBLogic.to.database.database.rawQuery('SELECT * FROM Music WHERE musicId IN (${arr.join(",")}) ORDER BY INSTR($joinStr)');
+    final musicArr = <Music>[];
+    for (var row in aaa) {
+      final music = Music(
+          musicId: row['musicId'] as String?,
+          musicName: row['musicName'] as String?,
+          artist: row['artist'] as String?,
+          artistBin: row['artistBin'] as String?,
+          albumId: row['albumId'] as String?,
+          albumName: row['albumName'] as String?,
+          coverPath: row['coverPath'] as String?,
+          musicPath: row['musicPath'] as String?,
+          time: row['time'] as String?,
+          category: row['category'] as String?,
+          group: row['group'] as String?,
+          baseUrl: row['baseUrl'] as String?,
+          date: row['date'] as String?,
+          timestamp: row['timestamp'] as int,
+          isLove: (row['isLove'] as int) == 1);
+      musicArr.add(music);
+    }
+    return musicArr;
   }
 
   /****************  Album  ****************/

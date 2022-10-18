@@ -22,11 +22,6 @@ abstract class MusicDao {
   Future<List<Music>> findLovedMusic();
 
   @Query(
-      "SELECT * FROM Music WHERE musicId IN (:musicIds) ORDER BY INSTR(:joinStr)")
-  Future<List<Music>> findMusicsByMusicIds(
-      List<String> musicIds, String joinStr);
-
-  @Query(
       "SELECT * FROM Music WHERE `timestamp` > 0 ORDER BY `timestamp` DESC LIMIT 100")
   Future<List<Music>> findRecentMusics();
 
