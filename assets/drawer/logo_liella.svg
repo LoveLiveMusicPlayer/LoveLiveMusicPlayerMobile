@@ -1,0 +1,20 @@
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 512">
+    <circle cx="837.93" cy="315" r="15" style="fill:#939" />
+    <path d="M837.93,291a15,15,0,0,1-15-15V178a15,15,0,0,1,30,0v98A15,15,0,0,1,837.93,291Z"
+        style="fill:#e4007f" />
+    <circle cx="341.93" cy="178" r="15" style="fill:#939" />
+    <path d="M341.93,202a15,15,0,0,0-15,15v98a15,15,0,0,0,30,0V217A15,15,0,0,0,341.93,202Z"
+        style="fill:#e4007f" />
+    <circle cx="726.93" cy="261.25" r="53.75"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <line x1="780.68" y1="263.5" x2="780.68" y2="314.72"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <line x1="617.93" y1="178" x2="617.93" y2="315"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <line x1="556.93" y1="178" x2="556.93" y2="315"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <path d="M396,261H504l-.32.25A53.75,53.75,0,1,0,487.17,300"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <polyline points="294.68 315 295 314.75 187 314.75 187 315 187 178"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+</svg>

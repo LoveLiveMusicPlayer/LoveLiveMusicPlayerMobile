@@ -56,18 +56,16 @@ class _DrawerPageState extends State<DrawerPage> {
   Widget topView() {
     return Column(
       children: [
-        SizedBox(height: 16.h),
         Obx(() {
           return logoIcon(
             global.getCurrentGroupIcon(global.currentGroup.value),
-            width: 96,
-            height: 96,
-            radius: 96,
-            color: GlobalLogic.to.getThemeColor(
-                const Color(0xFF05080C), const Color(0xFFD3E0EC)),
+            hasShadow: false,
+            width: 108.w,
+            height: 108.w,
+            radius: 108.w,
+            color: Colors.transparent
           );
         }),
-        SizedBox(height: 16.h),
         Text("LoveLiveMusicPlayer",
             style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold)),
         SizedBox(height: 16.h)
@@ -84,11 +82,11 @@ class _DrawerPageState extends State<DrawerPage> {
             showGroupButton(Assets.drawerLogoLovelive, onTap: () {
               global.currentGroup.value = Const.groupAll;
               DBLogic.to.findAllListByGroup(Const.groupAll);
-            }, innerWidth: 107, innerHeight: 27),
+            }),
             showGroupButton(Assets.drawerLogoUs, onTap: () {
               global.currentGroup.value = Const.groupUs;
               DBLogic.to.findAllListByGroup(Const.groupUs);
-            }, innerWidth: 74, innerHeight: 58),
+            }),
           ],
         ),
         SizedBox(height: 12.h),
@@ -98,11 +96,11 @@ class _DrawerPageState extends State<DrawerPage> {
             showGroupButton(Assets.drawerLogoAqours, onTap: () {
               global.currentGroup.value = Const.groupAqours;
               DBLogic.to.findAllListByGroup(Const.groupAqours);
-            }, innerWidth: 90, innerHeight: 36),
+            }),
             showGroupButton(Assets.drawerLogoNijigasaki, onTap: () {
               global.currentGroup.value = Const.groupSaki;
               DBLogic.to.findAllListByGroup(Const.groupSaki);
-            }, innerWidth: 101, innerHeight: 40)
+            })
           ],
         ),
         SizedBox(height: 12.h),
@@ -112,11 +110,11 @@ class _DrawerPageState extends State<DrawerPage> {
             showGroupButton(Assets.drawerLogoLiella, onTap: () {
               global.currentGroup.value = Const.groupLiella;
               DBLogic.to.findAllListByGroup(Const.groupLiella);
-            }, innerWidth: 100, innerHeight: 35),
+            }),
             showGroupButton(Assets.drawerLogoAllstars, onTap: () {
               global.currentGroup.value = Const.groupCombine;
               DBLogic.to.findAllListByGroup(Const.groupCombine);
-            }, innerWidth: 88, innerHeight: 44),
+            }),
           ],
         ),
         SizedBox(height: 16.h)
@@ -239,7 +237,7 @@ class _DrawerPageState extends State<DrawerPage> {
                 SizedBox(height: 8.h),
                 DrawerFunctionButton(
                     icon: Assets.drawerDrawerAiPic,
-                    text: "开屏美图",
+                    text: "开屏图片",
                     hasSwitch: true,
                     initSwitch: hasAIPic,
                     callBack: (check) async {

@@ -1,0 +1,10 @@
+<svg id="Layer_3" data-name="Layer 3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 512">
+    <line x1="404.25" y1="210.75" x2="404.25" y2="355.75"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <path d="M474.25,210.75v72.5a35,35,0,0,1-70,0"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <path
+        d="M616.47,222.74c-21.88-21.72-66.72-12.83-64.53,17.77s67.81,23.69,67.81,51.34-45.94,34.55-70,16.1"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <circle cx="518" cy="170.25" r="15" style="fill:#f7931e" />
+</svg>

@@ -1,0 +1,25 @@
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 512">
+    <line x1="82.43" y1="193.91" x2="169.49" y2="193.91"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <path d="M63.5,240.28H183.69c0,25.55-14.2,89-81.39,89"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <path d="M233.85,206.21H354c0,50.16-14.2,115.46-93.69,115.46"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <line x1="431.64" y1="193.91" x2="518.71" y2="193.91"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <path d="M412.71,240.28H532.9c0,25.55-14.19,89-81.39,89"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <circle cx="349.3" cy="171.79" r="15" style="fill:#ff0073" />
+    <circle cx="384.53" cy="166" r="15" style="fill:#ff0073" />
+    <path d="M750.57,206.21H870.76c0,50.16-14.2,115.46-93.7,115.46"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <circle cx="866.02" cy="171.79" r="15" style="fill:#ff0073" />
+    <circle cx="901.25" cy="166" r="15" style="fill:#ff0073" />
+    <circle cx="949.3" cy="322.47" r="15" style="fill:#ff0073" />
+    <path d="M706.09,185.39c-13.25,33.12-85.18,78.55-126.82,78.55"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <line x1="657.82" y1="236.5" x2="657.82" y2="329.24"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <line x1="949.3" y1="193.91" x2="949.3" y2="286.65"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+</svg>

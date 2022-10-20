@@ -59,6 +59,7 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
           scale: 0.9,
           child: CupertinoSwitch(
               value: switchValue,
+              activeColor: const Color.fromARGB(255, 228, 0, 127),
               onChanged: (value) {
                 switchValue = value;
                 if (widget.callBack != null) {
@@ -72,6 +73,7 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
             scale: 0.9,
             child: CupertinoSwitch(
               value: switchValue,
+              activeColor: const Color.fromARGB(255, 228, 0, 127),
               onChanged: null,
             ));
       }

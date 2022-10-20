@@ -69,8 +69,7 @@ class HomePageView extends GetView<HomeController> {
       return logoIcon(
           GlobalLogic.to.getCurrentGroupIcon(GlobalLogic.to.currentGroup.value),
           offset: EdgeInsets.only(right: 16.w),
-          color: GlobalLogic.to
-              .getThemeColor(const Color(0xFF05080C), const Color(0xFFD3E0EC)),
+          color: Get.theme.primaryColor,
           onTap: onTap);
     });
   }

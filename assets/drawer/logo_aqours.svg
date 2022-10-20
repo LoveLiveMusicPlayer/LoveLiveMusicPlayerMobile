@@ -1,0 +1,24 @@
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 512">
+    <path
+        d="M905.76,192.49c-21.87-21.72-66.71-12.83-64.53,17.77S909.05,234,909.05,261.6s-45.94,34.55-70,16.1"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <line x1="750.95" y1="230.5" x2="750.95" y2="288"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <path d="M751,230.5a50,50,0,0,1,50-50"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <line x1="690.95" y1="180.5" x2="690.95" y2="253.5"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <path d="M621,180.5V253a35,35,0,0,0,70,0"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <circle cx="515.7" cy="234.25" r="53.75"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <circle cx="354.7" cy="234.25" r="53.75"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <line x1="408.45" y1="236.5" x2="408.45" y2="314.5"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <circle cx="408.45" cy="354.5" r="15" style="fill:#29abe2" />
+    <line x1="141.2" y1="236.5" x2="234.83" y2="236.5"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <polyline points="114.95 287.5 188.46 142.5 261.95 289.5"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+</svg>

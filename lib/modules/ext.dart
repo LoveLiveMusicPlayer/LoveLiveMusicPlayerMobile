@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 
 import '../utils/sd_utils.dart';
 
@@ -53,7 +54,7 @@ Widget showImg(String? path, double? width, double? height,
                 image: ResizeImage(imageProvider,
                     width: (width?.h.toInt() ?? 1) * 2,
                     height: (width?.h.toInt() ?? 1) * 2),
-                fit: BoxFit.fill),
+                fit: BoxFit.fitWidth),
             borderRadius: BorderRadius.circular(radius.h),
             boxShadow: [
               BoxShadow(
@@ -81,7 +82,7 @@ Widget showImg(String? path, double? width, double? height,
               image: ResizeImage(shadowImage,
                   width: (width?.h.toInt() ?? 1) * 2,
                   height: (width?.h.toInt() ?? 1) * 2),
-              fit: BoxFit.fill),
+              fit: BoxFit.fitWidth),
           borderRadius: BorderRadius.circular(radius.h),
           boxShadow: [
             BoxShadow(
@@ -280,7 +281,7 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
 /// [innerHeight] 图片高度
 Widget showGroupButton(String path,
     {GestureTapCallback? onTap,
-    double innerWidth = 130,
+    double innerWidth = 128,
     double innerHeight = 60}) {
   return Container(
     width: 118.h,
@@ -311,7 +312,7 @@ Widget showGroupButton(String path,
           child: Stack(
             children: [
               Center(
-                child: Image.asset(path,
+                child: SvgPicture.asset(path,
                     width: innerWidth.h, height: innerHeight.h),
               ),
               Container(
@@ -332,11 +333,15 @@ Widget logoIcon(String path,
     double height = 36,
     double radius = 18,
     required Color color,
+    bool hasShadow = true,
     EdgeInsetsGeometry? offset,
     GestureTapCallback? onTap}) {
   final margin = offset ?? const EdgeInsets.only(right: 0);
   final image =
       path.startsWith("assets") ? path : SDUtils.getImgPath(fileName: path);
+  final shadowStyle = hasShadow ? <BoxShadow>[BoxShadow(
+      color: GlobalLogic.to
+          .getThemeColor(const Color(0xFF05080C), const Color(0xFFD3E0EC)), blurRadius: 10, offset: Offset(5.h, 3.h))] : <BoxShadow>[];
   return Center(
       child: Container(
           margin: margin,
@@ -344,12 +349,10 @@ Widget logoIcon(String path,
           height: height.h,
           padding: EdgeInsets.all(3.h),
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: color,
               borderRadius: BorderRadius.circular(radius.h),
-              boxShadow: [
-                BoxShadow(
-                    color: color, blurRadius: 10, offset: Offset(5.h, 3.h)),
-              ]),
+              boxShadow: shadowStyle
+          ),
           child: showImg(image, width, height,
               radius: radius.h, hasShadow: false, onTap: onTap)));
 }

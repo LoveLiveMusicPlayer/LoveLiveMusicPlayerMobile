@@ -1,0 +1,26 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 512">
+    <line x1="124.89" y1="230.81" x2="226.8" y2="230.81"
+        style="fill:none;stroke:#f15a24;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <polyline points="96.32 286.32 176.32 128.5 256.32 288.5"
+        style="fill:none;stroke:#f15a24;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <polyline points="698.51 290.55 733.36 221.8 768.21 291.5"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:25px" />
+    <polyline points="348.84 291.5 349 291.37 293.82 291.37 293.82 291.5 293.82 221.5"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:25px" />
+    <polyline points="445.19 291.5 445.36 291.37 390.17 291.37 390.17 291.5 390.17 221.5"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:25px" />
+    <line x1="648.66" y1="291.5" x2="648.66" y2="223.89"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:25px" />
+    <polyline points="676.21 222.13 676.38 222 621.43 222 621.43 222.13"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:25px" />
+    <path
+        d="M577.12,241.35c-32.55-32.33-99.3-19.1-96,26.45S582,303.06,582,344.2s-68.37,51.43-104.19,24"
+        style="fill:none;stroke:#f15a24;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+    <path
+        d="M925.55,229.58c-14.18-14.08-43.26-8.32-41.84,11.52s44,15.36,44,33.28-29.79,22.4-45.39,10.44"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:25px" />
+    <line x1="815.18" y1="254.22" x2="815.18" y2="291.5"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:25px" />
+    <path d="M815.18,254.22A32.4,32.4,0,0,1,847.6,221.8"
+        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:25px" />
+</svg>
