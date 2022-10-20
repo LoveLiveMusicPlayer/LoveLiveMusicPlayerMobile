@@ -18,11 +18,13 @@ class BottomBar extends StatelessWidget {
       return BottomNavigationBar(
         showUnselectedLabels: true,
         currentIndex: mIndex,
+        selectedFontSize: 10.sp,
+        unselectedFontSize: 10.sp,
         items: [
           BottomNavigationBarItem(
               icon: SvgPicture.asset(Assets.tabTabMusic,
                   height: 18.h,
-                  width: 20.h,
+                  width: 18.h,
                   color: mIndex == 0
                       ? const Color(0xFFF940A7)
                       : const Color(0xFFD1E0F3)),
@@ -30,7 +32,7 @@ class BottomBar extends StatelessWidget {
           BottomNavigationBarItem(
               icon: SvgPicture.asset(Assets.tabTabAlbum,
                   height: 18.h,
-                  width: 20.h,
+                  width: 18.h,
                   color: mIndex == 1
                       ? const Color(0xFFF940A7)
                       : const Color(0xFFD1E0F3)),
@@ -38,7 +40,7 @@ class BottomBar extends StatelessWidget {
           BottomNavigationBarItem(
               icon: SvgPicture.asset(Assets.tabTabSinger,
                   height: 18.h,
-                  width: 20.h,
+                  width: 18.h,
                   color: mIndex == 2
                       ? const Color(0xFFF940A7)
                       : const Color(0xFFD1E0F3)),

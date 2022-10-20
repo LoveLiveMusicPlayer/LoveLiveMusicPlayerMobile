@@ -29,7 +29,6 @@ class PermissionDialog extends StatelessWidget {
     return Center(
       child: Container(
           width: 300.w,
-          height: 330.h,
           padding: EdgeInsets.only(left: 16.w, right: 16.w),
           decoration: BoxDecoration(
               color: Get.theme.primaryColor,
@@ -87,7 +86,8 @@ class PermissionDialog extends StatelessWidget {
                       SystemNavigator.pop();
                     }
                   },
-                  child: Text("不同意", style: miniTextColor))
+                  child: Text("不同意", style: miniTextColor)
+              ),
             ],
           )),
     );

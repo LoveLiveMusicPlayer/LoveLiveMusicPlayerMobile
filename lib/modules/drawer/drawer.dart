@@ -46,7 +46,8 @@ class _DrawerPageState extends State<DrawerPage> {
           topView(),
           groupView(),
           functionView(context),
-          versionView()
+          SizedBox(height: 6.h),
+          versionView(),
         ],
       ),
     ));
@@ -124,9 +125,10 @@ class _DrawerPageState extends State<DrawerPage> {
   }
 
   Widget functionView(BuildContext context) {
-    return ListTile(
-        title: Container(
-            height: 310.h,
+    return Expanded(
+        flex: 1,
+        child: Container(
+            width: 250.w,
             margin: EdgeInsets.only(left: 8.w, right: 8.w),
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
@@ -447,10 +449,11 @@ class _DrawerPageState extends State<DrawerPage> {
   }
 
   Widget versionView() {
-    return Expanded(
+    return SizedBox(
+        height: 30.h,
         child: Center(
-      child: Text("Ver.$appVersion"),
-    ));
+          child: Text("Ver.$appVersion"),
+        ));
   }
 
   bool checkFileExist(InnerMusic music) {

@@ -18,11 +18,13 @@ class BottomBar2 extends StatelessWidget {
       return BottomNavigationBar(
         showUnselectedLabels: true,
         currentIndex: mIndex,
+        selectedFontSize: 10.sp,
+        unselectedFontSize: 10.sp,
         items: [
           BottomNavigationBarItem(
               icon: SvgPicture.asset(Assets.tabTabLove,
                   height: 18.h,
-                  width: 20.h,
+                  width: 18.h,
                   color: mIndex == 0
                       ? const Color(0xFFF940A7)
                       : const Color(0xFFD1E0F3)),
@@ -30,7 +32,7 @@ class BottomBar2 extends StatelessWidget {
           BottomNavigationBarItem(
               icon: SvgPicture.asset(Assets.tabTabPlaylist,
                   height: 18.h,
-                  width: 20.h,
+                  width: 18.h,
                   color: mIndex == 1
                       ? const Color(0xFFF940A7)
                       : const Color(0xFFD1E0F3)),
@@ -38,7 +40,7 @@ class BottomBar2 extends StatelessWidget {
           BottomNavigationBarItem(
               icon: SvgPicture.asset(Assets.tabTabRecently,
                   height: 18.h,
-                  width: 20.h,
+                  width: 18.h,
                   color: mIndex == 2
                       ? const Color(0xFFF940A7)
                       : const Color(0xFFD1E0F3)),
@@ -47,8 +49,6 @@ class BottomBar2 extends StatelessWidget {
         elevation: 0,
         backgroundColor: GlobalLogic.to
             .getThemeColor(const Color(0xFF4e4e4e), const Color(0xFFFAFAFA)),
-        selectedFontSize: 13.sp,
-        unselectedFontSize: 13.sp,
         selectedItemColor: const Color(0xFFD91F86),
         unselectedItemColor: const Color(0xFFA9B9CD).withOpacity(0.5),
         onTap: (index) {

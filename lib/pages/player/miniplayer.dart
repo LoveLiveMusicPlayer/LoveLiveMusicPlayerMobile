@@ -36,7 +36,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
             color: Colors.transparent,
-            borderRadius: BorderRadius.circular(34),
+            borderRadius: BorderRadius.circular(34.w),
           ),
           child: renderPanel());
     });
@@ -48,15 +48,15 @@ class _MiniPlayerState extends State<MiniPlayer> {
       return FutureBuilder<Decoration>(
         initialData: BoxDecoration(
           color: const Color(0xFFEBF3FE),
-          borderRadius: BorderRadius.circular(34),
+          borderRadius: BorderRadius.circular(34.w),
         ),
         builder: (BuildContext context, AsyncSnapshot<Decoration> snapshot) {
           return Container(
             height: 60.h,
-            margin: EdgeInsets.only(top: 2.h, left: 16.w, right: 16.w),
+            margin: EdgeInsets.only(top: 6.h, left: 16.w, right: 16.w),
             decoration: snapshot.requireData,
             child: ClipRRect(
-                borderRadius: BorderRadius.circular(34),
+                borderRadius: BorderRadius.circular(34.w),
                 child: BackdropFilter(
                   //背景滤镜
                   filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
@@ -71,7 +71,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
     return Container(
       height: 60.h,
       margin: EdgeInsets.only(top: 2.h, left: 16.w, right: 16.w),
-      child: ClipRRect(borderRadius: BorderRadius.circular(34), child: body()),
+      child: ClipRRect(borderRadius: BorderRadius.circular(34.w), child: body()),
     );
   }
 
@@ -86,7 +86,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
     return BoxDecoration(
       image:
           DecorationImage(image: MemoryImage(compressPic!), fit: BoxFit.fill),
-      borderRadius: BorderRadius.circular(34),
+      borderRadius: BorderRadius.circular(34.w),
     );
   }
 

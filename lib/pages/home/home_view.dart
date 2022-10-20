@@ -133,7 +133,7 @@ class _HomeViewState extends State<HomeView>
       }),
       panel: Player(onTap: () => GlobalLogic.mobileWeSlideController.hide()),
       footer: _buildTabBarView(),
-      footerHeight: 84.h,
+      footerHeight: 77.h,
       blur: true,
       parallax: true,
       isUpSlide: false,

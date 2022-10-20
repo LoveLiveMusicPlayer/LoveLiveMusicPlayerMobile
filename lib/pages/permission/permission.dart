@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -70,7 +72,8 @@ class Permission extends StatelessWidget {
                         }
                       },
                   )),
-                )
+                ),
+                SizedBox(height: Platform.isAndroid ? 12.h : 0)
               ],
             ),
           ),
