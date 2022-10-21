@@ -179,7 +179,6 @@ class _HomeViewState extends State<HomeView>
   Widget _buildTabBarView() {
     return TabBarView(
       controller: logic.tabController,
-      // physics: const NeverScrollableScrollPhysics(),
       children: const [BottomBar(), BottomBar2()],
     );
   }

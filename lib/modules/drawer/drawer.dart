@@ -57,12 +57,17 @@ class _DrawerPageState extends State<DrawerPage> {
     return Column(
       children: [
         Obx(() {
-          return logoIcon(global.getCurrentGroupIcon(global.currentGroup.value),
-              hasShadow: false,
-              width: 110.r,
-              height: 108.r,
-              radius: 108.r,
-              color: Colors.transparent);
+          final photoPath =
+              global.getCurrentGroupIcon(global.currentGroup.value);
+          return SizedBox(
+            height: 135.h,
+            child: logoIcon(photoPath,
+                hasShadow: false,
+                width: photoPath == Assets.logoLogo ? 140 : 130,
+                height: photoPath == Assets.logoLogo ? 140 : 130,
+                radius: photoPath == Assets.logoLogo ? 140 : 130,
+                color: Colors.transparent),
+          );
         }),
         Text("LoveLiveMusicPlayer",
             style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold)),
@@ -144,166 +149,164 @@ class _DrawerPageState extends State<DrawerPage> {
                     blurRadius: 6.r),
               ],
             ),
-            child: scrollView()));
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
+              child: scrollView(),
+            )));
   }
 
   Widget scrollView() {
     return SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 18.w),
-          child: Obx(() {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(height: 8.h),
-                DrawerFunctionButton(
-                  icon: Assets.drawerDrawerQuickTrans,
-                  text: "歌曲快传",
-                  onTap: () async {
-                    Get.back();
-                    Get.toNamed(Routes.routeTransform);
-                  },
-                ),
-                SizedBox(height: 8.h),
-                DrawerFunctionButton(
-                  icon: Assets.drawerDrawerDataSync,
-                  text: "数据同步",
-                  onTap: () {
-                    Get.back();
-                    Get.toNamed(Routes.routeDataSync);
-                  },
-                ),
-                SizedBox(height: 8.h),
-                DrawerFunctionButton(
-                    icon: Assets.drawerDrawerSystemTheme,
-                    text: "跟随系统",
-                    hasSwitch: true,
-                    initSwitch: GlobalLogic.to.withSystemTheme.value,
-                    callBack: (check) async {
-                      // 获取当前系统主题色
-                      bool isDark = MediaQuery.of(context).platformBrightness ==
-                          Brightness.dark;
-                      if (check) {
-                        // 设置为系统主题色
-                        Get.changeThemeMode(
-                            isDark ? ThemeMode.dark : ThemeMode.light);
-                        Get.changeTheme(isDark ? darkTheme : lightTheme);
-                      } else {
-                        // 设置为原来手动设置的主题色
-                        Get.changeThemeMode(GlobalLogic.to.manualIsDark.value
-                            ? ThemeMode.dark
-                            : ThemeMode.light);
-                        Get.changeTheme(GlobalLogic.to.manualIsDark.value
-                            ? darkTheme
-                            : lightTheme);
-                      }
+        child: Obx(() {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              DrawerFunctionButton(
+                icon: Assets.drawerDrawerQuickTrans,
+                text: "歌曲快传",
+                onTap: () async {
+                  Get.back();
+                  Get.toNamed(Routes.routeTransform);
+                },
+              ),
+              SizedBox(height: 8.h),
+              DrawerFunctionButton(
+                icon: Assets.drawerDrawerDataSync,
+                text: "数据同步",
+                onTap: () {
+                  Get.back();
+                  Get.toNamed(Routes.routeDataSync);
+                },
+              ),
+              SizedBox(height: 8.h),
+              DrawerFunctionButton(
+                  icon: Assets.drawerDrawerSystemTheme,
+                  text: "跟随系统",
+                  hasSwitch: true,
+                  initSwitch: GlobalLogic.to.withSystemTheme.value,
+                  callBack: (check) async {
+                    // 获取当前系统主题色
+                    bool isDark = MediaQuery.of(context).platformBrightness ==
+                        Brightness.dark;
+                    if (check) {
+                      // 设置为系统主题色
+                      Get.changeThemeMode(
+                          isDark ? ThemeMode.dark : ThemeMode.light);
+                      Get.changeTheme(isDark ? darkTheme : lightTheme);
+                    } else {
+                      // 设置为原来手动设置的主题色
+                      Get.changeThemeMode(GlobalLogic.to.manualIsDark.value
+                          ? ThemeMode.dark
+                          : ThemeMode.light);
+                      Get.changeTheme(GlobalLogic.to.manualIsDark.value
+                          ? darkTheme
+                          : lightTheme);
+                    }
 
-                      // 将全局变量设置为所选值
-                      GlobalLogic.to.withSystemTheme.value = check;
-                      // 修改sp值
-                      await SpUtil.put(Const.spWithSystemTheme, check);
-                      GlobalLogic.to.isThemeDark();
+                    // 将全局变量设置为所选值
+                    GlobalLogic.to.withSystemTheme.value = check;
+                    // 修改sp值
+                    await SpUtil.put(Const.spWithSystemTheme, check);
+                    GlobalLogic.to.isThemeDark();
 
-                      // 恢复原来操作的界面
-                      Future.delayed(const Duration(milliseconds: 300))
-                          .then((value) {
-                        Get.forceAppUpdate().then((value) {
-                          PageViewLogic.to.controller.jumpToPage(
-                              HomeController.to.state.currentIndex.value);
-                        });
+                    // 恢复原来操作的界面
+                    Future.delayed(const Duration(milliseconds: 300))
+                        .then((value) {
+                      Get.forceAppUpdate().then((value) {
+                        PageViewLogic.to.controller.jumpToPage(
+                            HomeController.to.state.currentIndex.value);
                       });
-                    }),
-                SizedBox(height: 8.h),
-                renderDayOrNightSwitch(),
-                DrawerFunctionButton(
-                    icon: Assets.drawerDrawerColorful,
-                    text: "炫彩模式",
-                    hasSwitch: true,
-                    initSwitch: GlobalLogic.to.hasSkin.value,
-                    callBack: (check) async {
-                      // 将全局变量设置为所选值
-                      GlobalLogic.to.hasSkin.value = check;
-                      // 修改sp值
-                      await SpUtil.put(Const.spColorful, check);
-                      if (GlobalLogic.to.hasSkin.value &&
-                          PlayerLogic.to.playingMusic.value.musicId == null) {
-                        GlobalLogic.to.iconColor.value =
-                            const Color(Const.noMusicColorfulSkin);
-                      }
-                    }),
-                SizedBox(height: 8.h),
-                DrawerFunctionButton(
-                    icon: Assets.drawerDrawerAiPic,
-                    text: "开屏图片",
-                    hasSwitch: true,
-                    initSwitch: hasAIPic,
-                    callBack: (check) async {
-                      SpUtil.put(Const.spAIPicture, check);
-                    }),
-                SizedBox(height: 8.h),
-                DrawerFunctionButton(
-                  icon: Assets.drawerDrawerDataDownload,
-                  text: "数据更新",
-                  onTap: () {
-                    handleUpdateData();
-                  },
-                ),
-                SizedBox(height: 8.h),
-                DrawerFunctionButton(
-                  icon: Assets.drawerDrawerReset,
-                  text: "清理数据",
-                  onTap: () async {
-                    SmartDialog.compatible
-                        .showLoading(msg: "重置中...", backDismiss: false);
-                    await DBLogic.to.clearAllAlbum();
-                    await SpUtil.clear();
-                    await DBLogic.to
-                        .findAllListByGroup(GlobalLogic.to.currentGroup.value);
-                    SmartDialog.compatible.dismiss();
-                    SmartDialog.compatible
-                        .showToast("清理成功", time: const Duration(seconds: 5));
-                  },
-                ),
-                // SizedBox(height: 8.h),
-                // DrawerFunctionButton(
-                //   icon: Assets.drawerDrawerDebug,
-                //   text: "保存日志",
-                //   onTap: () async {
-                //     await SDUtils.uploadLog();
-                //     SmartDialog.compatible
-                //         .showToast("导出成功", time: const Duration(seconds: 5));
-                //   },
-                // ),
-                SizedBox(height: 8.h),
-                DrawerFunctionButton(
-                  icon: Assets.drawerDrawerInspect,
-                  text: "查看日志",
-                  onTap: () async {
-                    Get.toNamed(Routes.routeLogger);
-                  },
-                ),
-                SizedBox(height: 8.h),
-                DrawerFunctionButton(
-                  icon: Assets.drawerDrawerUpdate,
-                  text: "版本升级",
-                  onTap: () {
-                    GlobalLogic.to.checkUpdate(manual: true);
-                  },
-                ),
-                SizedBox(height: 8.h),
-                DrawerFunctionButton(
-                  icon: Assets.drawerDrawerSecret,
-                  text: "隐私协议",
-                  onTap: () {
-                    Get.toNamed(Routes.routePermission);
-                  },
-                ),
-                SizedBox(height: 8.h),
-              ],
-            );
-          }),
-        ));
+                    });
+                  }),
+              SizedBox(height: 8.h),
+              renderDayOrNightSwitch(),
+              DrawerFunctionButton(
+                  icon: Assets.drawerDrawerColorful,
+                  text: "炫彩模式",
+                  hasSwitch: true,
+                  initSwitch: GlobalLogic.to.hasSkin.value,
+                  callBack: (check) async {
+                    // 将全局变量设置为所选值
+                    GlobalLogic.to.hasSkin.value = check;
+                    // 修改sp值
+                    await SpUtil.put(Const.spColorful, check);
+                    if (GlobalLogic.to.hasSkin.value &&
+                        PlayerLogic.to.playingMusic.value.musicId == null) {
+                      GlobalLogic.to.iconColor.value =
+                          const Color(Const.noMusicColorfulSkin);
+                    }
+                  }),
+              SizedBox(height: 8.h),
+              DrawerFunctionButton(
+                  icon: Assets.drawerDrawerAiPic,
+                  text: "开屏图片",
+                  hasSwitch: true,
+                  initSwitch: hasAIPic,
+                  callBack: (check) async {
+                    SpUtil.put(Const.spAIPicture, check);
+                  }),
+              SizedBox(height: 8.h),
+              DrawerFunctionButton(
+                icon: Assets.drawerDrawerDataDownload,
+                text: "数据更新",
+                onTap: () {
+                  handleUpdateData();
+                },
+              ),
+              SizedBox(height: 8.h),
+              DrawerFunctionButton(
+                icon: Assets.drawerDrawerReset,
+                text: "清理数据",
+                onTap: () async {
+                  SmartDialog.compatible
+                      .showLoading(msg: "重置中...", backDismiss: false);
+                  await DBLogic.to.clearAllAlbum();
+                  await SpUtil.clear();
+                  await DBLogic.to
+                      .findAllListByGroup(GlobalLogic.to.currentGroup.value);
+                  SmartDialog.compatible.dismiss();
+                  SmartDialog.compatible
+                      .showToast("清理成功", time: const Duration(seconds: 5));
+                },
+              ),
+              // SizedBox(height: 8.h),
+              // DrawerFunctionButton(
+              //   icon: Assets.drawerDrawerDebug,
+              //   text: "保存日志",
+              //   onTap: () async {
+              //     await SDUtils.uploadLog();
+              //     SmartDialog.compatible
+              //         .showToast("导出成功", time: const Duration(seconds: 5));
+              //   },
+              // ),
+              SizedBox(height: 8.h),
+              DrawerFunctionButton(
+                icon: Assets.drawerDrawerInspect,
+                text: "查看日志",
+                onTap: () async {
+                  Get.toNamed(Routes.routeLogger);
+                },
+              ),
+              SizedBox(height: 8.h),
+              DrawerFunctionButton(
+                icon: Assets.drawerDrawerUpdate,
+                text: "版本升级",
+                onTap: () {
+                  GlobalLogic.to.checkUpdate(manual: true);
+                },
+              ),
+              SizedBox(height: 8.h),
+              DrawerFunctionButton(
+                icon: Assets.drawerDrawerSecret,
+                text: "隐私协议",
+                onTap: () {
+                  Get.toNamed(Routes.routePermission);
+                },
+              )
+            ],
+          );
+        }));
   }
 
   Widget renderDayOrNightSwitch() {

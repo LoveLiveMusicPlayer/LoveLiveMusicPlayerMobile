@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
@@ -66,11 +67,13 @@ class HomePageView extends GetView<HomeController> {
   ///顶部头像
   Widget _getTopHead(GestureTapCallback? onTap) {
     return Obx(() {
-      return logoIcon(
-          GlobalLogic.to.getCurrentGroupIcon(GlobalLogic.to.currentGroup.value),
-          offset: EdgeInsets.only(right: 16.w),
-          color: Get.theme.primaryColor,
-          onTap: onTap);
+      final photoPath =
+          GlobalLogic.to.getCurrentGroupIcon(GlobalLogic.to.currentGroup.value);
+      final color = photoPath == Assets.logoLogo
+          ? const Color(Const.noMusicColorfulSkin)
+          : Get.theme.primaryColor;
+      return logoIcon(photoPath,
+          offset: EdgeInsets.only(right: 16.w), color: color, onTap: onTap);
     });
   }
 

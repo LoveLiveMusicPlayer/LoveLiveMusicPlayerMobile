@@ -351,9 +351,9 @@ Widget logoIcon(String path,
   return Center(
       child: Container(
           margin: margin,
-          width: width.h,
-          height: height.h,
-          padding: EdgeInsets.all(3.h),
+          width: width.r,
+          height: height.r,
+          padding: EdgeInsets.all(3.r),
           decoration: BoxDecoration(
               color: color,
               borderRadius: BorderRadius.circular(radius.h),
