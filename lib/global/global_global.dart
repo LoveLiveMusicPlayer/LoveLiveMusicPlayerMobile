@@ -276,8 +276,7 @@ class GlobalLogic extends SuperController
 
   scrollTo(ScrollController controller) {
     try {
-      controller.animateTo(0,
-          duration: const Duration(milliseconds: 200), curve: Curves.ease);
+      controller.animateTo(0, duration: Duration.zero, curve: Curves.ease);
     } catch (e) {
       Log4f.e(msg: e.toString());
     }

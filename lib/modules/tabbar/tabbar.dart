@@ -20,7 +20,7 @@ class TabBarComponent extends StatelessWidget {
       indicatorColor: const Color(0xFFF940A7),
       labelPadding: EdgeInsets.only(left: 4.w, right: 4.w),
       indicator: CustomUnderlineTabIndicator(
-          insets: EdgeInsets.only(top: 0.w, bottom: 8.h),
+          insets: EdgeInsets.only(top: 0, bottom: 8.h),
           borderSide: BorderSide(width: 16.w, color: const Color(0xFFF940A7)),
           indicatorWeight: 4.w),
       isScrollable: true,

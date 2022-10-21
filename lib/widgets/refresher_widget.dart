@@ -117,10 +117,10 @@ class _RefresherWidgetState extends State<RefresherWidget> {
             } else if (mode == LoadStatus.loading) {
               body = Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  CupertinoActivityIndicator(),
-                  SizedBox(width: 10),
-                  Text("加载中")
+                children: [
+                  const CupertinoActivityIndicator(),
+                  SizedBox(width: 10.r),
+                  const Text("加载中")
                 ],
               );
             } else if (mode == LoadStatus.failed) {

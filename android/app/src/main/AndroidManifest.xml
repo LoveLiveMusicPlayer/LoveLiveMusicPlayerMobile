@@ -9,7 +9,7 @@
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:label="lovelivemusicplayer"
+        android:label="LLMP"
         android:requestLegacyExternalStorage="true">
 
         <meta-data

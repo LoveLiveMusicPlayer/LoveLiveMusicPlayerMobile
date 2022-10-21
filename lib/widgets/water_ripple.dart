@@ -33,8 +33,8 @@ class WaterRippleState extends State<WaterRipple>
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 343.w,
-        width: 343.w,
+        height: 343.r,
+        width: 343.r,
         child: Stack(
           alignment: Alignment.center,
           children: children,

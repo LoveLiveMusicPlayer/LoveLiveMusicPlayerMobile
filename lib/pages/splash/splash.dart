@@ -5,7 +5,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get.dart';
-import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 
 class Splash extends StatefulWidget {
@@ -56,7 +55,6 @@ class _SplashState extends State<Splash> {
     String? imageUrl;
     final connection = await Connectivity().checkConnectivity();
     if (connection == ConnectivityResult.none) {
-      Log4f.d(msg: "无网络，遍历缓存取图");
       await Future.forEach<String>(imageList, (url) async {
         final isExist = await checkUrlExist(url);
         if (imageUrl == null && isExist) {
@@ -64,10 +62,10 @@ class _SplashState extends State<Splash> {
         }
       });
     } else {
-      Log4f.d(msg: "有网络，随机取图");
       if (imageUrl == null) {
         imageList.shuffle();
         imageUrl = imageList[0];
+        CachedNetworkImage.evictFromCache(imageUrl);
       }
     }
     if (imageUrl == null) {

@@ -34,21 +34,21 @@ class OneButtonDialog extends StatelessWidget {
         child: Container(
       width: 303.w,
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(16.w)),
+          color: Colors.white, borderRadius: BorderRadius.circular(16.r)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            height: 28.w,
+            height: 28.h,
           ),
           Image.asset(
             _imgAsset,
-            width: 78.w,
-            height: 78.w,
+            width: 78.r,
+            height: 78.r,
           ),
           SizedBox(
-            height: 12.w,
+            height: 12.h,
           ),
           Visibility(
             visible: _isShowTitle,
@@ -64,7 +64,7 @@ class OneButtonDialog extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 8.w,
+            height: 8.h,
           ),
           Visibility(
             visible: _isShowMsg,
@@ -79,15 +79,15 @@ class OneButtonDialog extends StatelessWidget {
                 )),
           ),
           SizedBox(
-            height: 28.w,
+            height: 28.h,
           ),
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
-                color: Color(0xFF28B3F7),
+                color: const Color(0xFF28B3F7),
                 borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(16.w),
-                    bottomRight: Radius.circular(16.w))),
+                    bottomLeft: Radius.circular(16.r),
+                    bottomRight: Radius.circular(16.r))),
             child: TextButton(
                 onPressed: () {
                   SmartDialog.compatible.dismiss();

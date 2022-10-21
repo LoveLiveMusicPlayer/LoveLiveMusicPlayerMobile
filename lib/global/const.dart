@@ -17,7 +17,7 @@ class Const {
   static const String iV = "0123456789012345";
 
   // 暂无歌曲时使用炫彩模式要显示的颜色值
-  static const int noMusicColorfulSkin = 0xFFE8CFC0;
+  static const int noMusicColorfulSkin = 0x4DFFAE00;
 
   /// sp
   static const String spAllowPermission = "SP_ALLOW_PERMISSION";

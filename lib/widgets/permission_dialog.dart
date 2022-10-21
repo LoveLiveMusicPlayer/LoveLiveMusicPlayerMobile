@@ -32,7 +32,7 @@ class PermissionDialog extends StatelessWidget {
           padding: EdgeInsets.only(left: 16.w, right: 16.w),
           decoration: BoxDecoration(
               color: Get.theme.primaryColor,
-              borderRadius: BorderRadius.circular(16.w)),
+              borderRadius: BorderRadius.circular(16.r)),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -63,7 +63,7 @@ class PermissionDialog extends StatelessWidget {
                 width: double.infinity,
                 decoration: BoxDecoration(
                     color: const Color(0xFF28B3F7),
-                    borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                    borderRadius: BorderRadius.all(Radius.circular(20.r))),
                 child: TextButton(
                     onPressed: () {
                       SmartDialog.compatible.dismiss();
@@ -86,8 +86,7 @@ class PermissionDialog extends StatelessWidget {
                       SystemNavigator.pop();
                     }
                   },
-                  child: Text("不同意", style: miniTextColor)
-              ),
+                  child: Text("不同意", style: miniTextColor)),
             ],
           )),
     );

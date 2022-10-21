@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <bitmap android:gravity="fill" android:src="@drawable/background"/>
+        <shape android:shape="rectangle">
+            <solid android:color="#ffffff" />
+        </shape>
     </item>
+
+    <item
+        android:top="210dp"
+        android:bottom="210dp"
+        android:drawable="@drawable/background"/>
 </layer-list>

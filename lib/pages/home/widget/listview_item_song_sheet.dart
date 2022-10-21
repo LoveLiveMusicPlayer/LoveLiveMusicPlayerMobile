@@ -152,7 +152,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
                   color: const Color(0xFFCCCCCC)),
             ),
           ),
-          SizedBox(width: 4.w)
+          SizedBox(width: 4.r)
         ],
       ),
     );

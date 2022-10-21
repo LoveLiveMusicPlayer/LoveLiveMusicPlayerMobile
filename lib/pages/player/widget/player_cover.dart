@@ -22,7 +22,7 @@ class _CoverState extends State<Cover> {
   Widget build(BuildContext context) {
     Music? currentMusic = PlayerLogic.to.playingMusic.value;
     return InkWell(
-      splashColor: Colors.red,
+      splashColor: Colors.transparent,
       onTap: widget.onTap,
       child: SizedBox(
         height: 400.h,
@@ -45,7 +45,7 @@ class _CoverState extends State<Cover> {
                         273,
                         radius: 24,
                         shadowColor: GlobalLogic.to.hasSkin.value
-                            ? GlobalLogic.to.iconColor.value.withAlpha(255)
+                            ? GlobalLogic.to.iconColor.value
                             : null),
                     renderBlackFilter()
                   ],

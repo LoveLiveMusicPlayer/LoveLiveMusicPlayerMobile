@@ -339,9 +339,15 @@ Widget logoIcon(String path,
   final margin = offset ?? const EdgeInsets.only(right: 0);
   final image =
       path.startsWith("assets") ? path : SDUtils.getImgPath(fileName: path);
-  final shadowStyle = hasShadow ? <BoxShadow>[BoxShadow(
-      color: GlobalLogic.to
-          .getThemeColor(const Color(0xFF05080C), const Color(0xFFD3E0EC)), blurRadius: 10, offset: Offset(5.h, 3.h))] : <BoxShadow>[];
+  final shadowStyle = hasShadow
+      ? <BoxShadow>[
+          BoxShadow(
+              color: GlobalLogic.to.getThemeColor(
+                  const Color(0xFF05080C), const Color(0xFFD3E0EC)),
+              blurRadius: 10,
+              offset: Offset(5.h, 3.h))
+        ]
+      : <BoxShadow>[];
   return Center(
       child: Container(
           margin: margin,
@@ -351,8 +357,7 @@ Widget logoIcon(String path,
           decoration: BoxDecoration(
               color: color,
               borderRadius: BorderRadius.circular(radius.h),
-              boxShadow: shadowStyle
-          ),
+              boxShadow: shadowStyle),
           child: showImg(image, width, height,
               radius: radius.h, hasShadow: false, onTap: onTap)));
 }

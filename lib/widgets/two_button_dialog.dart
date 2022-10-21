@@ -40,18 +40,18 @@ class TwoButtonDialog extends StatelessWidget {
       width: 303.w,
       decoration: BoxDecoration(
           color: Get.isDarkMode ? Get.theme.primaryColor : Colors.white,
-          borderRadius: BorderRadius.circular(16.w)),
+          borderRadius: BorderRadius.circular(16.r)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            height: 28.w,
+            height: 28.h,
           ),
           Image.asset(
             _imgAsset,
             width: 78.w,
-            height: 78.w,
+            height: 78.r,
           ),
           SizedBox(
             height: 12.w,

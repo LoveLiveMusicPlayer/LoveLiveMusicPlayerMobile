@@ -224,16 +224,16 @@ class _MusicTransformState extends State<MusicTransform> {
             visible: !isConnected,
             child: Center(
                 child: SvgPicture.asset(Assets.syncIconDataSync,
-                    width: 300.w, height: 300.w))),
+                    width: 300.r, height: 300.r))),
         SizedBox(height: 65.h),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           SvgPicture.asset(Assets.drawerDrawerSecret,
-              width: 15.w, height: 15.w),
-          SizedBox(width: 2.w),
+              width: 15.r, height: 15.r),
+          SizedBox(width: 2.r),
           Text("请保持手机和电脑处于同一局域网内", style: TextStyleMs.gray_12)
         ]),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          SizedBox(width: 15.w),
+          SizedBox(width: 15.r),
           Text("保持屏幕常亮，并扫描PC端二维码", style: TextStyleMs.gray_12)
         ]),
         SizedBox(height: 90.h),
@@ -545,7 +545,7 @@ class _MusicTransformState extends State<MusicTransform> {
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               SvgPicture.asset(asset,
                   color: const Color(0xFFF940A7), width: 13.h, height: 20.h),
-              SizedBox(width: 11.w),
+              SizedBox(width: 11.r),
               Text(title, style: TextStyleMs.pink_15)
             ]))));
   }

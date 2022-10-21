@@ -6,6 +6,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
@@ -36,7 +37,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
             color: Colors.transparent,
-            borderRadius: BorderRadius.circular(34.w),
+            borderRadius: BorderRadius.circular(34.r),
           ),
           child: renderPanel());
     });
@@ -48,7 +49,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
       return FutureBuilder<Decoration>(
         initialData: BoxDecoration(
           color: const Color(0xFFEBF3FE),
-          borderRadius: BorderRadius.circular(34.w),
+          borderRadius: BorderRadius.circular(34.r),
         ),
         builder: (BuildContext context, AsyncSnapshot<Decoration> snapshot) {
           return Container(
@@ -56,7 +57,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
             margin: EdgeInsets.only(top: 6.h, left: 16.w, right: 16.w),
             decoration: snapshot.requireData,
             child: ClipRRect(
-                borderRadius: BorderRadius.circular(34.w),
+                borderRadius: BorderRadius.circular(34.r),
                 child: BackdropFilter(
                   //背景滤镜
                   filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
@@ -71,23 +72,26 @@ class _MiniPlayerState extends State<MiniPlayer> {
     return Container(
       height: 60.h,
       margin: EdgeInsets.only(top: 2.h, left: 16.w, right: 16.w),
-      child: ClipRRect(borderRadius: BorderRadius.circular(34.w), child: body()),
+      child:
+          ClipRRect(borderRadius: BorderRadius.circular(34.r), child: body()),
     );
   }
 
   Future<Decoration> generateDecoration(Music music) async {
     String coverPath = (music.baseUrl ?? "") + (music.coverPath ?? "");
-    if (coverPath.isEmpty) {
-      coverPath = Assets.logoLogo;
-    } else {
+    if (coverPath.isNotEmpty) {
       coverPath = SDUtils.getImgFile(coverPath).path;
+      final compressPic = await ImageUtil().compressAndTryCatch(coverPath);
+      return BoxDecoration(
+        image:
+            DecorationImage(image: MemoryImage(compressPic!), fit: BoxFit.fill),
+        borderRadius: BorderRadius.circular(34.r),
+      );
+    } else {
+      return BoxDecoration(
+          color: const Color(Const.noMusicColorfulSkin),
+          borderRadius: BorderRadius.circular(34.r));
     }
-    final compressPic = await ImageUtil().compressAndTryCatch(coverPath);
-    return BoxDecoration(
-      image:
-          DecorationImage(image: MemoryImage(compressPic!), fit: BoxFit.fill),
-      borderRadius: BorderRadius.circular(34.w),
-    );
   }
 
   Widget body() {
@@ -98,15 +102,15 @@ class _MiniPlayerState extends State<MiniPlayer> {
         children: [
           /// 迷你封面
           miniCover(),
-          SizedBox(width: 6.w),
+          SizedBox(width: 6.r),
 
           /// 滚动歌名
           marqueeMusicName(),
-          SizedBox(width: 10.w),
+          SizedBox(width: 10.r),
 
           /// 播放按钮
           playButton(),
-          SizedBox(width: 20.w),
+          SizedBox(width: 20.r),
 
           /// 播放列表按钮
           touchIconByAsset(
@@ -121,7 +125,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
               color: Get.isDarkMode
                   ? const Color(0xFFCCCCCC)
                   : const Color(0xFF333333)),
-          SizedBox(width: 20.w),
+          SizedBox(width: 20.r),
         ],
       ),
     );
@@ -133,7 +137,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
         (currentMusic.baseUrl ?? "") + (currentMusic.coverPath ?? "");
     return Row(
       children: [
-        SizedBox(width: 6.w),
+        SizedBox(width: 6.r),
         showImg(SDUtils.getImgPath(fileName: coverPath), 50, 50,
             radius: 50, hasShadow: false, onTap: widget.onTap)
       ],

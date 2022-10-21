@@ -51,7 +51,7 @@ class _ListViewItemLoveState extends State<ListViewItemLove> {
             ///缩列图
             _buildIcon(),
 
-            SizedBox(width: 10.w),
+            SizedBox(width: 10.r),
 
             ///中间标题部分
             _buildContent(),
@@ -176,7 +176,7 @@ class _ListViewItemLoveState extends State<ListViewItemLove> {
                   color: const Color(0xFFCCCCCC)),
             ),
           ),
-          SizedBox(width: 4.w)
+          SizedBox(width: 4.r)
         ],
       ),
     );

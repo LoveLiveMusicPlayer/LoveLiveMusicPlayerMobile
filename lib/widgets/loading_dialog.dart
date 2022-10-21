@@ -17,8 +17,8 @@ class LoadingDialog extends Dialog {
       type: MaterialType.transparency,
       child: Center(
           child: Container(
-        width: 108.w,
-        height: 108.w,
+        width: 108.r,
+        height: 108.r,
         decoration: BoxDecoration(
             color: Colors.black38, borderRadius: BorderRadius.circular(10.w)),
         child: Column(

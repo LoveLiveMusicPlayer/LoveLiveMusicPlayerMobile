@@ -7,6 +7,7 @@ import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/modules/drawer/drawer.dart';
+import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/nested_page/nested_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/nested_page/nested_observer.dart';
@@ -36,6 +37,11 @@ class _HomeViewState extends State<HomeView>
   void initState() {
     super.initState();
     logic.tabController = TabController(length: 2, vsync: this);
+    logic.tabController?.addListener(() {
+      final position = HomeController.to.state.currentIndex.value;
+      final index = (logic.tabController?.index ?? 0) * 3 + position % 3;
+      PageViewLogic.to.controller.jumpToPage(index);
+    });
     handlePermission();
   }
 
@@ -173,7 +179,7 @@ class _HomeViewState extends State<HomeView>
   Widget _buildTabBarView() {
     return TabBarView(
       controller: logic.tabController,
-      physics: const NeverScrollableScrollPhysics(),
+      // physics: const NeverScrollableScrollPhysics(),
       children: const [BottomBar(), BottomBar2()],
     );
   }

@@ -57,14 +57,12 @@ class _DrawerPageState extends State<DrawerPage> {
     return Column(
       children: [
         Obx(() {
-          return logoIcon(
-            global.getCurrentGroupIcon(global.currentGroup.value),
-            hasShadow: false,
-            width: 108.w,
-            height: 108.w,
-            radius: 108.w,
-            color: Colors.transparent
-          );
+          return logoIcon(global.getCurrentGroupIcon(global.currentGroup.value),
+              hasShadow: false,
+              width: 110.r,
+              height: 108.r,
+              radius: 108.r,
+              color: Colors.transparent);
         }),
         Text("LoveLiveMusicPlayer",
             style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold)),
@@ -130,20 +128,20 @@ class _DrawerPageState extends State<DrawerPage> {
             margin: EdgeInsets.only(left: 8.w, right: 8.w),
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(8.w),
+              borderRadius: BorderRadius.circular(8.r),
               boxShadow: [
                 BoxShadow(
                     color:
                         Get.isDarkMode ? const Color(0x1005080C) : Colors.white,
                     offset: Offset(-3.w, -3.h),
                     blurStyle: BlurStyle.inner,
-                    blurRadius: 6.w),
+                    blurRadius: 6.r),
                 BoxShadow(
                     color: Get.isDarkMode
                         ? const Color(0xFF05080C)
                         : const Color(0xFFD3E0EC),
                     offset: Offset(5.w, 3.h),
-                    blurRadius: 6.w),
+                    blurRadius: 6.r),
               ],
             ),
             child: scrollView()));
