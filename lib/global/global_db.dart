@@ -15,6 +15,7 @@ import 'package:lovelivemusicplayer/eventbus/start_event.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/ArtistModel.dart';
@@ -59,7 +60,9 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     await findAllListByGroup(Const.groupAll);
     await findAllPlayListMusics();
     await Future.delayed(const Duration(seconds: 1));
-    eventBus.fire(StartEvent((DateTime.now().millisecondsSinceEpoch)));
+    if (!hasAIPic) {
+      eventBus.fire(StartEvent((DateTime.now().millisecondsSinceEpoch)));
+    }
     super.onInit();
     PlayerLogic.to.initLoopMode();
   }

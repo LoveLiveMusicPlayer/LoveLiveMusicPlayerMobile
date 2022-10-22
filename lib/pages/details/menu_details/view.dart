@@ -30,6 +30,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
   void initState() {
     super.initState();
     refreshData();
+    AppUtils.uploadEvent("MenuDetailsPage");
   }
 
   refreshData() {

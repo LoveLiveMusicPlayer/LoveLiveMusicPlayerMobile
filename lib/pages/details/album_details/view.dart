@@ -10,6 +10,7 @@ import 'package:lovelivemusicplayer/pages/details/logic.dart';
 import 'package:lovelivemusicplayer/pages/details/widget/details_body.dart';
 import 'package:lovelivemusicplayer/pages/details/widget/details_header.dart';
 import 'package:lovelivemusicplayer/pages/home/nested_page/nested_controller.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/widgets/details_cover.dart';
 
 class AlbumDetailsPage extends StatefulWidget {
@@ -32,6 +33,7 @@ class _AlbumDetailsPageState extends State<AlbumDetailsPage> {
       logic.state.items = music;
       setState(() {});
     });
+    AppUtils.uploadEvent("AlbumDetailsPage");
   }
 
   @override

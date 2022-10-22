@@ -11,6 +11,7 @@ import 'package:lovelivemusicplayer/pages/details/logic.dart';
 import 'package:lovelivemusicplayer/pages/details/widget/details_body.dart';
 import 'package:lovelivemusicplayer/pages/details/widget/details_header.dart';
 import 'package:lovelivemusicplayer/pages/home/nested_page/nested_controller.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 
 class SingerDetailsPage extends StatefulWidget {
   const SingerDetailsPage({Key? key}) : super(key: key);
@@ -32,6 +33,7 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
       logic.state.items = music;
       setState(() {});
     });
+    AppUtils.uploadEvent("SingerDetailsPage");
   }
 
   @override

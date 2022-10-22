@@ -4,12 +4,18 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Permission extends StatelessWidget {
+class Permission extends StatefulWidget {
   const Permission({Key? key}) : super(key: key);
 
+  @override
+  State<Permission> createState() => _PermissionState();
+}
+
+class _PermissionState extends State<Permission> {
   final message = """尊敬的用户：
 
 请务必认真阅读和理解《软件许可使用协议》（以下简称：本协议）中规定的所有权利和限制，除非您接受协议条款，否则您无权使用本软件及其相关服务。您一旦使用本软件，将视为对协议的接受。
@@ -42,6 +48,12 @@ class Permission extends StatelessWidget {
 Ⅳ.未经允许，进入计算机信息网络或者使用计算机信息网络资源；
 Ⅴ.未经允许，对计算机信息网络功能进行删除、修改或者增加的。
 """;
+
+  @override
+  void initState() {
+    super.initState();
+    AppUtils.uploadEvent("Permission");
+  }
 
   @override
   Widget build(BuildContext context) {

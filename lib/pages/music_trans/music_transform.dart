@@ -19,6 +19,7 @@ import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/details/widget/details_header.dart';
 import 'package:lovelivemusicplayer/routes.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/circle_widget.dart';
@@ -71,6 +72,7 @@ class _MusicTransformState extends State<MusicTransform> {
   void initState() {
     super.initState();
     Wakelock.enable();
+    AppUtils.uploadEvent("MusicTransform");
   }
 
   List<Map<String, String>> genFileList(DownloadMusic music) {

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,7 +18,6 @@ import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:umeng_common_sdk/umeng_common_sdk.dart';
 
 import 'global/const.dart';
 import 'global/global_theme.dart';
@@ -30,6 +30,7 @@ import 'utils/sp_util.dart';
 var isDark = false;
 var appVersion = "1.0.0";
 var hasAIPic = false;
+var needRemoveCover = true;
 
 void main() async {
   // 启动屏开启
@@ -99,20 +100,19 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     subscription = eventBus.on<StartEvent>().listen((event) {
+      needRemoveCover = false;
       // 初始化结束后，将启动屏关闭
       FlutterNativeSplash.remove();
       Log4f.d(msg: '移除开屏页面...');
       Future.delayed(const Duration(seconds: 1), () {
-        GlobalLogic.to.checkUpdate();
+        Connectivity().checkConnectivity().then((connection) {
+          if (connection != ConnectivityResult.none) {
+            GlobalLogic.to.checkUpdate();
+          }
+        });
       });
     });
     PaintingBinding.instance.imageCache.maximumSizeBytes = 1024 * 1024 * 100;
-    initUmeng();
-  }
-
-  Future<void> initUmeng() async {
-    await UmengCommonSdk.initCommon(
-        '634bd9c688ccdf4b7e4ac67b', '634bdfd305844627b56670a1', 'Umeng');
   }
 
   @override
@@ -138,6 +138,12 @@ class _MyAppState extends State<MyApp> {
             darkTheme: darkTheme,
             initialRoute: hasAIPic ? Routes.routeSplash : Routes.routeInitial,
             getPages: Routes.getRoutes(),
+            routingCallback: (Routing? route) {
+              final name = route?.current;
+              if (name != null) {
+                AppUtils.uploadPageStart(name);
+              }
+            },
             locale: Translation.locale,
             fallbackLocale: Translation.fallbackLocale,
             translations: Translation(),
@@ -162,7 +168,8 @@ initServices() async {
   Network.getInstance();
   PlayerBinding().dependencies();
   await SDUtils.init();
-  hasAIPic = await SpUtil.getBoolean(Const.spAIPicture);
+  SpUtil.put("prevPage", "");
+  hasAIPic = await SpUtil.getBoolean(Const.spAIPicture, true);
   Log4f.d(msg: '程序初始化完毕...');
 }
 

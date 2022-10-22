@@ -2,11 +2,14 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:color_thief_flutter/color_thief_flutter.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/ArtistModel.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
+import 'package:lovelivemusicplayer/utils/sp_util.dart';
+import 'package:umeng_common_sdk/umeng_common_sdk.dart';
 
 class AppUtils {
   /// 异步获取歌单封面
@@ -166,5 +169,26 @@ class AppUtils {
     SystemChrome.setSystemUIOverlayStyle(
         (isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark)
             .copyWith(statusBarColor: Colors.transparent));
+  }
+
+  static uploadEvent(String eventName, {Map<String, String>? params}) {
+    UmengCommonSdk.onEvent(
+        eventName,
+        params ??
+            {
+              "time":
+                  DateUtil.formatDate(DateTime.now(), format: DateFormats.full)
+            });
+  }
+
+  static uploadPageStart(String page) {
+    SpUtil.getString("prevPage").then((prevPage) {
+      if (prevPage == "") {
+        return;
+      }
+      UmengCommonSdk.onPageEnd(prevPage);
+      UmengCommonSdk.onPageStart(page);
+      SpUtil.put("prevPage", page);
+    });
   }
 }

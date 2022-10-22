@@ -135,6 +135,8 @@ Widget showImg(String? path, double? width, double? height,
     }
     if (isNetImage) {
       return InkWell(
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
           onTap: () {
             if (onTap != null) {
               onTap();
@@ -161,6 +163,8 @@ Widget showImg(String? path, double? width, double? height,
               )));
     } else {
       return InkWell(
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
           onTap: () {
             if (onTap != null) {
               onTap();

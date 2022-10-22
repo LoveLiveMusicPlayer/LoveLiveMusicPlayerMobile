@@ -4,8 +4,10 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
+import 'package:lovelivemusicplayer/eventbus/start_event.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/modules/drawer/drawer.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
@@ -15,10 +17,12 @@ import 'package:lovelivemusicplayer/pages/player/miniplayer.dart';
 import 'package:lovelivemusicplayer/pages/player/player.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/android_back_desktop.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/bottom_bar1.dart';
 import 'package:lovelivemusicplayer/widgets/bottom_bar2.dart';
 import 'package:lovelivemusicplayer/widgets/permission_dialog.dart';
+import 'package:umeng_common_sdk/umeng_common_sdk.dart';
 import 'package:we_slide/we_slide.dart';
 
 class HomeView extends StatefulWidget {
@@ -42,6 +46,9 @@ class _HomeViewState extends State<HomeView>
       final index = (logic.tabController?.index ?? 0) * 3 + position % 3;
       PageViewLogic.to.controller.jumpToPage(index);
     });
+    if (needRemoveCover) {
+      eventBus.fire(StartEvent((DateTime.now().millisecondsSinceEpoch)));
+    }
     handlePermission();
   }
 
@@ -54,11 +61,21 @@ class _HomeViewState extends State<HomeView>
               handlePermission();
             }, confirm: () {
               SpUtil.put(Const.spAllowPermission, true);
+              initUmeng();
             }),
             backDismiss: false,
             clickBgDismissTemp: false);
+      } else {
+        initUmeng();
       }
     });
+  }
+
+  Future<void> initUmeng() async {
+    await UmengCommonSdk.initCommon(
+        '634bd9c688ccdf4b7e4ac67b', '634bdfd305844627b56670a1', 'Umeng');
+    UmengCommonSdk.setPageCollectionModeManual();
+    AppUtils.uploadEvent("Home");
   }
 
   @override

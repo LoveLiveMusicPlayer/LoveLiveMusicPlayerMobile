@@ -89,6 +89,8 @@ class PlayerLogic extends SuperController
           mPlayList.isNotEmpty &&
           !GlobalLogic.to.isHandlePlay) {
         Log4f.d(msg: "当前播放: $index - ${mPlayList[index].musicName}");
+        AppUtils.uploadEvent("Playing",
+            params: {"music": mPlayList[index].musicName});
         final currentMusic = mPlayList[index];
         await changePlayingMusic(currentMusic);
         persistencePLayList2(mPlayList, index).then((value) {
@@ -174,6 +176,8 @@ class PlayerLogic extends SuperController
 
   /// 播放指定列表的歌曲
   playMusic(List<Music> musicList, {int index = 0, bool needPlay = true}) {
+    AppUtils.uploadEvent("Playing",
+        params: {"music": musicList[index].musicName ?? ""});
     Log4f.d(msg: "播放曲目: ${musicList[index].musicName}");
     try {
       // 如果上一次处理没有结束，直接跳过
