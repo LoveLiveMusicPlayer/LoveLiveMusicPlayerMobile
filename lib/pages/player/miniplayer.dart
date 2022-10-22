@@ -99,15 +99,22 @@ class _MiniPlayerState extends State<MiniPlayer> {
     return Row(
       children: [
         SizedBox(width: 8.w),
+
         /// 迷你封面
         miniCover(),
         SizedBox(width: 8.w),
+
         /// 滚动歌名
         marqueeMusicName(maxWidth),
         SizedBox(width: 14.w),
+
         /// 播放按钮
-        playButton(),
+        SizedBox(
+          width: 24.h,
+          child: playButton(),
+        ),
         SizedBox(width: 10.w),
+
         /// 播放列表按钮
         touchIconByAsset(
             path: Assets.playerPlayPlaylist,
@@ -120,8 +127,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
             height: 24,
             color: Get.isDarkMode
                 ? const Color(0xFFCCCCCC)
-                : const Color(0xFF333333)),
-        SizedBox(width: 15.w)
+                : const Color(0xFF333333))
       ],
     );
   }

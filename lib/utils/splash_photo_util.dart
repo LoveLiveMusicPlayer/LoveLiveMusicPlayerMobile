@@ -48,7 +48,8 @@ class SplashPhoto {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          fit: BoxFit.cover,
+          alignment: Alignment.topCenter,
+          fit: BoxFit.fitWidth,
           image: CachedNetworkImageProvider(imageUrl),
         ),
       ),
