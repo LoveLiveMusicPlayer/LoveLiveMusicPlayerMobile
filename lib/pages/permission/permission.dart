@@ -16,7 +16,7 @@ class Permission extends StatefulWidget {
 }
 
 class _PermissionState extends State<Permission> {
-  final message = """尊敬的用户：
+  final message = """亲爱的LLer：
 
 请务必认真阅读和理解《软件许可使用协议》（以下简称：本协议）中规定的所有权利和限制，除非您接受协议条款，否则您无权使用本软件及其相关服务。您一旦使用本软件，将视为对协议的接受。
 
@@ -35,8 +35,7 @@ class _PermissionState extends State<Permission> {
 收集到的数据将用户分析崩溃中的错误信息用于更好的完善本软件。
 下面是使用的统计数据开发工具：
 使用SDK名称：友盟SDK
-服务类型：请按SDK功能填写，如统计分析
-收集个人信息类型：设备信息（IMEI/MAC/Android ID/IDFA/OpenUDID/GUID/IP地址/SIM 卡 IMSI 信息等）
+服务类型：数据采集与统计分析
 隐私权政策链接：https://www.umeng.com/page/policy
 
 4.用户须知

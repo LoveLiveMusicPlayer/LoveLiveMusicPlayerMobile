@@ -71,7 +71,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
     }
     return Container(
       height: 60.h,
-      margin: EdgeInsets.only(top: 2.h, left: 16.w, right: 16.w),
+      margin: EdgeInsets.only(top: 6.h, left: 16.w, right: 16.w),
       child:
           ClipRRect(borderRadius: BorderRadius.circular(34.r), child: body()),
     );
@@ -95,49 +95,52 @@ class _MiniPlayerState extends State<MiniPlayer> {
   }
 
   Widget body() {
-    final maxWidth = ScreenUtil().screenWidth - 87.w - 98.h;
-    return Row(
-      children: [
-        SizedBox(width: 8.w),
+    final maxWidth = ScreenUtil().screenWidth - 85.w - 96.h;
+    return Container(
+        alignment: Alignment.center,
+        color: Colors.grey.withOpacity(0.15),
+        child: Row(
+          children: [
+            SizedBox(width: 6.w),
 
-        /// 迷你封面
-        miniCover(),
-        SizedBox(width: 8.w),
+            /// 迷你封面
+            miniCover(),
+            SizedBox(width: 8.w),
 
-        /// 滚动歌名
-        marqueeMusicName(maxWidth),
-        SizedBox(width: 14.w),
+            /// 滚动歌名
+            marqueeMusicName(maxWidth),
+            SizedBox(width: 14.w),
 
-        /// 播放按钮
-        SizedBox(
-          width: 24.h,
-          child: playButton(),
-        ),
-        SizedBox(width: 10.w),
+            /// 播放按钮
+            SizedBox(
+              width: 24.h,
+              child: playButton(),
+            ),
+            SizedBox(width: 10.w),
 
-        /// 播放列表按钮
-        touchIconByAsset(
-            path: Assets.playerPlayPlaylist,
-            onTap: () {
-              SmartDialog.compatible.show(
-                  widget: const DialogPlaylist(),
-                  alignmentTemp: Alignment.bottomCenter);
-            },
-            width: 24,
-            height: 24,
-            color: Get.isDarkMode
-                ? const Color(0xFFCCCCCC)
-                : const Color(0xFF333333))
-      ],
-    );
+            /// 播放列表按钮
+            touchIconByAsset(
+                path: Assets.playerPlayPlaylist,
+                onTap: () {
+                  SmartDialog.compatible.show(
+                      widget: const DialogPlaylist(),
+                      alignmentTemp: Alignment.bottomCenter);
+                },
+                width: 24,
+                height: 24,
+                color: Get.isDarkMode
+                    ? const Color(0xFFCCCCCC)
+                    : const Color(0xFF333333))
+          ],
+        ));
   }
 
   Widget miniCover() {
     final currentMusic = PlayerLogic.to.playingMusic.value;
     final coverPath =
         (currentMusic.baseUrl ?? "") + (currentMusic.coverPath ?? "");
-    return showImg(SDUtils.getImgPath(fileName: coverPath), 50, 50,
-        radius: 50, hasShadow: false, onTap: widget.onTap);
+    return showImg(SDUtils.getImgPath(fileName: coverPath), 48, 48,
+        radius: 48, hasShadow: false, onTap: widget.onTap);
   }
 
   Widget marqueeMusicName(double maxWidth) {
