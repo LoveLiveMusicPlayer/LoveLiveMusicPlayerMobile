@@ -27,9 +27,11 @@ Widget showImg(String? path, double? width, double? height,
   ImageProvider<Object> noShadowImage;
   ImageProvider<Object> shadowImage;
   bool isNetImage = false;
+  bool isLogo = false;
   if (hasShadow) {
     if (path == null || path.isEmpty) {
       shadowImage = AssetImage(defPhoto);
+      isLogo = true;
     } else if (path.startsWith("assets")) {
       shadowImage = AssetImage(path);
     } else if (path.startsWith("http")) {
@@ -41,7 +43,30 @@ Widget showImg(String? path, double? width, double? height,
         shadowImage = FileImage(File(path));
       } else {
         shadowImage = AssetImage(defPhoto);
+        isLogo = true;
       }
+    }
+    if (isLogo) {
+      return Container(
+          width: width?.h,
+          height: width?.h,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(radius.h),
+            boxShadow: [
+              BoxShadow(
+                  color: shadowColor ??
+                      (Get.isDarkMode
+                          ? const Color(0xFF05080C)
+                          : const Color(0xFFD3E0EC)),
+                  blurRadius: radius.h,
+                  offset: Offset(4.h, 8.h)),
+            ],
+          ),
+          child: SvgPicture.asset(
+            Assets.logoSvgLogo,
+            width: width?.h,
+            height: width?.h,
+          ));
     }
     if (isNetImage) {
       return CachedNetworkImage(
@@ -355,15 +380,15 @@ Widget logoIcon(String path,
   return Center(
       child: Container(
           margin: margin,
-          width: width.r,
-          height: height.r,
+          width: width.h,
+          height: height.h,
           padding: EdgeInsets.all(3.r),
           decoration: BoxDecoration(
               color: color,
-              borderRadius: BorderRadius.circular(radius.h),
+              borderRadius: BorderRadius.circular(radius.r),
               boxShadow: shadowStyle),
           child: showImg(image, width, height,
-              radius: radius.h, hasShadow: false, onTap: onTap)));
+              radius: radius.r, hasShadow: false, onTap: onTap)));
 }
 
 Widget touchIcon(IconData icon, GestureTapCallback onTap,

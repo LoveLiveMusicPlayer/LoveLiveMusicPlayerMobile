@@ -1,0 +1,17 @@
+<svg id="Layer_2" data-name="Layer 2"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+    <path
+        d="M824.4,601.25c-18,20-59.5,127.5-52,183,4.5,8.5,58,12,76-4s49-110,46-134-41-45-49-63-2-37-2-90v-2c0-157.4-127.6-285-285-285s-285,127.6-285,285v2c0,53,6,72-2,90s-46,39-49,63,28,118,46,134,76,4,76,4"
+        style="fill:none;stroke:#ff0073;stroke-linecap:round;stroke-linejoin:round;stroke-width:10px" />
+    <path d="M748.07,767.29A285.47,285.47,0,0,1,468.79,825.2"
+        style="fill:none;stroke:#f4c42d;stroke-linecap:round;stroke-linejoin:round;stroke-width:10px" />
+    <path
+        d="M297.4,626.25c19,71,55,180,155.5,214.5-38.5-43.5-72.5-106.5-79.5-163.5,19,43,46,63,82,76-72-102-81-267-11-383-9,100,20,218,72.5,275.5-19-69-18.5-125.5-4.5-174.5,6,77,28,150,77,186-22-52-27-127-18.5-153.5,8.5,51.5,44.5,98.5,80.5,109.5-28-58-37-228-17.5-247.5,52,0,128.5,43.5,148.5,72.5,10,116-20,199-122,295,39,0,70-11,92-31"
+        style="fill:none;stroke:#f7931e;stroke-linecap:round;stroke-linejoin:round;stroke-width:10px" />
+    <polyline
+        points="271.4 401.25 242.4 379.25 289.4 350.25 242.4 297.25 336.4 271.25 374.4 159.25 428.4 217.25"
+        style="fill:none;stroke:#f4c42d;stroke-linecap:round;stroke-linejoin:round;stroke-width:10px" />
+    <path
+        d="M332.4,203.25c-33-28-83-18-110,32s-11,156-18,217-47,109-75,135c24-4,50-18,66-38-21,67-24,176,28,236"
+        style="fill:none;stroke:#f7931e;stroke-linecap:round;stroke-linejoin:round;stroke-width:10px" />
+</svg>

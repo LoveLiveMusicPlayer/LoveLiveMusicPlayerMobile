@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
@@ -59,14 +60,25 @@ class _DrawerPageState extends State<DrawerPage> {
         Obx(() {
           final photoPath =
               global.getCurrentGroupIcon(global.currentGroup.value);
-          return SizedBox(
-            height: 135.h,
-            child: logoIcon(photoPath,
+          Widget widget;
+          if (photoPath == Assets.logoLogo) {
+            widget = SvgPicture.asset(
+              Assets.logoSvgLogo,
+              width: 165.h,
+              height: 165.h,
+              fit: BoxFit.fitWidth,
+            );
+          } else {
+            widget = logoIcon(photoPath,
                 hasShadow: false,
-                width: photoPath == Assets.logoLogo ? 140 : 130,
-                height: photoPath == Assets.logoLogo ? 140 : 130,
-                radius: photoPath == Assets.logoLogo ? 140 : 130,
-                color: Colors.transparent),
+                width: 120,
+                height: 120,
+                radius: 120,
+                color: Colors.transparent);
+          }
+          return SizedBox(
+            height: 130.h,
+            child: widget,
           );
         }),
         Text("LoveLiveMusicPlayer",

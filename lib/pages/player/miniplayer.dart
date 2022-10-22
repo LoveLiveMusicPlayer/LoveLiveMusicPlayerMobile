@@ -95,39 +95,34 @@ class _MiniPlayerState extends State<MiniPlayer> {
   }
 
   Widget body() {
-    return Container(
-      alignment: Alignment.center,
-      color: Colors.grey.withOpacity(0.05),
-      child: Row(
-        children: [
-          /// 迷你封面
-          miniCover(),
-          SizedBox(width: 6.r),
-
-          /// 滚动歌名
-          marqueeMusicName(),
-          SizedBox(width: 10.r),
-
-          /// 播放按钮
-          playButton(),
-          SizedBox(width: 20.r),
-
-          /// 播放列表按钮
-          touchIconByAsset(
-              path: Assets.playerPlayPlaylist,
-              onTap: () {
-                SmartDialog.compatible.show(
-                    widget: const DialogPlaylist(),
-                    alignmentTemp: Alignment.bottomCenter);
-              },
-              width: 18,
-              height: 18,
-              color: Get.isDarkMode
-                  ? const Color(0xFFCCCCCC)
-                  : const Color(0xFF333333)),
-          SizedBox(width: 20.r),
-        ],
-      ),
+    final maxWidth = ScreenUtil().screenWidth - 87.w - 98.h;
+    return Row(
+      children: [
+        SizedBox(width: 8.w),
+        /// 迷你封面
+        miniCover(),
+        SizedBox(width: 8.w),
+        /// 滚动歌名
+        marqueeMusicName(maxWidth),
+        SizedBox(width: 14.w),
+        /// 播放按钮
+        playButton(),
+        SizedBox(width: 10.w),
+        /// 播放列表按钮
+        touchIconByAsset(
+            path: Assets.playerPlayPlaylist,
+            onTap: () {
+              SmartDialog.compatible.show(
+                  widget: const DialogPlaylist(),
+                  alignmentTemp: Alignment.bottomCenter);
+            },
+            width: 24,
+            height: 24,
+            color: Get.isDarkMode
+                ? const Color(0xFFCCCCCC)
+                : const Color(0xFF333333)),
+        SizedBox(width: 15.w)
+      ],
     );
   }
 
@@ -135,18 +130,12 @@ class _MiniPlayerState extends State<MiniPlayer> {
     final currentMusic = PlayerLogic.to.playingMusic.value;
     final coverPath =
         (currentMusic.baseUrl ?? "") + (currentMusic.coverPath ?? "");
-    return Row(
-      children: [
-        SizedBox(width: 6.r),
-        showImg(SDUtils.getImgPath(fileName: coverPath), 50, 50,
-            radius: 50, hasShadow: false, onTap: widget.onTap)
-      ],
-    );
+    return showImg(SDUtils.getImgPath(fileName: coverPath), 50, 50,
+        radius: 50, hasShadow: false, onTap: widget.onTap);
   }
 
-  Widget marqueeMusicName() {
-    return Expanded(
-        child: Listener(
+  Widget marqueeMusicName(double maxWidth) {
+    return Listener(
       onPointerDown: (event) {
         startPosition = event.position.dx;
       },
@@ -173,15 +162,16 @@ class _MiniPlayerState extends State<MiniPlayer> {
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics()),
-        child: renderPlayingWidget(PlayerLogic.to.playingMusic.value.musicName),
+        child: renderPlayingWidget(
+            maxWidth, PlayerLogic.to.playingMusic.value.musicName),
       ),
-    ));
+    );
   }
 
-  Widget renderPlayingWidget(String? musicName) {
+  Widget renderPlayingWidget(double maxWidth, String? musicName) {
     const textStyle = TextStyle(fontWeight: FontWeight.bold);
     return SizedBox(
-      width: 180.w,
+      width: maxWidth,
       child: InkWell(
         onDoubleTap: () {
           if (PlayerLogic.to.playingMusic.value.musicId != null) {
@@ -205,53 +195,50 @@ class _MiniPlayerState extends State<MiniPlayer> {
   }
 
   Widget playButton() {
-    return Container(
-        padding: EdgeInsets.only(left: 10.w, top: 10.w, bottom: 10.w),
-        child: StreamBuilder<PlayerState>(
-          stream: PlayerLogic.to.mPlayer.playerStateStream,
-          builder: (context, snapshot) {
-            final playerState = snapshot.data;
-            final processingState = playerState?.processingState;
-            final playing = playerState?.playing;
-            final color = Get.isDarkMode
-                ? const Color(0xFFCCCCCC)
-                : const Color(0xFF333333);
-            if (processingState == ProcessingState.loading ||
-                processingState == ProcessingState.buffering) {
-              return Container(
-                margin: const EdgeInsets.all(8.0),
-                width: 16.h,
-                height: 16.h,
-                child: const CircularProgressIndicator(),
-              );
-            } else if (playing != true) {
-              return touchIconByAsset(
-                  path: Assets.playerPlayPlay,
-                  onTap: () {
-                    if (PlayerLogic.to.playingMusic.value.musicId != null) {
-                      PlayerLogic.to.mPlayer.play();
-                    }
-                  },
-                  width: 16,
-                  height: 16,
-                  color: color);
-            } else if (processingState != ProcessingState.completed) {
-              return touchIconByAsset(
-                  path: Assets.playerPlayPause,
-                  onTap: () => PlayerLogic.to.mPlayer.pause(),
-                  width: 16,
-                  height: 16,
-                  color: color);
-            } else {
-              return touchIconByAsset(
-                  path: Assets.playerPlayPlay,
-                  onTap: () => PlayerLogic.to.mPlayer.seek(Duration.zero,
-                      index: PlayerLogic.to.mPlayer.effectiveIndices!.first),
-                  width: 16,
-                  height: 16,
-                  color: color);
-            }
-          },
-        ));
+    return StreamBuilder<PlayerState>(
+      stream: PlayerLogic.to.mPlayer.playerStateStream,
+      builder: (context, snapshot) {
+        final playerState = snapshot.data;
+        final processingState = playerState?.processingState;
+        final playing = playerState?.playing;
+        final color =
+            Get.isDarkMode ? const Color(0xFFCCCCCC) : const Color(0xFF333333);
+        if (processingState == ProcessingState.loading ||
+            processingState == ProcessingState.buffering) {
+          return Container(
+            margin: const EdgeInsets.all(8.0),
+            width: 24.h,
+            height: 24.h,
+            child: const CircularProgressIndicator(),
+          );
+        } else if (playing != true) {
+          return touchIconByAsset(
+              path: Assets.playerPlayPlay,
+              onTap: () {
+                if (PlayerLogic.to.playingMusic.value.musicId != null) {
+                  PlayerLogic.to.mPlayer.play();
+                }
+              },
+              width: 24,
+              height: 24,
+              color: color);
+        } else if (processingState != ProcessingState.completed) {
+          return touchIconByAsset(
+              path: Assets.playerPlayPause,
+              onTap: () => PlayerLogic.to.mPlayer.pause(),
+              width: 24,
+              height: 24,
+              color: color);
+        } else {
+          return touchIconByAsset(
+              path: Assets.playerPlayPlay,
+              onTap: () => PlayerLogic.to.mPlayer.seek(Duration.zero,
+                  index: PlayerLogic.to.mPlayer.effectiveIndices!.first),
+              width: 24,
+              height: 24,
+              color: color);
+        }
+      },
+    );
   }
 }
