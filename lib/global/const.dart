@@ -1,3 +1,5 @@
+import 'package:lovelivemusicplayer/main.dart';
+
 class Const {
   // 设计图宽度 dp
   static const double uiWidth = 375;
@@ -31,12 +33,15 @@ class Const {
   static const String ossUrl =
       "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/";
 
-  static const String dataUrl =
-      "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/data/data.json";
+  static const String ownOssUrl =
+      "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/data/";
 
-  static const String artistModelUrl =
-      "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/data/artist.json";
+  // 数据更新桥文件
+  static String dataUrl = "$ownOssUrl$env/data.json";
 
-  static const String updateUrl =
-      "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/version/version.json";
+  // 歌手文件
+  static String artistModelUrl = "$ownOssUrl$env/artist.json";
+
+  // 版本更新文件
+  static String updateUrl = "$ownOssUrl$env/version.json";
 }

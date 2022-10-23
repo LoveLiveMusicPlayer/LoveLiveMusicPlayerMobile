@@ -32,6 +32,7 @@ var isDark = false;
 var appVersion = "1.0.0";
 var hasAIPic = false;
 var needRemoveCover = true;
+var env = const bool.fromEnvironment("dart.vm.product") ? "prod" : "pre";
 
 void main() async {
   // 启动屏开启

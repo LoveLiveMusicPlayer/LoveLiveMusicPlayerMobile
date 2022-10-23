@@ -18,12 +18,12 @@ class History {
   int timestamp;
 
   factory History.fromJson(Map<String, dynamic> json) => History(
-    musicId: json["musicId"],
-    timestamp: json["timestamp"],
-  );
+        musicId: json["musicId"],
+        timestamp: json["timestamp"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "musicId": musicId,
-    "timestamp": timestamp,
-  };
+        "musicId": musicId,
+        "timestamp": timestamp,
+      };
 }

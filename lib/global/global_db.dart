@@ -31,6 +31,7 @@ import 'package:lovelivemusicplayer/models/TransData.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/utils/sp_util.dart';
 
 class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   late MusicDatabase database;
@@ -251,6 +252,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     return await albumDao.findAlbumByUId(uid);
   }
 
+  /// 清空歌曲数据
   Future<void> clearAllMusic() async {
     try {
       await albumDao.deleteAllAlbums();
@@ -261,14 +263,13 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     }
   }
 
-  /// 清空全部专辑
-  Future<void> clearAllAlbum() async {
+  /// 清空用户数据
+  Future<void> clearAllUserData() async {
     try {
-      await albumDao.deleteAllAlbums();
-      await musicDao.deleteAllMusics();
-      await lyricDao.deleteAllLyrics();
-      await artistDao.deleteAllArtists();
+      await SpUtil.clear();
       await menuDao.deleteAllMenus();
+      await loveDao.deleteAllLoves();
+      await historyDao.deleteAllHistorys();
       await playListMusicDao.deleteAllPlayListMusics();
     } catch (e) {
       Log4f.e(msg: e.toString(), writeFile: true);
@@ -292,7 +293,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     final history = await historyDao.findHistoryById(musicId);
     final timestamp = DateTime.now().millisecondsSinceEpoch;
     if (history == null) {
-      await historyDao.insertHistory(History(musicId: musicId, timestamp: timestamp));
+      await historyDao
+          .insertHistory(History(musicId: musicId, timestamp: timestamp));
     } else {
       history.timestamp = timestamp;
       await historyDao.updateHistory(history);

@@ -25,7 +25,8 @@ part 'database.g.dart';
 
 @TypeConverters([StringListConverter])
 @Database(
-    version: 3, entities: [Album, Lyric, Music, PlayListMusic, Menu, Artist, Love, History])
+    version: 3,
+    entities: [Album, Lyric, Music, PlayListMusic, Menu, Artist, Love, History])
 abstract class MusicDatabase extends FloorDatabase {
   AlbumDao get albumDao;
 

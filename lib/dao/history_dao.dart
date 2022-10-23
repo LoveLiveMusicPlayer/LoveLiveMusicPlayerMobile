@@ -1,5 +1,5 @@
-import 'package:lovelivemusicplayer/models/History.dart';
 import 'package:floor/floor.dart';
+import 'package:lovelivemusicplayer/models/History.dart';
 
 @dao
 abstract class HistoryDao {

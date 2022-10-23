@@ -41,7 +41,8 @@ class ResetDataDialog extends StatelessWidget {
                 ])));
   }
 
-  Widget renderButton(String text, Callback onBackListener, {bool hasAfter = true}) {
+  Widget renderButton(String text, Callback onBackListener,
+      {bool hasAfter = true}) {
     return Container(
       width: 200.w,
       decoration: BoxDecoration(
