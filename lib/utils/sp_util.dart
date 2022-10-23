@@ -106,8 +106,8 @@ class SpUtil {
     await _sp?.remove(key);
   }
 
-  static clear() async {
-    await _sp?.erase();
+  static Future<void> clear() async {
+    return await _sp?.erase();
   }
 
   static bool isInitialized() {

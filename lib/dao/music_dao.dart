@@ -39,4 +39,7 @@ abstract class MusicDao {
 
   @Query("DELETE FROM Music")
   Future<void> deleteAllMusics();
+
+  @Query("UPDATE Music SET isLove = REPLACE(isLove, 1, 0)")
+  Future<void> deleteAllLove();
 }

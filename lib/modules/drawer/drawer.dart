@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,10 +22,12 @@ import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/pages/home/nested_page/nested_controller.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
+import 'package:lovelivemusicplayer/widgets/reset_data_dialog.dart';
 import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -163,11 +167,11 @@ class _DrawerPageState extends State<DrawerPage> {
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
-              child: scrollView(),
+              child: scrollView(context),
             )));
   }
 
-  Widget scrollView() {
+  Widget scrollView(BuildContext context) {
     return SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Obx(() {
@@ -270,16 +274,43 @@ class _DrawerPageState extends State<DrawerPage> {
               DrawerFunctionButton(
                 icon: Assets.drawerDrawerReset,
                 text: "清理数据",
-                onTap: () async {
-                  SmartDialog.compatible
-                      .showLoading(msg: "重置中...", backDismiss: false);
-                  await DBLogic.to.clearAllAlbum();
-                  await SpUtil.clear();
-                  await DBLogic.to
-                      .findAllListByGroup(GlobalLogic.to.currentGroup.value);
-                  SmartDialog.compatible.dismiss();
-                  SmartDialog.compatible
-                      .showToast("清理成功", time: const Duration(seconds: 5));
+                onTap: () {
+                  SmartDialog.compatible.show(
+                      widget: ResetDataDialog(
+                          deleteMusicData: () async {
+                            SpUtil.remove(Const.spDataVersion);
+                            await DBLogic.to.clearAllMusic();
+                          },
+                          deleteUserData: () async {
+                            await SpUtil.clear();
+                            await DBLogic.to.menuDao.deleteAllMenus();
+                            await DBLogic.to.playListMusicDao.deleteAllPlayListMusics();
+                            await DBLogic.to.musicDao.deleteAllLove();
+                            SpUtil.clear().then((value) {
+                              SpUtil.put(Const.spAllowPermission, true).then((value) async {
+                                // Get.deleteAll(force: true);
+                                // Phoenix.rebirth(Get.context!);
+                                // Get.reset();
+                                SmartDialog.compatible.dismiss();
+                                SmartDialog.compatible.showToast("应用即将关闭，请手动重启");
+                                Future.delayed(const Duration(seconds: 2), () {
+                                  if (Platform.isIOS) {
+                                    exit(0);
+                                  } else {
+                                    SystemNavigator.pop();
+                                  }
+                                });
+                              });
+                            });
+                          },
+                          afterDelete: () async {
+                            SmartDialog.compatible.dismiss();
+                            SmartDialog.compatible
+                                .showToast("清理成功", time: const Duration(seconds: 5));
+                            await DBLogic.to
+                                .findAllListByGroup(GlobalLogic.to.currentGroup.value);
+                          }
+                      ));
                 },
               ),
               // SizedBox(height: 8.h),

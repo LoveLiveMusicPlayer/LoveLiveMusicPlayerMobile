@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
@@ -76,7 +77,7 @@ void main() async {
     };
 
     runZonedGuarded(
-      () => runApp(const MyApp()),
+      () => runApp(Phoenix(child: const MyApp())),
       (error, stackTrace) {
         // 没被catch的异常
         reportErrorAndLog(makeDetails(error, stackTrace));
