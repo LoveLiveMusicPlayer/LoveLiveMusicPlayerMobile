@@ -6,6 +6,8 @@ import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/dao/album_dao.dart';
 import 'package:lovelivemusicplayer/dao/artist_dao.dart';
 import 'package:lovelivemusicplayer/dao/database.dart';
+import 'package:lovelivemusicplayer/dao/history_dao.dart';
+import 'package:lovelivemusicplayer/dao/love_dao.dart';
 import 'package:lovelivemusicplayer/dao/lyric_dao.dart';
 import 'package:lovelivemusicplayer/dao/menu_dao.dart';
 import 'package:lovelivemusicplayer/dao/music_dao.dart';
@@ -20,6 +22,8 @@ import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/ArtistModel.dart';
 import 'package:lovelivemusicplayer/models/FtpMusic.dart';
+import 'package:lovelivemusicplayer/models/History.dart';
+import 'package:lovelivemusicplayer/models/Love.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/models/PlayListMusic.dart';
@@ -36,6 +40,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   late PlayListMusicDao playListMusicDao;
   late MenuDao menuDao;
   late ArtistDao artistDao;
+  late LoveDao loveDao;
+  late HistoryDao historyDao;
 
   final artistList = <ArtistModel>[];
   final singleMap = <String, String>{};
@@ -49,13 +55,15 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   Future<void> onInit() async {
     database = await $FloorMusicDatabase
         .databaseBuilder('app_database.db')
-        .addMigrations([migration1to2]).build();
+        .addMigrations([migration1to2, migration2to3]).build();
     albumDao = database.albumDao;
     lyricDao = database.lyricDao;
     musicDao = database.musicDao;
     playListMusicDao = database.playListMusicDao;
     menuDao = database.menuDao;
     artistDao = database.artistDao;
+    loveDao = database.loveDao;
+    historyDao = database.historyDao;
     CachedNetworkImage.logLevel = CacheManagerLogLevel.debug;
     await findAllListByGroup(Const.groupAll);
     await findAllPlayListMusics();
@@ -111,10 +119,9 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         artistArr.sort((a, b) => AppUtils.comparePeopleNumber(a.uid, b.uid));
         GlobalLogic.to.artistList.value = artistArr;
       }
-      GlobalLogic.to.recentList.value = await musicDao.findRecentMusics();
       GlobalLogic.to.albumList.value = allAlbums;
-
-      findAllLoveListByGroup(group);
+      await findAllHistoryListByGroup(group);
+      await findAllLoveListByGroup(group);
       await findAllMenuList();
 
       GlobalLogic.to.databaseInitOver.value = true;
@@ -278,16 +285,43 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     return await musicDao.findMusicByUId(uid);
   }
 
+  /****************  History  **************/
+
   /// 更新歌曲最后一次的播放时间
   Future<void> refreshMusicTimestamp(String musicId) async {
-    final music = await musicDao.findMusicByUId(musicId);
-    if (music == null) {
-      return;
+    final history = await historyDao.findHistoryById(musicId);
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    if (history == null) {
+      await historyDao.insertHistory(History(musicId: musicId, timestamp: timestamp));
+    } else {
+      history.timestamp = timestamp;
+      await historyDao.updateHistory(history);
     }
-    music.timestamp = DateTime.now().millisecondsSinceEpoch;
-    await musicDao.updateMusic(music);
-    GlobalLogic.to.recentList.value = await musicDao.findRecentMusics();
-    return;
+    final recentlyList = await historyDao.findAllHistorys();
+    final tempList = <Music>[];
+    for (var history in recentlyList) {
+      for (var music in GlobalLogic.to.musicList) {
+        if (music.musicId == history.musicId) {
+          tempList.add(music);
+        }
+      }
+    }
+    GlobalLogic.to.recentList.value = tempList;
+  }
+
+  Future<void> findAllHistoryListByGroup(String group) async {
+    final historyList = await historyDao.findAllHistorys();
+    final tempList = <Music>[];
+    for (var history in historyList) {
+      for (var music in GlobalLogic.to.musicList) {
+        if (group == Const.groupAll || group == music.group) {
+          if (music.musicId == history.musicId) {
+            tempList.add(music);
+          }
+        }
+      }
+    }
+    GlobalLogic.to.recentList.value = tempList;
   }
 
   /****************  Menu  ****************/
@@ -451,17 +485,17 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   /****************  Love  ****************/
 
   /// 获取我喜欢列表
-  findAllLoveListByGroup(String group) {
+  findAllLoveListByGroup(String group) async {
     try {
       final loveList = <Music>[];
-      GlobalLogic.to.musicList.where((music) {
-        if (group == Const.groupAll) {
-          return music.isLove;
-        } else {
-          return music.isLove && music.group == group;
+      await Future.forEach<Music>(GlobalLogic.to.musicList, (music) async {
+        if (group == Const.groupAll || music.group == group) {
+          final isLove = (await loveDao.findLoveById(music.musicId!) != null);
+          music.isLove = isLove;
+          if (isLove) {
+            loveList.add(music);
+          }
         }
-      }).forEach((music) {
-        loveList.add(music);
       });
       GlobalLogic.to.loveList.value = loveList;
     } catch (e) {
@@ -473,7 +507,16 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   Future<Music?> updateLove(Music music, {bool? isLove}) async {
     try {
       music.isLove = isLove ?? !music.isLove;
-      await musicDao.updateMusic(music);
+      if (music.isLove) {
+        final love = await loveDao.findLoveById(music.musicId!);
+        if (love == null) {
+          await loveDao.insertLove(Love(
+              musicId: music.musicId!,
+              timestamp: DateTime.now().millisecondsSinceEpoch));
+        }
+      } else {
+        await loveDao.deleteLoveById(music.musicId!);
+      }
       GlobalLogic.to.musicList
           .firstWhere((mMusic) => mMusic.musicId == music.musicId)
           .isLove = music.isLove;
@@ -486,22 +529,9 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
   /// 更新歌曲列表中全部的喜欢状态
   Future<void> updateLoveList(List<Music> musicList, bool changeStatus) async {
-    try {
-      final changeIdList = <String>[];
-      for (var music in musicList) {
-        if (music.isLove != changeStatus) {
-          changeIdList.add(music.musicId!);
-        }
-      }
-      await musicDao.updateLoveStatus(changeStatus, changeIdList);
-      GlobalLogic.to.musicList
-          .where((music) => changeIdList.contains(music.musicId))
-          .forEach((element) {
-        element.isLove = changeStatus;
-      });
-    } catch (e) {
-      Log4f.e(msg: e.toString(), writeFile: true);
-    }
+    return await Future.forEach<Music>(musicList, (music) async {
+      await updateLove(music, isLove: changeStatus);
+    });
   }
 
   /****************  Artist  ****************/

@@ -2,13 +2,17 @@ import 'dart:async';
 
 import 'package:floor/floor.dart';
 import 'package:lovelivemusicplayer/dao/artist_dao.dart';
+import 'package:lovelivemusicplayer/dao/history_dao.dart';
 import 'package:lovelivemusicplayer/dao/list_converter.dart';
+import 'package:lovelivemusicplayer/dao/love_dao.dart';
 import 'package:lovelivemusicplayer/dao/lyric_dao.dart';
 import 'package:lovelivemusicplayer/dao/menu_dao.dart';
 import 'package:lovelivemusicplayer/dao/music_dao.dart';
 import 'package:lovelivemusicplayer/dao/playlist_dao.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
+import 'package:lovelivemusicplayer/models/History.dart';
+import 'package:lovelivemusicplayer/models/Love.dart';
 import 'package:lovelivemusicplayer/models/Lyric.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
@@ -21,7 +25,7 @@ part 'database.g.dart';
 
 @TypeConverters([StringListConverter])
 @Database(
-    version: 2, entities: [Album, Lyric, Music, PlayListMusic, Menu, Artist])
+    version: 3, entities: [Album, Lyric, Music, PlayListMusic, Menu, Artist, Love, History])
 abstract class MusicDatabase extends FloorDatabase {
   AlbumDao get albumDao;
 
@@ -34,6 +38,10 @@ abstract class MusicDatabase extends FloorDatabase {
   MenuDao get menuDao;
 
   ArtistDao get artistDao;
+
+  LoveDao get loveDao;
+
+  HistoryDao get historyDao;
 }
 
 final migration1to2 = Migration(1, 2, (database) async {
@@ -41,4 +49,15 @@ final migration1to2 = Migration(1, 2, (database) async {
     ALTER TABLE Music ADD COLUMN `date` TEXT
     ''';
   await database.execute(alterMusicTableSql);
+});
+
+final migration2to3 = Migration(2, 3, (database) async {
+  const insertLoveTableSql = '''
+    CREATE TABLE Love (musicId TEXT PRIMARY KEY, timestamp INTEGER)
+  ''';
+  const insertHistoryTableSql = '''
+    CREATE TABLE History (musicId TEXT PRIMARY KEY, timestamp INTEGER)
+  ''';
+  await database.execute(insertLoveTableSql);
+  await database.execute(insertHistoryTableSql);
 });
