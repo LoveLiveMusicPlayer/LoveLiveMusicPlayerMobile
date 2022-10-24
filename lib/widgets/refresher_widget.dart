@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
-import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class RefresherWidget extends StatefulWidget {
@@ -74,14 +74,14 @@ class _RefresherWidgetState extends State<RefresherWidget> {
           Image.asset(
             widget.emptyImg,
             width: 80.h,
-            height: 80.h,
+            height: 80.h
           ),
           SizedBox(
-            height: 10.h,
+            height: 10.h
           ),
           Text(
             widget.emptyMsg,
-            style: TextStyle(fontSize: 18.sp, color: ColorMs.colorBFBFBF),
+            style: TextStyleMs.colorBFBFBF_18
           )
         ],
       ),

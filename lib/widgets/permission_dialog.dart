@@ -22,7 +22,7 @@ class PermissionDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final titleColor =
-        Get.isDarkMode ? TextStyleMs.white_18_bold : TextStyleMs.black_18_bold;
+        Get.isDarkMode ? TextStyleMs.whiteBold_18 : TextStyleMs.blackBold_18;
     final textColor =
         Get.isDarkMode ? TextStyleMs.white_14 : TextStyleMs.black_14;
     final miniTextColor =
@@ -72,7 +72,7 @@ class PermissionDialog extends StatelessWidget {
                     },
                     child: Text(
                       "同意并继续",
-                      style: TextStyle(fontSize: 16.sp, color: Colors.white),
+                      style: TextStyleMs.white_16,
                     )),
               ),
               TextButton(

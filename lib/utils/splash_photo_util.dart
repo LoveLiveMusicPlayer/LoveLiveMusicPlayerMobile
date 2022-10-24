@@ -18,6 +18,7 @@ class SplashPhoto {
     "${frontUrl}shizuku/bg_shizuku_1.png",
     "${frontUrl}you/bg_you_1.png",
     "${frontUrl}chisato/bg_chisato_1.png",
+    "${frontUrl}kotori/bg_kotori_1.png"
   ];
 
   Future<Widget?> getRandomPhotoView() async {

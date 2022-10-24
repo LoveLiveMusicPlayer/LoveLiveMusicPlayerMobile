@@ -49,8 +49,8 @@ class DialogAddSongSheet extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Get.isDarkMode
-                    ? TextStyleMs.white_17_bold
-                    : TextStyleMs.black_17_bold),
+                    ? TextStyleMs.whiteBold_17
+                    : TextStyleMs.blackBold_17),
           ),
           Divider(
             height: 0.5.h,
@@ -150,13 +150,10 @@ class DialogAddSongSheet extends StatelessWidget {
                   width: 10.h,
                 ),
                 Expanded(
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                        color:
-                            Get.isDarkMode ? Colors.white : ColorMs.color666666,
-                        fontSize: 15.sp),
-                  ),
+                  child: Text(title,
+                      style: Get.isDarkMode
+                          ? TextStyleMs.white_15
+                          : TextStyleMs.lightBlack_15),
                 )
               ],
             ),

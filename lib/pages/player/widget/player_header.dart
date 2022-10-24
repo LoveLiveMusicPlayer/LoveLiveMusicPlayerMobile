@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
-import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class PlayerHeader extends StatelessWidget {
@@ -55,11 +54,9 @@ class PlayerHeader extends StatelessWidget {
                 Text(
                   PlayerLogic.to.playingMusic.value.artist ?? "",
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      color: GlobalLogic.to.hasSkin.value
-                          ? ColorMs.colorDFDFDF
-                          : ColorMs.color999999,
-                      fontSize: 12.sp),
+                  style: GlobalLogic.to.hasSkin.value
+                      ? TextStyleMs.colorDFDFDF_12
+                      : TextStyleMs.gray_12,
                   maxLines: 1,
                 )
               ],

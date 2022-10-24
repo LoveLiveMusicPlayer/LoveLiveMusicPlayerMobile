@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class SeekBar extends StatefulWidget {
   final Duration duration;
@@ -25,6 +26,9 @@ class SeekBar extends StatefulWidget {
 
 class _SeekBarState extends State<SeekBar> {
   double? _dragValue;
+  final textStyle = GlobalLogic.to.hasSkin.value
+      ? TextStyleMs.colorDFDFDF_12
+      : TextStyleMs.gray_12;
 
   @override
   Widget build(BuildContext context) {
@@ -83,22 +87,8 @@ class _SeekBarState extends State<SeekBar> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text(
-                  currentMS,
-                  style: TextStyle(
-                      fontSize: 12.sp,
-                      color: GlobalLogic.to.hasSkin.value
-                          ? ColorMs.colorDFDFDF
-                          : ColorMs.color999999),
-                ),
-                Text(
-                  totalMS,
-                  style: TextStyle(
-                      fontSize: 12.sp,
-                      color: GlobalLogic.to.hasSkin.value
-                          ? ColorMs.colorDFDFDF
-                          : ColorMs.color999999),
-                )
+                Text(currentMS, style: textStyle),
+                Text(totalMS, style: textStyle)
               ],
             ))
       ],

@@ -66,7 +66,7 @@ class _ListViewItemPlaylist extends State<ListViewItemPlaylist> {
                       overflow: TextOverflow.ellipsis,
                       style: Get.isDarkMode
                           ? TextStyleMs.whiteBold_14
-                          : TextStyleMs.black_18_bold),
+                          : TextStyleMs.blackBold_18),
                 ),
                 SizedBox(
                   width: 4.w,
@@ -78,7 +78,7 @@ class _ListViewItemPlaylist extends State<ListViewItemPlaylist> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
-                    style: TextStyleMs.gray_12_bold,
+                    style: TextStyleMs.grayBold_12,
                   ),
                 )
               ],

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
-import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 ///歌手 item
 class ListViewItemSinger extends StatefulWidget {
@@ -39,16 +39,12 @@ class _ListViewItemSingerState extends State<ListViewItemSinger> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  widget.artist.name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 15.sp,
-                      color:
-                          Get.isDarkMode ? Colors.white : ColorMs.color333333,
-                      fontWeight: FontWeight.bold),
-                ),
+                Text(widget.artist.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Get.isDarkMode
+                        ? TextStyleMs.whiteBold_15
+                        : TextStyleMs.blackBold_15),
                 SizedBox(
                   height: 4.h,
                 ),
@@ -56,10 +52,7 @@ class _ListViewItemSingerState extends State<ListViewItemSinger> {
                   "${widget.artist.music.length}首歌",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    color: ColorMs.color999999,
-                  ),
+                  style: TextStyleMs.gray_12,
                 ),
               ],
             ),

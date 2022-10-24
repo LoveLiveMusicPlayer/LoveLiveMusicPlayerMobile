@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class ResetDataDialog extends StatelessWidget {
   final Callback deleteMusicData;
@@ -61,7 +62,7 @@ class ResetDataDialog extends StatelessWidget {
           },
           child: Text(
             text,
-            style: TextStyle(fontSize: 16.sp, color: Colors.white),
+            style: TextStyleMs.white_16,
           )),
     );
   }

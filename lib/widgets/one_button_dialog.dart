@@ -93,7 +93,7 @@ class OneButtonDialog extends StatelessWidget {
                 },
                 child: Text(
                   "确定",
-                  style: TextStyle(fontSize: 16.sp, color: Colors.white),
+                  style: TextStyleMs.white_16,
                 )),
           )
         ],

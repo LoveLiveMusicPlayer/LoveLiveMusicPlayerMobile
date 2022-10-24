@@ -50,8 +50,8 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Get.isDarkMode
-                    ? TextStyleMs.white_17_bold
-                    : TextStyleMs.black_17_bold),
+                    ? TextStyleMs.whiteBold_17
+                    : TextStyleMs.blackBold_17),
           ),
           Divider(
               height: 0.5.h,
@@ -82,9 +82,9 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
             children: [
               Text(
                 title,
-                style: TextStyle(
-                    color: Get.isDarkMode ? Colors.white : ColorMs.color666666,
-                    fontSize: 15.sp),
+                style: Get.isDarkMode
+                    ? TextStyleMs.white_15
+                    : TextStyleMs.lightBlack_15,
               ),
               SizedBox(
                 width: 10.w,
@@ -93,10 +93,9 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
                   child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Text(message ?? "未知",
-                    style: TextStyle(
-                        color:
-                            Get.isDarkMode ? Colors.white : ColorMs.color666666,
-                        fontSize: 15.sp)),
+                    style: Get.isDarkMode
+                        ? TextStyleMs.white_15
+                        : TextStyleMs.lightBlack_15),
               ))
             ],
           ),

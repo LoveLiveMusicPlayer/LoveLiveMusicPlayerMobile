@@ -90,10 +90,9 @@ class DialogMoreWithMenu extends StatelessWidget {
                 Expanded(
                   child: Text(
                     title,
-                    style: TextStyle(
-                        color:
-                            Get.isDarkMode ? Colors.white : ColorMs.color666666,
-                        fontSize: 15.sp),
+                    style: Get.isDarkMode
+                        ? TextStyleMs.white_15
+                        : TextStyleMs.lightBlack_15,
                   ),
                 )
               ],

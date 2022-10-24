@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class DialogBottomBtn extends StatelessWidget {
   List<BtnItem> list;
@@ -51,15 +52,12 @@ class DialogBottomBtn extends StatelessWidget {
               color:
                   Get.isDarkMode ? ColorMs.colorD1E0F3 : ColorMs.color666666),
           SizedBox(height: 7.h),
-          Text(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-                color:
-                    Get.isDarkMode ? ColorMs.colorD1E0F3 : ColorMs.color666666,
-                fontSize: 15.sp),
-          ),
+          Text(title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Get.isDarkMode
+                  ? TextStyleMs.colorD1E0F3_15
+                  : TextStyleMs.lightBlack_15),
           SizedBox(
             height: 20.h,
           )

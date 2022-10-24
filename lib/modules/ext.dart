@@ -38,7 +38,8 @@ Widget showImg(String? path, double? width, double? height,
       shadowImage = AssetImage(path);
     } else if (path.startsWith("http")) {
       isNetImage = true;
-      shadowImage = CachedNetworkImageProvider(path, cacheManager: AppUtils.cacheManager);
+      shadowImage =
+          CachedNetworkImageProvider(path, cacheManager: AppUtils.cacheManager);
     } else {
       final file = File(path);
       if (file.existsSync()) {
@@ -143,7 +144,8 @@ Widget showImg(String? path, double? width, double? height,
       isNetImage = true;
       noShadowImage = CachedNetworkImageProvider(path,
           cacheManager: AppUtils.cacheManager,
-          maxWidth: width?.h.toInt(), maxHeight: width?.h.toInt());
+          maxWidth: width?.h.toInt(),
+          maxHeight: width?.h.toInt());
     } else {
       final file = File(path);
       if (file.existsSync()) {

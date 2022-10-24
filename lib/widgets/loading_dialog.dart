@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class LoadingDialog extends Dialog {
   String mag = "加载中...";
@@ -32,7 +33,7 @@ class LoadingDialog extends Dialog {
                 padding: EdgeInsets.symmetric(horizontal: 2.w),
                 child: Text(
                   mag,
-                  style: TextStyle(color: Colors.white, fontSize: 17.w),
+                  style: TextStyleMs.white_17,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ))
