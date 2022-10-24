@@ -29,6 +29,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
   final scrollList = <Widget>[];
   ImageProvider? provider;
   double startPosition = 0;
+  final maxWidth = ScreenUtil().screenWidth - 85.w - 96.h;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +96,6 @@ class _MiniPlayerState extends State<MiniPlayer> {
   }
 
   Widget body() {
-    final maxWidth = ScreenUtil().screenWidth - 85.w - 96.h;
     return Container(
         alignment: Alignment.center,
         color: Colors.grey.withOpacity(0.15),
@@ -108,12 +108,13 @@ class _MiniPlayerState extends State<MiniPlayer> {
             SizedBox(width: 8.w),
 
             /// 滚动歌名
-            marqueeMusicName(maxWidth),
+            marqueeMusicName(),
             SizedBox(width: 14.w),
 
             /// 播放按钮
             SizedBox(
               width: 24.h,
+              height: 24.h,
               child: playButton(),
             ),
             SizedBox(width: 10.w),
@@ -143,7 +144,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
         radius: 48, hasShadow: false, onTap: widget.onTap);
   }
 
-  Widget marqueeMusicName(double maxWidth) {
+  Widget marqueeMusicName() {
     return Listener(
       onPointerDown: (event) {
         startPosition = event.position.dx;
@@ -171,13 +172,12 @@ class _MiniPlayerState extends State<MiniPlayer> {
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics()),
-        child: renderPlayingWidget(
-            maxWidth, PlayerLogic.to.playingMusic.value.musicName),
+        child: renderPlayingWidget(PlayerLogic.to.playingMusic.value.musicName),
       ),
     );
   }
 
-  Widget renderPlayingWidget(double maxWidth, String? musicName) {
+  Widget renderPlayingWidget(String? musicName) {
     const textStyle = TextStyle(fontWeight: FontWeight.bold);
     return SizedBox(
       width: maxWidth,

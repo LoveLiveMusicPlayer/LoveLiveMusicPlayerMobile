@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 
@@ -61,7 +62,7 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
                   child: CircularCheckBox(
                       checkd: widget.checked,
                       uncheckedIconColor: const Color(0xff999999),
-                      checkIconColor: const Color(0xFFF940A7),
+                      checkIconColor: ColorMs.colorF940A7,
                       onCheckd: (checked) {
                         widget.checked = checked;
                         widget.onItemTap(widget.album, checked);

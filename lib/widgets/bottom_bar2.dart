@@ -7,6 +7,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 
 class BottomBar2 extends StatelessWidget {
   const BottomBar2({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class BottomBar2 extends StatelessWidget {
                   height: 18.h,
                   width: 18.h,
                   color: mIndex == 0
-                      ? const Color(0xFFF940A7)
+                      ? ColorMs.colorF940A7
                       : const Color(0xFFD1E0F3)),
               label: '我喜欢'),
           BottomNavigationBarItem(
@@ -34,7 +35,7 @@ class BottomBar2 extends StatelessWidget {
                   height: 18.h,
                   width: 18.h,
                   color: mIndex == 1
-                      ? const Color(0xFFF940A7)
+                      ? ColorMs.colorF940A7
                       : const Color(0xFFD1E0F3)),
               label: '歌单'),
           BottomNavigationBarItem(
@@ -42,7 +43,7 @@ class BottomBar2 extends StatelessWidget {
                   height: 18.h,
                   width: 18.h,
                   color: mIndex == 2
-                      ? const Color(0xFFF940A7)
+                      ? ColorMs.colorF940A7
                       : const Color(0xFFD1E0F3)),
               label: '最近播放'),
         ],

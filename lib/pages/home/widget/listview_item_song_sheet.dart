@@ -6,6 +6,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
@@ -90,10 +91,10 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
     if (widget.showDevicePic == true) {
       if (widget.menu.id <= 100) {
         return SvgPicture.asset(Assets.syncIconComputer,
-            color: const Color(0xFFF940A7), width: 13.h, height: 20.h);
+            color: ColorMs.colorF940A7, width: 13.h, height: 20.h);
       } else {
         return SvgPicture.asset(Assets.syncIconPhone,
-            color: const Color(0xFFF940A7), width: 13.h, height: 20.h);
+            color: ColorMs.colorF940A7, width: 13.h, height: 20.h);
       }
     }
     return Container();

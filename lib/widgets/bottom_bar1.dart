@@ -7,6 +7,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class BottomBar extends StatelessWidget {
                   height: 18.h,
                   width: 18.h,
                   color: mIndex == 0
-                      ? const Color(0xFFF940A7)
+                      ? ColorMs.colorF940A7
                       : const Color(0xFFD1E0F3)),
               label: '歌曲'),
           BottomNavigationBarItem(
@@ -34,7 +35,7 @@ class BottomBar extends StatelessWidget {
                   height: 18.h,
                   width: 18.h,
                   color: mIndex == 1
-                      ? const Color(0xFFF940A7)
+                      ? ColorMs.colorF940A7
                       : const Color(0xFFD1E0F3)),
               label: '专辑'),
           BottomNavigationBarItem(
@@ -42,7 +43,7 @@ class BottomBar extends StatelessWidget {
                   height: 18.h,
                   width: 18.h,
                   color: mIndex == 2
-                      ? const Color(0xFFF940A7)
+                      ? ColorMs.colorF940A7
                       : const Color(0xFFD1E0F3)),
               label: '歌手'),
         ],
@@ -50,7 +51,7 @@ class BottomBar extends StatelessWidget {
         // backgroundColor: Colors.transparent,
         backgroundColor: GlobalLogic.to
             .getThemeColor(const Color(0xFF4e4e4e), const Color(0xFFFAFAFA)),
-        selectedItemColor: const Color(0xFFF940A7),
+        selectedItemColor: ColorMs.colorF940A7,
         unselectedItemColor: const Color(0xFFD1E0F3),
         onTap: (index) {
           if (HomeController.to.state.currentIndex.value == index) {

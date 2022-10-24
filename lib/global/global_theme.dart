@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
+
+final ThemeData theme = ThemeData();
 
 //主题
 final ThemeData lightTheme = ThemeData(
     accentColor: Colors.green[300],
     brightness: Brightness.light,
-    primaryColor: const Color(0xFFF2F8FF),
-    scaffoldBackgroundColor: const Color(0xFFF2F8FF),
     bottomAppBarColor: Colors.black,
-    textTheme: TextTheme(
-        titleSmall: TextStyle(fontSize: 14.sp, color: const Color(0xFF333333))),
+    primaryColor: ColorMs.colorLightPrimary,
+    canvasColor: ColorMs.colorLightPrimary,
+    scaffoldBackgroundColor: ColorMs.colorLightPrimary,
+    textTheme: TextTheme(titleSmall: TextStyleMs.black_14),
     iconTheme: IconThemeData(color: Colors.grey[800]),
-    canvasColor: const Color(0xFFF2F8FF),
     appBarTheme: AppBarTheme(
       shadowColor: Colors.green[300]?.withOpacity(.1),
       elevation: 0.0,
@@ -20,11 +22,10 @@ final ThemeData darkTheme = ThemeData(
     accentColor: Colors.blue[300],
     brightness: Brightness.dark,
     bottomAppBarColor: Colors.white,
-    primaryColor: Colors.grey[850],
-    canvasColor: Colors.grey[850],
-    scaffoldBackgroundColor: Colors.grey[850],
-    textTheme:
-        TextTheme(titleSmall: TextStyle(fontSize: 14.sp, color: Colors.white)),
+    primaryColor: ColorMs.colorNightPrimary,
+    canvasColor: ColorMs.colorNightPrimary,
+    scaffoldBackgroundColor: ColorMs.colorNightPrimary,
+    textTheme: TextTheme(titleSmall: TextStyleMs.white_14),
     iconTheme: IconThemeData(color: Colors.grey[300]),
     appBarTheme: AppBarTheme(
       shadowColor: Colors.blue[300]?.withOpacity(.1),

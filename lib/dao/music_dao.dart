@@ -18,9 +18,6 @@ abstract class MusicDao {
   @Query('SELECT * FROM Music WHERE musicId = :musicId')
   Future<Music?> findMusicByUId(String musicId);
 
-  @Query("SELECT * FROM Music WHERE isLove = true")
-  Future<List<Music>> findLovedMusic();
-
   @Query(
       "SELECT * FROM Music WHERE `timestamp` > 0 ORDER BY `timestamp` DESC LIMIT 100")
   Future<List<Music>> findRecentMusics();
@@ -33,9 +30,6 @@ abstract class MusicDao {
 
   @update
   Future<void> updateMusic(Music music);
-
-  @Query("UPDATE Music SET isLove = :isLove WHERE musicId IN (:musicIds)")
-  Future<void> updateLoveStatus(bool isLove, List<String> musicIds);
 
   @Query("DELETE FROM Music")
   Future<void> deleteAllMusics();

@@ -20,6 +20,7 @@ import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/details/widget/details_header.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/circle_widget.dart';
@@ -320,12 +321,12 @@ class _MusicTransformState extends State<MusicTransform> {
               size: Size(160.h, 160.h),
               painter: CircleView(
                 completePercent: isStartDownload ? percent.roundToDouble() : 0,
-                completeColor: const Color(0xFFF940A7),
-                lineColors: [const Color(0xFFF940A7)],
+                completeColor: ColorMs.colorF940A7,
+                lineColors: [ColorMs.colorF940A7],
                 completeWidth: 8.w,
                 width: 1.w,
                 isDividerRound: true,
-                lineColor: const Color(0xFFF940A7),
+                lineColor: ColorMs.colorF940A7,
               ),
             ),
           ),
@@ -546,7 +547,7 @@ class _MusicTransformState extends State<MusicTransform> {
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               SvgPicture.asset(asset,
-                  color: const Color(0xFFF940A7), width: 13.h, height: 20.h),
+                  color: ColorMs.colorF940A7, width: 13.h, height: 20.h),
               SizedBox(width: 11.r),
               Text(title, style: TextStyleMs.pink_15)
             ]))));

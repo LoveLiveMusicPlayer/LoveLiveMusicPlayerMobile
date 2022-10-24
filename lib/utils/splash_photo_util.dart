@@ -54,6 +54,15 @@ class SplashPhoto {
         image: CachedNetworkImageProvider(imageUrl),
       ),
     );
+    return CachedNetworkImage(
+      imageUrl: imageUrl,
+      imageBuilder: (context, imageProvider) => Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth),
+        ),
+      ),
+      errorWidget: (context, url, error) => Icon(Icons.error),
+    );
     return Container(
       decoration: background,
       child: Container(),

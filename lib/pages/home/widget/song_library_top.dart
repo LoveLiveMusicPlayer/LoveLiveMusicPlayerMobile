@@ -5,6 +5,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 
@@ -150,7 +151,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
           GetBuilder<HomeController>(builder: (logic) {
             return CircularCheckBox(
               checkd: HomeController.to.state.selectAll,
-              checkIconColor: const Color(0xFFF940A7),
+              checkIconColor: ColorMs.colorF940A7,
               uncheckedIconColor: const Color(0xFF999999),
               spacing: 10.h,
               iconSize: 25,

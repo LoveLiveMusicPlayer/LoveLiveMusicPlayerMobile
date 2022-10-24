@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:log4f/log4f.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 
 class WaterRipple extends StatefulWidget {
   const WaterRipple({Key? key}) : super(key: key);
@@ -83,7 +84,7 @@ class WaterRippleState extends State<WaterRipple>
                   child: Container(
                     width: animation.value,
                     height: animation.value,
-                    color: const Color(0xFFF940A7),
+                    color: ColorMs.colorF940A7,
                   ),
                 ),
               );
@@ -107,7 +108,7 @@ class WaterRippleState extends State<WaterRipple>
                 child: Container(
                   width: animation.value,
                   height: animation.value,
-                  color: const Color(0xFFF940A7),
+                  color: ColorMs.colorF940A7,
                 ),
               ),
             );

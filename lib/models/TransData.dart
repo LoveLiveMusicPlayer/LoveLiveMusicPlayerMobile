@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:lovelivemusicplayer/models/Love.dart';
+
 TransData transDataFromJson(String str) => TransData.fromJson(json.decode(str));
 
 String transDataToJson(TransData data) => json.encode(data.toJson());
@@ -10,17 +12,17 @@ class TransData {
     required this.menu,
   });
 
-  List<String> love;
+  List<Love> love;
   List<TransMenu> menu;
 
   factory TransData.fromJson(Map<String, dynamic> json) => TransData(
-        love: List<String>.from(json["love"].map((x) => x)),
+        love: List<Love>.from(json["love"].map((x) => Love.fromJson(x))),
         menu: List<TransMenu>.from(
             json["menu"].map((x) => TransMenu.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "love": List<dynamic>.from(love.map((x) => x)),
+        "love": List<dynamic>.from(love.map((x) => x.toJson())),
         "menu": List<dynamic>.from(menu.map((x) => x.toJson())),
       };
 }

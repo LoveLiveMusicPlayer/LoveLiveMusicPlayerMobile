@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 import 'circular_check_box.dart';
@@ -125,7 +126,7 @@ class DetailsListTop extends StatelessWidget {
           ),
           CircularCheckBox(
             checkd: selectAll,
-            checkIconColor: const Color(0xFFF940A7),
+            checkIconColor: ColorMs.colorF940A7,
             uncheckedIconColor: const Color(0xFF999999),
             spacing: 10.h,
             iconSize: 25,

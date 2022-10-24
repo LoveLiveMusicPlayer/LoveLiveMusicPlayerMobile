@@ -555,11 +555,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   /****************  Transfer  ****************/
 
   Future<TransData> getTransPhoneData({bool needMenuList = false}) async {
-    final loveList = <String>[];
     final menuList = <TransMenu>[];
-    GlobalLogic.to.musicList.where((music) => music.isLove).forEach((music) {
-      loveList.add(music.musicId!);
-    });
+    final loveList = await loveDao.findAllLoves();
     if (needMenuList) {
       for (var menu in GlobalLogic.to.menuList) {
         if (menu.id > 100) {

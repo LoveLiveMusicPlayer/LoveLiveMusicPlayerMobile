@@ -8,12 +8,13 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/FtpCmd.dart';
+import 'package:lovelivemusicplayer/models/Love.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
-import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/models/TransData.dart';
 import 'package:lovelivemusicplayer/pages/details/widget/details_header.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/water_ripple.dart';
 import 'package:wakelock/wakelock.dart';
@@ -144,7 +145,7 @@ class _DataSyncState extends State<DataSync> {
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               SvgPicture.asset(asset,
-                  color: const Color(0xFFF940A7), width: 13.h, height: 20.h),
+                  color: ColorMs.colorF940A7, width: 13.h, height: 20.h),
               SizedBox(width: 11.r),
               Text(title, style: TextStyleMs.pink_15)
             ]))));
@@ -229,26 +230,10 @@ class _DataSyncState extends State<DataSync> {
   }
 
   replaceLoveList(TransData data) async {
-    final musicList = await DBLogic.to.musicDao.findLovedMusic();
-    final localLoveSet = <String>{};
-    await Future.forEach<Music>(musicList, (music) {
-      final musicId = music.musicId!;
-      localLoveSet.add(musicId);
+    await DBLogic.to.loveDao.deleteAllLoves();
+    await Future.forEach<Love>(data.love, (love) async {
+      await DBLogic.to.loveDao.insertLove(love);
     });
-    final remoteLoveSet = data.love.toSet();
-    final needDisEnableLoveSet = localLoveSet.difference(remoteLoveSet);
-    final needEnableLoveList = <String>[];
-
-    await Future.forEach<String>(remoteLoveSet.difference(localLoveSet),
-        (musicId) async {
-      if (await DBLogic.to.musicDao.findMusicByUId(musicId) != null) {
-        needEnableLoveList.add(musicId);
-      }
-    });
-
-    await DBLogic.to.musicDao
-        .updateLoveStatus(false, needDisEnableLoveSet.toList(growable: false));
-    await DBLogic.to.musicDao.updateLoveStatus(true, needEnableLoveList);
   }
 
   replacePcMenuList(TransData data) async {
