@@ -19,6 +19,7 @@ import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/android_back_desktop.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
+import 'package:lovelivemusicplayer/utils/splash_photo_util.dart';
 import 'package:lovelivemusicplayer/widgets/bottom_bar1.dart';
 import 'package:lovelivemusicplayer/widgets/bottom_bar2.dart';
 import 'package:lovelivemusicplayer/widgets/permission_dialog.dart';
@@ -98,10 +99,13 @@ class _HomeViewState extends State<HomeView>
               width: 300.w,
               child: const DrawerPage(),
             ),
-            body: SafeArea(
-              top: false,
-              bottom: GlobalLogic.to.needHomeSafeArea.value,
-              child: _weSlider(),
+            body: Container(
+              decoration: background,
+              child: SafeArea(
+                top: false,
+                bottom: GlobalLogic.to.needHomeSafeArea.value,
+                child: _weSlider(),
+              ),
             )),
         onWillPop: () async {
           if (NestedController.to.currentIndex == Routes.routeHome) {
@@ -139,6 +143,7 @@ class _HomeViewState extends State<HomeView>
       panelMaxSize: panelMaxSize,
       overlayOpacity: 0.9,
       backgroundColor: color,
+      // backgroundColor: const Color(0xff000000).withOpacity(0.5),
       overlay: true,
       isDismissible: true,
       body: Navigator(

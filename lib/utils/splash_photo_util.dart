@@ -3,6 +3,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
+var background = const BoxDecoration();
+
 class SplashPhoto {
   static const frontUrl =
       "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP-M/splash_bg/";
@@ -45,14 +47,15 @@ class SplashPhoto {
     if (imageUrl == null) {
       return null;
     }
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          alignment: Alignment.topCenter,
-          fit: BoxFit.fitWidth,
-          image: CachedNetworkImageProvider(imageUrl),
-        ),
+    background = BoxDecoration(
+      image: DecorationImage(
+        alignment: Alignment.topCenter,
+        fit: BoxFit.fitWidth,
+        image: CachedNetworkImageProvider(imageUrl),
       ),
+    );
+    return Container(
+      decoration: background,
       child: Container(),
     );
   }

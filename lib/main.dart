@@ -105,7 +105,6 @@ class _MyAppState extends State<MyApp> {
       needRemoveCover = false;
       // 初始化结束后，将启动屏关闭
       FlutterNativeSplash.remove();
-      Log4f.d(msg: '移除开屏页面...');
       Future.delayed(const Duration(seconds: 1), () {
         Connectivity().checkConnectivity().then((connection) {
           if (connection != ConnectivityResult.none) {
@@ -172,7 +171,6 @@ initServices() async {
   await SDUtils.init();
   SpUtil.put("prevPage", "");
   hasAIPic = await SpUtil.getBoolean(Const.spAIPicture, true);
-  Log4f.d(msg: '程序初始化完毕...');
 }
 
 /// GetX 日志重定向

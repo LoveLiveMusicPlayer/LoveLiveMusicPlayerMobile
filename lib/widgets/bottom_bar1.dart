@@ -47,6 +47,7 @@ class BottomBar extends StatelessWidget {
               label: '歌手'),
         ],
         elevation: 0,
+        // backgroundColor: Colors.transparent,
         backgroundColor: GlobalLogic.to
             .getThemeColor(const Color(0xFF4e4e4e), const Color(0xFFFAFAFA)),
         selectedItemColor: const Color(0xFFF940A7),
