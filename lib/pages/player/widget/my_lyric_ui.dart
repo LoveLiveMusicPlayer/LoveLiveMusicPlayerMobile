@@ -3,6 +3,7 @@ import 'package:flutter_lyric/lyric_ui/lyric_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 
 ///Sample Netease style
 ///should be extends LyricUI implementation your own UI.
@@ -54,16 +55,16 @@ class MyLrcUI extends LyricUI {
   @override
   TextStyle getOtherExtTextStyle() => TextStyle(
         color: GlobalLogic.to.hasSkin.value
-            ? const Color(0xffdfdfdf)
-            : const Color(0xFF999999),
+            ? ColorMs.colorDFDFDF
+            : ColorMs.color999999,
         fontSize: defaultSize.sp,
       );
 
   @override
   TextStyle getOtherMainTextStyle() => TextStyle(
       color: GlobalLogic.to.hasSkin.value
-          ? const Color(0xffdfdfdf)
-          : const Color(0xFF999999),
+          ? ColorMs.colorDFDFDF
+          : ColorMs.color999999,
       fontSize: otherMainSize.sp);
 
   @override

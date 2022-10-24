@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 
 class DialogBottomBtn extends StatelessWidget {
   List<BtnItem> list;
@@ -47,18 +48,16 @@ class DialogBottomBtn extends StatelessWidget {
           SvgPicture.asset(path,
               width: 21.h,
               height: 21.h,
-              color: Get.isDarkMode
-                  ? const Color(0xFFD1E0F3)
-                  : const Color(0xff666666)),
+              color:
+                  Get.isDarkMode ? ColorMs.colorD1E0F3 : ColorMs.color666666),
           SizedBox(height: 7.h),
           Text(
             title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-                color: Get.isDarkMode
-                    ? const Color(0xFFD1E0F3)
-                    : const Color(0xff666666),
+                color:
+                    Get.isDarkMode ? ColorMs.colorD1E0F3 : ColorMs.color666666,
                 fontSize: 15.sp),
           ),
           SizedBox(

@@ -119,10 +119,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
             "${widget.menu.music.length}首",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: const Color(0xff999999),
-              fontSize: 12.sp,
-            ),
+            style: TextStyleMs.gray_12_bold,
           ),
           SizedBox(
             width: 16.w,
@@ -150,7 +147,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
                   path: Assets.mainIcMore,
                   width: 10,
                   height: 20,
-                  color: const Color(0xFFCCCCCC)),
+                  color: ColorMs.colorCCCCCC),
             ),
           ),
           SizedBox(width: 4.r)

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 
 class SeekBar extends StatefulWidget {
   final Duration duration;
@@ -49,17 +50,17 @@ class _SeekBarState extends State<SeekBar> {
             inactiveColor: GlobalLogic.to.hasSkin.value
                 ? GlobalLogic.to.iconColor.value.withOpacity(0.3)
                 : Get.isDarkMode
-                    ? const Color(0xFF272727)
-                    : const Color(0x99CCDDF1),
+                    ? ColorMs.color272727
+                    : ColorMs.colorCCDDF1.withAlpha(153),
             activeColor: GlobalLogic.to.hasSkin.value
                 ? GlobalLogic.to.iconColor.value
                 : Get.isDarkMode
-                    ? const Color(0x9905080C)
-                    : const Color(0x99CCDDF1),
+                    ? ColorMs.color05080C.withAlpha(153)
+                    : ColorMs.colorCCDDF1.withAlpha(153),
             thumbColor: GlobalLogic.to.hasSkin.value
                 ? GlobalLogic.to.iconColor.value.withAlpha(255)
                 : Get.isDarkMode
-                    ? const Color(0xFF05080c)
+                    ? ColorMs.color05080C
                     : Get.theme.primaryColor,
             min: 0.0,
             max: total.toDouble(),
@@ -87,16 +88,16 @@ class _SeekBarState extends State<SeekBar> {
                   style: TextStyle(
                       fontSize: 12.sp,
                       color: GlobalLogic.to.hasSkin.value
-                          ? const Color(0xffdfdfdf)
-                          : const Color(0xFF999999)),
+                          ? ColorMs.colorDFDFDF
+                          : ColorMs.color999999),
                 ),
                 Text(
                   totalMS,
                   style: TextStyle(
                       fontSize: 12.sp,
                       color: GlobalLogic.to.hasSkin.value
-                          ? const Color(0xffdfdfdf)
-                          : const Color(0xFF999999)),
+                          ? ColorMs.colorDFDFDF
+                          : ColorMs.color999999),
                 )
               ],
             ))

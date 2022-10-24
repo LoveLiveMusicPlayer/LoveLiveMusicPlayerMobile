@@ -6,6 +6,8 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_playlist.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class DialogPlaylist extends StatefulWidget {
   const DialogPlaylist({Key? key}) : super(key: key);
@@ -63,9 +65,7 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
           ),
           Divider(
             height: 0.5.h,
-            color: Get.isDarkMode
-                ? const Color(0xFF737373)
-                : const Color(0xFFCFCFCF),
+            color: Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF,
           ),
           Expanded(
               child: Padding(
@@ -123,20 +123,16 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                     width: 16.h,
                     height: 16.h,
                     color: Get.isDarkMode
-                        ? const Color(0xFFCCCCCC)
-                        : const Color(0xFF666666)),
+                        ? ColorMs.colorCCCCCC
+                        : ColorMs.color666666),
                 SizedBox(
                   width: 10.h,
                 ),
                 Expanded(
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                        color: Get.isDarkMode
-                            ? Colors.white
-                            : const Color(0xff333333),
-                        fontSize: 15.sp),
-                  ),
+                  child: Text(title,
+                      style: Get.isDarkMode
+                          ? TextStyleMs.white_15
+                          : TextStyleMs.black_15),
                 ),
                 touchIconByAsset(
                     path: Assets.dialogIcDelete2,
@@ -144,8 +140,8 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                     width: 16.h,
                     height: 16.h,
                     color: Get.isDarkMode
-                        ? const Color(0xFFCCCCCC)
-                        : const Color(0xFF666666)),
+                        ? ColorMs.colorCCCCCC
+                        : ColorMs.color666666),
               ],
             ),
             SizedBox(

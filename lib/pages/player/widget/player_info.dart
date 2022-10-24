@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 
 class PlayerInfo extends StatelessWidget {
   const PlayerInfo({Key? key}) : super(key: key);
@@ -39,8 +40,8 @@ class PlayerInfo extends StatelessWidget {
         style: TextStyle(
             color: color ??
                 (GlobalLogic.to.hasSkin.value || Get.isDarkMode
-                    ? const Color(0xffdfdfdf)
-                    : const Color(0xFFB7BCC1)),
+                    ? ColorMs.colorDFDFDF
+                    : ColorMs.colorB7BCC1),
             fontSize: 15.sp,
             fontWeight: fontWeight),
         maxLines: 1,

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/nested_page/nested_controller.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class DetailsHeader extends StatelessWidget {
   final String title;
@@ -39,12 +40,9 @@ class DetailsHeader extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 15.sp,
-                      color: Get.isDarkMode
-                          ? Colors.white
-                          : const Color(0xFF333333),
-                    )))
+                    style: Get.isDarkMode
+                        ? TextStyleMs.white_15
+                        : TextStyleMs.black_15))
           ])
         ]));
   }

@@ -26,7 +26,7 @@ class TabBarComponent extends StatelessWidget {
           indicatorWeight: 4.w),
       isScrollable: true,
       labelColor: ColorMs.colorF940A7,
-      unselectedLabelColor: const Color(0xFFA9B9CD),
+      unselectedLabelColor: ColorMs.colorA9B9CD,
       labelStyle: TextStyle(
           fontSize: 24.sp, fontWeight: FontWeight.bold, fontFamily: 'KaTong'),
       unselectedLabelStyle: TextStyle(

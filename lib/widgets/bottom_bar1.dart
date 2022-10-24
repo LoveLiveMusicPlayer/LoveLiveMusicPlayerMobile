@@ -26,33 +26,30 @@ class BottomBar extends StatelessWidget {
               icon: SvgPicture.asset(Assets.tabTabMusic,
                   height: 18.h,
                   width: 18.h,
-                  color: mIndex == 0
-                      ? ColorMs.colorF940A7
-                      : const Color(0xFFD1E0F3)),
+                  color:
+                      mIndex == 0 ? ColorMs.colorF940A7 : ColorMs.colorD1E0F3),
               label: '歌曲'),
           BottomNavigationBarItem(
               icon: SvgPicture.asset(Assets.tabTabAlbum,
                   height: 18.h,
                   width: 18.h,
-                  color: mIndex == 1
-                      ? ColorMs.colorF940A7
-                      : const Color(0xFFD1E0F3)),
+                  color:
+                      mIndex == 1 ? ColorMs.colorF940A7 : ColorMs.colorD1E0F3),
               label: '专辑'),
           BottomNavigationBarItem(
               icon: SvgPicture.asset(Assets.tabTabSinger,
                   height: 18.h,
                   width: 18.h,
-                  color: mIndex == 2
-                      ? ColorMs.colorF940A7
-                      : const Color(0xFFD1E0F3)),
+                  color:
+                      mIndex == 2 ? ColorMs.colorF940A7 : ColorMs.colorD1E0F3),
               label: '歌手'),
         ],
         elevation: 0,
         // backgroundColor: Colors.transparent,
         backgroundColor: GlobalLogic.to
-            .getThemeColor(const Color(0xFF4e4e4e), const Color(0xFFFAFAFA)),
+            .getThemeColor(ColorMs.color4E4E4E, ColorMs.colorFAFAFA),
         selectedItemColor: ColorMs.colorF940A7,
-        unselectedItemColor: const Color(0xFFD1E0F3),
+        unselectedItemColor: ColorMs.colorD1E0F3,
         onTap: (index) {
           if (HomeController.to.state.currentIndex.value == index) {
             switch (index) {

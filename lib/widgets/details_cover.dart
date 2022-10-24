@@ -41,10 +41,7 @@ class DetailsCover extends StatelessWidget {
             "${album.category}·${album.date}",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-                color: const Color(0xFF999999),
-                fontSize: 12.sp,
-                fontWeight: FontWeight.bold),
+            style: TextStyleMs.gray_12_bold,
           ),
         ],
       ),

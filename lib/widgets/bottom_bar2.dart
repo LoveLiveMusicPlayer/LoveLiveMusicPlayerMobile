@@ -26,32 +26,29 @@ class BottomBar2 extends StatelessWidget {
               icon: SvgPicture.asset(Assets.tabTabLove,
                   height: 18.h,
                   width: 18.h,
-                  color: mIndex == 0
-                      ? ColorMs.colorF940A7
-                      : const Color(0xFFD1E0F3)),
+                  color:
+                      mIndex == 0 ? ColorMs.colorF940A7 : ColorMs.colorD1E0F3),
               label: '我喜欢'),
           BottomNavigationBarItem(
               icon: SvgPicture.asset(Assets.tabTabPlaylist,
                   height: 18.h,
                   width: 18.h,
-                  color: mIndex == 1
-                      ? ColorMs.colorF940A7
-                      : const Color(0xFFD1E0F3)),
+                  color:
+                      mIndex == 1 ? ColorMs.colorF940A7 : ColorMs.colorD1E0F3),
               label: '歌单'),
           BottomNavigationBarItem(
               icon: SvgPicture.asset(Assets.tabTabRecently,
                   height: 18.h,
                   width: 18.h,
-                  color: mIndex == 2
-                      ? ColorMs.colorF940A7
-                      : const Color(0xFFD1E0F3)),
+                  color:
+                      mIndex == 2 ? ColorMs.colorF940A7 : ColorMs.colorD1E0F3),
               label: '最近播放'),
         ],
         elevation: 0,
         backgroundColor: GlobalLogic.to
-            .getThemeColor(const Color(0xFF4e4e4e), const Color(0xFFFAFAFA)),
-        selectedItemColor: const Color(0xFFD91F86),
-        unselectedItemColor: const Color(0xFFA9B9CD).withOpacity(0.5),
+            .getThemeColor(ColorMs.color4E4E4E, ColorMs.colorFAFAFA),
+        selectedItemColor: ColorMs.colorD91F86,
+        unselectedItemColor: ColorMs.colorA9B9CD.withOpacity(0.5),
         onTap: (index) {
           if (HomeController.to.state.currentIndex.value == index + 3) {
             switch (index + 3) {

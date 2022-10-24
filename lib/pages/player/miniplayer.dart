@@ -12,6 +12,7 @@ import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_playlist.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/image_util.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
@@ -49,7 +50,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
       final music = PlayerLogic.to.playingMusic.value;
       return FutureBuilder<Decoration>(
         initialData: BoxDecoration(
-          color: const Color(0xFFEBF3FE),
+          color: ColorMs.colorEBF3FE,
           borderRadius: BorderRadius.circular(34.r),
         ),
         builder: (BuildContext context, AsyncSnapshot<Decoration> snapshot) {
@@ -129,9 +130,8 @@ class _MiniPlayerState extends State<MiniPlayer> {
                 },
                 width: 24,
                 height: 24,
-                color: Get.isDarkMode
-                    ? const Color(0xFFCCCCCC)
-                    : const Color(0xFF333333))
+                color:
+                    Get.isDarkMode ? ColorMs.colorCCCCCC : ColorMs.color333333)
           ],
         ));
   }
@@ -211,7 +211,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
         final processingState = playerState?.processingState;
         final playing = playerState?.playing;
         final color =
-            Get.isDarkMode ? const Color(0xFFCCCCCC) : const Color(0xFF333333);
+            Get.isDarkMode ? ColorMs.colorCCCCCC : ColorMs.color333333;
         if (processingState == ProcessingState.loading ||
             processingState == ProcessingState.buffering) {
           return Container(

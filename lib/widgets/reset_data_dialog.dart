@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 
 class ResetDataDialog extends StatelessWidget {
   final Callback deleteMusicData;
@@ -46,7 +47,7 @@ class ResetDataDialog extends StatelessWidget {
     return Container(
       width: 200.w,
       decoration: BoxDecoration(
-          color: const Color(0xFF28B3F7),
+          color: ColorMs.color28B3F7,
           borderRadius: BorderRadius.circular(16.r)),
       child: TextButton(
           onPressed: () {

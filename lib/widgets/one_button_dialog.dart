@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class OneButtonDialog extends StatelessWidget {
   String _imgAsset = "";
@@ -54,13 +56,10 @@ class OneButtonDialog extends StatelessWidget {
             visible: _isShowTitle,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Text(
-                _title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style:
-                    TextStyle(fontSize: 18.sp, color: const Color(0xFF333333)),
-              ),
+              child: Text(_title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyleMs.black_18),
             ),
           ),
           SizedBox(
@@ -72,8 +71,7 @@ class OneButtonDialog extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Text(
                   _msg,
-                  style: TextStyle(
-                      color: const Color(0xFF999999), fontSize: 14.sp),
+                  style: TextStyleMs.gray_14,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 )),
@@ -84,7 +82,7 @@ class OneButtonDialog extends StatelessWidget {
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
-                color: const Color(0xFF28B3F7),
+                color: ColorMs.color28B3F7,
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(16.r),
                     bottomRight: Radius.circular(16.r))),

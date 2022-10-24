@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 ///歌单
 class ListViewItemPlaylist extends StatefulWidget {
@@ -59,17 +61,12 @@ class _ListViewItemPlaylist extends State<ListViewItemPlaylist> {
               children: [
                 Container(
                   constraints: BoxConstraints(maxWidth: nameWidth),
-                  child: Text(
-                    widget.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        color: Get.isDarkMode
-                            ? Colors.white
-                            : const Color(0xff333333),
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold),
-                  ),
+                  child: Text(widget.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Get.isDarkMode
+                          ? TextStyleMs.whiteBold_14
+                          : TextStyleMs.black_18_bold),
                 ),
                 SizedBox(
                   width: 4.w,
@@ -81,10 +78,7 @@ class _ListViewItemPlaylist extends State<ListViewItemPlaylist> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: const Color(0xff999999),
-                      fontSize: 12.sp,
-                    ),
+                    style: TextStyleMs.gray_12_bold,
                   ),
                 )
               ],
@@ -97,7 +91,7 @@ class _ListViewItemPlaylist extends State<ListViewItemPlaylist> {
               },
               width: 16.h,
               height: 16.h,
-              color: const Color(0xFF999999))
+              color: ColorMs.color999999)
         ],
       ),
     );

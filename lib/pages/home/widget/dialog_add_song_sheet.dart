@@ -9,6 +9,8 @@ import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_song_sheet.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/new_menu_dialog.dart';
 
 class DialogAddSongSheet extends StatelessWidget {
@@ -43,22 +45,16 @@ class DialogAddSongSheet extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.all(12.h),
-            child: Text(
-              "添加到歌单",
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  fontSize: 17.sp,
-                  fontWeight: FontWeight.bold,
-                  color:
-                      Get.isDarkMode ? Colors.white : const Color(0xff333333)),
-            ),
+            child: Text("添加到歌单",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Get.isDarkMode
+                    ? TextStyleMs.white_17_bold
+                    : TextStyleMs.black_17_bold),
           ),
           Divider(
             height: 0.5.h,
-            color: Get.isDarkMode
-                ? const Color(0xFF737373)
-                : const Color(0xFFCFCFCF),
+            color: Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF,
           ),
           _buildItem("新建歌单", true, () {
             SmartDialog.compatible.dismiss();
@@ -157,9 +153,8 @@ class DialogAddSongSheet extends StatelessWidget {
                   child: Text(
                     title,
                     style: TextStyle(
-                        color: Get.isDarkMode
-                            ? Colors.white
-                            : const Color(0xff666666),
+                        color:
+                            Get.isDarkMode ? Colors.white : ColorMs.color666666,
                         fontSize: 15.sp),
                   ),
                 )
@@ -172,9 +167,8 @@ class DialogAddSongSheet extends StatelessWidget {
               visible: showLin,
               child: Divider(
                 height: 0.5.h,
-                color: Get.isDarkMode
-                    ? const Color(0xFF737373)
-                    : const Color(0xFFCFCFCF),
+                color:
+                    Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF,
               ),
             )
           ],
@@ -189,7 +183,7 @@ class DialogAddSongSheet extends StatelessWidget {
           path: assetPath,
           width: 16.h,
           height: 16.h,
-          color: Get.isDarkMode ? Colors.white : const Color(0xFF666666));
+          color: Get.isDarkMode ? Colors.white : ColorMs.color666666);
     } else if (icon != null) {
       return touchIcon(icon, () {}, color: Colors.pinkAccent);
     } else {

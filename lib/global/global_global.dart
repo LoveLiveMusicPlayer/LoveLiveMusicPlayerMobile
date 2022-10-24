@@ -12,6 +12,7 @@ import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:updater/updater.dart';
 import 'package:we_slide/we_slide.dart';
@@ -81,8 +82,8 @@ class GlobalLogic extends SuperController
       iconColor.value = hasSkin.value
           ? const Color(Const.noMusicColorfulSkin)
           : isDark
-              ? const Color(0xFF1E2328)
-              : const Color(0xFFF2F8FF);
+              ? ColorMs.color1E2328
+              : ColorMs.colorLightPrimary;
       withSystemTheme.value = isWith;
       Future.delayed(const Duration(milliseconds: 500))
           .then((value) => isThemeDark(init: true));

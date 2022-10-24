@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class PlayerHeader extends StatelessWidget {
@@ -56,8 +57,8 @@ class PlayerHeader extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       color: GlobalLogic.to.hasSkin.value
-                          ? const Color(0xffdfdfdf)
-                          : const Color(0xFF999999),
+                          ? ColorMs.colorDFDFDF
+                          : ColorMs.color999999,
                       fontSize: 12.sp),
                   maxLines: 1,
                 )

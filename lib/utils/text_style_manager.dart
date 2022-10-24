@@ -7,6 +7,12 @@ class TextStyleMs {
 
   static TextStyle gray_12 =
       TextStyle(color: ColorMs.color999999, fontSize: 12.sp);
+  static TextStyle gray_12_bold = TextStyle(
+      color: ColorMs.color999999, fontSize: 12.sp, fontWeight: FontWeight.bold);
+  static TextStyle gray_14 =
+      TextStyle(color: ColorMs.color999999, fontSize: 14.sp);
+  static TextStyle gray_16 =
+      TextStyle(color: ColorMs.color999999, fontSize: 16.sp);
   static TextStyle gray_18 =
       TextStyle(color: ColorMs.color999999, fontSize: 18.sp);
 
@@ -28,6 +34,8 @@ class TextStyleMs {
       TextStyle(color: ColorMs.color333333, fontSize: 16.sp);
   static TextStyle black_17 =
       TextStyle(color: ColorMs.color333333, fontSize: 17.sp);
+  static TextStyle black_17_bold = TextStyle(
+      color: ColorMs.color333333, fontSize: 17.sp, fontWeight: FontWeight.bold);
   static TextStyle black_18 =
       TextStyle(color: ColorMs.color333333, fontSize: 18.sp);
   static TextStyle black_18_bold = TextStyle(
@@ -51,6 +59,8 @@ class TextStyleMs {
       TextStyle(color: ColorMs.colorFFFFFF, fontSize: 16.sp);
   static TextStyle white_17 =
       TextStyle(color: ColorMs.colorFFFFFF, fontSize: 17.sp);
+  static TextStyle white_17_bold = TextStyle(
+      color: ColorMs.colorFFFFFF, fontSize: 17.sp, fontWeight: FontWeight.bold);
   static TextStyle white_18 =
       TextStyle(color: ColorMs.colorFFFFFF, fontSize: 18.sp);
   static TextStyle white_18_bold = TextStyle(

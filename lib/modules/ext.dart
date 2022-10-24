@@ -7,6 +7,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 
 import '../utils/sd_utils.dart';
 
@@ -36,7 +38,7 @@ Widget showImg(String? path, double? width, double? height,
       shadowImage = AssetImage(path);
     } else if (path.startsWith("http")) {
       isNetImage = true;
-      shadowImage = CachedNetworkImageProvider(path);
+      shadowImage = CachedNetworkImageProvider(path, cacheManager: AppUtils.cacheManager);
     } else {
       final file = File(path);
       if (file.existsSync()) {
@@ -56,8 +58,8 @@ Widget showImg(String? path, double? width, double? height,
               BoxShadow(
                   color: shadowColor ??
                       (Get.isDarkMode
-                          ? const Color(0xFF05080C)
-                          : const Color(0xFFD3E0EC)),
+                          ? ColorMs.color05080C
+                          : ColorMs.colorD3E0EC),
                   blurRadius: radius.h,
                   offset: Offset(4.h, 8.h)),
             ],
@@ -70,6 +72,7 @@ Widget showImg(String? path, double? width, double? height,
     }
     if (isNetImage) {
       return CachedNetworkImage(
+        cacheManager: AppUtils.cacheManager,
         imageUrl: path!,
         imageBuilder: (context, imageProvider) => Container(
           width: width?.h,
@@ -85,8 +88,8 @@ Widget showImg(String? path, double? width, double? height,
               BoxShadow(
                   color: shadowColor ??
                       (Get.isDarkMode
-                          ? const Color(0xFF05080C)
-                          : const Color(0xFFD3E0EC)),
+                          ? ColorMs.color05080C
+                          : ColorMs.colorD3E0EC),
                   blurRadius: radius.h,
                   offset: Offset(4.w, 8.h)),
             ],
@@ -113,8 +116,8 @@ Widget showImg(String? path, double? width, double? height,
             BoxShadow(
                 color: shadowColor ??
                     (Get.isDarkMode
-                        ? const Color(0xFF05080C)
-                        : const Color(0xFFD3E0EC)),
+                        ? ColorMs.color05080C
+                        : ColorMs.colorD3E0EC),
                 blurRadius: radius.h,
                 offset: Offset(4.h, 8.h)),
           ],
@@ -139,6 +142,7 @@ Widget showImg(String? path, double? width, double? height,
     } else if (path.startsWith("http")) {
       isNetImage = true;
       noShadowImage = CachedNetworkImageProvider(path,
+          cacheManager: AppUtils.cacheManager,
           maxWidth: width?.h.toInt(), maxHeight: width?.h.toInt());
     } else {
       final file = File(path);
@@ -170,6 +174,7 @@ Widget showImg(String? path, double? width, double? height,
           child: ClipRRect(
               borderRadius: BorderRadius.circular(radius.h),
               child: CachedNetworkImage(
+                cacheManager: AppUtils.cacheManager,
                 imageUrl: path!,
                 imageBuilder: (context, imageProvider) => Image(
                     image: ResizeImage(imageProvider,
@@ -236,15 +241,15 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
   Widget child;
   if (icon is IconData) {
     child = Icon(icon,
-        color: iconColor ??
-            (Get.isDarkMode ? Colors.white : const Color(0xFF333333)),
+        color:
+            iconColor ?? (Get.isDarkMode ? Colors.white : ColorMs.color333333),
         size: iconSize.h);
   } else if (icon is String &&
       icon.startsWith("assets") &&
       icon.endsWith(".svg")) {
     child = SvgPicture.asset(icon,
-        color: iconColor ??
-            (Get.isDarkMode ? Colors.white : const Color(0xFF333333)),
+        color:
+            iconColor ?? (Get.isDarkMode ? Colors.white : ColorMs.color333333),
         width: iconSize.h,
         height: iconSize.h);
   } else {
@@ -254,15 +259,13 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
   if (hasShadow) {
     shadow.add(BoxShadow(
         color: outerColor ??
-            (Get.isDarkMode ? const Color(0x1005080C) : Colors.white),
+            (Get.isDarkMode ? ColorMs.color05080C.withAlpha(16) : Colors.white),
         offset: const Offset(-3, -3),
         blurStyle: BlurStyle.inner,
         blurRadius: 6));
     shadow.add(BoxShadow(
         color: outerColor ??
-            (Get.isDarkMode
-                ? const Color(0xFF05080C)
-                : const Color(0xFFD3E0EC)),
+            (Get.isDarkMode ? ColorMs.color05080C : ColorMs.colorD3E0EC),
         offset: const Offset(5, 3),
         blurRadius: 6));
   }
@@ -279,9 +282,8 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          splashColor: Get.isDarkMode ? Colors.grey : const Color(0xFFD3E0EC),
-          highlightColor:
-              Get.isDarkMode ? Colors.grey : const Color(0xFFD3E0EC),
+          splashColor: Get.isDarkMode ? Colors.grey : ColorMs.colorD3E0EC,
+          highlightColor: Get.isDarkMode ? Colors.grey : ColorMs.colorD3E0EC,
           onTap: onTap,
           child: Stack(
             children: [
@@ -291,8 +293,8 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
                 alignment: const Alignment(0, 0),
                 color: bgColor ??
                     (Get.isDarkMode
-                        ? const Color(0xFF1E2328)
-                        : const Color(0xFFF2F8FF)),
+                        ? ColorMs.color1E2328
+                        : ColorMs.colorLightPrimary),
               ),
               Center(child: child)
             ],
@@ -319,14 +321,14 @@ Widget showGroupButton(String path,
       borderRadius: BorderRadius.circular(8.h),
       boxShadow: [
         BoxShadow(
-            color: Get.isDarkMode ? const Color(0x1005080C) : Colors.white,
+            color: Get.isDarkMode
+                ? ColorMs.color05080C.withAlpha(16)
+                : Colors.white,
             offset: const Offset(-3, -3),
             blurStyle: BlurStyle.inner,
             blurRadius: 6),
         BoxShadow(
-            color: Get.isDarkMode
-                ? const Color(0xFF05080C)
-                : const Color(0xFFD3E0EC),
+            color: Get.isDarkMode ? ColorMs.color05080C : ColorMs.colorD3E0EC,
             offset: const Offset(5, 3),
             blurRadius: 6),
       ],
@@ -335,8 +337,8 @@ Widget showGroupButton(String path,
       borderRadius: BorderRadius.circular(8.h),
       child: Material(
         child: InkWell(
-          splashColor: const Color(0xFFD3E0EC),
-          highlightColor: const Color(0xFFD3E0EC),
+          splashColor: ColorMs.colorD3E0EC,
+          highlightColor: ColorMs.colorD3E0EC,
           onTap: onTap,
           child: Stack(
             children: [
@@ -371,8 +373,8 @@ Widget logoIcon(String path,
   final shadowStyle = hasShadow
       ? <BoxShadow>[
           BoxShadow(
-              color: GlobalLogic.to.getThemeColor(
-                  const Color(0xFF05080C), const Color(0xFFD3E0EC)),
+              color: GlobalLogic.to
+                  .getThemeColor(ColorMs.color05080C, ColorMs.colorD3E0EC),
               blurRadius: 10,
               offset: Offset(5.h, 3.h))
         ]

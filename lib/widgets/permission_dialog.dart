@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class PermissionDialog extends StatelessWidget {
@@ -62,7 +63,7 @@ class PermissionDialog extends StatelessWidget {
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: const Color(0xFF28B3F7),
+                    color: ColorMs.color28B3F7,
                     borderRadius: BorderRadius.all(Radius.circular(20.r))),
                 child: TextButton(
                     onPressed: () {

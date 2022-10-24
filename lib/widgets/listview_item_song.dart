@@ -6,6 +6,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
@@ -99,8 +100,8 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
             widget.checked = value;
             widget.onItemTap(widget.index, widget.checked);
           },
-          checkIconColor: const Color(0xFFF940A7),
-          uncheckedIconColor: const Color(0xFF999999),
+          checkIconColor: ColorMs.colorF940A7,
+          uncheckedIconColor: ColorMs.color999999,
         ),
       ),
     );
@@ -128,10 +129,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
               widget.music.artist ?? "",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: const Color(0xff999999),
-                fontSize: 12.sp,
-              ),
+              style: TextStyleMs.gray_12,
             ),
             SizedBox(
               width: 16.w,
@@ -160,7 +158,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
                   },
                   width: 20,
                   height: 20,
-                  color: const Color(0xFFCCCCCC))),
+                  color: ColorMs.colorCCCCCC)),
           InkWell(
             onTap: () {
               widget.onMoreTap(widget.music);
@@ -172,7 +170,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
                   path: Assets.mainIcMore,
                   width: 10,
                   height: 20,
-                  color: const Color(0xFFCCCCCC)),
+                  color: ColorMs.colorCCCCCC),
             ),
           ),
           SizedBox(width: 4.r)

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class NewMenuDialog extends StatefulWidget {
@@ -87,9 +88,7 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
                 child: Container(
                   height: 44.w,
                   decoration: BoxDecoration(
-                      color: Get.isDarkMode
-                          ? Colors.grey
-                          : const Color(0xFFEDF5FF),
+                      color: Get.isDarkMode ? Colors.grey : ColorMs.colorEDF5FF,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(16.w),
                       )),
@@ -100,14 +99,10 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
                         }
                         SmartDialog.compatible.dismiss();
                       },
-                      child: Text(
-                        "取消",
-                        style: TextStyle(
-                            fontSize: 16.sp,
-                            color: Get.isDarkMode
-                                ? Colors.white
-                                : const Color(0xFF999999)),
-                      )),
+                      child: Text("取消",
+                          style: Get.isDarkMode
+                              ? TextStyleMs.white_16
+                              : TextStyleMs.gray_16)),
                 ),
               ),
               Expanded(
@@ -115,8 +110,8 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
                   height: 44.w,
                   decoration: BoxDecoration(
                       color: Get.isDarkMode
-                          ? const Color(0xFF0093DF)
-                          : const Color(0xFF28B3F7),
+                          ? ColorMs.color0093DF
+                          : ColorMs.color28B3F7,
                       borderRadius: BorderRadius.only(
                           bottomRight: Radius.circular(16.w))),
                   child: TextButton(
@@ -126,10 +121,7 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
                         }
                         SmartDialog.compatible.dismiss();
                       },
-                      child: Text(
-                        "确定",
-                        style: TextStyle(fontSize: 16.sp, color: Colors.white),
-                      )),
+                      child: Text("确定", style: TextStyleMs.white_16)),
                 ),
               )
             ],

@@ -61,7 +61,7 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
                   padding: EdgeInsets.only(right: 2.w),
                   child: CircularCheckBox(
                       checkd: widget.checked,
-                      uncheckedIconColor: const Color(0xff999999),
+                      uncheckedIconColor: ColorMs.color999999,
                       checkIconColor: ColorMs.colorF940A7,
                       onCheckd: (checked) {
                         widget.checked = checked;

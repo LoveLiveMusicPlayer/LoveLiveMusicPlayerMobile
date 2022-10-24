@@ -82,19 +82,19 @@ class SongLibraryTop extends GetView<GlobalLogic> {
           width: 56.h,
           height: 24.h,
           decoration: BoxDecoration(
-              gradient: const LinearGradient(
+              gradient: LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
                 colors: [
-                  Color(0xFFFF86C9),
-                  Color(0xFFF940A7),
+                  ColorMs.colorFF86C9,
+                  ColorMs.colorF940A7,
                 ],
               ),
               borderRadius: BorderRadius.circular(12.h),
               boxShadow: [
                 BoxShadow(
                     color: GlobalLogic.to.getThemeColor(
-                        const Color(0xFF05080C), const Color(0xFFD3E0EC)),
+                        ColorMs.color05080C, ColorMs.colorD3E0EC),
                     blurRadius: 6,
                     offset: const Offset(5, 3)),
               ]),
@@ -133,7 +133,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
           onTap: onScreenTap,
           width: 20,
           height: 20,
-          color: const Color(0xFFCCCCCC)),
+          color: ColorMs.colorCCCCCC),
     );
   }
 
@@ -152,7 +152,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
             return CircularCheckBox(
               checkd: HomeController.to.state.selectAll,
               checkIconColor: ColorMs.colorF940A7,
-              uncheckedIconColor: const Color(0xFF999999),
+              uncheckedIconColor: ColorMs.color999999,
               spacing: 10.h,
               iconSize: 25,
               title: "选择全部/已选${HomeController.to.getCheckedSong()}首",

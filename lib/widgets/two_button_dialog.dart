@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class TwoButtonDialog extends StatelessWidget {
@@ -77,8 +78,7 @@ class TwoButtonDialog extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Text(
                   _msg,
-                  style: TextStyle(
-                      color: const Color(0xFF999999), fontSize: 14.sp),
+                  style: TextStyleMs.gray_14,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 )),
@@ -92,9 +92,7 @@ class TwoButtonDialog extends StatelessWidget {
                 child: Container(
                   height: 44.w,
                   decoration: BoxDecoration(
-                      color: Get.isDarkMode
-                          ? Colors.grey
-                          : const Color(0xFFEDF5FF),
+                      color: Get.isDarkMode ? Colors.grey : ColorMs.colorEDF5FF,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(16.w),
                       )),
@@ -103,14 +101,10 @@ class TwoButtonDialog extends StatelessWidget {
                         SmartDialog.compatible.dismiss();
                         if (_onBackListener != null) _onBackListener!();
                       },
-                      child: Text(
-                        "取消",
-                        style: TextStyle(
-                            fontSize: 16.sp,
-                            color: Get.isDarkMode
-                                ? Colors.white
-                                : const Color(0xFF999999)),
-                      )),
+                      child: Text("取消",
+                          style: Get.isDarkMode
+                              ? TextStyleMs.white_16
+                              : TextStyleMs.gray_16)),
                 ),
               ),
               Expanded(
@@ -118,8 +112,8 @@ class TwoButtonDialog extends StatelessWidget {
                   height: 44.w,
                   decoration: BoxDecoration(
                       color: Get.isDarkMode
-                          ? const Color(0xFF0093DF)
-                          : const Color(0xFF28B3F7),
+                          ? ColorMs.color0093DF
+                          : ColorMs.color28B3F7,
                       borderRadius: BorderRadius.only(
                           bottomRight: Radius.circular(16.w))),
                   child: TextButton(

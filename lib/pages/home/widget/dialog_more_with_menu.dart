@@ -6,6 +6,8 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/new_menu_dialog.dart';
 
 class DialogMoreWithMenu extends StatelessWidget {
@@ -30,21 +32,16 @@ class DialogMoreWithMenu extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.all(12.h),
-            child: Text(
-              menu.name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  fontSize: 17.sp,
-                  color:
-                      Get.isDarkMode ? Colors.white : const Color(0xff333333)),
-            ),
+            child: Text(menu.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Get.isDarkMode
+                    ? TextStyleMs.white_17
+                    : TextStyleMs.black_17),
           ),
           Divider(
             height: 0.5.h,
-            color: Get.isDarkMode
-                ? const Color(0xFF737373)
-                : const Color(0xFFCFCFCF),
+            color: Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF,
           ),
           _buildItem(Assets.dialogIcEdit, "重命名歌单", true, () {
             SmartDialog.compatible.dismiss();
@@ -86,9 +83,7 @@ class DialogMoreWithMenu extends StatelessWidget {
                     onTap: () {},
                     width: 16.h,
                     height: 16.h,
-                    color: Get.isDarkMode
-                        ? Colors.white
-                        : const Color(0xFF666666)),
+                    color: Get.isDarkMode ? Colors.white : ColorMs.color666666),
                 SizedBox(
                   width: 10.h,
                 ),
@@ -96,9 +91,8 @@ class DialogMoreWithMenu extends StatelessWidget {
                   child: Text(
                     title,
                     style: TextStyle(
-                        color: Get.isDarkMode
-                            ? Colors.white
-                            : const Color(0xff666666),
+                        color:
+                            Get.isDarkMode ? Colors.white : ColorMs.color666666,
                         fontSize: 15.sp),
                   ),
                 )
@@ -111,9 +105,8 @@ class DialogMoreWithMenu extends StatelessWidget {
               visible: showLin,
               child: Divider(
                 height: 0.5.h,
-                color: Get.isDarkMode
-                    ? const Color(0xFF737373)
-                    : const Color(0xFFCFCFCF),
+                color:
+                    Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF,
               ),
             )
           ],

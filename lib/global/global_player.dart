@@ -88,7 +88,7 @@ class PlayerLogic extends SuperController
       if (index != null &&
           mPlayList.isNotEmpty &&
           !GlobalLogic.to.isHandlePlay) {
-        Log4f.d(msg: "当前播放: $index - ${mPlayList[index].musicName}");
+        Log4f.v(msg: "当前播放: $index - ${mPlayList[index].musicName}");
         AppUtils.uploadEvent("Playing",
             params: {"music": mPlayList[index].musicName});
         final currentMusic = mPlayList[index];
@@ -178,7 +178,7 @@ class PlayerLogic extends SuperController
   playMusic(List<Music> musicList, {int index = 0, bool needPlay = true}) {
     AppUtils.uploadEvent("Playing",
         params: {"music": musicList[index].musicName ?? ""});
-    Log4f.d(msg: "播放曲目: ${musicList[index].musicName}");
+    Log4f.v(msg: "播放曲目: ${musicList[index].musicName}");
     try {
       // 如果上一次处理没有结束，直接跳过
       if (GlobalLogic.to.isHandlePlay) {
@@ -201,7 +201,7 @@ class PlayerLogic extends SuperController
       audioSourceList.clear();
       audioSourceList.addAll(audioList);
       audioList.clear();
-      Log4f.d(msg: "播放列表长度: ${audioSourceList.length}");
+      Log4f.v(msg: "播放列表长度: ${audioSourceList.length}");
       mPlayer
           .setAudioSource(audioSourceList, initialIndex: index)
           .then((value) {

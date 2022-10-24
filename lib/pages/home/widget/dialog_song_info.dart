@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class DialogSongInfo extends StatefulWidget {
   final Music music;
@@ -44,23 +46,17 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
         children: [
           Padding(
             padding: EdgeInsets.all(12.h),
-            child: Text(
-              "歌曲信息",
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  fontSize: 17.sp,
-                  fontWeight: FontWeight.bold,
-                  color:
-                      Get.isDarkMode ? Colors.white : const Color(0xff333333)),
-            ),
+            child: Text("歌曲信息",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Get.isDarkMode
+                    ? TextStyleMs.white_17_bold
+                    : TextStyleMs.black_17_bold),
           ),
           Divider(
-            height: 0.5.h,
-            color: Get.isDarkMode
-                ? const Color(0xFF737373)
-                : const Color(0xFFCFCFCF),
-          ),
+              height: 0.5.h,
+              color:
+                  Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF),
           _buildItem("专辑: ", widget.music.albumName, true),
           _buildItem("时长: ", widget.music.time, true),
           _buildItem(
@@ -87,8 +83,7 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
               Text(
                 title,
                 style: TextStyle(
-                    color:
-                        Get.isDarkMode ? Colors.white : const Color(0xff666666),
+                    color: Get.isDarkMode ? Colors.white : ColorMs.color666666,
                     fontSize: 15.sp),
               ),
               SizedBox(
@@ -99,9 +94,8 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
                 scrollDirection: Axis.horizontal,
                 child: Text(message ?? "未知",
                     style: TextStyle(
-                        color: Get.isDarkMode
-                            ? Colors.white
-                            : const Color(0xff666666),
+                        color:
+                            Get.isDarkMode ? Colors.white : ColorMs.color666666,
                         fontSize: 15.sp)),
               ))
             ],
@@ -113,9 +107,7 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
             visible: showLin,
             child: Divider(
               height: 0.5.h,
-              color: Get.isDarkMode
-                  ? const Color(0xFF737373)
-                  : const Color(0xFFCFCFCF),
+              color: Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF,
             ),
           )
         ],

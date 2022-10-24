@@ -11,6 +11,8 @@ import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_song_info.dart';
 import 'package:lovelivemusicplayer/routes.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class DialogMoreWithMusic extends StatefulWidget {
   final Music music;
@@ -67,21 +69,16 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
         children: [
           Padding(
             padding: EdgeInsets.all(12.h),
-            child: Text(
-              widget.music.musicName!,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  fontSize: 17.sp,
-                  color:
-                      Get.isDarkMode ? Colors.white : const Color(0xff333333)),
-            ),
+            child: Text(widget.music.musicName!,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Get.isDarkMode
+                    ? TextStyleMs.white_17
+                    : TextStyleMs.black_17),
           ),
           Divider(
             height: 0.5.h,
-            color: Get.isDarkMode
-                ? const Color(0xFF737373)
-                : const Color(0xFFCFCFCF),
+            color: Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF,
           ),
           _buildItem(Assets.dialogIcAddPlayList, "加入播放列表", true, () {
             SmartDialog.compatible.dismiss();
@@ -153,9 +150,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
                     onTap: () {},
                     width: 16.h,
                     height: 16.h,
-                    color: Get.isDarkMode
-                        ? Colors.white
-                        : const Color(0xFF666666)),
+                    color: Get.isDarkMode ? Colors.white : ColorMs.color666666),
                 SizedBox(
                   width: 10.h,
                 ),
@@ -163,9 +158,8 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
                   child: Text(
                     title,
                     style: TextStyle(
-                        color: Get.isDarkMode
-                            ? Colors.white
-                            : const Color(0xff666666),
+                        color:
+                            Get.isDarkMode ? Colors.white : ColorMs.color666666,
                         fontSize: 15.sp),
                   ),
                 )
@@ -178,9 +172,8 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
               visible: showLin,
               child: Divider(
                 height: 0.5.h,
-                color: Get.isDarkMode
-                    ? const Color(0xFF737373)
-                    : const Color(0xFFCFCFCF),
+                color:
+                    Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF,
               ),
             )
           ],

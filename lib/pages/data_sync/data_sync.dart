@@ -129,14 +129,14 @@ class _DataSyncState extends State<DataSync> {
             height: 46.h,
             decoration: BoxDecoration(
               color: Get.isDarkMode
-                  ? const Color(0xFF1E2328)
-                  : const Color(0xFFF2F8FF),
+                  ? ColorMs.color1E2328
+                  : ColorMs.colorLightPrimary,
               borderRadius: BorderRadius.circular(6.h),
               boxShadow: [
                 BoxShadow(
                     color: Get.isDarkMode
-                        ? const Color(0xFF1E2328)
-                        : const Color(0xFFD3E0EC),
+                        ? ColorMs.color1E2328
+                        : ColorMs.colorD3E0EC,
                     offset: const Offset(5, 3),
                     blurRadius: 6),
               ],

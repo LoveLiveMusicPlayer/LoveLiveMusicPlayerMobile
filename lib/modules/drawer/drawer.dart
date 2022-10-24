@@ -23,6 +23,7 @@ import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
@@ -151,15 +152,16 @@ class _DrawerPageState extends State<DrawerPage> {
               borderRadius: BorderRadius.circular(8.r),
               boxShadow: [
                 BoxShadow(
-                    color:
-                        Get.isDarkMode ? const Color(0x1005080C) : Colors.white,
+                    color: Get.isDarkMode
+                        ? ColorMs.color05080C.withAlpha(16)
+                        : Colors.white,
                     offset: Offset(-3.w, -3.h),
                     blurStyle: BlurStyle.inner,
                     blurRadius: 6.r),
                 BoxShadow(
                     color: Get.isDarkMode
-                        ? const Color(0xFF05080C)
-                        : const Color(0xFFD3E0EC),
+                        ? ColorMs.color05080C
+                        : ColorMs.colorD3E0EC,
                     offset: Offset(5.w, 3.h),
                     blurRadius: 6.r),
               ],

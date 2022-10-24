@@ -337,7 +337,7 @@ class _MusicTransformState extends State<MusicTransform> {
           size: Size(190.h, 190.h),
           painter: CircleView(
             completePercent: 100,
-            completeColor: const Color(0x1AF940A7),
+            completeColor: ColorMs.colorF940A7.withAlpha(26),
             lineColors: [],
             completeWidth: 8.w,
           ),
@@ -367,7 +367,7 @@ class _MusicTransformState extends State<MusicTransform> {
             HorizontalLine(
                 dashedHeight: 1.h,
                 dashedWidth: 70.w,
-                color: const Color(0xFFCCDDF1)),
+                color: ColorMs.colorCCDDF1),
             SizedBox(height: 15.h),
             Text("$total",
                 style: Get.isDarkMode
@@ -531,14 +531,14 @@ class _MusicTransformState extends State<MusicTransform> {
             height: 46.h,
             decoration: BoxDecoration(
               color: Get.isDarkMode
-                  ? const Color(0xFF1E2328)
-                  : const Color(0xFFF2F8FF),
+                  ? ColorMs.color1E2328
+                  : ColorMs.colorLightPrimary,
               borderRadius: BorderRadius.circular(6.h),
               boxShadow: [
                 BoxShadow(
                     color: Get.isDarkMode
-                        ? const Color(0xFF1E2328)
-                        : const Color(0xFFD3E0EC),
+                        ? ColorMs.color1E2328
+                        : ColorMs.colorD3E0EC,
                     offset: const Offset(5, 3),
                     blurRadius: 6),
               ],

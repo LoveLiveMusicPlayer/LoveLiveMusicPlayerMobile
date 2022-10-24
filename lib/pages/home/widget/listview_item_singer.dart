@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 
 ///歌手 item
 class ListViewItemSinger extends StatefulWidget {
@@ -44,9 +45,8 @@ class _ListViewItemSingerState extends State<ListViewItemSinger> {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       fontSize: 15.sp,
-                      color: Get.isDarkMode
-                          ? Colors.white
-                          : const Color(0xFF333333),
+                      color:
+                          Get.isDarkMode ? Colors.white : ColorMs.color333333,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -58,7 +58,7 @@ class _ListViewItemSingerState extends State<ListViewItemSinger> {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 12.sp,
-                    color: const Color(0xFF999999),
+                    color: ColorMs.color999999,
                   ),
                 ),
               ],
