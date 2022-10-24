@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:log4f/log4f.dart';
+import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
+import 'package:lovelivemusicplayer/eventbus/start_event.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 
 var background = const BoxDecoration();
 
@@ -42,27 +45,26 @@ class SplashPhoto {
     } else {
       imageList.shuffle();
       imageUrl = imageList[0];
-      CachedNetworkImage.evictFromCache(imageUrl);
     }
     if (imageUrl == null) {
       return null;
     }
-    background = BoxDecoration(
-      image: DecorationImage(
-        alignment: Alignment.topCenter,
-        fit: BoxFit.fitWidth,
-        image: CachedNetworkImageProvider(imageUrl),
-      ),
+    final image = DecorationImage(
+      alignment: Alignment.topCenter,
+      fit: BoxFit.fitWidth,
+      image: CachedNetworkImageProvider(imageUrl,
+          cacheManager: AppUtils.cacheManager),
     );
-    return CachedNetworkImage(
-      imageUrl: imageUrl,
-      imageBuilder: (context, imageProvider) => Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth),
-        ),
-      ),
-      errorWidget: (context, url, error) => Icon(Icons.error),
-    );
+    final stream = image.image.resolve(const ImageConfiguration());
+    stream.addListener(
+        ImageStreamListener((ImageInfo info, bool synchronousCall) {
+      Future.delayed(const Duration(seconds: 1), () {
+        eventBus.fire(StartEvent((DateTime.now().millisecondsSinceEpoch)));
+      });
+    }, onError: (object, stackTrace) {
+      Log4f.d(msg: "下载开屏图失败\n$imageUrl");
+    }));
+    background = BoxDecoration(image: image);
     return Container(
       decoration: background,
       child: Container(),
@@ -71,7 +73,7 @@ class SplashPhoto {
 
   static Future<bool> checkUrlExist(url) async {
     try {
-      await DefaultCacheManager().getSingleFile(url);
+      await AppUtils.cacheManager.getSingleFile(url);
       return true;
     } catch (e) {
       return false;

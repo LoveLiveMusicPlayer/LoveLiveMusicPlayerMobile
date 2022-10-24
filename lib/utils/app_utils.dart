@@ -5,6 +5,7 @@ import 'package:color_thief_flutter/color_thief_flutter.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/ArtistModel.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
@@ -12,6 +13,9 @@ import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:umeng_common_sdk/umeng_common_sdk.dart';
 
 class AppUtils {
+  static CacheManager cacheManager =
+      CacheManager(Config("imgSplash", stalePeriod: const Duration(days: 1)));
+
   /// 异步获取歌单封面
   static Future<String> getMusicCoverPath(String? musicPath) async {
     final defaultPath = SDUtils.getImgPath();

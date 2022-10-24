@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
-import 'package:lovelivemusicplayer/eventbus/start_event.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/splash_photo_util.dart';
 
@@ -22,18 +20,12 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
     SplashPhoto().getRandomPhotoView().then((widget) {
-      if (widget == null) {
-        Future.delayed(const Duration(seconds: 3), goToHomePage);
-        return;
+      if (widget != null) {
+        myWidget = widget;
+        setState(() {});
       }
-      myWidget = widget;
-      setState(() {
-        Future.delayed(const Duration(seconds: 1), () {
-          eventBus.fire(StartEvent((DateTime.now().millisecondsSinceEpoch)));
-        });
-      });
-      Future.delayed(const Duration(seconds: 3), goToHomePage);
-    });
+    }).then(
+        (value) => Future.delayed(const Duration(seconds: 3), goToHomePage));
   }
 
   @override

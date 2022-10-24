@@ -19,7 +19,6 @@ import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/android_back_desktop.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
-import 'package:lovelivemusicplayer/utils/splash_photo_util.dart';
 import 'package:lovelivemusicplayer/widgets/bottom_bar1.dart';
 import 'package:lovelivemusicplayer/widgets/bottom_bar2.dart';
 import 'package:lovelivemusicplayer/widgets/permission_dialog.dart';
@@ -100,7 +99,7 @@ class _HomeViewState extends State<HomeView>
               child: const DrawerPage(),
             ),
             body: Container(
-              decoration: background,
+              // decoration: background,
               child: SafeArea(
                 top: false,
                 bottom: GlobalLogic.to.needHomeSafeArea.value,

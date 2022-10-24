@@ -22,6 +22,7 @@ import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/routes.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
@@ -279,6 +280,7 @@ class _DrawerPageState extends State<DrawerPage> {
                     await DBLogic.to.clearAllMusic();
                   }, deleteUserData: () async {
                     await DBLogic.to.clearAllUserData();
+                    AppUtils.cacheManager.emptyCache();
                     SpUtil.put(Const.spAllowPermission, true)
                         .then((value) async {
                       // Get.deleteAll(force: true);
