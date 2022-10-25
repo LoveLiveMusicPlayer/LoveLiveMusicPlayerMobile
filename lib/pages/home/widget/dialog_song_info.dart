@@ -62,7 +62,7 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
           _buildItem("${'position'.tr}: ",
               "${widget.music.baseUrl}${widget.music.musicPath}", true),
           _buildItem("${'release_date'.tr}: ", date, true),
-          _buildItem("${'Classification'.tr}: ", category, false)
+          _buildItem("${'classification'.tr}: ", category, false)
         ],
       ),
     );

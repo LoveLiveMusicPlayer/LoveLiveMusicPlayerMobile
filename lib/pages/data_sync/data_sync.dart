@@ -90,10 +90,9 @@ class _DataSyncState extends State<DataSync> {
             SvgPicture.asset(Assets.drawerDrawerSecret,
                 width: 15.r, height: 15.r),
             SizedBox(width: 10.r),
-            SizedBox(
-              width: 300.w,
-              child: Text('keep_same_lan'.tr,
-                  style: TextStyleMs.gray_12, textAlign: TextAlign.left),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 300.w),
+              child: Text('keep_same_lan'.tr, style: TextStyleMs.gray_12),
             )
           ]),
           SizedBox(height: 4.h),
@@ -101,10 +100,9 @@ class _DataSyncState extends State<DataSync> {
             SvgPicture.asset(Assets.drawerDrawerSecret,
                 width: 15.r, height: 15.r),
             SizedBox(width: 10.r),
-            SizedBox(
-              width: 300.w,
-              child: Text('keep_screen_and_scan_qr'.tr,
-                  style: TextStyleMs.gray_12, textAlign: TextAlign.left),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 300.w),
+              child: Text('keep_screen_and_scan_qr'.tr, style: TextStyleMs.gray_12),
             )
           ]),
           SizedBox(height: 85.h),
