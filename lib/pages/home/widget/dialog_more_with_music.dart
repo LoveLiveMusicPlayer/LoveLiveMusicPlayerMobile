@@ -80,18 +80,18 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
             height: 0.5.h,
             color: Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF,
           ),
-          _buildItem(Assets.dialogIcAddPlayList, "加入播放列表", true, () {
+          _buildItem(Assets.dialogIcAddPlayList, 'add_to_playlist'.tr, true, () {
             SmartDialog.compatible.dismiss();
             PlayerLogic.to.addNextMusic(widget.music, isNext: false);
-            SmartDialog.compatible.showToast("添加成功");
+            SmartDialog.compatible.showToast('add_success'.tr);
           }),
-          _buildItem(Assets.dialogIcAddSongSheet, "添加到歌单", true, () {
+          _buildItem(Assets.dialogIcAddSongSheet, 'add_to_menu'.tr, true, () {
             SmartDialog.compatible.dismiss();
             SmartDialog.compatible.show(
                 widget: DialogAddSongSheet(musicList: [widget.music]),
                 alignmentTemp: Alignment.bottomCenter);
           }),
-          _buildItem(Assets.dialogIcSongInfo, "歌曲信息", length > 4, () {
+          _buildItem(Assets.dialogIcSongInfo, 'music_info'.tr, length > 4, () {
             SmartDialog.compatible.dismiss();
             SmartDialog.compatible.show(
                 widget: DialogSongInfo(music: widget.music),
@@ -108,7 +108,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
     if (widget.isAlbum != null && widget.isAlbum == true) {
       return Container();
     }
-    return _buildItem(Assets.dialogIcSeeAlbum, "查看专辑", widget.onRemove != null,
+    return _buildItem(Assets.dialogIcSeeAlbum, 'view_album'.tr, widget.onRemove != null,
         () {
       SmartDialog.compatible.dismiss();
       if (widget.onClosePanel != null) {
@@ -122,7 +122,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
 
   Widget renderRemoveItem() {
     if (widget.onRemove != null) {
-      return _buildItem(Assets.dialogIcDelete2, "删除歌曲", false, () {
+      return _buildItem(Assets.dialogIcDelete2, 'remove_music'.tr, false, () {
         SmartDialog.compatible.dismiss();
         widget.onRemove!(widget.music);
       });

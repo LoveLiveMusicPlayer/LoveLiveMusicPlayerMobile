@@ -44,14 +44,14 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                 loopMode = LoopMode.off;
               }
               final index = PlayerLogic.loopModes.indexOf(loopMode);
-              var header = "随机播放";
+              var header = 'shuffle_play'.tr;
               if (index == 1) {
-                header = "顺序循环";
+                header = 'order_play'.tr;
               } else if (index == 2) {
-                header = "单曲循环";
+                header = 'single_play'.tr;
               }
               return _buildItem(
-                  icons[index], "$header - 共${mPlayList.length}首", true, () {
+                  icons[index], "$header - ${mPlayList.length} ${'total_number_unit'.tr}", true, () {
                 final currentIndex = PlayerLogic.loopModes.indexOf(loopMode);
                 final nextIndex =
                     (currentIndex + 1) % PlayerLogic.loopModes.length;

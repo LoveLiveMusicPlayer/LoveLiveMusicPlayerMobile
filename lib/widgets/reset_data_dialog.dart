@@ -30,15 +30,15 @@ class ResetDataDialog extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: 12.h),
-                  renderText("请选择要清理的数据", 18.sp),
+                  renderText('choose_your_clean_data'.tr, 18.sp),
                   SizedBox(height: 24.h),
-                  renderButton("删除歌曲数据", deleteMusicData),
+                  renderButton('remove_songs_data'.tr, deleteMusicData),
                   SizedBox(height: 24.h),
-                  renderButton("删除用户数据", deleteUserData, hasAfter: false),
+                  renderButton('remove_user_data'.tr, deleteUserData, hasAfter: false),
                   SizedBox(height: 24.h),
-                  renderText("歌曲数据：云端缓存数据", 12.sp),
+                  renderText('explain_songs_data'.tr, 12.sp),
                   SizedBox(height: 3.h),
-                  renderText("用户数据：播放器配置、我喜欢、歌单", 12.sp),
+                  renderText('explain_user_data'.tr, 12.sp),
                   SizedBox(height: 12.h),
                 ])));
   }
@@ -54,7 +54,7 @@ class ResetDataDialog extends StatelessWidget {
           onPressed: () {
             SmartDialog.compatible.dismiss();
             SmartDialog.compatible
-                .showLoading(msg: "重置中...", backDismiss: false);
+                .showLoading(msg: 'resetting'.tr, backDismiss: false);
             onBackListener();
             if (hasAfter) {
               afterDelete();

@@ -58,7 +58,7 @@ class _DataSyncState extends State<DataSync> {
       body: Column(
         children: [
           DetailsHeader(
-              title: '数据同步',
+              title: 'data_sync'.tr,
               onBack: () {
                 if (isConnected) {
                   showBackDialog();
@@ -89,28 +89,41 @@ class _DataSyncState extends State<DataSync> {
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             SvgPicture.asset(Assets.drawerDrawerSecret,
                 width: 15.r, height: 15.r),
-            SizedBox(width: 2.r),
-            Text("请保持手机和电脑处于同一局域网内", style: TextStyleMs.gray_12)
+            SizedBox(width: 10.r),
+            SizedBox(
+              width: 300.w,
+              child: Text('keep_same_lan'.tr,
+                  style: TextStyleMs.gray_12,
+                  textAlign: TextAlign.left),
+            )
           ]),
+          SizedBox(height: 4.h),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            SizedBox(width: 15.r),
-            Text("保持屏幕常亮，并扫描PC端二维码", style: TextStyleMs.gray_12)
+            SvgPicture.asset(Assets.drawerDrawerSecret,
+                width: 15.r, height: 15.r),
+            SizedBox(width: 10.r),
+            SizedBox(
+              width: 300.w,
+              child: Text('keep_screen_and_scan_qr'.tr,
+                  style: TextStyleMs.gray_12,
+                  textAlign: TextAlign.left),
+            )
           ]),
-          SizedBox(height: 90.h),
+          SizedBox(height: 85.h),
           Visibility(
               visible: isConnected,
               child: Column(children: [
-                btnFunc(Assets.syncIconPhone, "手机 ≫ 电脑", () async {
+                btnFunc(Assets.syncIconPhone, 'phone2pc'.tr, () async {
                   await sendPhone2pc();
                 }),
                 SizedBox(height: 28.h),
-                btnFunc(Assets.syncIconComputer, "电脑 ≫ 手机", () async {
+                btnFunc(Assets.syncIconComputer, 'pc2phone'.tr, () async {
                   await sendPc2phone();
                 })
               ])),
           Visibility(
               visible: !isConnected,
-              child: btnFunc(Assets.syncIconScanQr, "设备配对", () async {
+              child: btnFunc(Assets.syncIconScanQr, 'device_pair'.tr, () async {
                 final ip = await Get.toNamed(Routes.routeScan);
                 if (ip != null) {
                   openWS(ip);
@@ -165,7 +178,7 @@ class _DataSyncState extends State<DataSync> {
         Container(
           width: 250.w,
           margin: EdgeInsets.only(bottom: 30.h),
-          child: Text("退出后会中断连接及传输，是否继续？", style: TextStyleMs.black_14),
+          child: Text('terminate_trans'.tr, style: TextStyleMs.black_14),
         ),
         ElevatedButton(
           onPressed: () async {
@@ -176,7 +189,7 @@ class _DataSyncState extends State<DataSync> {
                 .findAllListByGroup(GlobalLogic.to.currentGroup.value)
                 .then((value) => Get.back());
           },
-          child: const Text('确定'),
+          child: Text('confirm'.tr),
         )
       ]),
     ));
@@ -220,7 +233,7 @@ class _DataSyncState extends State<DataSync> {
           break;
       }
     }, onError: (e) {
-      Log4f.w(msg: "连接失败");
+      SmartDialog.compatible.showToast('connect_fail'.tr);
       Log4f.e(msg: e.toString(), writeFile: true);
     }, cancelOnError: true);
     isConnected = true;

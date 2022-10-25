@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -11,7 +12,7 @@ class RefresherWidget extends StatefulWidget {
   Function(RefreshController controller)? onRefresh;
   Function(RefreshController controller)? onLoading;
   int itemCount;
-  String emptyMsg;
+  String? emptyMsg;
   String emptyImg;
   bool enablePullDown;
   bool enablePullUp;
@@ -34,7 +35,7 @@ class RefresherWidget extends StatefulWidget {
     this.onRefresh,
     this.onLoading,
     this.scrollController,
-    this.emptyMsg = "暂无数据",
+    this.emptyMsg,
     this.emptyImg = Assets.mainIcNull,
     this.enablePullUp = true,
     this.enablePullDown = true,
@@ -80,7 +81,7 @@ class _RefresherWidgetState extends State<RefresherWidget> {
             height: 10.h
           ),
           Text(
-            widget.emptyMsg,
+            widget.emptyMsg ?? 'no_data'.tr,
             style: TextStyleMs.colorBFBFBF_18
           )
         ],

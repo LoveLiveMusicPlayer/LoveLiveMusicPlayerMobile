@@ -43,18 +43,18 @@ class DialogMoreWithMenu extends StatelessWidget {
             height: 0.5.h,
             color: Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF,
           ),
-          _buildItem(Assets.dialogIcEdit, "重命名歌单", true, () {
+          _buildItem(Assets.dialogIcEdit, 'rename_menu'.tr, true, () {
             SmartDialog.compatible.dismiss();
             SmartDialog.compatible.show(
                 widget: NewMenuDialog(
-                    title: "重命名歌单",
+                    title: 'rename_menu'.tr,
                     onConfirm: (name) {
                       DBLogic.to.updateMenuName(name, menu.id);
                     }),
                 clickBgDismissTemp: false,
                 alignmentTemp: Alignment.center);
           }),
-          _buildItem(Assets.dialogIcDelete2, "删除歌单", true, () {
+          _buildItem(Assets.dialogIcDelete2, 'delete_menu'.tr, true, () {
             SmartDialog.compatible.dismiss();
             DBLogic.to.deleteMenuById(menu.id);
           }),

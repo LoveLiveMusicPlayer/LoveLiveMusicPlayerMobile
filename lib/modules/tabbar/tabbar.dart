@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/custom_underline_tabIndicator.dart';
@@ -31,9 +32,9 @@ class TabBarComponent extends StatelessWidget {
           fontSize: 24.sp, fontWeight: FontWeight.bold, fontFamily: 'KaTong'),
       unselectedLabelStyle: TextStyle(
           fontSize: 16.sp, fontWeight: FontWeight.bold, fontFamily: 'KaTong'),
-      tabs: const [
-        Tab(text: "歌库"),
-        Tab(text: "我的"),
+      tabs: [
+        Tab(text: 'song_lib'.tr),
+        Tab(text: 'mine'.tr),
       ],
       controller: HomeController.to.tabController,
     );

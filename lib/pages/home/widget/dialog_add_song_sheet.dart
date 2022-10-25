@@ -45,7 +45,7 @@ class DialogAddSongSheet extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.all(12.h),
-            child: Text("添加到歌单",
+            child: Text('add_to_menu'.tr,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Get.isDarkMode
@@ -56,11 +56,11 @@ class DialogAddSongSheet extends StatelessWidget {
             height: 0.5.h,
             color: Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF,
           ),
-          _buildItem("新建歌单", true, () {
+          _buildItem('create_menu'.tr, true, () {
             SmartDialog.compatible.dismiss();
             SmartDialog.compatible.show(
                 widget: NewMenuDialog(
-                    title: "新建歌单",
+                    title: 'create_menu'.tr,
                     onConfirm: (name) async {
                       final idList = <String>[];
                       for (var music in musicList) {
@@ -71,7 +71,7 @@ class DialogAddSongSheet extends StatelessWidget {
                       }
                       bool isSuccess = await DBLogic.to.addMenu(name, idList);
                       SmartDialog.compatible
-                          .showToast(isSuccess ? "新建成功" : "超出最大数量");
+                          .showToast(isSuccess ? 'create_success'.tr : 'create_over_max'.tr);
                     }),
                 clickBgDismissTemp: false,
                 alignmentTemp: Alignment.center);
@@ -104,7 +104,7 @@ class DialogAddSongSheet extends StatelessWidget {
                           .then((isSuccess) {
                         SmartDialog.compatible.dismiss();
                         SmartDialog.compatible
-                            .showToast(isSuccess ? "添加成功" : "添加失败");
+                            .showToast(isSuccess ? 'add_success'.tr : 'add_fail'.tr);
                       });
                     },
                     menu: menuList[index],
@@ -118,10 +118,10 @@ class DialogAddSongSheet extends StatelessWidget {
 
   Widget renderLove() {
     bool notAllLove = musicList.any((music) => music.isLove == false);
-    return _buildItem("我喜欢", true, () {
+    return _buildItem('iLove'.tr, true, () {
       PlayerLogic.to.toggleLoveList(musicList, notAllLove);
       SmartDialog.compatible.dismiss();
-      SmartDialog.compatible.showToast(notAllLove ? "已加入我喜欢" : "已取消我喜欢");
+      SmartDialog.compatible.showToast(notAllLove ? 'add_to_iLove'.tr : 'remove_from_iLove'.tr);
       if (changeLoveStatusCallback != null) {
         changeLoveStatusCallback!(notAllLove);
       }

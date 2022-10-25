@@ -167,7 +167,7 @@ class _DrawerPageState extends State<DrawerPage> {
               ],
             ),
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 12.h),
               child: scrollView(context),
             )));
   }
@@ -181,7 +181,7 @@ class _DrawerPageState extends State<DrawerPage> {
             children: [
               DrawerFunctionButton(
                 icon: Assets.drawerDrawerQuickTrans,
-                text: "歌曲快传",
+                text: 'music_trans'.tr,
                 onTap: () async {
                   Get.back();
                   Get.toNamed(Routes.routeTransform);
@@ -190,7 +190,7 @@ class _DrawerPageState extends State<DrawerPage> {
               SizedBox(height: 8.h),
               DrawerFunctionButton(
                 icon: Assets.drawerDrawerDataSync,
-                text: "数据同步",
+                text: 'data_sync'.tr,
                 onTap: () {
                   Get.back();
                   Get.toNamed(Routes.routeDataSync);
@@ -199,7 +199,7 @@ class _DrawerPageState extends State<DrawerPage> {
               SizedBox(height: 8.h),
               DrawerFunctionButton(
                   icon: Assets.drawerDrawerSystemTheme,
-                  text: "跟随系统",
+                  text: 'theme_with_system'.tr,
                   hasSwitch: true,
                   initSwitch: GlobalLogic.to.withSystemTheme.value,
                   callBack: (check) async {
@@ -240,7 +240,7 @@ class _DrawerPageState extends State<DrawerPage> {
               renderDayOrNightSwitch(),
               DrawerFunctionButton(
                   icon: Assets.drawerDrawerColorful,
-                  text: "炫彩模式",
+                  text: 'colorful_mode'.tr,
                   hasSwitch: true,
                   initSwitch: GlobalLogic.to.hasSkin.value,
                   callBack: (check) async {
@@ -257,7 +257,7 @@ class _DrawerPageState extends State<DrawerPage> {
               SizedBox(height: 8.h),
               DrawerFunctionButton(
                   icon: Assets.drawerDrawerAiPic,
-                  text: "开屏图片",
+                  text: 'splash_photo'.tr,
                   hasSwitch: true,
                   initSwitch: hasAIPic,
                   callBack: (check) async {
@@ -266,7 +266,7 @@ class _DrawerPageState extends State<DrawerPage> {
               SizedBox(height: 8.h),
               DrawerFunctionButton(
                 icon: Assets.drawerDrawerDataDownload,
-                text: "数据更新",
+                text: 'fetch_songs'.tr,
                 onTap: () {
                   handleUpdateData();
                 },
@@ -274,7 +274,7 @@ class _DrawerPageState extends State<DrawerPage> {
               SizedBox(height: 8.h),
               DrawerFunctionButton(
                 icon: Assets.drawerDrawerReset,
-                text: "清理数据",
+                text: 'clear_database'.tr,
                 onTap: () {
                   SmartDialog.compatible.show(
                       widget: ResetDataDialog(deleteMusicData: () async {
@@ -289,7 +289,7 @@ class _DrawerPageState extends State<DrawerPage> {
                       // Phoenix.rebirth(Get.context!);
                       // Get.reset();
                       SmartDialog.compatible.dismiss();
-                      SmartDialog.compatible.showToast("应用即将关闭，请手动重启");
+                      SmartDialog.compatible.showToast('will_shutdown'.tr);
                       Future.delayed(const Duration(seconds: 2), () {
                         if (Platform.isIOS) {
                           exit(0);
@@ -301,7 +301,7 @@ class _DrawerPageState extends State<DrawerPage> {
                   }, afterDelete: () async {
                     SmartDialog.compatible.dismiss();
                     SmartDialog.compatible
-                        .showToast("清理成功", time: const Duration(seconds: 5));
+                        .showToast('clean_success'.tr, time: const Duration(seconds: 5));
                     await DBLogic.to
                         .findAllListByGroup(GlobalLogic.to.currentGroup.value);
                   }));
@@ -320,7 +320,7 @@ class _DrawerPageState extends State<DrawerPage> {
               SizedBox(height: 8.h),
               DrawerFunctionButton(
                 icon: Assets.drawerDrawerInspect,
-                text: "查看日志",
+                text: 'view_log'.tr,
                 onTap: () async {
                   Get.toNamed(Routes.routeLogger);
                 },
@@ -328,7 +328,7 @@ class _DrawerPageState extends State<DrawerPage> {
               SizedBox(height: 8.h),
               DrawerFunctionButton(
                 icon: Assets.drawerDrawerUpdate,
-                text: "版本升级",
+                text: 'update'.tr,
                 onTap: () {
                   GlobalLogic.to.checkUpdate(manual: true);
                 },
@@ -336,7 +336,7 @@ class _DrawerPageState extends State<DrawerPage> {
               SizedBox(height: 8.h),
               DrawerFunctionButton(
                 icon: Assets.drawerDrawerSecret,
-                text: "隐私协议",
+                text: 'privacy_agreement'.tr,
                 onTap: () {
                   Get.toNamed(Routes.routePermission);
                 },
@@ -354,7 +354,7 @@ class _DrawerPageState extends State<DrawerPage> {
       children: [
         DrawerFunctionButton(
             icon: Assets.drawerDrawerDayNight,
-            text: "夜间模式",
+            text: 'night_mode'.tr,
             hasSwitch: true,
             initSwitch: GlobalLogic.to.manualIsDark.value,
             enableSwitch: !GlobalLogic.to.withSystemTheme.value,
@@ -387,7 +387,7 @@ class _DrawerPageState extends State<DrawerPage> {
   handleUpdateData() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     int currentNumber = int.tryParse(packageInfo.buildNumber) ?? 0;
-    SmartDialog.compatible.showLoading(msg: "下载数据中");
+    SmartDialog.compatible.showLoading(msg: 'downloading'.tr);
     Network.get(Const.dataUrl, success: (result) {
       if (result is List) {
         int index = -1;
@@ -410,7 +410,7 @@ class _DrawerPageState extends State<DrawerPage> {
               SmartDialog.compatible.dismiss(status: SmartStatus.loading);
               SmartDialog.compatible.show(
                   widget: TwoButtonDialog(
-                title: "已是最新版本，是否覆盖？",
+                title: 'now_is_latest'.tr,
                 isShowMsg: false,
                 onConfirmListener: () {
                   SmartDialog.compatible
@@ -431,17 +431,17 @@ class _DrawerPageState extends State<DrawerPage> {
         });
       } else {
         SmartDialog.compatible.dismiss(status: SmartStatus.loading);
-        SmartDialog.compatible.showToast("数据异常");
+        SmartDialog.compatible.showToast('data_error'.tr);
       }
     }, error: (err) {
       Log4f.e(msg: err, writeFile: true);
       SmartDialog.compatible.dismiss(status: SmartStatus.loading);
-      SmartDialog.compatible.showToast("数据更新失败");
+      SmartDialog.compatible.showToast('fetch_songs_fail'.tr);
     }, isShowDialog: false, isShowError: false);
   }
 
   parseUpdateDataSource(CloudData data) async {
-    SmartDialog.compatible.showLoading(msg: "导入中...");
+    SmartDialog.compatible.showLoading(msg: 'importing'.tr);
     await DBLogic.to.clearAllMusic();
     await loopParseData(data.music.us, data.album.us, Const.groupUs);
     await loopParseData(

@@ -22,7 +22,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'global/const.dart';
 import 'global/global_theme.dart';
-import 'i18n/translation.dart';
+import 'i10n/translation.dart';
 import 'network/http_request.dart';
 import 'routes.dart';
 import 'utils/sd_utils.dart';

@@ -63,7 +63,7 @@ class _PermissionState extends State<Permission> {
     return Scaffold(
         backgroundColor: Get.theme.primaryColor,
         appBar: AppBar(
-          title: const Text('用户协议及隐私政策'),
+          title: Text('privacy_agreement'.tr),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -73,7 +73,7 @@ class _PermissionState extends State<Permission> {
                 Text(message, style: textColor),
                 Center(
                   child: Text.rich(TextSpan(
-                    text: "本软件开源项目链接",
+                    text: 'github_url'.tr,
                     style: TextStyleMs.blue_12,
                     // 设置点击事件
                     recognizer: TapGestureRecognizer()

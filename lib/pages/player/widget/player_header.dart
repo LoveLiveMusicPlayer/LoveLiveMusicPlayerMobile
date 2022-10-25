@@ -44,7 +44,7 @@ class PlayerHeader extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  PlayerLogic.to.playingMusic.value.musicName ?? "暂无歌曲",
+                  PlayerLogic.to.playingMusic.value.musicName ?? 'no_songs'.tr,
                   overflow: TextOverflow.ellipsis,
                   style: GlobalLogic.to.hasSkin.value || Get.isDarkMode
                       ? TextStyleMs.whiteBold_15

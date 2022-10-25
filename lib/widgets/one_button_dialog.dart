@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
@@ -16,15 +17,15 @@ class OneButtonDialog extends StatelessWidget {
   OneButtonDialog(
       {Key? key,
       String imgAsset = Assets.logoLogo,
-      String title = "标题",
-      String msg = "网络异常!",
+      String? title,
+      String? msg,
       bool isShowTitle = true,
       bool isShowMsg = true,
       Callback? onBackListener})
       : super(key: key) {
     _imgAsset = imgAsset;
-    _title = title;
-    _msg = msg;
+    _title = title ?? "标题";
+    _msg = msg ?? "网络异常!";
     _isShowTitle = isShowTitle;
     _isShowMsg = isShowMsg;
     _onBackListener = onBackListener;
@@ -92,7 +93,7 @@ class OneButtonDialog extends StatelessWidget {
                   if (_onBackListener != null) _onBackListener!();
                 },
                 child: Text(
-                  "确定",
+                  'confirm'.tr,
                   style: TextStyleMs.white_16,
                 )),
           )

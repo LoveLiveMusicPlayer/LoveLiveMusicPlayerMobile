@@ -114,7 +114,7 @@ class _HomeViewState extends State<HomeView>
                     const Duration(seconds: 1)) {
               //间隔时间大于1秒 则重新赋值
               lastPressTime = DateTime.now();
-              SmartDialog.compatible.showToast("再次点击回到桌面");
+              SmartDialog.compatible.showToast('click_again_to_back'.tr);
               return false;
             }
             AndroidBackDesktop.backToDesktop();

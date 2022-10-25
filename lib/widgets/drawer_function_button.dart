@@ -40,13 +40,20 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
           height: 30.h,
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Row(
+            Expanded(
+                child: Row(
               children: [
                 SvgPicture.asset(widget.icon, height: 20.h, width: 20.h),
                 SizedBox(width: 8.r),
-                Text(widget.text, style: TextStyle(fontSize: 15.sp))
+                Expanded(
+                    child: Text(
+                        widget.text,
+                        style: TextStyle(fontSize: 14.sp),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis
+                    ))
               ],
-            ),
+            )),
             renderSwitchButton()
           ]),
         ));

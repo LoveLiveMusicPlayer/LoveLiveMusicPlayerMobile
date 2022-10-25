@@ -189,7 +189,7 @@ class _MusicTransformState extends State<MusicTransform> {
         body: Column(
       children: [
         DetailsHeader(
-            title: '歌曲快传',
+            title: 'music_trans'.tr,
             onBack: () {
               if (isConnected) {
                 showBackDialog();
@@ -232,17 +232,29 @@ class _MusicTransformState extends State<MusicTransform> {
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           SvgPicture.asset(Assets.drawerDrawerSecret,
               width: 15.r, height: 15.r),
-          SizedBox(width: 2.r),
-          Text("请保持手机和电脑处于同一局域网内", style: TextStyleMs.gray_12)
+          SizedBox(width: 10.r),
+          SizedBox(
+            width: 300.w,
+            child: Text('keep_same_lan'.tr,
+                style: TextStyleMs.gray_12,
+                textAlign: TextAlign.left),
+          )
         ]),
+        SizedBox(height: 4.h),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          SizedBox(width: 15.r),
-          Text("保持屏幕常亮，并扫描PC端二维码", style: TextStyleMs.gray_12)
+          SvgPicture.asset(Assets.drawerDrawerSecret,
+              width: 15.r, height: 15.r),
+          SizedBox(width: 10.r),
+          SizedBox(
+              width: 300.w,
+              child: Text('keep_screen_and_scan_qr'.tr,
+                  style: TextStyleMs.gray_12,
+                  textAlign: TextAlign.left))
         ]),
-        SizedBox(height: 90.h),
+        SizedBox(height: 85.h),
         Visibility(
             visible: !isConnected,
-            child: btnFunc(Assets.syncIconScanQr, "设备配对", () async {
+            child: btnFunc(Assets.syncIconScanQr, 'device_pair'.tr, () async {
               final ip = await Get.toNamed(Routes.routeScan);
               if (ip != null) {
                 ipAddress = ip;
@@ -381,7 +393,7 @@ class _MusicTransformState extends State<MusicTransform> {
           width: 190.h,
           height: 190.h,
           child: Center(
-              child: Text("数据解析中...",
+              child: Text('data_parsing'.tr,
                   style: Get.isDarkMode
                       ? TextStyleMs.white_15
                       : TextStyleMs.black_15)));
@@ -483,7 +495,7 @@ class _MusicTransformState extends State<MusicTransform> {
           break;
       }
     }, onError: (e) {
-      Log4f.w(msg: "连接失败");
+      SmartDialog.compatible.showToast('connect_fail'.tr);
       Log4f.e(msg: e.toString(), writeFile: true);
     }, cancelOnError: true);
     isConnected = true;
@@ -509,7 +521,7 @@ class _MusicTransformState extends State<MusicTransform> {
         Container(
           width: 250.w,
           margin: EdgeInsets.only(bottom: 30.h),
-          child: Text("退出后会中断连接及传输，是否继续？", style: TextStyleMs.black_14),
+          child: Text('terminate_trans'.tr, style: TextStyleMs.black_14),
         ),
         ElevatedButton(
           onPressed: () async {
@@ -517,7 +529,7 @@ class _MusicTransformState extends State<MusicTransform> {
             channel?.sink.add(message);
             release();
           },
-          child: const Text('确定'),
+          child: Text('confirm'.tr),
         )
       ]),
     ));

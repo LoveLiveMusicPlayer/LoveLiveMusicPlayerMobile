@@ -101,7 +101,7 @@ class HomePageView extends GetView<HomeController> {
     List<BtnItem> list = [];
     list.add(BtnItem(
         imgPath: Assets.dialogIcAddPlayList2,
-        title: "加入播放列表",
+        title: 'add_to_playlist'.tr,
         onTap: () async {
           List<Music> musicList = controller.state.items.cast();
           List<Music> tempList = [];
@@ -112,13 +112,13 @@ class HomePageView extends GetView<HomeController> {
           });
           final isSuccess = PlayerLogic.to.addMusicList(tempList);
           if (isSuccess) {
-            SmartDialog.compatible.showToast("添加成功");
+            SmartDialog.compatible.showToast('add_success'.tr);
           }
           SmartDialog.compatible.dismiss();
         }));
     list.add(BtnItem(
         imgPath: Assets.dialogIcAddPlayList,
-        title: "添加到歌单",
+        title: 'add_to_menu'.tr,
         onTap: () async {
           List<Music> musicList = controller.state.items.cast();
           var isHasChosen =

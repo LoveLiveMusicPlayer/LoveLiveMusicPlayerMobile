@@ -79,7 +79,7 @@ class _LyricState extends State<Lyric> {
         },
         emptyBuilder: () => Center(
           child: Text(
-            "暂无歌词",
+            'no_lyrics'.tr,
             style: lyricUI.getOtherMainTextStyle(),
           ),
         ),

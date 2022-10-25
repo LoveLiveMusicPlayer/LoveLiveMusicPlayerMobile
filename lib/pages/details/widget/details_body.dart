@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
@@ -101,7 +102,7 @@ class _DetailsBodyState extends State<DetailsBody> {
           },
           onPlayNextTap: (music) {
             PlayerLogic.to.addNextMusic(music);
-            SmartDialog.compatible.showToast("添加成功");
+            SmartDialog.compatible.showToast('add_success'.tr);
           },
           onMoreTap: (music) {
             SmartDialog.compatible.show(
@@ -138,7 +139,7 @@ class _DetailsBodyState extends State<DetailsBody> {
     List<BtnItem> list = [];
     list.add(BtnItem(
         imgPath: Assets.dialogIcAddPlayList2,
-        title: "加入播放列表",
+        title: 'add_to_playlist'.tr,
         onTap: () async {
           final musicList = widget.logic.state.items;
           final tempList = <Music>[];
@@ -149,13 +150,13 @@ class _DetailsBodyState extends State<DetailsBody> {
           });
           final isSuccess = PlayerLogic.to.addMusicList(tempList);
           if (isSuccess) {
-            SmartDialog.compatible.showToast("添加成功");
+            SmartDialog.compatible.showToast('add_success'.tr);
           }
           SmartDialog.compatible.dismiss();
         }));
     list.add(BtnItem(
         imgPath: Assets.dialogIcAddPlayList,
-        title: "添加到歌单",
+        title: 'add_to_menu'.tr,
         onTap: () async {
           List<Music> musicList = widget.logic.state.items.cast();
           var isHasChosen = widget.logic.state.items

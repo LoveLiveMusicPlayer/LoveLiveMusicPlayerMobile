@@ -116,7 +116,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
             height: 4.w,
           ),
           Text(
-            "${widget.menu.music.length}首",
+            "${widget.menu.music.length} ${'total_number_unit'.tr}",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyleMs.grayBold_12,

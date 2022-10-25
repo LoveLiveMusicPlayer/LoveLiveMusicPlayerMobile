@@ -46,7 +46,7 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
         children: [
           Padding(
             padding: EdgeInsets.all(12.h),
-            child: Text("歌曲信息",
+            child: Text('music_info'.tr,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Get.isDarkMode
@@ -57,12 +57,12 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
               height: 0.5.h,
               color:
                   Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF),
-          _buildItem("专辑: ", widget.music.albumName, true),
-          _buildItem("时长: ", widget.music.time, true),
+          _buildItem("${'album'.tr}: ", widget.music.albumName, true),
+          _buildItem("${'duration'.tr}: ", widget.music.time, true),
           _buildItem(
-              "位置: ", "${widget.music.baseUrl}${widget.music.musicPath}", true),
-          _buildItem("发行日期: ", date, true),
-          _buildItem("分类: ", category, false)
+              "${'position'.tr}: ", "${widget.music.baseUrl}${widget.music.musicPath}", true),
+          _buildItem("${'release_date'.tr}: ", date, true),
+          _buildItem("${'Classification'.tr}: ", category, false)
         ],
       ),
     );
@@ -92,7 +92,7 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
               Expanded(
                   child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Text(message ?? "未知",
+                child: Text(message ?? 'unknown'.tr,
                     style: Get.isDarkMode
                         ? TextStyleMs.white_15
                         : TextStyleMs.lightBlack_15),

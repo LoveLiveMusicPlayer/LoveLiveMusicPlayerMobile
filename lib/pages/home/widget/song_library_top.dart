@@ -112,7 +112,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
     return Expanded(
       child: Obx(() {
         return Text(
-            "${controller.getListSize(index, controller.databaseInitOver.value)}${index == 1 ? "张专辑" : "首歌曲"}",
+            "${controller.getListSize(index, controller.databaseInitOver.value)} ${index == 1 ? 'total_album_number_unit'.tr : 'total_number_unit'.tr}",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style:
@@ -155,7 +155,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
               uncheckedIconColor: ColorMs.color999999,
               spacing: 10.h,
               iconSize: 25,
-              title: "选择全部/已选${HomeController.to.getCheckedSong()}首",
+              title: "${'select_items'.tr} ${HomeController.to.getCheckedSong()} ${'total_number_unit'.tr}",
               textStyle:
                   Get.isDarkMode ? TextStyleMs.white_15 : TextStyleMs.black_15,
               onCheckd: (value) {
@@ -172,7 +172,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 16.h),
               child: Text(
-                "取消",
+                'cancel'.tr,
                 style: Get.isDarkMode
                     ? TextStyleMs.white_15
                     : TextStyleMs.black_15,

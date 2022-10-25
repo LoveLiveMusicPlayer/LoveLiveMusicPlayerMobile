@@ -108,7 +108,7 @@ class GlobalLogic extends SuperController
     controller = UpdaterController(
       listener: (UpdateStatus status) {
         if (status == UpdateStatus.Failed) {
-          SmartDialog.compatible.showToast("更新失败");
+          SmartDialog.compatible.showToast('update_fail'.tr);
         }
         Log4f.d(msg: 'Listener: $status');
       },
@@ -291,17 +291,17 @@ class GlobalLogic extends SuperController
       updater ??= Updater(
           context: Get.context!,
           url: Const.updateUrl,
-          titleText: '版本升级',
-          confirmText: "升级",
-          cancelText: "不升级",
+          titleText: 'update'.tr,
+          confirmText: 'update_yes'.tr,
+          cancelText: 'update_no'.tr,
           controller: controller);
       updater!.check().then((hasNewVersion) {
         if (manual && !hasNewVersion) {
-          SmartDialog.compatible.showToast("当前已是最新版本");
+          SmartDialog.compatible.showToast('no_need_update'.tr);
         }
       });
     } else if (manual) {
-      SmartDialog.compatible.showToast("IOS请前往商店查看");
+      SmartDialog.compatible.showToast('need_jump_to_app_store'.tr);
     }
   }
 

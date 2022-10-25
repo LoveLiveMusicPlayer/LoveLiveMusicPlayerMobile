@@ -28,21 +28,21 @@ class BottomBar2 extends StatelessWidget {
                   width: 18.h,
                   color:
                       mIndex == 0 ? ColorMs.colorF940A7 : ColorMs.colorD1E0F3),
-              label: '我喜欢'),
+              label: 'iLove'.tr),
           BottomNavigationBarItem(
               icon: SvgPicture.asset(Assets.tabTabPlaylist,
                   height: 18.h,
                   width: 18.h,
                   color:
                       mIndex == 1 ? ColorMs.colorF940A7 : ColorMs.colorD1E0F3),
-              label: '歌单'),
+              label: 'songMenu'.tr),
           BottomNavigationBarItem(
               icon: SvgPicture.asset(Assets.tabTabRecently,
                   height: 18.h,
                   width: 18.h,
                   color:
                       mIndex == 2 ? ColorMs.colorF940A7 : ColorMs.colorD1E0F3),
-              label: '最近播放'),
+              label: 'history'.tr),
         ],
         elevation: 0,
         backgroundColor: GlobalLogic.to

@@ -49,7 +49,7 @@ class _ListViewItemSingerState extends State<ListViewItemSinger> {
                   height: 4.h,
                 ),
                 Text(
-                  "${widget.artist.music.length}首歌",
+                  "${widget.artist.music.length} ${'total_number_unit'.tr}",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyleMs.gray_12,

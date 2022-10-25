@@ -8,8 +8,8 @@ import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class TwoButtonDialog extends StatelessWidget {
   String _imgAsset = "";
-  String _title = "";
-  String _msg = "";
+  String? _title;
+  String? _msg;
   bool _isShowTitle = true;
   bool _isShowMsg = true;
   Callback? _onBackListener;
@@ -18,8 +18,8 @@ class TwoButtonDialog extends StatelessWidget {
   TwoButtonDialog({
     Key? key,
     String imgAsset = Assets.mainIcErr,
-    String title = "标题",
-    String msg = "消息",
+    String? title,
+    String? msg,
     bool isShowTitle = true,
     bool isShowMsg = true,
     Callback? onBackListener,
@@ -61,7 +61,7 @@ class TwoButtonDialog extends StatelessWidget {
             visible: _isShowTitle,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Text(_title,
+              child: Text(_title ?? 'title'.tr,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Get.isDarkMode
@@ -77,7 +77,7 @@ class TwoButtonDialog extends StatelessWidget {
             child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Text(
-                  _msg,
+                  _msg ?? 'message'.tr,
                   style: TextStyleMs.gray_14,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
@@ -101,7 +101,7 @@ class TwoButtonDialog extends StatelessWidget {
                         SmartDialog.compatible.dismiss();
                         if (_onBackListener != null) _onBackListener!();
                       },
-                      child: Text("取消",
+                      child: Text('cancel'.tr,
                           style: Get.isDarkMode
                               ? TextStyleMs.white_16
                               : TextStyleMs.gray_16)),
@@ -122,7 +122,7 @@ class TwoButtonDialog extends StatelessWidget {
                         if (_onConfirmListener != null) _onConfirmListener!();
                       },
                       child: Text(
-                        "确定",
+                        'confirm'.tr,
                         style: TextStyleMs.white_16,
                       )),
                 ),

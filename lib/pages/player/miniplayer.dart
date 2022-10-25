@@ -192,7 +192,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             MarqueeText(
-                text: TextSpan(text: musicName ?? "暂无歌曲"),
+                text: TextSpan(text: musicName ?? 'no_songs'.tr),
                 style: Get.isDarkMode
                     ? TextStyleMs.white_14.merge(textStyle)
                     : TextStyleMs.black_14.merge(textStyle),

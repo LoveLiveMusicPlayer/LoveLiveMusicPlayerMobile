@@ -95,7 +95,7 @@ class DetailsListTop extends StatelessWidget {
   ///歌曲总数
   Widget _buildSongNumText() {
     return Expanded(
-      child: Text("$itemsLength首歌曲",
+      child: Text("$itemsLength ${'total_number_unit'.tr}",
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: Get.isDarkMode
@@ -130,7 +130,7 @@ class DetailsListTop extends StatelessWidget {
             uncheckedIconColor: ColorMs.color999999,
             spacing: 10.h,
             iconSize: 25,
-            title: "选择全部/已选$checkedItemLength首",
+            title: "${'select_items'.tr} $checkedItemLength ${'total_number_unit'.tr}",
             textStyle:
                 Get.isDarkMode ? TextStyleMs.white_15 : TextStyleMs.black_15,
             onCheckd: (value) {
@@ -145,7 +145,7 @@ class DetailsListTop extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 16.h),
               child: Text(
-                "取消",
+                'cancel'.tr,
                 style: Get.isDarkMode
                     ? TextStyleMs.white_15
                     : TextStyleMs.black_15,

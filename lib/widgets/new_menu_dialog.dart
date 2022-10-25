@@ -35,7 +35,7 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
         children: [
           Padding(
             padding: EdgeInsets.only(top: 26.h, bottom: 8.h),
-            child: Text(widget.title ?? "标题",
+            child: Text(widget.title ?? 'title'.tr,
                 style: Get.isDarkMode
                     ? TextStyleMs.white_18
                     : TextStyleMs.black_18),
@@ -55,7 +55,7 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
                   maxLength: maxLength,
                   decoration: InputDecoration(
                       isCollapsed: false,
-                      labelText: "请输入歌单名",
+                      labelText: 'input_menu_name'.tr,
                       contentPadding: EdgeInsets.only(left: 8.w, right: 8.w),
                       focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.blue)),
@@ -99,7 +99,7 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
                         }
                         SmartDialog.compatible.dismiss();
                       },
-                      child: Text("取消",
+                      child: Text('cancel'.tr,
                           style: Get.isDarkMode
                               ? TextStyleMs.white_16
                               : TextStyleMs.gray_16)),
@@ -121,7 +121,7 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
                         }
                         SmartDialog.compatible.dismiss();
                       },
-                      child: Text("确定", style: TextStyleMs.white_16)),
+                      child: Text('confirm'.tr, style: TextStyleMs.white_16)),
                 ),
               )
             ],

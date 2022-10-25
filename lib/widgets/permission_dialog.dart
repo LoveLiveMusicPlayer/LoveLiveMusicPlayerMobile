@@ -10,9 +10,6 @@ import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class PermissionDialog extends StatelessWidget {
-  final mainMsg =
-      "欢迎使用LoveLiveMusicPlayer!\n\n我们将通过《用户协议及隐私政策》帮助您了解本软件为您提供的服务，及收集、处理您个人数据的方式。\n点击【同意并继续】按钮代表您已同意。";
-  final clickFrontMsg = "查看完整版";
   final Callback? readPermission;
   final Callback? confirm;
 
@@ -38,16 +35,16 @@ class PermissionDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(height: 26.h),
-              Text("隐私保护政策", style: titleColor),
+              Text('privacy_policy'.tr, style: titleColor),
               SizedBox(height: 16.h),
-              Text(mainMsg, style: textColor),
+              Text('permission_main_message'.tr, style: textColor),
               SizedBox(height: 18.h),
               Row(
                 children: [
-                  Text(clickFrontMsg, style: miniTextColor),
+                  Text('permission_show_full'.tr, style: miniTextColor),
                   Text.rich(
                     TextSpan(
-                      text: "《用户协议及隐私政策》",
+                      text: 'permission_external_link'.tr,
                       style: TextStyleMs.blue_12,
                       // 设置点击事件
                       recognizer: TapGestureRecognizer()
@@ -71,7 +68,7 @@ class PermissionDialog extends StatelessWidget {
                       if (confirm != null) confirm!();
                     },
                     child: Text(
-                      "同意并继续",
+                      'permission_agree'.tr,
                       style: TextStyleMs.white_16,
                     )),
               ),
@@ -87,7 +84,7 @@ class PermissionDialog extends StatelessWidget {
                       SystemNavigator.pop();
                     }
                   },
-                  child: Text("不同意", style: miniTextColor)),
+                  child: Text('permission_disagree'.tr, style: miniTextColor)),
             ],
           )),
     );

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:get/get.dart' as Getx;
 import 'package:lovelivemusicplayer/models/apiResponse.dart';
 import 'package:lovelivemusicplayer/network/api_service.dart';
 import 'package:lovelivemusicplayer/widgets/one_button_dialog.dart';
@@ -40,15 +41,15 @@ class Network {
   static getSync(String url,
       {bool isShowDialog = false,
       bool isShowError = false,
-      String loadingMessage = "请求网络中..."}) async {
+      String? loadingMessage}) async {
     if (isShowDialog) {
-      SmartDialog.compatible.showLoading(msg: loadingMessage);
+      SmartDialog.compatible.showLoading(msg: loadingMessage ?? 'requesting'.tr);
     }
     var resp = await dio!.get(url).onError((error, stackTrace) {
       if (isShowError) {
         SmartDialog.compatible.show(
             widget: OneButtonDialog(
-          title: "请检查网络",
+          title: 'please_check_network'.tr,
           isShowMsg: false,
         ));
       }
@@ -66,14 +67,16 @@ class Network {
       Function(String msg)? error,
       bool isShowDialog = true,
       bool isShowError = true,
-      String loadingMessage = "请求网络中..."}) {
+      String? loadingMessage}) {
     request(url,
         method: 'get',
         params: params,
         success: success,
         error: error,
         isShowDialog: isShowDialog,
-        isShowError: isShowError);
+        isShowError: isShowError,
+        loadingMessage: loadingMessage
+    );
   }
 
   static post(String url,
@@ -82,14 +85,16 @@ class Network {
       Function(String msg)? error,
       bool isShowDialog = true,
       bool isShowError = true,
-      String loadingMessage = "请求网络中..."}) {
+      String? loadingMessage}) {
     request(url,
         method: 'post',
         params: params,
         success: success,
         error: error,
         isShowDialog: isShowDialog,
-        isShowError: isShowError);
+        isShowError: isShowError,
+        loadingMessage: loadingMessage
+    );
   }
 
   static Future<Response>? download(String url, String dest,
@@ -105,8 +110,7 @@ class Network {
       Function(String msg)? error,
       bool isShowDialog = true,
       bool isShowError = true,
-      String loadingMessage = "请求网络中..."}) async {
-    // if (SmartDialog.compatible.config.isLoading) SmartDialog.compatible.dismiss();
+      String? loadingMessage}) async {
     if (dio == null) {
       return throw "请先在实例化网络";
     }
@@ -115,7 +119,7 @@ class Network {
               if (value)
                 {
                   _dioRequest(url, method, params, success, error, isShowDialog,
-                      isShowError, loadingMessage)
+                      isShowError, loadingMessage ?? 'requesting'.tr)
                 }
               else
                 {_noNetwork(error, isShowError)}
@@ -136,8 +140,6 @@ class Network {
       SmartDialog.compatible.showLoading(msg: loadingMessage);
     }
     dio!
-        // .request<Map<String, dynamic>>(url,
-        //     queryParameters: params, options: Options(method: method))
         .request<dynamic>(url,
             queryParameters: params, options: Options(method: method))
         .then((value) => {_handlerSuccess(value.data, success)})
@@ -170,11 +172,11 @@ class Network {
   }
 
   static _noNetwork(Function(String msg)? error, bool isShowError) {
-    if (error != null) error("请检查网络");
+    if (error != null) error('please_check_network'.tr);
     if (isShowError) {
       SmartDialog.compatible.show(
           widget: OneButtonDialog(
-        title: "请检查网络",
+        title: 'please_check_network'.tr,
         isShowMsg: false,
       ));
     }
