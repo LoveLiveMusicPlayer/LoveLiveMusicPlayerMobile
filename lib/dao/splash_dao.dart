@@ -1,7 +1,6 @@
 import 'package:floor/floor.dart';
 import 'package:lovelivemusicplayer/models/Splash.dart';
 
-
 @dao
 abstract class SplashDao {
   @Query('SELECT * FROM Splash')

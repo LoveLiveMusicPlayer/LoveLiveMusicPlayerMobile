@@ -198,15 +198,16 @@ getOssUrl() async {
         }
 
         final endTime = forceMap["endTime"];
-        if (endTime != null && endTime < DateTime.now().millisecondsSinceEpoch) {
+        if (endTime != null &&
+            endTime < DateTime.now().millisecondsSinceEpoch) {
           return;
         }
         final forceId = forceMap["uid"];
         if (forceId == null) {
           return;
         }
-        final forceBg =
-        config.splash.bg.firstWhereOrNull((bg) => bg.uid == forceMap["uid"]);
+        final forceBg = config.splash.bg
+            .firstWhereOrNull((bg) => bg.uid == forceMap["uid"]);
         if (forceBg == null) {
           return;
         }

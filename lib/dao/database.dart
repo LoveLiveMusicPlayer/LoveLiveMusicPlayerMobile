@@ -13,12 +13,12 @@ import 'package:lovelivemusicplayer/dao/splash_dao.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/History.dart';
-import 'package:lovelivemusicplayer/models/Splash.dart';
 import 'package:lovelivemusicplayer/models/Love.dart';
 import 'package:lovelivemusicplayer/models/Lyric.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/models/PlayListMusic.dart';
+import 'package:lovelivemusicplayer/models/Splash.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 import 'album_dao.dart';
@@ -26,9 +26,17 @@ import 'album_dao.dart';
 part 'database.g.dart';
 
 @TypeConverters([StringListConverter])
-@Database(
-    version: 4,
-    entities: [Album, Lyric, Music, PlayListMusic, Menu, Artist, Love, History, Splash])
+@Database(version: 4, entities: [
+  Album,
+  Lyric,
+  Music,
+  PlayListMusic,
+  Menu,
+  Artist,
+  Love,
+  History,
+  Splash
+])
 abstract class MusicDatabase extends FloorDatabase {
   AlbumDao get albumDao;
 

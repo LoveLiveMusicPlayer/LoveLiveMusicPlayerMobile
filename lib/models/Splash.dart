@@ -16,10 +16,10 @@ class Splash {
   String url;
 
   factory Splash.fromJson(Map<String, dynamic> json) => Splash(
-    url: json["url"],
-  );
+        url: json["url"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "url": url,
-  };
+        "url": url,
+      };
 }
