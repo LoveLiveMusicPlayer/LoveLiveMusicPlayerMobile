@@ -43,7 +43,8 @@ class Network {
       bool isShowError = false,
       String? loadingMessage}) async {
     if (isShowDialog) {
-      SmartDialog.compatible.showLoading(msg: loadingMessage ?? 'requesting'.tr);
+      SmartDialog.compatible
+          .showLoading(msg: loadingMessage ?? 'requesting'.tr);
     }
     var resp = await dio!.get(url).onError((error, stackTrace) {
       if (isShowError) {
@@ -75,8 +76,7 @@ class Network {
         error: error,
         isShowDialog: isShowDialog,
         isShowError: isShowError,
-        loadingMessage: loadingMessage
-    );
+        loadingMessage: loadingMessage);
   }
 
   static post(String url,
@@ -93,8 +93,7 @@ class Network {
         error: error,
         isShowDialog: isShowDialog,
         isShowError: isShowError,
-        loadingMessage: loadingMessage
-    );
+        loadingMessage: loadingMessage);
   }
 
   static Future<Response>? download(String url, String dest,

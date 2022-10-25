@@ -300,8 +300,8 @@ class _DrawerPageState extends State<DrawerPage> {
                     });
                   }, afterDelete: () async {
                     SmartDialog.compatible.dismiss();
-                    SmartDialog.compatible
-                        .showToast('clean_success'.tr, time: const Duration(seconds: 5));
+                    SmartDialog.compatible.showToast('clean_success'.tr,
+                        time: const Duration(seconds: 5));
                     await DBLogic.to
                         .findAllListByGroup(GlobalLogic.to.currentGroup.value);
                   }));

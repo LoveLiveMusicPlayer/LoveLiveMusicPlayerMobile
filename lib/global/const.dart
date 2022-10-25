@@ -30,11 +30,18 @@ class Const {
   static const String spLoopMode = "SP_LOOP_MODE";
   static const String spDataVersion = "SP_DATA_VERSION";
 
-  static const String ossUrl =
+  // 默认的资源oss，无法在线获取时用于离线加载网络图片
+  static String ossUrl =
       "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/";
 
+  // 自己的oss
   static const String ownOssUrl =
       "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/data/";
+
+  // 动态获取资源oss的url和开屏图配置
+  static const String splashConfigUrl = "${ownOssUrl}splash_config.json";
+
+  static String splashUrl = "${ownOssUrl}LLMP-M/splash_bg/";
 
   // 数据更新桥文件
   static String dataUrl = "$ownOssUrl$env/data.json";

@@ -51,7 +51,9 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                 header = 'single_play'.tr;
               }
               return _buildItem(
-                  icons[index], "$header - ${mPlayList.length} ${'total_number_unit'.tr}", true, () {
+                  icons[index],
+                  "$header - ${mPlayList.length} ${'total_number_unit'.tr}",
+                  true, () {
                 final currentIndex = PlayerLogic.loopModes.indexOf(loopMode);
                 final nextIndex =
                     (currentIndex + 1) % PlayerLogic.loopModes.length;

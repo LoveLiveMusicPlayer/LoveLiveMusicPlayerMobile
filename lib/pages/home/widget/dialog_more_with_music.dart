@@ -80,7 +80,8 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
             height: 0.5.h,
             color: Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF,
           ),
-          _buildItem(Assets.dialogIcAddPlayList, 'add_to_playlist'.tr, true, () {
+          _buildItem(Assets.dialogIcAddPlayList, 'add_to_playlist'.tr, true,
+              () {
             SmartDialog.compatible.dismiss();
             PlayerLogic.to.addNextMusic(widget.music, isNext: false);
             SmartDialog.compatible.showToast('add_success'.tr);
@@ -108,8 +109,8 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
     if (widget.isAlbum != null && widget.isAlbum == true) {
       return Container();
     }
-    return _buildItem(Assets.dialogIcSeeAlbum, 'view_album'.tr, widget.onRemove != null,
-        () {
+    return _buildItem(
+        Assets.dialogIcSeeAlbum, 'view_album'.tr, widget.onRemove != null, () {
       SmartDialog.compatible.dismiss();
       if (widget.onClosePanel != null) {
         widget.onClosePanel!();

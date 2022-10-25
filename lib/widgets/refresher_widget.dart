@@ -72,18 +72,10 @@ class _RefresherWidgetState extends State<RefresherWidget> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset(
-            widget.emptyImg,
-            width: 80.h,
-            height: 80.h
-          ),
-          SizedBox(
-            height: 10.h
-          ),
-          Text(
-            widget.emptyMsg ?? 'no_data'.tr,
-            style: TextStyleMs.colorBFBFBF_18
-          )
+          Image.asset(widget.emptyImg, width: 80.h, height: 80.h),
+          SizedBox(height: 10.h),
+          Text(widget.emptyMsg ?? 'no_data'.tr,
+              style: TextStyleMs.colorBFBFBF_18)
         ],
       ),
     );

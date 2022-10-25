@@ -130,7 +130,8 @@ class DetailsListTop extends StatelessWidget {
             uncheckedIconColor: ColorMs.color999999,
             spacing: 10.h,
             iconSize: 25,
-            title: "${'select_items'.tr} $checkedItemLength ${'total_number_unit'.tr}",
+            title:
+                "${'select_items'.tr} $checkedItemLength ${'total_number_unit'.tr}",
             textStyle:
                 Get.isDarkMode ? TextStyleMs.white_15 : TextStyleMs.black_15,
             onCheckd: (value) {

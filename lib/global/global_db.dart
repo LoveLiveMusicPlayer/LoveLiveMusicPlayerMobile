@@ -12,6 +12,7 @@ import 'package:lovelivemusicplayer/dao/lyric_dao.dart';
 import 'package:lovelivemusicplayer/dao/menu_dao.dart';
 import 'package:lovelivemusicplayer/dao/music_dao.dart';
 import 'package:lovelivemusicplayer/dao/playlist_dao.dart';
+import 'package:lovelivemusicplayer/dao/splash_dao.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/start_event.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
@@ -43,6 +44,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   late ArtistDao artistDao;
   late LoveDao loveDao;
   late HistoryDao historyDao;
+  late SplashDao splashDao;
 
   final artistList = <ArtistModel>[];
   final singleMap = <String, String>{};
@@ -56,7 +58,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   Future<void> onInit() async {
     database = await $FloorMusicDatabase
         .databaseBuilder('app_database.db')
-        .addMigrations([migration1to2, migration2to3]).build();
+        .addMigrations([migration1to2, migration2to3, migration3to4]).build();
     albumDao = database.albumDao;
     lyricDao = database.lyricDao;
     musicDao = database.musicDao;
@@ -65,6 +67,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     artistDao = database.artistDao;
     loveDao = database.loveDao;
     historyDao = database.historyDao;
+    splashDao = database.splashDao;
     CachedNetworkImage.logLevel = CacheManagerLogLevel.debug;
     await findAllListByGroup(Const.groupAll);
     await findAllPlayListMusics();
@@ -270,6 +273,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       await menuDao.deleteAllMenus();
       await loveDao.deleteAllLoves();
       await historyDao.deleteAllHistorys();
+      await splashDao.deleteAllSplashUrls();
       await playListMusicDao.deleteAllPlayListMusics();
     } catch (e) {
       Log4f.e(msg: e.toString(), writeFile: true);

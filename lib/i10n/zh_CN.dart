@@ -78,7 +78,8 @@ const Map<String, String> zh_CN = {
   'input_menu_name': '请输入歌单名',
   'privacy_policy': '隐私保护政策',
   'permission_show_full': '查看完整版',
-  'permission_main_message': '欢迎使用LoveLiveMusicPlayer!\n\n我们将通过《用户协议及隐私政策》帮助您了解本软件为您提供的服务，及收集、处理您个人数据的方式。\n点击【同意并继续】按钮代表您已同意。',
+  'permission_main_message':
+      '欢迎使用LoveLiveMusicPlayer!\n\n我们将通过《用户协议及隐私政策》帮助您了解本软件为您提供的服务，及收集、处理您个人数据的方式。\n点击【同意并继续】按钮代表您已同意。',
   'permission_external_link': '《用户协议及隐私政策》',
   'permission_agree': '同意并继续',
   'permission_disagree': '不同意',

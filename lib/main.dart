@@ -15,6 +15,7 @@ import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/start_event.dart';
 import 'package:lovelivemusicplayer/global/global_binding.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -23,6 +24,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'global/const.dart';
 import 'global/global_theme.dart';
 import 'i10n/translation.dart';
+import 'models/InitConfig.dart';
 import 'network/http_request.dart';
 import 'routes.dart';
 import 'utils/sd_utils.dart';
@@ -32,6 +34,7 @@ var isDark = false;
 var appVersion = "1.0.0";
 var hasAIPic = false;
 var needRemoveCover = true;
+final splashList = <String>[];
 var env = const bool.fromEnvironment("dart.vm.product") ? "prod" : "pre";
 
 void main() async {
@@ -169,8 +172,82 @@ initServices() async {
   Network.getInstance();
   PlayerBinding().dependencies();
   await SDUtils.init();
-  SpUtil.put("prevPage", "");
   hasAIPic = await SpUtil.getBoolean(Const.spAIPicture, true);
+  await getOssUrl();
+  SpUtil.put("prevPage", "");
+}
+
+/// 获取资源oss url，解析开屏图片数据
+getOssUrl() async {
+  try {
+    final connection = await Connectivity().checkConnectivity();
+    if (connection != ConnectivityResult.none) {
+      final result = await Network.dio?.request<String>(Const.splashConfigUrl);
+      if (result != null && result.data != null) {
+        // 能够加载到开屏配置
+        final config = initConfigFromJson(result.data!);
+        Const.ossUrl = config.ossUrl;
+        Const.splashUrl = config.ossUrl + config.splash.route;
+        final forceMap = config.splash.forceChoose;
+
+        // 先将全部图片放到列表中
+        addAllSplashPhoto(config);
+
+        if (forceMap == null) {
+          return;
+        }
+
+        final endTime = forceMap["endTime"];
+        if (endTime != null && endTime < DateTime.now().millisecondsSinceEpoch) {
+          return;
+        }
+        final forceId = forceMap["uid"];
+        if (forceId == null) {
+          return;
+        }
+        final forceBg =
+        config.splash.bg.firstWhereOrNull((bg) => bg.uid == forceMap["uid"]);
+        if (forceBg == null) {
+          return;
+        }
+        final index = forceMap["index"];
+        if (index == null || index < 0 || index > forceBg.size) {
+          return;
+        }
+
+        // 需要强制开屏图，清空数组添加唯一一张
+        splashList.clear();
+        splashList.add(
+            "${Const.splashUrl}${forceBg.singer}/bg_${forceBg.singer}_$index.png");
+        return;
+      }
+    }
+    // 手机无网络、开屏配置无法加载
+    // 先延迟1s，避免数据库初始化未完成
+    await Future.delayed(const Duration(seconds: 1));
+    // 从数据库中加载全部开屏图地址
+    final tempList = await DBLogic.to.splashDao.findAllSplashUrls();
+    for (var splashItem in tempList) {
+      // 过滤只保留仍然缓存中的图片
+      final isExist = await AppUtils.checkUrlExist(splashItem.url);
+      if (isExist) {
+        splashList.add(splashItem.url);
+      }
+    }
+  } catch (e) {
+    Log4f.d(msg: e.toString());
+  }
+}
+
+/// 将可用开屏界面地址全部添加到开屏图列表中
+addAllSplashPhoto(InitConfig config) {
+  for (var bg in config.splash.bg) {
+    for (var index = 1; index <= bg.size; index++) {
+      final photoUrl =
+          "${Const.splashUrl}${bg.singer}/bg_${bg.singer}_$index.png";
+      splashList.add(photoUrl);
+    }
+  }
 }
 
 /// GetX 日志重定向

@@ -34,11 +34,13 @@ const Map<String, String> en_US = {
   'requesting': 'Requesting...',
   'please_check_network': 'Please check network',
   'keep_same_lan': 'Keep your phone and computer on the same LAN',
-  'keep_screen_and_scan_qr': 'Keep the screen steady on and scan the QR code on the PC',
+  'keep_screen_and_scan_qr':
+      'Keep the screen steady on and scan the QR code on the PC',
   'phone2pc': 'Phone >> PC',
   'pc2phone': 'PC >> Phone',
   'device_pair': 'Device pairing',
-  'terminate_trans': 'The connection and transmission will be interrupted. Do you want to continue?',
+  'terminate_trans':
+      'The connection and transmission will be interrupted. Do you want to continue?',
   'confirm': 'Confirm',
   'connect_fail': 'Connection failed',
   'album_info': 'Album info',
@@ -78,7 +80,8 @@ const Map<String, String> en_US = {
   'input_menu_name': 'Please input menu name',
   'privacy_policy': 'Privacy policy',
   'permission_show_full': 'View full version',
-  'permission_main_message': 'Welcome to LoveLiveMusicPlayer!\n\nWe will use the User Agreement and Privacy Policy to help you understand the services provided by the software for you and the way you collect and process your personal data.\nClick the "Agree and Continue" button to indicate that you have agreed.',
+  'permission_main_message':
+      'Welcome to LoveLiveMusicPlayer!\n\nWe will use the User Agreement and Privacy Policy to help you understand the services provided by the software for you and the way you collect and process your personal data.\nClick the "Agree and Continue" button to indicate that you have agreed.',
   'permission_external_link': 'User Agreement and Privacy Policy',
   'permission_agree': 'Agree and continue',
   'permission_disagree': 'Disagree and shutdown',

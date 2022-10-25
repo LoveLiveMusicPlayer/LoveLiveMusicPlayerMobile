@@ -236,8 +236,7 @@ class _MusicTransformState extends State<MusicTransform> {
           SizedBox(
             width: 300.w,
             child: Text('keep_same_lan'.tr,
-                style: TextStyleMs.gray_12,
-                textAlign: TextAlign.left),
+                style: TextStyleMs.gray_12, textAlign: TextAlign.left),
           )
         ]),
         SizedBox(height: 4.h),
@@ -248,8 +247,7 @@ class _MusicTransformState extends State<MusicTransform> {
           SizedBox(
               width: 300.w,
               child: Text('keep_screen_and_scan_qr'.tr,
-                  style: TextStyleMs.gray_12,
-                  textAlign: TextAlign.left))
+                  style: TextStyleMs.gray_12, textAlign: TextAlign.left))
         ]),
         SizedBox(height: 85.h),
         Visibility(

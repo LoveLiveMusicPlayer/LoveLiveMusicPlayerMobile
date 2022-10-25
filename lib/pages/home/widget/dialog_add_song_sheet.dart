@@ -70,8 +70,9 @@ class DialogAddSongSheet extends StatelessWidget {
                         }
                       }
                       bool isSuccess = await DBLogic.to.addMenu(name, idList);
-                      SmartDialog.compatible
-                          .showToast(isSuccess ? 'create_success'.tr : 'create_over_max'.tr);
+                      SmartDialog.compatible.showToast(isSuccess
+                          ? 'create_success'.tr
+                          : 'create_over_max'.tr);
                     }),
                 clickBgDismissTemp: false,
                 alignmentTemp: Alignment.center);
@@ -103,8 +104,8 @@ class DialogAddSongSheet extends StatelessWidget {
                           .insertToMenu(menuList[index].id, idList)
                           .then((isSuccess) {
                         SmartDialog.compatible.dismiss();
-                        SmartDialog.compatible
-                            .showToast(isSuccess ? 'add_success'.tr : 'add_fail'.tr);
+                        SmartDialog.compatible.showToast(
+                            isSuccess ? 'add_success'.tr : 'add_fail'.tr);
                       });
                     },
                     menu: menuList[index],
@@ -121,7 +122,8 @@ class DialogAddSongSheet extends StatelessWidget {
     return _buildItem('iLove'.tr, true, () {
       PlayerLogic.to.toggleLoveList(musicList, notAllLove);
       SmartDialog.compatible.dismiss();
-      SmartDialog.compatible.showToast(notAllLove ? 'add_to_iLove'.tr : 'remove_from_iLove'.tr);
+      SmartDialog.compatible
+          .showToast(notAllLove ? 'add_to_iLove'.tr : 'remove_from_iLove'.tr);
       if (changeLoveStatusCallback != null) {
         changeLoveStatusCallback!(notAllLove);
       }

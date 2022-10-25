@@ -51,6 +51,16 @@ class AppUtils {
     return await CachedNetworkImage.evictFromCache(url);
   }
 
+  /// 判断缓存中是否存在该URL
+  static Future<bool> checkUrlExist(url) async {
+    try {
+      await cacheManager.getSingleFile(url);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   /// 计算101...200中，数组内不存在的最小值
   static int calcSmallAtIntArr(List<int> idList) {
     var result = -1;

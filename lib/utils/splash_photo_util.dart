@@ -4,37 +4,24 @@ import 'package:flutter/material.dart';
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/start_event.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
+import 'package:lovelivemusicplayer/main.dart';
+import 'package:lovelivemusicplayer/models/Splash.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 
 var background = const BoxDecoration();
 
 class SplashPhoto {
-  static const frontUrl =
-      "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/LLMP-M/splash_bg/";
-
-  final imageList = [
-    "${frontUrl}yohane/bg_yohane_1.png",
-    "${frontUrl}maki/bg_maki_1.png",
-    "${frontUrl}shizuku/bg_shizuku_1.png",
-    "${frontUrl}you/bg_you_1.png",
-    "${frontUrl}chisato/bg_chisato_1.png",
-    "${frontUrl}kotori/bg_kotori_1.png"
-  ];
-
   Future<Widget?> getRandomPhotoView() async {
-    return await handlePic(imageList);
-  }
-
-  Future<Widget?> handlePic(List<String> imageList) async {
-    if (imageList.isEmpty) {
+    if (splashList.isEmpty) {
       return null;
     }
     String? imageUrl;
     final connection = await Connectivity().checkConnectivity();
     if (connection == ConnectivityResult.none) {
       final offlineList = <String>[];
-      await Future.forEach<String>(imageList, (url) async {
-        final isExist = await checkUrlExist(url);
+      await Future.forEach<String>(splashList, (url) async {
+        final isExist = await AppUtils.checkUrlExist(url);
         if (isExist) {
           offlineList.add(url);
         }
@@ -44,8 +31,8 @@ class SplashPhoto {
         imageUrl = offlineList[0];
       }
     } else {
-      imageList.shuffle();
-      imageUrl = imageList[0];
+      splashList.shuffle();
+      imageUrl = splashList[0];
     }
     if (imageUrl == null) {
       return null;
@@ -58,7 +45,11 @@ class SplashPhoto {
     );
     final stream = image.image.resolve(const ImageConfiguration());
     stream.addListener(
-        ImageStreamListener((ImageInfo info, bool synchronousCall) {
+        ImageStreamListener((ImageInfo info, bool synchronousCall) async {
+      final splashItem = await DBLogic.to.splashDao.findSplashByUrl(imageUrl!);
+      if (splashItem == null) {
+        DBLogic.to.splashDao.insertSplashUrl(Splash(url: imageUrl));
+      }
       Future.delayed(const Duration(seconds: 1), () {
         eventBus.fire(StartEvent((DateTime.now().millisecondsSinceEpoch)));
       });
@@ -70,14 +61,5 @@ class SplashPhoto {
       decoration: background,
       child: Container(),
     );
-  }
-
-  static Future<bool> checkUrlExist(url) async {
-    try {
-      await AppUtils.cacheManager.getSingleFile(url);
-      return true;
-    } catch (e) {
-      return false;
-    }
   }
 }

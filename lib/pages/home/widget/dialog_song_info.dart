@@ -59,8 +59,8 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
                   Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF),
           _buildItem("${'album'.tr}: ", widget.music.albumName, true),
           _buildItem("${'duration'.tr}: ", widget.music.time, true),
-          _buildItem(
-              "${'position'.tr}: ", "${widget.music.baseUrl}${widget.music.musicPath}", true),
+          _buildItem("${'position'.tr}: ",
+              "${widget.music.baseUrl}${widget.music.musicPath}", true),
           _buildItem("${'release_date'.tr}: ", date, true),
           _buildItem("${'Classification'.tr}: ", category, false)
         ],
