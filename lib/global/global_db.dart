@@ -558,21 +558,23 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
   /****************  Transfer  ****************/
 
-  Future<TransData> getTransPhoneData({bool needMenuList = false}) async {
+  Future<TransData> getTransPhoneData({bool needMenuList = false, bool isCover = false}) async {
     final menuList = <TransMenu>[];
     final loveList = await loveDao.findAllLoves();
     if (needMenuList) {
       for (var menu in GlobalLogic.to.menuList) {
-        if (menu.id > 100) {
-          menuList.add(TransMenu(
-              menuId: menu.id,
-              musicList: menu.music,
-              name: menu.name,
-              date: menu.date));
+        if (!isCover && menu.id <= 100) {
+          // 非全量覆盖，则过滤掉电脑端的歌单
+          continue;
         }
+        menuList.add(TransMenu(
+            menuId: menu.id,
+            musicList: menu.music,
+            name: menu.name,
+            date: menu.date));
       }
     }
-    return TransData(love: loveList, menu: menuList);
+    return TransData(love: loveList, menu: menuList, isCover: isCover);
   }
 
   @override

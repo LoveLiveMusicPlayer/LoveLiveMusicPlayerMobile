@@ -28,6 +28,7 @@ const Map<String, String> en_US = {
   'data_error': 'Data error',
   'fetch_songs_fail': 'Fetch songs error',
   'importing': 'Importing...',
+  'transferring': 'Transferring...',
   'loading': 'Loading...',
   'song_lib': 'SongLib',
   'mine': 'Mine',
@@ -92,4 +93,7 @@ const Map<String, String> en_US = {
   'explain_songs_data': 'Song data: cached songs data',
   'explain_user_data': 'User data: player configuration, love, playlist',
   'resetting': 'Resetting',
+  'warning_choose': 'Warning: Please choose carefully!',
+  'confirm_full_trans': 'Are you sure to completely cover the data?',
+  'cover_full_data': 'Completely cover the data',
 };

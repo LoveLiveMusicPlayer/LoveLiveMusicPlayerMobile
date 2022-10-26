@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -16,6 +17,7 @@ import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
+import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 import 'package:lovelivemusicplayer/widgets/water_ripple.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:web_socket_channel/io.dart';
@@ -33,6 +35,8 @@ class _DataSyncState extends State<DataSync> {
   IOWebSocketChannel? channel;
 
   var isConnected = false;
+  bool switchValue = false;
+  bool isTransferring = false;
 
   @override
   void initState() {
@@ -102,20 +106,61 @@ class _DataSyncState extends State<DataSync> {
             SizedBox(width: 10.r),
             ConstrainedBox(
               constraints: BoxConstraints(maxWidth: 300.w),
-              child: Text('keep_screen_and_scan_qr'.tr, style: TextStyleMs.gray_12),
+              child: Text('keep_screen_and_scan_qr'.tr,
+                  style: TextStyleMs.gray_12),
             )
           ]),
-          SizedBox(height: 85.h),
+          SizedBox(height: 60.h),
           Visibility(
               visible: isConnected,
               child: Column(children: [
                 btnFunc(Assets.syncIconPhone, 'phone2pc'.tr, () async {
+                  if (isTransferring) {
+                    SmartDialog.compatible.showToast('transferring'.tr);
+                    return;
+                  }
+                  isTransferring = true;
                   await sendPhone2pc();
                 }),
                 SizedBox(height: 28.h),
                 btnFunc(Assets.syncIconComputer, 'pc2phone'.tr, () async {
+                  if (isTransferring) {
+                    SmartDialog.compatible.showToast('transferring'.tr);
+                    return;
+                  }
+                  isTransferring = true;
                   await sendPc2phone();
-                })
+                }),
+                SizedBox(height: 28.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CupertinoSwitch(
+                        value: switchValue,
+                        activeColor: const Color.fromARGB(255, 228, 0, 127),
+                        onChanged: (value) {
+                          if (value) {
+                            SmartDialog.compatible.show(
+                                widget: TwoButtonDialog(
+                              title: 'warning_choose'.tr,
+                              msg: 'confirm_full_trans'.tr,
+                              onConfirmListener: () {
+                                switchValue = value;
+                                setState(() {});
+                              },
+                            ));
+                          } else {
+                            switchValue = value;
+                            setState(() {});
+                          }
+                        }),
+                    SizedBox(width: 10.w),
+                    Text('cover_full_data'.tr,
+                        style: Get.isDarkMode
+                            ? TextStyleMs.pink_15
+                            : TextStyleMs.black_15)
+                  ],
+                )
               ])),
           Visibility(
               visible: !isConnected,
@@ -193,15 +238,16 @@ class _DataSyncState extends State<DataSync> {
 
   sendPhone2pc() async {
     // 传输我喜欢列表 + 手机歌单列表
-    final body =
-        transDataToJson(await DBLogic.to.getTransPhoneData(needMenuList: true));
+    final body = transDataToJson(await DBLogic.to
+        .getTransPhoneData(needMenuList: true, isCover: switchValue));
     final cmd = FtpCmd(cmd: "phone2pc", body: body);
     channel?.sink.add(ftpCmdToJson(cmd));
   }
 
   sendPc2phone() async {
     // 传输我喜欢列表
-    final body = transDataToJson(await DBLogic.to.getTransPhoneData());
+    final body = transDataToJson(
+        await DBLogic.to.getTransPhoneData(isCover: switchValue));
     final cmd = FtpCmd(cmd: "pc2phone", body: body);
     channel?.sink.add(ftpCmdToJson(cmd));
   }
@@ -214,6 +260,7 @@ class _DataSyncState extends State<DataSync> {
         case "phone2pc":
           final data = transDataFromJson(ftpCmd.body);
           await replaceLoveList(data);
+          await replacePcMenuList(data);
           release();
           break;
         case "pc2phone":
@@ -247,7 +294,7 @@ class _DataSyncState extends State<DataSync> {
 
   replacePcMenuList(TransData data) async {
     final menuList = data.menu;
-    await DBLogic.to.menuDao.deletePcMenu();
+    await DBLogic.to.menuDao.deleteAllMenus();
     await Future.forEach<TransMenu>(menuList, (menu) async {
       final musicList = <String>[];
       await Future.forEach<String>(menu.musicList, (musicUId) async {
@@ -269,6 +316,7 @@ class _DataSyncState extends State<DataSync> {
   release() {
     final message = ftpCmdToJson(FtpCmd(cmd: "finish", body: ""));
     channel?.sink.add(message);
+    SmartDialog.compatible.dismiss();
     DBLogic.to
         .findAllListByGroup(GlobalLogic.to.currentGroup.value)
         .then((value) => Get.back());

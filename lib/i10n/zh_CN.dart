@@ -28,6 +28,7 @@ const Map<String, String> zh_CN = {
   'data_error': '数据异常',
   'fetch_songs_fail': '获取数据源失败',
   'importing': '导入中...',
+  'transferring': '正在传输中...',
   'loading': '加载中...',
   'song_lib': '歌库',
   'mine': '我的',
@@ -90,4 +91,7 @@ const Map<String, String> zh_CN = {
   'explain_songs_data': '歌曲数据：歌曲缓存数据',
   'explain_user_data': '用户数据：播放器配置、我喜欢、歌单',
   'resetting': '重置中...',
+  'warning_choose': '警告: 请谨慎选择',
+  'confirm_full_trans': '是否确定完全覆盖数据',
+  'cover_full_data': '完全覆盖数据',
 };

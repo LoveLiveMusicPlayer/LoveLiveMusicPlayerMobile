@@ -79,8 +79,7 @@ class TwoButtonDialog extends StatelessWidget {
                 child: Text(
                   _msg ?? 'message'.tr,
                   style: TextStyleMs.gray_14,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
+                  textAlign: TextAlign.center
                 )),
           ),
           SizedBox(

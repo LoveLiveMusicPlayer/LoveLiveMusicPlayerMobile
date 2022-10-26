@@ -10,20 +10,24 @@ class TransData {
   TransData({
     required this.love,
     required this.menu,
+    required this.isCover
   });
 
   List<Love> love;
   List<TransMenu> menu;
+  bool isCover;
 
   factory TransData.fromJson(Map<String, dynamic> json) => TransData(
         love: List<Love>.from(json["love"].map((x) => Love.fromJson(x))),
         menu: List<TransMenu>.from(
             json["menu"].map((x) => TransMenu.fromJson(x))),
+        isCover: json["isCover"]
       );
 
   Map<String, dynamic> toJson() => {
         "love": List<dynamic>.from(love.map((x) => x.toJson())),
         "menu": List<dynamic>.from(menu.map((x) => x.toJson())),
+        "isCover": isCover
       };
 }
 
