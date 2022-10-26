@@ -70,13 +70,13 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     splashDao = database.splashDao;
     CachedNetworkImage.logLevel = CacheManagerLogLevel.debug;
     await findAllListByGroup(Const.groupAll);
-    await findAllPlayListMusics();
+    PlayerLogic.to.initLoopMode();
     await Future.delayed(const Duration(seconds: 1));
+    await findAllPlayListMusics();
     if (!hasAIPic) {
       eventBus.fire(StartEvent((DateTime.now().millisecondsSinceEpoch)));
     }
     super.onInit();
-    PlayerLogic.to.initLoopMode();
   }
 
   /// 初始化数据库数据
@@ -405,9 +405,9 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   }
 
   /// 删除歌单中的歌曲
-  // @param 歌单id
-  // @param 要删除的歌曲id列表
-  // @return 1: 刷新界面 ;2: 需要返回上一页
+  /// @param menuId 歌单id
+  /// @param musicIds 要删除的歌曲id列表
+  /// @return 1: 刷新界面 ;2: 需要返回上一页
   Future<int> removeItemFromMenu(int menuId, List<String> musicIds) async {
     try {
       var menu = await menuDao.findMenuById(menuId);
