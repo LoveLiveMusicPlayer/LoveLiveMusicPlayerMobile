@@ -62,17 +62,19 @@ class _HomeViewState extends State<HomeView>
             }, confirm: () {
               SpUtil.put(Const.spAllowPermission, true);
               initUmeng();
+              GlobalLogic.to.checkUpdate();
             }),
             backDismiss: false,
             clickBgDismissTemp: false);
       } else {
         initUmeng();
+        GlobalLogic.to.checkUpdate();
       }
     });
   }
 
-  Future<void> initUmeng() async {
-    await UmengCommonSdk.initCommon(
+  initUmeng() {
+    UmengCommonSdk.initCommon(
         '634bd9c688ccdf4b7e4ac67b', '634bdfd305844627b56670a1', 'Umeng');
     UmengCommonSdk.setPageCollectionModeManual();
     AppUtils.uploadEvent("Home");

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
@@ -287,6 +288,11 @@ class GlobalLogic extends SuperController
   }
 
   checkUpdate({bool manual = false}) async {
+    final connection = await Connectivity().checkConnectivity();
+    if (connection == ConnectivityResult.none) {
+      SmartDialog.compatible.showToast("please_check_network".tr);
+      return;
+    }
     if (Platform.isAndroid) {
       updater ??= Updater(
           context: Get.context!,

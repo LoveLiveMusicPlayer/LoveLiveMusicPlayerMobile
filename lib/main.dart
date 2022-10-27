@@ -16,7 +16,6 @@ import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/start_event.dart';
 import 'package:lovelivemusicplayer/global/global_binding.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
-import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -35,7 +34,6 @@ var appVersion = "1.0.0";
 var hasAIPic = false;
 var needRemoveCover = true;
 final splashList = <String>[];
-var env = const bool.fromEnvironment("dart.vm.product") ? "prod" : "pre";
 
 void main() async {
   // 启动屏开启
@@ -108,13 +106,6 @@ class _MyAppState extends State<MyApp> {
       needRemoveCover = false;
       // 初始化结束后，将启动屏关闭
       FlutterNativeSplash.remove();
-      Future.delayed(const Duration(seconds: 1), () {
-        Connectivity().checkConnectivity().then((connection) {
-          if (connection != ConnectivityResult.none) {
-            GlobalLogic.to.checkUpdate();
-          }
-        });
-      });
     });
     PaintingBinding.instance.imageCache.maximumSizeBytes = 1024 * 1024 * 100;
   }

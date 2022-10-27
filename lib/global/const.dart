@@ -1,4 +1,4 @@
-import 'package:lovelivemusicplayer/main.dart';
+import 'package:flutter/foundation.dart';
 
 class Const {
   // 设计图宽度 dp
@@ -42,6 +42,8 @@ class Const {
   static const String splashConfigUrl = "${ownOssUrl}splash_config.json";
 
   static String splashUrl = "${ownOssUrl}LLMP-M/splash_bg/";
+
+  static const env = kReleaseMode ? "prod" : "pre";
 
   // 数据更新桥文件
   static String dataUrl = "$ownOssUrl$env/data.json";
