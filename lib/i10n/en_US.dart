@@ -96,4 +96,36 @@ const Map<String, String> en_US = {
   'warning_choose': 'Warning: Please choose carefully!',
   'confirm_full_trans': 'Are you sure to completely cover the data?',
   'cover_full_data': 'Completely cover the data',
+
+  'privacy_detail': '''Dear LLer,
+
+Please be sure to carefully read and understand all rights and restrictions set forth in the Software License Agreement (hereinafter referred to as the Agreement). Unless you accept the terms of the Agreement, you are not entitled to use the Software and related Services. Once you use the software, you will be deemed to accept the agreement.
+
+1. Statement of Rights
+This software is an open source project, owned by author zhushenwudi.
+Some of the information content is obtained from the network resources, including but not limited to: text expression and combination, ICONS, images, colors, and related data. If there is any contradiction or dispute due to copyright issues, please contact the author's mailbox 55681140@163.com to delete or replace it.
+If the software publicity, related documents reprint please contact the author himself for authorization. Please contact the author for support if you have any problem. The author reserves the right to provide users with modified or upgraded versions of the software.
+
+2. Scope of license
+Download, Install and Use: Users may download, install and use the Software in non-commercial and unlimited quantities.
+Reproduction, Distribution and Dissemination: User may non-commercially reproduce, distribute and disseminate the Software Products in unlimited quantities, provided that each copy, distribution and dissemination is complete and true, including all software, electronic documents, Copyrights and trademarks relating to the Software, as well as agreements.
+
+3. Privacy security
+The software does not contain any malicious code aimed at destroying user terminal data and obtaining user privacy information except reporting crash information and uploading the use data in the software.
+It does not contain any function code for tracking and monitoring user terminal behaviors, monitoring users' online and offline behaviors, collecting users' personal information such as other software and documents, and disclosing users' privacy.
+The collected data can be used to better improve the software by analyzing the error information in the crash.
+Here are the statistical development tools used:
+Use the SDK name: U-App SDK
+Service type: Data collection and statistical analysis
+Privacy policy links: https://www.umeng.com/page/policy
+
+4. User instructions
+This software is LoveLive! Users in the circle spontaneously use, not including any copyrighted songs. Copyright songs are extracted and imported from CDS by users themselves. See the Github project documentation for details about the import directory structure.
+Users shall use the Software in compliance with laws and agreements. Users are not entitled to perform any of the following actions, including but not limited to:
+Ⅰ. All rights management electronic information on the software shall not be deleted or changed;
+Ⅱ. shall not use this software to mislead and deceive others;
+Ⅲ. In violation of national regulations, delete, modify, increase or interfere with the functions of the computer information system, resulting in the failure of the computer information system to operate normally;
+Ⅳ. accessing computer information networks or using computer information network resources without permission;
+Ⅴ. Deleting, modifying or adding functions of computer information networks without permission.
+  '''
 };
