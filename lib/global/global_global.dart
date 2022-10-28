@@ -290,7 +290,6 @@ class GlobalLogic extends SuperController
   checkUpdate({bool manual = false}) async {
     final connection = await Connectivity().checkConnectivity();
     if (connection == ConnectivityResult.none) {
-      SmartDialog.compatible.showToast("please_check_network".tr);
       return;
     }
     if (Platform.isAndroid) {

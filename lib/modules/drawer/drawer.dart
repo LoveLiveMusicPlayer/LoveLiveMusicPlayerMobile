@@ -443,6 +443,7 @@ class _DrawerPageState extends State<DrawerPage> {
   parseUpdateDataSource(CloudData data) async {
     SmartDialog.compatible.showLoading(msg: 'importing'.tr);
     await DBLogic.to.clearAllMusic();
+    await DBLogic.to.artistDao.deleteAllArtists();
     await loopParseData(data.music.us, data.album.us, Const.groupUs);
     await loopParseData(
         data.music.aqours, data.album.aqours, Const.groupAqours);
