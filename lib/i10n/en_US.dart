@@ -85,7 +85,7 @@ const Map<String, String> en_US = {
       'Welcome to LoveLiveMusicPlayer!\n\nWe will use the User Agreement and Privacy Policy to help you understand the services provided by the software for you and the way you collect and process your personal data.\nClick the "Agree and Continue" button to indicate that you have agreed.',
   'permission_external_link': 'User Agreement and Privacy Policy',
   'permission_agree': 'Agree and continue',
-  'permission_disagree': 'Disagree and shutdown',
+  'permission_disagree': 'Disagree and quit',
   'no_data': 'No data',
   'choose_your_clean_data': 'Please select the data to be cleaned',
   'remove_songs_data': 'Remove songs data',

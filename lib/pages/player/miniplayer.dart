@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -83,17 +84,18 @@ class _MiniPlayerState extends State<MiniPlayer> {
     String coverPath = (music.baseUrl ?? "") + (music.coverPath ?? "");
     if (coverPath.isNotEmpty) {
       coverPath = SDUtils.getImgFile(coverPath).path;
-      final compressPic = await ImageUtil().compressAndTryCatch(coverPath);
-      return BoxDecoration(
-        image:
-            DecorationImage(image: MemoryImage(compressPic!), fit: BoxFit.fill),
-        borderRadius: BorderRadius.circular(34.r),
-      );
-    } else {
-      return BoxDecoration(
-          color: const Color(Const.noMusicColorfulSkin),
-          borderRadius: BorderRadius.circular(34.r));
+      Uint8List? compressPic = await ImageUtil().compressAndTryCatch(coverPath);
+      if (compressPic != null) {
+        return BoxDecoration(
+          image: DecorationImage(
+              image: MemoryImage(compressPic), fit: BoxFit.fill),
+          borderRadius: BorderRadius.circular(34.r),
+        );
+      }
     }
+    return BoxDecoration(
+        color: const Color(Const.noMusicColorfulSkin),
+        borderRadius: BorderRadius.circular(34.r));
   }
 
   Widget body() {

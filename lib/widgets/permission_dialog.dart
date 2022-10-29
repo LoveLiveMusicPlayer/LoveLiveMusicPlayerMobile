@@ -39,22 +39,23 @@ class PermissionDialog extends StatelessWidget {
               SizedBox(height: 16.h),
               Text('permission_main_message'.tr, style: textColor),
               SizedBox(height: 18.h),
-              Row(
-                children: [
-                  Text('permission_show_full'.tr, style: miniTextColor),
-                  Text.rich(
-                    TextSpan(
-                      text: 'permission_external_link'.tr,
-                      style: TextStyleMs.blue_12,
-                      // 设置点击事件
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          SmartDialog.compatible.dismiss();
-                          if (readPermission != null) readPermission!();
-                        },
-                    ),
+              RichText(
+                softWrap: true,
+                text: TextSpan(children: [
+                  TextSpan(
+                      text: 'permission_show_full'.tr, style: miniTextColor),
+                  WidgetSpan(child: SizedBox(width: 4.w)),
+                  TextSpan(
+                    text: 'permission_external_link'.tr,
+                    style: TextStyleMs.blue_12,
+                    // 设置点击事件
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        SmartDialog.compatible.dismiss();
+                        if (readPermission != null) readPermission!();
+                      },
                   )
-                ],
+                ]),
               ),
               SizedBox(height: 16.h),
               Container(

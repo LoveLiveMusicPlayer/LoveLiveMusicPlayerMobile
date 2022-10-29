@@ -80,7 +80,7 @@ class ImageUtil {
             minWidth: ScreenUtil().screenWidth.toInt());
       }
     } catch (e) {
-      Log4f.e(msg: e.toString(), writeFile: true);
+      Log4f.d(msg: e.toString(), writeFile: true);
     }
     return result;
   }
