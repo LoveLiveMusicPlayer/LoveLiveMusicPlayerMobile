@@ -212,17 +212,14 @@ class PlayerLogic extends SuperController
           if (playingMusic.value != musicList[index]) {
             setCurrentMusic(musicList[index]);
           }
-          DBLogic.to
-              .refreshMusicTimestamp(musicList[index].musicId!)
-              .then((value) {
-            GlobalLogic.to.isHandlePlay = false;
-          });
+          DBLogic.to.refreshMusicTimestamp(musicList[index].musicId!);
           getLrc(false);
         });
       });
     } catch (e) {
-      GlobalLogic.to.isHandlePlay = false;
       Log4f.e(msg: e.toString(), writeFile: true);
+    } finally {
+      GlobalLogic.to.isHandlePlay = false;
     }
   }
 
