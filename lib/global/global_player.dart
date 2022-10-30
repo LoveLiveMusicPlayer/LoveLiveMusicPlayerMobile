@@ -221,6 +221,7 @@ class PlayerLogic extends SuperController
         });
       });
     } catch (e) {
+      GlobalLogic.to.isHandlePlay = false;
       Log4f.e(msg: e.toString(), writeFile: true);
     }
   }
