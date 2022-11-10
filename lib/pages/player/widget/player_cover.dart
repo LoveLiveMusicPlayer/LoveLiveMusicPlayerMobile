@@ -28,9 +28,10 @@ class _CoverState extends State<Cover> {
         height: 400.h,
         width: double.infinity,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 18.h),
-
+            Visibility(
+                visible: SDUtils.allowEULA, child: SizedBox(height: 18.h)),
             SizedBox(
                 width: 273.h,
                 height: 273.h,
@@ -50,10 +51,15 @@ class _CoverState extends State<Cover> {
                     renderBlackFilter()
                   ],
                 )),
-
-            /// 信息
-            SizedBox(height: 18.h),
-            const PlayerInfo()
+            Visibility(
+                visible: SDUtils.allowEULA,
+                child: Column(
+                  children: [
+                    /// 信息
+                    SizedBox(height: 18.h),
+                    const PlayerInfo()
+                  ],
+                ))
           ],
         ),
       ),

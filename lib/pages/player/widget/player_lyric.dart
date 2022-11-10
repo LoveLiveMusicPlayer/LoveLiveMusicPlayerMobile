@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/my_lyric_ui.dart';
+import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 
 class Lyric extends StatefulWidget {
   final GestureTapCallback onTap;
@@ -34,10 +35,17 @@ class _LyricState extends State<Lyric> {
                 .getModel();
             break;
           case 1:
-            model = LyricsModelBuilder.create()
-                .bindLyricToMain(lyric['jp']!)
-                .bindLyricToExt(lyric['zh']!)
-                .getModel();
+            if (SDUtils.allowEULA) {
+              model = LyricsModelBuilder.create()
+                  .bindLyricToMain(lyric['jp']!)
+                  .bindLyricToExt(lyric['zh']!)
+                  .getModel();
+            } else {
+              model = LyricsModelBuilder.create()
+                  .bindLyricToMain(lyric['zh']!)
+                  .bindLyricToExt(lyric['roma']!)
+                  .getModel();
+            }
             break;
           case 2:
             model = LyricsModelBuilder.create()

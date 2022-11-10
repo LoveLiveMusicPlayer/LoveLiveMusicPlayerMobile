@@ -558,7 +558,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
   /****************  Transfer  ****************/
 
-  Future<TransData> getTransPhoneData({bool needMenuList = false, bool isCover = false}) async {
+  Future<TransData> getTransPhoneData(
+      {bool needMenuList = false, bool isCover = false}) async {
     final menuList = <TransMenu>[];
     final loveList = await loveDao.findAllLoves();
     if (needMenuList) {

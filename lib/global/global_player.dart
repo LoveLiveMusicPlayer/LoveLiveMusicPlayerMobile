@@ -54,7 +54,7 @@ class PlayerLogic extends SuperController
   var playingMusic = Music().obs;
 
   // 切换显示歌词类型 (0:原文; 1:翻译; 2:罗马音)
-  var lrcType = 0.obs;
+  var lrcType = SDUtils.allowEULA ? 0.obs : 1.obs;
 
   static PlayerLogic get to => Get.find();
 

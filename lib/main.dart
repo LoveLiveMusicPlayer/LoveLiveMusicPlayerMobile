@@ -161,8 +161,8 @@ initServices() async {
   await GetStorage.init();
   SpUtil.getInstance();
   Network.getInstance();
-  PlayerBinding().dependencies();
   await SDUtils.init();
+  PlayerBinding().dependencies();
   hasAIPic = await SpUtil.getBoolean(Const.spAIPicture, true);
   await getOssUrl();
   SpUtil.put("prevPage", "");

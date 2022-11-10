@@ -245,7 +245,8 @@ class _MusicTransformState extends State<MusicTransform> {
           SizedBox(width: 10.r),
           ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 300.w),
-            child: Text('keep_screen_and_scan_qr'.tr, style: TextStyleMs.gray_12),
+            child:
+                Text('keep_screen_and_scan_qr'.tr, style: TextStyleMs.gray_12),
           )
         ]),
         SizedBox(height: 85.h),

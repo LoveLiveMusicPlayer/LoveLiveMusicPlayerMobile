@@ -212,19 +212,23 @@ class _PlayerState extends State<Player> {
                 outerColor: GlobalLogic.to.hasSkin.value
                     ? GlobalLogic.to.iconColor.value
                     : null),
-            materialButton(icon, () => PlayerLogic.to.toggleTranslate(),
-                width: 32,
-                height: 32,
-                radius: 6,
-                iconSize: 30,
-                hasShadow: !GlobalLogic.to.hasSkin.value,
-                iconColor: GlobalLogic.to.hasSkin.value ? Colors.white : null,
-                bgColor: GlobalLogic.to.hasSkin.value
-                    ? GlobalLogic.to.iconColor.value
-                    : null,
-                outerColor: GlobalLogic.to.hasSkin.value
-                    ? GlobalLogic.to.iconColor.value
-                    : null)
+            Visibility(
+                visible: SDUtils.allowEULA,
+                child: materialButton(
+                    icon, () => PlayerLogic.to.toggleTranslate(),
+                    width: 32,
+                    height: 32,
+                    radius: 6,
+                    iconSize: 30,
+                    hasShadow: !GlobalLogic.to.hasSkin.value,
+                    iconColor:
+                        GlobalLogic.to.hasSkin.value ? Colors.white : null,
+                    bgColor: GlobalLogic.to.hasSkin.value
+                        ? GlobalLogic.to.iconColor.value
+                        : null,
+                    outerColor: GlobalLogic.to.hasSkin.value
+                        ? GlobalLogic.to.iconColor.value
+                        : null))
           ]));
     }
     return Padding(

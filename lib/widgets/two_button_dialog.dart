@@ -76,11 +76,8 @@ class TwoButtonDialog extends StatelessWidget {
             visible: _isShowMsg,
             child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Text(
-                  _msg ?? 'message'.tr,
-                  style: TextStyleMs.gray_14,
-                  textAlign: TextAlign.center
-                )),
+                child: Text(_msg ?? 'message'.tr,
+                    style: TextStyleMs.gray_14, textAlign: TextAlign.center)),
           ),
           SizedBox(
             height: 28.w,

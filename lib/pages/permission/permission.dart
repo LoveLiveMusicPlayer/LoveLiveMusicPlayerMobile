@@ -16,7 +16,6 @@ class Permission extends StatefulWidget {
 }
 
 class _PermissionState extends State<Permission> {
-
   @override
   void initState() {
     super.initState();

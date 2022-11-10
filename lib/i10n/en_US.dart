@@ -96,7 +96,6 @@ const Map<String, String> en_US = {
   'warning_choose': 'Warning: Please choose carefully!',
   'confirm_full_trans': 'Are you sure to completely cover the data?',
   'cover_full_data': 'Completely cover the data',
-
   'privacy_detail': '''Dear LLer,
 
 Please be sure to carefully read and understand all rights and restrictions set forth in the Software License Agreement (hereinafter referred to as the Agreement). Unless you accept the terms of the Agreement, you are not entitled to use the Software and related Services. Once you use the software, you will be deemed to accept the agreement.

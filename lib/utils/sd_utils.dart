@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 
 class SDUtils {
   static String path = "";
+  static bool allowEULA = false;
 
   static init() async {
     Directory? appDocDir;
@@ -17,6 +18,7 @@ class SDUtils {
     }
     appDocDir ??= await getApplicationDocumentsDirectory();
     path = appDocDir.path + Platform.pathSeparator;
+    allowEULA = SDUtils.checkDirectoryExist("${SDUtils.path}JP");
     Log4f.d(msg: path);
   }
 
@@ -33,6 +35,11 @@ class SDUtils {
   static bool checkFileExist(String filePath) {
     var file = File(filePath);
     return file.existsSync();
+  }
+
+  static bool checkDirectoryExist(String dirPath) {
+    var dir = Directory(dirPath);
+    return dir.existsSync();
   }
 
   static void makeDir(String dir) {
