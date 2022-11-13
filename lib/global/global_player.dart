@@ -338,18 +338,20 @@ class PlayerLogic extends SuperController
     final lyric = playingMusic.value.musicPath!
         .replaceAll("flac", "lrc")
         .replaceAll("wav", "lrc");
-    final jp = await handleLRC("jp", "JP/$baseUrl$lyric", uid, forceRefresh);
-    if (jp != null) {
-      jpLrc = jp;
+    if (SDUtils.allowEULA) {
+      final jp = await handleLRC("jp", "JP/$baseUrl$lyric", uid, forceRefresh);
+      if (jp != null) {
+        jpLrc = jp;
+      }
+      final roma =
+          await handleLRC("roma", "ROMA/$baseUrl$lyric", uid, forceRefresh);
+      if (roma != null) {
+        romaLrc = roma;
+      }
     }
     final zh = await handleLRC("zh", "ZH/$baseUrl$lyric", uid, forceRefresh);
     if (zh != null) {
       zhLrc = zh;
-    }
-    final roma =
-        await handleLRC("roma", "ROMA/$baseUrl$lyric", uid, forceRefresh);
-    if (roma != null) {
-      romaLrc = roma;
     }
 
     fullLrc.value = {"jp": jpLrc, "zh": zhLrc, "roma": romaLrc};
