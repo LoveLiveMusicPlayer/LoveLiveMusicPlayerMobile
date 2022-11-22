@@ -260,7 +260,6 @@ class _DataSyncState extends State<DataSync> {
         case "phone2pc":
           final data = transDataFromJson(ftpCmd.body);
           await replaceLoveList(data);
-          await replacePcMenuList(data);
           release();
           break;
         case "pc2phone":
@@ -294,7 +293,11 @@ class _DataSyncState extends State<DataSync> {
 
   replacePcMenuList(TransData data) async {
     final menuList = data.menu;
-    await DBLogic.to.menuDao.deleteAllMenus();
+    if (data.isCover) {
+      await DBLogic.to.menuDao.deleteAllMenus();
+    } else {
+      await DBLogic.to.menuDao.deletePcMenu();
+    }
     await Future.forEach<TransMenu>(menuList, (menu) async {
       final musicList = <String>[];
       await Future.forEach<String>(menu.musicList, (musicUId) async {

@@ -18,7 +18,7 @@ class SDUtils {
     }
     appDocDir ??= await getApplicationDocumentsDirectory();
     path = appDocDir.path + Platform.pathSeparator;
-    allowEULA = SDUtils.checkDirectoryExist("${SDUtils.path}LLMP");
+    allowEULA = Platform.isAndroid || SDUtils.checkDirectoryExist("${SDUtils.path}LLMP");
     Log4f.d(msg: path);
   }
 
