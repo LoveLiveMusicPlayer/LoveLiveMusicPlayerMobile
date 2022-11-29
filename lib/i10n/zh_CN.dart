@@ -1,6 +1,7 @@
 const Map<String, String> zh_CN = {
   'music': '歌曲',
   'album': '专辑',
+  'music_name': '歌名',
   'singer': '歌手',
   'iLove': '我喜欢',
   'songMenu': '歌单',

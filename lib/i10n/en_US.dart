@@ -1,6 +1,7 @@
 const Map<String, String> en_US = {
   'music': 'Music',
   'album': 'Album',
+  'music_name': 'Music name',
   'singer': 'Singer',
   'iLove': 'Love',
   'songMenu': 'Menu',
