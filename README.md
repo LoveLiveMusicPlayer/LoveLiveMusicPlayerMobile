@@ -33,6 +33,30 @@
 
 **--Project_by [朱神无敌](https://space.bilibili.com/4367965)**
 
+# 关联PC软件
+Github:<https://github.com/zhushenwudi/LoveLiveMusicPlayer>
+
+Gitee:<https://gitee.com/zhushenwudi/love-live-music-player>
+
+# 使用教程
+哔哩哔哩：
+软件介绍、教程：<https://www.bilibili.com/video/BV1cW4y177eX>
+
+IOS软件介绍、教程：<https://www.bilibili.com/video/BV1R3411Z7Zs>
+
+IOS AppStore:<https://apps.apple.com/cn/app/lovelivemusicplayer/id1641625393>
+
+歌曲传输方式;
+
+1. WiFi传输（PC和手机处于同一局域网）
+2. USB传输
+
+	Android：将LoveLive文件夹放入/Android/data/com.zhushenwudi.lovelivemusicplayer/files/
+	
+	IOS：将LoveLive文件夹放入 文件APP/LLMP/
+
+	IOS由于版权审核原因，程序安装后不允许显示日文歌词和罗马音，需要在文件APP/LLMP/中创建名为LLMP的文件夹，重启应用后即可解锁完整功能
+
 # 交流 (Communication)
 
 <img src="assets/up_face.jpg" width="100" height="100">
@@ -77,25 +101,28 @@ B站空间：<https://space.bilibili.com/4367965>
 
 - 英文 √
 - 中文 √
+- 德文 √
 - 日文 x
-- 德语 x
-- 法语 x
-- 俄语 x
-- 意大利语 x
+- 法文 x
+- 俄文 x
+- 意大利文 x
 
 ## 开发 (Develop)
 
+- 从dev分支拉取代码
+	git clone https://github.com/zhushenwudi/LoveLiveMusicPlayerMobile.git
+
 - 安装Android Studio插件：
-	GetX 和 FlutterAssetsGenerator
+    GetX 和 FlutterAssetsGenerator
 	
 - 删除第三方库全部缓存 (可选、谨慎选择)
-	flutter pub cache clean
+    flutter pub cache clean
 
 - 拉取项目第三方依赖库
-	flutter pub get
+    flutter pub get
 	
 - 生成数据库 helper 文件：
-	flutter packages pub run build_runner build
+    flutter packages pub run build_runner build
 
 ## 许可证 (License)
 
