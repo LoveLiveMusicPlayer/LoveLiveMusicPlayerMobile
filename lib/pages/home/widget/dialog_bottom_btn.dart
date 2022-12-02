@@ -53,8 +53,9 @@ class DialogBottomBtn extends StatelessWidget {
                   Get.isDarkMode ? ColorMs.colorD1E0F3 : ColorMs.color666666),
           SizedBox(height: 7.h),
           Text(title,
-              maxLines: 1,
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
               style: Get.isDarkMode
                   ? TextStyleMs.colorD1E0F3_15
                   : TextStyleMs.lightBlack_15),

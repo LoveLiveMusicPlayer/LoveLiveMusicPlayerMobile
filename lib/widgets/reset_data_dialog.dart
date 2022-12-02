@@ -63,6 +63,8 @@ class ResetDataDialog extends StatelessWidget {
           },
           child: Text(
             text,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyleMs.white_16,
           )),
     );
@@ -70,7 +72,7 @@ class ResetDataDialog extends StatelessWidget {
 
   Widget renderText(String text, double? fontSize) {
     final color = Get.isDarkMode ? Colors.white : Colors.black;
-    return Text(text, style: TextStyle(color: color, fontSize: fontSize));
+    return Text(text, textAlign: TextAlign.center, style: TextStyle(color: color, fontSize: fontSize));
   }
 }
 
