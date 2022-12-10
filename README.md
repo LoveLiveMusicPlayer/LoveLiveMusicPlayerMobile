@@ -14,7 +14,7 @@
 
 本程序非在线联网模式使用，只要下载资源便可离线运行，并且项目由 Flutter 开发，支持 IOS、Android部署。
 
-1. 本项目遵守MIT协议，如需转载请标明作者ID(朱神无敌)
+1. 本项目遵守MIT + Apache 2.0协议，如需转载请标明作者ID(朱神无敌)
 2. **请勿滥用，本项目仅用于学习和测试！请勿滥用，本项目仅用于学习和测试！请勿滥用，本项目仅用于学习和测试！**
 3. 由于本项目的特殊性，可能随时停止开发或删档
 4. 本项目为开源项目，不接受任何的催单和索取行为
@@ -37,6 +37,12 @@
 - [亮色模式 + 暗黑模式 + 炫彩模式] √
 
 **--Project_by [朱神无敌](https://space.bilibili.com/4367965)**
+
+# 软件截图
+<img src="assets/simple/simple1.png" width="200">
+<img src="assets/simple/simple2.png" width="200">
+<img src="assets/simple/simple3.png" width="200">
+<img src="assets/simple/simple4.png" width="200">
 
 # 关联PC软件
 Github:<https://github.com/zhushenwudi/LoveLiveMusicPlayer>

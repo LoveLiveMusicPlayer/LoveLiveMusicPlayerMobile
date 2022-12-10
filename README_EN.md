@@ -9,7 +9,7 @@ This project aims to summarize all the songs of LoveLive and generate a player d
 
 This program is not used in online networking mode. It can be run offline as long as resources are downloaded. The project is developed by Flutter and supports IOS and Android deployment.
 
-1. This project complies with the MIT agreement. If it needs to be reproduced, please indicate the author ID (zhushenwudi).
+1. This project complies with the MIT and Apache 2.0 agreement. If it needs to be reproduced, please indicate the author ID (zhushenwudi).
 2. **Please do not abuse it. This project is only for learning and testing! Please do not abuse, this project is only for learning and testing! Please do not abuse, this project is only for learning and testing!**
 3. Due to the particularity of this project, development may be stopped or files may be deleted at any time.
 4. This project is an open source project and does not accept any reminders or requests.
@@ -32,6 +32,12 @@ Function list:
 - [Bright color mode, dark color mode and dazzling color mode] ✓
 
 **--Project_by [zhushenwudi](https://space.bilibili.com/4367965)**
+
+# Screenshot
+<img src="assets/simple/simple1.png" width="200">
+<img src="assets/simple/simple2.png" width="200">
+<img src="assets/simple/simple3.png" width="200">
+<img src="assets/simple/simple4.png" width="200">
 
 # Associated PC software
 Github:<https://github.com/zhushenwudi/LoveLiveMusicPlayer>
