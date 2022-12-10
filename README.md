@@ -4,6 +4,11 @@
 <h1 align="center">LLMP-M</h1>
 <h3 align="center">一款送给 LLer 的专属移动播放器</h3>  
 <h4 align="center">持续更新中....欢迎点波star</h4>
+<h4 align="center">
+    <a href="https://raw.githubusercontent.com/zhushenwudi/LoveLiveMusicPlayerMobile/master/README_EN.md">
+    English Document
+    </a>
+</h4>
 
 你是否受够了[扣扣音乐]和[网抑云音乐]的版权忽有忽无，是否觉得国内播放器对舶来音乐不够重视，导致分类乱而难找。本项目旨在对 LoveLive 的全部歌曲做汇总整理，生成一份专属于 LLer 的播放器。
 
