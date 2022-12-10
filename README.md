@@ -46,7 +46,7 @@ IOS软件介绍、教程：<https://www.bilibili.com/video/BV1R3411Z7Zs>
 
 IOS AppStore:<https://apps.apple.com/cn/app/lovelivemusicplayer/id1641625393>
 
-歌曲传输方式;
+歌曲传输方式:
 
 1. WiFi传输（PC和手机处于同一局域网）
 2. USB传输
@@ -57,7 +57,7 @@ IOS AppStore:<https://apps.apple.com/cn/app/lovelivemusicplayer/id1641625393>
 
 	IOS由于版权审核原因，程序安装后不允许显示日文歌词和罗马音，需要在文件APP/LLMP/中创建名为LLMP的文件夹，重启应用后即可解锁完整功能
 
-# 交流 (Communication)
+# 交流
 
 <img src="assets/up_face.jpg" width="100" height="100">
 
@@ -65,7 +65,7 @@ QQ粉丝交流群：[724934644](https://jq.qq.com/?_wv=1027&k=FZkFfkP5)
 
 B站空间：<https://space.bilibili.com/4367965>
 
-# 发电 (Give a reward)
+# 发电
 
 欢迎来py，大家的支持就是我继续开发的动力！
 
@@ -74,9 +74,9 @@ B站空间：<https://space.bilibili.com/4367965>
 <img src="assets/up_wx.png" width="300" height="400">
 <img src="assets/up_zfb.png" width="300" height="400">
 
-## 项目内测 (Project testing)
+## 项目内测
 
-## 特别鸣谢 (Special Thanks)
+## 特别鸣谢
 
 - 依然洳雪：<https://space.bilibili.com/13184888>
 
@@ -89,7 +89,7 @@ B站空间：<https://space.bilibili.com/4367965>
 - 播放器界面组件 [we_slide](https://github.com/luciano-work/we_slide)
 - 歌词组件 [flutter_lyric](https://github.com/ozyl/flutter_lyric)
 
-## 鸣谢 (Thanks)
+## 鸣谢
 
 - 播放器组件 [just_audio](https://github.com/ryanheise/just_audio)
 - 屏幕适配方案 [flutter_screenutil](https://github.com/OpenFlutter/flutter_screenutil)
@@ -97,7 +97,7 @@ B站空间：<https://space.bilibili.com/4367965>
 - 萌娘百科 <https://zh.moegirl.org.cn>
 - LLWiki <https://llwiki.org>
 
-## 支持语言(Support languague)
+## 支持语言
 
 - 英文 √
 - 中文 √
@@ -107,12 +107,12 @@ B站空间：<https://space.bilibili.com/4367965>
 - 俄文 x
 - 意大利文 x
 
-## 开发 (Develop)
+## 开发
 
 - 从dev分支拉取代码
 	git clone https://github.com/zhushenwudi/LoveLiveMusicPlayerMobile.git
 
-- 安装Android Studio插件：
+- 安装Android Studio插件
     GetX 和 FlutterAssetsGenerator
 	
 - 删除第三方库全部缓存 (可选、谨慎选择)
@@ -121,9 +121,9 @@ B站空间：<https://space.bilibili.com/4367965>
 - 拉取项目第三方依赖库
     flutter pub get
 	
-- 生成数据库 helper 文件：
+- 生成数据库 helper 文件
     flutter packages pub run build_runner build
 
-## 许可证 (License)
+## 许可证
 
-[MIT](https://raw.githubusercontent.com/zhushenwudi/LoveLiveMusicPlayerMobile/master/LICENSE)
+[Apache-2.0](https://raw.githubusercontent.com/zhushenwudi/LoveLiveMusicPlayerMobile/master/LICENSE)
