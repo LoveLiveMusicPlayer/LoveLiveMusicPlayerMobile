@@ -8,6 +8,7 @@ import 'package:lovelivemusicplayer/pages/music_trans/music_transform.dart';
 import 'package:lovelivemusicplayer/pages/permission/permission.dart';
 import 'package:lovelivemusicplayer/pages/scan/scanner.dart';
 import 'package:lovelivemusicplayer/pages/splash/splash.dart';
+import 'package:lovelivemusicplayer/pages/system/system_settings.dart';
 
 class Routes {
   static const String routeInitial = "/";
@@ -21,6 +22,7 @@ class Routes {
   static const String routeSingerDetails = "/singer_details";
   static const String routeMenuDetails = "/menu_details";
   static const String routeLogger = "/logger";
+  static const String routeSystemSettings = "/system_settings";
 
   static List<GetPage> getRoutes() {
     return [
@@ -34,6 +36,7 @@ class Routes {
       GetPage(name: Routes.routeTransform, page: () => const MusicTransform()),
       GetPage(name: Routes.routeDataSync, page: () => const DataSync()),
       GetPage(name: Routes.routeLogger, page: () => const LogConsole()),
+      GetPage(name: Routes.routeSystemSettings, page: () => const SystemSettings()),
     ];
   }
 }

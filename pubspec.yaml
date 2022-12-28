@@ -88,6 +88,7 @@ dependencies:
   url_launcher: ^6.1.6 # url跳转
   umeng_common_sdk: 1.2.4 # 友盟sdk
   flutter_phoenix: ^1.1.0 # 软重启
+  image_picker: ^0.8.6
 
 dependency_overrides:
   ffi: ^2.0.1

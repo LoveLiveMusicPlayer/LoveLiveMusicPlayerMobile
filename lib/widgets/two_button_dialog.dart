@@ -62,7 +62,8 @@ class TwoButtonDialog extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Text(_title ?? 'title'.tr,
-                  maxLines: 1,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: Get.isDarkMode
                       ? TextStyleMs.white_18

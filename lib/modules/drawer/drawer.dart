@@ -11,23 +11,17 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/global/global_theme.dart';
 import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/CloudData.dart';
 import 'package:lovelivemusicplayer/models/CloudUpdate.dart';
 import 'package:lovelivemusicplayer/models/FtpMusic.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
-import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
-import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/routes.dart';
-import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
-import 'package:lovelivemusicplayer/widgets/reset_data_dialog.dart';
 import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -136,7 +130,27 @@ class _DrawerPageState extends State<DrawerPage> {
             }),
           ],
         ),
-        SizedBox(height: 16.h)
+        SizedBox(height: 16.h),
+        Visibility(
+          visible: false,
+          maintainAnimation: true,
+          maintainSize: true,
+          maintainState: true,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              showGroupButton(Assets.drawerLogoLiella, onTap: () {
+                global.currentGroup.value = Const.groupLiella;
+                DBLogic.to.findAllListByGroup(Const.groupLiella);
+              }),
+              showGroupButton(Assets.drawerLogoAllstars, onTap: () {
+                global.currentGroup.value = Const.groupCombine;
+                DBLogic.to.findAllListByGroup(Const.groupCombine);
+              }),
+            ],
+          ),
+        ),
+        SizedBox(height: 16.h),
       ],
     );
   }
@@ -175,213 +189,53 @@ class _DrawerPageState extends State<DrawerPage> {
   Widget scrollView(BuildContext context) {
     return SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Obx(() {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              DrawerFunctionButton(
-                icon: Assets.drawerDrawerQuickTrans,
-                text: 'music_trans'.tr,
-                onTap: () async {
-                  Get.back();
-                  Get.toNamed(Routes.routeTransform);
-                },
-              ),
-              SizedBox(height: 8.h),
-              DrawerFunctionButton(
-                icon: Assets.drawerDrawerDataSync,
-                text: 'data_sync'.tr,
-                onTap: () {
-                  Get.back();
-                  Get.toNamed(Routes.routeDataSync);
-                },
-              ),
-              SizedBox(height: 8.h),
-              DrawerFunctionButton(
-                  icon: Assets.drawerDrawerSystemTheme,
-                  text: 'theme_with_system'.tr,
-                  hasSwitch: true,
-                  initSwitch: GlobalLogic.to.withSystemTheme.value,
-                  callBack: (check) async {
-                    // 获取当前系统主题色
-                    bool isDark = MediaQuery.of(context).platformBrightness ==
-                        Brightness.dark;
-                    if (check) {
-                      // 设置为系统主题色
-                      Get.changeThemeMode(
-                          isDark ? ThemeMode.dark : ThemeMode.light);
-                      Get.changeTheme(isDark ? darkTheme : lightTheme);
-                    } else {
-                      // 设置为原来手动设置的主题色
-                      Get.changeThemeMode(GlobalLogic.to.manualIsDark.value
-                          ? ThemeMode.dark
-                          : ThemeMode.light);
-                      Get.changeTheme(GlobalLogic.to.manualIsDark.value
-                          ? darkTheme
-                          : lightTheme);
-                    }
-
-                    // 将全局变量设置为所选值
-                    GlobalLogic.to.withSystemTheme.value = check;
-                    // 修改sp值
-                    await SpUtil.put(Const.spWithSystemTheme, check);
-                    GlobalLogic.to.isThemeDark();
-
-                    // 恢复原来操作的界面
-                    Future.delayed(const Duration(milliseconds: 300))
-                        .then((value) {
-                      Get.forceAppUpdate().then((value) {
-                        PageViewLogic.to.controller.jumpToPage(
-                            HomeController.to.state.currentIndex.value);
-                      });
-                    });
-                  }),
-              SizedBox(height: 8.h),
-              renderDayOrNightSwitch(),
-              DrawerFunctionButton(
-                  icon: Assets.drawerDrawerColorful,
-                  text: 'colorful_mode'.tr,
-                  hasSwitch: true,
-                  initSwitch: GlobalLogic.to.hasSkin.value,
-                  callBack: (check) async {
-                    // 将全局变量设置为所选值
-                    GlobalLogic.to.hasSkin.value = check;
-                    // 修改sp值
-                    await SpUtil.put(Const.spColorful, check);
-                    if (GlobalLogic.to.hasSkin.value &&
-                        PlayerLogic.to.playingMusic.value.musicId == null) {
-                      GlobalLogic.to.iconColor.value =
-                          const Color(Const.noMusicColorfulSkin);
-                    }
-                  }),
-              SizedBox(height: 8.h),
-              DrawerFunctionButton(
-                  icon: Assets.drawerDrawerAiPic,
-                  text: 'splash_photo'.tr,
-                  hasSwitch: true,
-                  initSwitch: hasAIPic,
-                  callBack: (check) async {
-                    SpUtil.put(Const.spAIPicture, check);
-                  }),
-              SizedBox(height: 8.h),
-              DrawerFunctionButton(
-                icon: Assets.drawerDrawerDataDownload,
-                text: 'fetch_songs'.tr,
-                onTap: () {
-                  handleUpdateData();
-                },
-              ),
-              SizedBox(height: 8.h),
-              DrawerFunctionButton(
-                icon: Assets.drawerDrawerReset,
-                text: 'clear_database'.tr,
-                onTap: () {
-                  SmartDialog.compatible.show(
-                      widget: ResetDataDialog(deleteMusicData: () async {
-                    SpUtil.remove(Const.spDataVersion);
-                    await DBLogic.to.clearAllMusic();
-                  }, deleteUserData: () async {
-                    await DBLogic.to.clearAllUserData();
-                    AppUtils.cacheManager.emptyCache();
-                    SpUtil.put(Const.spAllowPermission, true)
-                        .then((value) async {
-                      // Get.deleteAll(force: true);
-                      // Phoenix.rebirth(Get.context!);
-                      // Get.reset();
-                      SmartDialog.compatible.dismiss();
-                      SmartDialog.compatible.showToast('will_shutdown'.tr);
-                      Future.delayed(const Duration(seconds: 2), () {
-                        if (Platform.isIOS) {
-                          exit(0);
-                        } else {
-                          SystemNavigator.pop();
-                        }
-                      });
-                    });
-                  }, afterDelete: () async {
-                    SmartDialog.compatible.dismiss();
-                    SmartDialog.compatible.showToast('clean_success'.tr,
-                        time: const Duration(seconds: 5));
-                    await DBLogic.to
-                        .findAllListByGroup(GlobalLogic.to.currentGroup.value);
-                  }));
-                },
-              ),
-              // SizedBox(height: 8.h),
-              // DrawerFunctionButton(
-              //   icon: Assets.drawerDrawerDebug,
-              //   text: "保存日志",
-              //   onTap: () async {
-              //     await SDUtils.uploadLog();
-              //     SmartDialog.compatible
-              //         .showToast("导出成功", time: const Duration(seconds: 5));
-              //   },
-              // ),
-              SizedBox(height: 8.h),
-              DrawerFunctionButton(
-                icon: Assets.drawerDrawerInspect,
-                text: 'view_log'.tr,
-                onTap: () async {
-                  Get.toNamed(Routes.routeLogger);
-                },
-              ),
-              SizedBox(height: 8.h),
-              DrawerFunctionButton(
-                icon: Assets.drawerDrawerUpdate,
-                text: 'update'.tr,
-                onTap: () {
-                  GlobalLogic.to.checkUpdate(manual: true);
-                },
-              ),
-              SizedBox(height: 8.h),
-              DrawerFunctionButton(
-                icon: Assets.drawerDrawerSecret,
-                text: 'privacy_agreement'.tr,
-                onTap: () {
-                  Get.toNamed(Routes.routePermission);
-                },
-              )
-            ],
-          );
-        }));
-  }
-
-  Widget renderDayOrNightSwitch() {
-    if (GlobalLogic.to.withSystemTheme.value) {
-      return Container();
-    }
-    return Column(
-      children: [
-        DrawerFunctionButton(
-            icon: Assets.drawerDrawerDayNight,
-            text: 'night_mode'.tr,
-            hasSwitch: true,
-            initSwitch: GlobalLogic.to.manualIsDark.value,
-            enableSwitch: !GlobalLogic.to.withSystemTheme.value,
-            callBack: (check) async {
-              Get.changeThemeMode(check ? ThemeMode.dark : ThemeMode.light);
-              Get.changeTheme(check ? darkTheme : lightTheme);
-              if (GlobalLogic.to.hasSkin.value &&
-                  PlayerLogic.to.playingMusic.value.musicId == null) {
-                GlobalLogic.to.iconColor.value =
-                    const Color(Const.noMusicColorfulSkin);
-              }
-              // 将全局变量设置为所选值
-              GlobalLogic.to.manualIsDark.value = check;
-              // 修改sp值
-              await SpUtil.put(Const.spDark, check);
-              GlobalLogic.to.isThemeDark();
-              // 恢复原来操作的界面
-              Future.delayed(const Duration(milliseconds: 300)).then((value) {
-                Get.forceAppUpdate().then((value) {
-                  PageViewLogic.to.controller
-                      .jumpToPage(HomeController.to.state.currentIndex.value);
-                });
-              });
-            }),
-        SizedBox(height: 8.h)
-      ],
-    );
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            DrawerFunctionButton(
+              icon: Assets.drawerDrawerQuickTrans,
+              text: 'music_trans'.tr,
+              onTap: () async {
+                Get.back();
+                Get.toNamed(Routes.routeTransform);
+              },
+            ),
+            SizedBox(height: 8.h),
+            DrawerFunctionButton(
+              icon: Assets.drawerDrawerDataSync,
+              text: 'data_sync'.tr,
+              onTap: () {
+                Get.back();
+                Get.toNamed(Routes.routeDataSync);
+              },
+            ),
+            SizedBox(height: 8.h),
+            DrawerFunctionButton(
+              icon: Assets.drawerDrawerDataDownload,
+              text: 'fetch_songs'.tr,
+              onTap: () {
+                handleUpdateData();
+              },
+            ),
+            SizedBox(height: 8.h),
+            DrawerFunctionButton(
+              icon: Assets.drawerDrawerUpdate,
+              text: 'update'.tr,
+              onTap: () {
+                GlobalLogic.to.checkUpdate(manual: true);
+              },
+            ),
+            SizedBox(height: 8.h),
+            DrawerFunctionButton(
+              icon: Assets.drawerDrawerSetting,
+              text: 'system_settings'.tr,
+              onTap: () {
+                Get.back();
+                Get.toNamed(Routes.routeSystemSettings, id: 1);
+              },
+            )
+          ],
+        ));
   }
 
   handleUpdateData() async {
@@ -406,6 +260,7 @@ class _DrawerPageState extends State<DrawerPage> {
         Network.dio?.request(latestDataUrl).then((value) {
           CloudData data = CloudData.fromJson(value.data);
           SpUtil.getInt(Const.spDataVersion).then((currentVersion) {
+            Log4f.d(msg: "云端版本号: ${data.version}");
             if (currentVersion == data.version) {
               SmartDialog.compatible.dismiss(status: SmartStatus.loading);
               SmartDialog.compatible.show(

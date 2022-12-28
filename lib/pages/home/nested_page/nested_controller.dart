@@ -7,6 +7,7 @@ import 'package:lovelivemusicplayer/pages/details/album_details/view.dart';
 import 'package:lovelivemusicplayer/pages/details/menu_details/view.dart';
 import 'package:lovelivemusicplayer/pages/details/singer_details/view.dart';
 import 'package:lovelivemusicplayer/pages/home/page_view/home_page_view.dart';
+import 'package:lovelivemusicplayer/pages/system/system_settings.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 
 class NestedController extends GetxController {
@@ -23,7 +24,8 @@ class NestedController extends GetxController {
     Routes.routeHome,
     Routes.routeAlbumDetails,
     Routes.routeSingerDetails,
-    Routes.routeMenuDetails
+    Routes.routeMenuDetails,
+    Routes.routeSystemSettings
   ];
 
   addNav(String route) {
@@ -79,8 +81,10 @@ class NestedController extends GetxController {
         page: () => const MenuDetailsPage(),
         transition: Transition.rightToLeftWithFade,
       );
+    } else if (settings.name == Routes.routeSystemSettings) {
+      addNav(Routes.routeSystemSettings);
+      return GetPageRoute(settings: settings, page: () => const SystemSettings());
     }
-
     return null;
   }
 }
