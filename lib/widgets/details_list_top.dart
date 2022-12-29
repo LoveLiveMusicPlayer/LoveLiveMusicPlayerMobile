@@ -39,7 +39,7 @@ class DetailsListTop extends StatelessWidget {
   Widget _buildPlaySong() {
     return Container(
       height: 45.h,
-      color: Get.theme.primaryColor,
+      color: Colors.transparent,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -116,7 +116,7 @@ class DetailsListTop extends StatelessWidget {
   ///播放歌曲条目
   Widget _buildSelectSong() {
     return Container(
-      color: Get.theme.primaryColor,
+      color: Colors.transparent,
       height: 45.h,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

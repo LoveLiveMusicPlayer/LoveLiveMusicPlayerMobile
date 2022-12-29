@@ -84,7 +84,36 @@ class _SystemSettingsState extends State<SystemSettings> {
                         });
                       }),
                   SizedBox(height: 8.h),
-                  renderDayOrNightSwitch(),
+                  DrawerFunctionButton(
+                      icon: Assets.drawerDrawerDayNight,
+                      text: 'night_mode'.tr,
+                      hasSwitch: true,
+                      initSwitch: GlobalLogic.to.manualIsDark.value,
+                      enableSwitch: !GlobalLogic.to.withSystemTheme.value,
+                      callBack: (check) async {
+                        Get.changeThemeMode(
+                            check ? ThemeMode.dark : ThemeMode.light);
+                        Get.changeTheme(check ? darkTheme : lightTheme);
+                        if (GlobalLogic.to.hasSkin.value &&
+                            PlayerLogic.to.playingMusic.value.musicId == null) {
+                          GlobalLogic.to.iconColor.value =
+                              const Color(Const.noMusicColorfulSkin);
+                        }
+                        // 将全局变量设置为所选值
+                        GlobalLogic.to.manualIsDark.value = check;
+                        // 修改sp值
+                        await SpUtil.put(Const.spDark, check);
+                        GlobalLogic.to.isThemeDark();
+                        // 恢复原来操作的界面
+                        Future.delayed(const Duration(milliseconds: 300))
+                            .then((value) {
+                          Get.forceAppUpdate().then((value) {
+                            PageViewLogic.to.controller.jumpToPage(
+                                HomeController.to.state.currentIndex.value);
+                          });
+                        });
+                      }),
+                  SizedBox(height: 8.h),
                   DrawerFunctionButton(
                       icon: Assets.drawerDrawerColorful,
                       text: 'colorful_mode'.tr,
@@ -204,43 +233,5 @@ class _SystemSettingsState extends State<SystemSettings> {
                 ],
               ))
         ]));
-  }
-
-  Widget renderDayOrNightSwitch() {
-    if (GlobalLogic.to.withSystemTheme.value) {
-      return Container();
-    }
-    return Column(
-      children: [
-        DrawerFunctionButton(
-            icon: Assets.drawerDrawerDayNight,
-            text: 'night_mode'.tr,
-            hasSwitch: true,
-            initSwitch: GlobalLogic.to.manualIsDark.value,
-            enableSwitch: !GlobalLogic.to.withSystemTheme.value,
-            callBack: (check) async {
-              Get.changeThemeMode(check ? ThemeMode.dark : ThemeMode.light);
-              Get.changeTheme(check ? darkTheme : lightTheme);
-              if (GlobalLogic.to.hasSkin.value &&
-                  PlayerLogic.to.playingMusic.value.musicId == null) {
-                GlobalLogic.to.iconColor.value =
-                    const Color(Const.noMusicColorfulSkin);
-              }
-              // 将全局变量设置为所选值
-              GlobalLogic.to.manualIsDark.value = check;
-              // 修改sp值
-              await SpUtil.put(Const.spDark, check);
-              GlobalLogic.to.isThemeDark();
-              // 恢复原来操作的界面
-              Future.delayed(const Duration(milliseconds: 300)).then((value) {
-                Get.forceAppUpdate().then((value) {
-                  PageViewLogic.to.controller
-                      .jumpToPage(HomeController.to.state.currentIndex.value);
-                });
-              });
-            }),
-        SizedBox(height: 8.h)
-      ],
-    );
   }
 }

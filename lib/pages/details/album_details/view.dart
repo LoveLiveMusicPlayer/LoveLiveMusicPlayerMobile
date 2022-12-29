@@ -40,7 +40,7 @@ class _AlbumDetailsPageState extends State<AlbumDetailsPage> {
   Widget build(BuildContext context) {
     return GetBuilder<DetailController>(builder: (logic) {
       return Scaffold(
-          backgroundColor: Get.theme.primaryColor,
+          backgroundColor: Colors.transparent,
           body: Column(children: [
             DetailsHeader(title: 'album_info'.tr),
             SizedBox(height: 8.h),

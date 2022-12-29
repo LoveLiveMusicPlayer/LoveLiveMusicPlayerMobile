@@ -105,11 +105,16 @@ class _HomeViewState extends State<HomeView>
             ),
             body: GetBuilder<GlobalLogic>(builder: (logic) {
               final photo = logic.bgPhoto.value;
+              final color = Theme.of(context).primaryColor;
               return Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: FileImage(File(photo)), fit: BoxFit.cover)),
-                child: SafeArea(
+                child: ColorfulSafeArea(
+                  color: photo == ""
+                      ? color
+                      : Color(Get.isDarkMode ? 0xff000000 : 0xffffffff)
+                          .withOpacity(Get.isDarkMode ? 0.4 : 0.3),
                   top: false,
                   bottom: GlobalLogic.to.needHomeSafeArea.value,
                   child: _weSlider(photo),

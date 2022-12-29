@@ -140,7 +140,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
   ///播放歌曲条目
   Widget _buildSelectSong() {
     return Container(
-      color: Get.theme.primaryColor,
+      color: Colors.transparent,
       height: 45.h,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

@@ -22,10 +22,7 @@ class DetailsHeader extends StatelessWidget {
               ? Get.theme.primaryColor
               : Colors.transparent,
           child: Column(children: [
-            SizedBox(height: MediaQuery
-                .of(Get.context!)
-                .padding
-                .top + 14.56.h),
+            SizedBox(height: MediaQuery.of(Get.context!).padding.top + 14.56.h),
             Stack(alignment: Alignment.center, children: [
               Row(children: [
                 Padding(

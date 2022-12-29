@@ -50,7 +50,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
   Widget build(BuildContext context) {
     return GetBuilder<DetailController>(builder: (logic) {
       return Scaffold(
-          backgroundColor: Get.theme.primaryColor,
+          backgroundColor: Colors.transparent,
           body: Column(children: [
             DetailsHeader(title: menu?.name ?? ""),
             SizedBox(height: 8.h),
