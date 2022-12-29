@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
@@ -17,6 +18,8 @@ import 'package:lovelivemusicplayer/pages/details/widget/details_header.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/utils/image_util.dart';
+import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
 import 'package:lovelivemusicplayer/widgets/reset_data_dialog.dart';
@@ -32,7 +35,7 @@ class _SystemSettingsState extends State<SystemSettings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Get.theme.primaryColor,
+        backgroundColor: Colors.transparent,
         body: Column(children: [
           DetailsHeader(title: 'system_settings'.tr),
           SizedBox(height: 16.h),
@@ -112,7 +115,23 @@ class _SystemSettingsState extends State<SystemSettings> {
                     icon: Assets.drawerDrawerBackground,
                     text: 'setting_background_photo'.tr,
                     onTap: () async {
-                      Get.toNamed(Routes.routeLogger);
+                      final ImagePicker picker = ImagePicker();
+                      final XFile? image =
+                          await picker.pickImage(source: ImageSource.gallery);
+                      if (image == null) {
+                        return;
+                      }
+                      print(image.path);
+                      final cropImage = await ImageUtil.cropImage(
+                          image: image.path, width: 256.w, height: 512.h);
+                      final picContent = await cropImage?.readAsBytes();
+                      if (picContent == null) {
+                        return;
+                      }
+
+                      final fileName = "${DateTime.now()}.jpg";
+                      SDUtils.saveBGPhoto(fileName, picContent);
+                      // Get.toNamed(Routes.routeLogger);
                     },
                   ),
                 ],
@@ -130,30 +149,30 @@ class _SystemSettingsState extends State<SystemSettings> {
                     onTap: () {
                       SmartDialog.compatible.show(
                           widget: ResetDataDialog(deleteMusicData: () async {
-                            SpUtil.remove(Const.spDataVersion);
-                            await DBLogic.to.clearAllMusic();
-                          }, deleteUserData: () async {
-                            await DBLogic.to.clearAllUserData();
-                            AppUtils.cacheManager.emptyCache();
-                            SpUtil.put(Const.spAllowPermission, true)
-                                .then((value) async {
-                              SmartDialog.compatible.dismiss();
-                              SmartDialog.compatible.showToast('will_shutdown'.tr);
-                              Future.delayed(const Duration(seconds: 2), () {
-                                if (Platform.isIOS) {
-                                  exit(0);
-                                } else {
-                                  SystemNavigator.pop();
-                                }
-                              });
-                            });
-                          }, afterDelete: () async {
-                            SmartDialog.compatible.dismiss();
-                            SmartDialog.compatible.showToast('clean_success'.tr,
-                                time: const Duration(seconds: 5));
-                            await DBLogic.to
-                                .findAllListByGroup(GlobalLogic.to.currentGroup.value);
-                          }));
+                        SpUtil.remove(Const.spDataVersion);
+                        await DBLogic.to.clearAllMusic();
+                      }, deleteUserData: () async {
+                        await DBLogic.to.clearAllUserData();
+                        AppUtils.cacheManager.emptyCache();
+                        SpUtil.put(Const.spAllowPermission, true)
+                            .then((value) async {
+                          SmartDialog.compatible.dismiss();
+                          SmartDialog.compatible.showToast('will_shutdown'.tr);
+                          Future.delayed(const Duration(seconds: 2), () {
+                            if (Platform.isIOS) {
+                              exit(0);
+                            } else {
+                              SystemNavigator.pop();
+                            }
+                          });
+                        });
+                      }, afterDelete: () async {
+                        SmartDialog.compatible.dismiss();
+                        SmartDialog.compatible.showToast('clean_success'.tr,
+                            time: const Duration(seconds: 5));
+                        await DBLogic.to.findAllListByGroup(
+                            GlobalLogic.to.currentGroup.value);
+                      }));
                     },
                   ),
                   // SizedBox(height: 8.h),

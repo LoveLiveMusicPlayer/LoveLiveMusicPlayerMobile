@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
-import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
-import 'package:flutter/services.dart';
 
 class DialogSongInfo extends StatefulWidget {
   final Music music;
@@ -60,11 +59,13 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
               height: 0.5.h,
               color:
                   Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF),
-          _buildItem("${'music_name'.tr}: ", widget.music.musicName, canPaste: true),
+          _buildItem("${'music_name'.tr}: ", widget.music.musicName,
+              canPaste: true),
           _buildItem("${'album'.tr}: ", widget.music.albumName, canPaste: true),
           _buildItem("${'duration'.tr}: ", widget.music.time),
           _buildItem("${'position'.tr}: ",
-              "${widget.music.baseUrl}${widget.music.musicPath}", canPaste: true),
+              "${widget.music.baseUrl}${widget.music.musicPath}",
+              canPaste: true),
           _buildItem("${'release_date'.tr}: ", date),
           _buildItem("${'classification'.tr}: ", category, showLin: false)
         ],
@@ -73,55 +74,58 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
   }
 
   ///单个条目
-  Widget _buildItem(String title, String? message, {bool canPaste = false, bool showLin = true}) {
+  Widget _buildItem(String title, String? message,
+      {bool canPaste = false, bool showLin = true}) {
     return GestureDetector(
-      onLongPress: () {
-        if (canPaste && message != null && message.isNotEmpty) {
-          Clipboard.setData(ClipboardData(text: message)).then((value) => SmartDialog.compatible.showToast("复制成功"));
-        }
-      },
-      child: Padding(
-        padding: EdgeInsets.only(left: 16.h, right: 16.h),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              height: 14.h,
-            ),
-            Row(
-              children: [
-                Text(
-                  title,
-                  style: Get.isDarkMode
-                      ? TextStyleMs.white_15
-                      : TextStyleMs.lightBlack_15,
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
-                Expanded(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Text(message ?? 'unknown'.tr,
-                          style: Get.isDarkMode
-                              ? TextStyleMs.white_15
-                              : TextStyleMs.lightBlack_15),
-                    ))
-              ],
-            ),
-            SizedBox(
-              height: 14.h,
-            ),
-            Visibility(
-              visible: showLin,
-              child: Divider(
-                height: 0.5.h,
-                color: Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF,
+        onLongPress: () {
+          if (canPaste && message != null && message.isNotEmpty) {
+            Clipboard.setData(ClipboardData(text: message))
+                .then((value) => SmartDialog.compatible.showToast("复制成功"));
+          }
+        },
+        child: Padding(
+          padding: EdgeInsets.only(left: 16.h, right: 16.h),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                height: 14.h,
               ),
-            )
-          ],
-        ),
-      )
-    );
+              Row(
+                children: [
+                  Text(
+                    title,
+                    style: Get.isDarkMode
+                        ? TextStyleMs.white_15
+                        : TextStyleMs.lightBlack_15,
+                  ),
+                  SizedBox(
+                    width: 10.w,
+                  ),
+                  Expanded(
+                      child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Text(message ?? 'unknown'.tr,
+                        style: Get.isDarkMode
+                            ? TextStyleMs.white_15
+                            : TextStyleMs.lightBlack_15),
+                  ))
+                ],
+              ),
+              SizedBox(
+                height: 14.h,
+              ),
+              Visibility(
+                visible: showLin,
+                child: Divider(
+                  height: 0.5.h,
+                  color: Get.isDarkMode
+                      ? ColorMs.color737373
+                      : ColorMs.colorCFCFCF,
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }

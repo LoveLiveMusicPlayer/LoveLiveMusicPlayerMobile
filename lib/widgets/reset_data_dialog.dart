@@ -72,7 +72,9 @@ class ResetDataDialog extends StatelessWidget {
 
   Widget renderText(String text, double? fontSize) {
     final color = Get.isDarkMode ? Colors.white : Colors.black;
-    return Text(text, textAlign: TextAlign.center, style: TextStyle(color: color, fontSize: fontSize));
+    return Text(text,
+        textAlign: TextAlign.center,
+        style: TextStyle(color: color, fontSize: fontSize));
   }
 }
 

@@ -45,9 +45,10 @@ class BottomBar extends StatelessWidget {
               label: 'singer'.tr),
         ],
         elevation: 0,
-        // backgroundColor: Colors.transparent,
-        backgroundColor: GlobalLogic.to
-            .getThemeColor(ColorMs.color4E4E4E, ColorMs.colorFAFAFA),
+        backgroundColor: GlobalLogic.to.bgPhoto.value == ""
+            ? GlobalLogic.to
+                .getThemeColor(ColorMs.color4E4E4E, ColorMs.colorFAFAFA)
+            : Colors.transparent,
         selectedItemColor: ColorMs.colorF940A7,
         unselectedItemColor: ColorMs.colorD1E0F3,
         onTap: (index) {

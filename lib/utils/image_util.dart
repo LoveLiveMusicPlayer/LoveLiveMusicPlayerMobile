@@ -1,10 +1,15 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:log4f/log4f.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 
 /**
  * @Author: Sky24n
@@ -83,5 +88,54 @@ class ImageUtil {
       Log4f.d(msg: e.toString(), writeFile: true);
     }
     return result;
+  }
+
+  ///裁切图片
+  ///[image] 图片路径或文件
+  ///[width] 宽度
+  ///[height] 高度
+  ///[aspectRatio] 比例
+  ///[androidUiSettings]UI 参数
+  ///[iOSUiSettings] ios的ui 参数
+  static Future<CroppedFile?> cropImage(
+      {required image,
+      required width,
+      required height,
+      aspectRatio,
+      androidUiSettings,
+      iOSUiSettings}) async {
+    String imagePth = "";
+    if (image is String) {
+      imagePth = image;
+    } else if (image is File) {
+      imagePth = image.path;
+    } else {
+      Log4f.d(msg: 'file_path_error'.tr);
+      return null;
+    }
+    final croppedFile = await ImageCropper().cropImage(
+      sourcePath: imagePth,
+      maxWidth: AppUtils.num2int(width),
+      maxHeight: AppUtils.num2int(height),
+      aspectRatio: aspectRatio ??
+          CropAspectRatio(
+              ratioX: AppUtils.num2double(width),
+              ratioY: AppUtils.num2double(height)),
+      uiSettings: [
+        androidUiSettings ??
+            AndroidUiSettings(
+                toolbarTitle: 'crop_background_image'.tr,
+                toolbarColor: Get.theme.primaryColor,
+                toolbarWidgetColor: Colors.white,
+                initAspectRatio: CropAspectRatioPreset.original,
+                hideBottomControls: false,
+                lockAspectRatio: true),
+        iOSUiSettings ??
+            IOSUiSettings(
+              title: 'crop_background_image'.tr,
+            ),
+      ],
+    );
+    return croppedFile;
   }
 }

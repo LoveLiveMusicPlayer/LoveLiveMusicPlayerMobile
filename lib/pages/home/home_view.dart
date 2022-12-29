@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -100,14 +103,19 @@ class _HomeViewState extends State<HomeView>
               width: 300.w,
               child: const DrawerPage(),
             ),
-            body: Container(
-              // decoration: background,
-              child: SafeArea(
-                top: false,
-                bottom: GlobalLogic.to.needHomeSafeArea.value,
-                child: _weSlider(),
-              ),
-            )),
+            body: GetBuilder<GlobalLogic>(builder: (logic) {
+              final photo = logic.bgPhoto.value;
+              return Container(
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: FileImage(File(photo)), fit: BoxFit.cover)),
+                child: SafeArea(
+                  top: false,
+                  bottom: GlobalLogic.to.needHomeSafeArea.value,
+                  child: _weSlider(photo),
+                ),
+              );
+            })),
         onWillPop: () async {
           if (NestedController.to.currentIndex == Routes.routeHome) {
             // 首页则提示回到桌面
@@ -128,7 +136,7 @@ class _HomeViewState extends State<HomeView>
         });
   }
 
-  Widget _weSlider() {
+  Widget _weSlider(String photo) {
     const double panelMinSize = 150;
     final double panelMaxSize = ScreenUtil().screenHeight;
     final color = Theme.of(context).primaryColor;
@@ -143,8 +151,10 @@ class _HomeViewState extends State<HomeView>
       panelMinSize: panelMinSize.h,
       panelMaxSize: panelMaxSize,
       overlayOpacity: 0.9,
-      backgroundColor: color,
-      // backgroundColor: const Color(0xff000000).withOpacity(0.5),
+      backgroundColor: photo == ""
+          ? color
+          : Color(Get.isDarkMode ? 0xff000000 : 0xffffffff)
+              .withOpacity(Get.isDarkMode ? 0.4 : 0.3),
       overlay: true,
       isDismissible: true,
       body: Navigator(

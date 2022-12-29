@@ -14,6 +14,7 @@ import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:updater/updater.dart';
 import 'package:we_slide/we_slide.dart';
@@ -32,6 +33,7 @@ class GlobalLogic extends SuperController
   final loveList = <Music>[].obs;
   final menuList = <Menu>[].obs;
   final recentList = <Music>[].obs;
+  final bgPhoto = "".obs;
 
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
@@ -117,6 +119,17 @@ class GlobalLogic extends SuperController
         Log4f.d(msg: 'Error: $status');
       },
     );
+
+    SpUtil.getString(Const.spBackgroundPhoto).then((value) {
+      if (SDUtils.checkFileExist(value)) {
+        setBgPhoto(value);
+      }
+    });
+  }
+
+  setBgPhoto(String photoPath) {
+    bgPhoto.value = photoPath;
+    refresh();
   }
 
   int getListSize(int index, bool isDbInit) {

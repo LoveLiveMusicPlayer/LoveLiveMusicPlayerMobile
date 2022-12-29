@@ -45,8 +45,10 @@ class BottomBar2 extends StatelessWidget {
               label: 'history'.tr),
         ],
         elevation: 0,
-        backgroundColor: GlobalLogic.to
-            .getThemeColor(ColorMs.color4E4E4E, ColorMs.colorFAFAFA),
+        backgroundColor: GlobalLogic.to.bgPhoto.value == ""
+            ? GlobalLogic.to
+                .getThemeColor(ColorMs.color4E4E4E, ColorMs.colorFAFAFA)
+            : Colors.transparent,
         selectedItemColor: ColorMs.colorD91F86,
         unselectedItemColor: ColorMs.colorA9B9CD.withOpacity(0.5),
         onTap: (index) {

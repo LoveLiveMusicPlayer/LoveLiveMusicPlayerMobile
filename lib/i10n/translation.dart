@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'de_DE.dart';
 import 'en_US.dart';
 import 'zh_CN.dart';
-import 'de_DE.dart';
 
 class Translation extends Translations {
   static Locale get locale => Get.deviceLocale ?? const Locale("zh", "CN");

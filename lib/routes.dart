@@ -36,7 +36,8 @@ class Routes {
       GetPage(name: Routes.routeTransform, page: () => const MusicTransform()),
       GetPage(name: Routes.routeDataSync, page: () => const DataSync()),
       GetPage(name: Routes.routeLogger, page: () => const LogConsole()),
-      GetPage(name: Routes.routeSystemSettings, page: () => const SystemSettings()),
+      GetPage(
+          name: Routes.routeSystemSettings, page: () => const SystemSettings()),
     ];
   }
 }

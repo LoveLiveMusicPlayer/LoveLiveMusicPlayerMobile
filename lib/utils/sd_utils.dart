@@ -4,12 +4,16 @@ import 'dart:typed_data';
 import 'package:common_utils/common_utils.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:log4f/log4f.dart';
+import 'package:lovelivemusicplayer/global/const.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/Device.dart';
+import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:path_provider/path_provider.dart';
 
 class SDUtils {
   static String path = "";
   static bool allowEULA = false;
+  static late String bgPhotoPath;
 
   static init() async {
     Directory? appDocDir;
@@ -18,8 +22,13 @@ class SDUtils {
     }
     appDocDir ??= await getApplicationDocumentsDirectory();
     path = appDocDir.path + Platform.pathSeparator;
-    allowEULA = Platform.isAndroid || SDUtils.checkDirectoryExist("${SDUtils.path}LLMP");
+    bgPhotoPath = "${path}bg/";
+    if (!checkDirectoryExist(bgPhotoPath)) {
+      makeDir(bgPhotoPath);
+    }
+    allowEULA = Platform.isAndroid || checkDirectoryExist("${path}LLMP");
     Log4f.d(msg: path);
+    print(path);
   }
 
   ///获取图片文件
@@ -66,6 +75,22 @@ class SDUtils {
     }
   }
 
+  static void saveBGPhoto(String fileName, List<int> content) {
+    final filePath = bgPhotoPath + fileName;
+    try {
+      var file = File(filePath);
+      bool exists = file.existsSync();
+      if (exists) {
+        file.deleteSync();
+      }
+      file.writeAsBytesSync(content);
+      SpUtil.put(Const.spBackgroundPhoto, bgPhotoPath);
+      GlobalLogic.to.setBgPhoto(filePath);
+    } catch (e) {
+      Log4f.e(msg: e.toString(), writeFile: true);
+    }
+  }
+
   static uploadLog() async {
     final time = DateUtil.getNowDateStr();
     final loggerFile =
@@ -90,7 +115,7 @@ class SDUtils {
     if (Platform.isAndroid) {
       final AndroidDeviceInfo info = await deviceInfoPlugin.androidInfo;
       return Device(
-          physicalDevice: info.isPhysicalDevice ?? false,
+          physicalDevice: info.isPhysicalDevice,
           serialNo: info.device ?? "",
           brand: info.brand ?? "",
           model: info.model ?? "",

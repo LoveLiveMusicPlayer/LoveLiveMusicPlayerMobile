@@ -20,7 +20,8 @@ const Map<String, String> de_DE = {
   'setting_background_photo': 'Hintergrundfarbe festlegen',
   'fetch_songs': 'Daten aktualisieren',
   'clear_database': 'Daten löschen',
-  'will_shutdown': 'Die App wird gerade geschlossen, bitte starten Sie sie manuell neu',
+  'will_shutdown':
+      'Die App wird gerade geschlossen, bitte starten Sie sie manuell neu',
   'clean_success': 'Erfolgreich gelöscht',
   'view_log': 'Protokoll ansehen',
   'privacy_agreement': 'Datenschutzvereinbarung',
@@ -37,12 +38,15 @@ const Map<String, String> de_DE = {
   'mine': 'Mein',
   'requesting': 'Netzwerk anfordern...',
   'please_check_network': 'Bitte prüfen Sie das Netzwerk',
-  'keep_same_lan': 'Bitte bewahren Sie Ihr Mobiltelefon und Ihren Computer im dasselbe lokales Netzwerk auf',
-  'keep_screen_and_scan_qr': 'Lassen Sie den Bildschirm immer eingeschaltet und scannen Sie den QR-Code auf der PC-Seite',
+  'keep_same_lan':
+      'Bitte bewahren Sie Ihr Mobiltelefon und Ihren Computer im dasselbe lokales Netzwerk auf',
+  'keep_screen_and_scan_qr':
+      'Lassen Sie den Bildschirm immer eingeschaltet und scannen Sie den QR-Code auf der PC-Seite',
   'phone2pc': 'Handy ≫ Computer',
   'pc2phone': 'Computer ≫ Handy',
   'device_pair': 'Gerätepaarung',
-  'terminate_trans': 'Nach dem Beenden wird die Verbindung und Übertragung unterbrochen, Möchten Sie weiter machen?',
+  'terminate_trans':
+      'Nach dem Beenden wird die Verbindung und Übertragung unterbrochen, Möchten Sie weiter machen?',
   'confirm': 'Bestätigen',
   'connect_fail': 'Verbindung fehlgeschlagen',
   'album_info': 'Albumdetails',
@@ -84,7 +88,8 @@ const Map<String, String> de_DE = {
   'permission_show_full': 'Vollversion anzeigen',
   'permission_main_message':
       'Willkommen bei LoveLiveMusicPlayer!\n\nWir werden die "Nutzungsvereinbarung und Datenschutzrichtlinie“ verwenden, um Ihnen zu helfen, die von dieser Software für Sie bereitgestellten Dienste und die Art und Weise der Erfassung und Verarbeitung Ihrer personenbezogenen Daten zu verstehen.\nDurch Klicken auf die Schaltfläche "Zustimmen und fortfahren“ haben Sie zugestimmt.',
-  'permission_external_link': '"Nutzungsvereinbarung und Datenschutzrichtlinie"',
+  'permission_external_link':
+      '"Nutzungsvereinbarung und Datenschutzrichtlinie"',
   'permission_agree': 'Zustimmen und weitermachen',
   'permission_disagree': 'Nicht zustimmen',
   'no_data': 'Keine Daten',
@@ -92,11 +97,15 @@ const Map<String, String> de_DE = {
   'remove_songs_data': 'Songdaten löschen',
   'remove_user_data': 'Benutzerdaten löschen',
   'explain_songs_data': 'Songdaten: Song-Cache-Daten',
-  'explain_user_data': 'Benutzerdaten: Playerkonfiguration, Favoriten, Songliste',
+  'explain_user_data':
+      'Benutzerdaten: Playerkonfiguration, Favoriten, Songliste',
   'resetting': 'zurücksetzen...',
   'warning_choose': 'Achtung: Wählen Sie sorgfältig aus',
-  'confirm_full_trans': 'Sind Sie sicher, dass Sie die Daten vollständig überschreiben?',
+  'confirm_full_trans':
+      'Sind Sie sicher, dass Sie die Daten vollständig überschreiben?',
   'cover_full_data': 'Vollständige Datenabdeckung',
+  'file_path_error': 'Dateipfadfehler',
+  'crop_background_image': 'Hintergrundbild zuschneiden',
   'privacy_detail': '''Lieber LLer:
 
 Bitte stellen Sie sicher, dass Sie alle Rechte und Einschränkungen, die in der „Softwarelizenzvereinbarung“ (im Folgenden als diese Vereinbarung bezeichnet) festgelegt sind, sorgfältig lesen und verstehen, es sei denn, Sie akzeptieren die Bedingungen dieser Vereinbarung, andernfalls haben Sie kein Recht, die Software und damit verbundene zu verwenden Dienstleistungen. Sobald Sie diese Software verwenden, wird davon ausgegangen, dass Sie diese Vereinbarung akzeptiert haben.
