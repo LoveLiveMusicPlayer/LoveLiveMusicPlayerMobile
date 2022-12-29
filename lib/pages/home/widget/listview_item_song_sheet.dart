@@ -38,30 +38,27 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => widget.onItemTap(widget.menu),
-      child: Container(
-        color: Get.theme.primaryColor,
-        child: Row(
-          children: [
-            _buildDevicePic(),
+      child: Row(
+        children: [
+          _buildDevicePic(),
 
-            SizedBox(
-              width: 5.w,
-            ),
+          SizedBox(
+            width: 5.w,
+          ),
 
-            ///缩列图
-            _buildIcon(),
+          ///缩列图
+          _buildIcon(),
 
-            SizedBox(
-              width: 10.w,
-            ),
+          SizedBox(
+            width: 10.w,
+          ),
 
-            ///中间标题部分
-            _buildContent(),
+          ///中间标题部分
+          _buildContent(),
 
-            ///右侧操作按钮
-            _buildAction()
-          ],
-        ),
+          ///右侧操作按钮
+          _buildAction()
+        ],
       ),
     );
   }

@@ -150,7 +150,6 @@ class _SystemSettingsState extends State<SystemSettings> {
                       if (image == null) {
                         return;
                       }
-                      print(image.path);
                       final cropImage = await ImageUtil.cropImage(
                           image: image.path, width: 256.w, height: 512.h);
                       final picContent = await cropImage?.readAsBytes();
@@ -160,7 +159,6 @@ class _SystemSettingsState extends State<SystemSettings> {
 
                       final fileName = "${DateTime.now()}.jpg";
                       SDUtils.saveBGPhoto(fileName, picContent);
-                      // Get.toNamed(Routes.routeLogger);
                     },
                   ),
                 ],

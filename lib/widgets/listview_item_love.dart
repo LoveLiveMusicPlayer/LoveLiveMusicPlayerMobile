@@ -42,25 +42,22 @@ class _ListViewItemLoveState extends State<ListViewItemLove> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return Container(
-        color: Get.theme.primaryColor,
-        child: Row(
-          children: [
-            ///勾选按钮
-            _buildCheckBox(),
+      return Row(
+        children: [
+          ///勾选按钮
+          _buildCheckBox(),
 
-            ///缩列图
-            _buildIcon(),
+          ///缩列图
+          _buildIcon(),
 
-            SizedBox(width: 10.r),
+          SizedBox(width: 10.r),
 
-            ///中间标题部分
-            _buildContent(),
+          ///中间标题部分
+          _buildContent(),
 
-            ///右侧操作按钮
-            _buildAction(),
-          ],
-        ),
+          ///右侧操作按钮
+          _buildAction(),
+        ],
       );
     });
   }

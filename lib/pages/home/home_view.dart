@@ -106,10 +106,12 @@ class _HomeViewState extends State<HomeView>
             body: GetBuilder<GlobalLogic>(builder: (logic) {
               final photo = logic.bgPhoto.value;
               final color = Theme.of(context).primaryColor;
+              DecorationImage? di;
+              if (photo != "") {
+                di = DecorationImage(image: FileImage(File(photo)), fit: BoxFit.cover);
+              }
               return Container(
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: FileImage(File(photo)), fit: BoxFit.cover)),
+                decoration: BoxDecoration(image: di),
                 child: ColorfulSafeArea(
                   color: photo == ""
                       ? color
@@ -158,8 +160,7 @@ class _HomeViewState extends State<HomeView>
       overlayOpacity: 0.9,
       backgroundColor: photo == ""
           ? color
-          : Color(Get.isDarkMode ? 0xff000000 : 0xffffffff)
-              .withOpacity(Get.isDarkMode ? 0.4 : 0.3),
+          : const Color(0x00000000).withOpacity(Get.isDarkMode ? 0.4 : 0.15),
       overlay: true,
       isDismissible: true,
       body: Navigator(

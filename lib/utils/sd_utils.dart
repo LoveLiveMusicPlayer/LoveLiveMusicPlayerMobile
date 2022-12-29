@@ -28,7 +28,6 @@ class SDUtils {
     }
     allowEULA = Platform.isAndroid || checkDirectoryExist("${path}LLMP");
     Log4f.d(msg: path);
-    print(path);
   }
 
   ///获取图片文件
@@ -84,7 +83,7 @@ class SDUtils {
         file.deleteSync();
       }
       file.writeAsBytesSync(content);
-      SpUtil.put(Const.spBackgroundPhoto, bgPhotoPath);
+      SpUtil.put(Const.spBackgroundPhoto, filePath);
       GlobalLogic.to.setBgPhoto(filePath);
     } catch (e) {
       Log4f.e(msg: e.toString(), writeFile: true);
