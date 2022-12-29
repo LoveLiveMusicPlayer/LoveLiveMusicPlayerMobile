@@ -4,6 +4,11 @@
 <h1 align="center">LLMP-M</h1>
 <h3 align="center">A dedicated mobile player for LLer</h3>  
 <h4 align="center">Continuously updating.... Welcome to Popstar</h4>
+<h4 align="center">
+
+Language: English | [Chinese Document](README.md)
+
+</h4>
 
 This project aims to summarize all the songs of LoveLive and generate a player dedicated for LLer.
 
