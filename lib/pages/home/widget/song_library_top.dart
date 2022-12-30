@@ -74,6 +74,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
 
   ///播放按钮
   Widget _buildPlayBtn() {
+    final hasShadow = GlobalLogic.to.bgPhoto.value == "";
     return InkWell(
       onTap: () {
         onPlayTap();
@@ -91,13 +92,13 @@ class SongLibraryTop extends GetView<GlobalLogic> {
                 ],
               ),
               borderRadius: BorderRadius.circular(12.h),
-              boxShadow: [
+              boxShadow: hasShadow ? [
                 BoxShadow(
                     color: GlobalLogic.to.getThemeColor(
                         ColorMs.color05080C, ColorMs.colorD3E0EC),
                     blurRadius: 6,
                     offset: const Offset(5, 3)),
-              ]),
+              ] : []),
           child: Icon(
             Icons.play_arrow_rounded,
             color: Colors.white,
@@ -115,8 +116,10 @@ class SongLibraryTop extends GetView<GlobalLogic> {
             "${controller.getListSize(index, controller.databaseInitOver.value)} ${index == 1 ? 'total_album_number_unit'.tr : 'total_number_unit'.tr}",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style:
-                Get.isDarkMode ? TextStyleMs.white_14 : TextStyleMs.black_14);
+            style: TextStyleMs.f14_400.copyWith(
+                color: (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
+                    ? ColorMs.colorFFFFFF
+                    : ColorMs.color333333));
       }),
     );
   }
@@ -133,12 +136,17 @@ class SongLibraryTop extends GetView<GlobalLogic> {
           onTap: onScreenTap,
           width: 20,
           height: 20,
-          color: ColorMs.colorCCCCCC),
+          color: (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
+              ? ColorMs.colorFFFFFF
+              : ColorMs.colorCCCCCC),
     );
   }
 
   ///播放歌曲条目
   Widget _buildSelectSong() {
+    final textStyle = (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
+        ? TextStyleMs.f15_400.copyWith(color: Colors.white)
+        : TextStyleMs.f15_400.copyWith(color: Colors.black);
     return Container(
       color: Colors.transparent,
       height: 45.h,
@@ -157,8 +165,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
               iconSize: 25,
               title:
                   "${'select_items'.tr} ${HomeController.to.getCheckedSong()} ${'total_number_unit'.tr}",
-              textStyle:
-                  Get.isDarkMode ? TextStyleMs.white_15 : TextStyleMs.black_15,
+              textStyle: textStyle,
               onCheckd: (value) {
                 HomeController.to.state.selectAll = value;
                 onSelectAllTap(value);
@@ -174,9 +181,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
               padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 16.h),
               child: Text(
                 'cancel'.tr,
-                style: Get.isDarkMode
-                    ? TextStyleMs.white_15
-                    : TextStyleMs.black_15,
+                style: textStyle,
               ),
             ),
           )

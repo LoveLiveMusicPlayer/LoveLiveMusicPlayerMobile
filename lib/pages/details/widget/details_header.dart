@@ -17,6 +17,7 @@ class DetailsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<GlobalLogic>(builder: (logic) {
+      final hasShadow = logic.bgPhoto.value == "";
       return Container(
           color: logic.bgPhoto.value == ""
               ? Get.theme.primaryColor
@@ -36,7 +37,7 @@ class DetailsHeader extends StatelessWidget {
                       } else {
                         onBack!();
                       }
-                    }, width: 32, height: 32, iconSize: 24, radius: 6))
+                    }, width: 32, height: 32, iconSize: 24, radius: 6, hasShadow: hasShadow))
               ]),
               ConstrainedBox(
                   constraints: BoxConstraints(maxWidth: Get.width - 120.w),

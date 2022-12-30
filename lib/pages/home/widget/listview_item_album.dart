@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
@@ -70,15 +71,15 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
                 ),
               ),
               Expanded(
-                  child: Text(
-                widget.album.albumName!,
-                maxLines: 2,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: Get.isDarkMode
-                    ? TextStyleMs.white_12
-                    : TextStyleMs.black_12,
-              ))
+                  child: Text(widget.album.albumName!,
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: (Get.isDarkMode ||
+                              GlobalLogic.to.bgPhoto.value != "")
+                          ? TextStyleMs.f12_400
+                              .copyWith(color: ColorMs.colorFFFFFF)
+                          : TextStyleMs.f12_400.copyWith(color: Colors.black)))
             ],
           )
         ]));

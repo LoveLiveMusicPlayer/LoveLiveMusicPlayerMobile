@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 ///歌手 item
@@ -42,9 +44,9 @@ class _ListViewItemSingerState extends State<ListViewItemSinger> {
                 Text(widget.artist.name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Get.isDarkMode
-                        ? TextStyleMs.whiteBold_15
-                        : TextStyleMs.blackBold_15),
+                    style: Get.isDarkMode || GlobalLogic.to.bgPhoto.value != ""
+                        ? TextStyleMs.white_15_500
+                        : TextStyleMs.black_15_500),
                 SizedBox(
                   height: 4.h,
                 ),
@@ -52,7 +54,10 @@ class _ListViewItemSingerState extends State<ListViewItemSinger> {
                   "${widget.artist.music.length} ${'total_number_unit'.tr}",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyleMs.gray_12,
+                  style: TextStyleMs.f12_400.copyWith(
+                      color: GlobalLogic.to.bgPhoto.value == ""
+                          ? ColorMs.color999999
+                          : ColorMs.colorD6D6D6),
                 ),
               ],
             ),

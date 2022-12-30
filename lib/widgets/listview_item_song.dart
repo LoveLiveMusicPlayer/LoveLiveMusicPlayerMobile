@@ -127,7 +127,10 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
               widget.music.artist ?? "",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: TextStyleMs.gray_12,
+              style: TextStyleMs.f12_400.copyWith(
+                  color: GlobalLogic.to.bgPhoto.value == ""
+                      ? ColorMs.color999999
+                      : ColorMs.colorD6D6D6),
             ),
             SizedBox(
               width: 16.w,

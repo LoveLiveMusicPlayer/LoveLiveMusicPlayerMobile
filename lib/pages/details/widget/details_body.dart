@@ -20,13 +20,12 @@ class DetailsBody extends StatefulWidget {
   final Function(Music)? onRemove;
   final bool? isAlbum;
 
-  const DetailsBody(
-      {Key? key,
-      required this.logic,
-      required this.buildCover,
-      required this.music,
-      this.isAlbum,
-      this.onRemove})
+  const DetailsBody({Key? key,
+    required this.logic,
+    required this.buildCover,
+    required this.music,
+    this.isAlbum,
+    this.onRemove})
       : super(key: key);
 
   @override
@@ -39,14 +38,14 @@ class _DetailsBodyState extends State<DetailsBody> {
     return WillPopScope(
         onWillPop: widget.logic.state.isSelect
             ? () async {
-                return false;
-              }
+          return false;
+        }
             : null,
         child: Expanded(
             child: ListView(
-          padding: const EdgeInsets.all(0),
-          children: getListItems(widget.logic),
-        )));
+              padding: const EdgeInsets.all(0),
+              children: getListItems(widget.logic),
+            )));
   }
 
   List<Widget> getListItems(logic) {
@@ -55,33 +54,39 @@ class _DetailsBodyState extends State<DetailsBody> {
     list.add(SizedBox(
       height: 10.h,
     ));
-    list.add(StickyHeader(
-      header: DetailsListTop(
-          selectAll: logic.state.selectAll,
-          isSelect: logic.state.isSelect,
-          itemsLength: widget.music.length,
-          checkedItemLength: logic.getCheckedSong(),
-          onPlayTap: () {
-            PlayerLogic.to.playMusic(widget.music);
-          },
-          onScreenTap: () {
-            if (logic.state.isSelect) {
-              SmartDialog.compatible.dismiss();
-            } else {
-              logic.openSelect();
-              showSelectDialog();
-            }
-          },
-          onSelectAllTap: (checked) {
-            logic.selectAll(checked);
-          },
-          onCancelTap: () {
-            SmartDialog.compatible.dismiss();
-          }),
-      content: Column(
-        children: renderMusicList(logic),
-      ),
-    ));
+    list.add(
+      StickyHeaderBuilder(
+        builder: (BuildContext context, double stuckAmount) {
+          var hasBg = stuckAmount < 0;
+          return DetailsListTop(
+              hasBg: hasBg,
+              selectAll: logic.state.selectAll,
+              isSelect: logic.state.isSelect,
+              itemsLength: widget.music.length,
+              checkedItemLength: logic.getCheckedSong(),
+              onPlayTap: () {
+                PlayerLogic.to.playMusic(widget.music);
+              },
+              onScreenTap: () {
+                if (logic.state.isSelect) {
+                  SmartDialog.compatible.dismiss();
+                } else {
+                  logic.openSelect();
+                  showSelectDialog();
+                }
+              },
+              onSelectAllTap: (checked) {
+                logic.selectAll(checked);
+              },
+              onCancelTap: () {
+                SmartDialog.compatible.dismiss();
+              });
+        },
+        content: Column(
+          children: renderMusicList(logic),
+        )
+      )
+    );
     return list;
   }
 

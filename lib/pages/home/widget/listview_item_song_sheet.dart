@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
@@ -107,8 +108,9 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
           Text(widget.menu.name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style:
-                  Get.isDarkMode ? TextStyleMs.white_15 : TextStyleMs.black_15),
+              style: Get.isDarkMode || GlobalLogic.to.bgPhoto.value != ""
+                  ? TextStyleMs.white_15_500
+                  : TextStyleMs.black_15_500),
           SizedBox(
             height: 4.w,
           ),
@@ -116,7 +118,10 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
             "${widget.menu.music.length} ${'total_number_unit'.tr}",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyleMs.grayBold_12,
+            style: TextStyleMs.f12_400.copyWith(
+                color: GlobalLogic.to.bgPhoto.value == ""
+                    ? ColorMs.color999999
+                    : ColorMs.colorD6D6D6),
           ),
           SizedBox(
             width: 16.w,

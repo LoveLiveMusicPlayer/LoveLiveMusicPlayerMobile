@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
@@ -17,6 +18,7 @@ class DetailsListTop extends StatelessWidget {
   bool isSelect;
   int itemsLength;
   int checkedItemLength;
+  bool hasBg;
 
   DetailsListTop({
     Key? key,
@@ -24,6 +26,7 @@ class DetailsListTop extends StatelessWidget {
     this.isSelect = false,
     this.itemsLength = 0,
     this.checkedItemLength = 0,
+    this.hasBg = false,
     required this.onPlayTap,
     required this.onScreenTap,
     required this.onSelectAllTap,
@@ -39,7 +42,7 @@ class DetailsListTop extends StatelessWidget {
   Widget _buildPlaySong() {
     return Container(
       height: 45.h,
-      color: Colors.transparent,
+      color: hasBg ? Get.theme.primaryColor : Colors.transparent,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -59,6 +62,7 @@ class DetailsListTop extends StatelessWidget {
 
   ///播放按钮
   Widget _buildPlayBtn() {
+    final hasShadow = GlobalLogic.to.bgPhoto.value == "";
     return InkWell(
       onTap: () {
         onPlayTap();
@@ -76,14 +80,13 @@ class DetailsListTop extends StatelessWidget {
                 ],
               ),
               borderRadius: BorderRadius.circular(12.h),
-              boxShadow: [
+              boxShadow: hasShadow ? [
                 BoxShadow(
-                    color: Get.isDarkMode
-                        ? ColorMs.color05080C
-                        : ColorMs.colorD3E0EC,
+                    color: GlobalLogic.to.getThemeColor(
+                        ColorMs.color05080C, ColorMs.colorD3E0EC),
                     blurRadius: 6,
                     offset: const Offset(5, 3)),
-              ]),
+              ] : []),
           child: Icon(
             Icons.play_arrow_rounded,
             color: Colors.white,
@@ -94,29 +97,39 @@ class DetailsListTop extends StatelessWidget {
 
   ///歌曲总数
   Widget _buildSongNumText() {
+    final color = TextStyleMs.f14_400.copyWith(
+        color: (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
+            ? ColorMs.colorFFFFFF
+            : ColorMs.color333333);
     return Expanded(
       child: Text("$itemsLength ${'total_number_unit'.tr}",
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: Get.isDarkMode
-              ? TextStyleMs.whiteBold_14
-              : TextStyleMs.blackBold_14),
+          maxLines: 1, overflow: TextOverflow.ellipsis, style: color),
     );
   }
 
   ///筛选按钮
   Widget _buildScreen() {
+    final color = (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
+        ? ColorMs.colorFFFFFF
+        : ColorMs.colorCCCCCC;
     return Padding(
-      padding: EdgeInsets.only(right: 16.h, top: 5.h, bottom: 5.h, left: 30.h),
-      child: touchIconByAsset(
-          path: Assets.mainIcScreen, onTap: onScreenTap, width: 20, height: 20),
-    );
+        padding:
+            EdgeInsets.only(right: 16.h, top: 5.h, bottom: 5.h, left: 30.h),
+        child: touchIconByAsset(
+            path: Assets.mainIcScreen,
+            onTap: onScreenTap,
+            width: 20,
+            height: 20,
+            color: color));
   }
 
   ///播放歌曲条目
   Widget _buildSelectSong() {
+    final textStyle = (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
+        ? TextStyleMs.f15_400.copyWith(color: Colors.white)
+        : TextStyleMs.f15_400.copyWith(color: Colors.black);
     return Container(
-      color: Colors.transparent,
+      color: hasBg ? Get.theme.primaryColor : Colors.transparent,
       height: 45.h,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -132,8 +145,7 @@ class DetailsListTop extends StatelessWidget {
             iconSize: 25,
             title:
                 "${'select_items'.tr} $checkedItemLength ${'total_number_unit'.tr}",
-            textStyle:
-                Get.isDarkMode ? TextStyleMs.white_15 : TextStyleMs.black_15,
+            textStyle: textStyle,
             onCheckd: (value) {
               onSelectAllTap(value);
             },
@@ -145,12 +157,7 @@ class DetailsListTop extends StatelessWidget {
             },
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 16.h),
-              child: Text(
-                'cancel'.tr,
-                style: Get.isDarkMode
-                    ? TextStyleMs.white_15
-                    : TextStyleMs.black_15,
-              ),
+              child: Text('cancel'.tr, style: textStyle),
             ),
           )
         ],

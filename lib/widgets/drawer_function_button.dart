@@ -2,22 +2,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/utils/color_manager.dart';
 
 class DrawerFunctionButton extends StatefulWidget {
-  const DrawerFunctionButton(
-      {Key? key,
-      this.icon,
-      required this.text,
-      this.onTap,
-      this.hasSwitch = false,
-      this.initSwitch = false,
-      this.enableSwitch = true,
-      this.callBack})
+  const DrawerFunctionButton({Key? key,
+    this.icon,
+    required this.text,
+    this.onTap,
+    this.hasSwitch = false,
+    this.initSwitch = false,
+    this.enableSwitch = true,
+    this.colorWithBG = true,
+    this.callBack})
       : super(key: key);
 
   final String? icon;
   final String text;
   final GestureTapCallback? onTap;
+  final bool colorWithBG;
   final bool hasSwitch;
   final bool initSwitch;
   final bool enableSwitch;
@@ -36,22 +40,34 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
   Widget build(BuildContext context) {
     return InkWell(
         onTap: widget.onTap,
+
         child: SizedBox(
           height: 30.h,
           child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Expanded(
                 child: Row(
-              children: [
-                widget.icon != null ? SvgPicture.asset(widget.icon!, height: 20.h, width: 20.h) : SizedBox(height: 20.h, width: 20.h),
-                SizedBox(width: 8.r),
-                Expanded(
-                    child: Text(widget.text,
-                        style: TextStyle(fontSize: 14.sp),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis))
-              ],
-            )),
+                  children: [
+                    widget.icon != null ? SvgPicture.asset(
+                        widget.icon!, height: 20.h, width: 20.h) : SizedBox(
+                        height: 20.h, width: 20.h),
+                    SizedBox(width: 8.r),
+                    Expanded(
+                        child: GetBuilder<GlobalLogic>(builder: (logic) {
+                          late bool mode;
+                          if (widget.colorWithBG) {
+                            mode = Get.isDarkMode || logic.bgPhoto.value != "";
+                          } else {
+                            mode = Get.isDarkMode;
+                          }
+                          return Text(widget.text,
+                              style: TextStyle(fontSize: 14.sp).copyWith(
+                                  color: mode? ColorMs.colorFFFFFF : Colors.black),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis);
+                        }))
+                  ],
+                )),
             renderSwitchButton()
           ]),
         ));
