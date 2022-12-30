@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
@@ -29,7 +30,7 @@ class DetailsCover extends StatelessWidget {
               album.albumName!,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Get.isDarkMode
+              style: (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
                   ? TextStyleMs.whiteBold_15
                   : TextStyleMs.blackBold_15,
             ),
@@ -41,7 +42,9 @@ class DetailsCover extends StatelessWidget {
             "${album.category}·${album.date}",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyleMs.grayBold_12,
+            style: GlobalLogic.to.bgPhoto.value != ""
+                ? TextStyleMs.colorDFDFDF_12
+                : TextStyleMs.grayBold_12,
           ),
         ],
       ),

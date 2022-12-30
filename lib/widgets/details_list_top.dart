@@ -19,6 +19,7 @@ class DetailsListTop extends StatelessWidget {
   int itemsLength;
   int checkedItemLength;
   bool hasBg;
+  Color? bgColor;
 
   DetailsListTop({
     Key? key,
@@ -27,6 +28,7 @@ class DetailsListTop extends StatelessWidget {
     this.itemsLength = 0,
     this.checkedItemLength = 0,
     this.hasBg = false,
+    this.bgColor,
     required this.onPlayTap,
     required this.onScreenTap,
     required this.onSelectAllTap,
@@ -42,7 +44,7 @@ class DetailsListTop extends StatelessWidget {
   Widget _buildPlaySong() {
     return Container(
       height: 45.h,
-      color: hasBg ? Get.theme.primaryColor : Colors.transparent,
+      color: hasBg ? bgColor : Colors.transparent,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -80,13 +82,15 @@ class DetailsListTop extends StatelessWidget {
                 ],
               ),
               borderRadius: BorderRadius.circular(12.h),
-              boxShadow: hasShadow ? [
-                BoxShadow(
-                    color: GlobalLogic.to.getThemeColor(
-                        ColorMs.color05080C, ColorMs.colorD3E0EC),
-                    blurRadius: 6,
-                    offset: const Offset(5, 3)),
-              ] : []),
+              boxShadow: hasShadow
+                  ? [
+                      BoxShadow(
+                          color: GlobalLogic.to.getThemeColor(
+                              ColorMs.color05080C, ColorMs.colorD3E0EC),
+                          blurRadius: 6,
+                          offset: const Offset(5, 3)),
+                    ]
+                  : []),
           child: Icon(
             Icons.play_arrow_rounded,
             color: Colors.white,
@@ -129,7 +133,7 @@ class DetailsListTop extends StatelessWidget {
         ? TextStyleMs.f15_400.copyWith(color: Colors.white)
         : TextStyleMs.f15_400.copyWith(color: Colors.black);
     return Container(
-      color: hasBg ? Get.theme.primaryColor : Colors.transparent,
+      color: hasBg ? bgColor : Colors.transparent,
       height: 45.h,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -140,7 +144,7 @@ class DetailsListTop extends StatelessWidget {
           CircularCheckBox(
             checkd: selectAll,
             checkIconColor: ColorMs.colorF940A7,
-            uncheckedIconColor: ColorMs.color999999,
+            uncheckedIconColor: ColorMs.colorD6D6D6,
             spacing: 10.h,
             iconSize: 25,
             title:

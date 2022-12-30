@@ -73,7 +73,10 @@ class HomePageView extends GetView<HomeController> {
           ? const Color(Const.noMusicColorfulSkin)
           : Get.theme.primaryColor;
       return logoIcon(photoPath,
-          offset: EdgeInsets.only(right: 16.w), color: color, onTap: onTap, hasShadow: GlobalLogic.to.bgPhoto.value == "");
+          offset: EdgeInsets.only(right: 16.w),
+          color: color,
+          onTap: onTap,
+          hasShadow: GlobalLogic.to.bgPhoto.value == "");
     });
   }
 

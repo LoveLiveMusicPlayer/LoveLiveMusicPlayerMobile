@@ -31,8 +31,8 @@ class AppUtils {
 
   /// 图片提取主色
   static Future<Color?> getImagePalette(String url) async {
-    final image =
-        await getImageFromProvider(FileImage(File(SDUtils.path + url)));
+    final path = url.contains(SDUtils.path) ? url : SDUtils.path + url;
+    final image = await getImageFromProvider(FileImage(File(path)));
     final rgb = await getColorFromImage(image);
     return Color.fromARGB(150, rgb?.elementAt(0) ?? 0, rgb?.elementAt(1) ?? 0,
         rgb?.elementAt(2) ?? 0);

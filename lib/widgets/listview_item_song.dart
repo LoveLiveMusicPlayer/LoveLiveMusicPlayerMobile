@@ -99,7 +99,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
             widget.onItemTap(widget.index, widget.checked);
           },
           checkIconColor: ColorMs.colorF940A7,
-          uncheckedIconColor: ColorMs.color999999,
+          uncheckedIconColor: ColorMs.colorD6D6D6,
         ),
       ),
     );
@@ -143,6 +143,9 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
 
   ///右侧操作按钮
   Widget _buildAction() {
+    final color = (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
+        ? ColorMs.colorDFDFDF
+        : ColorMs.colorCCCCCC;
     return Visibility(
       visible: !HomeController.to.state.isSelect.value,
       child: Row(
@@ -159,7 +162,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
                   },
                   width: 20,
                   height: 20,
-                  color: ColorMs.colorCCCCCC)),
+                  color: color)),
           InkWell(
             onTap: () {
               widget.onMoreTap(widget.music);
@@ -168,10 +171,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
               padding: EdgeInsets.only(
                   left: 12.w, right: 10.w, top: 12.h, bottom: 12.h),
               child: touchIconByAsset(
-                  path: Assets.mainIcMore,
-                  width: 10,
-                  height: 20,
-                  color: ColorMs.colorCCCCCC),
+                  path: Assets.mainIcMore, width: 10, height: 20, color: color),
             ),
           ),
           SizedBox(width: 4.r)

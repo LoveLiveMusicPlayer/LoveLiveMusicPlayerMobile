@@ -158,7 +158,7 @@ class _HomeViewState extends State<HomeView>
       footerController: GlobalLogic.mobileWeSlideFooterController,
       panelMinSize: panelMinSize.h,
       panelMaxSize: panelMaxSize,
-      overlayOpacity: 0.9,
+      overlayOpacity: 0,
       backgroundColor: photo == ""
           ? color
           : const Color(0x00000000).withOpacity(Get.isDarkMode ? 0.4 : 0.15),

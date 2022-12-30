@@ -133,6 +133,9 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
 
   ///右侧操作按钮
   Widget _buildAction() {
+    final color = (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
+        ? ColorMs.colorDFDFDF
+        : ColorMs.colorCCCCCC;
     return Visibility(
       visible: widget.onMoreTap != null,
       child: Row(
@@ -146,10 +149,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
               padding: EdgeInsets.only(
                   left: 12.w, right: 10.w, top: 12.h, bottom: 12.h),
               child: touchIconByAsset(
-                  path: Assets.mainIcMore,
-                  width: 10,
-                  height: 20,
-                  color: ColorMs.colorCCCCCC),
+                  path: Assets.mainIcMore, width: 10, height: 20, color: color),
             ),
           ),
           SizedBox(width: 4.r)

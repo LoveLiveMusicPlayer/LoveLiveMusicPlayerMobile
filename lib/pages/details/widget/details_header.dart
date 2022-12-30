@@ -37,7 +37,12 @@ class DetailsHeader extends StatelessWidget {
                       } else {
                         onBack!();
                       }
-                    }, width: 32, height: 32, iconSize: 24, radius: 6, hasShadow: hasShadow))
+                    },
+                        width: 32,
+                        height: 32,
+                        iconSize: 24,
+                        radius: 6,
+                        hasShadow: hasShadow))
               ]),
               ConstrainedBox(
                   constraints: BoxConstraints(maxWidth: Get.width - 120.w),
@@ -45,9 +50,10 @@ class DetailsHeader extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       textAlign: TextAlign.center,
-                      style: Get.isDarkMode
-                          ? TextStyleMs.white_15
-                          : TextStyleMs.black_15))
+                      style:
+                          (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
+                              ? TextStyleMs.white_15
+                              : TextStyleMs.black_15))
             ])
           ]));
     });

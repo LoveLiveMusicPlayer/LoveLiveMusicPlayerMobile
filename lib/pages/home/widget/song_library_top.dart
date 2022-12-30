@@ -92,13 +92,15 @@ class SongLibraryTop extends GetView<GlobalLogic> {
                 ],
               ),
               borderRadius: BorderRadius.circular(12.h),
-              boxShadow: hasShadow ? [
-                BoxShadow(
-                    color: GlobalLogic.to.getThemeColor(
-                        ColorMs.color05080C, ColorMs.colorD3E0EC),
-                    blurRadius: 6,
-                    offset: const Offset(5, 3)),
-              ] : []),
+              boxShadow: hasShadow
+                  ? [
+                      BoxShadow(
+                          color: GlobalLogic.to.getThemeColor(
+                              ColorMs.color05080C, ColorMs.colorD3E0EC),
+                          blurRadius: 6,
+                          offset: const Offset(5, 3)),
+                    ]
+                  : []),
           child: Icon(
             Icons.play_arrow_rounded,
             color: Colors.white,
@@ -160,7 +162,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
             return CircularCheckBox(
               checkd: HomeController.to.state.selectAll,
               checkIconColor: ColorMs.colorF940A7,
-              uncheckedIconColor: ColorMs.color999999,
+              uncheckedIconColor: ColorMs.colorD6D6D6,
               spacing: 10.h,
               iconSize: 25,
               title:

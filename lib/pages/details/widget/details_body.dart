@@ -3,12 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/pages/details/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_more_with_music.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/widgets/details_list_top.dart';
 import 'package:lovelivemusicplayer/widgets/listview_item_song.dart';
 import 'package:sticky_headers/sticky_headers.dart';
@@ -20,12 +23,13 @@ class DetailsBody extends StatefulWidget {
   final Function(Music)? onRemove;
   final bool? isAlbum;
 
-  const DetailsBody({Key? key,
-    required this.logic,
-    required this.buildCover,
-    required this.music,
-    this.isAlbum,
-    this.onRemove})
+  const DetailsBody(
+      {Key? key,
+      required this.logic,
+      required this.buildCover,
+      required this.music,
+      this.isAlbum,
+      this.onRemove})
       : super(key: key);
 
   @override
@@ -33,19 +37,35 @@ class DetailsBody extends StatefulWidget {
 }
 
 class _DetailsBodyState extends State<DetailsBody> {
+  var bgColor = Get.theme.primaryColor;
+
+  @override
+  void initState() {
+    final bgPhoto = GlobalLogic.to.bgPhoto.value;
+    if (SDUtils.checkFileExist(bgPhoto)) {
+      print(bgPhoto);
+      AppUtils.getImagePalette(bgPhoto).then((color) {
+        if (color != null) {
+          bgColor = color.withAlpha(255);
+        }
+      });
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: widget.logic.state.isSelect
             ? () async {
-          return false;
-        }
+                return false;
+              }
             : null,
         child: Expanded(
             child: ListView(
-              padding: const EdgeInsets.all(0),
-              children: getListItems(widget.logic),
-            )));
+          padding: const EdgeInsets.all(0),
+          children: getListItems(widget.logic),
+        )));
   }
 
   List<Widget> getListItems(logic) {
@@ -54,12 +74,12 @@ class _DetailsBodyState extends State<DetailsBody> {
     list.add(SizedBox(
       height: 10.h,
     ));
-    list.add(
-      StickyHeaderBuilder(
+    list.add(StickyHeaderBuilder(
         builder: (BuildContext context, double stuckAmount) {
           var hasBg = stuckAmount < 0;
           return DetailsListTop(
               hasBg: hasBg,
+              bgColor: bgColor,
               selectAll: logic.state.selectAll,
               isSelect: logic.state.isSelect,
               itemsLength: widget.music.length,
@@ -84,9 +104,7 @@ class _DetailsBodyState extends State<DetailsBody> {
         },
         content: Column(
           children: renderMusicList(logic),
-        )
-      )
-    );
+        )));
     return list;
   }
 
