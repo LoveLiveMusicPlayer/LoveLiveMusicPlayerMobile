@@ -8,6 +8,7 @@ import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_theme.dart';
+import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
@@ -120,9 +121,13 @@ class GlobalLogic extends SuperController
       },
     );
 
-    SpUtil.getString(Const.spBackgroundPhoto).then((value) {
-      if (SDUtils.checkFileExist(value)) {
-        setBgPhoto(value);
+    SpUtil.getBoolean(Const.spEnableBackgroundPhoto).then((value) {
+      if (value) {
+        SpUtil.getString(Const.spBackgroundPhoto).then((value) {
+          if (SDUtils.checkFileExist(value)) {
+            setBgPhoto(value);
+          }
+        });
       }
     });
   }

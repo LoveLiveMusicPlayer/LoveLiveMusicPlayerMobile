@@ -83,4 +83,7 @@ class TextStyleMs {
       TextStyle(color: ColorMs.colorDFDFDF, fontSize: 12.sp);
   static TextStyle colorBFBFBF_18 =
       TextStyle(color: ColorMs.colorBFBFBF, fontSize: 18.sp);
+
+
+  static TextStyle f15_500 = TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500);
 }

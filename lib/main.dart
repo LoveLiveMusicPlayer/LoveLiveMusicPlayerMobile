@@ -32,6 +32,7 @@ import 'utils/sp_util.dart';
 var isDark = false;
 var appVersion = "1.0.0";
 var hasAIPic = false;
+var enableBG = false;
 var needRemoveCover = true;
 final splashList = <String>[];
 
@@ -163,6 +164,7 @@ initServices() async {
   Network.getInstance();
   await SDUtils.init();
   PlayerBinding().dependencies();
+  enableBG = await SpUtil.getBoolean(Const.spEnableBackgroundPhoto, true);
   hasAIPic = await SpUtil.getBoolean(Const.spAIPicture, true);
   await getOssUrl();
   SpUtil.put("prevPage", "");

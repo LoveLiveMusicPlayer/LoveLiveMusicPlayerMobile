@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
@@ -114,7 +115,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(widget.music.musicName ?? "",
-                style: Get.isDarkMode
+                style: Get.isDarkMode || GlobalLogic.to.bgPhoto.value != ""
                     ? TextStyleMs.white_15_500
                     : TextStyleMs.black_15_500,
                 maxLines: 1,

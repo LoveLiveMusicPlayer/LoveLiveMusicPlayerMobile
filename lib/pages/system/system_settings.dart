@@ -141,24 +141,46 @@ class _SystemSettingsState extends State<SystemSettings> {
                       }),
                   SizedBox(height: 8.h),
                   DrawerFunctionButton(
-                    icon: Assets.drawerDrawerBackground,
-                    text: 'setting_background_photo'.tr,
+                      icon: Assets.drawerDrawerBackground,
+                      text: 'enable_background_photo'.tr,
+                      hasSwitch: true,
+                      initSwitch: enableBG,
+                      callBack: (check) async {
+                        enableBG = check;
+                        SpUtil.put(Const.spEnableBackgroundPhoto, check);
+                        if (check) {
+                          SpUtil.getString(Const.spBackgroundPhoto).then((value) {
+                            if (SDUtils.checkFileExist(value)) {
+                              GlobalLogic.to.setBgPhoto(value);
+                            }
+                          });
+                        } else {
+                          GlobalLogic.to.setBgPhoto("");
+                        }
+                      }),
+                  SizedBox(height: 8.h),
+                  DrawerFunctionButton(
+                    text: 'choose_background_photo'.tr,
                     onTap: () async {
-                      final ImagePicker picker = ImagePicker();
-                      final XFile? image =
-                          await picker.pickImage(source: ImageSource.gallery);
-                      if (image == null) {
-                        return;
-                      }
-                      final cropImage = await ImageUtil.cropImage(
-                          image: image.path, width: 256.w, height: 512.h);
-                      final picContent = await cropImage?.readAsBytes();
-                      if (picContent == null) {
-                        return;
-                      }
+                      if (enableBG) {
+                        final ImagePicker picker = ImagePicker();
+                        final XFile? image =
+                        await picker.pickImage(source: ImageSource.gallery);
+                        if (image == null) {
+                          return;
+                        }
+                        final cropImage = await ImageUtil.cropImage(
+                            image: image.path,
+                            width: ScreenUtil().screenWidth,
+                            height: ScreenUtil().screenHeight);
+                        final picContent = await cropImage?.readAsBytes();
+                        if (picContent == null) {
+                          return;
+                        }
 
-                      final fileName = "${DateTime.now()}.jpg";
-                      SDUtils.saveBGPhoto(fileName, picContent);
+                        final fileName = "${DateTime.now()}.jpg";
+                        SDUtils.saveBGPhoto(fileName, picContent);
+                      }
                     },
                   ),
                 ],

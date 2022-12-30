@@ -17,7 +17,8 @@ const Map<String, String> de_DE = {
   'theme_with_system': 'Mit System',
   'colorful_mode': 'Bunter Modus',
   'splash_photo': 'Splash-Foto',
-  'setting_background_photo': 'Hintergrundfarbe festlegen',
+  'enable_background_photo': 'Hintergrundfoto aktivieren',
+  'choose_background_photo': 'Hintergrundbild auswählen',
   'fetch_songs': 'Daten aktualisieren',
   'clear_database': 'Daten löschen',
   'will_shutdown':

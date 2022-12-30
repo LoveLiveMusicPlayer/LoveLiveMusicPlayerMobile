@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 class DrawerFunctionButton extends StatefulWidget {
   const DrawerFunctionButton(
       {Key? key,
-      required this.icon,
+      this.icon,
       required this.text,
       this.onTap,
       this.hasSwitch = false,
@@ -15,7 +15,7 @@ class DrawerFunctionButton extends StatefulWidget {
       this.callBack})
       : super(key: key);
 
-  final String icon;
+  final String? icon;
   final String text;
   final GestureTapCallback? onTap;
   final bool hasSwitch;
@@ -43,7 +43,7 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
             Expanded(
                 child: Row(
               children: [
-                SvgPicture.asset(widget.icon, height: 20.h, width: 20.h),
+                widget.icon != null ? SvgPicture.asset(widget.icon!, height: 20.h, width: 20.h) : SizedBox(height: 20.h, width: 20.h),
                 SizedBox(width: 8.r),
                 Expanded(
                     child: Text(widget.text,

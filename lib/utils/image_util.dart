@@ -117,6 +117,7 @@ class ImageUtil {
       sourcePath: imagePth,
       maxWidth: AppUtils.num2int(width),
       maxHeight: AppUtils.num2int(height),
+      compressQuality: 100,
       aspectRatio: aspectRatio ??
           CropAspectRatio(
               ratioX: AppUtils.num2double(width),

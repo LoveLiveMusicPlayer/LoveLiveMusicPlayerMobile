@@ -30,6 +30,7 @@ class Const {
   static const String spLoopMode = "SP_LOOP_MODE";
   static const String spDataVersion = "SP_DATA_VERSION";
   static const String spBackgroundPhoto = "SP_BACKGROUND_PHOTO";
+  static const String spEnableBackgroundPhoto = "SP_ENABLE_BACKGROUND_PHOTO";
 
   // 默认的资源oss，无法在线获取时用于离线加载网络图片
   static String ossUrl =

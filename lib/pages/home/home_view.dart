@@ -108,15 +108,16 @@ class _HomeViewState extends State<HomeView>
               final color = Theme.of(context).primaryColor;
               DecorationImage? di;
               if (photo != "") {
-                di = DecorationImage(image: FileImage(File(photo)), fit: BoxFit.cover);
+                di = DecorationImage(
+                    image: FileImage(File(photo)), fit: BoxFit.cover);
               }
               return Container(
                 decoration: BoxDecoration(image: di),
                 child: ColorfulSafeArea(
                   color: photo == ""
                       ? color
-                      : Color(Get.isDarkMode ? 0xff000000 : 0xffffffff)
-                          .withOpacity(Get.isDarkMode ? 0.4 : 0.3),
+                      : const Color(0x00000000)
+                          .withOpacity(Get.isDarkMode ? 0.4 : 0.15),
                   top: false,
                   bottom: GlobalLogic.to.needHomeSafeArea.value,
                   child: _weSlider(photo),
