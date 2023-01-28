@@ -94,7 +94,7 @@ dependencies:
 
 dependency_overrides:
   ffi: ^2.0.1
-  package_info_plus: ^3.0.1
+  package_info_plus: ^3.0.2
 
 dev_dependencies:
   flutter_test:
