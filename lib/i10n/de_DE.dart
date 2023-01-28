@@ -124,9 +124,13 @@ Diese Software enthält keine bösartigen Codes, die dazu bestimmt sind, Benutze
 Es enthält keine Codes zum Verfolgen und Überwachen des Verhaltens von Benutzerterminals, überwacht kein Online- und Offline-Verhalten von Benutzern, sammelt keine persönlichen Informationen wie Benutzer, die andere Software und Dokumente verwenden, und gibt keine Benutzerdaten weiter.
 Die gesammelten Daten werden verwendet, um die Software besser zu verbessern, indem Fehlermeldungen bei Abstürzen analysiert werden.
 Verwenden Sie die folgenden statistischen Entwicklungstools:
-Verwenden Sie den SDK-Namen: Umeng SDK
-Art der Dienstleistung: Datenerhebung und statistische Analyse
-Link zur Datenschutzrichtlinie: https://www.umeng.com/page/policy
+  Ⅰ.Verwenden Sie den SDK-Namen: U-App SDK
+  Sammlung personenbezogener informationen: ausrüstung informationen (IMEI/Mac/android-plattform ausweis/IDFA/OPENUDID/GUID/sim-karte IMSI/geografischer)
+  Art der Dienstleistung: Datenerhebung und statistische Analyse
+  Link zur Datenschutzrichtlinie: https://www.umeng.com/page/policy
+  Ⅱ.SDK-Namen verwenden: MobTech ShareSDK
+  Art der Dienstleistung: Sharing realisieren und pushen
+  Link zur Datenschutzerklärung: https://www.mob.com/about/policy
 
 4.Hinweis für Benutzer
 Diese Software wird spontan von LoveLive!-Fans verwendet und enthält keine urheberrechtlich geschützten Songs. Copyright-Songs werden vom Benutzer extrahiert und von der CD importiert. Die Importverzeichnisstruktur ist in der Github-Projektdokumentation dargestellt.

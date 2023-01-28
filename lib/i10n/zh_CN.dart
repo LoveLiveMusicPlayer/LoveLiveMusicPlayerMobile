@@ -117,9 +117,13 @@ const Map<String, String> zh_CN = {
 不含有任何跟踪、监视用户终端行为的功能代码，不会监控用户网上、网下的行为，不会收集用户使用其他软件、文档等个人信息，不会泄露用户隐私。
 收集到的数据将用户分析崩溃中的错误信息用于更好的完善本软件。
 下面是使用的统计数据开发工具：
-使用SDK名称：友盟SDK
-服务类型：数据采集与统计分析
-隐私权政策链接：https://www.umeng.com/page/policy
+  Ⅰ.使用SDK名称：友盟SDK
+  收集个人信息类型：设备信息（IMEI/Mac/android ID/IDFA/OPENUDID/GUID/SIM卡IMSI/地理位置信息）
+  服务类型：数据采集与统计分析
+  友盟隐私权政策链接：https://www.umeng.com/page/policy
+  Ⅱ.使用SDK名称：MobTech的ShareSDK
+  服务类型：实现分享和推送
+  MobTech隐私权政策链接：https://www.mob.com/about/policy
 
 4.用户须知
 本软件为LoveLive!圈内用户自发使用，不包含任何版权歌曲在内。版权歌曲均由用户本人自行从CD提取导入，导入目录结构详见Github项目文档。

@@ -119,9 +119,13 @@ The software does not contain any malicious code aimed at destroying user termin
 It does not contain any function code for tracking and monitoring user terminal behaviors, monitoring users' online and offline behaviors, collecting users' personal information such as other software and documents, and disclosing users' privacy.
 The collected data can be used to better improve the software by analyzing the error information in the crash.
 Here are the statistical development tools used:
-Use the SDK name: U-App SDK
-Service type: Data collection and statistical analysis
-Privacy policy links: https://www.umeng.com/page/policy
+  Ⅰ. Use the SDK name: U-App SDK
+  Personal information collection types: equipment information (IMEI/Mac/android ID/IDFA OPENUDID/GUID/SIM card IMSI/location)
+  Service type: Data collection and statistical analysis
+  Their Allies privacy policy links: https://www.umeng.com/page/policy
+  Ⅱ. Use SDK name: ShareSDK of MobTech
+  Service type: Share and push
+  MobTech privacy policy links: https://www.mob.com/about/policy
 
 4. User instructions
 This software is LoveLive! Users in the circle spontaneously use, not including any copyrighted songs. Copyright songs are extracted and imported from CDS by users themselves. See the Github project documentation for details about the import directory structure.
