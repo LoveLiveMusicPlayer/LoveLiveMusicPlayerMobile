@@ -42,9 +42,14 @@ class DetailsListTop extends StatelessWidget {
 
   ///播放歌曲条目
   Widget _buildPlaySong() {
+    final color = hasBg ? (bgColor ?? Colors.transparent) : Colors.transparent;
     return Container(
       height: 45.h,
-      color: hasBg ? bgColor : Colors.transparent,
+      decoration: BoxDecoration(
+        color: color,
+        border: Border.all(
+            color: color, strokeAlign: BorderSide.strokeAlignOutside),
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
