@@ -221,7 +221,9 @@ class _SystemSettingsState extends State<SystemSettings> {
                           await DBLogic.to.clearAllMusic();
                         }, deleteUserData: () async {
                           await DBLogic.to.clearAllUserData();
-                          AppUtils.cacheManager.emptyCache();
+                          await AppUtils.cacheManager.emptyCache();
+                          SDUtils.clearBGPhotos();
+                          SmartDialog.compatible.dismiss();
                           SpUtil.put(Const.spAllowPermission, true)
                               .then((value) async {
                             SmartDialog.compatible.dismiss();

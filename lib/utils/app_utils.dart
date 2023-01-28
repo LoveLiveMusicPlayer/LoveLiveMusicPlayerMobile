@@ -241,4 +241,29 @@ class AppUtils {
       return 0.0;
     }
   }
+
+  /// version1 新版本号
+  /// version2 老版本号
+  ///
+  static bool compareVersion(String version1, String version2) {
+    int i = 0, j = 0;
+    while (i < version1.length || j < version2.length) {
+      int num1 = 0;
+      while (i < version1.length && version1[i] != '.') {
+        num1 = num1 * 10 + int.parse(version1[i]);
+        i++;
+      }
+      int num2 = 0;
+      while (j < version2.length && version2[j] != '.') {
+        num2 = num2 * 10 + int.parse(version2[j]);
+        j++;
+      }
+      if (num1 != num2) {
+        return num1 < num2;
+      }
+      i++;
+      j++;
+    }
+    return false;
+  }
 }

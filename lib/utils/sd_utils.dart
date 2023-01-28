@@ -78,13 +78,29 @@ class SDUtils {
     final filePath = bgPhotoPath + fileName;
     try {
       var file = File(filePath);
-      bool exists = file.existsSync();
-      if (exists) {
+      if (file.existsSync()) {
         file.deleteSync();
       }
       file.writeAsBytesSync(content);
       SpUtil.put(Const.spBackgroundPhoto, filePath);
       GlobalLogic.to.setBgPhoto(filePath);
+    } catch (e) {
+      Log4f.e(msg: e.toString(), writeFile: true);
+    }
+  }
+
+  static clearBGPhotos() {
+    try {
+      final dir = Directory(bgPhotoPath);
+      if (dir.existsSync()) {
+        SpUtil.getString(Const.spBackgroundPhoto).then((usingBGPhotoPath) {
+          dir.listSync(recursive: false).forEach((file) {
+            if (file.path != usingBGPhotoPath) {
+              file.delete(recursive: true);
+            }
+          });
+        });
+      }
     } catch (e) {
       Log4f.e(msg: e.toString(), writeFile: true);
     }

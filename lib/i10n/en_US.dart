@@ -11,7 +11,6 @@ const Map<String, String> en_US = {
   'update_yes': 'Yes',
   'update_no': 'No',
   'no_need_update': 'The current version is the latest',
-  'need_jump_to_app_store': 'Check it out in the app store',
   'music_trans': 'Transfer songs',
   'data_sync': 'Data sync',
   'theme_with_system': 'Theme with os',

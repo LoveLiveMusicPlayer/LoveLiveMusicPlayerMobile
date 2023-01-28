@@ -164,7 +164,7 @@ initServices() async {
   Network.getInstance();
   await SDUtils.init();
   PlayerBinding().dependencies();
-  enableBG = await SpUtil.getBoolean(Const.spEnableBackgroundPhoto, true);
+  enableBG = await SpUtil.getBoolean(Const.spEnableBackgroundPhoto, false);
   hasAIPic = await SpUtil.getBoolean(Const.spAIPicture, true);
   await getOssUrl();
   SpUtil.put("prevPage", "");

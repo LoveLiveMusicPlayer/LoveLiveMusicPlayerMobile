@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -12,10 +13,15 @@ import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
+import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
+import 'package:lovelivemusicplayer/widgets/one_button_dialog.dart';
+import 'package:open_appstore/open_appstore.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:updater/updater.dart';
 import 'package:we_slide/we_slide.dart';
 
@@ -323,7 +329,31 @@ class GlobalLogic extends SuperController
         }
       });
     } else if (manual) {
-      SmartDialog.compatible.showToast('need_jump_to_app_store'.tr);
+      Network.get(Const.appstoreUrl, success: (resp) async {
+        Map<String, dynamic> map = jsonDecode(resp);
+        final tempList = map["results"] as List;
+        for (var bundle in tempList) {
+          final packageInfo = await PackageInfo.fromPlatform();
+          if (bundle["bundleId"] == packageInfo.packageName) {
+            bool needUpdate =
+                AppUtils.compareVersion(bundle["version"], packageInfo.version);
+            if (needUpdate) {
+              OpenAppstore.launch(
+                  androidAppId: packageInfo.packageName,
+                  iOSAppId: "1641625393");
+            } else {
+              SmartDialog.compatible.showToast('no_need_update'.tr);
+            }
+            break;
+          }
+        }
+      }, error: (msg) {
+        SmartDialog.compatible.show(
+            widget: OneButtonDialog(
+          title: 'please_check_network'.tr,
+          msg: msg,
+        ));
+      });
     }
   }
 

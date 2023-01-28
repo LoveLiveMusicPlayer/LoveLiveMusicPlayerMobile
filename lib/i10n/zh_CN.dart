@@ -11,7 +11,6 @@ const Map<String, String> zh_CN = {
   'update_yes': '升级',
   'update_no': '不升级',
   'no_need_update': '当前已是最新版本',
-  'need_jump_to_app_store': '请前往应用商店查看',
   'music_trans': '歌曲快传',
   'data_sync': '数据同步',
   'theme_with_system': '跟随系统',

@@ -88,9 +88,13 @@ dependencies:
   url_launcher: ^6.1.6 # url跳转
   umeng_common_sdk: 1.2.4 # 友盟sdk
   flutter_phoenix: ^1.1.0 # 软重启
-  image_picker: ^0.8.6
-  image_cropper: ^3.0.1
-  colorful_safe_area: ^0.3.0
+  image_picker: ^0.8.6 # 图片选择
+  image_cropper: ^3.0.1 # 图片裁切
+  colorful_safe_area: ^0.3.0 # 定制safe_area
+  open_appstore: # 跳转到应用商店
+    git:
+      url: https://github.com/zhushenwudi/flutter_open_appstore
+      ref: master
 
 dependency_overrides:
   ffi: ^2.0.1
