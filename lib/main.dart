@@ -13,9 +13,11 @@ import 'package:get_storage/get_storage.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
+import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/eventbus/start_event.dart';
 import 'package:lovelivemusicplayer/global/global_binding.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -102,13 +104,18 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   void didChangeLocales(List<Locale>? locales) {
-    super.didChangeLocales(locales);
+    if (locales != null) {
+      Get.updateLocale(locales.first);
+    }
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    // print(state);
+    /// 进入后台 && 展开了player组件时 关闭滚动歌词
+    if (state == AppLifecycleState.inactive && GlobalLogic.mobileWeSlideController.isOpened) {
+      eventBus.fire(PlayerClosableEvent(true));
+    }
   }
 
   @override

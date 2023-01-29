@@ -54,8 +54,10 @@ class _PlayerState extends State<Player> {
     loginSubscription = eventBus.on<PlayerClosableEvent>().listen((event) {
       /// 点击关闭按钮后确定关闭掉全量歌词界面，防止cpu消耗过多
       if (!isCover && event.isOpen) {
+        print("aaa");
         setStatus(cover: true, open: event.isOpen);
       } else {
+        print("bbb");
         setStatus(open: event.isOpen);
       }
     });
