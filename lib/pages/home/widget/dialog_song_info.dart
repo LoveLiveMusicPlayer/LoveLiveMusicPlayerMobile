@@ -80,7 +80,7 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
         onLongPress: () {
           if (canPaste && message != null && message.isNotEmpty) {
             Clipboard.setData(ClipboardData(text: message))
-                .then((value) => SmartDialog.compatible.showToast("复制成功"));
+                .then((value) => SmartDialog.compatible.showToast("copy_success".tr));
           }
         },
         child: Padding(

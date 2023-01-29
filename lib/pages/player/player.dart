@@ -71,7 +71,7 @@ class _PlayerState extends State<Player> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: Get.theme.primaryColor,
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Obx(() {

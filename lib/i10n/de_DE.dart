@@ -86,6 +86,8 @@ const Map<String, String> de_DE = {
   'input_menu_name': 'Bitte geben Sie einen Menu-Namen ein',
   'privacy_policy': 'Datenschutz-Bestimmungen',
   'permission_show_full': 'Vollversion anzeigen',
+  'copy_success': 'Erfolg kopieren',
+  'need_enable_bg': 'Bitte aktivieren Sie zuerst Hintergrundbilder',
   'permission_main_message':
       'Willkommen bei LoveLiveMusicPlayer!\n\nWir werden die "Nutzungsvereinbarung und Datenschutzrichtlinie“ verwenden, um Ihnen zu helfen, die von dieser Software für Sie bereitgestellten Dienste und die Art und Weise der Erfassung und Verarbeitung Ihrer personenbezogenen Daten zu verstehen.\nDurch Klicken auf die Schaltfläche "Zustimmen und fortfahren“ haben Sie zugestimmt.',
   'permission_external_link':

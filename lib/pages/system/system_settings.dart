@@ -194,6 +194,8 @@ class _SystemSettingsState extends State<SystemSettings> {
 
                           final fileName = "${DateTime.now()}.jpg";
                           SDUtils.saveBGPhoto(fileName, picContent);
+                        } else {
+                          SmartDialog.compatible.showToast('need_enable_bg'.tr);
                         }
                       },
                     ),

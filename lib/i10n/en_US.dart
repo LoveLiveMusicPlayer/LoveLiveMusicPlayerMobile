@@ -84,6 +84,8 @@ const Map<String, String> en_US = {
   'input_menu_name': 'Please input menu name',
   'privacy_policy': 'Privacy policy',
   'permission_show_full': 'View full version',
+  'copy_success': 'Copy success',
+  'need_enable_bg': 'Please enable background images first',
   'permission_main_message':
       'Welcome to LoveLiveMusicPlayer!\n\nWe will use the User Agreement and Privacy Policy to help you understand the services provided by the software for you and the way you collect and process your personal data.\nClick the "Agree and Continue" button to indicate that you have agreed.',
   'permission_external_link': 'User Agreement and Privacy Policy',
