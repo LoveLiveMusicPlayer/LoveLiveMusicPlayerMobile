@@ -20,8 +20,6 @@ import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
-
-import 'generated/assets.dart';
 import 'global/const.dart';
 import 'global/global_theme.dart';
 import 'i10n/translation.dart';
@@ -101,7 +99,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   StreamSubscription? subscription;
-  bool hidden = false;
 
   @override
   void didChangeLocales(List<Locale>? locales) {
@@ -111,8 +108,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    print(state);
-    setState(() => hidden = state != AppLifecycleState.resumed);
+    // print(state);
   }
 
   @override
@@ -168,17 +164,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               return MediaQuery(
                   // 设置文字大小不随系统设置改变
                   data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                  child: Stack(
-                    children: [
-                      widget!,
-                      if (hidden)
-                        const Image(
-                          image: AssetImage(Assets.launchBackground),
-                          height: double.infinity,
-                          fit: BoxFit.fitHeight,
-                        )
-                    ],
-                  ));
+                  child: widget!);
             }));
       },
     );

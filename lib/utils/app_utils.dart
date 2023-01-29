@@ -10,6 +10,7 @@ import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/ArtistModel.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
+import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 import 'package:umeng_common_sdk/umeng_common_sdk.dart';
 
 class AppUtils {
@@ -265,5 +266,31 @@ class AppUtils {
       j++;
     }
     return false;
+  }
+
+  static void shareQQ() {
+    SSDKMap params = SSDKMap()
+      ..setQQ(
+          "text",
+          "title",
+          "http://m.93lj.com/sharelink?mobid=ziqMNf",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "http://wx4.sinaimg.cn/large/006tkBCzly1fy8hfqdoy6j30dw0dw759.jpg",
+          "",
+          "",
+          "http://m.93lj.com/sharelink?mobid=ziqMNf",
+          "",
+          "",
+          SSDKContentTypes.webpage,
+          ShareSDKPlatforms.qq);
+    SharesdkPlugin.share(
+        ShareSDKPlatforms.qq,
+        params,
+        (SSDKResponseState state, dynamic userdata, dynamic contentEntity,
+            SSDKError error) {});
   }
 }

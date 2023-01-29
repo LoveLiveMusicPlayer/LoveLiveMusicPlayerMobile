@@ -17,10 +17,6 @@ class MainActivity : AudioServiceActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_SECURE,
-            WindowManager.LayoutParams.FLAG_SECURE,
-        )
         UMConfigure.preInit(this, "634bd9c688ccdf4b7e4ac67b", "Umeng")
         UMConfigure.setLogEnabled(true)
         UMConfigure.setEncryptEnabled(true)
