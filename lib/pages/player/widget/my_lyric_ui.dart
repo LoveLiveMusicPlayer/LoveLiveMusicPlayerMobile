@@ -55,7 +55,7 @@ class MyLrcUI extends LyricUI {
   @override
   TextStyle getOtherExtTextStyle() => TextStyle(
         color: GlobalLogic.to.hasSkin.value
-            ? ColorMs.colorDFDFDF
+            ? ColorMs.colorDFDFDF.withOpacity(0.4)
             : ColorMs.color999999,
         fontSize: defaultSize.sp,
       );
@@ -63,7 +63,7 @@ class MyLrcUI extends LyricUI {
   @override
   TextStyle getOtherMainTextStyle() => TextStyle(
       color: GlobalLogic.to.hasSkin.value
-          ? ColorMs.colorDFDFDF
+          ? ColorMs.colorDFDFDF.withOpacity(0.4)
           : ColorMs.color999999,
       fontSize: otherMainSize.sp);
 
