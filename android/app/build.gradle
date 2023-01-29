@@ -45,6 +45,7 @@ if (isReleaseBuildType()) {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+apply plugin: 'com.mob.sdk'
 
 android {
     compileSdkVersion 33
@@ -112,6 +113,35 @@ android {
         disable 'InvalidPackage'
         checkReleaseBuilds false
         abortOnError false
+    }
+}
+
+MobSDK {
+    appKey "375f94ab8316c"
+    appSecret "9cac7a0532d211eb04fcf6b25b197859"
+
+    ShareSDK {
+        devInfo {
+            QQ {
+                id 1
+                sortId 1
+                appId "102039234"
+                appKey "Yw6JL8gz82h7KI1V"
+                shareByAppClient true
+                bypassApproval false
+                enable true
+            }
+
+            QZone {
+                id 2
+                sortId 2
+                appId "102039234"
+                appKey "Yw6JL8gz82h7KI1V"
+                shareByAppClient true
+                bypassApproval false
+                enable true
+            }
+        }
     }
 }
 

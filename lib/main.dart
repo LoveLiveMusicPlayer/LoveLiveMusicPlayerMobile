@@ -19,7 +19,9 @@ import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 
+import 'generated/assets.dart';
 import 'global/const.dart';
 import 'global/global_theme.dart';
 import 'i10n/translation.dart';
@@ -97,23 +99,42 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   StreamSubscription? subscription;
+  bool hidden = false;
+
+  @override
+  void didChangeLocales(List<Locale>? locales) {
+    super.didChangeLocales(locales);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    print(state);
+    setState(() => hidden = state != AppLifecycleState.resumed);
+  }
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     subscription = eventBus.on<StartEvent>().listen((event) {
       needRemoveCover = false;
       // 初始化结束后，将启动屏关闭
       FlutterNativeSplash.remove();
     });
     PaintingBinding.instance.imageCache.maximumSizeBytes = 1024 * 1024 * 100;
+
+    ShareSDKRegister register = ShareSDKRegister();
+    register.setupQQ("375f94ab8316c", "9cac7a0532d211eb04fcf6b25b197859");
+    SharesdkPlugin.regist(register);
   }
 
   @override
   void dispose() {
     subscription?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -147,7 +168,17 @@ class _MyAppState extends State<MyApp> {
               return MediaQuery(
                   // 设置文字大小不随系统设置改变
                   data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                  child: widget!);
+                  child: Stack(
+                    children: [
+                      widget!,
+                      if (hidden)
+                        const Image(
+                          image: AssetImage(Assets.launchBackground),
+                          height: double.infinity,
+                          fit: BoxFit.fitHeight,
+                        )
+                    ],
+                  ));
             }));
       },
     );

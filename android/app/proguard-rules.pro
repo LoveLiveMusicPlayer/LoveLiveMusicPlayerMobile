@@ -26,3 +26,12 @@
 -keep public class com.zhushenwudi.lovelivemusicplayer.R$*{
 public static final int *;
 }
+
+# MobTech ShareSDK
+-keep class cn.sharesdk.**{*;}
+-keep class com.sina.**{*;}
+-keep class com.mob.**{*;}
+-keep class com.bytedance.**{*;}
+-dontwarn cn.sharesdk.**
+-dontwarn com.sina.**
+-dontwarn com.mob.**
