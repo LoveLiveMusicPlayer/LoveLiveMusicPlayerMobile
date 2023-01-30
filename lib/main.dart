@@ -161,15 +161,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   // 程序打开时介入
   void handleIncomingLinks() {
-    if (!kIsWeb) {
-      uriSub = uriLinkStream.listen((Uri? uri) {
-        if (uri != null) {
-          print("获取到的uri2: $uri");
-        }
-      }, onError: (Object err) {
-        Log4f.e(msg: err.toString());
-      });
-    }
+    uriSub = uriLinkStream.listen((Uri? uri) {
+      if (uri != null) {
+        print("获取到的uri2: $uri");
+      }
+    }, onError: (Object err) {
+      Log4f.e(msg: err.toString());
+    });
   }
 
   @override
