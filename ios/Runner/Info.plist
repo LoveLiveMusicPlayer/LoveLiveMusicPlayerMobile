@@ -2,24 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>mqq</string>
-		<string>mqqapi</string>
-		<string>timapi</string>
-		<string>mqqopensdkminiapp</string>
-		<string>mqqopensdknopasteboard</string>
-		<string>mqqopensdkapiV2</string>
-        <string>mqqopensdkapiV3</string>
-        <string>mqqopensdkapiV4</string>
-        <string>mqzoneopensdk</string>
-        <string>mqzoneopensdkapi</string>
-        <string>mqzoneopensdkapi19</string>
-        <string>mqzoneopensdkapiV2</string>
-        <string>mqqapi</string>
-        <string>mqqwpa</string>
-        <string>mqzone</string>
-	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -62,6 +44,16 @@
 				<string>tencent102039234</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>llmp</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>llmp</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
@@ -71,6 +63,24 @@
 	<false/>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>mqq</string>
+		<string>mqqapi</string>
+		<string>timapi</string>
+		<string>mqqopensdkminiapp</string>
+		<string>mqqopensdknopasteboard</string>
+		<string>mqqopensdkapiV2</string>
+		<string>mqqopensdkapiV3</string>
+		<string>mqqopensdkapiV4</string>
+		<string>mqzoneopensdk</string>
+		<string>mqzoneopensdkapi</string>
+		<string>mqzoneopensdkapi19</string>
+		<string>mqzoneopensdkapiV2</string>
+		<string>mqqapi</string>
+		<string>mqqwpa</string>
+		<string>mqzone</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
@@ -78,7 +88,7 @@
 	<key>MOBAppKey</key>
 	<string>375f94ab8316c</string>
 	<key>MOBAppSecret</key>
-    <string>9cac7a0532d211eb04fcf6b25b197859</string>
+	<string>9cac7a0532d211eb04fcf6b25b197859</string>
 	<key>NSCameraUsageDescription</key>
 	<string>需要获取摄像头权限扫描二维码</string>
 	<key>NSPhotoLibraryUsageDescription</key>

@@ -6,8 +6,11 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/ArtistModel.dart';
+import 'package:lovelivemusicplayer/models/Menu.dart';
+import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
@@ -268,29 +271,58 @@ class AppUtils {
     return false;
   }
 
-  static void shareQQ() {
-    SSDKMap params = SSDKMap()
+  static Future<void> shareQQ({Music? music, Menu? menu}) async {
+    if (music == null && menu == null) {
+      return;
+    }
+    if (music != null && menu != null) {
+      return;
+    }
+    late String text;
+    late String title;
+    late String params;
+    String? path;
+    if (music != null) {
+      title = "Ta向你分享了一首歌曲";
+      text = music.musicName!;
+      params = Uri.encodeFull(
+          "musicId=${music.musicId}&musicName=${music.musicName}");
+      path = SDUtils.path + music.baseUrl! + music.coverPath!;
+    } else if (menu != null) {
+      title = "Ta向你分享了一个歌单";
+      text = menu.name;
+      params = Uri.encodeFull(
+          "menuName=${menu.name}&musics=${menu.music.join(',')}");
+      final firstMusic = await DBLogic.to.findMusicById(menu.music.first);
+      if (firstMusic != null) {
+        path = SDUtils.path + firstMusic.baseUrl! + firstMusic.coverPath!;
+      }
+    }
+    if (path == null || path.isEmpty || !SDUtils.checkFileExist(path)) {
+      path = Const.shareDefaultLogo;
+    }
+    print(params);
+    SSDKMap sdkMap = SSDKMap()
       ..setQQ(
-          "text",
-          "title",
-          "http://m.93lj.com/sharelink?mobid=ziqMNf",
+          text,
+          title,
+          "http://shareqq.zhushenwudi.top?$params",
           "",
           "",
           "",
           "",
+          path,
           "",
-          "http://wx4.sinaimg.cn/large/006tkBCzly1fy8hfqdoy6j30dw0dw759.jpg",
           "",
           "",
-          "http://m.93lj.com/sharelink?mobid=ziqMNf",
+          "",
           "",
           "",
           SSDKContentTypes.webpage,
           ShareSDKPlatforms.qq);
-    SharesdkPlugin.share(
-        ShareSDKPlatforms.qq,
-        params,
-        (SSDKResponseState state, dynamic userdata, dynamic contentEntity,
-            SSDKError error) {});
+    SharesdkPlugin.share(ShareSDKPlatforms.qq, sdkMap, (SSDKResponseState state,
+        dynamic userdata, dynamic contentEntity, SSDKError error) {
+      print(error.rawData);
+    });
   }
 }

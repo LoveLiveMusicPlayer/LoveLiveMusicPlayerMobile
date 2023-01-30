@@ -22,6 +22,8 @@ import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
+import 'package:uni_links/uni_links.dart';
+
 import 'global/const.dart';
 import 'global/global_theme.dart';
 import 'i10n/translation.dart';
@@ -101,6 +103,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   StreamSubscription? subscription;
+  bool isInitialUriIsHandled = false;
+  StreamSubscription? uriSub;
 
   @override
   void didChangeLocales(List<Locale>? locales) {
@@ -112,8 +116,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
+
     /// 进入后台 && 展开了player组件时 关闭滚动歌词
-    if (state == AppLifecycleState.inactive && GlobalLogic.mobileWeSlideController.isOpened) {
+    if (state == AppLifecycleState.inactive &&
+        GlobalLogic.mobileWeSlideController.isOpened) {
       eventBus.fire(PlayerClosableEvent(true));
     }
   }
@@ -127,6 +133,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       // 初始化结束后，将启动屏关闭
       FlutterNativeSplash.remove();
     });
+
+    handleInitialUri();
+    handleIncomingLinks();
+
     PaintingBinding.instance.imageCache.maximumSizeBytes = 1024 * 1024 * 100;
 
     ShareSDKRegister register = ShareSDKRegister();
@@ -134,9 +144,38 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     SharesdkPlugin.regist(register);
   }
 
+  // 第一次打开
+  Future<void> handleInitialUri() async {
+    if (!isInitialUriIsHandled) {
+      isInitialUriIsHandled = true;
+      try {
+        final uri = await getInitialUri();
+        if (uri != null) {
+          print('获取到的uri: $uri');
+        }
+      } catch (err) {
+        Log4f.e(msg: err.toString());
+      }
+    }
+  }
+
+  // 程序打开时介入
+  void handleIncomingLinks() {
+    if (!kIsWeb) {
+      uriSub = uriLinkStream.listen((Uri? uri) {
+        if (uri != null) {
+          print("获取到的uri2: $uri");
+        }
+      }, onError: (Object err) {
+        Log4f.e(msg: err.toString());
+      });
+    }
+  }
+
   @override
   void dispose() {
     subscription?.cancel();
+    uriSub?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }

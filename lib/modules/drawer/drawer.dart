@@ -10,6 +10,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/CloudData.dart';
 import 'package:lovelivemusicplayer/models/CloudUpdate.dart';
@@ -17,6 +18,7 @@ import 'package:lovelivemusicplayer/models/FtpMusic.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/routes.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
@@ -236,6 +238,16 @@ class _DrawerPageState extends State<DrawerPage> {
               onTap: () {
                 Get.back();
                 Get.toNamed(Routes.routeSystemSettings, id: 1);
+              },
+            ),
+            SizedBox(height: 8.h),
+            DrawerFunctionButton(
+              icon: Assets.drawerDrawerSetting,
+              text: "分享",
+              colorWithBG: false,
+              onTap: () {
+                Get.back();
+                AppUtils.shareQQ(music: PlayerLogic.to.playingMusic.value);
               },
             )
           ],

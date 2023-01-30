@@ -43,6 +43,9 @@ class Const {
   static const String ownOssUrl =
       "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/data/";
 
+  static const String shareDefaultLogo =
+      "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/ic_launcher.png";
+
   // 动态获取资源oss的url和开屏图配置
   static const String splashConfigUrl = "${ownOssUrl}splash_config.json";
 
