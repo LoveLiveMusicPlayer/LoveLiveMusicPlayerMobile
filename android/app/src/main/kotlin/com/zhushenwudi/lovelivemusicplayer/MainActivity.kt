@@ -1,7 +1,6 @@
 package com.zhushenwudi.lovelivemusicplayer
 
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.annotation.NonNull
 import com.ryanheise.audioservice.AudioServiceActivity
 import com.umeng.commonsdk.UMConfigure
