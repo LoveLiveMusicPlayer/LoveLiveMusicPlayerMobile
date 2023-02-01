@@ -54,11 +54,11 @@ class Const {
   static const env = kReleaseMode ? "prod" : "pre";
 
   // 数据更新桥文件
-  static String dataUrl = "$ownOssUrl$env/data.json";
+  static const String dataUrl = "$ownOssUrl$env/data.json";
 
   // 歌手文件
-  static String artistModelUrl = "$ownOssUrl$env/artist.json";
+  static const String artistModelUrl = "$ownOssUrl$env/artist.json";
 
   // 版本更新文件
-  static String updateUrl = "$ownOssUrl$env/version.json";
+  static const String updateUrl = "$ownOssUrl$env/version.json";
 }
