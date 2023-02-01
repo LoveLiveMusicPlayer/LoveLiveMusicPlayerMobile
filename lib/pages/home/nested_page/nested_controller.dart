@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
@@ -47,10 +49,12 @@ class NestedController extends GetxController {
   goBack({bool fromBtnBack = false}) {
     routeList.removeLast();
     currentIndex = routeList.last;
-    reduceNav();
     if (fromBtnBack) {
       Get.back(id: 1);
     }
+    Timer(const Duration(milliseconds: 500), () {
+      reduceNav();
+    });
   }
 
   Route? onGenerateRoute(RouteSettings settings) {

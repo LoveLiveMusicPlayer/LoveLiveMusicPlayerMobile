@@ -37,7 +37,6 @@ class _SystemSettingsState extends State<SystemSettings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.transparent,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -298,18 +297,20 @@ class _SystemSettingsState extends State<SystemSettings> {
   }
 
   Widget renderLycoris() {
-    return Container(
-      height: 200.h,
-      width: double.infinity,
-      color: Colors.green,
-      child: WebViewPlus(
-          javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (controller) {
-            bool isBonus = Const.bonus == PlayerLogic.to.playingMusic.value.musicId;
-            print(isBonus);
-            controller.loadUrl('assets/lycoris/index.html?isBonus=$isBonus');
-          },
-          backgroundColor: Colors.transparent
+    return Padding(
+      padding: EdgeInsets.only(bottom: 25.h),
+      child: SizedBox(
+        height: 200.h,
+        width: double.infinity,
+        child: WebViewPlus(
+            javascriptMode: JavascriptMode.unrestricted,
+            onWebViewCreated: (controller) {
+              bool isBonus =
+                  Const.bonus == PlayerLogic.to.playingMusic.value.musicId;
+              print(isBonus);
+              controller.loadUrl('assets/lycoris/index.html?isBonus=$isBonus');
+            },
+            backgroundColor: Colors.transparent),
       ),
     );
   }
