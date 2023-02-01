@@ -18,6 +18,8 @@ class Const {
   static const String aesKey = "0123456789012345";
   static const String iV = "0123456789012345";
 
+  static const String bonus = "6268d7a4e7e29bcc5c9c8996";
+
   // 暂无歌曲时使用炫彩模式要显示的颜色值
   static const int noMusicColorfulSkin = 0x4DFFAE00;
 

@@ -5,38 +5,59 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/sakana-widget@2.4.1/lib/sakana.min.css"
-    />
+    <link rel="stylesheet" href="sakana.css"/>
+    <link rel="stylesheet" href="index.css"/>
     <script>
-      function initSakanaWidget() {
-<!--        const characters = SakanaWidget.getCharacters()-->
-<!--        console.log(characters)-->
-<!--        const chisato = SakanaWidget.getCharacter('chisato');-->
-<!--        chisato.initialState = {-->
-<!--          ...chisato.initialState,-->
-<!--          i: 0,-->
-<!--          d: 0-->
-<!--        }-->
-<!--        SakanaWidget.registerCharacter('chisato-silence', chisato);-->
-        new SakanaWidget({
-<!--          character: 'chisato-silence',-->
-          autoFit: true,
-          controls: false
-        }).mount('#sakana-widget')
-      }
+        function getParams() {
+            let url = location.search
+            let obj = {};
+            if (url.indexOf('?') !== -1) {
+                let str = url.substring(1)
+                let arr = str.split('&');
+                arr.map(item => {
+                    obj[item.split('=')[0]] = item.split('=')[1]
+                })
+            }
+            return obj
+        }
 
+        function initSakanaWidget() {
+            const params = getParams()
+            const isBonus = params.isBonus == 'true'
 
+            for (let i = 1; i <= 12; i++) {
+                if (!isBonus && (i < 9 || i > 10)) {
+                    continue
+                }
+                let inertia = (Math.floor(Math.random() * 11) + 35) / 10000
+                let angle = i % 2 === 0 ? -10 : 10
+                new SakanaWidget({
+                    character: i % 2 === 0 ? 'takina' : 'chisato',
+                    autoFit: true,
+                    controls: false
+                }).setState({i: inertia, d: 1, r: angle, y: 10}).mount("#widget" + i)
+            }
+        }
     </script>
-    <script
-            async
-            onload="initSakanaWidget()"
-            src="https://cdn.jsdelivr.net/npm/sakana-widget@2.4.1/lib/sakana.min.js"
-    ></script>
+    <script async onload="initSakanaWidget()" src="sakana.js"></script>
 </head>
-<body style="overflow: hidden; background-color: transparent">
-<div id="sakana-widget"
-     style="width:120px; height: 150px; margin-top: 20px; position: relative"></div>
+<body>
+<div class="top">
+    <div class="sakana" id="widget1"></div>
+    <div class="sakana" id="widget2"></div>
+    <div class="sakana" id="widget3"></div>
+    <div class="sakana" id="widget4"></div>
+    <div class="sakana" id="widget5"></div>
+    <div class="sakana" id="widget6"></div>
+</div>
+
+<div class="bottom">
+    <div class="sakana" id="widget7"></div>
+    <div class="sakana" id="widget8"></div>
+    <div class="sakana" id="widget9"></div>
+    <div class="sakana" id="widget10"></div>
+    <div class="sakana" id="widget11"></div>
+    <div class="sakana" id="widget12"></div>
+</div>
 </body>
 </html>

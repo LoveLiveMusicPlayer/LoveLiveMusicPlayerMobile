@@ -1,0 +1,29 @@
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+.top {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 10px;
+    left: 0px;
+}
+
+.bottom {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 60px;
+    left: 25px;
+}
+
+.sakana {
+    width:50px;
+    height: 150px;
+    margin-top: 20px;
+    position: relative;
+}

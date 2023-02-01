@@ -298,19 +298,18 @@ class _SystemSettingsState extends State<SystemSettings> {
   }
 
   Widget renderLycoris() {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 25.h),
-      child: Container(
-        height: 150.h,
-        width: 120.w,
-        color: Colors.transparent,
-        child: WebViewPlus(
+    return Container(
+      height: 200.h,
+      width: double.infinity,
+      color: Colors.green,
+      child: WebViewPlus(
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (controller) {
-            controller.loadUrl('assets/lycoris/index.html');
+            bool isBonus = Const.bonus == PlayerLogic.to.playingMusic.value.musicId;
+            print(isBonus);
+            controller.loadUrl('assets/lycoris/index.html?isBonus=$isBonus');
           },
           backgroundColor: Colors.transparent
-        ),
       ),
     );
   }

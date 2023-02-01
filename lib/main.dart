@@ -55,42 +55,43 @@ void main() async {
     androidNotificationChannelName: 'lovelive audio playback',
     androidNotificationOngoing: true,
   );
-  await SentryFlutter.init((options) {
-    options.dsn =
-        'https://dbb1e416963545c5893b40d85793e081@o1185358.ingest.sentry.io/6303906';
-    options.tracesSampleRate = 1.0;
-  }, appRunner: () {
-    void reportErrorAndLog(FlutterErrorDetails details) {
-      if (details
-          .exceptionAsString()
-          .contains("ScrollController not attached to any scroll views")) {
-        return;
-      }
-      final errorMsg = {
-        "exception": details.exceptionAsString(),
-        "stackTrace": details.stack.toString(),
-      };
-      Log4f.e(msg: "$errorMsg", writeFile: true);
-    }
-
-    FlutterErrorDetails makeDetails(Object error, StackTrace stackTrace) {
-      // 构建错误信息
-      return FlutterErrorDetails(stack: stackTrace, exception: error);
-    }
-
-    FlutterError.onError = (FlutterErrorDetails details) {
-      // 获取 widget build 过程中出现的异常错误
-      reportErrorAndLog(details);
-    };
-
-    runZonedGuarded(
-      () => runApp(Phoenix(child: const MyApp())),
-      (error, stackTrace) {
-        // 没被catch的异常
-        reportErrorAndLog(makeDetails(error, stackTrace));
-      },
-    );
-  });
+  // await SentryFlutter.init((options) {
+  //   options.dsn =
+  //       'https://dbb1e416963545c5893b40d85793e081@o1185358.ingest.sentry.io/6303906';
+  //   options.tracesSampleRate = 1.0;
+  // }, appRunner: () {
+  //   void reportErrorAndLog(FlutterErrorDetails details) {
+  //     if (details
+  //         .exceptionAsString()
+  //         .contains("ScrollController not attached to any scroll views")) {
+  //       return;
+  //     }
+  //     final errorMsg = {
+  //       "exception": details.exceptionAsString(),
+  //       "stackTrace": details.stack.toString(),
+  //     };
+  //     Log4f.e(msg: "$errorMsg", writeFile: true);
+  //   }
+  //
+  //   FlutterErrorDetails makeDetails(Object error, StackTrace stackTrace) {
+  //     // 构建错误信息
+  //     return FlutterErrorDetails(stack: stackTrace, exception: error);
+  //   }
+  //
+  //   FlutterError.onError = (FlutterErrorDetails details) {
+  //     // 获取 widget build 过程中出现的异常错误
+  //     reportErrorAndLog(details);
+  //   };
+  //
+  //   runZonedGuarded(
+  //     () => runApp(Phoenix(child: const MyApp())),
+  //     (error, stackTrace) {
+  //       // 没被catch的异常
+  //       reportErrorAndLog(makeDetails(error, stackTrace));
+  //     },
+  //   );
+  // });
+  runApp(Phoenix(child: const MyApp()));
   AppUtils.setStatusBar(isDark);
 }
 
