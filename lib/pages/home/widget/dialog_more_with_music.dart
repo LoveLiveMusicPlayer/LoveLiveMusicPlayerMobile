@@ -19,12 +19,14 @@ class DialogMoreWithMusic extends StatefulWidget {
   Function(Music)? onRemove;
   Function()? onClosePanel;
   bool? isAlbum;
+  bool? isPlayer;
 
   DialogMoreWithMusic(
       {Key? key,
       required this.music,
       this.onRemove,
       this.isAlbum,
+      this.isPlayer,
       this.onClosePanel})
       : super(key: key);
 
@@ -52,6 +54,9 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
     }
 
     if (widget.isAlbum == null || widget.isAlbum == false) {
+      length++;
+    }
+    if (widget.isPlayer != null || widget.isPlayer == true) {
       length++;
     }
     return Container(
@@ -99,6 +104,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
                 alignmentTemp: Alignment.bottomCenter);
           }),
           renderWatchAlbum(),
+          renderResearchLyric(),
           renderRemoveItem()
         ],
       ),
@@ -109,8 +115,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
     if (widget.isAlbum != null && widget.isAlbum == true) {
       return Container();
     }
-    return _buildItem(
-        Assets.dialogIcSeeAlbum, 'view_album'.tr, widget.onRemove != null, () {
+    return _buildItem(Assets.dialogIcSeeAlbum, 'view_album'.tr, true, () {
       SmartDialog.compatible.dismiss();
       if (widget.onClosePanel != null) {
         widget.onClosePanel!();
@@ -129,6 +134,16 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
       });
     }
     return Container();
+  }
+
+  Widget renderResearchLyric() {
+    if (widget.isPlayer == null || widget.isPlayer == false) {
+      return Container();
+    }
+    return _buildItem(Assets.drawerDrawerInspect, 'search_lyric'.tr, true, () {
+      PlayerLogic.to.getLrc(true);
+      SmartDialog.compatible.dismiss();
+    });
   }
 
   ///单个条目

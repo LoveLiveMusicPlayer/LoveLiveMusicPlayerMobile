@@ -21,6 +21,7 @@ import 'package:lovelivemusicplayer/pages/player/widget/player_header.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_lyric.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/seekbar.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
+import 'package:lovelivemusicplayer/widgets/tachie_widget.dart';
 import 'package:rxdart/rxdart.dart' as rx_dart;
 
 class Player extends StatefulWidget {
@@ -32,11 +33,13 @@ class Player extends StatefulWidget {
   State<Player> createState() => _PlayerState();
 }
 
+enum Type { cover, lyric, tachie }
+
 class _PlayerState extends State<Player> {
   StreamSubscription? loginSubscription;
 
   // 是否是封面
-  var isCover = true;
+  var showContent = Type.cover;
 
   // 是否被隐藏
   var isOpen = false;
@@ -53,7 +56,7 @@ class _PlayerState extends State<Player> {
   void initState() {
     loginSubscription = eventBus.on<PlayerClosableEvent>().listen((event) {
       /// 点击关闭按钮后确定关闭掉全量歌词界面，防止cpu消耗过多
-      if (!isCover && event.isOpen) {
+      if (showContent != Type.cover && event.isOpen) {
         setStatus(cover: true, open: event.isOpen);
       } else {
         setStatus(open: event.isOpen);
@@ -114,6 +117,7 @@ class _PlayerState extends State<Player> {
                 SmartDialog.compatible.show(
                     widget: DialogMoreWithMusic(
                       music: PlayerLogic.to.playingMusic.value,
+                      isPlayer: true,
                       onClosePanel: () {
                         GlobalLogic.mobileWeSlideController.hide();
                         GlobalLogic.to.needHomeSafeArea.value = true;
@@ -159,8 +163,8 @@ class _PlayerState extends State<Player> {
   }
 
   setStatus({bool? cover, bool? open}) {
-    if (cover != null && cover != isCover) {
-      isCover = cover;
+    if (cover != null && cover != (showContent == Type.cover)) {
+      showContent = cover ? Type.cover : Type.lyric;
     }
     if (open != null && open != isOpen) {
       isOpen = open;
@@ -169,19 +173,31 @@ class _PlayerState extends State<Player> {
   }
 
   Widget stackBody() {
-    if (isCover) {
+    if (showContent == Type.cover) {
       return Cover(onTap: () {
         setStatus(cover: false);
         PlayerLogic.to.needRefreshLyric.value = true;
       });
     } else {
-      return Lyric(
-          key: const Key("Lyric"), onTap: () => setStatus(cover: true));
+      return Stack(
+        children: [
+          Lyric(
+              key: const Key("Lyric"),
+              onTap: () => setStatus(cover: true),
+              height: 400.h),
+          Center(
+            child: Visibility(
+                visible: showContent == Type.tachie,
+                maintainState: true,
+                child: const Tachie()),
+          )
+        ],
+      );
     }
   }
 
   Widget funcButton() {
-    if (!isCover) {
+    if (showContent != Type.cover) {
       dynamic icon;
       switch (PlayerLogic.to.lrcType.value) {
         case 0:
@@ -198,8 +214,15 @@ class _PlayerState extends State<Player> {
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            materialButton(
-                Icons.youtube_searched_for, () => PlayerLogic.to.getLrc(true),
+            materialButton(Assets.playerPlayerCall, () {
+              if (showContent == Type.lyric) {
+                showContent = Type.tachie;
+              } else {
+                showContent = Type.lyric;
+              }
+              setState(() {});
+              PlayerLogic.to.needRefreshLyric.value = true;
+            },
                 width: 32,
                 height: 32,
                 radius: 6,

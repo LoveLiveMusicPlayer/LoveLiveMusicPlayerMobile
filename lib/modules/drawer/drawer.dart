@@ -242,7 +242,7 @@ class _DrawerPageState extends State<DrawerPage> {
             ),
             SizedBox(height: 8.h),
             DrawerFunctionButton(
-              icon: Assets.drawerDrawerSetting,
+              icon: Assets.drawerDrawerShare,
               text: "分享",
               colorWithBG: false,
               onTap: () {

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="sakana.css"/>
+    <link rel="stylesheet" href="index.css"/>
+    <script>
+        function getParams() {
+            let url = location.search
+            let obj = {};
+            if (url.indexOf('?') !== -1) {
+                let str = url.substring(1)
+                let arr = str.split('&');
+                arr.map(item => {
+                    obj[item.split('=')[0]] = item.split('=')[1]
+                })
+            }
+            return obj
+        }
+
+        function initWidget() {
+            const params = getParams()
+            const isBonus = params.isBonus === 'true'
+            isBonus ? renderBonusWidget() : renderNormalWidget(params)
+        }
+
+        function renderNormalWidget(params) {
+            const roleList = []
+
+            fetch('tachie.json')
+                .then(resp => resp.json())
+                .then(json => {
+                    const configList = json[params.group]
+                    for (let i = 0; i < params.bin.length; i++) {
+                        if (params.bin.charAt(i) === "1") {
+                            roleList.push(configList[i])
+                        }
+                    }
+
+                    for (let position = 0; position < 12; position++) {
+                        if (position > roleList.length - 1) {
+                            continue
+                        }
+                        const chisato = SakanaWidget.getCharacter('chisato')
+<!--                        let angle = Math.floor(Math.random() * 10) + 1-->
+                        chisato.initialState = {
+                            ...chisato.initialState,
+                            i: 0.003,
+                            d: 1,
+<!--                            r: angle,-->
+                            y: 15
+                        }
+                        chisato.image = `data:image/png;base64,${roleList[position].photo}`
+                        SakanaWidget.registerCharacter('chisato' + position, chisato)
+                        new SakanaWidget({
+                            character: 'chisato' + position,
+                            autoFit: true,
+                            controls: false,
+                            stroke: {
+                                color: roleList[position].color,
+                                heightPercent: 0.6
+                            }
+                        }).mount("#widget" + position)
+                    }
+                })
+        }
+
+        function renderBonusWidget() {
+            for (let i = 1; i <= 12; i++) {
+                let inertia = (Math.floor(Math.random() * 11) + 35) / 10000
+                let angle = i % 2 === 0 ? -10 : 10
+                new SakanaWidget({
+                    character: i % 2 === 0 ? 'takina' : 'chisato',
+                    autoFit: true,
+                    controls: false
+                }).setState({i: inertia, d: 1, r: angle, y: 10}).mount("#widget" + i)
+            }
+        }
+    </script>
+    <script async onload="initWidget()" src="sakana.js"></script>
+</head>
+<body>
+<div class="top">
+    <div class="sakana" id="widget10"></div>
+    <div class="sakana" id="widget5"></div>
+    <div class="sakana" id="widget3"></div>
+    <div class="sakana" id="widget2"></div>
+    <div class="sakana" id="widget7"></div>
+    <div class="sakana" id="widget8"></div>
+</div>
+
+<div class="bottom">
+    <div class="sakana" id="widget11"></div>
+    <div class="sakana" id="widget4"></div>
+    <div class="sakana" id="widget1"></div>
+    <div class="sakana" id="widget0"></div>
+    <div class="sakana" id="widget6"></div>
+    <div class="sakana" id="widget9"></div>
+</div>
+</body>
+</html>

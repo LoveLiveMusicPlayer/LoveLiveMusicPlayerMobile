@@ -24,7 +24,7 @@ import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
 import 'package:lovelivemusicplayer/widgets/reset_data_dialog.dart';
-import 'package:webview_flutter_plus/webview_flutter_plus.dart';
+import 'package:lovelivemusicplayer/widgets/tachie_widget.dart';
 
 class SystemSettings extends StatefulWidget {
   const SystemSettings({Key? key}) : super(key: key);
@@ -291,28 +291,8 @@ class _SystemSettingsState extends State<SystemSettings> {
                       ],
                     );
                   }))
-            ]),
-            renderLycoris()
-          ],
+            ])
+          ]
         ));
-  }
-
-  Widget renderLycoris() {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 25.h),
-      child: SizedBox(
-        height: 200.h,
-        width: double.infinity,
-        child: WebViewPlus(
-            javascriptMode: JavascriptMode.unrestricted,
-            onWebViewCreated: (controller) {
-              bool isBonus =
-                  Const.bonus == PlayerLogic.to.playingMusic.value.musicId;
-              print(isBonus);
-              controller.loadUrl('assets/lycoris/index.html?isBonus=$isBonus');
-            },
-            backgroundColor: Colors.transparent),
-      ),
-    );
   }
 }

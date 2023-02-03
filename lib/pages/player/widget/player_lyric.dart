@@ -12,7 +12,8 @@ import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 class Lyric extends StatefulWidget {
   final GestureTapCallback onTap;
 
-  const Lyric({Key? key, required this.onTap}) : super(key: key);
+  const Lyric({Key? key, required this.onTap, required double height})
+      : super(key: key);
 
   @override
   State<Lyric> createState() => _LyricState();

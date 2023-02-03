@@ -551,9 +551,9 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   }
 
   scrollToTop(ScrollController scrollController) {
-    try {
+    if (scrollController.hasClients) {
       scrollController.jumpTo(0);
-    } catch (e) {}
+    }
   }
 
   /****************  Transfer  ****************/

@@ -254,6 +254,8 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
             iconColor ?? (Get.isDarkMode ? Colors.white : ColorMs.color333333),
         width: iconSize.h,
         height: iconSize.h);
+  } else if (icon.endsWith(".gif")) {
+    child = Image.asset(icon, width: iconSize.h, height: iconSize.h);
   } else {
     child = Container();
   }

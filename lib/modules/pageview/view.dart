@@ -71,12 +71,12 @@ class _PageViewComponentState extends State<PageViewComponent>
     super.didChangeAppLifecycleState(state);
     switch (state) {
       case AppLifecycleState.resumed:
-        HomeController.scrollController1.jumpTo(controller1Offset);
-        HomeController.scrollController2.jumpTo(controller2Offset);
-        HomeController.scrollController3.jumpTo(controller3Offset);
-        HomeController.scrollController4.jumpTo(controller4Offset);
-        HomeController.scrollController5.jumpTo(controller5Offset);
-        HomeController.scrollController6.jumpTo(controller6Offset);
+        checkAndJump(HomeController.scrollController1, controller1Offset);
+        checkAndJump(HomeController.scrollController2, controller2Offset);
+        checkAndJump(HomeController.scrollController3, controller3Offset);
+        checkAndJump(HomeController.scrollController4, controller4Offset);
+        checkAndJump(HomeController.scrollController5, controller5Offset);
+        checkAndJump(HomeController.scrollController6, controller6Offset);
         break;
       case AppLifecycleState.inactive:
         break;
@@ -84,6 +84,12 @@ class _PageViewComponentState extends State<PageViewComponent>
         break;
       case AppLifecycleState.paused:
         break;
+    }
+  }
+
+  checkAndJump(ScrollController controller, double offset) {
+    if (controller.hasClients) {
+      controller.jumpTo(offset);
     }
   }
 

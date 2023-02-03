@@ -325,4 +325,18 @@ class AppUtils {
       print(error.rawData);
     });
   }
+
+  static Map? getArtistIndexArrInGroup(String artistStr) {
+    final firstOneChar = artistStr.substring(0, 1);
+    if (firstOneChar == "U") {
+      return null;
+    }
+    final artistDecNum =
+        int.parse(artistStr.substring(1, artistStr.length), radix: 36);
+    final artistBin = int.parse(artistDecNum.toRadixString(2)).toString();
+    return {
+      "group": firstOneChar,
+      "artistBin": artistBin.split('').reversed.join('')
+    };
+  }
 }

@@ -136,7 +136,7 @@ flutter:
     - assets/dialog/
     - assets/sync/
     - assets/logo/
-    - assets/lycoris/
+    - assets/tachie/
 
   fonts:
     - family: KaTong
