@@ -5,10 +5,14 @@ import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
 class Tachie extends StatelessWidget {
-  const Tachie({Key? key}) : super(key: key);
+
+  final bool canMove;
+
+  const Tachie({Key? key, this.canMove = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

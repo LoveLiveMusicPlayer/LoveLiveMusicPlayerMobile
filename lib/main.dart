@@ -20,7 +20,6 @@ import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 import 'package:uni_links/uni_links.dart';
 
@@ -56,42 +55,36 @@ void main() async {
     androidNotificationOngoing: true,
   );
   if (kReleaseMode) {
-    await SentryFlutter.init((options) {
-      options.dsn =
-          'https://dbb1e416963545c5893b40d85793e081@o1185358.ingest.sentry.io/6303906';
-      options.tracesSampleRate = 1.0;
-    }, appRunner: () {
-      void reportErrorAndLog(FlutterErrorDetails details) {
-        if (details
-            .exceptionAsString()
-            .contains("ScrollController not attached to any scroll views")) {
-          return;
-        }
-        final errorMsg = {
-          "exception": details.exceptionAsString(),
-          "stackTrace": details.stack.toString(),
-        };
-        Log4f.e(msg: "$errorMsg", writeFile: true);
+    void reportErrorAndLog(FlutterErrorDetails details) {
+      if (details
+          .exceptionAsString()
+          .contains("ScrollController not attached to any scroll views")) {
+        return;
       }
-
-      FlutterErrorDetails makeDetails(Object error, StackTrace stackTrace) {
-        // 构建错误信息
-        return FlutterErrorDetails(stack: stackTrace, exception: error);
-      }
-
-      FlutterError.onError = (FlutterErrorDetails details) {
-        // 获取 widget build 过程中出现的异常错误
-        reportErrorAndLog(details);
+      final errorMsg = {
+        "exception": details.exceptionAsString(),
+        "stackTrace": details.stack.toString(),
       };
+      Log4f.e(msg: "$errorMsg", writeFile: true);
+    }
 
-      runZonedGuarded(
-        () => runApp(Phoenix(child: const MyApp())),
-        (error, stackTrace) {
-          // 没被catch的异常
-          reportErrorAndLog(makeDetails(error, stackTrace));
-        },
-      );
-    });
+    FlutterErrorDetails makeDetails(Object error, StackTrace stackTrace) {
+      // 构建错误信息
+      return FlutterErrorDetails(stack: stackTrace, exception: error);
+    }
+
+    FlutterError.onError = (FlutterErrorDetails details) {
+      // 获取 widget build 过程中出现的异常错误
+      reportErrorAndLog(details);
+    };
+
+    runZonedGuarded(
+          () => runApp(Phoenix(child: const MyApp())),
+          (error, stackTrace) {
+        // 没被catch的异常
+        reportErrorAndLog(makeDetails(error, stackTrace));
+      },
+    );
   } else {
     runApp(Phoenix(child: const MyApp()));
   }
