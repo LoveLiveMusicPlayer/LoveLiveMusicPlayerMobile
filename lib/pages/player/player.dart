@@ -214,27 +214,29 @@ class _PlayerState extends State<Player> {
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            materialButton(Assets.playerPlayerCall, () {
-              if (showContent == Type.lyric) {
-                showContent = Type.tachie;
-              } else {
-                showContent = Type.lyric;
-              }
-              setState(() {});
-              PlayerLogic.to.needRefreshLyric.value = true;
-            },
-                width: 32,
-                height: 32,
-                radius: 6,
-                iconSize: 20,
-                hasShadow: !GlobalLogic.to.hasSkin.value,
-                iconColor: GlobalLogic.to.hasSkin.value ? Colors.white : null,
-                bgColor: GlobalLogic.to.hasSkin.value
-                    ? GlobalLogic.to.iconColor.value
-                    : null,
-                outerColor: GlobalLogic.to.hasSkin.value
-                    ? GlobalLogic.to.iconColor.value
-                    : null),
+            Visibility(
+              visible: GlobalLogic.to.hasSkin.value,
+                child: materialButton(Assets.playerPlayerCall, () {
+                  if (showContent == Type.lyric) {
+                    showContent = Type.tachie;
+                  } else {
+                    showContent = Type.lyric;
+                  }
+                  setState(() {});
+                  PlayerLogic.to.needRefreshLyric.value = true;
+                },
+                    width: 32,
+                    height: 32,
+                    radius: 6,
+                    iconSize: 20,
+                    hasShadow: !GlobalLogic.to.hasSkin.value,
+                    iconColor: GlobalLogic.to.hasSkin.value ? Colors.white : null,
+                    bgColor: GlobalLogic.to.hasSkin.value
+                        ? GlobalLogic.to.iconColor.value
+                        : null,
+                    outerColor: GlobalLogic.to.hasSkin.value
+                        ? GlobalLogic.to.iconColor.value
+                        : null)),
             Visibility(
                 visible: SDUtils.allowEULA,
                 child: materialButton(
@@ -337,7 +339,6 @@ class _PlayerState extends State<Player> {
       height: ScreenUtil().screenHeight,
       child: ClipRRect(
         child: Stack(
-          alignment: Alignment.center,
           children: [
             Container(
               decoration: BoxDecoration(
