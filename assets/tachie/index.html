@@ -45,16 +45,18 @@
                             continue
                         }
                         const chisato = SakanaWidget.getCharacter('chisato')
-<!--                        let angle = Math.floor(Math.random() * 10) + 1-->
+                        let angle = Math.floor(Math.random() * 10)
                         chisato.initialState = {
                             ...chisato.initialState,
-                            i: 0.003,
+                            i: 0.002,
                             d: 1,
-<!--                            r: angle,-->
+                            r: angle,
                             y: 15
                         }
                         chisato.image = `data:image/png;base64,${roleList[position].photo}`
                         SakanaWidget.registerCharacter('chisato' + position, chisato)
+                        let canMove = params.canMove === "true"
+
                         new SakanaWidget({
                             character: 'chisato' + position,
                             autoFit: true,
@@ -62,8 +64,9 @@
                             stroke: {
                                 color: roleList[position].color,
                                 heightPercent: 0.6
-                            }
-                        }).mount("#widget" + position)
+                            },
+                            showRod: canMove
+                        }).mount("#widget" + position, canMove)
                     }
                 })
         }
