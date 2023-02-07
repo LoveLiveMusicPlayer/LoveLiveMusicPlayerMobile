@@ -27,7 +27,6 @@ class Tachie extends StatelessWidget {
           height: 200.h,
           width: double.infinity,
           child: WebViewPlus(
-              gestureNavigationEnabled: true,
               key: ValueKey(musicId),
               javascriptMode: JavascriptMode.unrestricted,
               onWebViewCreated: (controller) async {

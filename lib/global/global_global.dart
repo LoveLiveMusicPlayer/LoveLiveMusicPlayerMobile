@@ -129,8 +129,8 @@ class GlobalLogic extends SuperController
     SpUtil.getBoolean(Const.spEnableBackgroundPhoto).then((value) {
       if (value) {
         SpUtil.getString(Const.spBackgroundPhoto).then((value) {
-          if (SDUtils.checkFileExist(value)) {
-            setBgPhoto(value);
+          if (SDUtils.checkFileExist(SDUtils.bgPhotoPath + value)) {
+            setBgPhoto(SDUtils.bgPhotoPath + value);
           }
         });
       }

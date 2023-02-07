@@ -44,7 +44,6 @@ class _DetailsBodyState extends State<DetailsBody> {
   void initState() {
     final bgPhoto = GlobalLogic.to.bgPhoto.value;
     if (SDUtils.checkFileExist(bgPhoto)) {
-      Log4f.d(msg: bgPhoto);
       AppUtils.getImagePalette(bgPhoto).then((color) {
         if (color != null) {
           bgColor = color.withAlpha(255);

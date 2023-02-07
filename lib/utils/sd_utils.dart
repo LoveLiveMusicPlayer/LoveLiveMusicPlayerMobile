@@ -82,7 +82,7 @@ class SDUtils {
         file.deleteSync();
       }
       file.writeAsBytesSync(content);
-      SpUtil.put(Const.spBackgroundPhoto, filePath);
+      SpUtil.put(Const.spBackgroundPhoto, fileName);
       GlobalLogic.to.setBgPhoto(filePath);
     } catch (e) {
       Log4f.e(msg: e.toString(), writeFile: true);
@@ -95,7 +95,7 @@ class SDUtils {
       if (dir.existsSync()) {
         SpUtil.getString(Const.spBackgroundPhoto).then((usingBGPhotoPath) {
           dir.listSync(recursive: false).forEach((file) {
-            if (file.path != usingBGPhotoPath) {
+            if (!file.path.contains(usingBGPhotoPath)) {
               file.delete(recursive: true);
             }
           });
