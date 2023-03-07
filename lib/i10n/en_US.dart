@@ -93,6 +93,7 @@ const Map<String, String> en_US = {
   'share_music': 'Share a song',
   'share_menu': 'Share a playlist',
   'no_qq': 'TIM/QQ is not installed',
+  'version_incompatible': 'The APP version does not match the PC version, please go to the blog to update',
   'permission_main_message':
       'Welcome to LoveLiveMusicPlayer!\n\nWe will use the User Agreement and Privacy Policy to help you understand the services provided by the software for you and the way you collect and process your personal data.\nClick the "Agree and Continue" button to indicate that you have agreed.',
   'permission_external_link': 'User Agreement and Privacy Policy',

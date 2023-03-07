@@ -13,6 +13,7 @@ import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/FtpCmd.dart';
 import 'package:lovelivemusicplayer/models/FtpMusic.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
@@ -403,6 +404,18 @@ class _MusicTransformState extends State<MusicTransform> {
     channel!.stream.listen((msg) async {
       final ftpCmd = ftpCmdFromJson(msg as String);
       switch (ftpCmd.cmd) {
+        case "version":
+          if ((int.tryParse(ftpCmd.body) ?? 0) != transVer) {
+            SmartDialog.compatible.showToast("version_incompatible".tr);
+            Get.back();
+            return;
+          }
+          final system = {
+            "cmd": "system",
+            "body": Platform.isAndroid ? "android" : "ios"
+          };
+          channel?.sink.add(convert.jsonEncode(system));
+          break;
         case "noTrans":
           isNoTrans = true;
           musicList.addAll(downloadMusicFromJson(ftpCmd.body));
@@ -498,11 +511,9 @@ class _MusicTransformState extends State<MusicTransform> {
     }, cancelOnError: true);
     isConnected = true;
     setState(() {});
-    final system = {
-      "cmd": "system",
-      "body": Platform.isAndroid ? "android" : "ios"
-    };
-    channel?.sink.add(convert.jsonEncode(system));
+    final message = ftpCmdToJson(
+        FtpCmd(cmd: "version", body: transVer.toString()));
+    channel?.sink.add(message);
   }
 
   showBackDialog() {

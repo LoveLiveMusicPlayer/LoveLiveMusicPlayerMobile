@@ -108,6 +108,7 @@ const Map<String, String> zh_CN = {
   'share_music': '分享歌曲',
   'share_menu': '分享歌单',
   'no_qq': 'TIM/QQ未安装',
+  'version_incompatible': 'APP与PC版本不匹配，请前往博客更新',
   'privacy_detail': '''亲爱的LLer：
 
 请务必认真阅读和理解《软件许可使用协议》（以下简称：本协议）中规定的所有权利和限制，除非您接受协议条款，否则您无权使用本软件及其相关服务。您一旦使用本软件，将视为对协议的接受。

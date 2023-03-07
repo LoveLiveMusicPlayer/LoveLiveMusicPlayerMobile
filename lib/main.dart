@@ -32,11 +32,19 @@ import 'routes.dart';
 import 'utils/sd_utils.dart';
 import 'utils/sp_util.dart';
 
+// 是否是暗黑主题
 var isDark = false;
+// APP版本号
 var appVersion = "1.0.0";
+// 是否有AI开屏
 var hasAIPic = false;
+// 是否允许显示背景图片
 var enableBG = false;
+// 是否需要移除开屏图片
 var needRemoveCover = true;
+// 传输协议版本号
+const transVer = 1;
+// 开屏图片列表
 final splashList = <String>[];
 
 void main() async {
