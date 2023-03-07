@@ -58,7 +58,12 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   Future<void> onInit() async {
     database = await $FloorMusicDatabase
         .databaseBuilder('app_database.db')
-        .addMigrations([migration1to2, migration2to3, migration3to4]).build();
+        .addMigrations([
+      migration1to2,
+      migration2to3,
+      migration3to4,
+      migration4to5
+    ]).build();
     albumDao = database.albumDao;
     lyricDao = database.lyricDao;
     musicDao = database.musicDao;
@@ -168,6 +173,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
             albumName: downloadMusic.albumName,
             musicPath: downloadMusic.musicPath,
             baseUrl: downloadMusic.baseUrl,
+            neteaseId: downloadMusic.neteaseId,
             time: downloadMusic.totalTime,
             group: downloadMusic.group,
             date: downloadMusic.date,
@@ -242,7 +248,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
           baseUrl: row['baseUrl'] as String?,
           date: row['date'] as String?,
           timestamp: row['timestamp'] as int,
-          isLove: (row['isLove'] as int) == 1);
+          isLove: (row['isLove'] as int) == 1,
+          neteaseId: row['neteaseId'] as String);
       musicArr.add(music);
     }
     return musicArr;

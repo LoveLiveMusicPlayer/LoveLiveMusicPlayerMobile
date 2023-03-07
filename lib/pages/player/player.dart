@@ -215,7 +215,7 @@ class _PlayerState extends State<Player> {
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Visibility(
-              visible: GlobalLogic.to.hasSkin.value,
+                visible: GlobalLogic.to.hasSkin.value,
                 child: materialButton(Assets.playerPlayerCall, () {
                   if (showContent == Type.lyric) {
                     showContent = Type.tachie;
@@ -230,7 +230,8 @@ class _PlayerState extends State<Player> {
                     radius: 6,
                     iconSize: 20,
                     hasShadow: !GlobalLogic.to.hasSkin.value,
-                    iconColor: GlobalLogic.to.hasSkin.value ? Colors.white : null,
+                    iconColor:
+                        GlobalLogic.to.hasSkin.value ? Colors.white : null,
                     bgColor: GlobalLogic.to.hasSkin.value
                         ? GlobalLogic.to.iconColor.value
                         : null,

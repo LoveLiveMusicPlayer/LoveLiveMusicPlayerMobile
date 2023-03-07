@@ -178,8 +178,10 @@ class _SystemSettingsState extends State<SystemSettings> {
                                 if (check) {
                                   SpUtil.getString(Const.spBackgroundPhoto)
                                       .then((value) {
-                                    if (SDUtils.checkFileExist(SDUtils.bgPhotoPath + value)) {
-                                      GlobalLogic.to.setBgPhoto(SDUtils.bgPhotoPath + value);
+                                    if (SDUtils.checkFileExist(
+                                        SDUtils.bgPhotoPath + value)) {
+                                      GlobalLogic.to.setBgPhoto(
+                                          SDUtils.bgPhotoPath + value);
                                     }
                                   });
                                 } else {

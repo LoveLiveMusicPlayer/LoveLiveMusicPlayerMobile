@@ -27,7 +27,8 @@ class DownloadMusic {
       required this.artist,
       required this.artistBin,
       required this.totalTime,
-      required this.baseUrl});
+      required this.baseUrl,
+      this.neteaseId});
 
   String albumUId;
   int albumId;
@@ -44,23 +45,26 @@ class DownloadMusic {
   String artistBin;
   String totalTime;
   String baseUrl;
+  String? neteaseId;
 
   factory DownloadMusic.fromJson(Map<String, dynamic> json) => DownloadMusic(
-      albumUId: json["albumUId"],
-      albumId: json["albumId"],
-      albumName: json["albumName"],
-      coverPath: json["coverPath"],
-      date: json["date"],
-      category: json["category"],
-      group: json["group"],
-      musicUId: json["musicUId"],
-      musicId: json["musicId"],
-      musicName: json["musicName"],
-      musicPath: json["musicPath"],
-      artist: json["artist"],
-      artistBin: json["artistBin"],
-      totalTime: json["totalTime"],
-      baseUrl: json["baseUrl"]);
+        albumUId: json["albumUId"],
+        albumId: json["albumId"],
+        albumName: json["albumName"],
+        coverPath: json["coverPath"],
+        date: json["date"],
+        category: json["category"],
+        group: json["group"],
+        musicUId: json["musicUId"],
+        musicId: json["musicId"],
+        musicName: json["musicName"],
+        musicPath: json["musicPath"],
+        artist: json["artist"],
+        artistBin: json["artistBin"],
+        totalTime: json["totalTime"],
+        baseUrl: json["baseUrl"],
+        neteaseId: json["neteaseId"],
+      );
 
   Map<String, dynamic> toJson() => {
         "albumUId": albumUId,
@@ -77,6 +81,7 @@ class DownloadMusic {
         "artist": artist,
         "artistBin": artistBin,
         "totalTime": totalTime,
-        "baseUrl": baseUrl
+        "baseUrl": baseUrl,
+        "neteaseId": neteaseId,
       };
 }

@@ -87,6 +87,12 @@ const Map<String, String> en_US = {
   'copy_success': 'Copy success',
   'need_enable_bg': 'Please enable background images first',
   'search_lyric': 'Search lyrics again',
+  'share_app': '(S)He shared a LLMP to you',
+  'outer_share_music': '(S)He shared a song to you',
+  'outer_share_menu': '(S)He shared a playlist to you',
+  'share_music': 'Share a song',
+  'share_menu': 'Share a playlist',
+  'no_qq': 'TIM/QQ is not installed',
   'permission_main_message':
       'Welcome to LoveLiveMusicPlayer!\n\nWe will use the User Agreement and Privacy Policy to help you understand the services provided by the software for you and the way you collect and process your personal data.\nClick the "Agree and Continue" button to indicate that you have agreed.',
   'permission_external_link': 'User Agreement and Privacy Policy',

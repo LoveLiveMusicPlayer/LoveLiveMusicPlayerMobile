@@ -76,7 +76,6 @@ dependencies:
       ref: e9da75b
   log4f: ^0.0.3 # 日志
   device_info_plus: ^8.0.0 # 设备信息
-  package_info_plus: ^3.0.2 # 安装包信息
   flutter_lyric: ^2.0.4+6 # 歌词显示
   updater: # 版本升级
     git:
@@ -99,7 +98,7 @@ dependencies:
 
 dependency_overrides:
   ffi: ^2.0.1
-  package_info_plus: ^3.0.2
+  package_info_plus: ^3.0.3 # 安装包信息
 
 dev_dependencies:
   flutter_test:

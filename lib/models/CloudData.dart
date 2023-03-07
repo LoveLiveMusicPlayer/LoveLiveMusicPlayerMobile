@@ -157,6 +157,7 @@ class InnerMusic {
     required this.time,
     required this.export,
     required this.baseUrl,
+    required this.neteaseId,
     required this.albumName,
   });
 
@@ -172,6 +173,7 @@ class InnerMusic {
   String? albumName;
   bool export;
   String baseUrl;
+  String? neteaseId;
 
   factory InnerMusic.fromJson(Map<String, dynamic> json) {
     return InnerMusic(
@@ -187,6 +189,7 @@ class InnerMusic {
       albumName: json["albumName"],
       export: json["export"],
       baseUrl: json["base_url"],
+      neteaseId: json["neteaseId"],
     );
   }
 
@@ -203,5 +206,6 @@ class InnerMusic {
         "albumName": albumName,
         "export": export,
         "base_url": baseUrl,
+        "neteaseId": neteaseId,
       };
 }

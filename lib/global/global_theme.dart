@@ -6,7 +6,7 @@ final ThemeData theme = ThemeData();
 
 //主题
 final ThemeData lightTheme = ThemeData(
-    accentColor: Colors.green[300],
+    hintColor: Colors.green[300],
     brightness: Brightness.light,
     bottomAppBarColor: Colors.black,
     primaryColor: ColorMs.colorLightPrimary,
@@ -19,7 +19,7 @@ final ThemeData lightTheme = ThemeData(
       elevation: 0.0,
     ));
 final ThemeData darkTheme = ThemeData(
-    accentColor: Colors.blue[300],
+    hintColor: Colors.blue[300],
     brightness: Brightness.dark,
     bottomAppBarColor: Colors.white,
     primaryColor: ColorMs.colorNightPrimary,

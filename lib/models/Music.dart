@@ -23,6 +23,7 @@ class Music {
       this.baseUrl,
       this.date,
       this.timestamp = 0,
+      this.neteaseId,
       this.isLove = false,
       this.checked = false});
 
@@ -41,6 +42,7 @@ class Music {
   String? group; // 团组
   bool isLove; // 是否我喜欢
   int timestamp; // 最后一次播放的时间戳
+  String? neteaseId; // 网易id
   String? date; // 出版日期
 
   @ignore
@@ -61,6 +63,7 @@ class Music {
         group: json["group"],
         isLove: json["isLove"],
         timestamp: json["timestamp"],
+        neteaseId: json["neteaseId"],
         date: json["date"],
       );
 
@@ -79,6 +82,7 @@ class Music {
         "group": group,
         "isLove": isLove,
         "timestamp": timestamp,
+        "neteaseId": neteaseId,
         "date": date,
       };
 
@@ -98,6 +102,7 @@ class Music {
         isLove: music.isLove,
         checked: music.checked,
         timestamp: music.timestamp,
+        neteaseId: music.neteaseId,
         date: music.date,
       );
 }

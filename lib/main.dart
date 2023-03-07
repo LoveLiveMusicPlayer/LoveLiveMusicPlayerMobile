@@ -79,8 +79,8 @@ void main() async {
     };
 
     runZonedGuarded(
-          () => runApp(Phoenix(child: const MyApp())),
-          (error, stackTrace) {
+      () => runApp(Phoenix(child: const MyApp())),
+      (error, stackTrace) {
         // 没被catch的异常
         reportErrorAndLog(makeDetails(error, stackTrace));
       },

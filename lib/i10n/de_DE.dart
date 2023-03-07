@@ -109,6 +109,12 @@ const Map<String, String> de_DE = {
   'file_path_error': 'Dateipfadfehler',
   'crop_background_image': 'Hintergrundbild zuschneiden',
   'search_lyric': 'Songtexte noch mal downloaden',
+  'share_app': 'Er/Sie hat LLMP mit Ihnen geteilt',
+  'outer_share_music': 'Er/Sie hat ein Lied mit dir geteilt',
+  'outer_share_menu': 'Er/Sie hat eine Playlist mit dir geteilt',
+  'share_music': 'Lied teilen',
+  'share_menu': 'Wiedergabeliste teilen',
+  'no_qq': 'TIM/QQ ist nicht installiert',
   'privacy_detail': '''Lieber LLer:
 
 Bitte stellen Sie sicher, dass Sie alle Rechte und Einschränkungen, die in der „Softwarelizenzvereinbarung“ (im Folgenden als diese Vereinbarung bezeichnet) festgelegt sind, sorgfältig lesen und verstehen, es sei denn, Sie akzeptieren die Bedingungen dieser Vereinbarung, andernfalls haben Sie kein Recht, die Software und damit verbundene zu verwenden Dienstleistungen. Sobald Sie diese Software verwenden, wird davon ausgegangen, dass Sie diese Vereinbarung akzeptiert haben.

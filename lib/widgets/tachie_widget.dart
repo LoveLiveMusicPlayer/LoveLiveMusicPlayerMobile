@@ -9,7 +9,6 @@ import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
 class Tachie extends StatelessWidget {
-
   final bool canMove;
 
   const Tachie({Key? key, this.canMove = true}) : super(key: key);

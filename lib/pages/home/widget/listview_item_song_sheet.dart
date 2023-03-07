@@ -75,7 +75,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
               radius: 8,
               onTap: () => widget.onItemTap(widget.menu));
         },
-        future: AppUtils.getMusicCoverPath(widget.menu.music.last),
+        future: AppUtils.getMusicCoverPath(widget.menu.music.first),
       );
     } else {
       return showImg(null, 48, 48,

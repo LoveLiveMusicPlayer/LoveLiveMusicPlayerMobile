@@ -10,7 +10,6 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/CloudData.dart';
 import 'package:lovelivemusicplayer/models/CloudUpdate.dart';
@@ -247,7 +246,7 @@ class _DrawerPageState extends State<DrawerPage> {
               colorWithBG: false,
               onTap: () {
                 Get.back();
-                AppUtils.shareQQ(music: PlayerLogic.to.playingMusic.value);
+                AppUtils.shareQQ();
               },
             )
           ],
@@ -350,7 +349,8 @@ class _DrawerPageState extends State<DrawerPage> {
             artist: music.artist,
             artistBin: music.artistBin,
             totalTime: music.time,
-            baseUrl: music.baseUrl);
+            baseUrl: music.baseUrl,
+            neteaseId: music.neteaseId);
         await DBLogic.to.importMusic(downloadMusic);
       }
     });

@@ -11,6 +11,7 @@ import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_song_info.dart';
 import 'package:lovelivemusicplayer/routes.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
@@ -48,7 +49,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
 
   @override
   Widget build(BuildContext context) {
-    var length = 4;
+    var length = 5;
     if (widget.onRemove != null) {
       length++;
     }
@@ -97,13 +98,18 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
                 widget: DialogAddSongSheet(musicList: [widget.music]),
                 alignmentTemp: Alignment.bottomCenter);
           }),
-          _buildItem(Assets.dialogIcSongInfo, 'music_info'.tr, length > 4, () {
+          _buildItem(Assets.dialogIcSongInfo, 'music_info'.tr, length > 5, () {
             SmartDialog.compatible.dismiss();
             SmartDialog.compatible.show(
                 widget: DialogSongInfo(music: widget.music),
                 alignmentTemp: Alignment.bottomCenter);
           }),
           renderWatchAlbum(),
+          _buildItem(Assets.drawerDrawerShare, 'share_music'.tr, length > 5,
+              () {
+            SmartDialog.compatible.dismiss();
+            AppUtils.shareQQ(music: widget.music);
+          }),
           renderResearchLyric(),
           renderRemoveItem()
         ],

@@ -6,6 +6,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/new_menu_dialog.dart';
@@ -18,7 +19,7 @@ class DialogMoreWithMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 180.h,
+      height: 4 * 55.h,
       width: double.infinity,
       decoration: BoxDecoration(
           color: Get.theme.primaryColor,
@@ -57,6 +58,10 @@ class DialogMoreWithMenu extends StatelessWidget {
           _buildItem(Assets.dialogIcDelete2, 'delete_menu'.tr, true, () {
             SmartDialog.compatible.dismiss();
             DBLogic.to.deleteMenuById(menu.id);
+          }),
+          _buildItem(Assets.drawerDrawerShare, 'share_menu'.tr, true, () {
+            SmartDialog.compatible.dismiss();
+            AppUtils.shareQQ(menu: menu);
           }),
         ],
       ),

@@ -81,3 +81,10 @@ final migration3to4 = Migration(3, 4, (database) async {
   ''';
   await database.execute(insertSplashTableSql);
 });
+
+final migration4to5 = Migration(4, 5, (database) async {
+  const alterMusicTableSql = '''
+    ALTER TABLE Music ADD COLUMN `neteaseId` TEXT
+    ''';
+  await database.execute(alterMusicTableSql);
+});
