@@ -48,6 +48,8 @@ class Const {
   static const String shareDefaultLogo =
       "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/ic_launcher.png";
 
+  static const String backendUrl = "https://netease-backend.zhushenwudi.top/song/detail";
+
   // 动态获取资源oss的url和开屏图配置
   static const String splashConfigUrl = "${ownOssUrl}splash_config.json";
 

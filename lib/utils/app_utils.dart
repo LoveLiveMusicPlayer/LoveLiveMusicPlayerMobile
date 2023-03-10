@@ -14,6 +14,7 @@ import 'package:lovelivemusicplayer/models/ArtistModel.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/models/ShareMenu.dart';
+import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
@@ -278,14 +279,14 @@ class AppUtils {
     if (music != null && menu != null) {
       return;
     }
+    SmartDialog.compatible.showLoading(msg: "loading".tr);
     late String text;
     late String title;
-    late String params;
+    String params = "";
     String path = "";
     if (music == null && menu == null) {
       text = "";
       title = "share_app".tr;
-      params = "open-app";
     } else {
       if (music != null) {
         title = "outer_share_music".tr;
@@ -294,8 +295,15 @@ class AppUtils {
             id: music.musicId!,
             name: music.musicName!,
             neteaseId: music.neteaseId);
-        params = Uri.encodeFull("play?data=${shareMusicToJson(shareMusic)}");
-        path = SDUtils.path + music.baseUrl! + music.coverPath!;
+        params = "?type=1&data=${shareMusicToJson(shareMusic)}";
+        try {
+          if (Platform.isIOS) {
+            path = SDUtils.path + music.baseUrl! + music.coverPath!;
+          } else {
+            final res = await Network.getSync("${Const.backendUrl}?ids=${music.neteaseId}");
+            path = res["songs"][0]["al"]["picUrl"];
+          }
+        } catch (ignore) {}
       } else if (menu != null) {
         SmartDialog.compatible.showLoading(msg: 'loading'.tr);
         title = "outer_share_menu".tr;
@@ -311,33 +319,42 @@ class AppUtils {
         }
         final shareMenu =
             ShareMenu(menuName: menu.name, musicList: shareMusicList);
-        params = Uri.encodeFull("share?data=${shareMenuToJson(shareMenu)}");
+        params = "?type=2&data=${shareMenuToJson(shareMenu)}";
         final firstMusic = await DBLogic.to.findMusicById(menu.music.first);
         if (firstMusic != null) {
-          path = SDUtils.path + firstMusic.baseUrl! + firstMusic.coverPath!;
+          try {
+            if (Platform.isIOS) {
+              path = SDUtils.path + firstMusic.baseUrl! + firstMusic.coverPath!;
+            } else {
+              final res = await Network.getSync("${Const.backendUrl}?ids=${firstMusic.neteaseId}");
+              path = res["songs"][0]["al"]["picUrl"];
+            }
+          } catch (ignore) {}
         }
         SmartDialog.compatible.dismiss();
       }
     }
 
-    if (path.isEmpty || !SDUtils.checkFileExist(path)) {
+    if (path.isEmpty) {
+      path = Const.shareDefaultLogo;
+    } else if (path.startsWith("http")) {
+    } else if (!SDUtils.checkFileExist(path)) {
       path = Const.shareDefaultLogo;
     }
-    print("--------------");
-    print(params);
+    SmartDialog.compatible.dismiss();
 
     SSDKMap sdkMap = SSDKMap()
       ..setQQ(
           text,
           title,
-          "http://192.168.123.19:8080/$params",
-          // "https://shareqq.zhushenwudi.top/$params",
+          // Uri.encodeFull("http://192.168.123.19:8080/#/$params"),
+          Uri.encodeFull("https://shareqq.zhushenwudi.top/#/$params"),
           "",
           "",
           "",
           "",
           path,
-          "",
+          path,
           "",
           "",
           "",
@@ -347,14 +364,8 @@ class AppUtils {
           ShareSDKPlatforms.qq);
     SharesdkPlugin.share(ShareSDKPlatforms.qq, sdkMap, (SSDKResponseState state,
         dynamic userdata, dynamic contentEntity, SSDKError error) {
-      print(error.rawData);
-      switch (error.code) {
-        case 200104:
-          SmartDialog.compatible.showToast("no_qq".tr);
-          break;
-        default:
-          break;
-      }
+      LogUtil.e(error.rawData);
+      SmartDialog.compatible.showToast(error.rawData);
     });
   }
 

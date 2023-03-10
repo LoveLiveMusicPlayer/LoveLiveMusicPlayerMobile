@@ -33,13 +33,11 @@ boolean isReleaseBuildType(){
 
 def keystoreProperties = new Properties()
 
-if (isReleaseBuildType()) {
-    def keystorePropertiesFile = rootProject.file("key.properties")
-    if (keystorePropertiesFile.exists()) {
-        keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-    } else {
-        throw GradleException("release模式需要在 app目录下创建 key.properties")
-    }
+def keystorePropertiesFile = rootProject.file("key.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+} else {
+    throw GradleException("release模式需要在 app目录下创建 key.properties")
 }
 
 apply plugin: 'com.android.application'
@@ -81,13 +79,17 @@ android {
     }
 
     signingConfigs {
-        if (releaseBuildType) {
-            release {
-                keyAlias keystoreProperties["keyAlias"]
-                keyPassword keystoreProperties["storePassword"]
-                storeFile file(keystoreProperties["storeFile"])
-                storePassword keystoreProperties["keyPassword"]
-            }
+        debug {
+            keyAlias keystoreProperties["keyAlias"]
+            keyPassword keystoreProperties["storePassword"]
+            storeFile file(keystoreProperties["storeFile"])
+            storePassword keystoreProperties["keyPassword"]
+        }
+        release {
+            keyAlias keystoreProperties["keyAlias"]
+            keyPassword keystoreProperties["storePassword"]
+            storeFile file(keystoreProperties["storeFile"])
+            storePassword keystoreProperties["keyPassword"]
         }
     }
 
