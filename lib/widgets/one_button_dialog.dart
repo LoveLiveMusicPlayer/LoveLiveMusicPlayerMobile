@@ -12,6 +12,7 @@ class OneButtonDialog extends StatelessWidget {
   String _msg = "";
   bool _isShowTitle = true;
   bool _isShowMsg = true;
+  bool _isShowImg = true;
   Callback? _onBackListener;
 
   OneButtonDialog(
@@ -21,6 +22,7 @@ class OneButtonDialog extends StatelessWidget {
       String? msg,
       bool isShowTitle = true,
       bool isShowMsg = true,
+      bool isShowImg = true,
       Callback? onBackListener})
       : super(key: key) {
     _imgAsset = imgAsset;
@@ -28,6 +30,7 @@ class OneButtonDialog extends StatelessWidget {
     _msg = msg ?? "网络异常!";
     _isShowTitle = isShowTitle;
     _isShowMsg = isShowMsg;
+    _isShowImg = isShowImg;
     _onBackListener = onBackListener;
   }
 
@@ -45,11 +48,13 @@ class OneButtonDialog extends StatelessWidget {
           SizedBox(
             height: 28.h,
           ),
-          Image.asset(
-            _imgAsset,
-            width: 78.r,
-            height: 78.r,
-          ),
+          Visibility(
+              visible: _isShowImg,
+              child: Image.asset(
+                _imgAsset,
+                width: 78.r,
+                height: 78.r,
+              )),
           SizedBox(
             height: 12.h,
           ),

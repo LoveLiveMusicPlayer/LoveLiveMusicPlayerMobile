@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
@@ -18,7 +19,10 @@ import 'package:lovelivemusicplayer/eventbus/start_event.dart';
 import 'package:lovelivemusicplayer/global/global_binding.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/widgets/one_button_dialog.dart';
+import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 import 'package:uni_links/uni_links.dart';
@@ -167,9 +171,39 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   // 程序打开时介入
   void handleIncomingLinks() {
-    uriSub = uriLinkStream.listen((Uri? uri) {
+    uriSub = uriLinkStream.listen((Uri? uri) async {
       if (uri != null) {
-        print("获取到的uri2: $uri");
+        final path = Uri.decodeQueryComponent(uri.toString());
+        final json = jsonEncode(Uri.parse(path).queryParameters);
+        print('获取到的uri2: $json');
+        final obj = jsonDecode(json);
+        switch (obj["type"]) {
+          case null:
+            // 仅打开APP
+            break;
+          case "1":
+            // 传递单曲
+            final musicId = obj["musicId"];
+            final music = await DBLogic.to.findMusicById(musicId);
+            if (music == null) {
+              SmartDialog.compatible.showToast("未找到此歌曲");
+              return;
+            }
+            SmartDialog.compatible.show(
+                widget: TwoButtonDialog(
+                  isShowImg: false,
+                  title: "是否播放分享歌曲",
+                  msg: music.musicName,
+                  onConfirmListener: () {
+                    PlayerLogic.to.playMusic([music]);
+                  },
+                ));
+            break;
+          case "2":
+            // 传递歌单
+
+            break;
+        }
       }
     }, onError: (Object err) {
       Log4f.e(msg: err.toString());

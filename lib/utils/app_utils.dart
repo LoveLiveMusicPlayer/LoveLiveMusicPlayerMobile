@@ -347,8 +347,8 @@ class AppUtils {
       ..setQQ(
           text,
           title,
-          // Uri.encodeFull("http://192.168.123.19:8080/#/$params"),
-          Uri.encodeFull("https://shareqq.zhushenwudi.top/#/$params"),
+          Uri.encodeFull("http://192.168.123.19:8080/#/$params"),
+          // Uri.encodeFull("https://shareqq.zhushenwudi.top/#/$params"),
           "",
           "",
           "",

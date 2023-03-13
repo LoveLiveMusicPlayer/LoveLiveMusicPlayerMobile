@@ -12,6 +12,7 @@ class TwoButtonDialog extends StatelessWidget {
   String? _msg;
   bool _isShowTitle = true;
   bool _isShowMsg = true;
+  bool _isShowImg = true;
   Callback? _onBackListener;
   Callback? _onConfirmListener;
 
@@ -22,6 +23,7 @@ class TwoButtonDialog extends StatelessWidget {
     String? msg,
     bool isShowTitle = true,
     bool isShowMsg = true,
+    bool isShowImg = true,
     Callback? onBackListener,
     Callback? onConfirmListener,
   }) : super(key: key) {
@@ -30,6 +32,7 @@ class TwoButtonDialog extends StatelessWidget {
     _msg = msg;
     _isShowTitle = isShowTitle;
     _isShowMsg = isShowMsg;
+    _isShowImg = isShowImg;
     _onBackListener = onBackListener;
     _onConfirmListener = onConfirmListener;
   }
@@ -49,11 +52,13 @@ class TwoButtonDialog extends StatelessWidget {
           SizedBox(
             height: 28.h,
           ),
-          Image.asset(
-            _imgAsset,
-            width: 78.w,
-            height: 78.r,
-          ),
+          Visibility(
+              visible: _isShowImg,
+              child: Image.asset(
+                _imgAsset,
+                width: 78.r,
+                height: 78.r,
+              )),
           SizedBox(
             height: 12.w,
           ),
