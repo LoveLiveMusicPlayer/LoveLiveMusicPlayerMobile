@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/ArtistModel.dart';
 import 'package:lovelivemusicplayer/models/Menu.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
@@ -17,6 +19,7 @@ import 'package:lovelivemusicplayer/models/ShareMenu.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
+import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 import 'package:umeng_common_sdk/umeng_common_sdk.dart';
 
@@ -381,5 +384,68 @@ class AppUtils {
       "group": firstOneChar,
       "artistBin": artistBin.split('').reversed.join('')
     };
+  }
+
+  static handleShare(uri) async {
+    final path = Uri.decodeQueryComponent(uri.toString());
+    final json = jsonEncode(Uri.parse(path).queryParameters);
+    LogUtil.d('获取到的uri: $json');
+    final obj = jsonDecode(json);
+    switch (obj["type"]) {
+      case null:
+      // 仅打开APP
+        break;
+      case "1":
+      // 传递单曲
+        final musicId = obj["musicId"];
+        final music = await DBLogic.to.findMusicById(musicId);
+        if (music == null) {
+          SmartDialog.compatible.showToast("no_found_music1".tr);
+          return;
+        }
+        SmartDialog.compatible.show(
+            widget: TwoButtonDialog(
+              isShowImg: false,
+              title: "need_play_share_music".tr,
+              msg: music.musicName,
+              onConfirmListener: () {
+                PlayerLogic.to.playMusic([music]);
+              },
+            ));
+        break;
+      case "2":
+      // 传递歌单
+        final data = obj["data"];
+        final json = jsonDecode(data);
+        List<String> musicIds = [];
+        json["musicIds"].forEach((musicId) {
+          musicIds.add(musicId);
+        });
+        final tempArr = <String>[];
+        await Future.forEach<String>(musicIds, (musicId) async {
+          final music = await DBLogic.to.findMusicById(musicId);
+          if (music != null && music.musicId != null) {
+            tempArr.add(music.musicId!);
+          }
+        });
+        if (tempArr.isEmpty) {
+          SmartDialog.compatible.showToast("no_found_music2".tr);
+          return;
+        }
+        final menuName = json["menuName"];
+        SmartDialog.compatible.show(
+            widget: TwoButtonDialog(
+              isShowImg: false,
+              title: "need_import_share_menu".tr,
+              msg: menuName,
+              onConfirmListener: () async {
+                bool isSuccess = await DBLogic.to.addMenu(menuName, tempArr);
+                SmartDialog.compatible.showToast(isSuccess
+                    ? 'create_success'.tr
+                    : 'create_over_max'.tr);
+              },
+            ));
+        break;
+    }
   }
 }

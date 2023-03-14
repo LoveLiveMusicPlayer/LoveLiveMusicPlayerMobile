@@ -161,7 +161,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       try {
         final uri = await getInitialUri();
         if (uri != null) {
-          print('获取到的uri: $uri');
+          AppUtils.handleShare(uri);
         }
       } catch (err) {
         Log4f.e(msg: err.toString());
@@ -173,37 +173,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void handleIncomingLinks() {
     uriSub = uriLinkStream.listen((Uri? uri) async {
       if (uri != null) {
-        final path = Uri.decodeQueryComponent(uri.toString());
-        final json = jsonEncode(Uri.parse(path).queryParameters);
-        print('获取到的uri2: $json');
-        final obj = jsonDecode(json);
-        switch (obj["type"]) {
-          case null:
-            // 仅打开APP
-            break;
-          case "1":
-            // 传递单曲
-            final musicId = obj["musicId"];
-            final music = await DBLogic.to.findMusicById(musicId);
-            if (music == null) {
-              SmartDialog.compatible.showToast("未找到此歌曲");
-              return;
-            }
-            SmartDialog.compatible.show(
-                widget: TwoButtonDialog(
-                  isShowImg: false,
-                  title: "是否播放分享歌曲",
-                  msg: music.musicName,
-                  onConfirmListener: () {
-                    PlayerLogic.to.playMusic([music]);
-                  },
-                ));
-            break;
-          case "2":
-            // 传递歌单
-
-            break;
-        }
+        AppUtils.handleShare(uri);
       }
     }, onError: (Object err) {
       Log4f.e(msg: err.toString());

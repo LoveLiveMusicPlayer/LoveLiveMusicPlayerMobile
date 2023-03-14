@@ -116,6 +116,10 @@ const Map<String, String> de_DE = {
   'share_menu': 'Wiedergabeliste teilen',
   'no_qq': 'TIM/QQ ist nicht installiert',
   'version_incompatible': 'Die APP-Version stimmt nicht mit der PC-Version überein, bitte gehen Sie zum Aktualisieren zum Blog',
+  'no_found_music1': 'Lied wurde nicht gefunden',
+  'need_play_share_music': 'Ob geteilte Songs abgespielt werden sollen',
+  'no_found_music2': 'Keine verfügbaren Songs gefunden',
+  'need_import_share_menu': 'Ob freigegebene Wiedergabelisten importiert werden sollen',
   'privacy_detail': '''Lieber LLer:
 
 Bitte stellen Sie sicher, dass Sie alle Rechte und Einschränkungen, die in der „Softwarelizenzvereinbarung“ (im Folgenden als diese Vereinbarung bezeichnet) festgelegt sind, sorgfältig lesen und verstehen, es sei denn, Sie akzeptieren die Bedingungen dieser Vereinbarung, andernfalls haben Sie kein Recht, die Software und damit verbundene zu verwenden Dienstleistungen. Sobald Sie diese Software verwenden, wird davon ausgegangen, dass Sie diese Vereinbarung akzeptiert haben.
