@@ -303,7 +303,8 @@ class AppUtils {
           if (Platform.isIOS) {
             path = SDUtils.path + music.baseUrl! + music.coverPath!;
           } else {
-            final res = await Network.getSync("${Const.backendUrl}?ids=${music.neteaseId}");
+            final res = await Network.getSync(
+                "${Const.backendUrl}?ids=${music.neteaseId}");
             path = res["songs"][0]["al"]["picUrl"];
           }
         } catch (ignore) {}
@@ -329,7 +330,8 @@ class AppUtils {
             if (Platform.isIOS) {
               path = SDUtils.path + firstMusic.baseUrl! + firstMusic.coverPath!;
             } else {
-              final res = await Network.getSync("${Const.backendUrl}?ids=${firstMusic.neteaseId}");
+              final res = await Network.getSync(
+                  "${Const.backendUrl}?ids=${firstMusic.neteaseId}");
               path = res["songs"][0]["al"]["picUrl"];
             }
           } catch (ignore) {}
@@ -393,10 +395,10 @@ class AppUtils {
     final obj = jsonDecode(json);
     switch (obj["type"]) {
       case null:
-      // 仅打开APP
+        // 仅打开APP
         break;
       case "1":
-      // 传递单曲
+        // 传递单曲
         final musicId = obj["musicId"];
         final music = await DBLogic.to.findMusicById(musicId);
         if (music == null) {
@@ -405,16 +407,16 @@ class AppUtils {
         }
         SmartDialog.compatible.show(
             widget: TwoButtonDialog(
-              isShowImg: false,
-              title: "need_play_share_music".tr,
-              msg: music.musicName,
-              onConfirmListener: () {
-                PlayerLogic.to.playMusic([music]);
-              },
-            ));
+          isShowImg: false,
+          title: "need_play_share_music".tr,
+          msg: music.musicName,
+          onConfirmListener: () {
+            PlayerLogic.to.playMusic([music]);
+          },
+        ));
         break;
       case "2":
-      // 传递歌单
+        // 传递歌单
         final data = obj["data"];
         final json = jsonDecode(data);
         List<String> musicIds = [];
@@ -435,16 +437,15 @@ class AppUtils {
         final menuName = json["menuName"];
         SmartDialog.compatible.show(
             widget: TwoButtonDialog(
-              isShowImg: false,
-              title: "need_import_share_menu".tr,
-              msg: menuName,
-              onConfirmListener: () async {
-                bool isSuccess = await DBLogic.to.addMenu(menuName, tempArr);
-                SmartDialog.compatible.showToast(isSuccess
-                    ? 'create_success'.tr
-                    : 'create_over_max'.tr);
-              },
-            ));
+          isShowImg: false,
+          title: "need_import_share_menu".tr,
+          msg: menuName,
+          onConfirmListener: () async {
+            bool isSuccess = await DBLogic.to.addMenu(menuName, tempArr);
+            SmartDialog.compatible.showToast(
+                isSuccess ? 'create_success'.tr : 'create_over_max'.tr);
+          },
+        ));
         break;
     }
   }

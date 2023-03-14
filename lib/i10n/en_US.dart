@@ -93,7 +93,8 @@ const Map<String, String> en_US = {
   'share_music': 'Share a song',
   'share_menu': 'Share a playlist',
   'no_qq': 'TIM/QQ is not installed',
-  'version_incompatible': 'The APP version does not match the PC version, please go to the blog to update',
+  'version_incompatible':
+      'The APP version does not match the PC version, please go to the blog to update',
   'no_found_music1': 'Song not found',
   'need_play_share_music': 'Whether to play shared songs',
   'no_found_music2': 'No available songs found',

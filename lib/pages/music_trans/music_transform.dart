@@ -511,8 +511,8 @@ class _MusicTransformState extends State<MusicTransform> {
     }, cancelOnError: true);
     isConnected = true;
     setState(() {});
-    final message = ftpCmdToJson(
-        FtpCmd(cmd: "version", body: transVer.toString()));
+    final message =
+        ftpCmdToJson(FtpCmd(cmd: "version", body: transVer.toString()));
     channel?.sink.add(message);
   }
 
