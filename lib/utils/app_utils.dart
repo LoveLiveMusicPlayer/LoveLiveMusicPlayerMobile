@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:color_thief_flutter/color_thief_flutter.dart';
 import 'package:common_utils/common_utils.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -309,7 +310,6 @@ class AppUtils {
           }
         } catch (ignore) {}
       } else if (menu != null) {
-        SmartDialog.compatible.showLoading(msg: 'loading'.tr);
         title = "outer_share_menu".tr;
         text = menu.name;
         final musicList = await DBLogic.to.findMusicByMusicIds(menu.music);
@@ -323,20 +323,32 @@ class AppUtils {
         }
         final shareMenu =
             ShareMenu(menuName: menu.name, musicList: shareMusicList);
-        params = "?type=2&data=${shareMenuToJson(shareMenu)}";
-        final firstMusic = await DBLogic.to.findMusicById(menu.music.first);
-        if (firstMusic != null) {
-          try {
-            if (Platform.isIOS) {
-              path = SDUtils.path + firstMusic.baseUrl! + firstMusic.coverPath!;
-            } else {
-              final res = await Network.getSync(
-                  "${Const.backendUrl}?ids=${firstMusic.neteaseId}");
-              path = res["songs"][0]["al"]["picUrl"];
-            }
-          } catch (ignore) {}
+
+        final value = shareMenuToJson(shareMenu);
+        final key = sha512.convert(utf8.encode(value));
+
+        final obj = {"key": "$key", "value": value};
+
+        final resp = await Network.dio?.post(Const.shareKvUrl, data: obj);
+        if (resp != null && resp.data["success"] == true) {
+          params = "?type=2&data=$key";
+          final firstMusic = await DBLogic.to.findMusicById(menu.music.first);
+          if (firstMusic != null) {
+            try {
+              if (Platform.isIOS) {
+                path =
+                    SDUtils.path + firstMusic.baseUrl! + firstMusic.coverPath!;
+              } else {
+                final res = await Network.getSync(
+                    "${Const.backendUrl}?ids=${firstMusic.neteaseId}");
+                path = res["songs"][0]["al"]["picUrl"];
+              }
+            } catch (ignore) {}
+          }
+          SmartDialog.compatible.dismiss();
+        } else {
+          return;
         }
-        SmartDialog.compatible.dismiss();
       }
     }
 
@@ -369,12 +381,8 @@ class AppUtils {
           ShareSDKPlatforms.qq);
     SharesdkPlugin.share(ShareSDKPlatforms.qq, sdkMap, (SSDKResponseState state,
         dynamic userdata, dynamic contentEntity, SSDKError error) {
-      if (error.code == 200300) {
-        SmartDialog.compatible.showToast("无法分享");
-      } else {
-        LogUtil.e(error.code);
-        SmartDialog.compatible.showToast(error.rawData);
-      }
+      LogUtil.e("错误码: ${error.code}");
+      SmartDialog.compatible.showToast(error.rawData);
     });
   }
 

@@ -51,6 +51,9 @@ class Const {
   static const String backendUrl =
       "https://netease-backend.zhushenwudi.top/song/detail";
 
+  static const String shareKvUrl =
+      "http://fc-mp-92601a5b-3adb-44ca-b6f6-fc4e8b3edbca.next.bspapp.com/saveShareKV";
+
   // 动态获取资源oss的url和开屏图配置
   static const String splashConfigUrl = "${ownOssUrl}splash_config.json";
 
