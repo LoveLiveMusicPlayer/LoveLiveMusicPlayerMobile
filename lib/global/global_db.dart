@@ -249,7 +249,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
           date: row['date'] as String?,
           timestamp: row['timestamp'] as int,
           isLove: (row['isLove'] as int) == 1,
-          neteaseId: row['neteaseId'] as String);
+          neteaseId: row['neteaseId'] as String?);
       musicArr.add(music);
     }
     return musicArr;
@@ -464,6 +464,9 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   Future<void> findAllPlayListMusics() async {
     try {
       final playList = await playListMusicDao.findAllPlayListMusics();
+      if (playList.isEmpty) {
+        return;
+      }
       final musicIds = <String>[];
       var willPlayMusicIndex = 0;
       for (var i = 0; i < playList.length; i++) {
@@ -472,7 +475,6 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
           willPlayMusicIndex = i;
         }
       }
-
       final musicList = await findMusicByMusicIds(musicIds);
       if (musicList.isNotEmpty) {
         playLogic.playMusic(musicList,

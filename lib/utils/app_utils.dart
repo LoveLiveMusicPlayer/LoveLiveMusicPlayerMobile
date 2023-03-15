@@ -352,8 +352,8 @@ class AppUtils {
       ..setQQ(
           text,
           title,
-          Uri.encodeFull("http://192.168.123.19:8080/#/$params"),
-          // Uri.encodeFull("https://shareqq.zhushenwudi.top/#/$params"),
+          // Uri.encodeFull("http://192.168.123.19:8080/#/$params"),
+          Uri.encodeFull("https://shareqq.zhushenwudi.top/#/$params"),
           "",
           "",
           "",
@@ -369,8 +369,12 @@ class AppUtils {
           ShareSDKPlatforms.qq);
     SharesdkPlugin.share(ShareSDKPlatforms.qq, sdkMap, (SSDKResponseState state,
         dynamic userdata, dynamic contentEntity, SSDKError error) {
-      LogUtil.e(error.rawData);
-      SmartDialog.compatible.showToast(error.rawData);
+      if (error.code == 200300) {
+        SmartDialog.compatible.showToast("无法分享");
+      } else {
+        LogUtil.e(error.code);
+        SmartDialog.compatible.showToast(error.rawData);
+      }
     });
   }
 
