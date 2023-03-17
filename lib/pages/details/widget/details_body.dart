@@ -117,7 +117,7 @@ class _DetailsBodyState extends State<DetailsBody> {
     ));
     for (var index = 0; index < widget.music.length; index++) {
       list.add(Padding(
-        padding: EdgeInsets.only(left: 16.w, bottom: 20.h, right: 16.w),
+        padding: EdgeInsets.only(bottom: 20.h),
         child: ListViewItemSong(
           index: index,
           music: widget.music[index],
