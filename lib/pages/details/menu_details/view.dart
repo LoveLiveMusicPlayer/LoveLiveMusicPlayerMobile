@@ -58,12 +58,13 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
                 logic: logic,
                 buildCover: _buildCover(),
                 music: music,
-                onRemove: (music) async {
+                isMenu: true,
+                onRemove: (List<String> musicIds) async {
                   if (menu == null || menu!.id == 0) {
                     return;
                   }
-                  final status = await DBLogic.to
-                      .removeItemFromMenu(menu!.id, [music.musicId!]);
+                  final status =
+                      await DBLogic.to.removeItemFromMenu(menu!.id, musicIds);
                   switch (status) {
                     case 1:
                       refreshData();

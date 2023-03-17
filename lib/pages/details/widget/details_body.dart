@@ -14,14 +14,16 @@ import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/widgets/details_list_top.dart';
 import 'package:lovelivemusicplayer/widgets/listview_item_song.dart';
+import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
 class DetailsBody extends StatefulWidget {
   final DetailController logic;
   final Widget buildCover;
   final List<Music> music;
-  final Function(Music)? onRemove;
+  final Function(List<String>)? onRemove;
   final bool? isAlbum;
+  final bool? isMenu;
 
   const DetailsBody(
       {Key? key,
@@ -29,6 +31,7 @@ class DetailsBody extends StatefulWidget {
       required this.buildCover,
       required this.music,
       this.isAlbum,
+      this.isMenu,
       this.onRemove})
       : super(key: key);
 
@@ -137,11 +140,6 @@ class _DetailsBodyState extends State<DetailsBody> {
         ),
       ));
     }
-    if (logic.state.isSelect) {
-      list.add(SizedBox(
-        height: 102.h,
-      ));
-    }
     return list;
   }
 
@@ -153,7 +151,7 @@ class _DetailsBodyState extends State<DetailsBody> {
         music: music,
         isAlbum: widget.isAlbum,
         onRemove: (music) {
-          widget.onRemove!(music);
+          widget.onRemove!([music.musicId!]);
         });
   }
 
@@ -202,14 +200,44 @@ class _DetailsBodyState extends State<DetailsBody> {
                   }),
               alignmentTemp: Alignment.bottomCenter);
         }));
-    SmartDialog.compatible.show(
-        widget: DialogBottomBtn(
-          list: list,
-        ),
-        isPenetrateTemp: true,
-        clickBgDismissTemp: false,
-        maskColorTemp: Colors.transparent,
-        alignmentTemp: Alignment.bottomCenter,
-        onDismiss: () => widget.logic.closeSelect());
+    if (widget.isMenu == true) {
+      list.add(BtnItem(
+          imgPath: Assets.dialogIcDelete2,
+          title: "从歌单中删除",
+          onTap: () async {
+            List<Music> musicList = widget.logic.state.items.cast();
+            var isHasChosen = widget.logic.state.items
+                .any((element) => element.checked == true);
+            if (!isHasChosen) {
+              SmartDialog.compatible.dismiss();
+              return;
+            }
+            List<String> musicIds = [];
+            await Future.forEach<Music>(musicList, (music) {
+              if (music.checked) {
+                musicIds.add(music.musicId!);
+              }
+            });
+
+            // todo: 列表划到底部dialog无法被销毁
+            SmartDialog.compatible.show(
+                widget: TwoButtonDialog(
+                    title: "确认要从歌单删除所选歌曲？",
+                    isShowMsg: false,
+                    onConfirmListener: () {
+                      widget.onRemove!(musicIds);
+                    }));
+          }));
+    }
+    SmartDialog.show(
+      builder: (_) {
+        return DialogBottomBtn(list: list);
+      },
+      usePenetrate: true,
+      clickMaskDismiss: false,
+      maskColor: Colors.transparent,
+      alignment: Alignment.bottomCenter,
+      onDismiss: () => widget.logic.closeSelect(),
+    );
   }
 }

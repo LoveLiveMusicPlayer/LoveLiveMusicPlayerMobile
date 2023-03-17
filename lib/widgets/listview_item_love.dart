@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
@@ -45,19 +46,28 @@ class _ListViewItemLoveState extends State<ListViewItemLove> {
     return Obx(() {
       return Row(
         children: [
-          ///勾选按钮
-          _buildCheckBox(),
+          _buildPlaying(),
+          Expanded(
+            child: Padding(
+                padding: EdgeInsets.only(left: 16.w, right: 16.w),
+                child: Row(
+                  children: [
+                    ///勾选按钮
+                    _buildCheckBox(),
 
-          ///缩列图
-          _buildIcon(),
+                    ///缩列图
+                    _buildIcon(),
 
-          SizedBox(width: 10.r),
+                    SizedBox(width: 10.r),
 
-          ///中间标题部分
-          _buildContent(),
+                    ///中间标题部分
+                    _buildContent(),
 
-          ///右侧操作按钮
-          _buildAction(),
+                    ///右侧操作按钮
+                    _buildAction(),
+                  ],
+                )),
+          ),
         ],
       );
     });
@@ -88,6 +98,16 @@ class _ListViewItemLoveState extends State<ListViewItemLove> {
     );
   }
 
+  Widget _buildPlaying() {
+    final isPlaying =
+        widget.music.musicId == PlayerLogic.to.playingMusic.value.musicId;
+    return Container(
+      width: 5.w,
+      height: 48.h,
+      color: isPlaying ? ColorMs.colorFFAE00 : Colors.transparent,
+    );
+  }
+
   ///勾选按钮
   Widget _buildCheckBox() {
     return Visibility(
@@ -109,6 +129,10 @@ class _ListViewItemLoveState extends State<ListViewItemLove> {
 
   ///中间标题部分
   Widget _buildContent() {
+    final isCurrentPlayingMusic =
+        PlayerLogic.to.playingMusic.value.musicId == widget.music.musicId;
+    final hasBGPhoto = GlobalLogic.to.bgPhoto.value != "";
+
     return Expanded(
       child: InkWell(
         onTap: clickItem,
@@ -116,12 +140,18 @@ class _ListViewItemLoveState extends State<ListViewItemLove> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.music.musicName ?? "",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Get.isDarkMode || GlobalLogic.to.bgPhoto.value != ""
-                    ? TextStyleMs.white_15_500
-                    : TextStyleMs.black_15_500),
+            Text(
+              widget.music.musicName ?? "",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: hasBGPhoto
+                  ? TextStyleMs.white_15_500
+                  : isCurrentPlayingMusic
+                      ? TextStyleMs.orange_15_500
+                      : Get.isDarkMode
+                          ? TextStyleMs.white_15_500
+                          : TextStyleMs.black_15_500,
+            ),
             SizedBox(
               height: 4.w,
             ),
@@ -130,9 +160,11 @@ class _ListViewItemLoveState extends State<ListViewItemLove> {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyleMs.f12_400.copyWith(
-                  color: GlobalLogic.to.bgPhoto.value == ""
-                      ? ColorMs.color999999
-                      : ColorMs.colorD6D6D6),
+                  color: hasBGPhoto
+                      ? ColorMs.colorD6D6D6
+                      : isCurrentPlayingMusic
+                          ? ColorMs.colorFFAE00
+                          : ColorMs.color999999),
             ),
             SizedBox(
               width: 16.w,

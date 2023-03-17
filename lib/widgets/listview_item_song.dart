@@ -49,19 +49,30 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
     return Obx(() {
       return Row(
         children: [
-          ///勾选按钮
-          _buildCheckBox(),
+          _buildPlaying(),
 
-          ///缩列图
-          _buildIcon(),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(left: 16.w, right: 16.w),
+              child: Row(
+                children: [
+                  ///勾选按钮
+                  _buildCheckBox(),
 
-          SizedBox(width: 10.r),
+                  ///缩列图
+                  _buildIcon(),
 
-          ///中间标题部分
-          _buildContent(),
+                  SizedBox(width: 10.r),
 
-          ///右侧操作按钮
-          _buildAction(),
+                  ///中间标题部分
+                  _buildContent(),
+
+                  ///右侧操作按钮
+                  _buildAction(),
+                ],
+              ),
+            ),
+          )
         ],
       );
     });
@@ -84,6 +95,15 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
       onTap: clickItem,
       child: showImg(SDUtils.getImgPath(fileName: coverPath), 48, 48,
           hasShadow: false, radius: 12, onTap: clickItem),
+    );
+  }
+
+  Widget _buildPlaying() {
+    final isPlaying = widget.music.musicId == PlayerLogic.to.playingMusic.value.musicId;
+    return Container(
+      width: 5.w,
+      height: 48.h,
+      color: isPlaying ? ColorMs.colorFFAE00 : Colors.transparent,
     );
   }
 
@@ -110,6 +130,8 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
   Widget _buildContent() {
     final isCurrentPlayingMusic =
         PlayerLogic.to.playingMusic.value.musicId == widget.music.musicId;
+    final hasBGPhoto = GlobalLogic.to.bgPhoto.value != "";
+
     return Expanded(
       child: InkWell(
         onTap: clickItem,
@@ -118,11 +140,13 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(widget.music.musicName ?? "",
-                style: isCurrentPlayingMusic
-                    ? TextStyleMs.orange_15_500
-                    : Get.isDarkMode || GlobalLogic.to.bgPhoto.value != ""
-                        ? TextStyleMs.white_15_500
-                        : TextStyleMs.black_15_500,
+                style: hasBGPhoto
+                    ? TextStyleMs.white_15_500
+                    : isCurrentPlayingMusic
+                        ? TextStyleMs.orange_15_500
+                        : Get.isDarkMode
+                            ? TextStyleMs.white_15_500
+                            : TextStyleMs.black_15_500,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis),
             SizedBox(
@@ -133,11 +157,11 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyleMs.f12_400.copyWith(
-                  color: isCurrentPlayingMusic
-                      ? ColorMs.colorFFAE00
-                      : GlobalLogic.to.bgPhoto.value == ""
-                          ? ColorMs.color999999
-                          : ColorMs.colorD6D6D6),
+                  color: hasBGPhoto
+                      ? ColorMs.colorD6D6D6
+                      : isCurrentPlayingMusic
+                          ? ColorMs.colorFFAE00
+                          : ColorMs.color999999),
             ),
             SizedBox(
               width: 16.w,

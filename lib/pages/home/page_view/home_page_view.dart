@@ -15,6 +15,7 @@ import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/song_library_top.dart';
+import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 
 class HomePageView extends GetView<HomeController> {
   const HomePageView({Key? key}) : super(key: key);
@@ -141,6 +142,36 @@ class HomePageView extends GetView<HomeController> {
               widget: DialogAddSongSheet(musicList: tempList),
               alignmentTemp: Alignment.bottomCenter);
         }));
+    if (HomeController.to.state.currentIndex.value == 3) {
+      // 仅在我喜欢中添加此按钮
+      list.add(BtnItem(
+          imgPath: Assets.dialogIcDelete2,
+          title: "取消我喜欢",
+          onTap: () async {
+            List<Music> musicList = controller.state.items.cast();
+            var isHasChosen =
+            controller.state.items.any((element) => element.checked == true);
+            if (!isHasChosen) {
+              SmartDialog.compatible.dismiss();
+              return;
+            }
+            List<Music> tempList = [];
+            await Future.forEach<Music>(musicList, (music) {
+              if (music.checked) {
+                tempList.add(music);
+              }
+            });
+            SmartDialog.compatible.dismiss();
+            SmartDialog.compatible.show(
+                widget: TwoButtonDialog(
+                    title: "确认要从我喜欢删除所选歌曲？",
+                    isShowMsg: false,
+                    onConfirmListener: () {
+                      bool notAllLove = tempList.any((music) => music.isLove == false);
+                      PlayerLogic.to.toggleLoveList(tempList, notAllLove);
+                    }));
+          }));
+    }
     SmartDialog.compatible.show(
         widget: DialogBottomBtn(
           list: list,

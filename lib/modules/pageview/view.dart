@@ -126,6 +126,8 @@ class _PageViewComponentState extends State<PageViewComponent>
   }
 
   Widget _buildList(int page, ScrollController scrollController) {
+    final currentPage = HomeController.to.state.currentIndex.value;
+    final hasPadding = currentPage == 1 || currentPage == 2 || currentPage == 4;
     return RefresherWidget(
       scrollController: scrollController,
       itemCount: GlobalLogic.to
@@ -138,8 +140,8 @@ class _PageViewComponentState extends State<PageViewComponent>
       columnNum: 3,
       crossAxisSpacing: 10.w,
       mainAxisSpacing: 10.h,
-      leftPadding: 16.w,
-      rightPadding: 16.w,
+      leftPadding: hasPadding ? 16.w : 0,
+      rightPadding: hasPadding ? 16.w : 0,
       aspectRatio: 0.9,
       listItem: (cxt, index) {
         return _buildListItem(index, page);
