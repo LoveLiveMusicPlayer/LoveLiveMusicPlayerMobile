@@ -117,9 +117,11 @@ const Map<String, String> en_US = {
   'file_path_error': 'File path error',
   'crop_background_image': 'Crop background image',
   'delete_from_menu': 'Delete from playlist',
-  'confirm_delete_from_menu': 'Are you sure you want to delete the selected song from playlist?',
+  'confirm_delete_from_menu':
+      'Are you sure you want to delete the selected song from playlist?',
   'cancel_i_like': 'Cancel I like',
-  'confirm_to_delete_music': 'Are you sure you want to delete the selected song from My Likes?',
+  'confirm_to_delete_music':
+      'Are you sure you want to delete the selected song from My Likes?',
   'share': 'Share',
   'privacy_detail': '''Dear LLer,
 

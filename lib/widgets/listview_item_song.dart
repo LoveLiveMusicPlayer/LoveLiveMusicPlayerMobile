@@ -50,7 +50,6 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
       return Row(
         children: [
           _buildPlaying(),
-
           Expanded(
             child: Padding(
               padding: EdgeInsets.only(left: 16.w, right: 16.w),
@@ -99,7 +98,8 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
   }
 
   Widget _buildPlaying() {
-    final isPlaying = widget.music.musicId == PlayerLogic.to.playingMusic.value.musicId;
+    final isPlaying =
+        widget.music.musicId == PlayerLogic.to.playingMusic.value.musicId;
     return Container(
       width: 5.w,
       height: 48.h,

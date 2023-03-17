@@ -123,9 +123,11 @@ const Map<String, String> de_DE = {
   'need_import_share_menu':
       'Ob freigegebene Wiedergabelisten importiert werden sollen',
   'delete_from_menu': 'Aus Wiedergabeliste löschen',
-  'confirm_delete_from_menu': 'Möchten Sie den ausgewählten Titel wirklich aus der Wiedergabeliste löschen?',
+  'confirm_delete_from_menu':
+      'Möchten Sie den ausgewählten Titel wirklich aus der Wiedergabeliste löschen?',
   'cancel_i_like': 'Abbrechen gefällt mir',
-  'confirm_to_delete_music': 'Möchten Sie den ausgewählten Song wirklich aus „Meine Favoriten“ löschen?',
+  'confirm_to_delete_music':
+      'Möchten Sie den ausgewählten Song wirklich aus „Meine Favoriten“ löschen?',
   'share': 'Aktie',
   'privacy_detail': '''Lieber LLer:
 

@@ -149,8 +149,8 @@ class HomePageView extends GetView<HomeController> {
           title: "cancel_i_like".tr,
           onTap: () async {
             List<Music> musicList = controller.state.items.cast();
-            var isHasChosen =
-            controller.state.items.any((element) => element.checked == true);
+            var isHasChosen = controller.state.items
+                .any((element) => element.checked == true);
             if (!isHasChosen) {
               SmartDialog.compatible.dismiss();
               return;
@@ -167,7 +167,8 @@ class HomePageView extends GetView<HomeController> {
                     title: "confirm_to_delete_music".tr,
                     isShowMsg: false,
                     onConfirmListener: () {
-                      bool notAllLove = tempList.any((music) => music.isLove == false);
+                      bool notAllLove =
+                          tempList.any((music) => music.isLove == false);
                       PlayerLogic.to.toggleLoveList(tempList, notAllLove);
                     }));
           }));
