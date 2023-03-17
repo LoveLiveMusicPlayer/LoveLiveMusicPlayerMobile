@@ -116,6 +116,11 @@ const Map<String, String> en_US = {
   'cover_full_data': 'Completely cover the data',
   'file_path_error': 'File path error',
   'crop_background_image': 'Crop background image',
+  'delete_from_menu': 'Delete from playlist',
+  'confirm_delete_from_menu': 'Are you sure you want to delete the selected song from playlist?',
+  'cancel_i_like': 'Cancel I like',
+  'confirm_to_delete_music': 'Are you sure you want to delete the selected song from My Likes?',
+  'share': 'Share',
   'privacy_detail': '''Dear LLer,
 
 Please be sure to carefully read and understand all rights and restrictions set forth in the Software License Agreement (hereinafter referred to as the Agreement). Unless you accept the terms of the Agreement, you are not entitled to use the Software and related Services. Once you use the software, you will be deemed to accept the agreement.

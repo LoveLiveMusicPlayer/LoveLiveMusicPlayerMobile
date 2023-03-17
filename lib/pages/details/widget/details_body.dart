@@ -203,7 +203,7 @@ class _DetailsBodyState extends State<DetailsBody> {
     if (widget.isMenu == true) {
       list.add(BtnItem(
           imgPath: Assets.dialogIcDelete2,
-          title: "从歌单中删除",
+          title: "delete_from_menu".tr,
           onTap: () async {
             List<Music> musicList = widget.logic.state.items.cast();
             var isHasChosen = widget.logic.state.items
@@ -222,7 +222,7 @@ class _DetailsBodyState extends State<DetailsBody> {
             // todo: 列表划到底部dialog无法被销毁
             SmartDialog.compatible.show(
                 widget: TwoButtonDialog(
-                    title: "确认要从歌单删除所选歌曲？",
+                    title: "confirm_delete_from_menu".tr,
                     isShowMsg: false,
                     onConfirmListener: () {
                       widget.onRemove!(musicIds);

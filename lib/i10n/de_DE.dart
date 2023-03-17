@@ -122,6 +122,11 @@ const Map<String, String> de_DE = {
   'no_found_music2': 'Keine verfügbaren Songs gefunden',
   'need_import_share_menu':
       'Ob freigegebene Wiedergabelisten importiert werden sollen',
+  'delete_from_menu': 'Aus Wiedergabeliste löschen',
+  'confirm_delete_from_menu': 'Möchten Sie den ausgewählten Titel wirklich aus der Wiedergabeliste löschen?',
+  'cancel_i_like': 'Abbrechen gefällt mir',
+  'confirm_to_delete_music': 'Möchten Sie den ausgewählten Song wirklich aus „Meine Favoriten“ löschen?',
+  'share': 'Aktie',
   'privacy_detail': '''Lieber LLer:
 
 Bitte stellen Sie sicher, dass Sie alle Rechte und Einschränkungen, die in der „Softwarelizenzvereinbarung“ (im Folgenden als diese Vereinbarung bezeichnet) festgelegt sind, sorgfältig lesen und verstehen, es sei denn, Sie akzeptieren die Bedingungen dieser Vereinbarung, andernfalls haben Sie kein Recht, die Software und damit verbundene zu verwenden Dienstleistungen. Sobald Sie diese Software verwenden, wird davon ausgegangen, dass Sie diese Vereinbarung akzeptiert haben.

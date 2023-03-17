@@ -146,7 +146,7 @@ class HomePageView extends GetView<HomeController> {
       // 仅在我喜欢中添加此按钮
       list.add(BtnItem(
           imgPath: Assets.dialogIcDelete2,
-          title: "取消我喜欢",
+          title: "cancel_i_like".tr,
           onTap: () async {
             List<Music> musicList = controller.state.items.cast();
             var isHasChosen =
@@ -164,7 +164,7 @@ class HomePageView extends GetView<HomeController> {
             SmartDialog.compatible.dismiss();
             SmartDialog.compatible.show(
                 widget: TwoButtonDialog(
-                    title: "确认要从我喜欢删除所选歌曲？",
+                    title: "confirm_to_delete_music".tr,
                     isShowMsg: false,
                     onConfirmListener: () {
                       bool notAllLove = tempList.any((music) => music.isLove == false);

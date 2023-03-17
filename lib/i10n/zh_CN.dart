@@ -113,6 +113,11 @@ const Map<String, String> zh_CN = {
   'need_play_share_music': '是否播放分享歌曲',
   'no_found_music2': '未找到可用歌曲',
   'need_import_share_menu': '是否导入分享歌单',
+  'delete_from_menu': '从歌单中删除',
+  'confirm_delete_from_menu': '确认要从歌单删除所选歌曲？',
+  'cancel_i_like': '取消我喜欢',
+  'confirm_to_delete_music': '确认要从我喜欢删除所选歌曲？',
+  'share': '分享',
   'privacy_detail': '''亲爱的LLer：
 
 请务必认真阅读和理解《软件许可使用协议》（以下简称：本协议）中规定的所有权利和限制，除非您接受协议条款，否则您无权使用本软件及其相关服务。您一旦使用本软件，将视为对协议的接受。
