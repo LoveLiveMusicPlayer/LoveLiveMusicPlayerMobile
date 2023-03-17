@@ -35,4 +35,5 @@ class ColorMs {
   static Color colorFAFAFA = const Color(0xFFFAFAFA);
   static Color colorBFBFBF = const Color(0xffBFBFBF);
   static Color colorD6D6D6 = const Color(0xffD6D6D6);
+  static Color colorFFAE00 = const Color(0xffFFAE00);
 }

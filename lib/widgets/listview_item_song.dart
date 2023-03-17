@@ -4,6 +4,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
@@ -107,6 +108,8 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
 
   ///中间标题部分
   Widget _buildContent() {
+    final isCurrentPlayingMusic =
+        PlayerLogic.to.playingMusic.value.musicId == widget.music.musicId;
     return Expanded(
       child: InkWell(
         onTap: clickItem,
@@ -115,9 +118,11 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(widget.music.musicName ?? "",
-                style: Get.isDarkMode || GlobalLogic.to.bgPhoto.value != ""
-                    ? TextStyleMs.white_15_500
-                    : TextStyleMs.black_15_500,
+                style: isCurrentPlayingMusic
+                    ? TextStyleMs.orange_15_500
+                    : Get.isDarkMode || GlobalLogic.to.bgPhoto.value != ""
+                        ? TextStyleMs.white_15_500
+                        : TextStyleMs.black_15_500,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis),
             SizedBox(
@@ -128,9 +133,11 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyleMs.f12_400.copyWith(
-                  color: GlobalLogic.to.bgPhoto.value == ""
-                      ? ColorMs.color999999
-                      : ColorMs.colorD6D6D6),
+                  color: isCurrentPlayingMusic
+                      ? ColorMs.colorFFAE00
+                      : GlobalLogic.to.bgPhoto.value == ""
+                          ? ColorMs.color999999
+                          : ColorMs.colorD6D6D6),
             ),
             SizedBox(
               width: 16.w,

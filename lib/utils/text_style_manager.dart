@@ -71,6 +71,9 @@ class TextStyleMs {
   static TextStyle whiteBold_18 = TextStyle(
       color: ColorMs.colorFFFFFF, fontSize: 18.sp, fontWeight: FontWeight.bold);
 
+  static TextStyle orange_15_500 = TextStyle(
+      color: ColorMs.colorFFAE00, fontSize: 15.sp, fontWeight: FontWeight.w500);
+
   static TextStyle blue_12 =
       TextStyle(color: ColorMs.color28B3F7, fontSize: 12.sp);
 
@@ -83,6 +86,7 @@ class TextStyleMs {
       TextStyle(color: ColorMs.colorDFDFDF, fontSize: 12.sp);
   static TextStyle colorBFBFBF_18 =
       TextStyle(color: ColorMs.colorBFBFBF, fontSize: 18.sp);
+
 
   static TextStyle f12_400 = TextStyle(fontSize: 12.sp);
   static TextStyle f14_400 = TextStyle(fontSize: 14.sp);
