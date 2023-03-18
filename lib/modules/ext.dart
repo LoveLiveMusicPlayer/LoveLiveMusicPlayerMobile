@@ -19,13 +19,18 @@ import '../utils/sd_utils.dart';
 /// [height] 显示的高度
 /// [radius] 圆角度数
 /// [hasShadow] 是否有阴影效果
-Widget showImg(String? path, double? width, double? height,
-    {double radius = 20,
-    bool hasShadow = true,
-    Color? shadowColor,
-    String defPhoto = Assets.logoLogo,
-    BoxFit fit = BoxFit.cover,
-    GestureTapCallback? onTap}) {
+Widget showImg(
+  String? path,
+  double? width,
+  double? height, {
+  double radius = 20,
+  bool hasShadow = true,
+  Color? shadowColor,
+  String defPhoto = Assets.logoLogo,
+  BoxFit fit = BoxFit.cover,
+  GestureTapCallback? onTap,
+  GestureTapCallback? onLongPress,
+}) {
   ImageProvider<Object> noShadowImage;
   ImageProvider<Object> shadowImage;
   bool isNetImage = false;
@@ -173,6 +178,11 @@ Widget showImg(String? path, double? width, double? height,
               onTap();
             }
           },
+          onLongPress: () {
+            if (onLongPress != null) {
+              onLongPress();
+            }
+          },
           child: ClipRRect(
               borderRadius: BorderRadius.circular(radius.h),
               child: CachedNetworkImage(
@@ -200,6 +210,11 @@ Widget showImg(String? path, double? width, double? height,
           onTap: () {
             if (onTap != null) {
               onTap();
+            }
+          },
+          onLongPress: () {
+            if (onLongPress != null) {
+              onLongPress();
             }
           },
           child: ClipRRect(

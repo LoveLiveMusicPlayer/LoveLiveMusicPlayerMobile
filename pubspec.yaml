@@ -96,6 +96,7 @@ dependencies:
   uni_links: ^0.5.1 # 回跳APP插件
   webview_flutter_plus: ^0.3.0+2
   crypto: ^3.0.2
+  vibration: ^1.7.5
 
 dependency_overrides:
   ffi: ^2.0.1

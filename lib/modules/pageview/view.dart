@@ -12,7 +12,6 @@ import 'package:lovelivemusicplayer/pages/home/widget/listview_item_album.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_singer.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_song_sheet.dart';
 import 'package:lovelivemusicplayer/routes.dart';
-import 'package:lovelivemusicplayer/widgets/listview_item_love.dart';
 import 'package:lovelivemusicplayer/widgets/listview_item_song.dart';
 import 'package:lovelivemusicplayer/widgets/refresher_widget.dart';
 
@@ -157,11 +156,7 @@ class _PageViewComponentState extends State<PageViewComponent>
         music: GlobalLogic.to.musicList[index],
         checked: HomeController.to.isItemChecked(index),
         onItemTap: (index, checked) {
-          if (HomeController.to.state.isSelect.value) {
-            HomeController.to.selectItem(index, checked);
-            return;
-          }
-          PlayerLogic.to.playMusic(GlobalLogic.to.musicList, index: index);
+          HomeController.to.selectItem(index, checked);
         },
         onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
         onMoreTap: (music) {
@@ -195,17 +190,20 @@ class _PageViewComponentState extends State<PageViewComponent>
         },
       );
     } else if (page == 3) {
-      return ListViewItemLove(
+      return ListViewItemSong(
         index: index,
         music: GlobalLogic.to.loveList[index],
         checked: HomeController.to.isItemChecked(index),
+        onItemTap: (index, checked) {
+          HomeController.to.selectItem(index, checked);
+        },
         onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
         onMoreTap: (music) {
           SmartDialog.compatible.show(
               widget: DialogMoreWithMusic(music: music),
               alignmentTemp: Alignment.bottomCenter);
         },
-        onPlayNowTap: (index) {
+        onPlayNowTap: () {
           PlayerLogic.to.playMusic(GlobalLogic.to.loveList, index: index);
         },
       );
@@ -228,11 +226,7 @@ class _PageViewComponentState extends State<PageViewComponent>
         music: GlobalLogic.to.recentList[index],
         checked: HomeController.to.isItemChecked(index),
         onItemTap: (index, checked) {
-          if (HomeController.to.state.isSelect.value) {
-            HomeController.to.selectItem(index, checked);
-            return;
-          }
-          PlayerLogic.to.playMusic(GlobalLogic.to.musicList, index: index);
+          HomeController.to.selectItem(index, checked);
         },
         onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
         onMoreTap: (music) {

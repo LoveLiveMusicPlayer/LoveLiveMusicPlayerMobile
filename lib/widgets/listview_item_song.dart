@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/Music.dart';
@@ -12,6 +13,9 @@ import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
+import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:vibration/vibration.dart';
 
 ///歌曲
 class ListViewItemSong extends StatefulWidget {
@@ -87,13 +91,40 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
     setState(() {});
   }
 
-  ///缩列图`
+  onLongPress() async {
+    if (!SDUtils.allowEULA) {
+      return;
+    }
+    final hasVibrator = await Vibration.hasVibrator();
+    if (hasVibrator == true) {
+      Vibration.vibrate();
+    }
+    if (!HomeController.to.state.isSelect.value) {
+      SmartDialog.compatible.show(
+          widget: TwoButtonDialog(
+        title: "search_at_moe".tr,
+        isShowMsg: false,
+        onConfirmListener: () async {
+          final uri = Uri.parse(Const.moeGirlUrl + widget.music.musicName!);
+          if (await canLaunchUrl(uri)) {
+            await launchUrl(uri, mode: LaunchMode.inAppWebView);
+          }
+        },
+      ));
+    }
+  }
+
+  ///缩列图
   Widget _buildIcon() {
     final coverPath = widget.music.baseUrl! + widget.music.coverPath!;
     return InkWell(
       onTap: clickItem,
+      onLongPress: onLongPress,
       child: showImg(SDUtils.getImgPath(fileName: coverPath), 48, 48,
-          hasShadow: false, radius: 12, onTap: clickItem),
+          hasShadow: false,
+          radius: 12,
+          onTap: clickItem,
+          onLongPress: onLongPress),
     );
   }
 
@@ -135,6 +166,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
     return Expanded(
       child: InkWell(
         onTap: clickItem,
+        onLongPress: onLongPress,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
