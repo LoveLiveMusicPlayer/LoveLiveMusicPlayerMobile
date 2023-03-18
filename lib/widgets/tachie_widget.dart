@@ -21,32 +21,32 @@ class Tachie extends StatelessWidget {
         return Container();
       }
       return Padding(
-        padding: EdgeInsets.only(bottom: 25.h),
-        child: SizedBox(
-          height: 200.h,
-          width: double.infinity,
-          child: WebViewPlus(
-              key: ValueKey(musicId),
-              javascriptMode: JavascriptMode.unrestricted,
-              onWebViewCreated: (controller) async {
-                final music = await DBLogic.to.findMusicById(musicId);
-                if (music == null || music.artistBin == null) {
-                  return;
-                }
-                final map = AppUtils.getArtistIndexArrInGroup(music.artistBin!);
+          padding: EdgeInsets.only(bottom: 25.h),
+          child: SizedBox(
+            height: 180.h,
+            width: double.infinity,
+            child: WebViewPlus(
+                key: ValueKey(musicId),
+                javascriptMode: JavascriptMode.unrestricted,
+                onWebViewCreated: (controller) async {
+                  final music = await DBLogic.to.findMusicById(musicId);
+                  if (music == null || music.artistBin == null) {
+                    return;
+                  }
+                  final map =
+                      AppUtils.getArtistIndexArrInGroup(music.artistBin!);
 
-                if (map == null) {
-                  return;
-                }
+                  if (map == null) {
+                    return;
+                  }
 
-                bool isBonus = Const.bonus == musicId;
+                  bool isBonus = Const.bonus == musicId;
 
-                controller.loadUrl(
-                    'assets/tachie/index.html?isBonus=$isBonus&bin=${map["artistBin"]}&group=${map["group"]}&canMove=$canMove');
-              },
-              backgroundColor: Colors.transparent),
-        ),
-      );
+                  controller.loadUrl(
+                      'assets/tachie/index.html?isBonus=$isBonus&bin=${map["artistBin"]}&group=${map["group"]}&canMove=$canMove');
+                },
+                backgroundColor: Colors.transparent),
+          ));
     });
   }
 }

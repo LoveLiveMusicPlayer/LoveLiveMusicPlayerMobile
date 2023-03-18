@@ -24,7 +24,7 @@
         function initWidget() {
             const params = getParams()
             const isBonus = params.isBonus === 'true'
-            isBonus ? renderBonusWidget() : renderNormalWidget(params)
+            isBonus ? renderBonusWidget(params) : renderNormalWidget(params)
         }
 
         function renderNormalWidget(params) {
@@ -71,16 +71,44 @@
                 })
         }
 
-        function renderBonusWidget() {
-            for (let i = 1; i <= 12; i++) {
-                let inertia = (Math.floor(Math.random() * 11) + 35) / 10000
-                let angle = i % 2 === 0 ? -10 : 10
-                new SakanaWidget({
-                    character: i % 2 === 0 ? 'takina' : 'chisato',
-                    autoFit: true,
-                    controls: false
-                }).setState({i: inertia, d: 1, r: angle, y: 10}).mount("#widget" + i)
-            }
+        function renderBonusWidget(params) {
+            let roleList = []
+
+            fetch('tachie.json')
+                .then(resp => resp.json())
+                .then(json => {
+                    roleList = [...json["bonus"]]
+
+                    for (let position = 0; position < 12; position++) {
+                        if (position > roleList.length - 1) {
+                            continue
+                        }
+                        const chisato = SakanaWidget.getCharacter('chisato')
+                        let inertia = (Math.floor(Math.random() * 11) + 35) / 10000
+                        let angle = position % 2 === 0 ? -7 : 7
+                        chisato.initialState = {
+                            ...chisato.initialState,
+                            i: inertia,
+                            d: 1,
+                            r: angle,
+                            y: 10
+                        }
+                        chisato.image = `data:image/png;base64,${roleList[position].photo}`
+                        SakanaWidget.registerCharacter('chisato' + position, chisato)
+                        let canMove = params.canMove === "true"
+
+                        new SakanaWidget({
+                            character: 'chisato' + position,
+                            autoFit: true,
+                            controls: false,
+                            stroke: {
+                                color: roleList[position].color,
+                                heightPercent: 0.6
+                            },
+                            showRod: false
+                        }).mount("#widget" + position, canMove)
+                    }
+                });
         }
     </script>
     <script async onload="initWidget()" src="sakana.js"></script>
