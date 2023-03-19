@@ -340,14 +340,7 @@ Widget showGroupButton(String path,
       borderRadius: BorderRadius.circular(8.h),
       boxShadow: [
         BoxShadow(
-            color: Get.isDarkMode
-                ? ColorMs.color05080C.withAlpha(16)
-                : Colors.white,
-            offset: const Offset(-3, -3),
-            blurStyle: BlurStyle.inner,
-            blurRadius: 6),
-        BoxShadow(
-            color: Get.isDarkMode ? ColorMs.color05080C : ColorMs.colorD3E0EC,
+            color: Get.isDarkMode ? ColorMs.color05080C : ColorMs.colorEEEEEE,
             offset: const Offset(5, 3),
             blurRadius: 6),
       ],
@@ -361,14 +354,16 @@ Widget showGroupButton(String path,
           onTap: onTap,
           child: Stack(
             children: [
-              Center(
-                child: SvgPicture.asset(path,
-                    width: innerWidth.h, height: innerHeight.h),
-              ),
               Container(
                 width: 130.h,
                 height: 60.h,
+                color:
+                    Get.isDarkMode ? ColorMs.colorNightPrimary : Colors.white,
                 alignment: const Alignment(0, 0),
+              ),
+              Center(
+                child: SvgPicture.asset(path,
+                    width: innerWidth.h, height: innerHeight.h),
               )
             ],
           ),

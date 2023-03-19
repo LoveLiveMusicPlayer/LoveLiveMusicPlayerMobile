@@ -38,18 +38,20 @@ class _DrawerPageState extends State<DrawerPage> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+        backgroundColor:
+            Get.isDarkMode ? ColorMs.colorNightPrimary : Colors.white,
         child: SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          topView(),
-          groupView(),
-          functionView(context),
-          SizedBox(height: 6.h),
-          versionView(),
-        ],
-      ),
-    ));
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              topView(),
+              groupView(),
+              functionView(context),
+              SizedBox(height: 6.h),
+              versionView(),
+            ],
+          ),
+        ));
   }
 
   Widget topView() {
@@ -131,24 +133,24 @@ class _DrawerPageState extends State<DrawerPage> {
           ],
         ),
         SizedBox(height: 16.h),
-        Visibility(
-          visible: false,
-          maintainAnimation: true,
-          maintainSize: true,
-          maintainState: true,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              showGroupButton(Assets.drawerLogoLiella, onTap: () {
-                global.currentGroup.value = Const.groupLiella;
-                DBLogic.to.findAllListByGroup(Const.groupLiella);
-              }),
-              showGroupButton(Assets.drawerLogoAllstars, onTap: () {
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            showGroupButton(Assets.drawerLogoHasunosora, onTap: () {
+              global.currentGroup.value = Const.groupLiella;
+              DBLogic.to.findAllListByGroup(Const.groupLiella);
+            }),
+            Visibility(
+              visible: false,
+              maintainAnimation: true,
+              maintainSize: true,
+              maintainState: true,
+              child: showGroupButton(Assets.drawerLogoAllstars, onTap: () {
                 global.currentGroup.value = Const.groupCombine;
                 DBLogic.to.findAllListByGroup(Const.groupCombine);
               }),
-            ],
-          ),
+            )
+          ],
         ),
         SizedBox(height: 16.h),
       ],
@@ -162,20 +164,13 @@ class _DrawerPageState extends State<DrawerPage> {
             width: 250.w,
             margin: EdgeInsets.only(left: 8.w, right: 8.w),
             decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
+              color: Get.isDarkMode ? ColorMs.colorNightPrimary : Colors.white,
               borderRadius: BorderRadius.circular(8.r),
               boxShadow: [
                 BoxShadow(
                     color: Get.isDarkMode
-                        ? ColorMs.color05080C.withAlpha(16)
-                        : Colors.white,
-                    offset: Offset(-3.w, -3.h),
-                    blurStyle: BlurStyle.inner,
-                    blurRadius: 6.r),
-                BoxShadow(
-                    color: Get.isDarkMode
                         ? ColorMs.color05080C
-                        : ColorMs.colorD3E0EC,
+                        : ColorMs.colorEEEEEE,
                     offset: Offset(5.w, 3.h),
                     blurRadius: 6.r),
               ],

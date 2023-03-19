@@ -198,7 +198,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
             artist = Artist(
                 uid: artistModel.v,
                 name: artistModel.k,
-                photo: "${Const.ossUrl}LLMP/artist/${artistModel.v}.jpg",
+                photo: "${Const.ossUrl}LLMP/artist_webp/${artistModel.v}.webp",
                 music: [mMusic.musicId!],
                 group: mMusic.group!);
             await artistDao.insertArtist(artist);
