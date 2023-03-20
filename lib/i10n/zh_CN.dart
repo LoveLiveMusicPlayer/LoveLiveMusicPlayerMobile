@@ -119,6 +119,7 @@ const Map<String, String> zh_CN = {
   'confirm_to_delete_music': '确认要从我喜欢删除所选歌曲？',
   'share': '分享',
   'search_at_moe': '是否在萌娘百科搜索？',
+  'moe_address_error': '部分地址可能存在错误',
   'privacy_detail': '''亲爱的LLer：
 
 请务必认真阅读和理解《软件许可使用协议》（以下简称：本协议）中规定的所有权利和限制，除非您接受协议条款，否则您无权使用本软件及其相关服务。您一旦使用本软件，将视为对协议的接受。

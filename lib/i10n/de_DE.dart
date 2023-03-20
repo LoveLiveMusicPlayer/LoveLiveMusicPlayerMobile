@@ -130,6 +130,7 @@ const Map<String, String> de_DE = {
       'Möchten Sie den ausgewählten Song wirklich aus „Meine Favoriten“ löschen?',
   'share': 'Aktie',
   'search_at_moe': 'Auf MoeGirl suchen?',
+  'moe_address_error': 'Einige Adressen können Fehler enthalten',
   'privacy_detail': '''Lieber LLer:
 
 Bitte stellen Sie sicher, dass Sie alle Rechte und Einschränkungen, die in der „Softwarelizenzvereinbarung“ (im Folgenden als diese Vereinbarung bezeichnet) festgelegt sind, sorgfältig lesen und verstehen, es sei denn, Sie akzeptieren die Bedingungen dieser Vereinbarung, andernfalls haben Sie kein Recht, die Software und damit verbundene zu verwenden Dienstleistungen. Sobald Sie diese Software verwenden, wird davon ausgegangen, dass Sie diese Vereinbarung akzeptiert haben.

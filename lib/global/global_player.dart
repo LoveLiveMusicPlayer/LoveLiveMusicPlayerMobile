@@ -388,7 +388,7 @@ class PlayerLogic extends SuperController
           try {
             final encodeUrl = Uri.encodeComponent(lrcUrl);
             final netLrc =
-                await Network.getSync("${Const.ossUrl}$encodeUrl") ?? "";
+                await Network.getSync("${Const.lyricOssUrl}$encodeUrl") ?? "";
             if (netLrc != null && netLrc.isNotEmpty) {
               if (storageLrc == null) {
                 lyric = Lyric(uid: uid, jp: null, zh: null, roma: null);

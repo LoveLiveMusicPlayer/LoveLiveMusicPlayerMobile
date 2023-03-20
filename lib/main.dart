@@ -246,7 +246,7 @@ getOssUrl() async {
       if (result != null && result.data != null) {
         // 能够加载到开屏配置
         final config = initConfigFromJson(result.data!);
-        Const.ossUrl = config.ossUrl;
+        Const.dataOssUrl = config.ossUrl;
         Const.splashUrl = config.ossUrl + config.splash.route;
         final forceMap = config.splash.forceChoose;
 

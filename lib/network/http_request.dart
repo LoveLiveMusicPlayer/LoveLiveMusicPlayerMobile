@@ -4,8 +4,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart' as Getx;
+import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/models/apiResponse.dart';
-import 'package:lovelivemusicplayer/network/api_service.dart';
 import 'package:lovelivemusicplayer/widgets/one_button_dialog.dart';
 import 'package:synchronized/extension.dart';
 
@@ -32,7 +32,7 @@ class Network {
   _init() {
     if (dio == null) {
       BaseOptions options = BaseOptions(
-          baseUrl: ApiService.baseUrl, connectTimeout: ApiService.timeout);
+          baseUrl: Const.dataOssUrl, connectTimeout: 30000);
       dio = Dio(options);
       _addInterceptor(dio);
     }

@@ -39,8 +39,9 @@ class Const {
       "https://itunes.apple.com/lookup?bundleId=com.zhushenwudi.lovelivemusicplayer";
 
   // 默认的资源oss，无法在线获取时用于离线加载网络图片
-  static String ossUrl =
-      "https://video-file-upload.oss-cn-hangzhou.aliyuncs.com/";
+  static String dataOssUrl = "https://picbed-cdn.zhushenwudi.top/llmp-oss/";
+
+  static String lyricOssUrl = "https://llmp-oss.oss-cn-hongkong.aliyuncs.com/";
 
   // 自己的oss
   static const String ownOssUrl =

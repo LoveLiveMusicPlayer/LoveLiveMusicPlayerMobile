@@ -103,7 +103,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
       SmartDialog.compatible.show(
           widget: TwoButtonDialog(
         title: "search_at_moe".tr,
-        isShowMsg: false,
+        msg: "moe_address_error".tr,
         onConfirmListener: () async {
           final uri = Uri.parse(Const.moeGirlUrl + widget.music.musicName!);
           if (await canLaunchUrl(uri)) {

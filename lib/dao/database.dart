@@ -26,7 +26,7 @@ import 'album_dao.dart';
 part 'database.g.dart';
 
 @TypeConverters([StringListConverter])
-@Database(version: 4, entities: [
+@Database(version: 5, entities: [
   Album,
   Lyric,
   Music,
