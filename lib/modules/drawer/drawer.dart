@@ -137,8 +137,8 @@ class _DrawerPageState extends State<DrawerPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             showGroupButton(Assets.drawerLogoHasunosora, onTap: () {
-              global.currentGroup.value = Const.groupLiella;
-              DBLogic.to.findAllListByGroup(Const.groupLiella);
+              global.currentGroup.value = Const.groupHasunosora;
+              DBLogic.to.findAllListByGroup(Const.groupHasunosora);
             }),
             Visibility(
               visible: false,
@@ -318,6 +318,8 @@ class _DrawerPageState extends State<DrawerPage> {
         data.music.liella, data.album.liella, Const.groupLiella);
     await loopParseData(
         data.music.combine, data.album.combine, Const.groupCombine);
+    await loopParseData(
+        data.music.hasunosora, data.album.hasunosora, Const.groupHasunosora);
     await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
     SmartDialog.compatible.dismiss(status: SmartStatus.loading);
     SpUtil.put(Const.spDataVersion, data.version);

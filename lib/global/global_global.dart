@@ -243,6 +243,8 @@ class GlobalLogic extends SuperController
         return Assets.logoLogoLiella;
       case Const.groupCombine:
         return Assets.logoLogoCombine;
+      case Const.groupHasunosora:
+        return Assets.logoLogoHasunosora;
       default:
         return Assets.logoLogo;
     }

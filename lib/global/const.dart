@@ -13,6 +13,7 @@ class Const {
   static const String groupSaki = "Nijigasaki";
   static const String groupLiella = "Liella!";
   static const String groupCombine = "Combine";
+  static const String groupHasunosora = "Hasunosora";
 
   // Logan 加密键值对
   static const String aesKey = "0123456789012345";
