@@ -44,6 +44,8 @@ var enableBG = false;
 var needRemoveCover = true;
 // 传输协议版本号
 const transVer = 1;
+// 是否需要清理数据并重启
+const needClearApp = true;
 // 开屏图片列表
 final splashList = <String>[];
 

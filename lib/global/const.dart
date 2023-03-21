@@ -33,6 +33,7 @@ class Const {
   static const String spLoopMode = "SP_LOOP_MODE";
   static const String spDataVersion = "SP_DATA_VERSION";
   static const String spBackgroundPhoto = "SP_BACKGROUND_PHOTO";
+  static const String spForceRemoveVersion = "SP_FORCE_REMOVE_VERSION";
   static const String spEnableBackgroundPhoto = "SP_ENABLE_BACKGROUND_PHOTO";
 
   static const String appstoreUrl =

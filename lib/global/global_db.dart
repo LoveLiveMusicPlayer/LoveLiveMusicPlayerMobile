@@ -74,6 +74,9 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     historyDao = database.historyDao;
     splashDao = database.splashDao;
     CachedNetworkImage.logLevel = CacheManagerLogLevel.debug;
+
+    await checkNeedClearApp();
+
     await findAllListByGroup(Const.groupAll);
     PlayerLogic.to.initLoopMode();
     await Future.delayed(const Duration(seconds: 1));
@@ -202,7 +205,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
             artist = Artist(
                 uid: artistModel.v,
                 name: artistModel.k,
-                photo: "${Const.dataOssUrl}LLMP/artist_webp/${artistModel.v}.webp",
+                photo:
+                    "${Const.dataOssUrl}LLMP/artist_webp/${artistModel.v}.webp",
                 music: [mMusic.musicId!],
                 group: mMusic.group!);
             await artistDao.insertArtist(artist);
@@ -274,6 +278,25 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       await artistDao.deleteAllArtists();
     } catch (e) {
       Log4f.e(msg: e.toString(), writeFile: true);
+    }
+  }
+
+  /// 检查是否需要清空APP数据
+  Future<void> checkNeedClearApp() async {
+    // 获取上一次版本号
+    final oldVersion = await SpUtil.getString(Const.spForceRemoveVersion, "1.0.0");
+    // 比较上一次记录的版本号与当前APP版本，判断是否进来了一个新版本
+    final isNewVersion = AppUtils.compareVersion(oldVersion, appVersion);
+    if (isNewVersion) {
+      // 如果是新版本
+      if (needClearApp) {
+        // 需要清理APP
+        await clearAllMusic();
+        await clearAllUserData();
+        await SpUtil.clear();
+      }
+      // 无论如何都要将版本号记录在本地SP
+      await SpUtil.put(Const.spForceRemoveVersion, appVersion);
     }
   }
 

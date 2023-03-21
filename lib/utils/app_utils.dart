@@ -254,8 +254,8 @@ class AppUtils {
     }
   }
 
-  /// version1 新版本号
-  /// version2 老版本号
+  /// version1 老版本号
+  /// version2 新版本号
   ///
   static bool compareVersion(String version1, String version2) {
     int i = 0, j = 0;

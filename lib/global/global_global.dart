@@ -338,7 +338,7 @@ class GlobalLogic extends SuperController
           final packageInfo = await PackageInfo.fromPlatform();
           if (bundle["bundleId"] == packageInfo.packageName) {
             bool needUpdate =
-                AppUtils.compareVersion(bundle["version"], packageInfo.version);
+                AppUtils.compareVersion(packageInfo.version, bundle["version"]);
             if (needUpdate) {
               OpenAppstore.launch(
                   androidAppId: packageInfo.packageName,
