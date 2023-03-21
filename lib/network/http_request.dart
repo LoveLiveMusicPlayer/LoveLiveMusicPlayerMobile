@@ -14,6 +14,13 @@ class Network {
   static Dio? dio;
   static final Lock _lock = Lock();
 
+  Map<String, dynamic> httpHeaders = {
+    'Accept': 'application/json,*/*',
+    "Session-Access-Origin": "xxx",
+    "Content-Type": "application/json",
+    "Cache-Control": "no-cache"
+  };
+
   Network._();
 
   static Network getInstance() {
@@ -32,7 +39,9 @@ class Network {
   _init() {
     if (dio == null) {
       BaseOptions options = BaseOptions(
-          baseUrl: Const.dataOssUrl, connectTimeout: 30000);
+          baseUrl: Const.dataOssUrl,
+          connectTimeout: 30000,
+          headers: httpHeaders);
       dio = Dio(options);
       _addInterceptor(dio);
     }
