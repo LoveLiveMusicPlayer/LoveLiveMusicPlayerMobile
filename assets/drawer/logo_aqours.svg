@@ -1,24 +1,33 @@
 <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 512">
     <path
-        d="M905.76,192.49c-21.87-21.72-66.71-12.83-64.53,17.77S909.05,234,909.05,261.6s-45.94,34.55-70,16.1"
-        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
-    <line x1="750.95" y1="230.5" x2="750.95" y2="288"
-        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
-    <path d="M751,230.5a50,50,0,0,1,50-50"
-        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
-    <line x1="690.95" y1="180.5" x2="690.95" y2="253.5"
-        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
-    <path d="M621,180.5V253a35,35,0,0,0,70,0"
-        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
-    <circle cx="515.7" cy="234.25" r="53.75"
-        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
-    <circle cx="354.7" cy="234.25" r="53.75"
-        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
-    <line x1="408.45" y1="236.5" x2="408.45" y2="314.5"
-        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
-    <circle cx="408.45" cy="354.5" r="15" style="fill:#29abe2" />
-    <line x1="141.2" y1="236.5" x2="234.83" y2="236.5"
-        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
-    <polyline points="114.95 287.5 188.46 142.5 261.95 289.5"
-        style="fill:none;stroke:#e4007f;stroke-linecap:round;stroke-linejoin:round;stroke-width:30px" />
+        d="M750.1,313c-10.07,0-20.35-3-27.91-8.84a9.92,9.92,0,0,1,12.07-15.74c7.36,5.64,19.41,5.92,26,2.65,4.28-2.11,4.28-4.52,4.28-5.42v-.09c-1.2-2.12-9.81-5-14.44-6.52-12.31-4.1-29.16-9.7-30.37-26.62-.84-11.77,5.32-21.85,16.48-27,14.08-6.46,32.2-3.32,43.07,7.47a9.92,9.92,0,1,1-14,14.08c-5.64-5.6-15-6.19-20.82-3.52-5.33,2.44-5.06,6.13-5,7.52.26,3.7,9.45,6.76,16.84,9.22,11.82,3.93,28,9.32,28,25.43,0,9.94-5.6,18.4-15.35,23.21A43.19,43.19,0,0,1,750.1,313Z"
+        style="fill:#e4007f" />
+    <path
+        d="M670,313a9.92,9.92,0,0,1-9.92-9.91v-38a9.92,9.92,0,1,1,19.83,0v38A9.91,9.91,0,0,1,670,313Z"
+        style="fill:#e4007f" />
+    <path
+        d="M670,275a9.92,9.92,0,0,1-9.92-9.92,43,43,0,0,1,43-43A9.92,9.92,0,1,1,703,242,23.17,23.17,0,0,0,679.9,265.1,9.92,9.92,0,0,1,670,275Z"
+        style="fill:#e4007f" />
+    <path
+        d="M630.32,290.22a9.92,9.92,0,0,1-9.92-9.91V232a9.92,9.92,0,1,1,19.83,0v48.27A9.91,9.91,0,0,1,630.32,290.22Z"
+        style="fill:#e4007f" />
+    <path
+        d="M607.18,313a33.09,33.09,0,0,1-33-32.32c0-.14,0-.27,0-.4V232A9.92,9.92,0,1,1,594,232V280a13.23,13.23,0,0,0,26.45,0,9.92,9.92,0,1,1,19.83,0A33.09,33.09,0,0,1,607.18,313Z"
+        style="fill:#e4007f" />
+    <path
+        d="M514.45,313a45.46,45.46,0,1,1,45.45-45.45A45.51,45.51,0,0,1,514.45,313Zm0-71.07a25.62,25.62,0,1,0,25.62,25.62A25.65,25.65,0,0,0,514.45,242Z"
+        style="fill:#e4007f" />
+    <path
+        d="M408,313a45.46,45.46,0,1,1,45.46-45.45A45.5,45.5,0,0,1,408,313ZM408,242a25.62,25.62,0,1,0,25.62,25.62A25.65,25.65,0,0,0,408,242Z"
+        style="fill:#e4007f" />
+    <path
+        d="M443.54,330.55a9.92,9.92,0,0,1-9.92-9.91V269.07a9.92,9.92,0,1,1,19.84,0v51.57A9.92,9.92,0,0,1,443.54,330.55Z"
+        style="fill:#e4007f" />
+    <circle cx="443.54" cy="347.08" r="9.92" style="fill:#29abe2" />
+    <path
+        d="M346.69,314a9.92,9.92,0,0,1-8.88-5.49L298,229l-39.68,78.3a9.92,9.92,0,0,1-17.7-9l48.6-95.87a9.92,9.92,0,0,1,8.84-5.43h0a9.93,9.93,0,0,1,8.85,5.48l48.59,97.19A9.92,9.92,0,0,1,346.69,314Z"
+        style="fill:#e4007f" />
+    <path
+        d="M342,284c0,5.48-5.33,9.92-11.9,9.92H268.2c-6.57,0-11.9-4.44-11.9-9.92s5.33-9.92,11.9-9.92h61.9C336.67,274.08,342,278.52,342,284Z"
+        style="fill:#e4007f" />
 </svg>

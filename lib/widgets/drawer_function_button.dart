@@ -64,7 +64,7 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
                   }
                   return Text(widget.text,
                       style: TextStyle(fontSize: 14.sp).copyWith(
-                          color: mode ? ColorMs.colorFFFFFF : Colors.black),
+                          color: mode ? ColorMs.colorEDF5FF : Colors.black),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis);
                 }))

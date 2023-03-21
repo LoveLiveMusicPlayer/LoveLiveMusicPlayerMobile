@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
@@ -100,7 +101,7 @@ class _HomeViewState extends State<HomeView>
                 ? Get.theme.primaryColor
                 : Colors.white,
             endDrawer: SizedBox(
-              width: 300.w,
+              width: min(0.35 * Get.height, Get.width),
               child: const DrawerPage(),
             ),
             body: GetBuilder<GlobalLogic>(builder: (logic) {
