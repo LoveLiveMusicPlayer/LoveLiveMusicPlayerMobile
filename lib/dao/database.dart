@@ -58,33 +58,26 @@ abstract class MusicDatabase extends FloorDatabase {
 }
 
 final migration1to2 = Migration(1, 2, (database) async {
-  const alterMusicTableSql = '''
-    ALTER TABLE Music ADD COLUMN `date` TEXT
-    ''';
+  const alterMusicTableSql = '''ALTER TABLE Music ADD COLUMN `date` TEXT''';
   await database.execute(alterMusicTableSql);
 });
 
 final migration2to3 = Migration(2, 3, (database) async {
-  const insertLoveTableSql = '''
-    CREATE TABLE Love (musicId TEXT PRIMARY KEY, timestamp INTEGER)
-  ''';
-  const insertHistoryTableSql = '''
-    CREATE TABLE History (musicId TEXT PRIMARY KEY, timestamp INTEGER)
-  ''';
+  const insertLoveTableSql =
+      '''CREATE TABLE Love (musicId TEXT PRIMARY KEY, timestamp INTEGER)''';
+  const insertHistoryTableSql =
+      '''CREATE TABLE History (musicId TEXT PRIMARY KEY, timestamp INTEGER)''';
   await database.execute(insertLoveTableSql);
   await database.execute(insertHistoryTableSql);
 });
 
 final migration3to4 = Migration(3, 4, (database) async {
-  const insertSplashTableSql = '''
-    CREATE TABLE Splash (url TEXT PRIMARY KEY)
-  ''';
+  const insertSplashTableSql = '''CREATE TABLE Splash (url TEXT PRIMARY KEY)''';
   await database.execute(insertSplashTableSql);
 });
 
 final migration4to5 = Migration(4, 5, (database) async {
-  const alterMusicTableSql = '''
-    ALTER TABLE Music ADD COLUMN `neteaseId` TEXT
-    ''';
+  const alterMusicTableSql =
+      '''ALTER TABLE Music ADD COLUMN `neteaseId` TEXT''';
   await database.execute(alterMusicTableSql);
 });

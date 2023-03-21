@@ -77,10 +77,11 @@ class SDUtils {
   static void saveBGPhoto(String fileName, List<int> content) {
     final filePath = bgPhotoPath + fileName;
     try {
+      var dir = Directory(bgPhotoPath);
+      dir.listSync().forEach((element) {
+        element.deleteSync(recursive: true);
+      });
       var file = File(filePath);
-      if (file.existsSync()) {
-        file.deleteSync();
-      }
       file.writeAsBytesSync(content);
       SpUtil.put(Const.spBackgroundPhoto, fileName);
       GlobalLogic.to.setBgPhoto(filePath);
