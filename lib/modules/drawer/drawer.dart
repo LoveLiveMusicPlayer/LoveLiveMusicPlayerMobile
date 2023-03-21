@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -82,7 +83,9 @@ class _DrawerPageState extends State<DrawerPage> {
           );
         }),
         Text("LoveLiveMusicPlayer",
-            style: TextStyle(fontSize: 17.sp, color: Get.isDarkMode ? ColorMs.colorEDF5FF : Colors.black)),
+            style: TextStyle(
+                fontSize: 17.sp,
+                color: Get.isDarkMode ? ColorMs.colorEDF5FF : Colors.black)),
         SizedBox(height: 16.h)
       ],
     );
@@ -357,7 +360,7 @@ class _DrawerPageState extends State<DrawerPage> {
     return SizedBox(
         height: 30.h,
         child: Center(
-          child: Text("Ver.$appVersion"),
+          child: Text("Ver.$appVersion${kReleaseMode ? "" : " Preview"}"),
         ));
   }
 

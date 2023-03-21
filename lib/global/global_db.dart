@@ -284,7 +284,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   /// 检查是否需要清空APP数据
   Future<void> checkNeedClearApp() async {
     // 获取上一次版本号
-    final oldVersion = await SpUtil.getString(Const.spForceRemoveVersion, "1.0.0");
+    final oldVersion =
+        await SpUtil.getString(Const.spForceRemoveVersion, "1.0.0");
     // 比较上一次记录的版本号与当前APP版本，判断是否进来了一个新版本
     final isNewVersion = AppUtils.compareVersion(oldVersion, appVersion);
     if (isNewVersion) {

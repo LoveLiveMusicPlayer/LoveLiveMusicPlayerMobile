@@ -68,7 +68,8 @@ class Album {
         Const.groupSaki: List<dynamic>.from(nijigasaki.map((x) => x.toJson())),
         Const.groupLiella: List<dynamic>.from(liella.map((x) => x.toJson())),
         Const.groupCombine: List<dynamic>.from(combine.map((x) => x.toJson())),
-        Const.groupHasunosora: List<dynamic>.from(hasunosora.map((x) => x.toJson())),
+        Const.groupHasunosora:
+            List<dynamic>.from(hasunosora.map((x) => x.toJson())),
       };
 }
 
@@ -150,7 +151,8 @@ class Music {
         Const.groupSaki: List<dynamic>.from(nijigasaki.map((x) => x.toJson())),
         Const.groupLiella: List<dynamic>.from(liella.map((x) => x.toJson())),
         Const.groupCombine: List<dynamic>.from(combine.map((x) => x.toJson())),
-        Const.groupHasunosora: List<dynamic>.from(hasunosora.map((x) => x.toJson())),
+        Const.groupHasunosora:
+            List<dynamic>.from(hasunosora.map((x) => x.toJson())),
       };
 }
 

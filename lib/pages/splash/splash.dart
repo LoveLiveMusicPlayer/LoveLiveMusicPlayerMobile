@@ -38,7 +38,7 @@ class _SplashState extends State<Splash> {
         });
       });
     }
-    
+
     SplashPhoto().getRandomPhotoView().then((widget) {
       if (widget != null) {
         myWidget = widget;
@@ -67,9 +67,8 @@ class _SplashState extends State<Splash> {
             highlightColor: ColorMs.color0093DF,
             colorBrightness: Brightness.dark,
             splashColor: Colors.grey,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20)
-            ),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             child: Text("${"skip".tr} ${count}s"),
             onPressed: () => goToHomePage(),
           ),
