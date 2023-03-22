@@ -28,8 +28,8 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
-      music.addAll(await DBLogic.to.findAllMusicsByArtistBin(artist.uid));
+    DBLogic.to.findAllMusicsByArtistBin(artist.uid).then((musicList) {
+      music.addAll(musicList);
       logic.state.items = music;
       setState(() {});
     });

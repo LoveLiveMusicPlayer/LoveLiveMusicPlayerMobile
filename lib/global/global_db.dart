@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
@@ -78,8 +80,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     await checkNeedClearApp();
 
     await findAllListByGroup(Const.groupAll);
-    PlayerLogic.to.initLoopMode();
-    await Future.delayed(const Duration(seconds: 1));
+    await PlayerLogic.to.initLoopMode();
     await findAllPlayListMusics();
     if (!hasAIPic) {
       // 没有AI开屏时发送卸载窗口命令
@@ -223,9 +224,9 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   }
 
   Future<void> downloadArtistModelList() async {
-    final result = await Network.dio?.request<String>(Const.artistModelUrl);
-    if (result != null && result.data != null) {
-      artistList.addAll(artistFromJson(result.data!));
+    final res = await Network.getSync(Const.artistModelUrl, isShowDialog: false);
+    if (res is List) {
+      artistList.addAll(artistFromJson(jsonEncode(res)));
     }
   }
 

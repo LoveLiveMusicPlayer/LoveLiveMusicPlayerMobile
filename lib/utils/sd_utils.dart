@@ -1,7 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
-
-import 'package:common_utils/common_utils.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
@@ -105,25 +102,6 @@ class SDUtils {
     } catch (e) {
       Log4f.e(msg: e.toString(), writeFile: true);
     }
-  }
-
-  static uploadLog() async {
-    final time = DateUtil.getNowDateStr();
-    final loggerFile =
-        File(await FlutterLogan.getUploadPath(time.split(" ")[0]));
-    if (loggerFile.existsSync()) {
-      final filePath = "${path}log${Platform.pathSeparator}$time.txt";
-      touchFile(filePath);
-      loggerFile.copySync(filePath);
-    }
-    final device = await getDeviceInfo();
-    final deviceFilePath = "${path}log${Platform.pathSeparator}device.txt";
-    if (!File(deviceFilePath).existsSync()) {
-      touchFile(deviceFilePath);
-    }
-    final deviceJson = deviceToJson(device).codeUnits;
-    File(deviceFilePath)
-        .writeAsBytesSync(Uint8List.fromList(deviceJson), flush: true);
   }
 
   static Future<Device> getDeviceInfo() async {

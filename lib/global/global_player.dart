@@ -103,8 +103,8 @@ class PlayerLogic extends SuperController
     });
   }
 
-  initLoopMode() {
-    SpUtil.getInt(Const.spLoopMode, 0).then((index) => changeLoopMode(index));
+  initLoopMode() async {
+    await SpUtil.getInt(Const.spLoopMode, 0).then((index) => changeLoopMode(index));
   }
 
   /// 持久化播放列表

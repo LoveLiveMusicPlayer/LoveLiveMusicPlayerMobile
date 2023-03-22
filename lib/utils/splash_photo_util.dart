@@ -50,9 +50,7 @@ class SplashPhoto {
       if (splashItem == null) {
         DBLogic.to.splashDao.insertSplashUrl(Splash(url: imageUrl));
       }
-      Future.delayed(const Duration(seconds: 1), () {
-        eventBus.fire(StartEvent((DateTime.now().millisecondsSinceEpoch)));
-      });
+      eventBus.fire(StartEvent((DateTime.now().millisecondsSinceEpoch)));
     }, onError: (object, stackTrace) {
       Log4f.d(msg: "下载开屏图失败\n$imageUrl");
     }));

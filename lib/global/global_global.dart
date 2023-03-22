@@ -349,12 +349,6 @@ class GlobalLogic extends SuperController
             break;
           }
         }
-      }, error: (msg) {
-        SmartDialog.compatible.show(
-            widget: OneButtonDialog(
-          title: 'please_check_network'.tr,
-          msg: msg,
-        ));
       });
     }
   }

@@ -329,8 +329,8 @@ class AppUtils {
 
         final obj = {"key": "$key", "value": value};
 
-        final resp = await Network.dio?.post(Const.shareKvUrl, data: obj);
-        if (resp != null && resp.data["success"] == true) {
+        final resp = await Network.postSync(Const.shareKvUrl, obj);
+        if (resp["success"] == true) {
           params = "?type=2&data=$key";
           final firstMusic = await DBLogic.to.findMusicById(menu.music.first);
           if (firstMusic != null) {

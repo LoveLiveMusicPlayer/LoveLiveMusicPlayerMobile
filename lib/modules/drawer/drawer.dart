@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -270,33 +271,30 @@ class _DrawerPageState extends State<DrawerPage> {
           return;
         }
         String latestDataUrl = CloudUpdate.fromJson(result[index]).url;
-        Network.dio?.request(latestDataUrl).then((value) {
-          CloudData data = CloudData.fromJson(value.data);
-          SpUtil.getInt(Const.spDataVersion).then((currentVersion) {
-            Log4f.d(msg: "云端版本号: ${data.version}");
-            if (currentVersion == data.version) {
-              SmartDialog.compatible.dismiss(status: SmartStatus.loading);
-              SmartDialog.compatible.show(
-                  widget: TwoButtonDialog(
-                title: 'now_is_latest'.tr,
-                isShowMsg: false,
-                onConfirmListener: () {
-                  SmartDialog.compatible
-                      .dismiss(status: SmartStatus.allDialog)
-                      .then((value) {
-                    parseUpdateDataSource(data);
-                  });
-                },
-              ));
-            } else if (currentVersion < data.version) {
-              SmartDialog.compatible
-                  .dismiss(status: SmartStatus.loading)
-                  .then((value) {
+        Network.get(latestDataUrl, success: (res) {
+          if (res is Map<String, dynamic>) {
+            CloudData data = CloudData.fromJson(res);
+            SpUtil.getInt(Const.spDataVersion).then((currentVersion) async {
+              Log4f.d(msg: "云端版本号: ${data.version}");
+              await SmartDialog.compatible.dismiss(status: SmartStatus.loading);
+              if (currentVersion == data.version) {
+                SmartDialog.compatible.show(
+                    widget: TwoButtonDialog(
+                      title: 'now_is_latest'.tr,
+                      isShowMsg: false,
+                      onConfirmListener: () {
+                        parseUpdateDataSource(data);
+                      },
+                    ));
+              } else if (currentVersion < data.version) {
                 parseUpdateDataSource(data);
-              });
-            }
-          });
-        });
+              }
+            });
+          } else {
+            SmartDialog.compatible.dismiss(status: SmartStatus.loading);
+            SmartDialog.compatible.showToast('data_error'.tr);
+          }
+        }, isShowDialog: false);
       } else {
         SmartDialog.compatible.dismiss(status: SmartStatus.loading);
         SmartDialog.compatible.showToast('data_error'.tr);
@@ -305,7 +303,7 @@ class _DrawerPageState extends State<DrawerPage> {
       Log4f.e(msg: err, writeFile: true);
       SmartDialog.compatible.dismiss(status: SmartStatus.loading);
       SmartDialog.compatible.showToast('fetch_songs_fail'.tr);
-    }, isShowDialog: false, isShowError: false);
+    }, isShowDialog: false);
   }
 
   parseUpdateDataSource(CloudData data) async {

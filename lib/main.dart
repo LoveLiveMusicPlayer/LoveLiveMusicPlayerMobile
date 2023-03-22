@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
@@ -52,6 +53,8 @@ var needRemoveCover = true;
 const transVer = 1;
 // 开屏图片列表
 final splashList = <String>[];
+// 是否可以使用SmartDialog
+var isCanUseSmartDialog = false;
 
 void main() async {
   // 启动屏开启
@@ -62,12 +65,7 @@ void main() async {
   // 初始化
   await initServices();
   isDark = await SpUtil.getBoolean(Const.spDark);
-  await JustAudioBackground.init(
-    androidNotificationChannelId:
-        'com.zhushenwudi.lovelivemusicplayer.channel.audio',
-    androidNotificationChannelName: 'lovelive audio playback',
-    androidNotificationOngoing: true,
-  );
+
   if (env == "pre") {
     void reportErrorAndLog(FlutterErrorDetails details) {
       if (details
@@ -104,6 +102,13 @@ void main() async {
   }
 
   AppUtils.setStatusBar(isDark);
+
+  await JustAudioBackground.init(
+    androidNotificationChannelId:
+    'com.zhushenwudi.lovelivemusicplayer.channel.audio',
+    androidNotificationChannelName: 'lovelive audio playback',
+    androidNotificationOngoing: true,
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -217,6 +222,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             fallbackLocale: Translation.fallbackLocale,
             translations: Translation(),
             builder: FlutterSmartDialog.init(builder: (context, widget) {
+              isCanUseSmartDialog = true;
               return MediaQuery(
                   // 设置文字大小不随系统设置改变
                   data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
@@ -248,10 +254,10 @@ getOssUrl() async {
   try {
     final connection = await Connectivity().checkConnectivity();
     if (connection != ConnectivityResult.none) {
-      final result = await Network.dio?.request<String>(Const.splashConfigUrl);
-      if (result != null && result.data != null) {
+      final result = await Network.getSync(Const.splashConfigUrl);
+      if (result is Map<String, dynamic>) {
         // 能够加载到开屏配置
-        final config = initConfigFromJson(result.data!);
+        final config = initConfigFromJson(jsonEncode(result));
         Const.dataOssUrl = config.ossUrl;
         Const.splashUrl = config.ossUrl + config.splash.route;
         final forceMap = config.splash.forceChoose;

@@ -253,7 +253,7 @@ class _SystemSettingsState extends State<SystemSettings> {
                                     .then((value) async {
                                   SmartDialog.compatible.dismiss();
                                   SmartDialog.compatible
-                                      .showToast('will_shutdown'.tr);
+                                      .showLoading(msg: 'will_shutdown'.tr);
                                   Future.delayed(const Duration(seconds: 2),
                                       () {
                                     if (Platform.isIOS) {

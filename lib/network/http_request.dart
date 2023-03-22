@@ -88,8 +88,34 @@ class Network {
         loadingMessage: loadingMessage);
   }
 
+  static postSync(String url,
+      dynamic data,
+      {bool isShowDialog = false,
+        bool isShowError = false,
+        String? loadingMessage}) async {
+    if (isShowDialog) {
+      SmartDialog.compatible
+          .showLoading(msg: loadingMessage ?? 'requesting'.tr);
+    }
+    var resp = await dio!.post(url, data: data).onError((error, stackTrace) {
+      if (isShowError) {
+        SmartDialog.compatible.show(
+            widget: OneButtonDialog(
+              title: 'please_check_network'.tr,
+              isShowMsg: false,
+            ));
+      }
+      throw Future.error(error.toString());
+    });
+    if (isShowDialog) {
+      SmartDialog.compatible.dismiss();
+    }
+    return resp.data;
+  }
+
   static post(String url,
       {Map<String, dynamic>? params,
+      dynamic data,
       Function(dynamic t)? success,
       Function(String msg)? error,
       bool isShowDialog = true,
@@ -98,6 +124,7 @@ class Network {
     request(url,
         method: 'post',
         params: params,
+        data: data,
         success: success,
         error: error,
         isShowDialog: isShowDialog,
@@ -114,6 +141,7 @@ class Network {
   static request(String url,
       {String method = 'get',
       Map<String, dynamic>? params,
+      dynamic data,
       Function(dynamic t)? success,
       Function(String msg)? error,
       bool isShowDialog = true,
@@ -126,7 +154,7 @@ class Network {
         .then((value) => {
               if (value)
                 {
-                  _dioRequest(url, method, params, success, error, isShowDialog,
+                  _dioRequest(url, method, params, data, success, error, isShowDialog,
                       isShowError, loadingMessage ?? 'requesting'.tr)
                 }
               else
@@ -139,6 +167,7 @@ class Network {
       String url,
       String method,
       Map<String, dynamic>? params,
+      dynamic data,
       Function(dynamic t)? success,
       Function(String msg)? error,
       bool isShowDialog,
@@ -149,10 +178,11 @@ class Network {
     }
     dio!
         .request<dynamic>(url,
-            queryParameters: params, options: Options(method: method))
-        .then((value) => {_handlerSuccess(value.data, success)})
-        .onError((e, stackTrace) =>
-            {_handlerError(isShowError, e.toString(), error)});
+            queryParameters: params, data: data, options: Options(method: method))
+        .then((value) {
+      if (success != null) success(value.data);
+    }).onError(
+            (e, stackTrace) => _handlerError(isShowError, e.toString(), error));
   }
 
   static _addInterceptor(Dio? dio) {
@@ -164,16 +194,17 @@ class Network {
       // 3.对参数进行一些处理,比如序列化处理等
       //     options.extra
 
-      // if (options.path.startsWith("http") || options.path.startsWith("https")) {
-      //   LogUtil.v(options.path);
-      // } else {
-      //   LogUtil.v(options.baseUrl + options.path);
-      // }
+      if (options.path.startsWith("http") || options.path.startsWith("https")) {
+        print(options.path);
+      } else {
+        print(options.baseUrl + options.path);
+      }
       // LogUtil.v(options.headers);
       // LogUtil.v(options.queryParameters);
       // LogUtil.d("拦截了请求");
       handler.next(options);
     }, onResponse: (Response e, ResponseInterceptorHandler handler) {
+      print(e.data);
       handler.next(e);
     });
     dio?.interceptors.add(inter);
@@ -194,10 +225,10 @@ class Network {
     SmartDialog.compatible.dismiss();
     if (success != null) {
       if (t is Map<String, dynamic>) {
+        print("1111");
         success(ApiResponse().fromJson(t).data);
-      } else if (t is String) {
-        success(t);
       } else {
+        print("2222");
         success(t);
       }
     }
