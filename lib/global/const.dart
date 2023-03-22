@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:lovelivemusicplayer/main.dart';
 
 class Const {
   // 设计图宽度 dp
@@ -19,7 +20,7 @@ class Const {
   static const String aesKey = "0123456789012345";
   static const String iV = "0123456789012345";
 
-  static const String bonus = "6268d7a4e7e29bcc5c9c8996";
+  static const String bonus = "64198531396358024272298e";
 
   // 暂无歌曲时使用炫彩模式要显示的颜色值
   static const int noMusicColorfulSkin = 0x4DFFAE00;
@@ -63,8 +64,6 @@ class Const {
   static const String splashConfigUrl = "${ownOssUrl}splash_config.json";
 
   static String splashUrl = "${ownOssUrl}LLMP-M/splash_bg/";
-
-  static const env = kReleaseMode ? "prod" : "pre";
 
   // 数据更新桥文件
   static const String dataUrl = "$ownOssUrl$env/data.json";

@@ -360,7 +360,7 @@ class _DrawerPageState extends State<DrawerPage> {
     return SizedBox(
         height: 30.h,
         child: Center(
-          child: Text("Ver.$appVersion${kReleaseMode ? "" : " Preview"}"),
+          child: Text("Ver.$appVersion${env == "prod" ? "" : " Preview"}"),
         ));
   }
 

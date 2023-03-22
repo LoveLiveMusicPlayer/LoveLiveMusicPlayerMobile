@@ -64,6 +64,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       migration3to4,
       migration4to5
     ]).build();
+    splashDao = database.splashDao;
     albumDao = database.albumDao;
     lyricDao = database.lyricDao;
     musicDao = database.musicDao;
@@ -72,7 +73,6 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     artistDao = database.artistDao;
     loveDao = database.loveDao;
     historyDao = database.historyDao;
-    splashDao = database.splashDao;
     CachedNetworkImage.logLevel = CacheManagerLogLevel.debug;
 
     await checkNeedClearApp();
@@ -82,6 +82,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     await Future.delayed(const Duration(seconds: 1));
     await findAllPlayListMusics();
     if (!hasAIPic) {
+      // 没有AI开屏时发送卸载窗口命令
       eventBus.fire(StartEvent((DateTime.now().millisecondsSinceEpoch)));
     }
     super.onInit();

@@ -32,6 +32,12 @@ import 'routes.dart';
 import 'utils/sd_utils.dart';
 import 'utils/sp_util.dart';
 
+
+// 是否需要清理数据并重启
+const needClearApp = true;
+// 当前环境
+const env = "pre";
+
 // 是否是暗黑主题
 var isDark = false;
 // APP版本号
@@ -44,8 +50,6 @@ var enableBG = false;
 var needRemoveCover = true;
 // 传输协议版本号
 const transVer = 1;
-// 是否需要清理数据并重启
-const needClearApp = true;
 // 开屏图片列表
 final splashList = <String>[];
 
@@ -64,7 +68,7 @@ void main() async {
     androidNotificationChannelName: 'lovelive audio playback',
     androidNotificationOngoing: true,
   );
-  if (kReleaseMode) {
+  if (env == "pre") {
     void reportErrorAndLog(FlutterErrorDetails details) {
       if (details
           .exceptionAsString()
