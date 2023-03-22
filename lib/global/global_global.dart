@@ -19,7 +19,6 @@ import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
-import 'package:lovelivemusicplayer/widgets/one_button_dialog.dart';
 import 'package:open_appstore/open_appstore.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:updater/updater.dart';

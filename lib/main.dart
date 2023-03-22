@@ -33,7 +33,6 @@ import 'routes.dart';
 import 'utils/sd_utils.dart';
 import 'utils/sp_util.dart';
 
-
 // 是否需要清理数据并重启
 const needClearApp = true;
 // 当前环境
@@ -105,7 +104,7 @@ void main() async {
 
   await JustAudioBackground.init(
     androidNotificationChannelId:
-    'com.zhushenwudi.lovelivemusicplayer.channel.audio',
+        'com.zhushenwudi.lovelivemusicplayer.channel.audio',
     androidNotificationChannelName: 'lovelive audio playback',
     androidNotificationOngoing: true,
   );

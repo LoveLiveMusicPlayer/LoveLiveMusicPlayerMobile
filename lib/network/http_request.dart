@@ -4,8 +4,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart' as Getx;
+import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
-import 'package:lovelivemusicplayer/models/apiResponse.dart';
 import 'package:lovelivemusicplayer/widgets/one_button_dialog.dart';
 import 'package:synchronized/extension.dart';
 
@@ -88,11 +88,10 @@ class Network {
         loadingMessage: loadingMessage);
   }
 
-  static postSync(String url,
-      dynamic data,
+  static postSync(String url, dynamic data,
       {bool isShowDialog = false,
-        bool isShowError = false,
-        String? loadingMessage}) async {
+      bool isShowError = false,
+      String? loadingMessage}) async {
     if (isShowDialog) {
       SmartDialog.compatible
           .showLoading(msg: loadingMessage ?? 'requesting'.tr);
@@ -101,9 +100,9 @@ class Network {
       if (isShowError) {
         SmartDialog.compatible.show(
             widget: OneButtonDialog(
-              title: 'please_check_network'.tr,
-              isShowMsg: false,
-            ));
+          title: 'please_check_network'.tr,
+          isShowMsg: false,
+        ));
       }
       throw Future.error(error.toString());
     });
@@ -154,8 +153,16 @@ class Network {
         .then((value) => {
               if (value)
                 {
-                  _dioRequest(url, method, params, data, success, error, isShowDialog,
-                      isShowError, loadingMessage ?? 'requesting'.tr)
+                  _dioRequest(
+                      url,
+                      method,
+                      params,
+                      data,
+                      success,
+                      error,
+                      isShowDialog,
+                      isShowError,
+                      loadingMessage ?? 'requesting'.tr)
                 }
               else
                 {_noNetwork(error, isShowError)}
@@ -178,7 +185,9 @@ class Network {
     }
     dio!
         .request<dynamic>(url,
-            queryParameters: params, data: data, options: Options(method: method))
+            queryParameters: params,
+            data: data,
+            options: Options(method: method))
         .then((value) {
       if (success != null) success(value.data);
     }).onError(
@@ -221,26 +230,14 @@ class Network {
     }
   }
 
-  static _handlerSuccess(dynamic t, Function(dynamic t)? success) {
-    SmartDialog.compatible.dismiss();
-    if (success != null) {
-      if (t is Map<String, dynamic>) {
-        print("1111");
-        success(ApiResponse().fromJson(t).data);
-      } else {
-        print("2222");
-        success(t);
-      }
-    }
-  }
-
   static _handlerError(
       bool isShowError, String msg, Function(String msg)? error) {
     SmartDialog.compatible.dismiss();
     if (isShowError) {
+      Log4f.e(msg: msg, writeFile: true);
       SmartDialog.compatible.show(
           widget: OneButtonDialog(
-        title: msg,
+        title: "net_error".tr,
         isShowMsg: false,
       ));
     }

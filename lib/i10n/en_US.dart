@@ -126,6 +126,7 @@ const Map<String, String> en_US = {
   'search_at_moe': 'Search on MoeGirl?',
   'moe_address_error': 'Some addresses may contain errors',
   'skip': 'Skip',
+  'net_error': 'Network error',
   'privacy_detail': '''Dear LLer,
 
 Please be sure to carefully read and understand all rights and restrictions set forth in the Software License Agreement (hereinafter referred to as the Agreement). Unless you accept the terms of the Agreement, you are not entitled to use the Software and related Services. Once you use the software, you will be deemed to accept the agreement.

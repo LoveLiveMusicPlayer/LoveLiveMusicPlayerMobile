@@ -224,7 +224,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   }
 
   Future<void> downloadArtistModelList() async {
-    final res = await Network.getSync(Const.artistModelUrl, isShowDialog: false);
+    final res =
+        await Network.getSync(Const.artistModelUrl, isShowDialog: false);
     if (res is List) {
       artistList.addAll(artistFromJson(jsonEncode(res)));
     }

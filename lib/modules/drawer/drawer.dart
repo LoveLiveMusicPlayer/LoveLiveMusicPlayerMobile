@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -280,12 +278,12 @@ class _DrawerPageState extends State<DrawerPage> {
               if (currentVersion == data.version) {
                 SmartDialog.compatible.show(
                     widget: TwoButtonDialog(
-                      title: 'now_is_latest'.tr,
-                      isShowMsg: false,
-                      onConfirmListener: () {
-                        parseUpdateDataSource(data);
-                      },
-                    ));
+                  title: 'now_is_latest'.tr,
+                  isShowMsg: false,
+                  onConfirmListener: () {
+                    parseUpdateDataSource(data);
+                  },
+                ));
               } else if (currentVersion < data.version) {
                 parseUpdateDataSource(data);
               }
