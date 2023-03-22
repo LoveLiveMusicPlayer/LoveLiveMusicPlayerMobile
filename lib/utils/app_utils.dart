@@ -382,6 +382,7 @@ class AppUtils {
     SharesdkPlugin.share(ShareSDKPlatforms.qq, sdkMap, (SSDKResponseState state,
         dynamic userdata, dynamic contentEntity, SSDKError error) {
       Log4f.e(msg: "错误码: ${error.code}");
+      Log4f.e(msg: "错误原因: ${error.rawData}");
       SmartDialog.compatible.showToast(error.rawData);
     });
   }
@@ -403,7 +404,7 @@ class AppUtils {
   static handleShare(uri) async {
     final path = Uri.decodeQueryComponent(uri.toString());
     final json = jsonEncode(Uri.parse(path).queryParameters);
-    LogUtil.d('获取到的uri: $json');
+    Log4f.d(msg: '获取到的uri: $json');
     final obj = jsonDecode(json);
     switch (obj["type"]) {
       case null:
