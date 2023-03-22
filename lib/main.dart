@@ -64,6 +64,15 @@ void main() async {
   // 仅支持竖屏
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  // 必须优先初始化
+  await JustAudioBackground.init(
+    androidNotificationChannelId:
+    'com.zhushenwudi.lovelivemusicplayer.channel.audio',
+    androidNotificationChannelName: 'lovelive audio playback',
+    androidNotificationOngoing: true,
+  );
+
   // 初始化
   await initServices();
   isDark = await SpUtil.getBoolean(Const.spDark);
@@ -104,13 +113,6 @@ void main() async {
   }
 
   AppUtils.setStatusBar(isDark);
-
-  await JustAudioBackground.init(
-    androidNotificationChannelId:
-        'com.zhushenwudi.lovelivemusicplayer.channel.audio',
-    androidNotificationChannelName: 'lovelive audio playback',
-    androidNotificationOngoing: true,
-  );
 }
 
 class MyApp extends StatefulWidget {
