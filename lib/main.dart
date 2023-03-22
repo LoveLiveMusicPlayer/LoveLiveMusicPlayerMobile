@@ -20,6 +20,7 @@ import 'package:lovelivemusicplayer/global/global_binding.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/utils/completerExt.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 import 'package:uni_links/uni_links.dart';
@@ -54,6 +55,8 @@ const transVer = 1;
 final splashList = <String>[];
 // 是否可以使用SmartDialog
 var isCanUseSmartDialog = false;
+// 是否初始化好SplashDao
+var isInitSplashDao = false;
 
 void main() async {
   // 启动屏开启
@@ -295,17 +298,31 @@ getOssUrl() async {
       }
     }
     // 手机无网络、开屏配置无法加载
-    // 先延迟1s，避免数据库初始化未完成
-    await Future.delayed(const Duration(seconds: 1));
-    // 从数据库中加载全部开屏图地址
-    final tempList = await DBLogic.to.splashDao.findAllSplashUrls();
-    for (var splashItem in tempList) {
-      // 过滤只保留仍然缓存中的图片
-      final isExist = await AppUtils.checkUrlExist(splashItem.url);
-      if (isExist) {
-        splashList.add(splashItem.url);
-      }
-    }
+    // 等待isInitSplashDao变化，避免数据库初始化未完成
+    await CompleterExt.awaitFor<bool>((run) {
+      var count = 0;
+      // 定时300ms检测一次变化
+      Timer.periodic(const Duration(milliseconds: 300), (timer) async {
+        count++;
+        if (isInitSplashDao) {
+          // 从数据库中加载全部开屏图地址
+          final tempList = await DBLogic.to.splashDao.findAllSplashUrls();
+          for (var splashItem in tempList) {
+            // 过滤只保留仍然缓存中的图片
+            final isExist = await AppUtils.checkUrlExist(splashItem.url);
+            if (isExist) {
+              splashList.add(splashItem.url);
+            }
+          }
+          timer.cancel();
+          run(true);
+        } else if (count >= 10) {
+          // 轮询超过10次就强制停止
+          timer.cancel();
+          run(true);
+        }
+      });
+    });
   } catch (e) {
     Log4f.d(msg: e.toString());
   }

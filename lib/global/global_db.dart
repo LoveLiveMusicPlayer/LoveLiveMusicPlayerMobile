@@ -86,6 +86,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       // 没有AI开屏时发送卸载窗口命令
       eventBus.fire(StartEvent((DateTime.now().millisecondsSinceEpoch)));
     }
+    isInitSplashDao = true;
     super.onInit();
   }
 
