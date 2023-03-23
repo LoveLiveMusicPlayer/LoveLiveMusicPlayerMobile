@@ -249,7 +249,7 @@ initServices() async {
   PlayerBinding().dependencies();
   enableBG = await SpUtil.getBoolean(Const.spEnableBackgroundPhoto, false);
   hasAIPic = await SpUtil.getBoolean(Const.spAIPicture, true);
-  await getOssUrl();
+  if (hasAIPic) await getOssUrl();
   SpUtil.put("prevPage", "");
 }
 

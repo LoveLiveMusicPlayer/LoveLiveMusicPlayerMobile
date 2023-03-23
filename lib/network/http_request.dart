@@ -41,6 +41,8 @@ class Network {
       BaseOptions options = BaseOptions(
           baseUrl: Const.dataOssUrl,
           connectTimeout: 30000,
+          receiveTimeout: 30000,
+          sendTimeout: 30000,
           headers: httpHeaders);
       dio = Dio(options);
       _addInterceptor(dio);
@@ -228,7 +230,7 @@ class Network {
     if (isShowDialog) {
       SmartDialog.compatible.dismiss(status: SmartStatus.loading);
     }
-    Log4f.d(msg: url);
+    Log4f.d(msg: Uri.decodeFull(url));
     Log4f.d(msg: msg);
     if (isShowError) {
       SmartDialog.compatible.show(
