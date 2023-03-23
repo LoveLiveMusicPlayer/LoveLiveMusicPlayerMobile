@@ -79,7 +79,11 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
                             TextSelection.collapsed(offset: text.length));
                     setState(() {});
                   },
-                  textInputAction: TextInputAction.search),
+                  onSubmitted: (str) {
+                    text = str;
+                    setState(() {});
+                  },
+                  textInputAction: TextInputAction.done),
             ),
           ),
           Row(
