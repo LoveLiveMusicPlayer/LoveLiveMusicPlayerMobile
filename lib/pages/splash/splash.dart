@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/eventbus/close_open.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
-import 'package:lovelivemusicplayer/eventbus/start_event.dart';
 import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
@@ -28,26 +27,25 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    if (hasAIPic) {
-      subscription = eventBus.on<StartSplashTimer>().listen((event) {
-        mTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-          count--;
-          setState(() {});
-          if (count <= 0) {
-            goToHomePage();
-          }
-        });
-      });
-    }
 
-    SplashPhoto().getRandomPhotoView().then((widget) {
+    SplashPhoto().getRandomPhotoView().then((widget) async {
       if (widget == null) {
         goToHomePage();
       } else {
         myWidget = widget;
         setState(() {});
-        // 发送启动倒计时命令
-        eventBus.fire(StartSplashTimer((DateTime.now().millisecondsSinceEpoch)));
+        // 启动倒计时
+        if (hasAIPic) {
+          mTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+            count--;
+            setState(() {});
+            if (count <= 0) {
+              timer.cancel();
+              goToHomePage();
+            }
+          },
+          );
+        }
       }
       // 发送卸载窗口命令
       eventBus.fire(CloseOpen((DateTime.now().millisecondsSinceEpoch)));

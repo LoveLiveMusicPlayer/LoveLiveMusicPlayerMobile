@@ -48,20 +48,21 @@ class SplashPhoto {
       final stream = image.image.resolve(const ImageConfiguration());
       stream.addListener(
           ImageStreamListener((ImageInfo info, bool synchronousCall) async {
-            final splashItem = await DBLogic.to.splashDao.findSplashByUrl(imageUrl!);
-            if (splashItem == null) {
-              await DBLogic.to.splashDao.insertSplashUrl(Splash(url: imageUrl));
-            }
-            print(imageUrl);
-            widget = Container(
-              decoration: BoxDecoration(image: image),
-              child: Container(),
-            );
-            run(widget);
-          }, onError: (object, stackTrace) {
-            Log4f.d(msg: "下载开屏图失败\n$imageUrl");
-            run(null);
-          }));
+        final splashItem =
+            await DBLogic.to.splashDao.findSplashByUrl(imageUrl!);
+        if (splashItem == null) {
+          await DBLogic.to.splashDao.insertSplashUrl(Splash(url: imageUrl));
+        }
+        print(imageUrl);
+        widget = Container(
+          decoration: BoxDecoration(image: image),
+          child: Container(),
+        );
+        run(widget);
+      }, onError: (object, stackTrace) {
+        Log4f.d(msg: "下载开屏图失败\n$imageUrl");
+        run(null);
+      }));
     });
   }
 }
