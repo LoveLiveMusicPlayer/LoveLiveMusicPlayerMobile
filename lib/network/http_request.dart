@@ -56,11 +56,11 @@ class Network {
           .showLoading(msg: loadingMessage ?? 'requesting'.tr);
     }
     var resp = await dio!.get(url).onError((error, stackTrace) {
-      _handlerError(url, isShowError, error.toString(), (msg) => null);
+      _handlerError(url, isShowDialog, isShowError, error.toString(), (msg) => null);
       return Future.error("");
     });
     if (isShowDialog) {
-      SmartDialog.compatible.dismiss();
+      SmartDialog.compatible.dismiss(status: SmartStatus.loading);
     }
     return resp.data;
   }
@@ -91,11 +91,11 @@ class Network {
           .showLoading(msg: loadingMessage ?? 'requesting'.tr);
     }
     var resp = await dio!.post(url, data: data).onError((error, stackTrace) {
-      _handlerError(url, isShowError, error.toString(), (msg) => null);
+      _handlerError(url, isShowDialog, isShowError, error.toString(), (msg) => null);
       return Future.error("");
     });
     if (isShowDialog) {
-      SmartDialog.compatible.dismiss();
+      SmartDialog.compatible.dismiss(status: SmartStatus.loading);
     }
     return resp.data;
   }
@@ -177,9 +177,14 @@ class Network {
             data: data,
             options: Options(method: method))
         .then((value) {
-      if (success != null) success(value.data);
+      if (success != null) {
+        if (isShowDialog) {
+          SmartDialog.compatible.dismiss(status: SmartStatus.loading);
+        }
+        success(value.data);
+      }
     }).onError((e, stackTrace) =>
-            _handlerError(url, isShowError, e.toString(), error));
+            _handlerError(url, isShowDialog, isShowError, e.toString(), error));
   }
 
   static _addInterceptor(Dio? dio) {
@@ -219,8 +224,10 @@ class Network {
   }
 
   static _handlerError(
-      String url, bool isShowError, String msg, Function(String msg)? error) {
-    SmartDialog.compatible.dismiss();
+      String url, bool isShowDialog, bool isShowError, String msg, Function(String msg)? error) {
+    if (isShowDialog) {
+      SmartDialog.compatible.dismiss(status: SmartStatus.loading);
+    }
     Log4f.d(msg: url);
     Log4f.d(msg: msg);
     if (isShowError) {
