@@ -138,6 +138,7 @@ flutter:
     - assets/sync/
     - assets/logo/
     - assets/tachie/
+    - assets/role/
 
   fonts:
     - family: KaTong

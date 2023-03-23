@@ -462,17 +462,4 @@ class AppUtils {
         break;
     }
   }
-
-  static String capture(String first, String second, String input) {
-    bool hasFirst = input.indexOf(first) > 0;
-    bool hasSecond = input.indexOf(second) > 0;
-    print(hasFirst);
-    print(hasSecond);
-    if (hasFirst && hasSecond) {
-      int firstIndex = input.indexOf(first) + first.length;
-      int secondIndex = input.indexOf(second);
-      return input.substring(firstIndex, secondIndex);
-    }
-    return input;
-  }
 }

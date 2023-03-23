@@ -127,4 +127,24 @@ class SDUtils {
           osVersion: info.systemVersion ?? "");
     }
   }
+
+  // 遍历目录下全部文件
+  static List<String> recursionFile(String dirPath, {recursion = false}) {
+    Directory dir = Directory(dirPath);
+    List<String> filePathList = [];
+
+    if (dir.existsSync()) {
+      List<FileSystemEntity> lists = dir.listSync();
+      for (FileSystemEntity entity in lists) {
+        if (entity is File) {
+          filePathList.add(entity.path);
+        } else if (entity is Directory && recursion) {
+          Directory subDir = entity;
+          recursionFile(subDir.path);
+        }
+      }
+    }
+
+    return filePathList;
+  }
 }

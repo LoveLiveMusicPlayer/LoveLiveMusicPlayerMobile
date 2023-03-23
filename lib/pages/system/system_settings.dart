@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -222,9 +223,7 @@ class _SystemSettingsState extends State<SystemSettings> {
                       );
                     })),
                 SizedBox(height: 12.h),
-                Divider(
-                    height: 1.h,
-                    color: const Color.fromARGB(255, 102, 102, 102)),
+                renderRoleLogo(),
                 SizedBox(height: 12.h),
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -316,5 +315,87 @@ class _SystemSettingsState extends State<SystemSettings> {
                     );
                   })
             ]));
+  }
+
+  Widget renderRoleLogo() {
+    return FutureBuilder<Map<String, Color?>>(
+      initialData: const {"": Colors.transparent},
+      builder:
+          (BuildContext context, AsyncSnapshot<Map<String, Color?>> snapshot) {
+        final assetPath = snapshot.data?.keys.first;
+        final dotColor = snapshot.data?.values.first?.withAlpha(255);
+        if (assetPath != null && assetPath.isNotEmpty) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ClipOval(
+                child: Container(
+                  width: 10.r,
+                  height: 10.r,
+                  color: dotColor,
+                ),
+              ),
+              SizedBox(
+                width: 30.w,
+              ),
+              ClipOval(
+                child: Container(
+                  width: 15.r,
+                  height: 15.r,
+                  color: dotColor,
+                ),
+              ),
+              SizedBox(
+                width: 30.w,
+              ),
+              Image.asset(
+                snapshot.data?.keys.first ?? "",
+                width: 50.r,
+                height: 50.r,
+              ),
+              SizedBox(
+                width: 30.w,
+              ),
+              ClipOval(
+                child: Container(
+                  width: 15.r,
+                  height: 15.r,
+                  color: dotColor,
+                ),
+              ),
+              SizedBox(
+                width: 30.w,
+              ),
+              ClipOval(
+                child: Container(
+                  width: 10.r,
+                  height: 10.r,
+                  color: dotColor,
+                ),
+              )
+            ],
+          );
+        } else {
+          return SizedBox(
+            height: 50.r,
+          );
+        }
+      },
+      future: getShowAsset(),
+    );
+  }
+
+  Future<Map<String, Color?>> getShowAsset() async {
+    final manifestJson =
+        await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
+    final images = json.decode(manifestJson).keys.where(
+        (String key) => key.startsWith('assets/role/') && key.endsWith(".png"));
+    List<String> assets = [];
+    assets.addAll(images);
+    assets.shuffle();
+    final assetPath = assets[0];
+    print(assetPath);
+    Color? color = await AppUtils.getImagePalette2(assetPath);
+    return {assetPath: color};
   }
 }
