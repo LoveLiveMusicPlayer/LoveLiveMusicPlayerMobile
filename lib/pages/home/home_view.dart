@@ -8,10 +8,8 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
-import 'package:lovelivemusicplayer/eventbus/start_event.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/modules/drawer/drawer.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
@@ -50,9 +48,6 @@ class _HomeViewState extends State<HomeView>
       final index = (logic.tabController?.index ?? 0) * 3 + position % 3;
       PageViewLogic.to.controller.jumpToPage(index);
     });
-    if (needRemoveCover) {
-      eventBus.fire(StartEvent((DateTime.now().millisecondsSinceEpoch)));
-    }
     handlePermission();
   }
 

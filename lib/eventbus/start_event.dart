@@ -1,5 +1,5 @@
-class StartEvent {
+class StartSplashTimer {
   int timestamp;
 
-  StartEvent(this.timestamp);
+  StartSplashTimer(this.timestamp);
 }

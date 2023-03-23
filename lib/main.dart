@@ -13,6 +13,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:log4f/log4f.dart';
+import 'package:lovelivemusicplayer/eventbus/close_open.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/eventbus/start_event.dart';
@@ -47,8 +48,6 @@ var appVersion = "1.0.0";
 var hasAIPic = false;
 // 是否允许显示背景图片
 var enableBG = false;
-// 是否需要移除开屏图片
-var needRemoveCover = true;
 // 传输协议版本号
 const transVer = 1;
 // 开屏图片列表
@@ -68,7 +67,7 @@ void main() async {
   // 必须优先初始化
   await JustAudioBackground.init(
     androidNotificationChannelId:
-    'com.zhushenwudi.lovelivemusicplayer.channel.audio',
+        'com.zhushenwudi.lovelivemusicplayer.channel.audio',
     androidNotificationChannelName: 'lovelive audio playback',
     androidNotificationOngoing: true,
   );
@@ -149,8 +148,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    subscription = eventBus.on<StartEvent>().listen((event) {
-      needRemoveCover = false;
+    subscription = eventBus.on<CloseOpen>().listen((event) {
       // 初始化结束后，将启动屏关闭
       FlutterNativeSplash.remove();
     });

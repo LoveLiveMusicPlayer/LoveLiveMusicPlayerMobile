@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/eventbus/close_open.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/start_event.dart';
 import 'package:lovelivemusicplayer/main.dart';
@@ -28,7 +29,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
     if (hasAIPic) {
-      subscription = eventBus.on<StartEvent>().listen((event) {
+      subscription = eventBus.on<StartSplashTimer>().listen((event) {
         mTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
           count--;
           setState(() {});
@@ -40,10 +41,16 @@ class _SplashState extends State<Splash> {
     }
 
     SplashPhoto().getRandomPhotoView().then((widget) {
-      if (widget != null) {
+      if (widget == null) {
+        goToHomePage();
+      } else {
         myWidget = widget;
         setState(() {});
+        // 发送启动倒计时命令
+        eventBus.fire(StartSplashTimer((DateTime.now().millisecondsSinceEpoch)));
       }
+      // 发送卸载窗口命令
+      eventBus.fire(CloseOpen((DateTime.now().millisecondsSinceEpoch)));
     });
   }
 

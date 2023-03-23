@@ -97,10 +97,14 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                         for (var element in mPlayList) {
                           idList.add(element.musicId);
                         }
-                        DBLogic.to.findMusicByMusicIds(idList).then((musicList) {
+                        DBLogic.to
+                            .findMusicByMusicIds(idList)
+                            .then((musicList) {
                           PlayerLogic.to.playMusic(musicList, index: index);
-                          Future.delayed(const Duration(milliseconds: 1000)).then((value) {
-                            SmartDialog.compatible.dismiss(status: SmartStatus.loading);
+                          Future.delayed(const Duration(milliseconds: 1000))
+                              .then((value) {
+                            SmartDialog.compatible
+                                .dismiss(status: SmartStatus.loading);
                           });
                         });
                       },

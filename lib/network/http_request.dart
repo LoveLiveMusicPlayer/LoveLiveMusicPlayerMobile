@@ -58,7 +58,8 @@ class Network {
           .showLoading(msg: loadingMessage ?? 'requesting'.tr);
     }
     var resp = await dio!.get(url).onError((error, stackTrace) {
-      _handlerError(url, isShowDialog, isShowError, error.toString(), (msg) => null);
+      _handlerError(
+          url, isShowDialog, isShowError, error.toString(), (msg) => null);
       return Future.error("");
     });
     if (isShowDialog) {
@@ -93,7 +94,8 @@ class Network {
           .showLoading(msg: loadingMessage ?? 'requesting'.tr);
     }
     var resp = await dio!.post(url, data: data).onError((error, stackTrace) {
-      _handlerError(url, isShowDialog, isShowError, error.toString(), (msg) => null);
+      _handlerError(
+          url, isShowDialog, isShowError, error.toString(), (msg) => null);
       return Future.error("");
     });
     if (isShowDialog) {
@@ -225,8 +227,8 @@ class Network {
     }
   }
 
-  static _handlerError(
-      String url, bool isShowDialog, bool isShowError, String msg, Function(String msg)? error) {
+  static _handlerError(String url, bool isShowDialog, bool isShowError,
+      String msg, Function(String msg)? error) {
     if (isShowDialog) {
       SmartDialog.compatible.dismiss(status: SmartStatus.loading);
     }

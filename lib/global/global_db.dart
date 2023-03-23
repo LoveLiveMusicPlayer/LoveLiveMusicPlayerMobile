@@ -15,8 +15,8 @@ import 'package:lovelivemusicplayer/dao/menu_dao.dart';
 import 'package:lovelivemusicplayer/dao/music_dao.dart';
 import 'package:lovelivemusicplayer/dao/playlist_dao.dart';
 import 'package:lovelivemusicplayer/dao/splash_dao.dart';
+import 'package:lovelivemusicplayer/eventbus/close_open.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
-import 'package:lovelivemusicplayer/eventbus/start_event.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
@@ -84,7 +84,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     await findAllPlayListMusics();
     if (!hasAIPic) {
       // 没有AI开屏时发送卸载窗口命令
-      eventBus.fire(StartEvent((DateTime.now().millisecondsSinceEpoch)));
+      eventBus.fire(CloseOpen((DateTime.now().millisecondsSinceEpoch)));
     }
     isInitSplashDao = true;
     super.onInit();

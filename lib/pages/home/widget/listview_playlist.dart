@@ -16,13 +16,14 @@ class ListViewItemPlaylist extends StatefulWidget {
   Function(int) onDelTap;
   Function(int) onPlayTap;
 
-  ListViewItemPlaylist({Key? key,
-    required this.index,
-    required this.musicId,
-    required this.name,
-    required this.artist,
-    required this.onDelTap,
-    required this.onPlayTap})
+  ListViewItemPlaylist(
+      {Key? key,
+      required this.index,
+      required this.musicId,
+      required this.name,
+      required this.artist,
+      required this.onDelTap,
+      required this.onPlayTap})
       : super(key: key);
 
   @override
@@ -72,8 +73,8 @@ class _ListViewItemPlaylist extends State<ListViewItemPlaylist> {
                         style: isCurrentPlayIndex
                             ? TextStyleMs.orangeBold_14
                             : Get.isDarkMode
-                            ? TextStyleMs.whiteBold_14
-                            : TextStyleMs.blackBold_14),
+                                ? TextStyleMs.whiteBold_14
+                                : TextStyleMs.blackBold_14),
                   ),
                   SizedBox(
                     width: 4.w,
