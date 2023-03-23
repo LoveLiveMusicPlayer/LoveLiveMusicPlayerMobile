@@ -88,7 +88,7 @@ void main() async {
         "exception": details.exceptionAsString(),
         "stackTrace": details.stack.toString(),
       };
-      Log4f.e(msg: "$errorMsg", writeFile: true);
+      Log4f.e(msg: "$errorMsg");
     }
 
     FlutterErrorDetails makeDetails(Object error, StackTrace stackTrace) {

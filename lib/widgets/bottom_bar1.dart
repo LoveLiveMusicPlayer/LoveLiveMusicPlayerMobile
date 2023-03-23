@@ -76,7 +76,7 @@ class BottomBar extends StatelessWidget {
       controller.animateTo(0,
           duration: const Duration(milliseconds: 200), curve: Curves.ease);
     } catch (e) {
-      Log4f.e(msg: e.toString(), writeFile: true);
+      Log4f.e(msg: e.toString());
     }
   }
 

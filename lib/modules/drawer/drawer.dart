@@ -298,7 +298,7 @@ class _DrawerPageState extends State<DrawerPage> {
         SmartDialog.compatible.showToast('data_error'.tr);
       }
     }, error: (err) {
-      Log4f.e(msg: err, writeFile: true);
+      Log4f.e(msg: err);
       SmartDialog.compatible.dismiss(status: SmartStatus.loading);
       SmartDialog.compatible.showToast('fetch_songs_fail'.tr);
     }, isShowDialog: false);

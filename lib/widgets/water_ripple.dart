@@ -94,7 +94,7 @@ class WaterRippleState extends State<WaterRipple>
           controller.forward();
           setState(() {});
         } catch (e) {
-          Log4f.e(msg: e.toString(), writeFile: true);
+          Log4f.e(msg: e.toString());
           return;
         }
       });

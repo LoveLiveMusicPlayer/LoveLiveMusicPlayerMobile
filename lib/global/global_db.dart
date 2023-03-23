@@ -145,7 +145,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
       GlobalLogic.to.databaseInitOver.value = true;
     } catch (e) {
-      Log4f.e(msg: e.toString(), writeFile: true);
+      Log4f.e(msg: e.toString());
     }
     try {
       scrollToTop(HomeController.scrollController1);
@@ -220,7 +220,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         }
       }
     } catch (e) {
-      Log4f.e(msg: e.toString(), writeFile: true);
+      Log4f.e(msg: e.toString());
     }
   }
 
@@ -281,7 +281,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       await musicDao.deleteAllMusics();
       await artistDao.deleteAllArtists();
     } catch (e) {
-      Log4f.e(msg: e.toString(), writeFile: true);
+      Log4f.e(msg: e.toString());
     }
   }
 
@@ -315,7 +315,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       await splashDao.deleteAllSplashUrls();
       await playListMusicDao.deleteAllPlayListMusics();
     } catch (e) {
-      Log4f.e(msg: e.toString(), writeFile: true);
+      Log4f.e(msg: e.toString());
     }
   }
 
@@ -391,7 +391,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       await findAllMenuList();
       return true;
     } catch (e) {
-      Log4f.e(msg: e.toString(), writeFile: true);
+      Log4f.e(msg: e.toString());
     }
     return false;
   }
@@ -424,7 +424,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       await findAllMenuList();
       return true;
     } catch (e) {
-      Log4f.e(msg: e.toString(), writeFile: true);
+      Log4f.e(msg: e.toString());
     }
     return false;
   }
@@ -439,7 +439,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         await findAllMenuList();
       }
     } catch (e) {
-      Log4f.e(msg: e.toString(), writeFile: true);
+      Log4f.e(msg: e.toString());
     }
   }
 
@@ -475,7 +475,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         return 1;
       }
     } catch (e) {
-      Log4f.e(msg: e.toString(), writeFile: true);
+      Log4f.e(msg: e.toString());
     }
     return -1;
   }
@@ -486,7 +486,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       await menuDao.deleteMenuById(menuId);
       await findAllMenuList();
     } catch (e) {
-      Log4f.e(msg: e.toString(), writeFile: true);
+      Log4f.e(msg: e.toString());
     }
   }
 
@@ -513,7 +513,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
             index: willPlayMusicIndex, needPlay: false);
       }
     } catch (e) {
-      Log4f.e(msg: e.toString(), writeFile: true);
+      Log4f.e(msg: e.toString());
     }
   }
 
@@ -525,7 +525,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         await playListMusicDao.insertAllPlayListMusics(playMusics);
       }
     } catch (e) {
-      Log4f.e(msg: e.toString(), writeFile: true);
+      Log4f.e(msg: e.toString());
     }
   }
 
@@ -546,7 +546,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       });
       GlobalLogic.to.loveList.value = loveList;
     } catch (e) {
-      Log4f.e(msg: e.toString(), writeFile: true);
+      Log4f.e(msg: e.toString());
     }
   }
 
@@ -569,7 +569,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
           .isLove = music.isLove;
       return music;
     } catch (e) {
-      Log4f.e(msg: e.toString(), writeFile: true);
+      Log4f.e(msg: e.toString());
     }
     return null;
   }

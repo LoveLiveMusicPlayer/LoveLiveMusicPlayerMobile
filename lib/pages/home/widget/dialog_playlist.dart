@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_playlist.dart';
@@ -86,9 +88,22 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                   if (mPlayList.isNotEmpty) {
                     return ListViewItemPlaylist(
                       index: index,
+                      musicId: mPlayList[index].musicId,
                       name: mPlayList[index].musicName,
                       artist: mPlayList[index].artist,
-                      onPlayTap: (index) {},
+                      onPlayTap: (index) {
+                        SmartDialog.compatible.showLoading(msg: "loading".tr);
+                        List<String> idList = [];
+                        for (var element in mPlayList) {
+                          idList.add(element.musicId);
+                        }
+                        DBLogic.to.findMusicByMusicIds(idList).then((musicList) {
+                          PlayerLogic.to.playMusic(musicList, index: index);
+                          Future.delayed(const Duration(milliseconds: 1000)).then((value) {
+                            SmartDialog.compatible.dismiss(status: SmartStatus.loading);
+                          });
+                        });
+                      },
                       onDelTap: (index) {
                         mPlayList.removeAt(index);
                         setState(() {});

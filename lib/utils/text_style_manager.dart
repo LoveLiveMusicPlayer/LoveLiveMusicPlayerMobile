@@ -73,6 +73,10 @@ class TextStyleMs {
 
   static TextStyle orange_15_500 = TextStyle(
       color: ColorMs.colorFFAE00, fontSize: 15.sp, fontWeight: FontWeight.w500);
+  static TextStyle orangeBold_14 = TextStyle(
+      color: ColorMs.colorFFAE00, fontSize: 14.sp, fontWeight: FontWeight.bold);
+  static TextStyle orangeBold_12 = TextStyle(
+      color: ColorMs.colorFFAE00, fontSize: 12.sp, fontWeight: FontWeight.bold);
 
   static TextStyle blue_12 =
       TextStyle(color: ColorMs.color28B3F7, fontSize: 12.sp);

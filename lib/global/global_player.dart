@@ -48,8 +48,6 @@ class PlayerLogic extends SuperController
   // 播放位置
   var playingPosition = const Duration(milliseconds: 0).obs;
 
-  var miniPlayerList = <Music>[].obs;
-
   // 当前播放歌曲
   var playingMusic = Music().obs;
 
@@ -218,7 +216,7 @@ class PlayerLogic extends SuperController
         });
       });
     } catch (e) {
-      Log4f.e(msg: e.toString(), writeFile: true);
+      Log4f.e(msg: e.toString());
     } finally {
       GlobalLogic.to.isHandlePlay = false;
     }

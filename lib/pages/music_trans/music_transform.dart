@@ -507,7 +507,7 @@ class _MusicTransformState extends State<MusicTransform> {
       }
     }, onError: (e) {
       SmartDialog.compatible.showToast('connect_fail'.tr);
-      Log4f.e(msg: e.toString(), writeFile: true);
+      Log4f.e(msg: e.toString());
     }, cancelOnError: true);
     isConnected = true;
     setState(() {});

@@ -56,14 +56,8 @@ class Network {
           .showLoading(msg: loadingMessage ?? 'requesting'.tr);
     }
     var resp = await dio!.get(url).onError((error, stackTrace) {
-      if (isShowError) {
-        SmartDialog.compatible.show(
-            widget: OneButtonDialog(
-          title: 'please_check_network'.tr,
-          isShowMsg: false,
-        ));
-      }
-      throw Future.error(error.toString());
+      _handlerError(url, isShowError, error.toString(), (msg) => null);
+      return Future.error("");
     });
     if (isShowDialog) {
       SmartDialog.compatible.dismiss();
@@ -97,14 +91,8 @@ class Network {
           .showLoading(msg: loadingMessage ?? 'requesting'.tr);
     }
     var resp = await dio!.post(url, data: data).onError((error, stackTrace) {
-      if (isShowError) {
-        SmartDialog.compatible.show(
-            widget: OneButtonDialog(
-          title: 'please_check_network'.tr,
-          isShowMsg: false,
-        ));
-      }
-      throw Future.error(error.toString());
+      _handlerError(url, isShowError, error.toString(), (msg) => null);
+      return Future.error("");
     });
     if (isShowDialog) {
       SmartDialog.compatible.dismiss();
@@ -190,8 +178,8 @@ class Network {
             options: Options(method: method))
         .then((value) {
       if (success != null) success(value.data);
-    }).onError(
-            (e, stackTrace) => _handlerError(isShowError, e.toString(), error));
+    }).onError((e, stackTrace) =>
+            _handlerError(url, isShowError, e.toString(), error));
   }
 
   static _addInterceptor(Dio? dio) {
@@ -231,10 +219,11 @@ class Network {
   }
 
   static _handlerError(
-      bool isShowError, String msg, Function(String msg)? error) {
+      String url, bool isShowError, String msg, Function(String msg)? error) {
     SmartDialog.compatible.dismiss();
+    Log4f.d(msg: url);
+    Log4f.d(msg: msg);
     if (isShowError) {
-      Log4f.e(msg: msg, writeFile: true);
       SmartDialog.compatible.show(
           widget: OneButtonDialog(
         title: "net_error".tr,
