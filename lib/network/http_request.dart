@@ -200,17 +200,23 @@ class Network {
       // 3.对参数进行一些处理,比如序列化处理等
       //     options.extra
 
-      if (options.path.startsWith("http") || options.path.startsWith("https")) {
-        print(options.path);
-      } else {
-        print(options.baseUrl + options.path);
+      if (!options.path.endsWith(".lrc")) {
+        if (options.path.startsWith("http") ||
+            options.path.startsWith("https")) {
+          print(options.path);
+        } else {
+          print(options.baseUrl + options.path);
+        }
       }
+
       // LogUtil.v(options.headers);
       // LogUtil.v(options.queryParameters);
       // LogUtil.d("拦截了请求");
       handler.next(options);
     }, onResponse: (Response e, ResponseInterceptorHandler handler) {
-      print(e.data);
+      if (!e.realUri.path.endsWith(".lrc")) {
+        print(e.data);
+      }
       handler.next(e);
     });
     dio?.interceptors.add(inter);

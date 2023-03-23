@@ -384,7 +384,6 @@ class _SystemSettingsState extends State<SystemSettings> {
     assets.addAll(images);
     assets.shuffle();
     final assetPath = assets[0];
-    print(assetPath);
     Color? color = await AppUtils.getImagePalette2(assetPath);
     return {assetPath: color};
   }
