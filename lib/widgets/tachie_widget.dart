@@ -28,6 +28,7 @@ class Tachie extends StatelessWidget {
             child: WebViewPlus(
                 key: ValueKey(musicId),
                 javascriptMode: JavascriptMode.unrestricted,
+                zoomEnabled: false,
                 onWebViewCreated: (controller) async {
                   final music = await DBLogic.to.findMusicById(musicId);
                   if (music == null || music.artistBin == null) {
