@@ -222,9 +222,9 @@ class _SystemSettingsState extends State<SystemSettings> {
                         ],
                       );
                     })),
-                SizedBox(height: 12.h),
+                SizedBox(height: 2.h),
                 renderRoleLogo(),
-                SizedBox(height: 12.h),
+                SizedBox(height: 2.h),
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
                     child: GetBuilder<GlobalLogic>(builder: (logic) {
@@ -320,46 +320,46 @@ class _SystemSettingsState extends State<SystemSettings> {
             children: [
               ClipOval(
                 child: Container(
-                  width: 10.r,
-                  height: 10.r,
+                  width: 7.r,
+                  height: 7.r,
                   color: dotColor,
                 ),
               ),
               SizedBox(
-                width: 30.w,
+                width: 35.w,
               ),
               ClipOval(
                 child: Container(
-                  width: 15.r,
-                  height: 15.r,
+                  width: 9.r,
+                  height: 9.r,
                   color: dotColor,
                 ),
               ),
               SizedBox(
-                width: 30.w,
+                width: 35.w,
               ),
               Image.asset(
                 snapshot.data?.keys.first ?? "",
-                width: 50.r,
-                height: 50.r,
+                width: 32.r,
+                height: 32.r,
               ),
               SizedBox(
-                width: 30.w,
+                width: 35.w,
               ),
               ClipOval(
                 child: Container(
-                  width: 15.r,
-                  height: 15.r,
+                  width: 9.r,
+                  height: 9.r,
                   color: dotColor,
                 ),
               ),
               SizedBox(
-                width: 30.w,
+                width: 35.w,
               ),
               ClipOval(
                 child: Container(
-                  width: 10.r,
-                  height: 10.r,
+                  width: 7.r,
+                  height: 7.r,
                   color: dotColor,
                 ),
               )
@@ -367,7 +367,7 @@ class _SystemSettingsState extends State<SystemSettings> {
           );
         } else {
           return SizedBox(
-            height: 50.r,
+            height: 32.r,
           );
         }
       },
