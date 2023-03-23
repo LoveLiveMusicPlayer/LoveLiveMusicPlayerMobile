@@ -210,7 +210,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             enableLog: kDebugMode,
-            defaultTransition: Transition.fade,
+            defaultTransition: Transition.rightToLeftWithFade,
             theme: isDark ? darkTheme : lightTheme,
             themeMode: ThemeMode.light,
             darkTheme: darkTheme,

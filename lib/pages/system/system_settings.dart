@@ -272,16 +272,6 @@ class _SystemSettingsState extends State<SystemSettings> {
                               }));
                             },
                           ),
-                          // SizedBox(height: 8.h),
-                          // DrawerFunctionButton(
-                          //   icon: Assets.drawerDrawerDebug,
-                          //   text: "保存日志",
-                          //   onTap: () async {
-                          //     await SDUtils.uploadLog();
-                          //     SmartDialog.compatible
-                          //         .showToast("导出成功", time: const Duration(seconds: 5));
-                          //   },
-                          // ),
                           SizedBox(height: 8.h),
                           DrawerFunctionButton(
                             icon: Assets.drawerDrawerInspect,
