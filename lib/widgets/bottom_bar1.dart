@@ -16,6 +16,15 @@ class BottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       final mIndex = handlePage(HomeController.to.state.currentIndex.value);
+      final colorFilter1 = ColorFilter.mode(
+          mIndex == 0 ? ColorMs.colorF940A7 : ColorMs.colorD1E0F3,
+          BlendMode.srcIn);
+      final colorFilter2 = ColorFilter.mode(
+          mIndex == 1 ? ColorMs.colorF940A7 : ColorMs.colorD1E0F3,
+          BlendMode.srcIn);
+      final colorFilter3 = ColorFilter.mode(
+          mIndex == 2 ? ColorMs.colorF940A7 : ColorMs.colorD1E0F3,
+          BlendMode.srcIn);
       return BottomNavigationBar(
         showUnselectedLabels: true,
         currentIndex: mIndex,
@@ -24,24 +33,15 @@ class BottomBar extends StatelessWidget {
         items: [
           BottomNavigationBarItem(
               icon: SvgPicture.asset(Assets.tabTabMusic,
-                  height: 18.h,
-                  width: 18.h,
-                  color:
-                      mIndex == 0 ? ColorMs.colorF940A7 : ColorMs.colorD1E0F3),
+                  height: 18.h, width: 18.h, colorFilter: colorFilter1),
               label: 'music'.tr),
           BottomNavigationBarItem(
               icon: SvgPicture.asset(Assets.tabTabAlbum,
-                  height: 18.h,
-                  width: 18.h,
-                  color:
-                      mIndex == 1 ? ColorMs.colorF940A7 : ColorMs.colorD1E0F3),
+                  height: 18.h, width: 18.h, colorFilter: colorFilter2),
               label: 'album'.tr),
           BottomNavigationBarItem(
               icon: SvgPicture.asset(Assets.tabTabSinger,
-                  height: 18.h,
-                  width: 18.h,
-                  color:
-                      mIndex == 2 ? ColorMs.colorF940A7 : ColorMs.colorD1E0F3),
+                  height: 18.h, width: 18.h, colorFilter: colorFilter3),
               label: 'singer'.tr),
         ],
         elevation: 0,

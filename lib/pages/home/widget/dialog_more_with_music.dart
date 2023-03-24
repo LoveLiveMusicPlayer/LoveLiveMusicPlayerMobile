@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/models/Album.dart';
-import 'package:lovelivemusicplayer/models/Music.dart';
+import 'package:lovelivemusicplayer/models/album.dart';
+import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_song_info.dart';
@@ -17,12 +17,12 @@ import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class DialogMoreWithMusic extends StatefulWidget {
   final Music music;
-  Function(Music)? onRemove;
-  Function()? onClosePanel;
-  bool? isAlbum;
-  bool? isPlayer;
+  final Function(Music)? onRemove;
+  final Function()? onClosePanel;
+  final bool? isAlbum;
+  final bool? isPlayer;
 
-  DialogMoreWithMusic(
+  const DialogMoreWithMusic(
       {Key? key,
       required this.music,
       this.onRemove,

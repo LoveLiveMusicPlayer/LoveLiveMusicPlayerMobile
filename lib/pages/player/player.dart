@@ -11,7 +11,7 @@ import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/models/PositionData.dart';
+import 'package:lovelivemusicplayer/models/position_data.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/control_buttons.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';

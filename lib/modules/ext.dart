@@ -426,6 +426,6 @@ Widget touchIconByAsset(
     child: SvgPicture.asset(path,
         width: width.h,
         height: height.h,
-        colorFilter: ColorFilter.mode(ColorMs.colorF940A7, BlendMode.srcIn)),
+        colorFilter: ColorFilter.mode(color, BlendMode.srcIn)),
   );
 }

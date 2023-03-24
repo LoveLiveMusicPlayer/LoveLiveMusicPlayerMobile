@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/models/Artist.dart';
+import 'package:lovelivemusicplayer/models/artist.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 ///歌手 item
 class ListViewItemSinger extends StatefulWidget {
-  Artist artist;
+  final Artist artist;
 
-  Function(Artist) onItemTap;
+  final Function(Artist) onItemTap;
 
-  ListViewItemSinger({Key? key, required this.artist, required this.onItemTap})
+  const ListViewItemSinger({Key? key, required this.artist, required this.onItemTap})
       : super(key: key);
 
   @override

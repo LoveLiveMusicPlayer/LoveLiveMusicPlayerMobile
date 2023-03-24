@@ -1,5 +1,5 @@
 import 'package:floor/floor.dart';
-import 'package:lovelivemusicplayer/models/PlayListMusic.dart';
+import 'package:lovelivemusicplayer/models/play_list_music.dart';
 
 @dao
 abstract class PlayListMusicDao {

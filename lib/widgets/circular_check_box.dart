@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class CircularCheckBox extends StatefulWidget {
   bool checkd;
-  Color checkIconColor;
-  Color uncheckedIconColor;
-  double iconSize;
-  String title;
-  double spacing;
-  Function(bool) onCheckd;
-  TextStyle textStyle;
+  final Color checkIconColor;
+  final Color uncheckedIconColor;
+  final double iconSize;
+  final String title;
+  final double spacing;
+  final Function(bool) onCheckd;
+  final TextStyle textStyle;
 
   CircularCheckBox(
       {Key? key,

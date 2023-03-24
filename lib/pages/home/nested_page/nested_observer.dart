@@ -34,10 +34,10 @@ class MyNavigator extends NavigatorObserver {
       AppUtils.uploadPageStart(name);
     }
     super.didPush(route, previousRoute);
-    String? previousName;
-    if (previousRoute != null) {
-      previousName = previousRoute.settings.name;
-    }
+    // String? previousName;
+    // if (previousRoute != null) {
+    //   previousName = previousRoute.settings.name;
+    // }
     // Log4f.v(msg: "didPush: from $previousName to ${route.settings.name}");
   }
 }

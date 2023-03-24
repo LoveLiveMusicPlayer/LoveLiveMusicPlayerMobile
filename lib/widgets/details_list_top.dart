@@ -14,14 +14,14 @@ class DetailsListTop extends StatelessWidget {
   final GestureTapCallback onScreenTap;
   final Function(bool) onSelectAllTap;
   final Function onCancelTap;
-  bool selectAll;
-  bool isSelect;
-  int itemsLength;
-  int checkedItemLength;
-  bool hasBg;
-  Color? bgColor;
+  final bool selectAll;
+  final bool isSelect;
+  final int itemsLength;
+  final int checkedItemLength;
+  final bool hasBg;
+  final Color? bgColor;
 
-  DetailsListTop({
+  const DetailsListTop({
     Key? key,
     this.selectAll = false,
     this.isSelect = false,

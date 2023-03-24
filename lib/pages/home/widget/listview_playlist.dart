@@ -9,14 +9,14 @@ import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 ///歌单
 class ListViewItemPlaylist extends StatefulWidget {
-  int index;
-  String musicId;
-  String name;
-  String artist;
-  Function(int) onDelTap;
-  Function(int) onPlayTap;
+  final int index;
+  final String musicId;
+  final String name;
+  final String artist;
+  final Function(int) onDelTap;
+  final Function(int) onPlayTap;
 
-  ListViewItemPlaylist(
+  const ListViewItemPlaylist(
       {Key? key,
       required this.index,
       required this.musicId,

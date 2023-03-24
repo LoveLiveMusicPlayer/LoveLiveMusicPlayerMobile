@@ -10,9 +10,9 @@ import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class DetailsHeader extends StatelessWidget {
   final String title;
-  Function()? onBack;
+  final Function()? onBack;
 
-  DetailsHeader({Key? key, required this.title, this.onBack}) : super(key: key);
+  const DetailsHeader({Key? key, required this.title, this.onBack}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

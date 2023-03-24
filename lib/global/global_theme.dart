@@ -8,7 +8,6 @@ final ThemeData theme = ThemeData();
 final ThemeData lightTheme = ThemeData(
     hintColor: Colors.green[300],
     brightness: Brightness.light,
-    bottomAppBarColor: Colors.black,
     primaryColor: ColorMs.colorLightPrimary,
     canvasColor: ColorMs.colorLightPrimary,
     scaffoldBackgroundColor: ColorMs.colorLightPrimary,
@@ -17,11 +16,10 @@ final ThemeData lightTheme = ThemeData(
     appBarTheme: AppBarTheme(
       shadowColor: Colors.green[300]?.withOpacity(.1),
       elevation: 0.0,
-    ));
+    ), bottomAppBarTheme: const BottomAppBarTheme(color: Colors.black));
 final ThemeData darkTheme = ThemeData(
     hintColor: Colors.blue[300],
     brightness: Brightness.dark,
-    bottomAppBarColor: Colors.white,
     primaryColor: ColorMs.colorNightPrimary,
     canvasColor: ColorMs.colorNightPrimary,
     scaffoldBackgroundColor: ColorMs.colorNightPrimary,
@@ -30,4 +28,4 @@ final ThemeData darkTheme = ThemeData(
     appBarTheme: AppBarTheme(
       shadowColor: Colors.blue[300]?.withOpacity(.1),
       elevation: 0.0,
-    ));
+    ), bottomAppBarTheme: const BottomAppBarTheme(color: Colors.white));

@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/models/Menu.dart';
+import 'package:lovelivemusicplayer/models/menu.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
@@ -13,16 +13,16 @@ import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 ///歌单
 class ListViewItemSongSheet extends StatefulWidget {
-  Function(Menu) onItemTap;
+  final Function(Menu) onItemTap;
 
   ///条目数据
-  Menu menu;
+  final Menu menu;
 
-  Function(Menu)? onMoreTap;
+  final Function(Menu)? onMoreTap;
 
   final bool? showDevicePic;
 
-  ListViewItemSongSheet(
+  const ListViewItemSongSheet(
       {Key? key,
       required this.onItemTap,
       this.onMoreTap,

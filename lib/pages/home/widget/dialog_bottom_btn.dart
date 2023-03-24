@@ -6,9 +6,9 @@ import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class DialogBottomBtn extends StatelessWidget {
-  List<BtnItem> list;
+  final List<BtnItem> list;
 
-  DialogBottomBtn({Key? key, required this.list}) : super(key: key);
+  const DialogBottomBtn({Key? key, required this.list}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +49,9 @@ class DialogBottomBtn extends StatelessWidget {
           SvgPicture.asset(path,
               width: 21.h,
               height: 21.h,
-              color:
-                  Get.isDarkMode ? ColorMs.colorD1E0F3 : ColorMs.color666666),
+              colorFilter: ColorFilter.mode(
+                  Get.isDarkMode ? ColorMs.colorD1E0F3 : ColorMs.color666666,
+                  BlendMode.srcIn)),
           SizedBox(height: 7.h),
           Text(title,
               maxLines: 2,

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/main.dart';
-import 'package:lovelivemusicplayer/models/Splash.dart';
+import 'package:lovelivemusicplayer/models/splash.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
-import 'package:lovelivemusicplayer/utils/completerExt.dart';
+import 'package:lovelivemusicplayer/utils/completer_ext.dart';
 
 var background = const BoxDecoration();
 

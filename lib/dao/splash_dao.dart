@@ -1,5 +1,5 @@
 import 'package:floor/floor.dart';
-import 'package:lovelivemusicplayer/models/Splash.dart';
+import 'package:lovelivemusicplayer/models/splash.dart';
 
 @dao
 abstract class SplashDao {

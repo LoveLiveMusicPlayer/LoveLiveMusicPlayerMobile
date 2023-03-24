@@ -1,5 +1,5 @@
 import 'package:floor/floor.dart';
-import 'package:lovelivemusicplayer/models/Lyric.dart';
+import 'package:lovelivemusicplayer/models/lyric.dart';
 
 @dao
 abstract class LyricDao {

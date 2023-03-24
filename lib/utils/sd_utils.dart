@@ -4,7 +4,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/models/Device.dart';
+import 'package:lovelivemusicplayer/models/device.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -111,9 +111,9 @@ class SDUtils {
       final AndroidDeviceInfo info = await deviceInfoPlugin.androidInfo;
       return Device(
           physicalDevice: info.isPhysicalDevice,
-          serialNo: info.device ?? "",
-          brand: info.brand ?? "",
-          model: info.model ?? "",
+          serialNo: info.device,
+          brand: info.brand,
+          model: info.model,
           osName: info.version.baseOS ?? "",
           osVersion: "${info.version.sdkInt}");
     } else {

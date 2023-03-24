@@ -1,4 +1,4 @@
-import 'package:lovelivemusicplayer/models/Music.dart';
+import 'package:lovelivemusicplayer/models/music.dart';
 
 class AlbumDetailState {
   AlbumDetailState() {

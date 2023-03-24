@@ -52,7 +52,12 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
               children: [
                 widget.icon != null
                     ? SvgPicture.asset(widget.icon!,
-                        height: 20.h, width: 20.h, color: widget.iconColor)
+                        height: 20.h,
+                        width: 20.h,
+                        colorFilter: widget.iconColor == null
+                            ? null
+                            : ColorFilter.mode(
+                                widget.iconColor!, BlendMode.srcIn))
                     : SizedBox(height: 20.h, width: 20.h),
                 SizedBox(width: 8.r),
                 Expanded(child: GetBuilder<GlobalLogic>(builder: (logic) {

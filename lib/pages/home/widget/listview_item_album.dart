@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/models/Album.dart';
+import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
@@ -12,7 +12,7 @@ import '../../../utils/sd_utils.dart';
 
 ///专辑 item
 class ListViewItemAlbum extends StatefulWidget {
-  Album album;
+  final Album album;
 
   ///当前选中状态
   bool checked;
@@ -20,7 +20,7 @@ class ListViewItemAlbum extends StatefulWidget {
   ///是否选择条目
   bool isSelect;
 
-  Function(Album, bool) onItemTap;
+  final Function(Album, bool) onItemTap;
 
   ListViewItemAlbum(
       {Key? key,
@@ -35,6 +35,13 @@ class ListViewItemAlbum extends StatefulWidget {
 }
 
 class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final borderWidth = (ScreenUtil().screenWidth - 72.w) / 3;

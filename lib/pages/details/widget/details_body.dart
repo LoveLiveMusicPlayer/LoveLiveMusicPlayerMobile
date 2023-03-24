@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/models/Music.dart';
+import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/pages/details/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';

@@ -1,4 +1,4 @@
-const Map<String, String> de_DE = {
+const Map<String, String> deDE = {
   'music': 'Die Musik',
   'album': 'Das Album',
   'music_name': 'Der Liedtitel',

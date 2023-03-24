@@ -1,4 +1,4 @@
-const Map<String, String> en_US = {
+const Map<String, String> enUS = {
   'music': 'Music',
   'album': 'Album',
   'music_name': 'Music name',

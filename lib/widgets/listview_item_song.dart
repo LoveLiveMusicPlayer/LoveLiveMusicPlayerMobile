@@ -6,7 +6,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/models/Music.dart';
+import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
@@ -19,18 +19,18 @@ import 'package:vibration/vibration.dart';
 
 ///歌曲
 class ListViewItemSong extends StatefulWidget {
-  Function(int, bool) onItemTap;
-  Function(Music) onPlayNextTap;
-  Function() onPlayNowTap;
-  Function(Music) onMoreTap;
+  final Function(int, bool) onItemTap;
+  final Function(Music) onPlayNextTap;
+  final Function() onPlayNowTap;
+  final Function(Music) onMoreTap;
 
   ///条目数据
-  Music music;
+  final Music music;
 
   ///当前选中状态
   bool checked;
 
-  int index;
+  final int index;
 
   ListViewItemSong(
       {Key? key,
@@ -212,8 +212,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-              padding: EdgeInsets.only(
-                  left: 12.w, right: 12.w, top: 12.h, bottom: 12.h),
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
               child: touchIconByAsset(
                   path: Assets.mainIcAddNext,
                   onTap: () {
@@ -228,8 +227,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
               widget.onMoreTap(widget.music);
             },
             child: Container(
-              padding: EdgeInsets.only(
-                  left: 12.w, right: 10.w, top: 12.h, bottom: 12.h),
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
               child: touchIconByAsset(
                   path: Assets.mainIcMore, width: 10, height: 20, color: color),
             ),

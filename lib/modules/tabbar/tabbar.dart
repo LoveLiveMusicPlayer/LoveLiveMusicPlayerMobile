@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
-import 'package:lovelivemusicplayer/pages/home/widget/custom_underline_tabIndicator.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/custom_underline_tab_indicator.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 
 class TabBarComponent extends StatelessWidget {

@@ -14,10 +14,10 @@ import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/models/ArtistModel.dart';
-import 'package:lovelivemusicplayer/models/Menu.dart';
-import 'package:lovelivemusicplayer/models/Music.dart';
-import 'package:lovelivemusicplayer/models/ShareMenu.dart';
+import 'package:lovelivemusicplayer/models/artist_model.dart';
+import 'package:lovelivemusicplayer/models/menu.dart';
+import 'package:lovelivemusicplayer/models/music.dart';
+import 'package:lovelivemusicplayer/models/share_menu.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
@@ -309,7 +309,7 @@ class AppUtils {
                 "${Const.backendUrl}?ids=${music.neteaseId}");
             path = res["songs"][0]["al"]["picUrl"];
           }
-        } catch (ignore) {}
+        } catch (_) {}
       } else if (menu != null) {
         title = "outer_share_menu".tr;
         text = menu.name;
@@ -344,7 +344,7 @@ class AppUtils {
                     "${Const.backendUrl}?ids=${firstMusic.neteaseId}");
                 path = res["songs"][0]["al"]["picUrl"];
               }
-            } catch (ignore) {}
+            } catch (_) {}
           }
         } else {
           return;

@@ -1,5 +1,5 @@
 import 'package:floor/floor.dart';
-import 'package:lovelivemusicplayer/models/Album.dart';
+import 'package:lovelivemusicplayer/models/album.dart';
 
 @dao
 abstract class AlbumDao {

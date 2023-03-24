@@ -9,9 +9,9 @@ import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_theme.dart';
-import 'package:lovelivemusicplayer/models/Album.dart';
-import 'package:lovelivemusicplayer/models/Artist.dart';
-import 'package:lovelivemusicplayer/models/Menu.dart';
+import 'package:lovelivemusicplayer/models/album.dart';
+import 'package:lovelivemusicplayer/models/artist.dart';
+import 'package:lovelivemusicplayer/models/menu.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
@@ -24,7 +24,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:updater/updater.dart';
 import 'package:we_slide/we_slide.dart';
 
-import '../models/Music.dart';
+import '../models/music.dart';
 
 class GlobalLogic extends SuperController
     with GetSingleTickerProviderStateMixin {
@@ -299,7 +299,7 @@ class GlobalLogic extends SuperController
       }
       PageViewLogic.to.controller
           .jumpToPage(HomeController.to.state.currentIndex.value);
-    } catch (e) {}
+    } catch (_) {}
   }
 
   scrollTo(ScrollController controller) {

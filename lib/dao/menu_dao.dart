@@ -1,5 +1,5 @@
 import 'package:floor/floor.dart';
-import 'package:lovelivemusicplayer/models/Menu.dart';
+import 'package:lovelivemusicplayer/models/menu.dart';
 
 @dao
 abstract class MenuDao {

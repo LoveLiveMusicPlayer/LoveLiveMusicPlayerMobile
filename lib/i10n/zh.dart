@@ -1,4 +1,4 @@
-const Map<String, String> zh_CN = {
+const Map<String, String> zhCN = {
   'music': '歌曲',
   'album': '专辑',
   'music_name': '歌名',

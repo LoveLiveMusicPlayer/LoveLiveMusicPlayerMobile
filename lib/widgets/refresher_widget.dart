@@ -8,27 +8,27 @@ import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class RefresherWidget extends StatefulWidget {
-  Widget Function(BuildContext context, int index) listItem;
-  Function(RefreshController controller)? onRefresh;
-  Function(RefreshController controller)? onLoading;
-  int itemCount;
-  String? emptyMsg;
-  String emptyImg;
-  bool enablePullDown;
-  bool enablePullUp;
-  bool isGridView;
-  int columnNum;
-  double mainAxisSpacing;
-  double crossAxisSpacing;
-  Color spacingColor;
-  double leftPadding;
-  double rightPadding;
-  double aspectRatio;
-  ScrollController? scrollController;
+  final Widget Function(BuildContext context, int index) listItem;
+  final Function(RefreshController controller)? onRefresh;
+  final Function(RefreshController controller)? onLoading;
+  final int itemCount;
+  final String? emptyMsg;
+  final String emptyImg;
+  final bool enablePullDown;
+  final bool enablePullUp;
+  final bool isGridView;
+  final int columnNum;
+  final double mainAxisSpacing;
+  final double crossAxisSpacing;
+  final Color spacingColor;
+  final double leftPadding;
+  final double rightPadding;
+  final double aspectRatio;
+  final ScrollController? scrollController;
 
   /// 长宽比
 
-  RefresherWidget({
+  const RefresherWidget({
     Key? key,
     required this.itemCount,
     required this.listItem,

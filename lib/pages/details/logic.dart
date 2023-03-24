@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/models/Music.dart';
+import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/pages/details/state.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 

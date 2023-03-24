@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:lovelivemusicplayer/models/Love.dart';
+import 'package:lovelivemusicplayer/models/love.dart';
 
 TransData transDataFromJson(String str) => TransData.fromJson(json.decode(str));
 

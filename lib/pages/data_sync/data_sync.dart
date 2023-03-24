@@ -8,10 +8,10 @@ import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/models/FtpCmd.dart';
-import 'package:lovelivemusicplayer/models/Love.dart';
-import 'package:lovelivemusicplayer/models/Menu.dart';
-import 'package:lovelivemusicplayer/models/TransData.dart';
+import 'package:lovelivemusicplayer/models/ftp_cmd.dart';
+import 'package:lovelivemusicplayer/models/love.dart';
+import 'package:lovelivemusicplayer/models/menu.dart';
+import 'package:lovelivemusicplayer/models/trans_data.dart';
 import 'package:lovelivemusicplayer/pages/details/widget/details_header.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
@@ -199,7 +199,10 @@ class _DataSyncState extends State<DataSync> {
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               SvgPicture.asset(asset,
-                  color: ColorMs.colorF940A7, width: 13.h, height: 20.h),
+                  colorFilter:
+                      ColorFilter.mode(ColorMs.colorF940A7, BlendMode.srcIn),
+                  width: 13.h,
+                  height: 20.h),
               SizedBox(width: 11.r),
               Text(title, style: TextStyleMs.pink_15)
             ]))));

@@ -21,16 +21,16 @@ import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/main.dart';
-import 'package:lovelivemusicplayer/models/Album.dart';
-import 'package:lovelivemusicplayer/models/Artist.dart';
-import 'package:lovelivemusicplayer/models/ArtistModel.dart';
-import 'package:lovelivemusicplayer/models/FtpMusic.dart';
-import 'package:lovelivemusicplayer/models/History.dart';
-import 'package:lovelivemusicplayer/models/Love.dart';
-import 'package:lovelivemusicplayer/models/Menu.dart';
-import 'package:lovelivemusicplayer/models/Music.dart';
-import 'package:lovelivemusicplayer/models/PlayListMusic.dart';
-import 'package:lovelivemusicplayer/models/TransData.dart';
+import 'package:lovelivemusicplayer/models/album.dart';
+import 'package:lovelivemusicplayer/models/artist.dart';
+import 'package:lovelivemusicplayer/models/artist_model.dart';
+import 'package:lovelivemusicplayer/models/ftp_music.dart';
+import 'package:lovelivemusicplayer/models/history.dart';
+import 'package:lovelivemusicplayer/models/love.dart';
+import 'package:lovelivemusicplayer/models/menu.dart';
+import 'package:lovelivemusicplayer/models/music.dart';
+import 'package:lovelivemusicplayer/models/play_list_music.dart';
+import 'package:lovelivemusicplayer/models/trans_data.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
@@ -154,7 +154,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       scrollToTop(HomeController.scrollController4);
       scrollToTop(HomeController.scrollController5);
       scrollToTop(HomeController.scrollController6);
-    } catch (e) {}
+    } catch (_) {}
   }
 
   /// 导入数据
@@ -581,7 +581,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     });
   }
 
-  /****************  Artist  ****************/
+  ///****************  Artist  ****************/
 
   Future<List<Music>> findAllMusicsByArtistBin(String artistBin) async {
     final artist = await artistDao.findArtistByArtistBin(artistBin);
@@ -597,7 +597,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     }
   }
 
-  /****************  Transfer  ****************/
+  ///****************  Transfer  ****************/
 
   Future<TransData> getTransPhoneData(
       {bool needMenuList = false, bool isCover = false}) async {
