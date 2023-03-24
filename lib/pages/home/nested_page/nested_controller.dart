@@ -6,6 +6,7 @@ import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/Album.dart';
 import 'package:lovelivemusicplayer/models/Artist.dart';
 import 'package:lovelivemusicplayer/pages/details/album_details/view.dart';
+import 'package:lovelivemusicplayer/pages/details/binding.dart';
 import 'package:lovelivemusicplayer/pages/details/menu_details/view.dart';
 import 'package:lovelivemusicplayer/pages/details/singer_details/view.dart';
 import 'package:lovelivemusicplayer/pages/home/page_view/home_page_view.dart';
@@ -65,26 +66,26 @@ class NestedController extends GetxController {
       addNav(Routes.routeAlbumDetails);
       album = settings.arguments as Album;
       return GetPageRoute(
-        settings: settings,
-        page: () => const AlbumDetailsPage(),
-        transition: Transition.rightToLeftWithFade,
-      );
+          routeName: "album_details",
+          settings: settings,
+          page: () => const AlbumDetailsPage(),
+          binding: DetailBinding());
     } else if (settings.name == Routes.routeSingerDetails) {
       addNav(Routes.routeSingerDetails);
       artist = settings.arguments as Artist;
       return GetPageRoute(
-        settings: settings,
-        page: () => const SingerDetailsPage(),
-        transition: Transition.rightToLeftWithFade,
-      );
+          routeName: "singer_details",
+          settings: settings,
+          page: () => const SingerDetailsPage(),
+          binding: DetailBinding());
     } else if (settings.name == Routes.routeMenuDetails) {
       addNav(Routes.routeMenuDetails);
       menuId = settings.arguments as int;
       return GetPageRoute(
-        settings: settings,
-        page: () => const MenuDetailsPage(),
-        transition: Transition.rightToLeftWithFade,
-      );
+          routeName: "menu_details",
+          settings: settings,
+          page: () => const MenuDetailsPage(),
+          binding: DetailBinding());
     } else if (settings.name == Routes.routeSystemSettings) {
       addNav(Routes.routeSystemSettings);
       return GetPageRoute(

@@ -340,7 +340,7 @@ addAllSplashPhoto(InitConfig config) {
 
 /// GetX 日志重定向
 void defaultLogWriterCallback(String value, {bool isError = false}) {
-  if (isError) {
-    Log4f.w(msg: value);
+  if (isError && !value.contains("already removed")) {
+    Log4f.e(msg: value);
   }
 }

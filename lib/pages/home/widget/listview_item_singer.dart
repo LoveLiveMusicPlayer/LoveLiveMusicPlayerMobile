@@ -25,10 +25,12 @@ class _ListViewItemSingerState extends State<ListViewItemSinger> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        showImg(widget.artist.photo, 48, 48,
-            radius: 24,
-            hasShadow: false,
-            onTap: () => widget.onItemTap(widget.artist)),
+        Hero(
+            tag: "singer${widget.artist.uid}",
+            child: showImg(widget.artist.photo, 48, 48,
+                radius: 24,
+                hasShadow: false,
+                onTap: () => widget.onItemTap(widget.artist))),
         SizedBox(
           width: 10.w,
         ),

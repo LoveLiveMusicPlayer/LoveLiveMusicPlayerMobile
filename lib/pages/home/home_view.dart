@@ -164,7 +164,7 @@ class _HomeViewState extends State<HomeView>
         key: Get.nestedKey(1),
         initialRoute: Routes.routeHome,
         onGenerateRoute: NestedController.to.onGenerateRoute,
-        observers: [MyNavigator()],
+        observers: [HeroController(), MyNavigator()],
       ),
       blurColor: Colors.transparent,
       overlayColor: color,

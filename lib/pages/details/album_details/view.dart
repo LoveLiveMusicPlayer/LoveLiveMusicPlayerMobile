@@ -23,14 +23,17 @@ class AlbumDetailsPage extends StatefulWidget {
 class _AlbumDetailsPageState extends State<AlbumDetailsPage> {
   final Album album = NestedController.to.album;
   final music = <Music>[];
-  final logic = Get.put(DetailController());
+  late Widget buildCover;
+  late Widget bottom;
 
   @override
   void initState() {
+    buildCover = DetailsCover(album: album);
+    bottom = renderBottom();
     super.initState();
     DBLogic.to.findAllMusicsByAlbumId(album.albumId!).then((musicList) {
       music.addAll(musicList);
-      logic.state.items = music;
+      DetailController.to.state.items = music;
       setState(() {});
     });
     AppUtils.uploadEvent("AlbumDetailsPage");
@@ -38,23 +41,23 @@ class _AlbumDetailsPageState extends State<AlbumDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<DetailController>(builder: (logic) {
-      return Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Column(children: [
-            DetailsHeader(title: 'album_info'.tr),
-            SizedBox(height: 8.h),
-            DetailsBody(
+    return Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Column(children: [
+          DetailsHeader(title: 'album_info'.tr),
+          SizedBox(height: 8.h),
+          GetBuilder<DetailController>(builder: (logic) {
+            return DetailsBody(
               logic: logic,
               isAlbum: true,
-              buildCover: DetailsCover(album: album),
+              buildCover: buildCover,
               music: music,
               // onRemove: (music) =>
               //     Log4f.d(msg: "remove: ${music.musicName}"),
-            ),
-            renderBottom()
-          ]));
-    });
+            );
+          }),
+          bottom
+        ]));
   }
 
   Widget renderBottom() {

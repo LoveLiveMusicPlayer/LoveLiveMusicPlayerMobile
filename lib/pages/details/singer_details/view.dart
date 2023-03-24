@@ -23,14 +23,17 @@ class SingerDetailsPage extends StatefulWidget {
 class _SingerDetailsPageState extends State<SingerDetailsPage> {
   final Artist artist = NestedController.to.artist;
   final music = <Music>[];
-  final logic = Get.put(DetailController());
+  late Widget buildCover;
+  late Widget bottom;
 
   @override
   void initState() {
+    buildCover = _buildCover();
+    bottom = renderBottom();
     super.initState();
     DBLogic.to.findAllMusicsByArtistBin(artist.uid).then((musicList) {
       music.addAll(musicList);
-      logic.state.items = music;
+      DetailController.to.state.items = music;
       setState(() {});
     });
     AppUtils.uploadEvent("SingerDetailsPage");
@@ -38,24 +41,24 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<DetailController>(builder: (logic) {
-      return Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Column(
-            children: [
-              DetailsHeader(title: artist.name),
-              SizedBox(height: 8.h),
-              DetailsBody(
+    return Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Column(
+          children: [
+            DetailsHeader(title: artist.name),
+            SizedBox(height: 8.h),
+            GetBuilder<DetailController>(builder: (logic) {
+              return DetailsBody(
                 logic: logic,
-                buildCover: _buildCover(),
+                buildCover: buildCover,
                 music: music,
                 // onRemove: (music) =>
                 //     Log4f.d(msg: "remove: ${music.musicName}"),
-              ),
-              renderBottom()
-            ],
-          ));
-    });
+              );
+            }),
+            bottom
+          ],
+        ));
   }
 
   Widget _buildCover() {
@@ -64,7 +67,9 @@ class _SingerDetailsPageState extends State<SingerDetailsPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          showImg(artist.photo, 240, 240, radius: 120),
+          Hero(
+              tag: "singer${artist.uid}",
+              child: showImg(artist.photo, 240, 240, radius: 120))
         ],
       ),
     );

@@ -48,7 +48,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
           ),
 
           ///缩列图
-          _buildIcon(),
+          Hero(tag: "menu${widget.menu.id}", child: _buildIcon()),
 
           SizedBox(
             width: 10.w,

@@ -24,10 +24,11 @@ class MenuDetailsPage extends StatefulWidget {
 class _MenuDetailsPageState extends State<MenuDetailsPage> {
   final music = <Music>[];
   Menu? menu;
-  final logic = Get.put(DetailController());
+  late Widget bottom;
 
   @override
   void initState() {
+    bottom = renderBottom();
     super.initState();
     refreshData();
     AppUtils.uploadEvent("MenuDetailsPage");
@@ -41,22 +42,22 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
       if (musicList != null && musicList.isNotEmpty) {
         music.addAll(await DBLogic.to.findMusicByMusicIds(musicList));
       }
-      logic.state.items = music;
+      DetailController.to.state.items = music;
       setState(() {});
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<DetailController>(builder: (logic) {
-      return Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Column(children: [
-            DetailsHeader(title: menu?.name ?? ""),
-            SizedBox(height: 8.h),
-            DetailsBody(
+    return Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Column(children: [
+          DetailsHeader(title: menu?.name ?? ""),
+          SizedBox(height: 8.h),
+          GetBuilder<DetailController>(builder: (logic) {
+            return DetailsBody(
                 logic: logic,
-                buildCover: _buildCover(),
+                buildCover: Hero(tag: "menu${menu?.id}", child: _buildCover()),
                 music: music,
                 isMenu: true,
                 onRemove: (List<String> musicIds) async {
@@ -75,10 +76,10 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
                     default:
                       break;
                   }
-                }),
-            renderBottom()
-          ]));
-    });
+                });
+          }),
+          bottom
+        ]));
   }
 
   Widget _buildCover() {
