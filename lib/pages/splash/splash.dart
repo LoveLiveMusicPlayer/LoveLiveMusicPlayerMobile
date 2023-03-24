@@ -36,14 +36,16 @@ class _SplashState extends State<Splash> {
         setState(() {});
         // 启动倒计时
         if (hasAIPic) {
-          mTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-            count--;
-            setState(() {});
-            if (count <= 0) {
-              timer.cancel();
-              goToHomePage();
-            }
-          },
+          mTimer = Timer.periodic(
+            const Duration(seconds: 1),
+            (timer) {
+              count--;
+              setState(() {});
+              if (count <= 0) {
+                timer.cancel();
+                goToHomePage();
+              }
+            },
           );
         }
       }

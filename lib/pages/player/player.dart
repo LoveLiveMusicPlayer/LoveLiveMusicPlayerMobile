@@ -188,7 +188,6 @@ class _PlayerState extends State<Player> {
           Center(
             child: Visibility(
                 visible: showContent == Type.tachie,
-                maintainState: true,
                 child: const Tachie(canMove: false)),
           )
         ],

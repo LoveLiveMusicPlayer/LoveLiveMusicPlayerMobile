@@ -42,38 +42,33 @@ class MyLrcUI extends LyricUI {
             lyricBaseLine: ui.lyricBaseLine,
             highlight: ui.highlight);
 
+  final playingColor = GlobalLogic.to.hasSkin.value || Get.isDarkMode
+      ? Colors.white
+      : Colors.black;
+
+  final otherColor = GlobalLogic.to.hasSkin.value
+      ? ColorMs.colorDFDFDF.withOpacity(0.4)
+      : ColorMs.color999999;
+
   @override
   TextStyle getPlayingExtTextStyle() => TextStyle(
-      color: GlobalLogic.to.hasSkin.value
-          ? Colors.white
-          : Get.isDarkMode
-              ? Colors.orangeAccent
-              : Colors.black,
+      color: playingColor,
       fontSize: defaultSize.sp,
       fontWeight: FontWeight.bold);
 
   @override
   TextStyle getOtherExtTextStyle() => TextStyle(
-        color: GlobalLogic.to.hasSkin.value
-            ? ColorMs.colorDFDFDF.withOpacity(0.4)
-            : ColorMs.color999999,
+        color: otherColor,
         fontSize: defaultSize.sp,
       );
 
   @override
-  TextStyle getOtherMainTextStyle() => TextStyle(
-      color: GlobalLogic.to.hasSkin.value
-          ? ColorMs.colorDFDFDF.withOpacity(0.4)
-          : ColorMs.color999999,
-      fontSize: otherMainSize.sp);
+  TextStyle getOtherMainTextStyle() =>
+      TextStyle(color: otherColor, fontSize: otherMainSize.sp);
 
   @override
   TextStyle getPlayingMainTextStyle() => TextStyle(
-      color: GlobalLogic.to.hasSkin.value
-          ? Colors.white
-          : Get.isDarkMode
-              ? Colors.orangeAccent
-              : Colors.black,
+      color: playingColor,
       fontSize: otherMainSize.sp,
       fontWeight: FontWeight.bold);
 

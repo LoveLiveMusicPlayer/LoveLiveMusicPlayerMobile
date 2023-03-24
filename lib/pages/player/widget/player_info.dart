@@ -13,18 +13,21 @@ class PlayerInfo extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Obx(() {
+        final playingColor = GlobalLogic.to.hasSkin.value || Get.isDarkMode
+            ? Colors.white
+            : Colors.black;
+        final otherColor = GlobalLogic.to.hasSkin.value
+            ? ColorMs.colorDFDFDF.withOpacity(0.4)
+            : ColorMs.color999999;
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            recentlyLrc(PlayerLogic.to.playingJPLrc["pre"]),
+            recentlyLrc(PlayerLogic.to.playingJPLrc["pre"], color: otherColor),
             SizedBox(height: 10.h),
             recentlyLrc(PlayerLogic.to.playingJPLrc["current"],
-                color: GlobalLogic.to.hasSkin.value || Get.isDarkMode
-                    ? Colors.white
-                    : Colors.black,
-                fontWeight: FontWeight.bold),
+                color: playingColor, fontWeight: FontWeight.bold),
             SizedBox(height: 10.h),
-            recentlyLrc(PlayerLogic.to.playingJPLrc["next"])
+            recentlyLrc(PlayerLogic.to.playingJPLrc["next"], color: otherColor)
           ],
         );
       }),
