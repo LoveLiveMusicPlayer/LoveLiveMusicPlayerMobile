@@ -34,10 +34,13 @@ class PlayerLogic extends SuperController
   var mPlayList = <PlayListMusic>[];
 
   // 当前播放的歌词
-  var playingJPLrc = {"pre": "", "current": "", "next": ""}.obs;
+  var playingJPLrc = {"musicId": "", "pre": "", "current": "", "next": ""}.obs;
 
   // 全量歌词
   var fullLrc = {"jp": "", "zh": "", "roma": ""}.obs;
+
+  // 当前播放歌曲日文解析后的列表
+  var parsedJPLrc = [];
 
   // 是否需要刷新歌词UI
   var needRefreshLyric = false.obs;
@@ -135,7 +138,6 @@ class PlayerLogic extends SuperController
 
   /// 修改当前播放的歌曲
   Future<void> changePlayingMusic(PlayListMusic currentMusic) async {
-    playingJPLrc.value = {"pre": "", "current": "", "next": ""};
     if (playingMusic.value.musicId != currentMusic.musicId) {
       final music = await DBLogic.to.findMusicById(currentMusic.musicId);
       if (music != null) {
@@ -146,31 +148,39 @@ class PlayerLogic extends SuperController
 
   /// 修改前一句、当前、后一句歌词内容
   Future<void> changePlayingLyric(Duration duration) async {
-    final lrcList = ParserSmart(fullLrc["jp"]!).parseLines();
-    for (var i = 0; i < lrcList.length; i++) {
-      if (i == lrcList.length - 1 &&
-          (lrcList[i].startTime ?? 0) < duration.inMilliseconds) {
-        playingJPLrc.value = {
-          "pre": (i - 1 <= lrcList.length - 1 && i > 0)
-              ? lrcList[i - 1].mainText ?? ""
-              : "",
-          "current": (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "",
-          "next": ""
-        };
+    final musicId = playingMusic.value.musicId;
+    if (musicId == null || playingJPLrc["musicId"] != musicId) {
+      return;
+    }
+    for (var index = 0; index < parsedJPLrc.length; index++) {
+      if (index == parsedJPLrc.length - 1 &&
+          (parsedJPLrc[index].startTime ?? 0) < duration.inMilliseconds) {
+        parsePlayingLyric(musicId, index, false);
         break;
-      } else if ((lrcList[i].startTime ?? 0) < duration.inMilliseconds &&
-          (lrcList[i + 1].startTime ?? 0) > duration.inMilliseconds) {
-        playingJPLrc.value = {
-          "pre": (i - 1 <= lrcList.length - 1 && i > 0)
-              ? lrcList[i - 1].mainText ?? ""
-              : "",
-          "current": (i <= lrcList.length - 1) ? lrcList[i].mainText ?? "" : "",
-          "next":
-              (i + 1 <= lrcList.length - 1) ? lrcList[i + 1].mainText ?? "" : ""
-        };
+      } else if ((parsedJPLrc[index].startTime ?? 0) <
+              duration.inMilliseconds &&
+          (parsedJPLrc[index + 1].startTime ?? 0) > duration.inMilliseconds) {
+        parsePlayingLyric(musicId, index, true);
         break;
       }
     }
+  }
+
+  /// 解析前一句、当前、后一句歌词内容
+  parsePlayingLyric(String musicId, int index, bool isLast) {
+    final pre = (index - 1 <= parsedJPLrc.length - 1 && index > 0)
+        ? parsedJPLrc[index - 1].mainText ?? ""
+        : "";
+    final current = (index <= parsedJPLrc.length - 1)
+        ? parsedJPLrc[index].mainText ?? ""
+        : "";
+    String next = "";
+    if (isLast) {
+      next = (index + 1 <= parsedJPLrc.length - 1)
+          ? parsedJPLrc[index + 1].mainText ?? ""
+          : "";
+    }
+    setPlayingJPLrc(musicId, pre, current, next);
   }
 
   /// 播放指定列表的歌曲
@@ -354,6 +364,9 @@ class PlayerLogic extends SuperController
     }
 
     fullLrc.value = {"jp": jpLrc, "zh": zhLrc, "roma": romaLrc};
+    parsedJPLrc.clear();
+    parsedJPLrc.addAll(ParserSmart(fullLrc["jp"]!).parseLines());
+    setPlayingJPLrc(playingMusic.value.musicId ?? "");
     Future.delayed(
         const Duration(milliseconds: 200), () => needRefreshLyric.value = true);
   }
@@ -498,11 +511,7 @@ class PlayerLogic extends SuperController
     await audioSourceList.removeAt(index);
     // 播放列表为空则停止播放，清空状态
     if (audioSourceList.length == 0) {
-      setCurrentMusic(null);
-      playingJPLrc.value = {"pre": "", "current": "", "next": ""};
-      fullLrc.value = {"jp": "", "zh": "", "roma": ""};
-      needRefreshLyric.value = true;
-      await mPlayer.stop();
+      await clearPlayerStatus();
       return;
     }
     // 删除的是最后一首歌，将播放列表第一首
@@ -514,12 +523,26 @@ class PlayerLogic extends SuperController
   /// 删除播放列表中全部歌曲
   Future<void> removeAllMusics() async {
     await audioSourceList.removeRange(0, audioSourceList.length);
-    // 播放列表为空则停止播放，清空状态
+    await clearPlayerStatus();
+  }
+
+  /// 停止播放，清空状态
+  Future<void> clearPlayerStatus() async {
     setCurrentMusic(null);
-    playingJPLrc.value = {"pre": "", "current": "", "next": ""};
+    setPlayingJPLrc();
     fullLrc.value = {"jp": "", "zh": "", "roma": ""};
     needRefreshLyric.value = true;
     await mPlayer.stop();
+  }
+
+  /// 清空封面下面的歌词
+  setPlayingJPLrc([musicId = "", pre = "", current = "", next = ""]) {
+    playingJPLrc.value = {
+      "musicId": musicId,
+      "pre": pre,
+      "current": current,
+      "next": next
+    };
   }
 
   /// 设置当前播放歌曲
@@ -538,7 +561,7 @@ class PlayerLogic extends SuperController
   /// 按钮点击上一曲
   playPrev() {
     if (mPlayer.hasPrevious) {
-      playingJPLrc.value = {"pre": "", "current": "", "next": ""};
+      setPlayingJPLrc();
       mPlayer.seekToPrevious();
     }
   }
@@ -546,7 +569,7 @@ class PlayerLogic extends SuperController
   /// 按钮点击下一曲
   playNext() {
     if (mPlayer.hasNext) {
-      playingJPLrc.value = {"pre": "", "current": "", "next": ""};
+      setPlayingJPLrc();
       mPlayer.seekToNext();
     }
   }
