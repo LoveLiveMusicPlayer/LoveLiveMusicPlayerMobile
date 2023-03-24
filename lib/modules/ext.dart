@@ -23,7 +23,7 @@ Widget showImg(
   String? path,
   double? width,
   double? height, {
-  double radius = 20,
+  double radius = 12,
   bool hasShadow = true,
   Color? shadowColor,
   String defPhoto = Assets.logoLogo,
@@ -264,11 +264,11 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
   } else if (icon is String &&
       icon.startsWith("assets") &&
       icon.endsWith(".svg")) {
+    final colorFilter = ColorFilter.mode(
+        iconColor ?? (Get.isDarkMode ? Colors.white : ColorMs.color333333),
+        BlendMode.srcIn);
     child = SvgPicture.asset(icon,
-        color:
-            iconColor ?? (Get.isDarkMode ? Colors.white : ColorMs.color333333),
-        width: iconSize.h,
-        height: iconSize.h);
+        colorFilter: colorFilter, width: iconSize.h, height: iconSize.h);
   } else if (icon.endsWith(".gif")) {
     child = Image.asset(icon, width: iconSize.h, height: iconSize.h);
   } else {
@@ -423,7 +423,9 @@ Widget touchIconByAsset(
     double height = 20}) {
   return InkWell(
     onTap: onTap,
-    child:
-        SvgPicture.asset(path, width: width.h, height: height.h, color: color),
+    child: SvgPicture.asset(path,
+        width: width.h,
+        height: height.h,
+        colorFilter: ColorFilter.mode(ColorMs.colorF940A7, BlendMode.srcIn)),
   );
 }

@@ -71,28 +71,25 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
         initialData: SDUtils.getImgPath(),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           return showImg(snapshot.data, 48, 48,
-              hasShadow: false,
-              radius: 8,
-              onTap: () => widget.onItemTap(widget.menu));
+              hasShadow: false, onTap: () => widget.onItemTap(widget.menu));
         },
         future: AppUtils.getMusicCoverPath(widget.menu.music.first),
       );
     } else {
       return showImg(null, 48, 48,
-          hasShadow: false,
-          radius: 8,
-          onTap: () => widget.onItemTap(widget.menu));
+          hasShadow: false, onTap: () => widget.onItemTap(widget.menu));
     }
   }
 
   Widget _buildDevicePic() {
+    final colorFilter = ColorFilter.mode(ColorMs.colorF940A7, BlendMode.srcIn);
     if (widget.showDevicePic == true) {
       if (widget.menu.id <= 100) {
         return SvgPicture.asset(Assets.syncIconComputer,
-            color: ColorMs.colorF940A7, width: 13.h, height: 20.h);
+            colorFilter: colorFilter, width: 13.h, height: 20.h);
       } else {
         return SvgPicture.asset(Assets.syncIconPhone,
-            color: ColorMs.colorF940A7, width: 13.h, height: 20.h);
+            colorFilter: colorFilter, width: 13.h, height: 20.h);
       }
     }
     return Container();

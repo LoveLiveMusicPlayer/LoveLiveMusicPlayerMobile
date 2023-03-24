@@ -309,7 +309,7 @@ class _MusicTransformState extends State<MusicTransform> {
             final mCoverPath =
                 musicList[index].baseUrl + musicList[index].coverPath;
             return showImg(SDUtils.getImgPath(fileName: mCoverPath), 400, 400,
-                hasShadow: false, radius: 12);
+                hasShadow: false);
           },
           itemCount: musicList.length,
         ),
@@ -568,7 +568,10 @@ class _MusicTransformState extends State<MusicTransform> {
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               SvgPicture.asset(asset,
-                  color: ColorMs.colorF940A7, width: 13.h, height: 20.h),
+                  colorFilter:
+                      ColorFilter.mode(ColorMs.colorF940A7, BlendMode.srcIn),
+                  width: 13.h,
+                  height: 20.h),
               SizedBox(width: 11.r),
               Text(title, style: TextStyleMs.pink_15)
             ]))));

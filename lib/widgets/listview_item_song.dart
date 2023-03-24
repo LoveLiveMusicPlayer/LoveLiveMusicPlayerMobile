@@ -121,10 +121,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
       onTap: clickItem,
       onLongPress: onLongPress,
       child: showImg(SDUtils.getImgPath(fileName: coverPath), 48, 48,
-          hasShadow: false,
-          radius: 12,
-          onTap: clickItem,
-          onLongPress: onLongPress),
+          hasShadow: false, onTap: clickItem, onLongPress: onLongPress),
     );
   }
 
