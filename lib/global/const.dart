@@ -42,29 +42,18 @@ class Const {
   // 默认的资源oss，无法在线获取时用于离线加载网络图片
   static String dataOssUrl = "https://picbed-cdn.zhushenwudi.top/llmp-oss/";
 
-  static String lyricOssUrl = "https://llmp-oss.oss-cn-hongkong.aliyuncs.com/";
+  static String splashUrl = "${dataOssUrl}LLMP-M/splash_bg/";
 
-  // 自己的oss
+  static const String lyricOssUrl = "https://llmp-oss.oss-cn-hongkong.aliyuncs.com/";
+
+  /// 根服务OSS
   static const String ownOssUrl =
-      "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/data/";
-
-  static const String shareDefaultLogo =
-      "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/ic_launcher.png";
-
-  static const String backendUrl =
-      "https://netease-backend.zhushenwudi.top/song/detail";
-
-  static const String shareKvUrl =
-      "http://fc-mp-92601a5b-3adb-44ca-b6f6-fc4e8b3edbca.next.bspapp.com/saveShareKV";
-
-  static const String moeGirlUrl = "https://zh.moegirl.org.cn/";
+      "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/data/v2/";
 
   // 动态获取资源oss的url和开屏图配置
   static const String splashConfigUrl = "${ownOssUrl}splash_config.json";
 
-  static String splashUrl = "${ownOssUrl}LLMP-M/splash_bg/";
-
-  // 数据更新桥文件
+  // 数据更新文件
   static const String dataUrl = "$ownOssUrl$env/data.json";
 
   // 歌手文件
@@ -72,4 +61,18 @@ class Const {
 
   // 版本更新文件
   static const String updateUrl = "$ownOssUrl$env/version.json";
+
+  // 默认LOGO
+  static const String shareDefaultLogo =
+      "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/ic_launcher.png";
+
+  // 获取网易云歌曲封面图
+  static const String backendUrl =
+      "https://netease-backend.zhushenwudi.top/song/detail";
+
+  // 阿里Serverless 分享KV
+  static const String shareKvUrl =
+      "http://fc-mp-92601a5b-3adb-44ca-b6f6-fc4e8b3edbca.next.bspapp.com/saveShareKV";
+
+  static const String moeGirlUrl = "https://zh.moegirl.org.cn/";
 }
