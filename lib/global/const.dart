@@ -50,7 +50,7 @@ class Const {
   static const String ownOssUrl =
       "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/data/v2/";
 
-  // 动态获取资源oss的url和开屏图配置
+  // 开屏图配置文件
   static const String splashConfigUrl = "${ownOssUrl}splash_config.json";
 
   // 数据更新文件
