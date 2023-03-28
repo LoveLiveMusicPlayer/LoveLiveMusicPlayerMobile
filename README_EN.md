@@ -35,6 +35,9 @@ Function list:
 - [Reporting of playing data] ✓
 - [Fast transmission of songs and data synchronization] ✓
 - [Bright color mode, dark color mode and dazzling color mode] ✓
+- [Dynamic stand image] ✓
+- [DIY background image] ✓
+- [Long press the song to jump to detail through MoeGirl] ✓
 
 **--Project_by [zhushenwudi](https://space.bilibili.com/4367965)**
 
