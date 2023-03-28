@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -24,12 +26,13 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final width = min(0.4 * Get.height, 0.8 * Get.width);
     return Container(
-      width: 303.w,
+      width: width,
       height: 230.h,
       decoration: BoxDecoration(
           color: Get.isDarkMode ? Get.theme.primaryColor : Colors.white,
-          borderRadius: BorderRadius.circular(16.w)),
+          borderRadius: BorderRadius.circular(16.r)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -40,61 +43,60 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
                     ? TextStyleMs.white_18
                     : TextStyleMs.black_18),
           ),
-          SizedBox(
-            width: 220.w,
-            child: Center(
-              widthFactor: 220.w,
-              child: TextField(
-                  controller: controller,
-                  cursorColor: Colors.blue,
-                  cursorHeight: 18.h,
-                  cursorRadius: Radius.circular(15.r),
-                  cursorWidth: 2,
-                  showCursor: true,
-                  obscureText: false,
-                  maxLength: maxLength,
-                  decoration: InputDecoration(
-                      isCollapsed: false,
-                      labelText: 'input_menu_name'.tr,
-                      contentPadding: EdgeInsets.only(left: 8.w, right: 8.w),
-                      focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue)),
-                      border: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red))),
-                  onChanged: (str) {
-                    if (controller.value.isComposingRangeValid) {
-                      // ios自带输入法bug修复
-                      return;
-                    }
-                    final len = str.length;
-                    if (len < maxLength) {
-                      text = str.substring(0, len);
-                    } else {
-                      text = str.substring(0, maxLength);
-                    }
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 28.w),
+            child: TextField(
+                controller: controller,
+                cursorColor: Colors.blue,
+                cursorHeight: 18.h,
+                cursorRadius: Radius.circular(15.r),
+                cursorWidth: 2,
+                showCursor: true,
+                obscureText: false,
+                maxLength: maxLength,
+                decoration: InputDecoration(
+                    isCollapsed: false,
+                    labelText: 'input_menu_name'.tr,
+                    labelStyle: TextStyle(fontSize: 14.sp),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 14.h),
+                    counterStyle: TextStyle(fontSize: 10.sp),
+                    focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue)),
+                    border: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red))),
+                onChanged: (str) {
+                  if (controller.value.isComposingRangeValid) {
+                    // ios自带输入法bug修复
+                    return;
+                  }
+                  final len = str.length;
+                  if (len < maxLength) {
+                    text = str.substring(0, len);
+                  } else {
+                    text = str.substring(0, maxLength);
+                  }
 
-                    controller.value = TextEditingValue(
-                        text: text,
-                        selection:
-                            TextSelection.collapsed(offset: text.length));
-                    setState(() {});
-                  },
-                  onSubmitted: (str) {
-                    text = str;
-                    setState(() {});
-                  },
-                  textInputAction: TextInputAction.done),
-            ),
+                  controller.value = TextEditingValue(
+                      text: text,
+                      selection:
+                      TextSelection.collapsed(offset: text.length));
+                  setState(() {});
+                },
+                onSubmitted: (str) {
+                  text = str;
+                  setState(() {});
+                },
+                textInputAction: TextInputAction.done),
           ),
           Row(
             children: [
               Expanded(
                 child: Container(
-                  height: 44.w,
+                  height: 44.h,
                   decoration: BoxDecoration(
                       color: Get.isDarkMode ? Colors.grey : ColorMs.colorEDF5FF,
                       borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(16.w),
+                        bottomLeft: Radius.circular(16.r),
                       )),
                   child: TextButton(
                       onPressed: () {
@@ -111,13 +113,13 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
               ),
               Expanded(
                 child: Container(
-                  height: 44.w,
+                  height: 44.h,
                   decoration: BoxDecoration(
                       color: Get.isDarkMode
                           ? ColorMs.color0093DF
                           : ColorMs.color28B3F7,
                       borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(16.w))),
+                          bottomRight: Radius.circular(16.r))),
                   child: TextButton(
                       onPressed: () {
                         if (widget.onConfirm != null) {

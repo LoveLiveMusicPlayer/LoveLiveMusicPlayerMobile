@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +28,8 @@ class PermissionDialog extends StatelessWidget {
         Get.isDarkMode ? TextStyleMs.white_12 : TextStyleMs.black_12;
     return Center(
       child: Container(
-          width: 300.w,
-          padding: EdgeInsets.only(left: 16.w, right: 16.w),
+          width: min(0.4 * Get.height, 0.8 * Get.width),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
           decoration: BoxDecoration(
               color: Get.theme.primaryColor,
               borderRadius: BorderRadius.circular(16.r)),
@@ -58,9 +59,10 @@ class PermissionDialog extends StatelessWidget {
                   )
                 ]),
               ),
-              SizedBox(height: 16.h),
+              SizedBox(height: 20.h),
               Container(
                 width: double.infinity,
+                height: 40.h,
                 decoration: BoxDecoration(
                     color: ColorMs.color28B3F7,
                     borderRadius: BorderRadius.all(Radius.circular(20.r))),
@@ -69,8 +71,9 @@ class PermissionDialog extends StatelessWidget {
                       final callback =
                           await SharesdkPlugin.uploadPrivacyPermissionStatus(1,
                               (success) {
-                        SmartDialog.compatible.dismiss();
-                        if (confirm != null) confirm!();
+                        SmartDialog.compatible.dismiss().then((value) {
+                          if (confirm != null) confirm!();
+                        });
                       });
                       print(callback);
                     },
@@ -79,19 +82,24 @@ class PermissionDialog extends StatelessWidget {
                       style: TextStyleMs.white_16,
                     )),
               ),
-              TextButton(
-                  style: ButtonStyle(
-                      overlayColor: MaterialStateProperty.resolveWith((states) {
-                    return Colors.transparent;
-                  })),
-                  onPressed: () {
-                    if (Platform.isIOS) {
-                      exit(0);
-                    } else {
-                      SystemNavigator.pop();
-                    }
-                  },
-                  child: Text('permission_disagree'.tr, style: miniTextColor)),
+              SizedBox(height: 6.h),
+              SizedBox(
+                height: 32.h,
+                child: TextButton(
+                    style: ButtonStyle(overlayColor:
+                        MaterialStateProperty.resolveWith((states) {
+                      return Colors.transparent;
+                    })),
+                    onPressed: () {
+                      if (Platform.isIOS) {
+                        exit(0);
+                      } else {
+                        SystemNavigator.pop();
+                      }
+                    },
+                    child:
+                        Text('permission_disagree'.tr, style: miniTextColor)),
+              ),
             ],
           )),
     );

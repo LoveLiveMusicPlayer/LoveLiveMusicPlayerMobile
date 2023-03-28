@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -19,54 +21,62 @@ class ResetDataDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = min(0.4 * Get.height, 0.8 * Get.width);
     return Center(
         child: Container(
-            width: 300.w,
+            width: width,
             decoration: BoxDecoration(
                 color: Get.isDarkMode ? Get.theme.primaryColor : Colors.white,
                 borderRadius: BorderRadius.circular(16.r)),
-            child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 12.h),
-                  renderText('choose_your_clean_data'.tr, 18.sp),
-                  SizedBox(height: 24.h),
-                  renderButton('remove_songs_data'.tr, deleteMusicData),
-                  SizedBox(height: 24.h),
-                  renderButton('remove_user_data'.tr, deleteUserData,
-                      hasAfter: false),
-                  SizedBox(height: 24.h),
-                  renderText('explain_songs_data'.tr, 12.sp),
-                  SizedBox(height: 3.h),
-                  renderText('explain_user_data'.tr, 12.sp),
-                  SizedBox(height: 12.h),
-                ])));
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+              child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 12.h),
+                    renderText('choose_your_clean_data'.tr, 18.sp),
+                    SizedBox(height: 24.h),
+                    renderButton('remove_songs_data'.tr, deleteMusicData),
+                    SizedBox(height: 24.h),
+                    renderButton('remove_user_data'.tr, deleteUserData,
+                        hasAfter: false),
+                    SizedBox(height: 24.h),
+                    renderText('explain_songs_data'.tr, 12.sp),
+                    SizedBox(height: 3.h),
+                    renderText('explain_user_data'.tr, 12.sp),
+                    SizedBox(height: 12.h),
+                  ]),
+            )));
   }
 
   Widget renderButton(String text, Callback onBackListener,
       {bool hasAfter = true}) {
-    return Container(
-      width: 200.w,
-      decoration: BoxDecoration(
-          color: ColorMs.color28B3F7,
-          borderRadius: BorderRadius.circular(16.r)),
-      child: TextButton(
-          onPressed: () {
-            SmartDialog.compatible.dismiss();
-            SmartDialog.compatible
-                .showLoading(msg: 'resetting'.tr, backDismiss: false);
-            onBackListener();
-            if (hasAfter) {
-              afterDelete();
-            }
-          },
-          child: Text(
-            text,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyleMs.white_16,
-          )),
+    return Padding(
+      padding: EdgeInsets.only(left: 20.w, right: 20.w),
+      child: Container(
+        width: double.infinity,
+        height: 44.h,
+        decoration: BoxDecoration(
+            color: ColorMs.color28B3F7,
+            borderRadius: BorderRadius.circular(16.r)),
+        child: TextButton(
+            onPressed: () {
+              SmartDialog.compatible.dismiss();
+              SmartDialog.compatible
+                  .showLoading(msg: 'resetting'.tr, backDismiss: false);
+              onBackListener();
+              if (hasAfter) {
+                afterDelete();
+              }
+            },
+            child: Text(
+              text,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyleMs.white_16,
+            )),
+      ),
     );
   }
 

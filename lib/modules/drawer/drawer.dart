@@ -21,6 +21,7 @@ import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
 import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -354,9 +355,11 @@ class _DrawerPageState extends State<DrawerPage> {
 
   Widget versionView() {
     return SizedBox(
-        height: 30.h,
+        height: 24.h,
         child: Center(
-          child: Text("Ver.$appVersion${env == "prod" ? "" : " Preview"}"),
+          child: Text("Ver.$appVersion${env == "prod" ? "" : " Preview"}",
+              style:
+                  Get.isDarkMode ? TextStyleMs.white_12 : TextStyleMs.black_12),
         ));
   }
 

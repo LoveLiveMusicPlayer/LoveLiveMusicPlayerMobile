@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -39,9 +41,10 @@ class TwoButtonDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = min(0.4 * Get.height, 0.8 * Get.width);
     return Center(
         child: Container(
-      width: 303.w,
+      width: width,
       decoration: BoxDecoration(
           color: Get.isDarkMode ? Get.theme.primaryColor : Colors.white,
           borderRadius: BorderRadius.circular(16.r)),
@@ -76,27 +79,31 @@ class TwoButtonDialog extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 8.w,
+            height: 8.h,
           ),
           Visibility(
             visible: _isShowMsg,
+            maintainAnimation: true,
+            maintainState: true,
+            maintainSize: true,
             child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Text(_msg ?? 'message'.tr,
                     style: TextStyleMs.gray_14, textAlign: TextAlign.center)),
           ),
           SizedBox(
-            height: 28.w,
+            height: 8.h,
           ),
           Row(
             children: [
               Expanded(
                 child: Container(
-                  height: 44.w,
+                  height: 44.h,
+                  width: double.infinity,
                   decoration: BoxDecoration(
                       color: Get.isDarkMode ? Colors.grey : ColorMs.colorEDF5FF,
                       borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(16.w),
+                        bottomLeft: Radius.circular(16.r),
                       )),
                   child: TextButton(
                       onPressed: () {
@@ -111,13 +118,14 @@ class TwoButtonDialog extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  height: 44.w,
+                  height: 44.h,
+                  width: double.infinity,
                   decoration: BoxDecoration(
                       color: Get.isDarkMode
                           ? ColorMs.color0093DF
                           : ColorMs.color28B3F7,
                       borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(16.w))),
+                          bottomRight: Radius.circular(16.r))),
                   child: TextButton(
                       onPressed: () {
                         SmartDialog.compatible.dismiss();

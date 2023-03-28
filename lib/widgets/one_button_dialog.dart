@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -36,9 +38,10 @@ class OneButtonDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = min(0.4 * Get.height, 0.8 * Get.width);
     return Center(
         child: Container(
-      width: 303.w,
+      width: width,
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(16.r)),
       child: Column(
@@ -73,6 +76,9 @@ class OneButtonDialog extends StatelessWidget {
           ),
           Visibility(
             visible: _isShowMsg,
+            maintainState: true,
+            maintainAnimation: true,
+            maintainSize: true,
             child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Text(
@@ -83,10 +89,11 @@ class OneButtonDialog extends StatelessWidget {
                 )),
           ),
           SizedBox(
-            height: 28.h,
+            height: 8.h,
           ),
           Container(
             width: double.infinity,
+            height: 44.h,
             decoration: BoxDecoration(
                 color: ColorMs.color28B3F7,
                 borderRadius: BorderRadius.only(

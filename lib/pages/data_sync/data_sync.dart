@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -209,20 +211,21 @@ class _DataSyncState extends State<DataSync> {
   }
 
   showBackDialog() {
+    final width = min(0.4 * Get.height, 0.8 * Get.width);
     SmartDialog.compatible.show(
         widget: Container(
-      width: 300.w,
+      width: width,
       height: 150.h,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20.w),
+        borderRadius: BorderRadius.circular(20.r),
       ),
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         Container(
-          width: 250.w,
           margin: EdgeInsets.only(bottom: 30.h),
-          child: Text('terminate_trans'.tr, style: TextStyleMs.black_14),
+          child: Text('terminate_trans'.tr,
+              style: TextStyleMs.black_14, textAlign: TextAlign.center),
         ),
         ElevatedButton(
           onPressed: () async {
@@ -233,7 +236,10 @@ class _DataSyncState extends State<DataSync> {
                 .findAllListByGroup(GlobalLogic.to.currentGroup.value)
                 .then((value) => Get.back());
           },
-          child: Text('confirm'.tr),
+          child: Padding(
+            padding: EdgeInsets.all(8.h),
+            child: Text('confirm'.tr, style: TextStyleMs.white_14),
+          ),
         )
       ]),
     ));
