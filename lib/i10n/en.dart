@@ -151,7 +151,12 @@ Here are the statistical development tools used:
   Their Allies privacy policy links: https://www.umeng.com/page/policy
   Ⅱ. Use SDK name: ShareSDK of MobTech
   Service type: Share and push
-  MobTech privacy policy links: https://www.mob.com/about/policy
+  Their Allies privacy policy links: https://www.mob.com/about/policy
+  Ⅲ. Use SDK name: 360 Hardening SDK (Applicable to APK/HAP/APK plug-in /SDK hardening)
+  Device permission: None
+  Function purpose: Used for App fault detection and diagnosis,App security reinforcement protection, piracy detection services, threat environment detection services, so as to help users quickly solve abnormal situations
+  Authorization mode: The authorization mode is determined by the App developer and is enabled when the end user agrees to authorize the permission to the developer App
+  Their Allies privacy policy links: https://jiagu.360.cn/#/global/help/322
 
 4. User instructions
 This software is LoveLive! Users in the circle spontaneously use, not including any copyrighted songs. Copyright songs are extracted and imported from CDS by users themselves. See the Github project documentation for details about the import directory structure.

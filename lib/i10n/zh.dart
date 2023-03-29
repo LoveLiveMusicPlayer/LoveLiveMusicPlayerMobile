@@ -147,6 +147,11 @@ const Map<String, String> zhCN = {
   Ⅱ.使用SDK名称：MobTech的ShareSDK
   服务类型：实现分享和推送
   MobTech隐私权政策链接：https://www.mob.com/about/policy
+  Ⅲ.使用SDK名称：360加固SDK (适用于APK/HAP/APK插件/SDK加固)
+  设备权限: 无
+  实现的功能目的: 用于检测App故障和诊断,App安全加固保护,盗版检测服务,威胁环境检测服务,以便帮助用户快速解决异常情况
+  权限授权方式: 授权方式由App开发者决定,当终端用户同意向开发者App授权该权限时开启
+  360加固隐私权政策链接：https://jiagu.360.cn/#/global/help/322
 
 4.用户须知
 本软件为LoveLive!圈内用户自发使用，不包含任何版权歌曲在内。版权歌曲均由用户本人自行从CD提取导入，导入目录结构详见Github项目文档。
