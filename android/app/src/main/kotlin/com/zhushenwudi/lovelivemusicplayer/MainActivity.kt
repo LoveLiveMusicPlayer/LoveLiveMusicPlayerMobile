@@ -1,7 +1,6 @@
 package com.zhushenwudi.lovelivemusicplayer
 
 import android.os.Bundle
-import androidx.annotation.NonNull
 import com.ryanheise.audioservice.AudioServiceActivity
 import com.umeng.commonsdk.UMConfigure
 import io.flutter.embedding.engine.FlutterEngine
@@ -22,7 +21,7 @@ class MainActivity : AudioServiceActivity() {
         com.umeng.umeng_common_sdk.UmengCommonSdkPlugin.setContext(this)
     }
 
-    override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         registerWith(flutterEngine)
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
