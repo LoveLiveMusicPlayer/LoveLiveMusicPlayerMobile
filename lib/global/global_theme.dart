@@ -16,7 +16,8 @@ final ThemeData lightTheme = ThemeData(
     appBarTheme: AppBarTheme(
       shadowColor: Colors.green[300]?.withOpacity(.1),
       elevation: 0.0,
-    ), bottomAppBarTheme: const BottomAppBarTheme(color: Colors.black));
+    ),
+    bottomAppBarTheme: const BottomAppBarTheme(color: Colors.black));
 final ThemeData darkTheme = ThemeData(
     hintColor: Colors.blue[300],
     brightness: Brightness.dark,
@@ -28,4 +29,5 @@ final ThemeData darkTheme = ThemeData(
     appBarTheme: AppBarTheme(
       shadowColor: Colors.blue[300]?.withOpacity(.1),
       elevation: 0.0,
-    ), bottomAppBarTheme: const BottomAppBarTheme(color: Colors.white));
+    ),
+    bottomAppBarTheme: const BottomAppBarTheme(color: Colors.white));

@@ -129,9 +129,9 @@ class _DrawerPageState extends State<DrawerPage> {
               global.currentGroup.value = Const.groupLiella;
               DBLogic.to.findAllListByGroup(Const.groupLiella);
             }),
-            showGroupButton(Assets.drawerLogoAllstars, onTap: () {
-              global.currentGroup.value = Const.groupCombine;
-              DBLogic.to.findAllListByGroup(Const.groupCombine);
+            showGroupButton(Assets.drawerLogoHasunosora, onTap: () {
+              global.currentGroup.value = Const.groupHasunosora;
+              DBLogic.to.findAllListByGroup(Const.groupHasunosora);
             }),
           ],
         ),
@@ -139,12 +139,12 @@ class _DrawerPageState extends State<DrawerPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            showGroupButton(Assets.drawerLogoHasunosora, onTap: () {
-              global.currentGroup.value = Const.groupHasunosora;
-              DBLogic.to.findAllListByGroup(Const.groupHasunosora);
+            showGroupButton(Assets.drawerLogoYohane, onTap: () {
+              global.currentGroup.value = Const.groupYohane;
+              DBLogic.to.findAllListByGroup(Const.groupYohane);
             }),
             Visibility(
-              visible: false,
+              visible: true,
               maintainAnimation: true,
               maintainSize: true,
               maintainState: true,
@@ -320,6 +320,8 @@ class _DrawerPageState extends State<DrawerPage> {
         data.music.combine, data.album.combine, Const.groupCombine);
     await loopParseData(
         data.music.hasunosora, data.album.hasunosora, Const.groupHasunosora);
+    await loopParseData(
+        data.music.yohane, data.album.yohane, Const.groupYohane);
     await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
     SmartDialog.compatible.dismiss(status: SmartStatus.loading);
     SpUtil.put(Const.spDataVersion, data.version);

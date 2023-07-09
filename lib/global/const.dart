@@ -14,6 +14,7 @@ class Const {
   static const String groupLiella = "Liella!";
   static const String groupCombine = "Combine";
   static const String groupHasunosora = "Hasunosora";
+  static const String groupYohane = "Yohane";
 
   // Logan 加密键值对
   static const String aesKey = "0123456789012345";
@@ -44,7 +45,8 @@ class Const {
 
   static String splashUrl = "${dataOssUrl}LLMP-M/splash_bg/";
 
-  static const String lyricOssUrl = "https://llmp-oss.oss-cn-hongkong.aliyuncs.com/";
+  static const String lyricOssUrl =
+      "https://llmp-oss.oss-cn-hongkong.aliyuncs.com/";
 
   /// 根服务OSS
   static const String ownOssUrl =

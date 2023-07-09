@@ -35,10 +35,8 @@ class ListViewItemAlbum extends StatefulWidget {
 }
 
 class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
-
   @override
   void initState() {
-
     super.initState();
   }
 

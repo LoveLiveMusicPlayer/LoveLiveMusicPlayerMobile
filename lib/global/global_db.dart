@@ -110,6 +110,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
             .addAll(await albumDao.findAllAlbumsByGroup(Const.groupCombine));
         tempAlbumList
             .addAll(await albumDao.findAllAlbumsByGroup(Const.groupHasunosora));
+        tempAlbumList
+            .addAll(await albumDao.findAllAlbumsByGroup(Const.groupYohane));
         allAlbums.addAll(tempAlbumList);
 
         // 获取全部歌曲列表
@@ -126,6 +128,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
             .addAll(await musicDao.findAllMusicsByGroup(Const.groupCombine));
         tempMusicList
             .addAll(await musicDao.findAllMusicsByGroup(Const.groupHasunosora));
+        tempMusicList
+            .addAll(await musicDao.findAllMusicsByGroup(Const.groupYohane));
         GlobalLogic.to.musicList.value = tempMusicList;
         final artistArr = await artistDao.findAllArtists();
         artistArr.sort((a, b) => AppUtils.comparePeopleNumber(a.uid, b.uid));

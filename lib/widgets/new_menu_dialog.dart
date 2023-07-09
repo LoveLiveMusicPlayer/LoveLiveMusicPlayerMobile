@@ -58,7 +58,8 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
                     isCollapsed: false,
                     labelText: 'input_menu_name'.tr,
                     labelStyle: TextStyle(fontSize: 14.sp),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 14.h),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 8.w, vertical: 14.h),
                     counterStyle: TextStyle(fontSize: 10.sp),
                     focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue)),
@@ -78,8 +79,7 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
 
                   controller.value = TextEditingValue(
                       text: text,
-                      selection:
-                      TextSelection.collapsed(offset: text.length));
+                      selection: TextSelection.collapsed(offset: text.length));
                   setState(() {});
                 },
                 onSubmitted: (str) {

@@ -38,6 +38,7 @@ class Album {
     required this.liella,
     required this.combine,
     required this.hasunosora,
+    required this.yohane,
   });
 
   List<InnerAlbum> us;
@@ -46,6 +47,7 @@ class Album {
   List<InnerAlbum> liella;
   List<InnerAlbum> combine;
   List<InnerAlbum> hasunosora;
+  List<InnerAlbum> yohane;
 
   factory Album.fromJson(Map<String, dynamic> json) => Album(
         us: List<InnerAlbum>.from(
@@ -60,6 +62,8 @@ class Album {
             json[Const.groupCombine].map((x) => InnerAlbum.fromJson(x))),
         hasunosora: List<InnerAlbum>.from(
             json[Const.groupHasunosora].map((x) => InnerAlbum.fromJson(x))),
+        yohane: List<InnerAlbum>.from(
+            json[Const.groupYohane].map((x) => InnerAlbum.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -70,6 +74,7 @@ class Album {
         Const.groupCombine: List<dynamic>.from(combine.map((x) => x.toJson())),
         Const.groupHasunosora:
             List<dynamic>.from(hasunosora.map((x) => x.toJson())),
+        Const.groupYohane: List<dynamic>.from(yohane.map((x) => x.toJson())),
       };
 }
 
@@ -121,6 +126,7 @@ class Music {
     required this.liella,
     required this.combine,
     required this.hasunosora,
+    required this.yohane,
   });
 
   List<InnerMusic> us;
@@ -129,6 +135,7 @@ class Music {
   List<InnerMusic> liella;
   List<InnerMusic> combine;
   List<InnerMusic> hasunosora;
+  List<InnerMusic> yohane;
 
   factory Music.fromJson(Map<String, dynamic> json) => Music(
         us: List<InnerMusic>.from(
@@ -143,6 +150,8 @@ class Music {
             json[Const.groupCombine].map((x) => InnerMusic.fromJson(x))),
         hasunosora: List<InnerMusic>.from(
             json[Const.groupHasunosora].map((x) => InnerMusic.fromJson(x))),
+        yohane: List<InnerMusic>.from(
+            json[Const.groupYohane].map((x) => InnerMusic.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -153,6 +162,7 @@ class Music {
         Const.groupCombine: List<dynamic>.from(combine.map((x) => x.toJson())),
         Const.groupHasunosora:
             List<dynamic>.from(hasunosora.map((x) => x.toJson())),
+        Const.groupYohane: List<dynamic>.from(yohane.map((x) => x.toJson())),
       };
 }
 

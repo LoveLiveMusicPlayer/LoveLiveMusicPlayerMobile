@@ -335,7 +335,7 @@ Widget showGroupButton(String path,
     double innerHeight = 60}) {
   return Container(
     width: 118.h,
-    height: 60.h,
+    height: 50.h,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(8.h),
       boxShadow: [
@@ -356,15 +356,16 @@ Widget showGroupButton(String path,
             children: [
               Container(
                 width: 130.h,
-                height: 60.h,
+                height: 50.h,
                 color:
                     Get.isDarkMode ? ColorMs.colorNightPrimary : Colors.white,
                 alignment: const Alignment(0, 0),
               ),
               Center(
-                child: SvgPicture.asset(path,
-                    width: innerWidth.h, height: innerHeight.h),
-              )
+                  child: SvgPicture.asset(path,
+                      width: innerWidth.h,
+                      height: innerHeight.h,
+                      fit: BoxFit.fitWidth))
             ],
           ),
         ),
