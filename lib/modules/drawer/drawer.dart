@@ -139,7 +139,10 @@ class _DrawerPageState extends State<DrawerPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            showGroupButton(Assets.drawerLogoYohane, onTap: () {
+            showGroupButton(
+                Get.isDarkMode
+                    ? Assets.drawerLogoYohaneNight
+                    : Assets.drawerLogoYohaneDay, onTap: () {
               global.currentGroup.value = Const.groupYohane;
               DBLogic.to.findAllListByGroup(Const.groupYohane);
             }),
