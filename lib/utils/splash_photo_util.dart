@@ -18,6 +18,7 @@ class SplashPhoto {
     String? imageUrl;
     final connection = await Connectivity().checkConnectivity();
     if (connection == ConnectivityResult.none) {
+      print("无网络");
       final offlineList = <String>[];
       await Future.forEach<String>(splashList, (url) async {
         final isExist = await AppUtils.checkUrlExist(url);
@@ -30,6 +31,7 @@ class SplashPhoto {
         imageUrl = offlineList[0];
       }
     } else {
+      print("有网络");
       splashList.shuffle();
       imageUrl = splashList[0];
     }
@@ -60,6 +62,7 @@ class SplashPhoto {
         );
         run(widget);
       }, onError: (object, stackTrace) {
+        print("下载开屏图失败\n$imageUrl");
         Log4f.d(msg: "下载开屏图失败\n$imageUrl");
         run(null);
       }));

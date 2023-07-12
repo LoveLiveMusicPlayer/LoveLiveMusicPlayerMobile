@@ -19,6 +19,7 @@ import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/global/global_binding.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/pages/carplay/carplay.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/completer_ext.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -55,6 +56,8 @@ final splashList = <String>[];
 var isCanUseSmartDialog = false;
 // 是否初始化好SplashDao
 var isInitSplashDao = false;
+
+late Carplay carplay;
 
 void main() async {
   // 启动屏开启
@@ -150,6 +153,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     subscription = eventBus.on<CloseOpen>().listen((event) {
       // 初始化结束后，将启动屏关闭
       FlutterNativeSplash.remove();
+      carplay = Carplay.getInstance();
     });
 
     handleInitialUri();

@@ -98,7 +98,10 @@ dependencies:
   webview_flutter_plus: ^0.3.0+2 # WebView
   crypto: ^3.0.2 # 加密
   vibration: ^1.7.5 # 振动
-  flutter_carplay: ^1.0.3 # Carplay支持
+  flutter_carplay: # Carplay支持
+    git:
+      url: https://github.com/zhushenwudi/flutter_carplay
+      ref: combine-all
 
 dependency_overrides:
   ffi: ^2.0.1
@@ -135,6 +138,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/carplay/
     - assets/main/
     - assets/drawer/
     - assets/player/

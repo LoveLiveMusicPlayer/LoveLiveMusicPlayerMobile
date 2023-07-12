@@ -30,6 +30,7 @@ class _SplashState extends State<Splash> {
 
     SplashPhoto().getRandomPhotoView().then((widget) async {
       if (widget == null) {
+        print("widget === null");
         goToHomePage();
       } else {
         myWidget = widget;
@@ -51,6 +52,7 @@ class _SplashState extends State<Splash> {
       }
       // 发送卸载窗口命令
       eventBus.fire(CloseOpen((DateTime.now().millisecondsSinceEpoch)));
+      print("start splash");
     });
   }
 

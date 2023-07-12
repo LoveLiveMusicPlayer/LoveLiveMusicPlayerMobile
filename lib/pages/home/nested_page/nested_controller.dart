@@ -89,7 +89,9 @@ class NestedController extends GetxController {
     } else if (settings.name == Routes.routeSystemSettings) {
       addNav(Routes.routeSystemSettings);
       return GetPageRoute(
-          settings: settings, page: () => const SystemSettings());
+          routeName: "setting",
+          settings: settings,
+          page: () => const SystemSettings());
     }
     return null;
   }

@@ -9,10 +9,8 @@ import Flutter
   ) -> Bool {
     UMConfigure.setLogEnabled(true)
     UMConfigure.initWithAppkey("634bdfd305844627b56670a1", channel:"Umeng")
-    if #available(iOS 12.0, *) {
-        return true;
-    }
-    GeneratedPluginRegistrant.register(with: self)
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+    return true
+//     GeneratedPluginRegistrant.register(with: self)
+//     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }

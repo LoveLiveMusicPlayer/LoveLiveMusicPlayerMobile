@@ -16,6 +16,7 @@ import 'package:lovelivemusicplayer/models/cloud_update.dart';
 import 'package:lovelivemusicplayer/models/ftp_music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
+import 'package:lovelivemusicplayer/pages/carplay/carplay.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
@@ -248,6 +249,16 @@ class _DrawerPageState extends State<DrawerPage> {
               onTap: () {
                 Get.back();
                 AppUtils.shareQQ();
+              },
+            ),
+            SizedBox(height: 8.h),
+            DrawerFunctionButton(
+              icon: Assets.drawerDrawerShare,
+              text: "强制刷新",
+              colorWithBG: false,
+              onTap: () {
+                Get.back();
+                Carplay.getInstance().forceReload();
               },
             )
           ],
