@@ -9,6 +9,7 @@ import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
@@ -104,11 +105,8 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
           widget: TwoButtonDialog(
         title: "search_at_moe".tr,
         msg: "moe_address_error".tr,
-        onConfirmListener: () async {
-          final uri = Uri.parse(Const.moeGirlUrl + widget.music.musicName!);
-          if (await canLaunchUrl(uri)) {
-            await launchUrl(uri, mode: LaunchMode.inAppWebView);
-          }
+        onConfirmListener: () {
+          Get.toNamed(Routes.routeMoeGirl, arguments: widget.music.musicName!);
         },
       ));
     }
