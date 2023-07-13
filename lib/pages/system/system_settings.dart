@@ -36,6 +36,19 @@ class SystemSettings extends StatefulWidget {
 
 class _SystemSettingsState extends State<SystemSettings> {
   @override
+  void initState() {
+    super.initState();
+    print("into here");
+    startServer();
+  }
+
+  @override
+  void dispose() {
+    stopServer();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.transparent,
@@ -144,6 +157,9 @@ class _SystemSettingsState extends State<SystemSettings> {
                               hasSwitch: true,
                               initSwitch: GlobalLogic.to.hasSkin.value,
                               callBack: (check) async {
+                                if (check) {
+                                  startServer();
+                                }
                                 // 将全局变量设置为所选值
                                 GlobalLogic.to.hasSkin.value = check;
                                 // 修改sp值

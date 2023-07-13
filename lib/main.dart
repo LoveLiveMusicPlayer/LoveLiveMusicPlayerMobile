@@ -5,6 +5,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -56,12 +57,18 @@ var isCanUseSmartDialog = false;
 // 是否初始化好SplashDao
 var isInitSplashDao = false;
 
+InAppLocalhostServer? localhostServer;
+
 void main() async {
   // 启动屏开启
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   // 仅支持竖屏
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  // 禁用 Android WebView Inspect
+  if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+    await InAppWebViewController.setWebContentsDebuggingEnabled(false);
+  }
 
   // 必须优先初始化
   await JustAudioBackground.init(
@@ -137,9 +144,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
 
     /// 进入后台 && 展开了player组件时 关闭滚动歌词
-    if (state == AppLifecycleState.inactive &&
-        GlobalLogic.mobileWeSlideController.isOpened) {
-      eventBus.fire(PlayerClosableEvent(true));
+    if (state == AppLifecycleState.inactive) {
+      if (GlobalLogic.mobileWeSlideController.isOpened) {
+        eventBus.fire(PlayerClosableEvent(true));
+      }
+      stopServer();
     }
   }
 
@@ -248,6 +257,26 @@ initServices() async {
   hasAIPic = await SpUtil.getBoolean(Const.spAIPicture, true);
   if (hasAIPic) await getOssUrl();
   SpUtil.put("prevPage", "");
+}
+
+startServer() {
+  localhostServer ??= InAppLocalhostServer(documentRoot: 'assets/tachie');
+  if (true == localhostServer?.isRunning()) {
+    return;
+  }
+  localhostServer?.start();
+  Log4f.d(msg: "startServer");
+}
+
+stopServer() {
+  if (localhostServer == null) {
+    return;
+  }
+  if (true == localhostServer?.isRunning()) {
+    localhostServer?.close();
+    Log4f.d(msg: "stopServer");
+  }
+  localhostServer = null;
 }
 
 /// 获取资源oss url，解析开屏图片数据
