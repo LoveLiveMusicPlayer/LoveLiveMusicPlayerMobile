@@ -35,36 +35,36 @@ dependencies:
   cupertino_icons: ^1.0.5
   provider: ^6.0.5
   get: ^4.6.5
-  flutter_spinkit: ^5.1.0
+  flutter_spinkit: ^5.2.0
   dio: ^4.0.6 # 网络加载
-  path_provider: ^2.0.13 # 路径提供
+  path_provider: ^2.0.15 # 路径提供
   pull_to_refresh:  # 下拉刷新上拉加载
     git:
       url: https://gitee.com/zhushenwudi/flutter_pulltorefresh
       ref: 6d7fbdd
-  web_socket_channel: ^2.3.0 # webSocket
+  web_socket_channel: ^2.4.0 # webSocket
   connectivity_plus: ^4.0.1 # 网络监测
   scan: ^1.6.0 # 扫码
-  flutter_smart_dialog: ^4.9.0+3 # 弹窗
-  synchronized: ^3.0.1 # 锁
+  flutter_smart_dialog: ^4.9.3+1 # 弹窗
+  synchronized: ^3.1.0 # 锁
   another_transformer_page_view: ^2.0.1 # 轮播器
   get_storage: ^2.1.1 # sp存储
   common_utils: ^2.1.0 # 工具类
-  flutter_screenutil: ^5.7.0 # 屏幕适配方案
+  flutter_screenutil: ^5.8.4 # 屏幕适配方案
   we_slide: ^2.4.0 # 播放器屏幕操作组件
-  flutter_native_splash: ^2.2.19 # 启动页
+  flutter_native_splash: ^2.3.1 # 启动页
   marquee_text: # 走马灯滚动文字
     git:
       url: https://gitee.com/zhushenwudi/flutter-marquee-text
       ref: 015bdeb
-  flutter_svg: ^2.0.4 # svg图片支持
+  flutter_svg: ^2.0.7 # svg图片支持
   just_audio: # 音频播放
     git:
       url: https://github.com/zhushenwudi/just_audio
       path: just_audio
-  just_audio_background: ^0.0.1-beta.9 # 音频播放后台服务
+  just_audio_background: ^0.0.1-beta.10 # 音频播放后台服务
   event_bus: ^2.0.0 # 事件总线通信
-  floor: ^1.4.1 # 数据库服务
+  floor: ^1.4.2 # 数据库服务
   flutter_staggered_grid_view: ^0.6.2 # 分栏列表
   concurrent_queue: ^1.4.0 # 队列
   wakelock: ^0.6.2 # 屏幕常亮
@@ -82,9 +82,9 @@ dependencies:
       url: https://github.com/zhushenwudi/flutter_updater
       ref: 04d471d
   sticky_headers: ^0.3.0+2 # 粘性头
-  url_launcher: ^6.1.10 # url跳转
+  url_launcher: ^6.1.11 # url跳转
   umeng_common_sdk: ^1.2.6 # 友盟sdk
-  flutter_phoenix: ^1.1.0 # 软重启
+  flutter_phoenix: ^1.1.1 # 软重启
   image_picker: ^1.0.0 # 图片选择
   image_cropper: ^4.0.1 # 图片裁切
   colorful_safe_area: ^1.0.0 # 定制safe_area
@@ -95,8 +95,8 @@ dependencies:
   mobcommonlib: ^1.1.4
   sharesdk_plugin: ^1.3.6 # MobTech分享插件
   uni_links: ^0.5.1 # 回跳APP插件
-  crypto: ^3.0.2 # 加密
-  vibration: ^1.7.5 # 振动
+  crypto: ^3.0.3 # 加密
+  vibration: ^1.7.7 # 振动
   flutter_inappwebview: ^6.0.0-beta.24+1
 
 dependency_overrides:
