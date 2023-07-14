@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -7,14 +6,13 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
-import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_playlist.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
-import 'package:lovelivemusicplayer/utils/image_util.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:marquee_text/marquee_text.dart';
@@ -51,7 +49,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
       final music = PlayerLogic.to.playingMusic.value;
       return FutureBuilder<Decoration>(
         initialData: BoxDecoration(
-          color: ColorMs.colorEBF3FE,
+          color: Colors.transparent,
           borderRadius: BorderRadius.circular(34.r),
         ),
         builder: (BuildContext context, AsyncSnapshot<Decoration> snapshot) {
@@ -82,20 +80,14 @@ class _MiniPlayerState extends State<MiniPlayer> {
 
   Future<Decoration> generateDecoration(Music music) async {
     String coverPath = (music.baseUrl ?? "") + (music.coverPath ?? "");
+    Color color = GlobalLogic.to.iconColor.value;
     if (coverPath.isNotEmpty) {
-      coverPath = SDUtils.getImgFile(coverPath).path;
-      Uint8List? compressPic = await ImageUtil().compressAndTryCatch(coverPath);
-      if (compressPic != null) {
-        return BoxDecoration(
-          image: DecorationImage(
-              image: MemoryImage(compressPic), fit: BoxFit.fill),
-          borderRadius: BorderRadius.circular(34.r),
-        );
-      }
+      color = await AppUtils.getImagePalette(coverPath) ??
+          GlobalLogic.to.iconColor.value;
     }
+
     return BoxDecoration(
-        color: const Color(Const.noMusicColorfulSkin),
-        borderRadius: BorderRadius.circular(34.r));
+        color: color, borderRadius: BorderRadius.circular(34.r));
   }
 
   Widget body() {

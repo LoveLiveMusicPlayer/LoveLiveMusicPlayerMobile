@@ -59,8 +59,9 @@ class DialogAddSongSheet extends StatelessWidget {
           _buildItem('create_menu'.tr, true, () {
             SmartDialog.compatible.dismiss();
             SmartDialog.compatible.show(
-                widget: NewMenuDialog(
+                widget: TextFieldDialog(
                     title: 'create_menu'.tr,
+                    hint: 'input_menu_name'.tr,
                     onConfirm: (name) async {
                       final idList = <String>[];
                       for (var music in musicList) {
