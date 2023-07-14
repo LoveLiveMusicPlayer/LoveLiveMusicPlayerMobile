@@ -269,7 +269,7 @@ class _PlayerState extends State<Player> {
               PlayerLogic.to.playingMusic.value.isLove
                   ? Icons.favorite
                   : Assets.playerPlayLove,
-              () => PlayerLogic.to.toggleLove(),
+              () async => await PlayerLogic.to.toggleLove(),
               width: 32,
               height: 32,
               radius: 6,

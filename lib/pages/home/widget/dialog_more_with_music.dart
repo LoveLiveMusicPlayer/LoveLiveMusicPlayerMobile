@@ -87,9 +87,9 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
             color: Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF,
           ),
           _buildItem(Assets.dialogIcAddPlayList, 'add_to_playlist'.tr, true,
-              () {
+              () async {
             SmartDialog.compatible.dismiss();
-            PlayerLogic.to.addNextMusic(widget.music, isNext: false);
+            await PlayerLogic.to.addNextMusic(widget.music, isNext: false);
             SmartDialog.compatible.showToast('add_success'.tr);
           }),
           _buildItem(Assets.dialogIcAddSongSheet, 'add_to_menu'.tr, true, () {

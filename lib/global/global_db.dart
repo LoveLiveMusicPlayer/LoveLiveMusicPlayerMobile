@@ -536,7 +536,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   /****************  Love  ****************/
 
   /// 获取我喜欢列表
-  findAllLoveListByGroup(String group) async {
+  Future<void> findAllLoveListByGroup(String group) async {
     try {
       final loveList = <Music>[];
       await Future.forEach<Music>(GlobalLogic.to.musicList, (music) async {

@@ -36,14 +36,15 @@ class SystemSettings extends StatefulWidget {
 }
 
 class _SystemSettingsState extends State<SystemSettings> {
-
   final scrollViewWithTachiHeight = Get.height - 210.h;
   final scrollViewWithoutTachiHeight = Get.height - 390.h;
   late double maxHeight;
 
   @override
   void initState() {
-    maxHeight = GlobalLogic.to.hasSkin.value ? scrollViewWithoutTachiHeight : scrollViewWithTachiHeight;
+    maxHeight = GlobalLogic.to.hasSkin.value
+        ? scrollViewWithoutTachiHeight
+        : scrollViewWithTachiHeight;
     super.initState();
     startServer();
   }

@@ -206,20 +206,20 @@ class InnerMusic {
   String? neteaseId;
 
   factory InnerMusic.fromJson(Map<String, dynamic> json) => InnerMusic(
-    musicUId: json["_id"],
-    id: json["id"],
-    name: json["name"],
-    albumId: json["album"],
-    coverPath: json["cover_path"],
-    musicPath: json["music_path"],
-    artist: json["artist"],
-    artistBin: json["artist_bin"],
-    time: json["time"],
-    albumName: json["albumName"],
-    export: json["export"],
-    baseUrl: json["base_url"],
-    neteaseId: json["neteaseId"],
-  );
+        musicUId: json["_id"],
+        id: json["id"],
+        name: json["name"],
+        albumId: json["album"],
+        coverPath: json["cover_path"],
+        musicPath: json["music_path"],
+        artist: json["artist"],
+        artistBin: json["artist_bin"],
+        time: json["time"],
+        albumName: json["albumName"],
+        export: json["export"],
+        baseUrl: json["base_url"],
+        neteaseId: json["neteaseId"],
+      );
 
   Map<String, dynamic> toJson() => {
         "_id": musicUId,

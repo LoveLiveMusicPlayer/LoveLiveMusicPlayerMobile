@@ -146,7 +146,8 @@ class ControlButtons extends StatelessWidget {
             StreamBuilder<SequenceState?>(
               stream: player.sequenceStateStream,
               builder: (context, snapshot) => materialButton(
-                  Assets.playerPlayNext, () => PlayerLogic.to.playNext(),
+                  Assets.playerPlayNext,
+                  () async => await PlayerLogic.to.playNext(),
                   width: 60,
                   height: 60,
                   radius: 40,

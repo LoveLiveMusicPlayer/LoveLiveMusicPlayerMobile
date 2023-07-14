@@ -125,8 +125,8 @@ class _DetailsBodyState extends State<DetailsBody> {
           onItemTap: (index, checked) {
             logic.selectItem(index, checked);
           },
-          onPlayNextTap: (music) {
-            PlayerLogic.to.addNextMusic(music);
+          onPlayNextTap: (music) async {
+            await PlayerLogic.to.addNextMusic(music);
             SmartDialog.compatible.showToast('add_success'.tr);
           },
           onMoreTap: (music) {
@@ -168,7 +168,7 @@ class _DetailsBodyState extends State<DetailsBody> {
               tempList.add(music);
             }
           });
-          final isSuccess = PlayerLogic.to.addMusicList(tempList);
+          final isSuccess = await PlayerLogic.to.addMusicList(tempList);
           if (isSuccess) {
             SmartDialog.compatible.showToast('add_success'.tr);
           }

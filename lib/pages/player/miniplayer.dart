@@ -176,9 +176,9 @@ class _MiniPlayerState extends State<MiniPlayer> {
     return SizedBox(
       width: maxWidth,
       child: InkWell(
-        onDoubleTap: () {
+        onDoubleTap: () async {
           if (PlayerLogic.to.playingMusic.value.musicId != null) {
-            PlayerLogic.to.togglePlay();
+            await PlayerLogic.to.togglePlay();
           }
         },
         child: Column(

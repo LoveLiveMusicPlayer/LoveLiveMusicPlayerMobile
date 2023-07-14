@@ -158,7 +158,8 @@ class _PageViewComponentState extends State<PageViewComponent>
         onItemTap: (index, checked) {
           HomeController.to.selectItem(index, checked);
         },
-        onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
+        onPlayNextTap: (music) async =>
+            await PlayerLogic.to.addNextMusic(music),
         onMoreTap: (music) {
           SmartDialog.compatible.show(
               widget: DialogMoreWithMusic(music: music),
@@ -197,7 +198,8 @@ class _PageViewComponentState extends State<PageViewComponent>
         onItemTap: (index, checked) {
           HomeController.to.selectItem(index, checked);
         },
-        onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
+        onPlayNextTap: (music) async =>
+            await PlayerLogic.to.addNextMusic(music),
         onMoreTap: (music) {
           SmartDialog.compatible.show(
               widget: DialogMoreWithMusic(music: music),
@@ -228,7 +230,8 @@ class _PageViewComponentState extends State<PageViewComponent>
         onItemTap: (index, checked) {
           HomeController.to.selectItem(index, checked);
         },
-        onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
+        onPlayNextTap: (music) async =>
+            await PlayerLogic.to.addNextMusic(music),
         onMoreTap: (music) {
           SmartDialog.compatible.show(
               widget: DialogMoreWithMusic(music: music),
