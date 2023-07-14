@@ -508,16 +508,33 @@ class PlayerLogic extends SuperController
 
   /// 删除播放列表中的一首歌曲
   Future<void> removeMusic(int index) async {
-    await audioSourceList.removeAt(index);
-    // 播放列表为空则停止播放，清空状态
-    if (audioSourceList.length == 0) {
+    if (audioSourceList.length == 1) {
+      // 播放列表仅剩一个则停止播放，清空状态
+      mPlayList.removeAt(index);
+      await audioSourceList.removeAt(index);
       await clearPlayerStatus();
       return;
     }
-    // 删除的是最后一首歌，将播放列表第一首
-    final music = await DBLogic.to.findMusicById(
-        mPlayList[mPlayList.length == index ? 0 : index].musicId);
-    setCurrentMusic(music!);
+
+    final currentMusic = playingMusic.value;
+    final chooseMusic = mPlayList[index];
+
+    if (currentMusic.musicId != chooseMusic.musicId) {
+      // 删除非当前播放的歌曲
+      mPlayList.removeAt(index);
+      await audioSourceList.removeAt(index);
+      return;
+    }
+    // 删除当前播放的歌曲
+    int mIndex = 0;
+    if (index != mPlayList.length - 1) {
+      // 当前播放的歌曲不在末位，则播放下一首; 在末位，则播放第一首
+      mIndex = index + 1;
+    }
+    final music = await DBLogic.to.findMusicById(mPlayList[mIndex].musicId);
+    await audioSourceList.removeAt(index);
+    mPlayList.removeAt(index);
+    setCurrentMusic(music);
   }
 
   /// 删除播放列表中全部歌曲
