@@ -207,6 +207,7 @@ class PlayerLogic extends SuperController
       for (var music in musicList) {
         audioList.add(genAudioSourceUri(music));
       }
+      await mPlayer.pause();
       await mPlayer.stop();
       await audioSourceList.clear();
       await audioSourceList.addAll(audioList);
@@ -546,6 +547,7 @@ class PlayerLogic extends SuperController
 
   /// 停止播放，清空状态
   Future<void> clearPlayerStatus() async {
+    await mPlayer.pause();
     await mPlayer.stop();
     setCurrentMusic(null);
     setPlayingJPLrc();
