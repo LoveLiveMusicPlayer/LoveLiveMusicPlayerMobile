@@ -60,10 +60,10 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                 final nextIndex =
                     (currentIndex + 1) % PlayerLogic.loopModes.length;
                 PlayerLogic.to.changeLoopMode(nextIndex);
-              }, () {
-                mPlayList.removeRange(0, mPlayList.length);
+              }, () async {
+                mPlayList.clear();
+                await PlayerLogic.to.removeAllMusics();
                 setState(() {});
-                PlayerLogic.to.removeAllMusics();
               });
             },
           ),
@@ -108,10 +108,10 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                           });
                         });
                       },
-                      onDelTap: (index) {
+                      onDelTap: (index) async {
                         mPlayList.removeAt(index);
+                        await PlayerLogic.to.removeMusic(index);
                         setState(() {});
-                        PlayerLogic.to.removeMusic(index);
                       },
                     );
                   } else {

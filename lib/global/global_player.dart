@@ -206,7 +206,7 @@ class PlayerLogic extends SuperController
       for (var music in musicList) {
         audioList.add(genAudioSourceUri(music));
       }
-      mPlayer.stop();
+      mPlayer.pause();
       audioSourceList.clear();
       audioSourceList.addAll(audioList);
       audioList.clear();
@@ -522,17 +522,17 @@ class PlayerLogic extends SuperController
 
   /// 删除播放列表中全部歌曲
   Future<void> removeAllMusics() async {
-    await audioSourceList.removeRange(0, audioSourceList.length);
     await clearPlayerStatus();
+    await audioSourceList.clear();
   }
 
   /// 停止播放，清空状态
   Future<void> clearPlayerStatus() async {
+    await mPlayer.pause();
     setCurrentMusic(null);
     setPlayingJPLrc();
     fullLrc.value = {"jp": "", "zh": "", "roma": ""};
     needRefreshLyric.value = true;
-    await mPlayer.stop();
   }
 
   /// 清空封面下面的歌词
