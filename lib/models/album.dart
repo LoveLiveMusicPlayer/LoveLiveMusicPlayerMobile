@@ -25,7 +25,7 @@ class Album {
   String? coverPath;
   String? category;
   String? group;
-  bool existFile;
+  bool? existFile;
   @ignore
   bool checked;
 

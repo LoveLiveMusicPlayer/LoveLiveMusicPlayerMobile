@@ -45,7 +45,7 @@ class Music {
   int timestamp; // 最后一次播放的时间戳
   String? neteaseId; // 网易id
   String? date; // 出版日期
-  bool existFile;
+  bool? existFile;
 
   @ignore
   bool checked; // 是否已选中
