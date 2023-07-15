@@ -26,7 +26,7 @@ import 'album_dao.dart';
 part 'database.g.dart';
 
 @TypeConverters([StringListConverter])
-@Database(version: 5, entities: [
+@Database(version: 6, entities: [
   Album,
   Lyric,
   Music,
@@ -79,5 +79,12 @@ final migration3to4 = Migration(3, 4, (database) async {
 final migration4to5 = Migration(4, 5, (database) async {
   const alterMusicTableSql =
       '''ALTER TABLE Music ADD COLUMN `neteaseId` TEXT''';
+  await database.execute(alterMusicTableSql);
+});
+
+final migration5to6 = Migration(5, 6, (database) async {
+  const alterAlbumTableSql = '''ALTER TABLE Album ADD COLUMN `existFile` BOOLEAN''';
+  const alterMusicTableSql = '''ALTER TABLE Music ADD COLUMN `existFile` BOOLEAN''';
+  await database.execute(alterAlbumTableSql);
   await database.execute(alterMusicTableSql);
 });

@@ -67,6 +67,14 @@ class ImageUtil {
     return completer.future;
   }
 
+  //       Uint8List? compressPic = await ImageUtil().compressAndTryCatch(coverPath);
+  //       if (compressPic != null) {
+  //         return BoxDecoration(
+  //           image: DecorationImage(
+  //               image: MemoryImage(compressPic), fit: BoxFit.fill),
+  //           borderRadius: BorderRadius.circular(34.r),
+  //         );
+  //       }
   Future<Uint8List?> compressAndTryCatch(String path) async {
     Uint8List? result;
     try {

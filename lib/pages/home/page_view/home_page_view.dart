@@ -114,7 +114,7 @@ class HomePageView extends GetView<HomeController> {
               tempList.add(music);
             }
           });
-          final isSuccess = PlayerLogic.to.addMusicList(tempList);
+          final isSuccess = await PlayerLogic.to.addMusicList(tempList);
           if (isSuccess) {
             SmartDialog.compatible.showToast('add_success'.tr);
           }

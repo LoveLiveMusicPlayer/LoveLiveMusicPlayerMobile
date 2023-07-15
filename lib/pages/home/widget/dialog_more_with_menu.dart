@@ -47,8 +47,9 @@ class DialogMoreWithMenu extends StatelessWidget {
           _buildItem(Assets.dialogIcEdit, 'rename_menu'.tr, true, () {
             SmartDialog.compatible.dismiss();
             SmartDialog.compatible.show(
-                widget: NewMenuDialog(
+                widget: TextFieldDialog(
                     title: 'rename_menu'.tr,
+                    hint: 'input_menu_name'.tr,
                     onConfirm: (name) {
                       DBLogic.to.updateMenuName(name, menu.id);
                     }),

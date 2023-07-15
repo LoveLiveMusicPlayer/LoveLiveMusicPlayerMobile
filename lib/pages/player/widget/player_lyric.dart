@@ -69,7 +69,7 @@ class _LyricState extends State<Lyric> {
             children: [
               IconButton(
                   padding: const EdgeInsets.all(0),
-                  onPressed: () => PlayerLogic.to.seekTo(progress),
+                  onPressed: () async => await PlayerLogic.to.seekTo(progress),
                   icon: const Icon(Icons.play_arrow, color: Colors.green)),
               Expanded(
                 child: Container(

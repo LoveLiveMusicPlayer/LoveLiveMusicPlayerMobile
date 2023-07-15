@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_lyric/lyric_parser/parser_smart.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
@@ -94,19 +95,17 @@ class PlayerLogic extends SuperController
             params: {"music": mPlayList[index].musicName});
         final currentMusic = mPlayList[index];
         await changePlayingMusic(currentMusic);
-        persistencePLayList2(mPlayList, index).then((value) {
-          DBLogic.to.refreshMusicTimestamp(currentMusic.musicId).then((value) {
-            GlobalLogic.to.isHandlePlay = false;
-          });
-        });
+        await persistencePLayList2(mPlayList, index);
+        await DBLogic.to.refreshMusicTimestamp(currentMusic.musicId);
+        GlobalLogic.to.isHandlePlay = false;
         getLrc(false);
       }
     });
   }
 
-  initLoopMode() async {
-    await SpUtil.getInt(Const.spLoopMode, 0)
-        .then((index) => changeLoopMode(index));
+  Future<void> initLoopMode() async {
+    final mode = await SpUtil.getInt(Const.spLoopMode, 0);
+    await changeLoopMode(mode);
   }
 
   /// 持久化播放列表
@@ -184,7 +183,9 @@ class PlayerLogic extends SuperController
   }
 
   /// 播放指定列表的歌曲
-  playMusic(List<Music> musicList, {int index = 0, bool needPlay = true}) {
+  Future<void> playMusic(List<Music> musicList,
+      {int index = 0, bool needPlay = true}) async {
+    SmartDialog.compatible.showLoading(msg: 'loading'.tr);
     AppUtils.uploadEvent("Playing",
         params: {"music": musicList[index].musicName ?? ""});
     Log4f.v(msg: "播放曲目: ${musicList[index].musicName}");
@@ -206,25 +207,23 @@ class PlayerLogic extends SuperController
       for (var music in musicList) {
         audioList.add(genAudioSourceUri(music));
       }
-      mPlayer.stop();
-      audioSourceList.clear();
-      audioSourceList.addAll(audioList);
+      await mPlayer.pause();
+      await mPlayer.stop();
+      await audioSourceList.clear();
+      await audioSourceList.addAll(audioList);
       audioList.clear();
       Log4f.v(msg: "播放列表长度: ${audioSourceList.length}");
-      mPlayer
-          .setAudioSource(audioSourceList, initialIndex: index)
-          .then((value) {
-        if (needPlay) {
-          mPlayer.play();
-        }
-        persistencePlayList(musicList, index).then((value) {
-          if (playingMusic.value != musicList[index]) {
-            setCurrentMusic(musicList[index]);
-          }
-          DBLogic.to.refreshMusicTimestamp(musicList[index].musicId!);
-          getLrc(false);
-        });
-      });
+      mPlayer.setAudioSource(audioSourceList, initialIndex: index);
+      if (needPlay) {
+        mPlayer.play();
+      }
+      await persistencePlayList(musicList, index);
+      if (playingMusic.value != musicList[index]) {
+        setCurrentMusic(musicList[index]);
+      }
+      await DBLogic.to.refreshMusicTimestamp(musicList[index].musicId!);
+      getLrc(false);
+      SmartDialog.compatible.dismiss();
     } catch (e) {
       Log4f.e(msg: e.toString());
     } finally {
@@ -234,7 +233,7 @@ class PlayerLogic extends SuperController
 
   /// 插入到下一曲
   /// @param isNext true: 插入下一首; false: 插入末尾
-  addNextMusic(Music music, {bool isNext = true}) {
+  Future<void> addNextMusic(Music music, {bool isNext = true}) async {
     if (music.musicId == playingMusic.value.musicId) {
       // 如果选中的歌曲是当前播放的歌曲
       return;
@@ -251,32 +250,44 @@ class PlayerLogic extends SuperController
       return;
     }
 
+    int mIndex = -1;
     // 搜索并删除当前要插入的歌曲
     for (var index = 0; index < mPlayList.length; index++) {
       if (mPlayList[index].musicId == music.musicId) {
-        audioSourceList.removeAt(index);
-        mPlayList.removeAt(index);
+        mIndex = index;
         break;
       }
     }
+
+    if (mIndex >= 0) {
+      mPlayList.removeAt(mIndex);
+      await audioSourceList.removeAt(mIndex);
+    }
+
+    mIndex = -1;
 
     if (isNext) {
       // 将插入的歌曲放在当前播放歌曲的后面
       for (var index = 0; index < mPlayList.length; index++) {
         if (mPlayList[index].musicId == playingMusic.value.musicId) {
-          audioSourceList.insert(index + 1, genAudioSourceUri(music));
-          mPlayList.insert(index + 1, pMusic);
+          mIndex = index;
           break;
         }
       }
+
+      if (mIndex >= 0) {
+        mPlayList.insert(mIndex + 1, pMusic);
+        await audioSourceList.insert(mIndex + 1, genAudioSourceUri(music));
+      }
     } else {
-      audioSourceList.insert(mPlayList.length, genAudioSourceUri(music));
       mPlayList.insert(mPlayList.length, pMusic);
+      await audioSourceList.insert(
+          audioSourceList.length, genAudioSourceUri(music));
     }
   }
 
   /// 将音乐列表插入到当前播放列表末尾
-  bool addMusicList(List<Music> musicList) {
+  Future<bool> addMusicList(List<Music> musicList) async {
     if (musicList.isEmpty) {
       return false;
     }
@@ -297,38 +308,36 @@ class PlayerLogic extends SuperController
       }
     }
     // 将音乐列表插入到播放列表队尾
-    for (Music music in musicList) {
-      audioSourceList.add(genAudioSourceUri(music));
+    await Future.forEach(musicList, (Music music) async {
+      await audioSourceList.add(genAudioSourceUri(music));
       mPlayList.add(PlayListMusic(
           musicId: music.musicId!,
           musicName: music.musicName!,
           artist: music.artist!));
-    }
+    });
     return true;
   }
 
   /// 生成一个播放URI
-  UriAudioSource genAudioSourceUri(Music music) {
-    return AudioSource.uri(
-      Uri.file('${SDUtils.path}${music.baseUrl}${music.musicPath}'),
-      tag: MediaItem(
-        id: music.musicId!,
-        title: music.musicName!,
-        album: music.albumName!,
-        artist: music.artist,
-        artUri: (music.coverPath == null || music.coverPath!.isEmpty)
-            ? Uri.parse(Assets.logoLogo)
-            : Uri.file(SDUtils.path + music.baseUrl! + music.coverPath!),
-      ),
-    );
-  }
+  UriAudioSource genAudioSourceUri(Music music) => AudioSource.uri(
+    Uri.file('${SDUtils.path}${music.baseUrl}${music.musicPath}'),
+    tag: MediaItem(
+      id: music.musicId!,
+      title: music.musicName!,
+      album: music.albumName!,
+      artist: music.artist,
+      artUri: (music.coverPath == null || music.coverPath!.isEmpty)
+          ? Uri.parse(Assets.logoLogo)
+          : Uri.file(SDUtils.path + music.baseUrl! + music.coverPath!),
+    ),
+  );
 
   /// 开关播放
-  togglePlay() {
+  Future<void> togglePlay() async {
     if (isPlaying.value) {
-      mPlayer.pause();
+      await mPlayer.pause();
     } else {
-      mPlayer.play();
+      await mPlayer.play();
     }
   }
 
@@ -455,39 +464,37 @@ class PlayerLogic extends SuperController
 
   /// 切换我喜欢状态
   /// @param isLove 默认不传为根据现有状态取反，传了就是指定状态
-  toggleLove({Music? music, bool? isLove}) {
+  Future<void> toggleLove({Music? music, bool? isLove}) async {
     Music? mMusic = music;
     mMusic ??= playingMusic.value;
     if (mMusic.musicId == null) {
       return;
     }
-    DBLogic.to.updateLove(mMusic, isLove: isLove).then((music) {
-      // 切换的歌曲如果是当前播放的歌曲，需要手动深拷贝一下对象使得player界面状态正确
-      if (music != null && music.musicId == playingMusic.value.musicId) {
-        setCurrentMusic(Music.deepClone(music));
-      }
-      DBLogic.to.findAllLoveListByGroup(GlobalLogic.to.currentGroup.value);
-    });
+    final tempMusic = await DBLogic.to.updateLove(mMusic, isLove: isLove);
+    // 切换的歌曲如果是当前播放的歌曲，需要手动深拷贝一下对象使得player界面状态正确
+    if (tempMusic != null && tempMusic.musicId == playingMusic.value.musicId) {
+      setCurrentMusic(Music.deepClone(tempMusic));
+    }
+    await DBLogic.to.findAllLoveListByGroup(GlobalLogic.to.currentGroup.value);
   }
 
   /// 切换我喜欢状态（列表）
   /// @param musicList 选中的歌曲列表
   /// @param changeStatus 要修改的状态
-  toggleLoveList(List<Music> musicList, bool changeStatus) {
-    DBLogic.to.updateLoveList(musicList, changeStatus).then((value) {
-      final music = playingMusic.value;
-      final hasPlayingMusic =
-          musicList.any((element) => element.musicId == music.musicId);
-      if (hasPlayingMusic) {
-        playingMusic.value.isLove = !playingMusic.value.isLove;
-      }
-      DBLogic.to.findAllLoveListByGroup(GlobalLogic.to.currentGroup.value);
-    });
+  Future<void> toggleLoveList(List<Music> musicList, bool changeStatus) async {
+    await DBLogic.to.updateLoveList(musicList, changeStatus);
+    final music = playingMusic.value;
+    final hasPlayingMusic =
+        musicList.any((element) => element.musicId == music.musicId);
+    if (hasPlayingMusic) {
+      playingMusic.value.isLove = !playingMusic.value.isLove;
+    }
+    await DBLogic.to.findAllLoveListByGroup(GlobalLogic.to.currentGroup.value);
   }
 
   /// 拖拽到指定位置播放
-  seekTo(int ms) {
-    mPlayer.seek(Duration(milliseconds: ms));
+  Future<void> seekTo(int ms) async {
+    await mPlayer.seek(Duration(milliseconds: ms));
   }
 
   /// 切换循环模式
@@ -508,31 +515,42 @@ class PlayerLogic extends SuperController
 
   /// 删除播放列表中的一首歌曲
   Future<void> removeMusic(int index) async {
-    await audioSourceList.removeAt(index);
-    // 播放列表为空则停止播放，清空状态
-    if (audioSourceList.length == 0) {
+    if (audioSourceList.length == 1) {
+      // 播放列表仅剩一个则停止播放，清空状态
+      mPlayList.removeAt(index);
+      await audioSourceList.removeAt(index);
       await clearPlayerStatus();
       return;
     }
-    // 删除的是最后一首歌，将播放列表第一首
-    final music = await DBLogic.to.findMusicById(
-        mPlayList[mPlayList.length == index ? 0 : index].musicId);
-    setCurrentMusic(music!);
+
+    final currentMusic = playingMusic.value;
+    final chooseMusic = mPlayList[index];
+
+    if (currentMusic.musicId != chooseMusic.musicId) {
+      // 删除非当前播放的歌曲
+      mPlayList.removeAt(index);
+      await audioSourceList.removeAt(index);
+      return;
+    }
+    // 删除当前播放的歌曲
+    mPlayList.removeAt(index);
+    await audioSourceList.removeAt(index);
   }
 
   /// 删除播放列表中全部歌曲
   Future<void> removeAllMusics() async {
-    await audioSourceList.removeRange(0, audioSourceList.length);
+    await audioSourceList.clear();
     await clearPlayerStatus();
   }
 
   /// 停止播放，清空状态
   Future<void> clearPlayerStatus() async {
+    await mPlayer.pause();
+    await mPlayer.stop();
     setCurrentMusic(null);
     setPlayingJPLrc();
     fullLrc.value = {"jp": "", "zh": "", "roma": ""};
     needRefreshLyric.value = true;
-    await mPlayer.stop();
   }
 
   /// 清空封面下面的歌词
@@ -559,18 +577,18 @@ class PlayerLogic extends SuperController
   }
 
   /// 按钮点击上一曲
-  playPrev() {
+  Future<void> playPrev() async {
     if (mPlayer.hasPrevious) {
       setPlayingJPLrc();
-      mPlayer.seekToPrevious();
+      await mPlayer.seekToPrevious();
     }
   }
 
   /// 按钮点击下一曲
-  playNext() {
+  Future<void> playNext() async {
     if (mPlayer.hasNext) {
       setPlayingJPLrc();
-      mPlayer.seekToNext();
+      await mPlayer.seekToNext();
     }
   }
 

@@ -337,9 +337,12 @@ class _DrawerPageState extends State<DrawerPage> {
   Future<void> loopParseData(List<InnerMusic> musicList,
       List<InnerAlbum> albumList, String group) async {
     await Future.forEach<InnerMusic>(musicList, (music) async {
-      if (music.export && checkFileExist(music)) {
+      if (music.export) {
         int albumId = music.albumId;
         InnerAlbum album = albumList.firstWhere((album) => album.id == albumId);
+        if (Platform.isIOS) {
+          music.musicPath = music.musicPath.replaceAll(".flac", ".wav");
+        }
         DownloadMusic downloadMusic = DownloadMusic(
             albumUId: album.albumUId,
             albumId: albumId,
@@ -356,7 +359,9 @@ class _DrawerPageState extends State<DrawerPage> {
             artistBin: music.artistBin,
             totalTime: music.time,
             baseUrl: music.baseUrl,
-            neteaseId: music.neteaseId);
+            neteaseId: music.neteaseId,
+            existFile: checkFileExist(music)
+        );
         await DBLogic.to.importMusic(downloadMusic);
       }
     });
@@ -373,9 +378,6 @@ class _DrawerPageState extends State<DrawerPage> {
   }
 
   bool checkFileExist(InnerMusic music) {
-    if (Platform.isIOS) {
-      music.musicPath = music.musicPath.replaceAll(".flac", ".wav");
-    }
     return File('${SDUtils.path}${music.baseUrl}${music.musicPath}')
         .existsSync();
   }

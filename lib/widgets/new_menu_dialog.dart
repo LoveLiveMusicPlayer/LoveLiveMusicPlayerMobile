@@ -1,31 +1,36 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
-class NewMenuDialog extends StatefulWidget {
+class TextFieldDialog extends StatefulWidget {
   final String? title;
+  final String? hint;
+  final List<TextInputFormatter> formatter = [];
   final Function()? onBack;
   final Function(String str)? onConfirm;
 
-  const NewMenuDialog({Key? key, this.title, this.onBack, this.onConfirm})
+  TextFieldDialog(
+      {Key? key, this.title, this.hint, formatter, this.onBack, this.onConfirm})
       : super(key: key);
 
   @override
-  State<NewMenuDialog> createState() => _NewMenuDialogState();
+  State<TextFieldDialog> createState() => _TextFieldDialogState();
 }
 
-class _NewMenuDialogState extends State<NewMenuDialog> {
+class _TextFieldDialogState extends State<TextFieldDialog> {
   final controller = TextEditingController();
   String text = "";
   int maxLength = 20;
 
   @override
   Widget build(BuildContext context) {
+    widget.formatter;
     final width = min(0.4 * Get.height, 0.8 * Get.width);
     return Container(
       width: width,
@@ -54,9 +59,10 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
                 showCursor: true,
                 obscureText: false,
                 maxLength: maxLength,
+                inputFormatters: widget.formatter,
                 decoration: InputDecoration(
                     isCollapsed: false,
-                    labelText: 'input_menu_name'.tr,
+                    labelText: widget.hint ?? 'hint'.tr,
                     labelStyle: TextStyle(fontSize: 14.sp),
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 8.w, vertical: 14.h),
