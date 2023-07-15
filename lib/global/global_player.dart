@@ -539,8 +539,8 @@ class PlayerLogic extends SuperController
 
   /// 删除播放列表中全部歌曲
   Future<void> removeAllMusics() async {
-    await audioSourceList.clear();
     await clearPlayerStatus();
+    await audioSourceList.clear();
   }
 
   /// 停止播放，清空状态
