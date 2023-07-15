@@ -518,8 +518,8 @@ class PlayerLogic extends SuperController
     if (audioSourceList.length == 1) {
       // 播放列表仅剩一个则停止播放，清空状态
       mPlayList.removeAt(index);
-      await audioSourceList.removeAt(index);
       await clearPlayerStatus();
+      await audioSourceList.removeAt(index);
       return;
     }
 
