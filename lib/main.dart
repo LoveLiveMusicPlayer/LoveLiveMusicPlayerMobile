@@ -38,7 +38,7 @@ import 'utils/sp_util.dart';
 // 是否需要清理数据
 const needClearApp = true;
 // 当前环境
-const env = "pre";
+const env = "prod";
 
 // 是否是暗黑主题
 var isDark = false;
@@ -59,61 +59,65 @@ var isInitSplashDao = false;
 
 InAppLocalhostServer? localhostServer;
 
-FlutterErrorDetails makeDetails(Object error, StackTrace stackTrace) {
-  // 构建错误信息
-  return FlutterErrorDetails(stack: stackTrace, exception: error);
-}
-
-void reportErrorAndLog(FlutterErrorDetails details) {
-  if (details
-      .exceptionAsString()
-      .contains("ScrollController not attached to any scroll views")) {
-    return;
-  }
-  final errorMsg = {
-    "exception": details.exceptionAsString(),
-    "stackTrace": details.stack.toString(),
-  };
-  Log4f.e(msg: "$errorMsg");
-}
-
 void main() async {
-  runZonedGuarded(() async {
-    // 获取框架异常 WidgetFlutterBinding用于与 Flutter 引擎交互
-    WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  // 启动屏开启
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  // 仅支持竖屏
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  // 禁用 Android WebView Inspect
+  if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+    await InAppWebViewController.setWebContentsDebuggingEnabled(false);
+  }
+
+  // 必须优先初始化
+  await JustAudioBackground.init(
+    androidNotificationChannelId:
+        'com.zhushenwudi.lovelivemusicplayer.channel.audio',
+    androidNotificationChannelName: 'lovelive audio playback',
+    androidNotificationOngoing: true,
+  );
+
+  // 初始化
+  await initServices();
+  isDark = await SpUtil.getBoolean(Const.spDark);
+
+  if (env == "pre") {
+    void reportErrorAndLog(FlutterErrorDetails details) {
+      if (details
+          .exceptionAsString()
+          .contains("ScrollController not attached to any scroll views")) {
+        return;
+      }
+      final errorMsg = {
+        "exception": details.exceptionAsString(),
+        "stackTrace": details.stack.toString(),
+      };
+      Log4f.e(msg: "$errorMsg");
+    }
+
+    FlutterErrorDetails makeDetails(Object error, StackTrace stackTrace) {
+      // 构建错误信息
+      return FlutterErrorDetails(stack: stackTrace, exception: error);
+    }
 
     FlutterError.onError = (FlutterErrorDetails details) {
       // 获取 widget build 过程中出现的异常错误
       reportErrorAndLog(details);
     };
 
-    // 仅支持竖屏
-    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-    // 禁用 Android WebView Inspect
-    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
-      await InAppWebViewController.setWebContentsDebuggingEnabled(false);
-    }
-
-    // 必须优先初始化
-    await JustAudioBackground.init(
-      androidNotificationChannelId:
-          'com.zhushenwudi.lovelivemusicplayer.channel.audio',
-      androidNotificationChannelName: 'lovelive audio playback',
-      androidNotificationOngoing: true,
+    runZonedGuarded(
+      () => runApp(Phoenix(child: const MyApp())),
+      (error, stackTrace) {
+        // 没被catch的异常
+        reportErrorAndLog(makeDetails(error, stackTrace));
+      },
     );
-
-    // 初始化
-    await initServices();
-    isDark = await SpUtil.getBoolean(Const.spDark);
-
+  } else {
     runApp(Phoenix(child: const MyApp()));
+  }
 
-    AppUtils.setStatusBar(isDark);
-  }, (Object error, StackTrace stackTrace) {
-    // 异常上报
-    reportErrorAndLog(makeDetails(error, stackTrace));
-  });
+  AppUtils.setStatusBar(isDark);
 }
 
 class MyApp extends StatefulWidget {
