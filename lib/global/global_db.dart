@@ -64,7 +64,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       migration1to2,
       migration2to3,
       migration3to4,
-      migration4to5
+      migration4to5,
+      migration5to6,
     ]).build();
     splashDao = database.splashDao;
     albumDao = database.albumDao;
@@ -172,8 +173,13 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
             date: downloadMusic.date,
             coverPath: downloadMusic.baseUrl + downloadMusic.coverPath,
             category: downloadMusic.category,
-            group: downloadMusic.group);
+            group: downloadMusic.group,
+            existFile: downloadMusic.existFile
+        );
         await albumDao.insertAlbum(mAlbum);
+      } else if (album.existFile == false && downloadMusic.existFile) {
+        album.existFile = true;
+        await albumDao.updateAlbum(album);
       }
       final music = await findMusicById(downloadMusic.musicUId);
       if (music == null) {
@@ -192,6 +198,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
             group: downloadMusic.group,
             date: downloadMusic.date,
             category: downloadMusic.category,
+            existFile: downloadMusic.existFile,
             isLove: false);
         await musicDao.insertMusic(mMusic);
         if (artistList.isEmpty) {
@@ -222,6 +229,9 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
             await artistDao.updateArtist(artist);
           }
         }
+      } else if (music.existFile == false && downloadMusic.existFile) {
+        music.existFile = true;
+        await musicDao.updateMusic(music);
       }
     } catch (e) {
       Log4f.e(msg: e.toString());

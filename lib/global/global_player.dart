@@ -319,20 +319,18 @@ class PlayerLogic extends SuperController
   }
 
   /// 生成一个播放URI
-  UriAudioSource genAudioSourceUri(Music music) {
-    return AudioSource.uri(
-      Uri.file('${SDUtils.path}${music.baseUrl}${music.musicPath}'),
-      tag: MediaItem(
-        id: music.musicId!,
-        title: music.musicName!,
-        album: music.albumName!,
-        artist: music.artist,
-        artUri: (music.coverPath == null || music.coverPath!.isEmpty)
-            ? Uri.parse(Assets.logoLogo)
-            : Uri.file(SDUtils.path + music.baseUrl! + music.coverPath!),
-      ),
-    );
-  }
+  UriAudioSource genAudioSourceUri(Music music) => AudioSource.uri(
+    Uri.file('${SDUtils.path}${music.baseUrl}${music.musicPath}'),
+    tag: MediaItem(
+      id: music.musicId!,
+      title: music.musicName!,
+      album: music.albumName!,
+      artist: music.artist,
+      artUri: (music.coverPath == null || music.coverPath!.isEmpty)
+          ? Uri.parse(Assets.logoLogo)
+          : Uri.file(SDUtils.path + music.baseUrl! + music.coverPath!),
+    ),
+  );
 
   /// 开关播放
   Future<void> togglePlay() async {

@@ -15,6 +15,7 @@ class Album {
       this.coverPath, // 封面
       this.category, // 分类
       this.group, // 团组
+      this.existFile = false, // 本地是否存在此专辑的歌曲
       this.checked = false});
 
   @primaryKey
@@ -24,6 +25,7 @@ class Album {
   String? coverPath;
   String? category;
   String? group;
+  bool existFile;
   @ignore
   bool checked;
 
@@ -34,6 +36,7 @@ class Album {
         coverPath: json["coverPath"],
         category: json["category"],
         group: json["group"],
+        existFile: json["existFile"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -43,5 +46,6 @@ class Album {
         "coverPath": coverPath,
         "category": category,
         "group": group,
+        "existFile": existFile,
       };
 }

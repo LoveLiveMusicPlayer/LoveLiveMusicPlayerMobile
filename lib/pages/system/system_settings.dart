@@ -287,9 +287,6 @@ class _SystemSettingsState extends State<SystemSettings> {
                                     hasSwitch: true,
                                     initSwitch: enableBG,
                                     callBack: (check) async {
-                                      isEnableHttp = check;
-                                      SpUtil.put(Const.spEnableHttp, check);
-                                      // todo: 重新生成播放列表并播放
                                     }),
                                 SizedBox(height: 8.h),
                                 DrawerFunctionButton(

@@ -28,7 +28,8 @@ class DownloadMusic {
       required this.artistBin,
       required this.totalTime,
       required this.baseUrl,
-      this.neteaseId});
+      this.neteaseId,
+      required this.existFile});
 
   String albumUId;
   int albumId;
@@ -46,6 +47,7 @@ class DownloadMusic {
   String totalTime;
   String baseUrl;
   String? neteaseId;
+  bool existFile;
 
   factory DownloadMusic.fromJson(Map<String, dynamic> json) => DownloadMusic(
         albumUId: json["albumUId"],
@@ -64,6 +66,7 @@ class DownloadMusic {
         totalTime: json["totalTime"],
         baseUrl: json["baseUrl"],
         neteaseId: json["neteaseId"],
+        existFile: json["existFile"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -83,5 +86,6 @@ class DownloadMusic {
         "totalTime": totalTime,
         "baseUrl": baseUrl,
         "neteaseId": neteaseId,
+        "existFile": existFile,
       };
 }
