@@ -54,7 +54,7 @@ class _MoeGirlState extends State<MoeGirl> {
     });
     
     // 输出排序后的 class
-    for (var j = elementsWithZIndex.length - 1; j > elementsWithZIndex.length - 10; j--) {
+    for (var j = elementsWithZIndex.length - 1; j > elementsWithZIndex.length - 15; j--) {
       if (elementsWithZIndex[j].className == "") {
         continue;
       }
