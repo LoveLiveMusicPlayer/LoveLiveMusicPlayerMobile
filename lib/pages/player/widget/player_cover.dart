@@ -39,9 +39,7 @@ class _CoverState extends State<Cover> {
                   children: [
                     /// 封面
                     showImg(
-                        SDUtils.getImgPath(
-                            fileName:
-                                "${currentMusic.baseUrl}${currentMusic.coverPath}"),
+                        SDUtils.getImgPathFromMusic(currentMusic),
                         273,
                         273,
                         radius: 24,

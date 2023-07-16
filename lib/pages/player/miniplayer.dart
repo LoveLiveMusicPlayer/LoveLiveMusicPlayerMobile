@@ -132,9 +132,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
 
   Widget miniCover() {
     final currentMusic = PlayerLogic.to.playingMusic.value;
-    final coverPath =
-        (currentMusic.baseUrl ?? "") + (currentMusic.coverPath ?? "");
-    return showImg(SDUtils.getImgPath(fileName: coverPath), 48, 48,
+    return showImg(SDUtils.getImgPathFromMusic(currentMusic), 48, 48,
         radius: 48, hasShadow: false, onTap: widget.onTap);
   }
 

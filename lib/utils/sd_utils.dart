@@ -4,7 +4,10 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/main.dart';
+import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/models/device.dart';
+import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -28,14 +31,39 @@ class SDUtils {
     Log4f.d(msg: path);
   }
 
-  ///获取图片文件
+  ///从路径中获取图片文件
   static File getImgFile(String fileName) {
     return File(path + fileName);
   }
 
-  ///获取图片文件
+  ///从路径中获取图片完整路径
   static String getImgPath({String? fileName}) {
     return path + (fileName ?? "");
+  }
+
+  ///从music中获取图片完整路径
+  static String getImgPathFromMusic(Music music) {
+    String imagePath;
+    if (music.musicId == null) {
+      return "";
+    }
+    if (music.existFile == true) {
+      imagePath = "$path${music.baseUrl}${music.coverPath}";
+    } else {
+      imagePath = "$remoteHttpHost${music.baseUrl}${music.coverPath}";
+    }
+    return imagePath;
+  }
+
+  ///从album中获取图片完整路径
+  static String getImgPathFromAlbum(Album album) {
+    String imagePath;
+    if (album.existFile == true) {
+      imagePath = "$path${album.coverPath}";
+    } else {
+      imagePath = "$remoteHttpHost${album.coverPath}";
+    }
+    return imagePath;
   }
 
   static bool checkFileExist(String filePath) {

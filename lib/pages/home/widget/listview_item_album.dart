@@ -52,7 +52,7 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
             child: Hero(
                 tag: "album${widget.album.albumId}",
                 child: showImg(
-                    SDUtils.getImgPath(fileName: widget.album.coverPath!),
+                    SDUtils.getImgPathFromAlbum(widget.album),
                     borderWidth,
                     borderWidth,
                     hasShadow: false,

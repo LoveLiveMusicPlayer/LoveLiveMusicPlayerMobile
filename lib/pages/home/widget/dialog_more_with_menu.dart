@@ -9,7 +9,7 @@ import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
-import 'package:lovelivemusicplayer/widgets/new_menu_dialog.dart';
+import 'package:lovelivemusicplayer/widgets/text_field_dialog.dart';
 
 class DialogMoreWithMenu extends StatelessWidget {
   final Menu menu;

@@ -11,7 +11,7 @@ import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_song_sheet.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
-import 'package:lovelivemusicplayer/widgets/new_menu_dialog.dart';
+import 'package:lovelivemusicplayer/widgets/text_field_dialog.dart';
 
 class DialogAddSongSheet extends StatelessWidget {
   final List<Music> musicList;

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
@@ -36,7 +35,7 @@ import 'utils/sd_utils.dart';
 import 'utils/sp_util.dart';
 
 // 是否需要清理数据
-const needClearApp = true;
+const needClearApp = false;
 // 当前环境
 const env = "pre";
 
@@ -48,6 +47,8 @@ var appVersion = "1.0.0";
 var hasAIPic = false;
 // 是否允许显示背景图片
 var enableBG = false;
+// http远端歌库主机地址
+var remoteHttpHost = "";
 // 传输协议版本号
 const transVer = 1;
 // 开屏图片列表
@@ -106,7 +107,7 @@ void main() async {
       reportErrorAndLog(details);
     };
 
-    runApp(Phoenix(child: const MyApp()));
+    runApp(const MyApp());
 
     AppUtils.setStatusBar(isDark);
   }, (error, stackTrace) {
@@ -248,11 +249,12 @@ initServices() async {
   SpUtil.getInstance();
   Network.getInstance();
   await SDUtils.init();
-  PlayerBinding().dependencies();
   enableBG = await SpUtil.getBoolean(Const.spEnableBackgroundPhoto, false);
   hasAIPic = await SpUtil.getBoolean(Const.spAIPicture, true);
+  remoteHttpHost = await SpUtil.getString(Const.spHttpUrl, "");
+  PlayerBinding().dependencies();
   if (hasAIPic) await getOssUrl();
-  SpUtil.put("prevPage", "");
+  SpUtil.put(Const.spPrevPage, "");
 }
 
 startServer() {
@@ -273,6 +275,10 @@ stopServer() {
     Log4f.d(msg: "stopServer");
   }
   localhostServer = null;
+}
+
+checkEnableHttp() {
+  return remoteHttpHost.isNotEmpty;
 }
 
 /// 获取资源oss url，解析开屏图片数据

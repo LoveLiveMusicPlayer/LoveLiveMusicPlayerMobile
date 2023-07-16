@@ -197,7 +197,7 @@ class _DrawerPageState extends State<DrawerPage> {
               icon: Assets.drawerDrawerQuickTrans,
               text: 'music_trans'.tr,
               colorWithBG: false,
-              onTap: () async {
+              onTap: (controller) async {
                 Get.back();
                 Get.toNamed(Routes.routeTransform);
               },
@@ -207,7 +207,7 @@ class _DrawerPageState extends State<DrawerPage> {
               icon: Assets.drawerDrawerDataSync,
               text: 'data_sync'.tr,
               colorWithBG: false,
-              onTap: () {
+              onTap: (controller) {
                 Get.back();
                 Get.toNamed(Routes.routeDataSync);
               },
@@ -217,7 +217,7 @@ class _DrawerPageState extends State<DrawerPage> {
               icon: Assets.drawerDrawerDataDownload,
               text: 'fetch_songs'.tr,
               colorWithBG: false,
-              onTap: () {
+              onTap: (controller) {
                 handleUpdateData();
               },
             ),
@@ -226,7 +226,7 @@ class _DrawerPageState extends State<DrawerPage> {
               icon: Assets.drawerDrawerUpdate,
               text: 'update'.tr,
               colorWithBG: false,
-              onTap: () {
+              onTap: (controller) {
                 GlobalLogic.to.checkUpdate(manual: true);
               },
             ),
@@ -235,7 +235,7 @@ class _DrawerPageState extends State<DrawerPage> {
               icon: Assets.drawerDrawerSetting,
               text: 'system_settings'.tr,
               colorWithBG: false,
-              onTap: () {
+              onTap: (controller) {
                 Get.back();
                 Get.toNamed(Routes.routeSystemSettings, id: 1);
               },
@@ -245,7 +245,7 @@ class _DrawerPageState extends State<DrawerPage> {
               icon: Assets.drawerDrawerShare,
               text: "share".tr,
               colorWithBG: false,
-              onTap: () {
+              onTap: (controller) {
                 Get.back();
                 AppUtils.shareQQ();
               },

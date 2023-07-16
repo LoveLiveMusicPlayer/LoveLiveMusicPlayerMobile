@@ -112,11 +112,10 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
 
   ///缩列图
   Widget _buildIcon() {
-    final coverPath = widget.music.baseUrl! + widget.music.coverPath!;
     return InkWell(
       onTap: clickItem,
       onLongPress: onLongPress,
-      child: showImg(SDUtils.getImgPath(fileName: coverPath), 48, 48,
+      child: showImg(SDUtils.getImgPathFromMusic(widget.music), 48, 48,
           hasShadow: false, onTap: clickItem, onLongPress: onLongPress),
     );
   }

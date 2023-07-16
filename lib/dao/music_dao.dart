@@ -9,6 +9,9 @@ abstract class MusicDao {
   @Query('SELECT * FROM Music WHERE `group` = :group ORDER BY musicId')
   Future<List<Music>> findAllMusicsByGroup(String group);
 
+  @Query('SELECT * FROM Music WHERE `group` = :group AND `existFile` = true ORDER BY musicId')
+  Future<List<Music>> findAllExistMusicsByGroup(String group);
+
   @Query('SELECT * FROM Music WHERE name like "%ん%"')
   Future<List<Music>> findAllMusicsTest();
 

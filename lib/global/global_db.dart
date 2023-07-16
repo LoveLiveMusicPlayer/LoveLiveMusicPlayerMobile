@@ -99,46 +99,85 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       if (group == Const.groupAll) {
         // 获取全部专辑列表
         final tempAlbumList = <Album>[];
-        tempAlbumList
-            .addAll(await albumDao.findAllAlbumsByGroup(Const.groupUs));
-        tempAlbumList
-            .addAll(await albumDao.findAllAlbumsByGroup(Const.groupAqours));
-        tempAlbumList
-            .addAll(await albumDao.findAllAlbumsByGroup(Const.groupSaki));
-        tempAlbumList
-            .addAll(await albumDao.findAllAlbumsByGroup(Const.groupLiella));
-        tempAlbumList
-            .addAll(await albumDao.findAllAlbumsByGroup(Const.groupCombine));
-        tempAlbumList
-            .addAll(await albumDao.findAllAlbumsByGroup(Const.groupHasunosora));
-        tempAlbumList
-            .addAll(await albumDao.findAllAlbumsByGroup(Const.groupYohane));
+        if (checkEnableHttp()) {
+          tempAlbumList
+              .addAll(await albumDao.findAllAlbumsByGroup(Const.groupUs));
+          tempAlbumList
+              .addAll(await albumDao.findAllAlbumsByGroup(Const.groupAqours));
+          tempAlbumList
+              .addAll(await albumDao.findAllAlbumsByGroup(Const.groupSaki));
+          tempAlbumList
+              .addAll(await albumDao.findAllAlbumsByGroup(Const.groupLiella));
+          tempAlbumList
+              .addAll(await albumDao.findAllAlbumsByGroup(Const.groupCombine));
+          tempAlbumList.addAll(
+              await albumDao.findAllAlbumsByGroup(Const.groupHasunosora));
+          tempAlbumList
+              .addAll(await albumDao.findAllAlbumsByGroup(Const.groupYohane));
+        } else {
+          tempAlbumList
+              .addAll(await albumDao.findAllExistAlbumsByGroup(Const.groupUs));
+          tempAlbumList.addAll(
+              await albumDao.findAllExistAlbumsByGroup(Const.groupAqours));
+          tempAlbumList.addAll(
+              await albumDao.findAllExistAlbumsByGroup(Const.groupSaki));
+          tempAlbumList.addAll(
+              await albumDao.findAllExistAlbumsByGroup(Const.groupLiella));
+          tempAlbumList.addAll(
+              await albumDao.findAllExistAlbumsByGroup(Const.groupCombine));
+          tempAlbumList.addAll(
+              await albumDao.findAllExistAlbumsByGroup(Const.groupHasunosora));
+          tempAlbumList.addAll(
+              await albumDao.findAllExistAlbumsByGroup(Const.groupYohane));
+        }
+
         allAlbums.addAll(tempAlbumList);
 
         // 获取全部歌曲列表
         final tempMusicList = <Music>[];
-        tempMusicList
-            .addAll(await musicDao.findAllMusicsByGroup(Const.groupUs));
-        tempMusicList
-            .addAll(await musicDao.findAllMusicsByGroup(Const.groupAqours));
-        tempMusicList
-            .addAll(await musicDao.findAllMusicsByGroup(Const.groupSaki));
-        tempMusicList
-            .addAll(await musicDao.findAllMusicsByGroup(Const.groupLiella));
-        tempMusicList
-            .addAll(await musicDao.findAllMusicsByGroup(Const.groupCombine));
-        tempMusicList
-            .addAll(await musicDao.findAllMusicsByGroup(Const.groupHasunosora));
-        tempMusicList
-            .addAll(await musicDao.findAllMusicsByGroup(Const.groupYohane));
+        if (checkEnableHttp()) {
+          tempMusicList
+              .addAll(await musicDao.findAllMusicsByGroup(Const.groupUs));
+          tempMusicList
+              .addAll(await musicDao.findAllMusicsByGroup(Const.groupAqours));
+          tempMusicList
+              .addAll(await musicDao.findAllMusicsByGroup(Const.groupSaki));
+          tempMusicList
+              .addAll(await musicDao.findAllMusicsByGroup(Const.groupLiella));
+          tempMusicList
+              .addAll(await musicDao.findAllMusicsByGroup(Const.groupCombine));
+          tempMusicList.addAll(
+              await musicDao.findAllMusicsByGroup(Const.groupHasunosora));
+          tempMusicList
+              .addAll(await musicDao.findAllMusicsByGroup(Const.groupYohane));
+        } else {
+          tempMusicList
+              .addAll(await musicDao.findAllExistMusicsByGroup(Const.groupUs));
+          tempMusicList.addAll(
+              await musicDao.findAllExistMusicsByGroup(Const.groupAqours));
+          tempMusicList.addAll(
+              await musicDao.findAllExistMusicsByGroup(Const.groupSaki));
+          tempMusicList.addAll(
+              await musicDao.findAllExistMusicsByGroup(Const.groupLiella));
+          tempMusicList.addAll(
+              await musicDao.findAllExistMusicsByGroup(Const.groupCombine));
+          tempMusicList.addAll(
+              await musicDao.findAllExistMusicsByGroup(Const.groupHasunosora));
+          tempMusicList.addAll(
+              await musicDao.findAllExistMusicsByGroup(Const.groupYohane));
+        }
         GlobalLogic.to.musicList.value = tempMusicList;
         final artistArr = await artistDao.findAllArtists();
         artistArr.sort((a, b) => AppUtils.comparePeopleNumber(a.uid, b.uid));
         GlobalLogic.to.artistList.value = artistArr;
       } else {
-        allAlbums.addAll(await albumDao.findAllAlbumsByGroup(group));
-        GlobalLogic.to.musicList.value =
-            await musicDao.findAllMusicsByGroup(group);
+        if (checkEnableHttp()) {
+          allAlbums.addAll(await albumDao.findAllAlbumsByGroup(group));
+          GlobalLogic.to.musicList.value = await musicDao.findAllMusicsByGroup(group);
+        } else {
+          allAlbums.addAll(await albumDao.findAllExistAlbumsByGroup(group));
+          GlobalLogic.to.musicList.value = await musicDao.findAllExistMusicsByGroup(group);
+        }
         final artistArr = await artistDao.findAllArtistsByGroup(group);
         artistArr.sort((a, b) => AppUtils.comparePeopleNumber(a.uid, b.uid));
         GlobalLogic.to.artistList.value = artistArr;
@@ -174,8 +213,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
             coverPath: downloadMusic.baseUrl + downloadMusic.coverPath,
             category: downloadMusic.category,
             group: downloadMusic.group,
-            existFile: downloadMusic.existFile
-        );
+            existFile: downloadMusic.existFile);
         await albumDao.insertAlbum(mAlbum);
       } else if (album.existFile == false && downloadMusic.existFile) {
         album.existFile = true;

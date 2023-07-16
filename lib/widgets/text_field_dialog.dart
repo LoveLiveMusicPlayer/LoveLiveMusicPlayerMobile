@@ -11,12 +11,13 @@ import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 class TextFieldDialog extends StatefulWidget {
   final String? title;
   final String? hint;
-  final List<TextInputFormatter> formatter = [];
+  final int? maxLength;
+  final List<TextInputFormatter>? formatter;
   final Function()? onBack;
   final Function(String str)? onConfirm;
 
-  TextFieldDialog(
-      {Key? key, this.title, this.hint, formatter, this.onBack, this.onConfirm})
+  const TextFieldDialog(
+      {Key? key, this.title, this.hint, this.formatter, this.onBack, this.onConfirm, this.maxLength})
       : super(key: key);
 
   @override
@@ -26,11 +27,10 @@ class TextFieldDialog extends StatefulWidget {
 class _TextFieldDialogState extends State<TextFieldDialog> {
   final controller = TextEditingController();
   String text = "";
-  int maxLength = 20;
+  late int maxLength = widget.maxLength ?? 20;
 
   @override
   Widget build(BuildContext context) {
-    widget.formatter;
     final width = min(0.4 * Get.height, 0.8 * Get.width);
     return Container(
       width: width,
@@ -59,7 +59,7 @@ class _TextFieldDialogState extends State<TextFieldDialog> {
                 showCursor: true,
                 obscureText: false,
                 maxLength: maxLength,
-                inputFormatters: widget.formatter,
+                inputFormatters: widget.formatter ?? [],
                 decoration: InputDecoration(
                     isCollapsed: false,
                     labelText: widget.hint ?? 'hint'.tr,

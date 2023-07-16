@@ -17,6 +17,7 @@ class DrawerFunctionButton extends StatefulWidget {
       this.enableSwitch = true,
       this.colorWithBG = true,
       this.iconColor,
+      this.controller,
       this.callBack})
       : super(key: key);
 
@@ -29,20 +30,57 @@ class DrawerFunctionButton extends StatefulWidget {
   final bool initSwitch;
   final bool enableSwitch;
   final Callback? callBack;
+  final ButtonControllerCallback? controller;
 
   @override
   State<DrawerFunctionButton> createState() => _DrawerFunctionButtonState();
 }
 
-typedef Callback = void Function(bool check);
+typedef Callback = void Function(ButtonController controller, bool check);
+typedef GestureTapCallback = void Function(ButtonController controller);
+typedef ButtonControllerCallback = void Function(ButtonController controller);
+
+class ButtonController extends ChangeNotifier {
+  String _textValue;
+  bool _switchValue = false;
+
+  ButtonController(this._textValue, this._switchValue);
+
+  String get getText => _textValue;
+
+  bool get getSwitchValue => _switchValue;
+
+  set setSwitchValue(bool newValue) {
+    _switchValue = newValue;
+    notifyListeners();
+  }
+
+  set setTextValue(String newValue) {
+    _textValue = newValue;
+    notifyListeners();
+  }
+}
 
 class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
-  late bool switchValue = widget.initSwitch;
+  late ButtonController bh = ButtonController(widget.text, widget.initSwitch);
+
+  @override
+  void initState() {
+    if (widget.controller != null) {
+      widget.controller!(bh);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: widget.onTap,
+        onTap: () {
+          final onTap = widget.onTap;
+          if (onTap != null) {
+            onTap(bh);
+          }
+        },
         child: SizedBox(
           height: 30.h,
           child:
@@ -67,11 +105,13 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
                   } else {
                     mode = Get.isDarkMode;
                   }
-                  return Text(widget.text,
-                      style: TextStyle(fontSize: 14.sp).copyWith(
-                          color: mode ? ColorMs.colorEDF5FF : Colors.black),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis);
+                  return ListenableBuilder(
+                      listenable: bh,
+                      builder: (c, w) => Text(bh._textValue,
+                          style: TextStyle(fontSize: 14.sp).copyWith(
+                              color: mode ? ColorMs.colorEDF5FF : Colors.black),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis));
                 }))
               ],
             )),
@@ -85,22 +125,23 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
       if (widget.enableSwitch) {
         return Transform.scale(
           scale: 0.9,
-          child: CupertinoSwitch(
-              value: switchValue,
-              activeColor: const Color.fromARGB(255, 228, 0, 127),
-              onChanged: (value) {
-                switchValue = value;
-                if (widget.callBack != null) {
-                  widget.callBack!(value);
-                }
-                setState(() {});
-              }),
+          child: ListenableBuilder(
+              listenable: bh,
+              builder: (c, w) => CupertinoSwitch(
+                  value: bh._switchValue,
+                  activeColor: const Color.fromARGB(255, 228, 0, 127),
+                  onChanged: (value) {
+                    bh.setSwitchValue = value;
+                    if (widget.callBack != null) {
+                      widget.callBack!(bh, value);
+                    }
+                  })),
         );
       } else {
         return Transform.scale(
             scale: 0.9,
             child: CupertinoSwitch(
-              value: switchValue,
+              value: bh._switchValue,
               activeColor: const Color.fromARGB(255, 228, 0, 127),
               onChanged: null,
             ));

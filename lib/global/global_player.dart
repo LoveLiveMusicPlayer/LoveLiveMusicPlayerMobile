@@ -10,6 +10,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/lyric.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/models/play_list_music.dart';
@@ -319,18 +320,32 @@ class PlayerLogic extends SuperController
   }
 
   /// 生成一个播放URI
-  UriAudioSource genAudioSourceUri(Music music) => AudioSource.uri(
-    Uri.file('${SDUtils.path}${music.baseUrl}${music.musicPath}'),
-    tag: MediaItem(
-      id: music.musicId!,
-      title: music.musicName!,
-      album: music.albumName!,
-      artist: music.artist,
-      artUri: (music.coverPath == null || music.coverPath!.isEmpty)
-          ? Uri.parse(Assets.logoLogo)
-          : Uri.file(SDUtils.path + music.baseUrl! + music.coverPath!),
-    ),
-  );
+  UriAudioSource genAudioSourceUri(Music music) {
+    Uri musicUri;
+    if (music.existFile == true) {
+      musicUri = Uri.file('${SDUtils.path}${music.baseUrl}${music.musicPath}');
+    } else {
+      musicUri = Uri.parse('$remoteHttpHost${music.baseUrl}${music.musicPath?.replaceAll("wav", "flac")}');
+    }
+    Uri coverUri;
+    if (music.coverPath == null || music.coverPath!.isEmpty) {
+      coverUri = Uri.parse(Assets.logoLogo);
+    } else if (music.existFile == true) {
+      coverUri = Uri.file('${SDUtils.path}${music.baseUrl}${music.coverPath}');
+    } else {
+      coverUri = Uri.parse('$remoteHttpHost${music.baseUrl}${music.coverPath}');
+    }
+    return AudioSource.uri(
+      musicUri,
+      tag: MediaItem(
+        id: music.musicId!,
+        title: music.musicName!,
+        album: music.albumName!,
+        artist: music.artist,
+        artUri: coverUri,
+      ),
+    );
+  }
 
   /// 开关播放
   Future<void> togglePlay() async {
@@ -569,8 +584,7 @@ class PlayerLogic extends SuperController
       playingMusic.value = Music();
     } else {
       playingMusic.value = music;
-      final url = music.baseUrl! + music.coverPath!;
-      AppUtils.getImagePalette(url).then((color) {
+      AppUtils.getImagePaletteFromMusic(playingMusic.value).then((color) {
         GlobalLogic.to.iconColor.value = color ?? Get.theme.primaryColor;
       });
     }
