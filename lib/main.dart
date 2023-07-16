@@ -79,38 +79,41 @@ void main() async {
     return FlutterErrorDetails(stack: stackTrace, exception: error);
   }
 
-  runZonedGuarded(() async {
-    // 启动屏开启
-    WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-    // 仅支持竖屏
-    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-    // 禁用 Android WebView Inspect
-    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
-      await InAppWebViewController.setWebContentsDebuggingEnabled(false);
-    }
+  runZonedGuarded(
+    () async {
+      // 启动屏开启
+      WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+      // 仅支持竖屏
+      await SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.portraitUp]);
+      FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+      // 禁用 Android WebView Inspect
+      if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+        await InAppWebViewController.setWebContentsDebuggingEnabled(false);
+      }
 
-    // 必须优先初始化
-    await JustAudioBackground.init(
-      androidNotificationChannelId:
-      'com.zhushenwudi.lovelivemusicplayer.channel.audio',
-      androidNotificationChannelName: 'lovelive audio playback',
-      androidNotificationOngoing: true,
-    );
+      // 必须优先初始化
+      await JustAudioBackground.init(
+        androidNotificationChannelId:
+            'com.zhushenwudi.lovelivemusicplayer.channel.audio',
+        androidNotificationChannelName: 'lovelive audio playback',
+        androidNotificationOngoing: true,
+      );
 
-    // 初始化
-    await initServices();
-    isDark = await SpUtil.getBoolean(Const.spDark);
+      // 初始化
+      await initServices();
+      isDark = await SpUtil.getBoolean(Const.spDark);
 
-    FlutterError.onError = (FlutterErrorDetails details) {
-      // 获取 widget build 过程中出现的异常错误
-      reportErrorAndLog(details);
-    };
+      FlutterError.onError = (FlutterErrorDetails details) {
+        // 获取 widget build 过程中出现的异常错误
+        reportErrorAndLog(details);
+      };
 
-    runApp(const MyApp());
+      runApp(const MyApp());
 
-    AppUtils.setStatusBar(isDark);
-  }, (error, stackTrace) {
+      AppUtils.setStatusBar(isDark);
+    },
+    (error, stackTrace) {
       // 没被catch的异常
       reportErrorAndLog(makeDetails(error, stackTrace));
     },

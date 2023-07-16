@@ -17,7 +17,13 @@ class TextFieldDialog extends StatefulWidget {
   final Function(String str)? onConfirm;
 
   const TextFieldDialog(
-      {Key? key, this.title, this.hint, this.formatter, this.onBack, this.onConfirm, this.maxLength})
+      {Key? key,
+      this.title,
+      this.hint,
+      this.formatter,
+      this.onBack,
+      this.onConfirm,
+      this.maxLength})
       : super(key: key);
 
   @override

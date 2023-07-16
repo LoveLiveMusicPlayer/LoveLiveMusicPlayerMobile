@@ -290,14 +290,17 @@ class _SystemSettingsState extends State<SystemSettings> {
                                 RegExp('^[a-zA-Z0-9.:/_-]*\$'))
                           ],
                           onConfirm: (host) async {
-                            final enableHttp = await SpUtil.getBoolean(Const.spEnableHttp, false);
+                            final enableHttp = await SpUtil.getBoolean(
+                                Const.spEnableHttp, false);
                             if (enableHttp) {
                               setTextValue(controller, host);
                               remoteHttpHost = host;
                               await SpUtil.put(Const.spHttpUrl, host);
-                              await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
+                              await DBLogic.to.findAllListByGroup(
+                                  GlobalLogic.to.currentGroup.value);
                             } else {
-                              SmartDialog.compatible.showToast("请先打开使用HTTP曲库开关");
+                              SmartDialog.compatible
+                                  .showToast("请先打开使用HTTP曲库开关");
                             }
                           }),
                       clickBgDismissTemp: false,

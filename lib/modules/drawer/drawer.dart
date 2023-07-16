@@ -360,8 +360,7 @@ class _DrawerPageState extends State<DrawerPage> {
             totalTime: music.time,
             baseUrl: music.baseUrl,
             neteaseId: music.neteaseId,
-            existFile: checkFileExist(music)
-        );
+            existFile: checkFileExist(music));
         await DBLogic.to.importMusic(downloadMusic);
       }
     });

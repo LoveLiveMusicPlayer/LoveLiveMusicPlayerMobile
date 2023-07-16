@@ -6,16 +6,18 @@ Artist artistDaoFromJson(String str) => Artist.fromJson(json.decode(str));
 
 String artistDaoToJson(Artist data) => json.encode(data.toJson());
 
-@Entity(tableName: "Artist")
+@Entity(tableName: "Artist", primaryKeys: ['id'])
 class Artist {
   Artist(
-      {required this.uid,
+      {this.id,
+      required this.uid,
       required this.name,
       required this.photo,
       required this.music,
       required this.group});
 
-  @primaryKey
+  @PrimaryKey(autoGenerate: true)
+  int? id;
   String uid;
   String name;
   String photo;
@@ -23,6 +25,7 @@ class Artist {
   List<String> music;
 
   factory Artist.fromJson(Map<String, dynamic> json) => Artist(
+        id: json["id"],
         uid: json["uid"],
         name: json["name"],
         photo: json["photo"],
@@ -31,6 +34,7 @@ class Artist {
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "uid": uid,
         "name": name,
         "photo": photo,

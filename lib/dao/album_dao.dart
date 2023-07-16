@@ -9,7 +9,8 @@ abstract class AlbumDao {
   @Query('SELECT * FROM Album WHERE `group` = :group GROUP BY `albumId`')
   Future<List<Album>> findAllAlbumsByGroup(String group);
 
-  @Query('SELECT * FROM Album WHERE `group` = :group AND `existFile` = true GROUP BY `albumId`')
+  @Query(
+      'SELECT * FROM Album WHERE `group` = :group AND `existFile` = true GROUP BY `albumId`')
   Future<List<Album>> findAllExistAlbumsByGroup(String group);
 
   @Query('SELECT * FROM Album WHERE albumId = :albumId')

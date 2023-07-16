@@ -21,8 +21,7 @@ class DetailsCover extends StatelessWidget {
         children: [
           Hero(
               tag: "album${album.albumId}",
-              child: showImg(
-                  SDUtils.getImgPathFromAlbum(album), 240, 240,
+              child: showImg(SDUtils.getImgPathFromAlbum(album), 240, 240,
                   radius: 24)),
           SizedBox(
             height: 20.h,

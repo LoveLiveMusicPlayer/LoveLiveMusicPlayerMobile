@@ -325,7 +325,8 @@ class PlayerLogic extends SuperController
     if (music.existFile == true) {
       musicUri = Uri.file('${SDUtils.path}${music.baseUrl}${music.musicPath}');
     } else {
-      musicUri = Uri.parse('$remoteHttpHost${music.baseUrl}${music.musicPath?.replaceAll("wav", "flac")}');
+      musicUri = Uri.parse(
+          '$remoteHttpHost${music.baseUrl}${music.musicPath?.replaceAll("wav", "flac")}');
     }
     Uri coverUri;
     if (music.coverPath == null || music.coverPath!.isEmpty) {

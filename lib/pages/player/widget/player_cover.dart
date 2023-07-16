@@ -38,10 +38,7 @@ class _CoverState extends State<Cover> {
                 child: Stack(
                   children: [
                     /// 封面
-                    showImg(
-                        SDUtils.getImgPathFromMusic(currentMusic),
-                        273,
-                        273,
+                    showImg(SDUtils.getImgPathFromMusic(currentMusic), 273, 273,
                         radius: 24,
                         shadowColor: GlobalLogic.to.hasSkin.value
                             ? GlobalLogic.to.iconColor.value

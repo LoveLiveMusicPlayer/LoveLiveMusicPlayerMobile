@@ -66,6 +66,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       migration3to4,
       migration4to5,
       migration5to6,
+      migration6to7,
     ]).build();
     splashDao = database.splashDao;
     albumDao = database.albumDao;
@@ -173,10 +174,12 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       } else {
         if (checkEnableHttp()) {
           allAlbums.addAll(await albumDao.findAllAlbumsByGroup(group));
-          GlobalLogic.to.musicList.value = await musicDao.findAllMusicsByGroup(group);
+          GlobalLogic.to.musicList.value =
+              await musicDao.findAllMusicsByGroup(group);
         } else {
           allAlbums.addAll(await albumDao.findAllExistAlbumsByGroup(group));
-          GlobalLogic.to.musicList.value = await musicDao.findAllExistMusicsByGroup(group);
+          GlobalLogic.to.musicList.value =
+              await musicDao.findAllExistMusicsByGroup(group);
         }
         final artistArr = await artistDao.findAllArtistsByGroup(group);
         artistArr.sort((a, b) => AppUtils.comparePeopleNumber(a.uid, b.uid));
@@ -251,7 +254,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         final artistModelList =
             AppUtils.parseArtistBin(mMusic.artistBin, artistList, singleMap);
         for (var artistModel in artistModelList) {
-          var artist = await artistDao.findArtistByArtistBin(artistModel.v);
+          var artist = await artistDao.findArtistByArtistBinAndGroup(
+              artistModel.v, mMusic.group!);
 
           if (artist == null) {
             artist = Artist(
@@ -261,7 +265,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
                     "${Const.dataOssUrl}LLMP/artist_webp/${artistModel.v}.webp",
                 music: [mMusic.musicId!],
                 group: mMusic.group!);
-            await artistDao.insertArtist(artist);
+            await artistDao.insertArtistWithId(artist);
           } else {
             artist.music.add(mMusic.musicId!);
             await artistDao.updateArtist(artist);
@@ -636,7 +640,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   ///****************  Artist  ****************/
 
   Future<List<Music>> findAllMusicsByArtistBin(String artistBin) async {
-    final artist = await artistDao.findArtistByArtistBin(artistBin);
+    final artist = await artistDao.findArtistByArtistBinAndGroup(
+        artistBin, GlobalLogic.to.currentGroup.value);
     if (artist == null) {
       return [];
     }

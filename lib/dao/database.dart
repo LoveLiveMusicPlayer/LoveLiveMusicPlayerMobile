@@ -26,7 +26,7 @@ import 'album_dao.dart';
 part 'database.g.dart';
 
 @TypeConverters([StringListConverter])
-@Database(version: 6, entities: [
+@Database(version: 7, entities: [
   Album,
   Lyric,
   Music,
@@ -83,8 +83,31 @@ final migration4to5 = Migration(4, 5, (database) async {
 });
 
 final migration5to6 = Migration(5, 6, (database) async {
-  const alterAlbumTableSql = '''ALTER TABLE Album ADD COLUMN `existFile` BOOLEAN''';
-  const alterMusicTableSql = '''ALTER TABLE Music ADD COLUMN `existFile` BOOLEAN''';
+  const alterAlbumTableSql =
+      '''ALTER TABLE Album ADD COLUMN `existFile` BOOLEAN''';
+  const alterMusicTableSql =
+      '''ALTER TABLE Music ADD COLUMN `existFile` BOOLEAN''';
   await database.execute(alterAlbumTableSql);
   await database.execute(alterMusicTableSql);
+});
+
+final migration6to7 = Migration(6, 7, (database) async {
+  const alterArtistTableSql1 = '''ALTER TABLE Artist RENAME TO Artist_old''';
+  const alterArtistTableSql2 = '''
+  CREATE TABLE Artist (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "uid" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "photo" TEXT NOT NULL,
+    "group" TEXT NOT NULL,
+    "music" TEXT NOT NULL
+  )
+  ''';
+  const alterArtistTableSql3 =
+      '''INSERT INTO Artist ("uid", "name", "photo", "group", "music") SELECT "uid", "name", "photo", "group", "music" FROM Artist_old''';
+  const alterArtistTableSql4 = '''DROP TABLE Artist_old''';
+  await database.execute(alterArtistTableSql1);
+  await database.execute(alterArtistTableSql2);
+  await database.execute(alterArtistTableSql3);
+  await database.execute(alterArtistTableSql4);
 });
