@@ -566,7 +566,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       final musicList = await findMusicByMusicIds(musicIds);
       if (musicList.isNotEmpty) {
         playLogic.playMusic(musicList,
-            index: willPlayMusicIndex, needPlay: false);
+            mIndex: willPlayMusicIndex, needPlay: false);
       }
     } catch (e) {
       Log4f.e(msg: e.toString());

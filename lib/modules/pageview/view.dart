@@ -166,7 +166,7 @@ class _PageViewComponentState extends State<PageViewComponent>
               alignmentTemp: Alignment.bottomCenter);
         },
         onPlayNowTap: () {
-          PlayerLogic.to.playMusic(GlobalLogic.to.musicList, index: index);
+          PlayerLogic.to.playMusic(GlobalLogic.to.musicList, mIndex: index);
         },
       );
     } else if (page == 1) {
@@ -206,7 +206,7 @@ class _PageViewComponentState extends State<PageViewComponent>
               alignmentTemp: Alignment.bottomCenter);
         },
         onPlayNowTap: () {
-          PlayerLogic.to.playMusic(GlobalLogic.to.loveList, index: index);
+          PlayerLogic.to.playMusic(GlobalLogic.to.loveList, mIndex: index);
         },
       );
     } else if (page == 4) {
@@ -238,7 +238,7 @@ class _PageViewComponentState extends State<PageViewComponent>
               alignmentTemp: Alignment.bottomCenter);
         },
         onPlayNowTap: () {
-          PlayerLogic.to.playMusic(GlobalLogic.to.recentList, index: index);
+          PlayerLogic.to.playMusic(GlobalLogic.to.recentList, mIndex: index);
         },
       );
     }

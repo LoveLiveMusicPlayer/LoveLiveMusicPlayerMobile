@@ -135,7 +135,7 @@ class _DetailsBodyState extends State<DetailsBody> {
                 alignmentTemp: Alignment.bottomCenter);
           },
           onPlayNowTap: () {
-            PlayerLogic.to.playMusic(widget.music, index: index);
+            PlayerLogic.to.playMusic(widget.music, mIndex: index);
           },
         ),
       ));

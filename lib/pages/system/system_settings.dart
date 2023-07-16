@@ -294,6 +294,9 @@ class _SystemSettingsState extends State<SystemSettings> {
                                 Const.spEnableHttp, false);
                             if (enableHttp) {
                               setTextValue(controller, host);
+                              if (!host.endsWith("/")) {
+                                host = "$host/";
+                              }
                               remoteHttpHost = host;
                               await SpUtil.put(Const.spHttpUrl, host);
                               await DBLogic.to.findAllListByGroup(

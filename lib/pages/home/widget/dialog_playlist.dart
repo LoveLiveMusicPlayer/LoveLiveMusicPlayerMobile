@@ -100,7 +100,7 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                         DBLogic.to
                             .findMusicByMusicIds(idList)
                             .then((musicList) {
-                          PlayerLogic.to.playMusic(musicList, index: index);
+                          PlayerLogic.to.playMusic(musicList, mIndex: index);
                           Future.delayed(const Duration(milliseconds: 1000))
                               .then((value) {
                             SmartDialog.compatible

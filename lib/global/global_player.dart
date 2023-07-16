@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter_lyric/lyric_parser/parser_smart.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -185,8 +186,13 @@ class PlayerLogic extends SuperController
 
   /// 播放指定列表的歌曲
   Future<void> playMusic(List<Music> musicList,
-      {int index = 0, bool needPlay = true}) async {
+      {int? mIndex, bool needPlay = true}) async {
     SmartDialog.compatible.showLoading(msg: 'loading'.tr);
+    // 随机播放时任取一个index
+    int index = mIndex ?? 0;
+    if (mIndex == null && mPlayer.shuffleModeEnabled) {
+      index = Random().nextInt(musicList.length);
+    }
     AppUtils.uploadEvent("Playing",
         params: {"music": musicList[index].musicName ?? ""});
     Log4f.v(msg: "播放曲目: ${musicList[index].musicName}");
