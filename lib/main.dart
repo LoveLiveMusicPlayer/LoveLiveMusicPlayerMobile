@@ -72,7 +72,9 @@ void main() async {
       "exception": details.exceptionAsString(),
       "stackTrace": details.stack.toString(),
     };
-    Log4f.e(msg: "$errorMsg");
+    if (kDebugMode) {
+      Log4f.e(msg: "$errorMsg");
+    }
   }
 
   FlutterErrorDetails makeDetails(Object error, StackTrace stackTrace) {
@@ -268,7 +270,6 @@ startServer() {
     return;
   }
   localhostServer?.start();
-  Log4f.d(msg: "startServer");
 }
 
 stopServer() {
@@ -277,7 +278,6 @@ stopServer() {
   }
   if (true == localhostServer?.isRunning()) {
     localhostServer?.close();
-    Log4f.d(msg: "stopServer");
   }
   localhostServer = null;
 }

@@ -102,7 +102,6 @@ class _SystemSettingsState extends State<SystemSettings> {
   }
 
   Widget renderTopFunctionButtonArray() {
-    ButtonController? httpUrlController;
     return GetBuilder<GlobalLogic>(builder: (logic) {
       final iconColor = logic.bgPhoto.value == "" ? null : ColorMs.colorCCCCCC;
       return Column(
@@ -266,7 +265,7 @@ class _SystemSettingsState extends State<SystemSettings> {
                 return DrawerFunctionButton(
                     icon: Assets.drawerDrawerHttp,
                     iconColor: iconColor,
-                    text: '使用HTTP曲库',
+                    text: 'use_http_music'.tr,
                     hasSwitch: true,
                     initSwitch: remoteHttp.isEnableHttp(),
                     callBack: (controller, check) async {
@@ -279,17 +278,16 @@ class _SystemSettingsState extends State<SystemSettings> {
                   Listenable.merge([remoteHttp.enableHttp, remoteHttp.httpUrl]),
               builder: (c, w) {
                 final text = remoteHttp.noneHttpUrl()
-                    ? "输入HTTP地址"
+                    ? 'input_http_url'.tr
                     : remoteHttp.httpUrl.value;
                 return DrawerFunctionButton(
                   text: text,
                   iconColor: iconColor,
-                  controller: (c) => httpUrlController = c,
                   onTap: (controller) {
                     SmartDialog.compatible.show(
                         widget: TextFieldDialog(
-                            title: '输入HTTP地址',
-                            hint: '支持字符: a-z A-Z 0-9 .:/_-',
+                            title: 'input_http_url'.tr,
+                            hint: 'support_http_characters'.tr,
                             maxLength: 50,
                             formatter: [
                               FilteringTextInputFormatter.allow(
@@ -299,7 +297,7 @@ class _SystemSettingsState extends State<SystemSettings> {
                               host = host.endsWith("/") ? host : "$host/";
                               controller.setTextValue =
                                   (host.isEmpty || host == "/")
-                                      ? "输入HTTP地址"
+                                      ? 'input_http_url'.tr
                                       : host;
                               await remoteHttp.setHttpUrl(host);
                             }),

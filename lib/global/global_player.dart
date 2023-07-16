@@ -223,6 +223,7 @@ class PlayerLogic extends SuperController
       await audioSourceList.clear();
       if (audioList.isEmpty) {
         SmartDialog.compatible.dismiss();
+        SmartDialog.compatible.showToast('now_can_not_play'.tr);
         return;
       }
       await audioSourceList.addAll(audioList);

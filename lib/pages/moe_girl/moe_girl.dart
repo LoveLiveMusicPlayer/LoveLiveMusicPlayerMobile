@@ -33,17 +33,39 @@ class _MoeGirlState extends State<MoeGirl> {
   ];
 
   final strDeleteDom = """
-    // 获取具有 class 为 "adsbygoogle" 的节点
-    var adsNode = document.querySelector('.adsbygoogle');
-    // 检查节点是否存在
-    if (adsNode) {
-      // 获取父节点
-      var parentNode = adsNode.parentNode;
-      // 删除父节点
-      parentNode.remove();
-      console.log("成功删除父节点.");
-    } else {
-      console.log("未找到具有 class 为 'adsbygoogle' 的节点.");
+    // 获取 HTML 中所有元素
+    var elements = document.getElementsByTagName("*");
+    // 创建一个空数组用于存储元素及其对应的 z-index 层级和 class
+    var elementsWithZIndex = [];
+    // 遍历所有元素
+    for (var i = 0; i < elements.length; i++) {
+      var element = elements[i];
+      // 获取元素的 z-index 层级
+      var zIndex = getComputedStyle(element).getPropertyValue("z-index");
+      // 获取元素的 class
+      var className = element.className;
+      // 将元素及其 z-index 层级和 class 存储到数组中
+      elementsWithZIndex.push({ element: element, zIndex: zIndex, className: className });
+    }
+    
+    // 根据 z-index 层级进行排序
+    elementsWithZIndex.sort(function(a, b) {
+      return parseInt(a.zIndex) - parseInt(b.zIndex);
+    });
+    
+    // 输出排序后的 class
+    for (var j = elementsWithZIndex.length - 1; j > elementsWithZIndex.length - 10; j--) {
+      if (elementsWithZIndex[j].className == "") {
+        continue;
+      }
+      console.log(elementsWithZIndex[j].className);
+      var adsNode = document.querySelector("." + elementsWithZIndex[j].className);
+      // 检查节点是否存在
+      if (adsNode) {
+      	adsNode.remove();
+      } else {
+        console.log("未找到节点.");
+      }
     }
   """;
 
@@ -88,7 +110,7 @@ class _MoeGirlState extends State<MoeGirl> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("萌娘百科"),
+          title: Text('moe_girl_wiki'.tr),
           backgroundColor:
               Get.isDarkMode ? ColorMs.colorNightPrimary : ColorMs.color28B3F7,
         ),

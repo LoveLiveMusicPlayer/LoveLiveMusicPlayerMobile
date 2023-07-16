@@ -4,7 +4,7 @@ import 'package:lovelivemusicplayer/pages/data_sync/data_sync.dart';
 import 'package:lovelivemusicplayer/pages/home/home_binding.dart';
 import 'package:lovelivemusicplayer/pages/home/home_view.dart';
 import 'package:lovelivemusicplayer/pages/home/nested_page/nested_binding.dart';
-import 'package:lovelivemusicplayer/pages/moegirl/moe_girl.dart';
+import 'package:lovelivemusicplayer/pages/moe_girl/moe_girl.dart';
 import 'package:lovelivemusicplayer/pages/music_trans/music_transform.dart';
 import 'package:lovelivemusicplayer/pages/permission/permission.dart';
 import 'package:lovelivemusicplayer/pages/scan/scanner.dart';
