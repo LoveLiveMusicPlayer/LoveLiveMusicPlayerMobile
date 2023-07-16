@@ -13,6 +13,7 @@ import 'package:get/get.dart';
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/artist_model.dart';
@@ -52,7 +53,11 @@ class AppUtils {
   /// 图片提取主色
   static Future<Color?> getImagePalette(String url) async {
     final path = url.contains(SDUtils.path) ? url : SDUtils.path + url;
-    final image = await getImageFromProvider(FileImage(File(path)));
+    final file = File(path);
+    if (!file.existsSync()) {
+      return GlobalLogic.to.iconColor.value;
+    }
+    final image = await getImageFromProvider(FileImage(file));
     final rgb = await getColorFromImage(image, 1);
     return Color.fromARGB(150, rgb?.elementAt(0) ?? 0, rgb?.elementAt(1) ?? 0,
         rgb?.elementAt(2) ?? 0);

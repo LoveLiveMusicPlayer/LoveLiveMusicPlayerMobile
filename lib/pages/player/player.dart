@@ -50,8 +50,9 @@ class _PlayerState extends State<Player> {
           PlayerLogic.to.mPlayer.positionStream,
           PlayerLogic.to.mPlayer.bufferedPositionStream,
           PlayerLogic.to.mPlayer.durationStream,
-          (position, bufferedPosition, duration) => PositionData(
-              position, bufferedPosition, duration ?? Duration.zero));
+              (position, bufferedPosition, duration) =>
+              PositionData(
+                  position, bufferedPosition, duration ?? Duration.zero));
 
   @override
   void initState() {
@@ -106,7 +107,10 @@ class _PlayerState extends State<Player> {
       height: 580.h,
       child: Column(
         children: <Widget>[
-          SizedBox(height: MediaQuery.of(context).padding.top + 14.56.h),
+          SizedBox(height: MediaQuery
+              .of(context)
+              .padding
+              .top + 14.56.h),
 
           /// 头部
           PlayerHeader(
@@ -152,6 +156,7 @@ class _PlayerState extends State<Player> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+
           /// 滑动条
           slider(),
 
@@ -215,7 +220,7 @@ class _PlayerState extends State<Player> {
       return Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Visibility(
                 visible: GlobalLogic.to.hasSkin.value,
                 child: materialButton(Assets.playerPlayerCall, () {
@@ -234,7 +239,7 @@ class _PlayerState extends State<Player> {
                     iconSize: 20,
                     hasShadow: !GlobalLogic.to.hasSkin.value,
                     iconColor:
-                        GlobalLogic.to.hasSkin.value ? Colors.white : null,
+                    GlobalLogic.to.hasSkin.value ? Colors.white : null,
                     bgColor: GlobalLogic.to.hasSkin.value
                         ? GlobalLogic.to.iconColor.value
                         : null,
@@ -251,7 +256,7 @@ class _PlayerState extends State<Player> {
                     iconSize: 30,
                     hasShadow: !GlobalLogic.to.hasSkin.value,
                     iconColor:
-                        GlobalLogic.to.hasSkin.value ? Colors.white : null,
+                    GlobalLogic.to.hasSkin.value ? Colors.white : null,
                     bgColor: GlobalLogic.to.hasSkin.value
                         ? GlobalLogic.to.iconColor.value
                         : null,
@@ -269,7 +274,7 @@ class _PlayerState extends State<Player> {
               PlayerLogic.to.playingMusic.value.isLove
                   ? Icons.favorite
                   : Assets.playerPlayLove,
-              () async => await PlayerLogic.to.toggleLove(),
+                  () async => await PlayerLogic.to.toggleLove(),
               width: 32,
               height: 32,
               radius: 6,
@@ -332,12 +337,18 @@ class _PlayerState extends State<Player> {
       return Container();
     }
 
-    ImageProvider provider;
+    ImageProvider? provider;
     if (pic.isEmpty) {
       provider = const AssetImage(Assets.logoLogo);
     } else {
-      provider = FileImage(File(SDUtils.path + pic));
+      final file = File(SDUtils.path + pic);
+      if (file.existsSync()) {
+        provider = FileImage(file);
+      }
     }
+    final decoration = provider == null ? BoxDecoration(
+        color: GlobalLogic.to.iconColor.value) : BoxDecoration(
+        image: DecorationImage(image: provider, fit: BoxFit.cover));
     return SizedBox(
       width: ScreenUtil().screenWidth,
       height: ScreenUtil().screenHeight,
@@ -345,16 +356,16 @@ class _PlayerState extends State<Player> {
         child: Stack(
           children: [
             Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(image: provider, fit: BoxFit.cover)),
+              decoration: decoration,
             ),
             Positioned.fill(
                 child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-              child: Container(
-                decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
-              ),
-            ))
+                  filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.4)),
+                  ),
+                ))
           ],
         ),
       ),
