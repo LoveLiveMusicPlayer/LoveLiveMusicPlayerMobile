@@ -91,9 +91,9 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          FutureBuilder<String>(
+          FutureBuilder<String?>(
             initialData: SDUtils.getImgPath(),
-            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+            builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
               return showImg(snapshot.data, 240, 240, radius: 120);
             },
             future: AppUtils.getMusicCoverPath(menu!.music.last),

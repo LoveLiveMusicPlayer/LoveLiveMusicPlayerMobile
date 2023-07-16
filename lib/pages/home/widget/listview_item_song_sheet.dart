@@ -67,9 +67,9 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
   ///缩列图
   Widget _buildIcon() {
     if (widget.menu.music.isNotEmpty) {
-      return FutureBuilder<String>(
+      return FutureBuilder<String?>(
         initialData: SDUtils.getImgPath(),
-        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
           return showImg(snapshot.data, 48, 48,
               hasShadow: false, onTap: () => widget.onItemTap(widget.menu));
         },

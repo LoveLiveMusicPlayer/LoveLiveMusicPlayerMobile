@@ -86,8 +86,8 @@ class _MusicTransformState extends State<MusicTransform> {
     final picDest = SDUtils.path + music.baseUrl + music.coverPath;
     String musicDest = SDUtils.path + music.baseUrl + music.musicPath;
     if (Platform.isIOS) {
-      musicUrl = musicUrl.replaceAll(".flac", ".wav");
-      musicDest = musicDest.replaceAll(".flac", ".wav");
+      musicUrl = AppUtils.flac2wav(musicUrl);
+      musicDest = AppUtils.flac2wav(musicDest);
     }
 
     final List<Map<String, String>> array = [];
@@ -140,9 +140,7 @@ class _MusicTransformState extends State<MusicTransform> {
           }
         }, cancelToken);
         if (isMusic) {
-          if (Platform.isIOS && music.musicPath.endsWith(".flac")) {
-            music.musicPath = music.musicPath.replaceAll(".flac", ".wav");
-          }
+          music.musicPath = AppUtils.flac2wav(music.musicPath);
           await DBLogic.to.importMusic(music);
         }
       } catch (e) {
@@ -453,9 +451,7 @@ class _MusicTransformState extends State<MusicTransform> {
               } else {
                 String filePath =
                     SDUtils.path + music.baseUrl + music.musicPath;
-                if (Platform.isIOS) {
-                  filePath = filePath.replaceAll(".flac", ".wav");
-                }
+                filePath = AppUtils.flac2wav(filePath);
                 if (SDUtils.checkFileExist(filePath)) {
                   // 文件存在则尝试插入
                   await DBLogic.to.importMusic(music);

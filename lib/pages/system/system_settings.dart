@@ -260,70 +260,57 @@ class _SystemSettingsState extends State<SystemSettings> {
             },
           ),
           SizedBox(height: 8.h),
-          DrawerFunctionButton(
-              icon: Assets.drawerDrawerHttp,
-              iconColor: iconColor,
-              text: '使用HTTP曲库',
-              hasSwitch: true,
-              initSwitch: checkEnableHttp(),
-              callBack: (controller, check) async {
-                SpUtil.put(Const.spEnableHttp, check);
-                // PhoenixNative.restartApp();
+          ListenableBuilder(
+              listenable: remoteHttp.enableHttp,
+              builder: (c, w) {
+                return DrawerFunctionButton(
+                    icon: Assets.drawerDrawerHttp,
+                    iconColor: iconColor,
+                    text: '使用HTTP曲库',
+                    hasSwitch: true,
+                    initSwitch: remoteHttp.isEnableHttp(),
+                    callBack: (controller, check) async {
+                      await remoteHttp.setEnableHttp(check);
+                    });
               }),
           SizedBox(height: 8.h),
-          FutureBuilder<String>(
-            initialData: '输入HTTP地址',
-            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-              setTextValue(httpUrlController, snapshot.data!);
-              return DrawerFunctionButton(
-                text: snapshot.data!,
-                iconColor: iconColor,
-                controller: (c) => httpUrlController = c,
-                onTap: (controller) {
-                  SmartDialog.compatible.show(
-                      widget: TextFieldDialog(
-                          title: '输入HTTP地址',
-                          hint: '支持字符: a-z A-Z 0-9 .:/_-',
-                          maxLength: 50,
-                          formatter: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp('^[a-zA-Z0-9.:/_-]*\$'))
-                          ],
-                          onConfirm: (host) async {
-                            final enableHttp = await SpUtil.getBoolean(
-                                Const.spEnableHttp, false);
-                            if (enableHttp) {
-                              setTextValue(controller, host);
-                              if (!host.endsWith("/")) {
-                                host = "$host/";
-                              }
-                              remoteHttpHost = host;
-                              await SpUtil.put(Const.spHttpUrl, host);
-                              await DBLogic.to.findAllListByGroup(
-                                  GlobalLogic.to.currentGroup.value);
-                            } else {
-                              SmartDialog.compatible
-                                  .showToast("请先打开使用HTTP曲库开关");
-                            }
-                          }),
-                      clickBgDismissTemp: false,
-                      alignmentTemp: Alignment.center);
-                },
-              );
-            },
-            future: (() async => await SpUtil.getString(Const.spHttpUrl))(),
-          )
+          ListenableBuilder(
+              listenable:
+                  Listenable.merge([remoteHttp.enableHttp, remoteHttp.httpUrl]),
+              builder: (c, w) {
+                final text = remoteHttp.noneHttpUrl()
+                    ? "输入HTTP地址"
+                    : remoteHttp.httpUrl.value;
+                return DrawerFunctionButton(
+                  text: text,
+                  iconColor: iconColor,
+                  controller: (c) => httpUrlController = c,
+                  onTap: (controller) {
+                    SmartDialog.compatible.show(
+                        widget: TextFieldDialog(
+                            title: '输入HTTP地址',
+                            hint: '支持字符: a-z A-Z 0-9 .:/_-',
+                            maxLength: 50,
+                            formatter: [
+                              FilteringTextInputFormatter.allow(
+                                  RegExp('^[a-zA-Z0-9.:/_-]*\$'))
+                            ],
+                            onConfirm: (host) async {
+                              host = host.endsWith("/") ? host : "$host/";
+                              controller.setTextValue =
+                                  (host.isEmpty || host == "/")
+                                      ? "输入HTTP地址"
+                                      : host;
+                              await remoteHttp.setHttpUrl(host);
+                            }),
+                        clickBgDismissTemp: false,
+                        alignmentTemp: Alignment.center);
+                  },
+                );
+              }),
         ],
       );
     });
-  }
-
-  setTextValue(ButtonController? controller, String text) {
-    if (text.isEmpty) {
-      controller?.setTextValue = "输入HTTP地址";
-    } else {
-      controller?.setTextValue = text;
-    }
   }
 
   Widget renderBottomFunctionButtonArray() {

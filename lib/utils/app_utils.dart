@@ -31,7 +31,7 @@ class AppUtils {
       CacheManager(Config("imgSplash", stalePeriod: const Duration(days: 1)));
 
   /// 异步获取歌单封面
-  static Future<String> getMusicCoverPath(String? musicPath) async {
+  static Future<String?> getMusicCoverPath(String? musicPath) async {
     final defaultPath = SDUtils.getImgPath();
     if (musicPath == null) {
       return defaultPath;
@@ -40,11 +40,11 @@ class AppUtils {
     if (music == null) {
       return defaultPath;
     }
-    String path;
+    String? path;
     if (music.existFile == true) {
       path = "${SDUtils.path}${music.baseUrl}${music.coverPath}";
-    } else {
-      path = "$remoteHttpHost${music.baseUrl}${music.coverPath}";
+    } else if (remoteHttp.canUseHttpUrl()) {
+      path = "${remoteHttp.httpUrl.value}${music.baseUrl}${music.coverPath}";
     }
     return path;
   }
@@ -60,13 +60,19 @@ class AppUtils {
 
   /// Music提取主色
   static Future<Color?> getImagePaletteFromMusic(Music music) async {
-    final image;
+    var image;
     if (music.existFile == true) {
       final path = "${SDUtils.path}${music.baseUrl}${music.coverPath}";
       image = await getImageFromProvider(FileImage(File(path)));
     } else {
-      final path = "$remoteHttpHost${music.baseUrl}${music.coverPath}";
-      image = await getImageFromProvider(NetworkImage(path));
+      if (remoteHttp.canUseHttpUrl()) {
+        final path =
+            "${remoteHttp.httpUrl.value}${music.baseUrl}${music.coverPath}";
+        image = await getImageFromProvider(NetworkImage(path));
+      }
+    }
+    if (image == null) {
+      return null;
     }
     final rgb = await getColorFromImage(image, 1);
     return Color.fromARGB(150, rgb?.elementAt(0) ?? 0, rgb?.elementAt(1) ?? 0,
@@ -483,5 +489,12 @@ class AppUtils {
         ));
         break;
     }
+  }
+
+  static flac2wav(String path) {
+    if (Platform.isIOS) {
+      return path.replaceAll(".flac", ".wav");
+    }
+    return path;
   }
 }

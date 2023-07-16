@@ -100,7 +100,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       if (group == Const.groupAll) {
         // 获取全部专辑列表
         final tempAlbumList = <Album>[];
-        if (checkEnableHttp()) {
+        if (remoteHttp.isEnableHttp()) {
           tempAlbumList
               .addAll(await albumDao.findAllAlbumsByGroup(Const.groupUs));
           tempAlbumList
@@ -136,7 +136,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
         // 获取全部歌曲列表
         final tempMusicList = <Music>[];
-        if (checkEnableHttp()) {
+        if (remoteHttp.isEnableHttp()) {
           tempMusicList
               .addAll(await musicDao.findAllMusicsByGroup(Const.groupUs));
           tempMusicList
@@ -172,7 +172,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         artistArr.sort((a, b) => AppUtils.comparePeopleNumber(a.uid, b.uid));
         GlobalLogic.to.artistList.value = artistArr;
       } else {
-        if (checkEnableHttp()) {
+        if (remoteHttp.isEnableHttp()) {
           allAlbums.addAll(await albumDao.findAllAlbumsByGroup(group));
           GlobalLogic.to.musicList.value =
               await musicDao.findAllMusicsByGroup(group);
@@ -317,7 +317,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
           date: row['date'] as String?,
           timestamp: row['timestamp'] as int,
           isLove: (row['isLove'] as int) == 1,
-          neteaseId: row['neteaseId'] as String?);
+          neteaseId: row['neteaseId'] as String?,
+          existFile: (row['existFile'] as int?) == 1);
       musicArr.add(music);
     }
     return musicArr;

@@ -26,6 +26,7 @@ import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 import 'package:uni_links/uni_links.dart';
 
 import 'global/const.dart';
+import 'global/global_player.dart';
 import 'global/global_theme.dart';
 import 'i10n/translation.dart';
 import 'models/init_config.dart';
@@ -47,8 +48,6 @@ var appVersion = "1.0.0";
 var hasAIPic = false;
 // 是否允许显示背景图片
 var enableBG = false;
-// http远端歌库主机地址
-var remoteHttpHost = "";
 // 传输协议版本号
 const transVer = 1;
 // 开屏图片列表
@@ -59,6 +58,8 @@ var isCanUseSmartDialog = false;
 var isInitSplashDao = false;
 
 InAppLocalhostServer? localhostServer;
+
+late RemoteHttp remoteHttp;
 
 void main() async {
   void reportErrorAndLog(FlutterErrorDetails details) {
@@ -252,9 +253,10 @@ initServices() async {
   SpUtil.getInstance();
   Network.getInstance();
   await SDUtils.init();
+  remoteHttp = RemoteHttp(await SpUtil.getBoolean(Const.spEnableHttp, false),
+      await SpUtil.getString(Const.spHttpUrl, ""));
   enableBG = await SpUtil.getBoolean(Const.spEnableBackgroundPhoto, false);
   hasAIPic = await SpUtil.getBoolean(Const.spAIPicture, true);
-  remoteHttpHost = await SpUtil.getString(Const.spHttpUrl, "");
   PlayerBinding().dependencies();
   if (hasAIPic) await getOssUrl();
   SpUtil.put(Const.spPrevPage, "");
@@ -278,10 +280,6 @@ stopServer() {
     Log4f.d(msg: "stopServer");
   }
   localhostServer = null;
-}
-
-checkEnableHttp() {
-  return remoteHttpHost.isNotEmpty;
 }
 
 /// 获取资源oss url，解析开屏图片数据
@@ -376,5 +374,44 @@ addAllSplashPhoto(InitConfig config) {
 void defaultLogWriterCallback(String value, {bool isError = false}) {
   if (isError && !value.contains("already removed")) {
     Log4f.e(msg: value);
+  }
+}
+
+/// HTTP远端曲库实体类
+class RemoteHttp {
+  late ValueNotifier<bool> enableHttp;
+  late ValueNotifier<String> httpUrl;
+
+  RemoteHttp(bool enableHttp, String httpUrl) {
+    this.enableHttp = ValueNotifier(enableHttp);
+    this.httpUrl = ValueNotifier(httpUrl);
+  }
+
+  // 是否开启了远端HTTP服务
+  bool isEnableHttp() {
+    return enableHttp.value;
+  }
+
+  // 是否没有正确填写远端曲库URL
+  bool noneHttpUrl() {
+    return httpUrl.value.isEmpty || httpUrl.value == '/';
+  }
+
+  // 是否能够拼接完整URL路径
+  bool canUseHttpUrl() {
+    return isEnableHttp() && !noneHttpUrl();
+  }
+
+  setEnableHttp(bool newValue) async {
+    enableHttp.value = newValue;
+    await PlayerLogic.to.removeAllMusics();
+    await SpUtil.put(Const.spEnableHttp, newValue);
+    await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
+  }
+
+  setHttpUrl(String newValue) async {
+    httpUrl.value = newValue;
+    await SpUtil.put(Const.spHttpUrl, newValue);
+    await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
   }
 }

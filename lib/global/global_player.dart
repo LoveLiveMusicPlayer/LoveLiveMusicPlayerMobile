@@ -212,11 +212,19 @@ class PlayerLogic extends SuperController
       // 设置新的播放列表
       final audioList = <AudioSource>[];
       for (var music in musicList) {
-        audioList.add(genAudioSourceUri(music));
+        final genMusic = genAudioSourceUri(music);
+        if (genMusic == null) {
+          continue;
+        }
+        audioList.add(genMusic);
       }
       await mPlayer.pause();
       await mPlayer.stop();
       await audioSourceList.clear();
+      if (audioList.isEmpty) {
+        SmartDialog.compatible.dismiss();
+        return;
+      }
       await audioSourceList.addAll(audioList);
       audioList.clear();
       Log4f.v(msg: "播放列表长度: ${audioSourceList.length}");
@@ -243,6 +251,11 @@ class PlayerLogic extends SuperController
   Future<void> addNextMusic(Music music, {bool isNext = true}) async {
     if (music.musicId == playingMusic.value.musicId) {
       // 如果选中的歌曲是当前播放的歌曲
+      return;
+    }
+
+    final genMusic = genAudioSourceUri(music);
+    if (genMusic == null) {
       return;
     }
 
@@ -284,12 +297,11 @@ class PlayerLogic extends SuperController
 
       if (mIndex >= 0) {
         mPlayList.insert(mIndex + 1, pMusic);
-        await audioSourceList.insert(mIndex + 1, genAudioSourceUri(music));
+        await audioSourceList.insert(mIndex + 1, genMusic);
       }
     } else {
       mPlayList.insert(mPlayList.length, pMusic);
-      await audioSourceList.insert(
-          audioSourceList.length, genAudioSourceUri(music));
+      await audioSourceList.insert(audioSourceList.length, genMusic);
     }
   }
 
@@ -316,31 +328,37 @@ class PlayerLogic extends SuperController
     }
     // 将音乐列表插入到播放列表队尾
     await Future.forEach(musicList, (Music music) async {
-      await audioSourceList.add(genAudioSourceUri(music));
-      mPlayList.add(PlayListMusic(
-          musicId: music.musicId!,
-          musicName: music.musicName!,
-          artist: music.artist!));
+      final genMusic = genAudioSourceUri(music);
+      if (genMusic != null) {
+        await audioSourceList.add(genMusic);
+        mPlayList.add(PlayListMusic(
+            musicId: music.musicId!,
+            musicName: music.musicName!,
+            artist: music.artist!));
+      }
     });
     return true;
   }
 
   /// 生成一个播放URI
-  UriAudioSource genAudioSourceUri(Music music) {
+  UriAudioSource? genAudioSourceUri(Music music) {
     Uri musicUri;
     if (music.existFile == true) {
       musicUri = Uri.file('${SDUtils.path}${music.baseUrl}${music.musicPath}');
-    } else {
+    } else if (remoteHttp.canUseHttpUrl()) {
       musicUri = Uri.parse(
-          '$remoteHttpHost${music.baseUrl}${music.musicPath?.replaceAll("wav", "flac")}');
+          '${remoteHttp.httpUrl.value}${music.baseUrl}${music.musicPath?.replaceAll("wav", "flac")}');
+    } else {
+      return null;
     }
-    Uri coverUri;
+    Uri? coverUri;
     if (music.coverPath == null || music.coverPath!.isEmpty) {
       coverUri = Uri.parse(Assets.logoLogo);
     } else if (music.existFile == true) {
       coverUri = Uri.file('${SDUtils.path}${music.baseUrl}${music.coverPath}');
-    } else {
-      coverUri = Uri.parse('$remoteHttpHost${music.baseUrl}${music.coverPath}');
+    } else if (remoteHttp.canUseHttpUrl()) {
+      coverUri = Uri.parse(
+          '${remoteHttp.httpUrl.value}${music.baseUrl}${music.coverPath}');
     }
     return AudioSource.uri(
       musicUri,

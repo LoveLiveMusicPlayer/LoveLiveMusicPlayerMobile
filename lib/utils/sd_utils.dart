@@ -42,26 +42,27 @@ class SDUtils {
   }
 
   ///从music中获取图片完整路径
-  static String getImgPathFromMusic(Music music) {
-    String imagePath;
+  static String? getImgPathFromMusic(Music music) {
+    String? imagePath;
     if (music.musicId == null) {
       return "";
     }
     if (music.existFile == true) {
       imagePath = "$path${music.baseUrl}${music.coverPath}";
-    } else {
-      imagePath = "$remoteHttpHost${music.baseUrl}${music.coverPath}";
+    } else if (remoteHttp.canUseHttpUrl()) {
+      imagePath =
+          "${remoteHttp.httpUrl.value}${music.baseUrl}${music.coverPath}";
     }
     return imagePath;
   }
 
   ///从album中获取图片完整路径
-  static String getImgPathFromAlbum(Album album) {
-    String imagePath;
+  static String? getImgPathFromAlbum(Album album) {
+    String? imagePath;
     if (album.existFile == true) {
       imagePath = "$path${album.coverPath}";
-    } else {
-      imagePath = "$remoteHttpHost${album.coverPath}";
+    } else if (remoteHttp.canUseHttpUrl()) {
+      imagePath = "${remoteHttp.httpUrl.value}${album.coverPath}";
     }
     return imagePath;
   }

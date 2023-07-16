@@ -340,9 +340,7 @@ class _DrawerPageState extends State<DrawerPage> {
       if (music.export) {
         int albumId = music.albumId;
         InnerAlbum album = albumList.firstWhere((album) => album.id == albumId);
-        if (Platform.isIOS) {
-          music.musicPath = music.musicPath.replaceAll(".flac", ".wav");
-        }
+        music.musicPath = AppUtils.flac2wav(music.musicPath);
         DownloadMusic downloadMusic = DownloadMusic(
             albumUId: album.albumUId,
             albumId: albumId,
