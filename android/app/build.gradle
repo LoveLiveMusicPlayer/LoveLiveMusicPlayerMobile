@@ -111,6 +111,17 @@ android {
             }
         }
     }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def abi = output.getFilter(com.android.build.OutputFile.ABI)
+            if (abi != null) {
+                def abiWithoutPrefix = abi.replaceFirst("^(arm64|armeabi)-", "")
+                output.outputFileName = "LLMP_v${variant.versionName}_${abiWithoutPrefix}.apk"
+            }
+        }
+    }
+
     namespace 'com.zhushenwudi.lovelivemusicplayer'
     lint {
         abortOnError false
