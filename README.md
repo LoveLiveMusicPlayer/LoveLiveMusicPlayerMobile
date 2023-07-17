@@ -92,6 +92,8 @@ B站空间：<https://space.bilibili.com/4367965>
 
 ## 特别鸣谢
 
+- UI设计：<https://space.bilibili.com/202660950>
+
 - 依然洳雪：<https://space.bilibili.com/13184888>
 
 - 虹之咲字幕组：<https://space.bilibili.com/238547115>
