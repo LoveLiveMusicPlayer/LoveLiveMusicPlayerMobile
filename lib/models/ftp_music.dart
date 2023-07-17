@@ -66,7 +66,7 @@ class DownloadMusic {
         totalTime: json["totalTime"],
         baseUrl: json["baseUrl"],
         neteaseId: json["neteaseId"],
-        existFile: json["existFile"],
+        existFile: json["existFile"] ?? true,
       );
 
   Map<String, dynamic> toJson() => {

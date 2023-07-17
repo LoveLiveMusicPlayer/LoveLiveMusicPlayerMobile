@@ -496,10 +496,14 @@ class AppUtils {
     }
   }
 
-  static flac2wav(String path) {
+  static flac2wav(String? path) {
     if (Platform.isIOS) {
-      return path.replaceAll(".flac", ".wav");
+      return path?.replaceAll(".flac", ".wav");
     }
     return path;
+  }
+
+  static wav2flac(String? path) {
+    return path?.replaceAll(".wav", ".flac");
   }
 }
