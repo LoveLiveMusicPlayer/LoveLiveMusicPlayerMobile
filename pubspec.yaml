@@ -84,7 +84,6 @@ dependencies:
   sticky_headers: ^0.3.0+2 # 粘性头
   url_launcher: ^6.1.10 # url跳转
   umeng_common_sdk: ^1.2.6 # 友盟sdk
-  flutter_phoenix: ^1.1.0 # 软重启
   image_picker: ^1.0.0 # 图片选择
   image_cropper: ^4.0.1 # 图片裁切
   colorful_safe_area: ^1.0.0 # 定制safe_area
