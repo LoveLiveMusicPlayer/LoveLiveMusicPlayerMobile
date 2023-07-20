@@ -15,6 +15,7 @@ class TextFieldDialog extends StatefulWidget {
   final List<TextInputFormatter>? formatter;
   final Function()? onBack;
   final Function(String str)? onConfirm;
+  final TextEditingController? controller;
 
   const TextFieldDialog(
       {Key? key,
@@ -22,6 +23,7 @@ class TextFieldDialog extends StatefulWidget {
       this.hint,
       this.formatter,
       this.onBack,
+      this.controller,
       this.onConfirm,
       this.maxLength})
       : super(key: key);
@@ -31,7 +33,7 @@ class TextFieldDialog extends StatefulWidget {
 }
 
 class _TextFieldDialogState extends State<TextFieldDialog> {
-  final controller = TextEditingController();
+  late final controller = widget.controller ?? TextEditingController();
   String text = "";
   late int maxLength = widget.maxLength ?? 20;
 

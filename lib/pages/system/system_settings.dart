@@ -209,6 +209,7 @@ class _SystemSettingsState extends State<SystemSettings> {
               initSwitch: hasAIPic,
               callBack: (controller, check) async {
                 SpUtil.put(Const.spAIPicture, check);
+                hasAIPic = check;
               }),
           SizedBox(height: 8.h),
           DrawerFunctionButton(
@@ -288,6 +289,8 @@ class _SystemSettingsState extends State<SystemSettings> {
                         widget: TextFieldDialog(
                             title: 'input_http_url'.tr,
                             hint: 'support_http_characters'.tr,
+                            controller: TextEditingController(
+                                text: remoteHttp.httpUrl.value),
                             maxLength: 50,
                             formatter: [
                               FilteringTextInputFormatter.allow(

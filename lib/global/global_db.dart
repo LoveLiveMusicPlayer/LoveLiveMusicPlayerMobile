@@ -170,7 +170,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         GlobalLogic.to.musicList.value = tempMusicList;
         final artistArr = await artistDao.findAllArtists();
         artistArr.sort((a, b) => AppUtils.comparePeopleNumber(a.uid, b.uid));
-        GlobalLogic.to.artistList.value = artistArr;
+        var mergeArtistList = mergeArtists(artistArr);
+        GlobalLogic.to.artistList.value = mergeArtistList;
       } else {
         if (remoteHttp.isEnableHttp()) {
           allAlbums.addAll(await albumDao.findAllAlbumsByGroup(group));
@@ -202,6 +203,22 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       scrollToTop(HomeController.scrollController5);
       scrollToTop(HomeController.scrollController6);
     } catch (_) {}
+  }
+
+  List<Artist> mergeArtists(List<Artist> artists) {
+    Map<String, Artist> mergedMap = {};
+
+    for (var artist in artists) {
+      if (mergedMap.containsKey(artist.uid)) {
+        mergedMap[artist.uid]!.music.addAll(artist.music);
+      } else {
+        mergedMap[artist.uid] = artist;
+      }
+    }
+
+    List<Artist> mergedList = mergedMap.values.toList();
+
+    return mergedList;
   }
 
   /// 导入数据
@@ -641,8 +658,12 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   ///****************  Artist  ****************/
 
   Future<List<Music>> findAllMusicsByArtistBin(String artistBin) async {
-    final artist = await artistDao.findArtistByArtistBinAndGroup(
-        artistBin, GlobalLogic.to.currentGroup.value);
+    final Artist? artist;
+    if (GlobalLogic.to.currentGroup.value == Const.groupAll) {
+      artist = await artistDao.findArtistByArtistBin(artistBin);
+    } else {
+      artist = await artistDao.findArtistByArtistBinAndGroup(artistBin, GlobalLogic.to.currentGroup.value);
+    }
     if (artist == null) {
       return [];
     }

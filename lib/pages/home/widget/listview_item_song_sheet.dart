@@ -12,7 +12,7 @@ import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 ///歌单
-class ListViewItemSongSheet extends StatefulWidget {
+class ListViewItemSongSheet extends StatelessWidget {
   final Function(Menu) onItemTap;
 
   ///条目数据
@@ -31,14 +31,9 @@ class ListViewItemSongSheet extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<ListViewItemSongSheet> createState() => _ListViewItemSongStateSheet();
-}
-
-class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
-  @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => widget.onItemTap(widget.menu),
+      onTap: () => onItemTap(menu),
       child: Row(
         children: [
           _buildDevicePic(),
@@ -48,7 +43,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
           ),
 
           ///缩列图
-          Hero(tag: "menu${widget.menu.id}", child: _buildIcon()),
+          Hero(tag: "menu${menu.id}", child: _buildIcon()),
 
           SizedBox(
             width: 10.w,
@@ -66,25 +61,25 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
 
   ///缩列图
   Widget _buildIcon() {
-    if (widget.menu.music.isNotEmpty) {
+    if (menu.music.isNotEmpty) {
       return FutureBuilder<String?>(
         initialData: SDUtils.getImgPath(),
         builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
           return showImg(snapshot.data, 48, 48,
-              hasShadow: false, onTap: () => widget.onItemTap(widget.menu));
+              hasShadow: false, onTap: () => onItemTap(menu));
         },
-        future: AppUtils.getMusicCoverPath(widget.menu.music.first),
+        future: AppUtils.getMusicCoverPath(menu.music.first),
       );
     } else {
       return showImg(null, 48, 48,
-          hasShadow: false, onTap: () => widget.onItemTap(widget.menu));
+          hasShadow: false, onTap: () => onItemTap(menu));
     }
   }
 
   Widget _buildDevicePic() {
     final colorFilter = ColorFilter.mode(ColorMs.colorF940A7, BlendMode.srcIn);
-    if (widget.showDevicePic == true) {
-      if (widget.menu.id <= 100) {
+    if (showDevicePic == true) {
+      if (menu.id <= 100) {
         return SvgPicture.asset(Assets.syncIconComputer,
             colorFilter: colorFilter, width: 13.h, height: 20.h);
       } else {
@@ -102,7 +97,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.menu.name,
+          Text(menu.name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Get.isDarkMode || GlobalLogic.to.bgPhoto.value != ""
@@ -112,7 +107,7 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
             height: 4.w,
           ),
           Text(
-            "${widget.menu.music.length} ${'total_number_unit'.tr}",
+            "${menu.music.length} ${'total_number_unit'.tr}",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyleMs.f12_400.copyWith(
@@ -134,13 +129,13 @@ class _ListViewItemSongStateSheet extends State<ListViewItemSongSheet> {
         ? ColorMs.colorDFDFDF
         : ColorMs.colorCCCCCC;
     return Visibility(
-      visible: widget.onMoreTap != null,
+      visible: onMoreTap != null,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           InkWell(
             onTap: () {
-              widget.onMoreTap!(widget.menu);
+              onMoreTap!(menu);
             },
             child: Container(
               padding: EdgeInsets.only(

@@ -12,6 +12,9 @@ abstract class ArtistDao {
   @Query('SELECT * FROM Artist WHERE uid = :artistBin AND `group` = :group')
   Future<Artist?> findArtistByArtistBinAndGroup(String artistBin, String group);
 
+  @Query('SELECT * FROM Artist WHERE uid = :artistBin')
+  Future<Artist?> findArtistByArtistBin(String artistBin);
+
   @insert
   Future<int> insertArtist(Artist artist);
 
