@@ -10,6 +10,7 @@ import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/text_field_dialog.dart';
+import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 
 class DialogMoreWithMenu extends StatelessWidget {
   final Menu menu;
@@ -58,7 +59,14 @@ class DialogMoreWithMenu extends StatelessWidget {
           }),
           _buildItem(Assets.dialogIcDelete2, 'delete_menu'.tr, true, () {
             SmartDialog.compatible.dismiss();
-            DBLogic.to.deleteMenuById(menu.id);
+            SmartDialog.compatible.show(
+                widget: TwoButtonDialog(
+                  title: 'warning_choose'.tr,
+                  msg: 'need_delete_menu'.tr,
+                  onConfirmListener: () {
+                    DBLogic.to.deleteMenuById(menu.id);
+                  },
+                ));
           }),
           _buildItem(Assets.drawerDrawerShare, 'share_menu'.tr, true, () {
             SmartDialog.compatible.dismiss();
