@@ -51,11 +51,11 @@ class AppUtils {
   }
 
   /// 图片提取主色
-  static Future<Color?> getImagePalette(String url) async {
+  static Future<Color?> getImagePalette(String url, [Color? defaultColor]) async {
     final path = url.contains(SDUtils.path) ? url : SDUtils.path + url;
     final file = File(path);
     if (!file.existsSync()) {
-      return GlobalLogic.to.iconColor.value;
+      return defaultColor ?? GlobalLogic.to.iconColor.value;
     }
     final image = await getImageFromProvider(FileImage(file));
     final rgb = await getColorFromImage(image, 1);
