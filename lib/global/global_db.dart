@@ -662,7 +662,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     if (GlobalLogic.to.currentGroup.value == Const.groupAll) {
       artist = await artistDao.findArtistByArtistBin(artistBin);
     } else {
-      artist = await artistDao.findArtistByArtistBinAndGroup(artistBin, GlobalLogic.to.currentGroup.value);
+      artist = await artistDao.findArtistByArtistBinAndGroup(
+          artistBin, GlobalLogic.to.currentGroup.value);
     }
     if (artist == null) {
       return [];

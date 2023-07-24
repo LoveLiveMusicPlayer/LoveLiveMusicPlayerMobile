@@ -60,6 +60,9 @@ class PlayerLogic extends SuperController
   // 切换显示歌词类型 (0:原文; 1:翻译; 2:罗马音)
   var lrcType = SDUtils.allowEULA ? 0.obs : 1.obs;
 
+  // 检查过的歌词索引，避免重复解析歌词引起cpu性能损耗
+  int mLrcIndex = -1;
+
   static PlayerLogic get to => Get.find();
 
   @override
@@ -92,6 +95,8 @@ class PlayerLogic extends SuperController
       if (index != null &&
           mPlayList.isNotEmpty &&
           !GlobalLogic.to.isHandlePlay) {
+        // 切歌后重置索引
+        mLrcIndex = -1;
         Log4f.v(msg: "当前播放: $index - ${mPlayList[index].musicName}");
         AppUtils.uploadEvent("Playing",
             params: {"music": mPlayList[index].musicName});
@@ -156,15 +161,26 @@ class PlayerLogic extends SuperController
     for (var index = 0; index < parsedJPLrc.length; index++) {
       if (index == parsedJPLrc.length - 1 &&
           (parsedJPLrc[index].startTime ?? 0) < duration.inMilliseconds) {
+        if (checkedLyricIndex(index)) return;
         parsePlayingLyric(musicId, index, false);
         break;
       } else if ((parsedJPLrc[index].startTime ?? 0) <
               duration.inMilliseconds &&
           (parsedJPLrc[index + 1].startTime ?? 0) > duration.inMilliseconds) {
+        if (checkedLyricIndex(index)) return;
         parsePlayingLyric(musicId, index, true);
         break;
       }
     }
+  }
+
+  /// 检查是否检测过该Lyric索引，如果检测过就跳过节约cpu性能
+  bool checkedLyricIndex(int index) {
+    if (index == mLrcIndex) {
+      return true;
+    }
+    mLrcIndex = index;
+    return false;
   }
 
   /// 解析前一句、当前、后一句歌词内容

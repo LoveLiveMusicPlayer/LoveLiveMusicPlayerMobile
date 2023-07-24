@@ -2,20 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/pages/details/logic.dart';
-import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';
-import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_more_with_music.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
-import 'package:lovelivemusicplayer/widgets/details_list_top.dart';
 import 'package:lovelivemusicplayer/widgets/listview_item_song.dart';
-import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
-import 'package:sticky_headers/sticky_headers.dart';
 
 class DetailsBody extends StatefulWidget {
   final DetailController logic;
@@ -116,7 +110,4 @@ class _DetailsBodyState extends State<DetailsBody> {
       },
     );
   }
-
-// Rest of the code...
 }
-

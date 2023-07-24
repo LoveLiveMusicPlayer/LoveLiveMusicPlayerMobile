@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:isolate';
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -14,8 +13,9 @@ import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_playlist.dart';
-import 'package:lovelivemusicplayer/utils/decoration_helper.dart' show generateDecorationData, BoxDecorationData;
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/decoration_helper.dart'
+    show generateDecorationData, BoxDecorationData;
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:marquee_text/marquee_text.dart';
@@ -51,10 +51,13 @@ class _MiniPlayerState extends State<MiniPlayer> {
     if (GlobalLogic.to.hasSkin.value) {
       final music = PlayerLogic.to.playingMusic.value;
       return FutureBuilder<BoxDecorationData>(
-        initialData: BoxDecorationData(color: Get.isDarkMode
-            ? ColorMs.color05080C.value
-            : ColorMs.colorD3E0EC.value, borderRadius: 48.h),
-        builder: (BuildContext context, AsyncSnapshot<BoxDecorationData> snapshot) {
+        initialData: BoxDecorationData(
+            color: Get.isDarkMode
+                ? ColorMs.color05080C.value
+                : ColorMs.colorD3E0EC.value,
+            borderRadius: 48.h),
+        builder:
+            (BuildContext context, AsyncSnapshot<BoxDecorationData> snapshot) {
           final decoration = snapshot.requireData.toBoxDecoration();
 
           return Container(
@@ -81,9 +84,11 @@ class _MiniPlayerState extends State<MiniPlayer> {
     );
   }
 
-  Future<BoxDecorationData> setupIsolate(Music music, Color color, double radius) async {
+  Future<BoxDecorationData> setupIsolate(
+      Music music, Color color, double radius) async {
     final receivePort = ReceivePort();
-    await Isolate.spawn(generateDecorationData, [music, color, radius, receivePort.sendPort]);
+    await Isolate.spawn(
+        generateDecorationData, [music, color, radius, receivePort.sendPort]);
 
     final completer = Completer<BoxDecorationData>();
     receivePort.listen((dynamic data) {

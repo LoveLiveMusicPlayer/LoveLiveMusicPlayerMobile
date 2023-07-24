@@ -51,7 +51,8 @@ class AppUtils {
   }
 
   /// 图片提取主色
-  static Future<Color?> getImagePalette(String url, [Color? defaultColor]) async {
+  static Future<Color?> getImagePalette(String url,
+      [Color? defaultColor]) async {
     final path = url.contains(SDUtils.path) ? url : SDUtils.path + url;
     final file = File(path);
     if (!file.existsSync()) {
