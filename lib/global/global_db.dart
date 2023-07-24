@@ -659,16 +659,22 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
   Future<List<Music>> findAllMusicsByArtistBin(String artistBin) async {
     final Artist? artist;
+    final musicList = <String>[];
     if (GlobalLogic.to.currentGroup.value == Const.groupAll) {
-      artist = await artistDao.findArtistByArtistBin(artistBin);
+      final artistList = await artistDao.findArtistByArtistBin(artistBin);
+      for (var artist in artistList) {
+        if (artist != null) {
+          musicList.addAll(artist.music);
+        }
+      }
     } else {
-      artist = await artistDao.findArtistByArtistBinAndGroup(
-          artistBin, GlobalLogic.to.currentGroup.value);
+      artist = await artistDao.findArtistByArtistBinAndGroup(artistBin, GlobalLogic.to.currentGroup.value);
+      if (artist != null) {
+        musicList.addAll(artist.music);
+      }
     }
-    if (artist == null) {
-      return [];
-    }
-    return await findMusicByMusicIds(artist.music);
+
+    return await findMusicByMusicIds(musicList);
   }
 
   scrollToTop(ScrollController scrollController) {
