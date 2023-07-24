@@ -114,9 +114,7 @@ class _TextFieldDialogState extends State<TextFieldDialog> {
                       )),
                   child: TextButton(
                       onPressed: () {
-                        if (widget.onBack != null) {
-                          widget.onBack!();
-                        }
+                        widget.onBack?.call();
                         SmartDialog.compatible.dismiss();
                       },
                       child: Text('cancel'.tr,
@@ -136,9 +134,7 @@ class _TextFieldDialogState extends State<TextFieldDialog> {
                           bottomRight: Radius.circular(16.r))),
                   child: TextButton(
                       onPressed: () {
-                        if (widget.onConfirm != null) {
-                          widget.onConfirm!(text);
-                        }
+                        widget.onConfirm?.call(text);
                         SmartDialog.compatible.dismiss();
                       },
                       child: Text('confirm'.tr, style: TextStyleMs.white_16)),

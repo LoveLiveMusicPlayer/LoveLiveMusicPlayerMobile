@@ -93,16 +93,8 @@ class _RefresherWidgetState extends State<RefresherWidget> {
         enablePullDown: widget.enablePullDown,
         enablePullUp: widget.enablePullUp,
         controller: _controller,
-        onRefresh: () async {
-          if (widget.onRefresh != null) {
-            widget.onRefresh!(_controller);
-          }
-        },
-        onLoading: () async {
-          if (widget.onLoading != null) {
-            widget.onLoading!(_controller);
-          }
-        },
+        onRefresh: () async => widget.onRefresh?.call(_controller),
+        onLoading: () async => widget.onLoading?.call(_controller),
         footer: CustomFooter(
           builder: (BuildContext context, LoadStatus? mode) {
             Widget body;

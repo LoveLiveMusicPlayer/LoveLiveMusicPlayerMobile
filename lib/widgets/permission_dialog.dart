@@ -54,7 +54,7 @@ class PermissionDialog extends StatelessWidget {
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         SmartDialog.compatible.dismiss();
-                        if (readPermission != null) readPermission!();
+                        readPermission?.call();
                       },
                   )
                 ]),
@@ -71,9 +71,7 @@ class PermissionDialog extends StatelessWidget {
                       final callback =
                           await SharesdkPlugin.uploadPrivacyPermissionStatus(1,
                               (success) {
-                        SmartDialog.compatible.dismiss().then((value) {
-                          if (confirm != null) confirm!();
-                        });
+                        SmartDialog.compatible.dismiss().then((value) => confirm?.call());
                       });
                       print(callback);
                     },

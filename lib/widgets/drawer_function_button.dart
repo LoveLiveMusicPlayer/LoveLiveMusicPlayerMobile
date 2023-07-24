@@ -66,21 +66,14 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
 
   @override
   void initState() {
-    if (widget.controller != null) {
-      widget.controller!(bh);
-    }
+    widget.controller?.call(bh);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: () {
-          final onTap = widget.onTap;
-          if (onTap != null) {
-            onTap(bh);
-          }
-        },
+        onTap: () => widget.onTap?.call(bh),
         child: SizedBox(
           height: 30.h,
           child:
@@ -132,9 +125,7 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
                   activeColor: const Color.fromARGB(255, 228, 0, 127),
                   onChanged: (value) {
                     bh.setSwitchValue = value;
-                    if (widget.callBack != null) {
-                      widget.callBack!(bh, value);
-                    }
+                    widget.callBack?.call(bh, value);
                   })),
         );
       } else {

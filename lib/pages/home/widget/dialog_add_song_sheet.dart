@@ -125,9 +125,7 @@ class DialogAddSongSheet extends StatelessWidget {
       SmartDialog.compatible.dismiss();
       SmartDialog.compatible
           .showToast(notAllLove ? 'add_to_iLove'.tr : 'remove_from_iLove'.tr);
-      if (changeLoveStatusCallback != null) {
-        changeLoveStatusCallback!(notAllLove);
-      }
+      changeLoveStatusCallback?.call(notAllLove);
     },
         assetPath: notAllLove ? Assets.playerPlayLove : null,
         icon: notAllLove ? null : Icons.favorite);

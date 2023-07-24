@@ -123,9 +123,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
     }
     return _buildItem(Assets.dialogIcSeeAlbum, 'view_album'.tr, true, () {
       SmartDialog.compatible.dismiss();
-      if (widget.onClosePanel != null) {
-        widget.onClosePanel!();
-      }
+      widget.onClosePanel?.call();
       if (album != null) {
         Get.toNamed(Routes.routeAlbumDetails, arguments: album, id: 1);
       }
