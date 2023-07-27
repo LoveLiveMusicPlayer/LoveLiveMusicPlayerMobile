@@ -20,6 +20,7 @@ import 'package:lovelivemusicplayer/global/global_binding.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/utils/code_push.dart';
 import 'package:lovelivemusicplayer/utils/completer_ext.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
@@ -162,6 +163,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     subscription = eventBus.on<CloseOpen>().listen((event) {
       // 初始化结束后，将启动屏关闭
       FlutterNativeSplash.remove();
+
+      // 获取热修复补丁包
+      CodePush.getInstance().hasNewVersion().then((hasNewVersion) {
+        if (hasNewVersion) {
+          CodePush.getInstance().upgrade();
+        }
+      });
     });
 
     handleInitialUri();

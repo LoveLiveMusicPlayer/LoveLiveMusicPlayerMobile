@@ -28,8 +28,7 @@ import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 import 'package:umeng_common_sdk/umeng_common_sdk.dart';
 
 class AppUtils {
-  static CacheManager cacheManager =
-      CacheManager(Config("imgSplash", stalePeriod: const Duration(days: 1)));
+  static CacheManager cacheManager = CacheManager(Config("imgSplash"));
 
   /// 异步获取歌单封面
   static Future<String?> getMusicCoverPath(String? musicPath) async {
