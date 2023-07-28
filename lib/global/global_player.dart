@@ -203,7 +203,9 @@ class PlayerLogic extends SuperController
   /// 播放指定列表的歌曲
   Future<void> playMusic(List<Music> musicList,
       {int? mIndex, bool needPlay = true}) async {
-    SmartDialog.compatible.showLoading(msg: 'loading'.tr);
+    if (isCanUseSmartDialog) {
+      SmartDialog.compatible.showLoading(msg: 'loading'.tr);
+    }
     // 随机播放时任取一个index
     int index = mIndex ?? 0;
     if (mIndex == null && mPlayer.shuffleModeEnabled) {
