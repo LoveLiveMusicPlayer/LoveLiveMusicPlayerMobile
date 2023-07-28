@@ -16,7 +16,7 @@ class MoeGirl extends StatefulWidget {
 class _MoeGirlState extends State<MoeGirl> {
   final GlobalKey webViewKey = GlobalKey();
 
-  final adUrlFilters = [
+  static const adUrlFilters = [
     ".*.doubleclick.net/.*",
     ".*.ads.pubmatic.com/.*",
     ".*.googlesyndication.com/.*",
@@ -32,7 +32,7 @@ class _MoeGirlState extends State<MoeGirl> {
     ".*.outbrain.com/.*"
   ];
 
-  final strDeleteDom = """
+  static const strDeleteDom = """
     // 获取 HTML 中所有元素
     var elements = document.getElementsByTagName("*");
     // 创建一个空数组用于存储元素及其对应的 z-index 层级和 class
@@ -57,7 +57,7 @@ class _MoeGirlState extends State<MoeGirl> {
     for (var j = elementsWithZIndex.length - 1; j > elementsWithZIndex.length - 15; j--) {
       if (elementsWithZIndex[j].className == "") {
         continue;
-      }
+      }                                                                                                      
       console.log(elementsWithZIndex[j].className);
       var adsNode = document.querySelector("." + elementsWithZIndex[j].className);
       // 检查节点是否存在
@@ -110,28 +110,24 @@ class _MoeGirlState extends State<MoeGirl> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          elevation: 0,
           title: Text('moe_girl_wiki'.tr),
           backgroundColor:
               Get.isDarkMode ? ColorMs.colorNightPrimary : ColorMs.color28B3F7,
         ),
-        body: SafeArea(
-            child: Column(children: <Widget>[
-          Expanded(
-            child: Stack(
-              children: [
-                InAppWebView(
-                  key: webViewKey,
-                  initialUrlRequest:
-                      URLRequest(url: WebUri(Const.moeGirlUrl + Get.arguments)),
-                  initialSettings:
-                      InAppWebViewSettings(contentBlockers: contentBlockers),
-                  onWebViewCreated: (controller) async {
-                    webViewController = controller;
-                  },
-                ),
-              ],
+        body: Stack(
+          children: [
+            InAppWebView(
+              key: webViewKey,
+              initialUrlRequest:
+                  URLRequest(url: WebUri(Const.moeGirlUrl + Get.arguments)),
+              initialSettings:
+                  InAppWebViewSettings(contentBlockers: contentBlockers),
+              onWebViewCreated: (controller) async {
+                webViewController = controller;
+              },
             ),
-          ),
-        ])));
+          ],
+        ));
   }
 }
