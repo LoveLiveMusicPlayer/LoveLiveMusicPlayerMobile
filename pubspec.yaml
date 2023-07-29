@@ -104,7 +104,7 @@ dependencies:
 
 dependency_overrides:
   ffi: ^2.0.1
-  package_info_plus: ^3.0.3 # 安装包信息
+  package_info_plus: ^3.1.2 # 安装包信息
   md5_file_checksum:
     git:
       url: https://github.com/zhushenwudi/md5_file_checksum
