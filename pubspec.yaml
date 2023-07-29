@@ -84,7 +84,7 @@ dependencies:
     git:
       url: https://github.com/zhushenwudi/flutter_updater
       ref: 04d471d
-  sticky_headers: ^0.3.0+2 # 粘性头
+  flutter_sticky_header: ^0.6.5 # 粘性头
   url_launcher: ^6.1.12 # url跳转
   umeng_common_sdk: ^1.2.6 # 友盟sdk
   image_picker: ^1.0.1 # 图片选择
@@ -100,7 +100,7 @@ dependencies:
   crypto: ^3.0.3 # 加密
   vibration: ^1.8.1 # 振动
   flutter_inappwebview: ^6.0.0-beta.24+1 # WebView
-  shorebird_code_push: ^1.1.0
+  shorebird_code_push: ^1.1.0 # 热修复
 
 dependency_overrides:
   ffi: ^2.0.1
