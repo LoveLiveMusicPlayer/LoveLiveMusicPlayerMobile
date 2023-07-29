@@ -76,6 +76,7 @@ class GlobalLogic extends SuperController
   Updater? updater;
   UpdaterController? controller;
 
+  /// 定时关闭功能
   Timer? timer;
   ButtonController? timerController;
   var remainTime = ValueNotifier<int>(0);
@@ -393,26 +394,29 @@ class GlobalLogic extends SuperController
     if (number == null || number < 0) {
       return;
     }
-    String str;
+    remainTime.value = number;
     if (number == 0) {
-      str = 'timed_to_stop'.tr;
+      timerController?.setTextValue = 'timed_to_stop'.tr;
       _stopTimer();
     } else {
-      str = "${'timed_to_stop_remain'.tr}$number${'minutes'.tr}";
+      timerController?.setTextValue =
+          "${'timed_to_stop_remain'.tr}${remainTime.value}${'minutes'.tr}";
       timer = Timer.periodic(const Duration(minutes: 1), (Timer t) {
         remainTime.value--;
         Log4f.d(msg: "睡眠模式-倒计时:${remainTime.value}分钟");
         if (remainTime.value <= 0) {
+          timerController?.setTextValue = 'timed_to_stop'.tr;
           if (PlayerLogic.to.mPlayer.playing) {
             PlayerLogic.to.mPlayer.pause();
             PlayerLogic.to.mPlayer.stop();
           }
           t.cancel();
+        } else {
+          timerController?.setTextValue =
+              "${'timed_to_stop_remain'.tr}${remainTime.value}${'minutes'.tr}";
         }
       });
     }
-    remainTime.value = number;
-    timerController?.setTextValue = str;
   }
 
   void _stopTimer() {
