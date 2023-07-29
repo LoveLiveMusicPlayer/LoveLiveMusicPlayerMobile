@@ -6,7 +6,7 @@
 <h4 align="center">Continuously updating.... Welcome to Popstar</h4>
 <h4 align="center">
 
-Language: English | [Chinese Document](README.md)
+Language: English | [中文](README.md)
 
 </h4>
 
@@ -35,6 +35,7 @@ Function list:
 - [Reporting of playing data] ✓
 - [Fast transmission of songs and data synchronization] ✓
 - [Bright color mode, dark color mode and dazzling color mode] ✓
+- [Sleep mode stops at regular intervals] ✓
 - [Dynamic stand image] ✓
 - [DIY background image] ✓
 - [Long press the song to jump to detail through MoeGirl] ✓
@@ -66,11 +67,13 @@ Song transmission mode:
 2. USB transmission
 
 	Android: Place the LoveLive folder in /Android/data/com.zhushenwudi.lovelivemusicplayer/files/
+	
 	IOS：Place the LoveLive folder in File.app /LLMP/
 	
 	Due to copyright review, IOS does not allow Japanese lyrics and Roman sounds to be displayed after the program is installed. You need to create a folder named LLMP in the file APPLLMP, and restart the application to unlock the full function
 	
 # Communication
+
 <img src="assets/up_face.jpg" width="100" height="100">
 
 QQ communication group：[724934644](https://jq.qq.com/?_wv=1027&k=FZkFfkP5)
@@ -90,10 +93,16 @@ Welcome to gay me. Your support is my motivation to continue developing!
 
 ## Special Thanks
 
+- UI Design：<https://space.bilibili.com/202660950>
+
 - 依然洳雪：<https://space.bilibili.com/13184888>
+
 - 虹之咲 translators：<https://space.bilibili.com/238547115>
+
 - No.10 translators：<https://space.bilibili.com/565597249>
+
 - Other individual translators
+
 - Player UI component [we_slide](https://github.com/luciano-work/we_slide)
 - Lyric component [flutter_lyric](https://github.com/ozyl/flutter_lyric)
 
@@ -119,11 +128,16 @@ Welcome to gay me. Your support is my motivation to continue developing!
 
 - Pull code from dev branch
 	git clone https://github.com/zhushenwudi/LoveLiveMusicPlayerMobile.git
+
 - To install the Android Studio plug-in
 	GetX and FlutterAssetsGenerator
-- Delete all caches of third-party libraries (optional and cautious)	flutter pub cache clean
+
+- Delete all caches of third-party libraries (optional and cautious)
+    flutter pub cache clean
+
 - Pull the third-party dependency library of the project
 	flutter pub get
+
 - Generate database helper file
 	flutter packages pub run build_runner build
 
