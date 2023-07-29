@@ -1,5 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:get/get.dart';
 import 'package:shorebird_code_push/shorebird_code_push.dart';
 import 'package:synchronized/synchronized.dart';
 
@@ -34,12 +35,12 @@ class CodePush {
   }
 
   Future<void> upgrade() async {
-    SmartDialog.compatible.showLoading(msg: "升级中...");
+    SmartDialog.compatible.showLoading(msg: 'upgrading'.tr);
     await shorebirdCodePush.downloadUpdateIfAvailable();
     bool isDownloadOK = await shorebirdCodePush.isNewPatchReadyToInstall();
     SmartDialog.compatible.dismiss();
     if (isDownloadOK) {
-      SmartDialog.compatible.showToast("请重启APP更新到最新版本");
+      SmartDialog.compatible.showToast('upgrade_on_next_time'.tr);
     }
   }
 }

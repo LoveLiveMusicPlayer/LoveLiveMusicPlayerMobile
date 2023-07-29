@@ -71,7 +71,9 @@ class PermissionDialog extends StatelessWidget {
                       final callback =
                           await SharesdkPlugin.uploadPrivacyPermissionStatus(1,
                               (success) {
-                        SmartDialog.compatible.dismiss().then((value) => confirm?.call());
+                        SmartDialog.compatible
+                            .dismiss()
+                            .then((value) => confirm?.call());
                       });
                       print(callback);
                     },

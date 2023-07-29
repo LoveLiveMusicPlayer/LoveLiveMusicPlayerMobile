@@ -10,7 +10,7 @@ class DrawerFunctionButton extends StatefulWidget {
   const DrawerFunctionButton(
       {Key? key,
       this.icon,
-      required this.text,
+      this.text = "",
       this.onTap,
       this.hasSwitch = false,
       this.initSwitch = false,
@@ -30,7 +30,7 @@ class DrawerFunctionButton extends StatefulWidget {
   final bool initSwitch;
   final bool enableSwitch;
   final Callback? callBack;
-  final ButtonControllerCallback? controller;
+  final ButtonController? controller;
 
   @override
   State<DrawerFunctionButton> createState() => _DrawerFunctionButtonState();
@@ -38,11 +38,10 @@ class DrawerFunctionButton extends StatefulWidget {
 
 typedef Callback = void Function(ButtonController controller, bool check);
 typedef GestureTapCallback = void Function(ButtonController controller);
-typedef ButtonControllerCallback = void Function(ButtonController controller);
 
 class ButtonController extends ChangeNotifier {
-  String _textValue;
-  bool _switchValue = false;
+  late String _textValue;
+  late bool _switchValue;
 
   ButtonController(this._textValue, this._switchValue);
 
@@ -51,24 +50,23 @@ class ButtonController extends ChangeNotifier {
   bool get getSwitchValue => _switchValue;
 
   set setSwitchValue(bool newValue) {
-    _switchValue = newValue;
-    notifyListeners();
+    if (_switchValue != newValue) {
+      _switchValue = newValue;
+      notifyListeners();
+    }
   }
 
   set setTextValue(String newValue) {
-    _textValue = newValue;
-    notifyListeners();
+    if (_textValue != newValue) {
+      _textValue = newValue;
+      notifyListeners();
+    }
   }
 }
 
 class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
-  late ButtonController bh = ButtonController(widget.text, widget.initSwitch);
-
-  @override
-  void initState() {
-    widget.controller?.call(bh);
-    super.initState();
-  }
+  late ButtonController bh =
+      widget.controller ?? ButtonController(widget.text, widget.initSwitch);
 
   @override
   Widget build(BuildContext context) {

@@ -134,6 +134,13 @@ const Map<String, String> enUS = {
   'now_can_not_play': "Currently unplayable",
   'moe_girl_wiki': 'Moe-girl Wiki',
   'need_delete_menu': 'Delete the menu?',
+  'select_time': 'Please select time（unit：minutes）',
+  'upgrading': 'Upgrading...',
+  'upgrade_on_next_time': 'The update will take effect on the next startup',
+  'end_time': 'End time: ',
+  'timed_to_stop': 'Timed off',
+  'timed_to_stop_remain': 'Timed off, remaining',
+  'minutes': 'minute(s)',
   'privacy_detail': '''Dear LLer,
 
 Please be sure to carefully read and understand all rights and restrictions set forth in the Software License Agreement (hereinafter referred to as the Agreement). Unless you accept the terms of the Agreement, you are not entitled to use the Software and related Services. Once you use the software, you will be deemed to accept the agreement.

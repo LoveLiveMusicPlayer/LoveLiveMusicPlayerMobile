@@ -23,6 +23,7 @@ import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/image_util.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
+import 'package:lovelivemusicplayer/widgets/dialog_add_min.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
 import 'package:lovelivemusicplayer/widgets/reset_data_dialog.dart';
 import 'package:lovelivemusicplayer/widgets/tachie_widget.dart';
@@ -42,6 +43,7 @@ class _SystemSettingsState extends State<SystemSettings> {
 
   @override
   void initState() {
+    GlobalLogic.to.timerController ??= ButtonController('timed_to_stop'.tr, false);
     maxHeight = GlobalLogic.to.hasSkin.value
         ? scrollViewWithoutTachiHeight
         : scrollViewWithTachiHeight;
@@ -319,6 +321,24 @@ class _SystemSettingsState extends State<SystemSettings> {
       final iconColor = logic.bgPhoto.value == "" ? null : ColorMs.colorCCCCCC;
       return Column(
         children: [
+          DrawerFunctionButton(
+            icon: Assets.drawerDrawerTimer,
+            iconColor: iconColor,
+            controller: logic.timerController,
+            onTap: (controller) {
+              SmartDialog.compatible.show(
+                  widget: AddMinDialog(
+                    title: 'select_time'.tr,
+                    initTimer: logic.remainTime.value,
+                    onConfirmListener: ([number]) {
+                      logic.startTimer(number);
+                    },
+                  ),
+                  clickBgDismissTemp: false,
+                  alignmentTemp: Alignment.center);
+            },
+          ),
+          SizedBox(height: 8.h),
           DrawerFunctionButton(
             icon: Assets.drawerDrawerReset,
             iconColor: iconColor,
