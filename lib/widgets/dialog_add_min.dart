@@ -77,8 +77,10 @@ class _AddMinDialogState extends State<AddMinDialog> {
                     : TextStyleMs.black_18),
           ),
           SizedBox(height: 18.h),
-          Text("${'end_time'.tr}$_endTime",
-              style: const TextStyle(color: Colors.red)),
+          Visibility(
+              visible: _counter > 0,
+              child: Text("${'end_time'.tr}$_endTime",
+                  style: const TextStyle(color: Colors.red))),
           SizedBox(height: 18.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
