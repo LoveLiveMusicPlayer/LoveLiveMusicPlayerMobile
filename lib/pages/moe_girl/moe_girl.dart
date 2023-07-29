@@ -33,38 +33,25 @@ class _MoeGirlState extends State<MoeGirl> {
   ];
 
   static const strDeleteDom = """
-    // 获取 HTML 中所有元素
-    var elements = document.getElementsByTagName("*");
-    // 创建一个空数组用于存储元素及其对应的 z-index 层级和 class
-    var elementsWithZIndex = [];
-    // 遍历所有元素
-    for (var i = 0; i < elements.length; i++) {
-      var element = elements[i];
-      // 获取元素的 z-index 层级
-      var zIndex = getComputedStyle(element).getPropertyValue("z-index");
-      // 获取元素的 class
-      var className = element.className;
-      // 将元素及其 z-index 层级和 class 存储到数组中
-      elementsWithZIndex.push({ element: element, zIndex: zIndex, className: className });
-    }
-    
-    // 根据 z-index 层级进行排序
-    elementsWithZIndex.sort(function(a, b) {
-      return parseInt(a.zIndex) - parseInt(b.zIndex);
-    });
-    
-    // 输出排序后的 class
-    for (var j = elementsWithZIndex.length - 1; j > elementsWithZIndex.length - 15; j--) {
-      if (elementsWithZIndex[j].className == "") {
-        continue;
-      }                                                                                                      
-      console.log(elementsWithZIndex[j].className);
-      var adsNode = document.querySelector("." + elementsWithZIndex[j].className);
-      // 检查节点是否存在
-      if (adsNode) {
-      	adsNode.remove();
-      } else {
-        console.log("未找到节点.");
+    var divElements = document.querySelectorAll("*");
+    for (var parent of divElements) {
+      // 删除父节点class名为adsbygoogle的
+      if (parent.className === 'adsbygoogle') {
+        // 移除匹配标签的父节点
+        parent.remove();
+      }
+      var childNodes = parent.childNodes;
+      // 判断父节点中子节点个数小于等于3
+      if (childNodes.length <= 3) {
+        for (var node of childNodes) {
+          var elementText = node.textContent;
+          // 检查文本内容是否完全等于"广告"或"谷歌广告"
+          if (elementText === '广告' || elementText === '谷歌广告') {
+            // 移除匹配标签的父节点
+            parent.remove();
+            break;
+          }
+        }
       }
     }
   """;
