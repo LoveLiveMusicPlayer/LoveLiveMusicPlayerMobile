@@ -47,13 +47,13 @@ class _ListViewItemPlaylist extends State<ListViewItemPlaylist> {
 
   ///中间标题部分
   Widget _buildContent() {
-    final screenWidth = Get.width - 33.w;
-    final constraintWidth = screenWidth * 0.5;
+    final screenWidth = Get.width - 33.h;
     final isCurrentPlayIndex =
         widget.musicId == PlayerLogic.to.playingMusic.value.musicId;
     return InkWell(
         onTap: () => widget.onPlayTap(widget.index),
         child: Container(
+          constraints: BoxConstraints(maxWidth: screenWidth),
           height: 34.h,
           width: screenWidth,
           padding: const EdgeInsets.all(0),
@@ -66,7 +66,7 @@ class _ListViewItemPlaylist extends State<ListViewItemPlaylist> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    constraints: BoxConstraints(maxWidth: constraintWidth),
+                    constraints: BoxConstraints(maxWidth: screenWidth * 0.55),
                     child: Text(widget.name,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -76,11 +76,9 @@ class _ListViewItemPlaylist extends State<ListViewItemPlaylist> {
                                 ? TextStyleMs.whiteBold_14
                                 : TextStyleMs.blackBold_14),
                   ),
-                  SizedBox(
-                    width: 4.w,
-                  ),
+                  SizedBox(width: 4.w),
                   Container(
-                    constraints: BoxConstraints(maxWidth: constraintWidth),
+                    constraints: BoxConstraints(maxWidth: screenWidth * 0.35),
                     child: Text(
                       "-${widget.artist}",
                       maxLines: 1,

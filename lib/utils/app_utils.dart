@@ -13,7 +13,9 @@ import 'package:get/get.dart';
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/artist_model.dart';
 import 'package:lovelivemusicplayer/models/menu.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
@@ -26,11 +28,10 @@ import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 import 'package:umeng_common_sdk/umeng_common_sdk.dart';
 
 class AppUtils {
-  static CacheManager cacheManager =
-      CacheManager(Config("imgSplash", stalePeriod: const Duration(days: 1)));
+  static CacheManager cacheManager = CacheManager(Config("imgSplash"));
 
   /// 异步获取歌单封面
-  static Future<String> getMusicCoverPath(String? musicPath) async {
+  static Future<String?> getMusicCoverPath(String? musicPath) async {
     final defaultPath = SDUtils.getImgPath();
     if (musicPath == null) {
       return defaultPath;
@@ -39,13 +40,45 @@ class AppUtils {
     if (music == null) {
       return defaultPath;
     }
-    return SDUtils.path + music.baseUrl! + music.coverPath!;
+    String? path;
+    if (music.existFile == true) {
+      path = "${SDUtils.path}${music.baseUrl}${music.coverPath}";
+    } else if (remoteHttp.canUseHttpUrl()) {
+      path = "${remoteHttp.httpUrl.value}${music.baseUrl}${music.coverPath}";
+    }
+    return path;
   }
 
   /// 图片提取主色
-  static Future<Color?> getImagePalette(String url) async {
+  static Future<Color?> getImagePalette(String url,
+      [Color? defaultColor]) async {
     final path = url.contains(SDUtils.path) ? url : SDUtils.path + url;
-    final image = await getImageFromProvider(FileImage(File(path)));
+    final file = File(path);
+    if (!file.existsSync()) {
+      return defaultColor ?? GlobalLogic.to.iconColor.value;
+    }
+    final image = await getImageFromProvider(FileImage(file));
+    final rgb = await getColorFromImage(image, 1);
+    return Color.fromARGB(150, rgb?.elementAt(0) ?? 0, rgb?.elementAt(1) ?? 0,
+        rgb?.elementAt(2) ?? 0);
+  }
+
+  /// Music提取主色
+  static Future<Color?> getImagePaletteFromMusic(Music music) async {
+    var image;
+    if (music.existFile == true) {
+      final path = "${SDUtils.path}${music.baseUrl}${music.coverPath}";
+      image = await getImageFromProvider(FileImage(File(path)));
+    } else {
+      if (remoteHttp.canUseHttpUrl()) {
+        final path =
+            "${remoteHttp.httpUrl.value}${music.baseUrl}${music.coverPath}";
+        image = await getImageFromProvider(NetworkImage(path));
+      }
+    }
+    if (image == null) {
+      return null;
+    }
     final rgb = await getColorFromImage(image, 1);
     return Color.fromARGB(150, rgb?.elementAt(0) ?? 0, rgb?.elementAt(1) ?? 0,
         rgb?.elementAt(2) ?? 0);
@@ -209,13 +242,13 @@ class AppUtils {
   }
 
   static uploadPageStart(String page) {
-    SpUtil.getString("prevPage").then((prevPage) {
+    SpUtil.getString(Const.spPrevPage).then((prevPage) {
       if (prevPage == "") {
         return;
       }
       UmengCommonSdk.onPageEnd(prevPage);
       UmengCommonSdk.onPageStart(page);
-      SpUtil.put("prevPage", page);
+      SpUtil.put(Const.spPrevPage, page);
     });
   }
 
@@ -461,5 +494,16 @@ class AppUtils {
         ));
         break;
     }
+  }
+
+  static flac2wav(String? path) {
+    if (Platform.isIOS) {
+      return path?.replaceAll(".flac", ".wav");
+    }
+    return path;
+  }
+
+  static wav2flac(String? path) {
+    return path?.replaceAll(".wav", ".flac");
   }
 }

@@ -31,6 +31,7 @@ class _PermissionState extends State<Permission> {
     return Scaffold(
         backgroundColor: Get.theme.primaryColor,
         appBar: AppBar(
+          elevation: 0,
           title: Text('privacy_agreement'.tr),
         ),
         body: SafeArea(

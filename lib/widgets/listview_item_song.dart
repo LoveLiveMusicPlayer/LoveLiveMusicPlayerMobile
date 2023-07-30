@@ -3,18 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
-import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:vibration/vibration.dart';
 
 ///歌曲
@@ -104,11 +103,8 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
           widget: TwoButtonDialog(
         title: "search_at_moe".tr,
         msg: "moe_address_error".tr,
-        onConfirmListener: () async {
-          final uri = Uri.parse(Const.moeGirlUrl + widget.music.musicName!);
-          if (await canLaunchUrl(uri)) {
-            await launchUrl(uri, mode: LaunchMode.inAppWebView);
-          }
+        onConfirmListener: () {
+          Get.toNamed(Routes.routeMoeGirl, arguments: widget.music.musicName!);
         },
       ));
     }
@@ -116,11 +112,10 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
 
   ///缩列图
   Widget _buildIcon() {
-    final coverPath = widget.music.baseUrl! + widget.music.coverPath!;
     return InkWell(
       onTap: clickItem,
       onLongPress: onLongPress,
-      child: showImg(SDUtils.getImgPath(fileName: coverPath), 48, 48,
+      child: showImg(SDUtils.getImgPathFromMusic(widget.music), 48, 48,
           hasShadow: false, onTap: clickItem, onLongPress: onLongPress),
     );
   }

@@ -133,6 +133,20 @@ const Map<String, String> deDE = {
   'moe_address_error': 'Einige Adressen können Fehler enthalten',
   'skip': 'überspringen',
   'net_error': 'Netzwerkfehler',
+  'hint': 'Tipp.',
+  'use_http_music': 'Spielen Sie Musik von Http',
+  'input_http_url': 'Geben Sie die http-Adresse ein',
+  'support_http_characters': 'Unterstützen Sie Charaktere: a-z A-Z 0-9 .:/_-',
+  'now_can_not_play': "Kann nicht spielen",
+  'moe_girl_wiki': 'Moe-girl Wiki',
+  'need_delete_menu': 'Möchten Sie die Songliste löschen?',
+  'select_time': 'Bitte wählen Sie die Zeit aus (Einheit: Minuten)',
+  'upgrading': 'Upgrade durchführen...',
+  'upgrade_on_next_time': 'Das Update wird beim nächsten Start wirksam',
+  'end_time': 'Endzeit: ',
+  'timed_to_stop': 'Zeit abgelaufen',
+  'timed_to_stop_remain': 'Auszeit, verbleibend',
+  'minutes': 'Minuten',
   'privacy_detail': '''Lieber LLer:
 
 Bitte stellen Sie sicher, dass Sie alle Rechte und Einschränkungen, die in der „Softwarelizenzvereinbarung“ (im Folgenden als diese Vereinbarung bezeichnet) festgelegt sind, sorgfältig lesen und verstehen, es sei denn, Sie akzeptieren die Bedingungen dieser Vereinbarung, andernfalls haben Sie kein Recht, die Software und damit verbundene zu verwenden Dienstleistungen. Sobald Sie diese Software verwenden, wird davon ausgegangen, dass Sie diese Vereinbarung akzeptiert haben.

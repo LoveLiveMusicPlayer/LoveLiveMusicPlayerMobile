@@ -223,7 +223,7 @@ class Network {
   }
 
   static _noNetwork(Function(String msg)? error, bool isShowError) {
-    if (error != null) error('please_check_network'.tr);
+    error?.call('please_check_network'.tr);
     if (isShowError) {
       SmartDialog.compatible.show(
           widget: OneButtonDialog(
@@ -247,7 +247,7 @@ class Network {
         isShowMsg: false,
       ));
     }
-    if (error != null) error(msg);
+    error?.call(msg);
   }
 
   ///检查网络

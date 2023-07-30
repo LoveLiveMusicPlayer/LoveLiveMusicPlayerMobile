@@ -11,7 +11,7 @@ import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_song_sheet.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
-import 'package:lovelivemusicplayer/widgets/new_menu_dialog.dart';
+import 'package:lovelivemusicplayer/widgets/text_field_dialog.dart';
 
 class DialogAddSongSheet extends StatelessWidget {
   final List<Music> musicList;
@@ -59,8 +59,9 @@ class DialogAddSongSheet extends StatelessWidget {
           _buildItem('create_menu'.tr, true, () {
             SmartDialog.compatible.dismiss();
             SmartDialog.compatible.show(
-                widget: NewMenuDialog(
+                widget: TextFieldDialog(
                     title: 'create_menu'.tr,
+                    hint: 'input_menu_name'.tr,
                     onConfirm: (name) async {
                       final idList = <String>[];
                       for (var music in musicList) {
@@ -124,9 +125,7 @@ class DialogAddSongSheet extends StatelessWidget {
       SmartDialog.compatible.dismiss();
       SmartDialog.compatible
           .showToast(notAllLove ? 'add_to_iLove'.tr : 'remove_from_iLove'.tr);
-      if (changeLoveStatusCallback != null) {
-        changeLoveStatusCallback!(notAllLove);
-      }
+      changeLoveStatusCallback?.call(notAllLove);
     },
         assetPath: notAllLove ? Assets.playerPlayLove : null,
         icon: notAllLove ? null : Icons.favorite);

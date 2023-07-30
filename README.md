@@ -35,6 +35,7 @@ Language: 中文 | [English Document](README_EN.md)
 - [播放数据上报] ✓
 - [歌曲快传 + 数据同步] ✓
 - [亮色模式 + 暗黑模式 + 炫彩模式] ✓
+- [睡眠模式定时停止] ✓
 - [动态立绘] ✓
 - [自定义背景图] ✓
 - [长按歌曲跳转萌娘百科搜索] ✓
@@ -91,6 +92,8 @@ B站空间：<https://space.bilibili.com/4367965>
 ## 项目内测
 
 ## 特别鸣谢
+
+- UI设计：<https://space.bilibili.com/202660950>
 
 - 依然洳雪：<https://space.bilibili.com/13184888>
 

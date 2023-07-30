@@ -4,6 +4,7 @@ import 'package:lovelivemusicplayer/pages/data_sync/data_sync.dart';
 import 'package:lovelivemusicplayer/pages/home/home_binding.dart';
 import 'package:lovelivemusicplayer/pages/home/home_view.dart';
 import 'package:lovelivemusicplayer/pages/home/nested_page/nested_binding.dart';
+import 'package:lovelivemusicplayer/pages/moe_girl/moe_girl.dart';
 import 'package:lovelivemusicplayer/pages/music_trans/music_transform.dart';
 import 'package:lovelivemusicplayer/pages/permission/permission.dart';
 import 'package:lovelivemusicplayer/pages/scan/scanner.dart';
@@ -23,6 +24,7 @@ class Routes {
   static const String routeMenuDetails = "/menu_details";
   static const String routeLogger = "/logger";
   static const String routeSystemSettings = "/system_settings";
+  static const String routeMoeGirl = "/moe_girl";
 
   static List<GetPage> getRoutes() {
     return [
@@ -38,6 +40,7 @@ class Routes {
       GetPage(name: Routes.routeLogger, page: () => const LogConsole()),
       GetPage(
           name: Routes.routeSystemSettings, page: () => const SystemSettings()),
+      GetPage(name: Routes.routeMoeGirl, page: () => const MoeGirl()),
     ];
   }
 }

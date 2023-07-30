@@ -25,6 +25,7 @@ class Music {
       this.timestamp = 0,
       this.neteaseId,
       this.isLove = false,
+      this.existFile = false,
       this.checked = false});
 
   @primaryKey
@@ -44,6 +45,7 @@ class Music {
   int timestamp; // 最后一次播放的时间戳
   String? neteaseId; // 网易id
   String? date; // 出版日期
+  bool? existFile;
 
   @ignore
   bool checked; // 是否已选中
@@ -65,6 +67,7 @@ class Music {
         timestamp: json["timestamp"],
         neteaseId: json["neteaseId"],
         date: json["date"],
+        existFile: json["existFile"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -84,6 +87,7 @@ class Music {
         "timestamp": timestamp,
         "neteaseId": neteaseId,
         "date": date,
+        "existFile": existFile,
       };
 
   factory Music.deepClone(Music music) => Music(
@@ -104,5 +108,6 @@ class Music {
         timestamp: music.timestamp,
         neteaseId: music.neteaseId,
         date: music.date,
+        existFile: music.existFile,
       );
 }

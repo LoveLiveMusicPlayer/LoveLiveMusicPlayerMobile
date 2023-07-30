@@ -5,6 +5,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -20,12 +21,14 @@ import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/pages/carplay/carplay.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/utils/code_push.dart';
 import 'package:lovelivemusicplayer/utils/completer_ext.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 import 'package:uni_links/uni_links.dart';
 
 import 'global/const.dart';
+import 'global/global_player.dart';
 import 'global/global_theme.dart';
 import 'i10n/translation.dart';
 import 'models/init_config.dart';
@@ -37,7 +40,7 @@ import 'utils/sp_util.dart';
 // 是否需要清理数据
 const needClearApp = true;
 // 当前环境
-const env = "prod";
+const env = "pre";
 
 // 是否是暗黑主题
 var isDark = false;
@@ -56,63 +59,72 @@ var isCanUseSmartDialog = false;
 // 是否初始化好SplashDao
 var isInitSplashDao = false;
 
+InAppLocalhostServer? localhostServer;
+
+late RemoteHttp remoteHttp;
+
 late Carplay carplay;
 
 void main() async {
-  // 启动屏开启
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  // 仅支持竖屏
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-
-  // 必须优先初始化
-  await JustAudioBackground.init(
-    androidNotificationChannelId:
-        'com.zhushenwudi.lovelivemusicplayer.channel.audio',
-    androidNotificationChannelName: 'lovelive audio playback',
-    androidNotificationOngoing: true,
-  );
-
-  // 初始化
-  await initServices();
-  isDark = await SpUtil.getBoolean(Const.spDark);
-
-  if (env == "pre") {
-    void reportErrorAndLog(FlutterErrorDetails details) {
-      if (details
-          .exceptionAsString()
-          .contains("ScrollController not attached to any scroll views")) {
-        return;
-      }
-      final errorMsg = {
-        "exception": details.exceptionAsString(),
-        "stackTrace": details.stack.toString(),
-      };
+  void reportErrorAndLog(FlutterErrorDetails details) {
+    if (details
+        .exceptionAsString()
+        .contains("ScrollController not attached to any scroll views")) {
+      return;
+    }
+    final errorMsg = {
+      "exception": details.exceptionAsString(),
+      "stackTrace": details.stack.toString(),
+    };
+    if (kDebugMode) {
       Log4f.e(msg: "$errorMsg");
     }
-
-    FlutterErrorDetails makeDetails(Object error, StackTrace stackTrace) {
-      // 构建错误信息
-      return FlutterErrorDetails(stack: stackTrace, exception: error);
-    }
-
-    FlutterError.onError = (FlutterErrorDetails details) {
-      // 获取 widget build 过程中出现的异常错误
-      reportErrorAndLog(details);
-    };
-
-    runZonedGuarded(
-      () => runApp(const MyApp()),
-      (error, stackTrace) {
-        // 没被catch的异常
-        reportErrorAndLog(makeDetails(error, stackTrace));
-      },
-    );
-  } else {
-    runApp(const MyApp());
   }
 
-  AppUtils.setStatusBar(isDark);
+  FlutterErrorDetails makeDetails(Object error, StackTrace stackTrace) {
+    // 构建错误信息
+    return FlutterErrorDetails(stack: stackTrace, exception: error);
+  }
+
+  runZonedGuarded(
+    () async {
+      // 启动屏开启
+      WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+      // 仅支持竖屏
+      await SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.portraitUp]);
+      FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+      // 禁用 Android WebView Inspect
+      if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+        await InAppWebViewController.setWebContentsDebuggingEnabled(false);
+      }
+
+      // 必须优先初始化
+      await JustAudioBackground.init(
+        androidNotificationChannelId:
+            'com.zhushenwudi.lovelivemusicplayer.channel.audio',
+        androidNotificationChannelName: 'lovelive audio playback',
+        androidNotificationOngoing: true,
+      );
+
+      // 初始化
+      await initServices();
+      isDark = await SpUtil.getBoolean(Const.spDark);
+
+      FlutterError.onError = (FlutterErrorDetails details) {
+        // 获取 widget build 过程中出现的异常错误
+        reportErrorAndLog(details);
+      };
+
+      runApp(const MyApp());
+
+      AppUtils.setStatusBar(isDark);
+    },
+    (error, stackTrace) {
+      // 没被catch的异常
+      reportErrorAndLog(makeDetails(error, stackTrace));
+    },
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -139,9 +151,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
 
     /// 进入后台 && 展开了player组件时 关闭滚动歌词
-    if (state == AppLifecycleState.inactive &&
-        GlobalLogic.mobileWeSlideController.isOpened) {
-      eventBus.fire(PlayerClosableEvent(true));
+    if (state == AppLifecycleState.inactive) {
+      if (GlobalLogic.mobileWeSlideController.isOpened) {
+        eventBus.fire(PlayerClosableEvent(true));
+      }
+      stopServer();
     }
   }
 
@@ -153,6 +167,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       // 初始化结束后，将启动屏关闭
       FlutterNativeSplash.remove();
       carplay = Carplay.getInstance();
+      // 获取热修复补丁包
+      CodePush.getInstance().hasNewVersion().then((hasNewVersion) {
+        if (hasNewVersion) {
+          CodePush.getInstance().upgrade();
+        }
+      });
+
     });
 
     handleInitialUri();
@@ -246,11 +267,31 @@ initServices() async {
   SpUtil.getInstance();
   Network.getInstance();
   await SDUtils.init();
-  PlayerBinding().dependencies();
+  remoteHttp = RemoteHttp(await SpUtil.getBoolean(Const.spEnableHttp, false),
+      await SpUtil.getString(Const.spHttpUrl, ""));
   enableBG = await SpUtil.getBoolean(Const.spEnableBackgroundPhoto, false);
   hasAIPic = await SpUtil.getBoolean(Const.spAIPicture, true);
+  PlayerBinding().dependencies();
   if (hasAIPic) await getOssUrl();
-  SpUtil.put("prevPage", "");
+  SpUtil.put(Const.spPrevPage, "");
+}
+
+startServer() {
+  localhostServer ??= InAppLocalhostServer(documentRoot: 'assets/tachie');
+  if (true == localhostServer?.isRunning()) {
+    return;
+  }
+  localhostServer?.start();
+}
+
+stopServer() {
+  if (localhostServer == null) {
+    return;
+  }
+  if (true == localhostServer?.isRunning()) {
+    localhostServer?.close();
+  }
+  localhostServer = null;
 }
 
 /// 获取资源oss url，解析开屏图片数据
@@ -345,5 +386,44 @@ addAllSplashPhoto(InitConfig config) {
 void defaultLogWriterCallback(String value, {bool isError = false}) {
   if (isError && !value.contains("already removed")) {
     Log4f.e(msg: value);
+  }
+}
+
+/// HTTP远端曲库实体类
+class RemoteHttp {
+  late ValueNotifier<bool> enableHttp;
+  late ValueNotifier<String> httpUrl;
+
+  RemoteHttp(bool enableHttp, String httpUrl) {
+    this.enableHttp = ValueNotifier(enableHttp);
+    this.httpUrl = ValueNotifier(httpUrl);
+  }
+
+  // 是否开启了远端HTTP服务
+  bool isEnableHttp() {
+    return enableHttp.value;
+  }
+
+  // 是否没有正确填写远端曲库URL
+  bool noneHttpUrl() {
+    return httpUrl.value.isEmpty || httpUrl.value == '/';
+  }
+
+  // 是否能够拼接完整URL路径
+  bool canUseHttpUrl() {
+    return isEnableHttp() && !noneHttpUrl();
+  }
+
+  setEnableHttp(bool newValue) async {
+    enableHttp.value = newValue;
+    await PlayerLogic.to.removeAllMusics();
+    await SpUtil.put(Const.spEnableHttp, newValue);
+    await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
+  }
+
+  setHttpUrl(String newValue) async {
+    httpUrl.value = newValue;
+    await SpUtil.put(Const.spHttpUrl, newValue);
+    await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
   }
 }

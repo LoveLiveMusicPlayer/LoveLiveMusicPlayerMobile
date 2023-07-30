@@ -102,7 +102,7 @@ class OneButtonDialog extends StatelessWidget {
             child: TextButton(
                 onPressed: () {
                   SmartDialog.compatible.dismiss();
-                  if (_onBackListener != null) _onBackListener!();
+                  _onBackListener?.call();
                 },
                 child: Text(
                   'confirm'.tr,

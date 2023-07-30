@@ -8,7 +8,7 @@ if (localPropertiesFile.exists()) {
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    throw new RuntimeException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
 def flutterVersionName = localProperties.getProperty("flutter.versionName")
@@ -33,11 +33,13 @@ boolean isReleaseBuildType(){
 
 def keystoreProperties = new Properties()
 
-def keystorePropertiesFile = rootProject.file("key.properties")
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-} else {
-    throw GradleException("release模式需要在 app目录下创建 key.properties")
+if (isReleaseBuildType()) {
+    def keystorePropertiesFile = rootProject.file("key.properties")
+    if (keystorePropertiesFile.exists()) {
+        keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    } else {
+        throw new RuntimeException("release模式需要在app目录下创建key.properties")
+    }
 }
 
 apply plugin: 'com.android.application'
@@ -80,17 +82,13 @@ android {
     }
 
     signingConfigs {
-        debug {
-            keyAlias keystoreProperties["keyAlias"]
-            keyPassword keystoreProperties["storePassword"]
-            storeFile file(keystoreProperties["storeFile"])
-            storePassword keystoreProperties["keyPassword"]
-        }
-        release {
-            keyAlias keystoreProperties["keyAlias"]
-            keyPassword keystoreProperties["storePassword"]
-            storeFile file(keystoreProperties["storeFile"])
-            storePassword keystoreProperties["keyPassword"]
+        if (releaseBuildType) {
+            release {
+                keyAlias keystoreProperties["keyAlias"]
+                keyPassword keystoreProperties["storePassword"]
+                storeFile file(keystoreProperties["storeFile"])
+                storePassword keystoreProperties["keyPassword"]
+            }
         }
     }
 
@@ -111,6 +109,17 @@ android {
             }
         }
     }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def abi = output.getFilter(com.android.build.OutputFile.ABI)
+            if (abi != null) {
+                def abiWithoutPrefix = abi.replaceFirst("^(arm64|armeabi)-", "")
+                output.outputFileName = "LLMP_v${variant.versionName}_${abiWithoutPrefix}.apk"
+            }
+        }
+    }
+
     namespace 'com.zhushenwudi.lovelivemusicplayer'
     lint {
         abortOnError false

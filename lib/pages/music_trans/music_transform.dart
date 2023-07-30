@@ -63,9 +63,6 @@ class _MusicTransformState extends State<MusicTransform> {
   // 是否准备开始传输任务
   bool isStartDownload = false;
 
-  // 是否是无传输模式
-  bool isNoTrans = false;
-
   String? ipAddress;
 
   // banner控制器，无作用，但是必须加，代码控制时也需要这个
@@ -86,8 +83,8 @@ class _MusicTransformState extends State<MusicTransform> {
     final picDest = SDUtils.path + music.baseUrl + music.coverPath;
     String musicDest = SDUtils.path + music.baseUrl + music.musicPath;
     if (Platform.isIOS) {
-      musicUrl = musicUrl.replaceAll(".flac", ".wav");
-      musicDest = musicDest.replaceAll(".flac", ".wav");
+      musicUrl = AppUtils.flac2wav(musicUrl);
+      musicDest = AppUtils.flac2wav(musicDest);
     }
 
     final List<Map<String, String>> array = [];
@@ -140,9 +137,7 @@ class _MusicTransformState extends State<MusicTransform> {
           }
         }, cancelToken);
         if (isMusic) {
-          if (Platform.isIOS && music.musicPath.endsWith(".flac")) {
-            music.musicPath = music.musicPath.replaceAll(".flac", ".wav");
-          }
+          music.musicPath = AppUtils.flac2wav(music.musicPath);
           await DBLogic.to.importMusic(music);
         }
       } catch (e) {
@@ -290,7 +285,7 @@ class _MusicTransformState extends State<MusicTransform> {
   }
 
   Widget drawBody() {
-    if (isNoTrans || index <= 0 || musicList.length < index) {
+    if (index <= 0 || musicList.length < index) {
       return Container(
           width: 300.h,
           height: 300.h,
@@ -417,25 +412,6 @@ class _MusicTransformState extends State<MusicTransform> {
           };
           channel?.sink.add(convert.jsonEncode(system));
           break;
-        case "noTrans":
-          isNoTrans = true;
-          musicList.addAll(downloadMusicFromJson(ftpCmd.body));
-          isStartDownload = true;
-          setState(() {});
-          Future.forEach<DownloadMusic>(musicList, (music) async {
-            if (File(SDUtils.path + music.baseUrl + music.musicPath)
-                .existsSync()) {
-              currentMusic = music;
-              changeNextTaskView(music);
-              setState(() {});
-              await DBLogic.to.importMusic(music);
-            }
-          }).then((_) {
-            DBLogic.to
-                .findAllListByGroup(GlobalLogic.to.currentGroup.value)
-                .then((value) => Get.back());
-          });
-          break;
         case "port":
           port = ftpCmd.body;
           break;
@@ -451,11 +427,9 @@ class _MusicTransformState extends State<MusicTransform> {
                 // 强制传输则添加到预下载列表
                 musicIdList.add(music.musicUId);
               } else {
+                music.musicPath = AppUtils.flac2wav(music.musicPath);
                 String filePath =
                     SDUtils.path + music.baseUrl + music.musicPath;
-                if (Platform.isIOS) {
-                  filePath = filePath.replaceAll(".flac", ".wav");
-                }
                 if (SDUtils.checkFileExist(filePath)) {
                   // 文件存在则尝试插入
                   await DBLogic.to.importMusic(music);

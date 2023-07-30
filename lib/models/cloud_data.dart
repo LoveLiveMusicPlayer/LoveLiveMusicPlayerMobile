@@ -49,32 +49,36 @@ class Album {
   List<InnerAlbum> hasunosora;
   List<InnerAlbum> yohane;
 
-  factory Album.fromJson(Map<String, dynamic> json) => Album(
-        us: List<InnerAlbum>.from(
-            json[Const.groupUs].map((x) => InnerAlbum.fromJson(x))),
-        aqours: List<InnerAlbum>.from(
-            json[Const.groupAqours].map((x) => InnerAlbum.fromJson(x))),
-        nijigasaki: List<InnerAlbum>.from(
-            json[Const.groupSaki].map((x) => InnerAlbum.fromJson(x))),
-        liella: List<InnerAlbum>.from(
-            json[Const.groupLiella].map((x) => InnerAlbum.fromJson(x))),
-        combine: List<InnerAlbum>.from(
-            json[Const.groupCombine].map((x) => InnerAlbum.fromJson(x))),
-        hasunosora: List<InnerAlbum>.from(
-            json[Const.groupHasunosora].map((x) => InnerAlbum.fromJson(x))),
-        yohane: List<InnerAlbum>.from(
-            json[Const.groupYohane].map((x) => InnerAlbum.fromJson(x))),
-      );
+  factory Album.fromJson(Map<String, dynamic> json) {
+    List<InnerAlbum> json2Obj(Map<String, dynamic> json, String key) {
+      return json.containsKey(key)
+          ? List<InnerAlbum>.from(json[key].map((x) => InnerAlbum.fromJson(x)))
+          : [];
+    }
+
+    return Album(
+      us: json2Obj(json, Const.groupUs),
+      aqours: json2Obj(json, Const.groupAqours),
+      nijigasaki: json2Obj(json, Const.groupSaki),
+      liella: json2Obj(json, Const.groupLiella),
+      combine: json2Obj(json, Const.groupCombine),
+      hasunosora: json2Obj(json, Const.groupHasunosora),
+      yohane: json2Obj(json, Const.groupYohane),
+    );
+  }
+
+  List<dynamic> obj2Json(List<InnerAlbum> obj) {
+    return List<dynamic>.from(obj.map((x) => x.toJson()));
+  }
 
   Map<String, dynamic> toJson() => {
-        Const.groupUs: List<dynamic>.from(us.map((x) => x.toJson())),
-        Const.groupAqours: List<dynamic>.from(aqours.map((x) => x.toJson())),
-        Const.groupSaki: List<dynamic>.from(nijigasaki.map((x) => x.toJson())),
-        Const.groupLiella: List<dynamic>.from(liella.map((x) => x.toJson())),
-        Const.groupCombine: List<dynamic>.from(combine.map((x) => x.toJson())),
-        Const.groupHasunosora:
-            List<dynamic>.from(hasunosora.map((x) => x.toJson())),
-        Const.groupYohane: List<dynamic>.from(yohane.map((x) => x.toJson())),
+        Const.groupUs: obj2Json(us),
+        Const.groupAqours: obj2Json(aqours),
+        Const.groupSaki: obj2Json(nijigasaki),
+        Const.groupLiella: obj2Json(liella),
+        Const.groupCombine: obj2Json(combine),
+        Const.groupHasunosora: obj2Json(hasunosora),
+        Const.groupYohane: obj2Json(yohane),
       };
 }
 
@@ -137,32 +141,36 @@ class Music {
   List<InnerMusic> hasunosora;
   List<InnerMusic> yohane;
 
-  factory Music.fromJson(Map<String, dynamic> json) => Music(
-        us: List<InnerMusic>.from(
-            json[Const.groupUs].map((x) => InnerMusic.fromJson(x))),
-        aqours: List<InnerMusic>.from(
-            json[Const.groupAqours].map((x) => InnerMusic.fromJson(x))),
-        nijigasaki: List<InnerMusic>.from(
-            json[Const.groupSaki].map((x) => InnerMusic.fromJson(x))),
-        liella: List<InnerMusic>.from(
-            json[Const.groupLiella].map((x) => InnerMusic.fromJson(x))),
-        combine: List<InnerMusic>.from(
-            json[Const.groupCombine].map((x) => InnerMusic.fromJson(x))),
-        hasunosora: List<InnerMusic>.from(
-            json[Const.groupHasunosora].map((x) => InnerMusic.fromJson(x))),
-        yohane: List<InnerMusic>.from(
-            json[Const.groupYohane].map((x) => InnerMusic.fromJson(x))),
-      );
+  factory Music.fromJson(Map<String, dynamic> json) {
+    List<InnerMusic> json2Obj(Map<String, dynamic> json, String key) {
+      return json.containsKey(key)
+          ? List<InnerMusic>.from(json[key].map((x) => InnerMusic.fromJson(x)))
+          : [];
+    }
+
+    return Music(
+      us: json2Obj(json, Const.groupUs),
+      aqours: json2Obj(json, Const.groupAqours),
+      nijigasaki: json2Obj(json, Const.groupSaki),
+      liella: json2Obj(json, Const.groupLiella),
+      combine: json2Obj(json, Const.groupCombine),
+      hasunosora: json2Obj(json, Const.groupHasunosora),
+      yohane: json2Obj(json, Const.groupYohane),
+    );
+  }
+
+  List<dynamic> obj2Json(List<InnerMusic> obj) {
+    return List<dynamic>.from(obj.map((x) => x.toJson()));
+  }
 
   Map<String, dynamic> toJson() => {
-        Const.groupUs: List<dynamic>.from(us.map((x) => x.toJson())),
-        Const.groupAqours: List<dynamic>.from(aqours.map((x) => x.toJson())),
-        Const.groupSaki: List<dynamic>.from(nijigasaki.map((x) => x.toJson())),
-        Const.groupLiella: List<dynamic>.from(liella.map((x) => x.toJson())),
-        Const.groupCombine: List<dynamic>.from(combine.map((x) => x.toJson())),
-        Const.groupHasunosora:
-            List<dynamic>.from(hasunosora.map((x) => x.toJson())),
-        Const.groupYohane: List<dynamic>.from(yohane.map((x) => x.toJson())),
+        Const.groupUs: obj2Json(us),
+        Const.groupAqours: obj2Json(aqours),
+        Const.groupSaki: obj2Json(nijigasaki),
+        Const.groupLiella: obj2Json(liella),
+        Const.groupCombine: obj2Json(combine),
+        Const.groupHasunosora: obj2Json(hasunosora),
+        Const.groupYohane: obj2Json(yohane),
       };
 }
 
@@ -197,23 +205,21 @@ class InnerMusic {
   String baseUrl;
   String? neteaseId;
 
-  factory InnerMusic.fromJson(Map<String, dynamic> json) {
-    return InnerMusic(
-      musicUId: json["_id"],
-      id: json["id"],
-      name: json["name"],
-      albumId: json["album"],
-      coverPath: json["cover_path"],
-      musicPath: json["music_path"],
-      artist: json["artist"],
-      artistBin: json["artist_bin"],
-      time: json["time"],
-      albumName: json["albumName"],
-      export: json["export"],
-      baseUrl: json["base_url"],
-      neteaseId: json["neteaseId"],
-    );
-  }
+  factory InnerMusic.fromJson(Map<String, dynamic> json) => InnerMusic(
+        musicUId: json["_id"],
+        id: json["id"],
+        name: json["name"],
+        albumId: json["album"],
+        coverPath: json["cover_path"],
+        musicPath: json["music_path"],
+        artist: json["artist"],
+        artistBin: json["artist_bin"],
+        time: json["time"],
+        albumName: json["albumName"],
+        export: json["export"],
+        baseUrl: json["base_url"],
+        neteaseId: json["neteaseId"],
+      );
 
   Map<String, dynamic> toJson() => {
         "_id": musicUId,

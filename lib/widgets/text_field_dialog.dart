@@ -1,28 +1,41 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
-class NewMenuDialog extends StatefulWidget {
+class TextFieldDialog extends StatefulWidget {
   final String? title;
+  final String? hint;
+  final int? maxLength;
+  final List<TextInputFormatter>? formatter;
   final Function()? onBack;
   final Function(String str)? onConfirm;
+  final TextEditingController? controller;
 
-  const NewMenuDialog({Key? key, this.title, this.onBack, this.onConfirm})
+  const TextFieldDialog(
+      {Key? key,
+      this.title,
+      this.hint,
+      this.formatter,
+      this.onBack,
+      this.controller,
+      this.onConfirm,
+      this.maxLength})
       : super(key: key);
 
   @override
-  State<NewMenuDialog> createState() => _NewMenuDialogState();
+  State<TextFieldDialog> createState() => _TextFieldDialogState();
 }
 
-class _NewMenuDialogState extends State<NewMenuDialog> {
-  final controller = TextEditingController();
+class _TextFieldDialogState extends State<TextFieldDialog> {
+  late final controller = widget.controller ?? TextEditingController();
   String text = "";
-  int maxLength = 20;
+  late int maxLength = widget.maxLength ?? 20;
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +67,10 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
                 showCursor: true,
                 obscureText: false,
                 maxLength: maxLength,
+                inputFormatters: widget.formatter ?? [],
                 decoration: InputDecoration(
                     isCollapsed: false,
-                    labelText: 'input_menu_name'.tr,
+                    labelText: widget.hint ?? 'hint'.tr,
                     labelStyle: TextStyle(fontSize: 14.sp),
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 8.w, vertical: 14.h),
@@ -100,9 +114,7 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
                       )),
                   child: TextButton(
                       onPressed: () {
-                        if (widget.onBack != null) {
-                          widget.onBack!();
-                        }
+                        widget.onBack?.call();
                         SmartDialog.compatible.dismiss();
                       },
                       child: Text('cancel'.tr,
@@ -122,9 +134,7 @@ class _NewMenuDialogState extends State<NewMenuDialog> {
                           bottomRight: Radius.circular(16.r))),
                   child: TextButton(
                       onPressed: () {
-                        if (widget.onConfirm != null) {
-                          widget.onConfirm!(text);
-                        }
+                        widget.onConfirm?.call(text);
                         SmartDialog.compatible.dismiss();
                       },
                       child: Text('confirm'.tr, style: TextStyleMs.white_16)),

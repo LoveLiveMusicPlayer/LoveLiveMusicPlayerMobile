@@ -122,6 +122,20 @@ const Map<String, String> zhCN = {
   'moe_address_error': '部分地址可能存在错误',
   'skip': '跳过',
   'net_error': '网络错误',
+  'hint': '提示',
+  'use_http_music': '使用HTTP曲库',
+  'input_http_url': '输入HTTP地址',
+  'support_http_characters': '支持字符: a-z A-Z 0-9 .:/_-',
+  'now_can_not_play': "当前无法播放",
+  'moe_girl_wiki': '萌娘百科',
+  'need_delete_menu': '是否刪除歌单',
+  'select_time': '请选择时间（单位：分钟）',
+  'upgrading': '升级中...',
+  'upgrade_on_next_time': '更新将于下次启动生效',
+  'end_time': '结束时间：',
+  'timed_to_stop': '定时关闭',
+  'timed_to_stop_remain': '定时关闭，还剩',
+  'minutes': '分钟',
   'privacy_detail': '''亲爱的LLer：
 
 请务必认真阅读和理解《软件许可使用协议》（以下简称：本协议）中规定的所有权利和限制，除非您接受协议条款，否则您无权使用本软件及其相关服务。您一旦使用本软件，将视为对协议的接受。

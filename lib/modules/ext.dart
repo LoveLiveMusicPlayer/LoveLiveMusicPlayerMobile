@@ -27,24 +27,45 @@ Widget showImg(
   bool hasShadow = true,
   Color? shadowColor,
   String defPhoto = Assets.logoLogo,
-  BoxFit fit = BoxFit.cover,
+  BoxFit fit = BoxFit.fill,
   GestureTapCallback? onTap,
   GestureTapCallback? onLongPress,
 }) {
   ImageProvider<Object> noShadowImage;
   ImageProvider<Object> shadowImage;
-  bool isNetImage = false;
   bool isLogo = false;
   if (hasShadow) {
+    final shaColor = shadowColor ??=
+        Get.isDarkMode ? ColorMs.color05080C : ColorMs.colorD3E0EC;
+    final boxShadow = [
+      BoxShadow(
+          color: shaColor, blurRadius: radius.h, offset: Offset(4.h, 8.h)),
+    ];
     if (path == null || path.isEmpty) {
       shadowImage = AssetImage(defPhoto);
       isLogo = true;
     } else if (path.startsWith("assets")) {
       shadowImage = AssetImage(path);
     } else if (path.startsWith("http")) {
-      isNetImage = true;
-      shadowImage =
-          CachedNetworkImageProvider(path, cacheManager: AppUtils.cacheManager);
+      return CachedNetworkImage(
+        cacheManager: AppUtils.cacheManager,
+        imageUrl: path,
+        imageBuilder: (context, imageProvider) => Container(
+          width: width?.h,
+          height: width?.h,
+          decoration: BoxDecoration(
+            color: shadowColor,
+            image: DecorationImage(image: imageProvider),
+            borderRadius: BorderRadius.circular(radius.h),
+            boxShadow: boxShadow,
+          ),
+        ),
+        placeholder: (context, url) {
+          return Image(image: AssetImage(defPhoto));
+        },
+        errorWidget: (context, url, error) =>
+            Image(image: AssetImage(defPhoto)),
+      );
     } else {
       final file = File(path);
       if (file.existsSync()) {
@@ -60,15 +81,7 @@ Widget showImg(
           height: width?.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(radius.h),
-            boxShadow: [
-              BoxShadow(
-                  color: shadowColor ??
-                      (Get.isDarkMode
-                          ? ColorMs.color05080C
-                          : ColorMs.colorD3E0EC),
-                  blurRadius: radius.h,
-                  offset: Offset(4.h, 8.h)),
-            ],
+            boxShadow: boxShadow,
           ),
           child: SvgPicture.asset(
             Assets.logoSvgLogo,
@@ -76,60 +89,15 @@ Widget showImg(
             height: width?.h,
           ));
     }
-    if (isNetImage) {
-      return CachedNetworkImage(
-        cacheManager: AppUtils.cacheManager,
-        imageUrl: path!,
-        imageBuilder: (context, imageProvider) => Container(
-          width: width?.h,
-          height: width?.h,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: ResizeImage(imageProvider,
-                    width: (width?.h.toInt() ?? 1) * 2,
-                    height: (width?.h.toInt() ?? 1) * 2),
-                fit: BoxFit.fitWidth),
-            borderRadius: BorderRadius.circular(radius.h),
-            boxShadow: [
-              BoxShadow(
-                  color: shadowColor ??
-                      (Get.isDarkMode
-                          ? ColorMs.color05080C
-                          : ColorMs.colorD3E0EC),
-                  blurRadius: radius.h,
-                  offset: Offset(4.w, 8.h)),
-            ],
-          ),
-        ),
-        placeholder: (context, url) {
-          return Image(image: AssetImage(defPhoto));
-        },
-        errorWidget: (context, url, error) =>
-            Image(image: AssetImage(defPhoto)),
-      );
-    } else {
-      return Container(
-        width: width?.h,
-        height: width?.h,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: ResizeImage(shadowImage,
-                  width: (width?.h.toInt() ?? 1) * 2,
-                  height: (width?.h.toInt() ?? 1) * 2),
-              fit: BoxFit.fitWidth),
-          borderRadius: BorderRadius.circular(radius.h),
-          boxShadow: [
-            BoxShadow(
-                color: shadowColor ??
-                    (Get.isDarkMode
-                        ? ColorMs.color05080C
-                        : ColorMs.colorD3E0EC),
-                blurRadius: radius.h,
-                offset: Offset(4.h, 8.h)),
-          ],
-        ),
-      );
-    }
+    return Container(
+      width: width?.h,
+      height: width?.h,
+      decoration: BoxDecoration(
+        image: DecorationImage(image: shadowImage),
+        borderRadius: BorderRadius.circular(radius.h),
+        boxShadow: boxShadow,
+      ),
+    );
   } else {
     if (path == null || path.isEmpty) {
       noShadowImage = Image.asset(
@@ -146,11 +114,31 @@ Widget showImg(
         fit: fit,
       ).image;
     } else if (path.startsWith("http")) {
-      isNetImage = true;
-      noShadowImage = CachedNetworkImageProvider(path,
-          cacheManager: AppUtils.cacheManager,
-          maxWidth: width?.h.toInt(),
-          maxHeight: width?.h.toInt());
+      return InkWell(
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          onTap: () => onTap?.call(),
+          onLongPress: () => onLongPress?.call(),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(radius.h),
+              child: CachedNetworkImage(
+                width: width?.h,
+                height: width?.h,
+                cacheManager: AppUtils.cacheManager,
+                imageUrl: path,
+                imageBuilder: (context, imageProvider) =>
+                    Image(image: imageProvider),
+                placeholder: (context, url) {
+                  return Image(
+                      image: AssetImage(defPhoto),
+                      width: width?.h,
+                      height: width?.h);
+                },
+                errorWidget: (context, url, error) => Image(
+                    image: AssetImage(defPhoto),
+                    width: width?.h,
+                    height: width?.h),
+              )));
     } else {
       final file = File(path);
       if (file.existsSync()) {
@@ -169,64 +157,18 @@ Widget showImg(
         ).image;
       }
     }
-    if (isNetImage) {
-      return InkWell(
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          onTap: () {
-            if (onTap != null) {
-              onTap();
-            }
-          },
-          onLongPress: () {
-            if (onLongPress != null) {
-              onLongPress();
-            }
-          },
-          child: ClipRRect(
-              borderRadius: BorderRadius.circular(radius.h),
-              child: CachedNetworkImage(
-                cacheManager: AppUtils.cacheManager,
-                imageUrl: path!,
-                imageBuilder: (context, imageProvider) => Image(
-                    image: ResizeImage(imageProvider,
-                        width: width?.h.toInt() ?? 1,
-                        height: width?.h.toInt() ?? 1)),
-                placeholder: (context, url) {
-                  return Image(
-                      image: AssetImage(defPhoto),
-                      width: width?.h,
-                      height: width?.h);
-                },
-                errorWidget: (context, url, error) => Image(
-                    image: AssetImage(defPhoto),
-                    width: width?.h,
-                    height: width?.h),
-              )));
-    } else {
-      return InkWell(
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          onTap: () {
-            if (onTap != null) {
-              onTap();
-            }
-          },
-          onLongPress: () {
-            if (onLongPress != null) {
-              onLongPress();
-            }
-          },
-          child: ClipRRect(
-              borderRadius: BorderRadius.circular(radius.h),
-              child: Image(
-                image: ResizeImage(noShadowImage,
-                    width: (width?.h.toInt() ?? 1) * 2,
-                    height: (width?.h.toInt() ?? 1) * 2),
-                width: width?.h,
-                height: width?.h,
-              )));
-    }
+    return InkWell(
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        onTap: () => onTap?.call(),
+        onLongPress: () => onLongPress?.call(),
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(radius.h),
+            child: Image(
+              image: noShadowImage,
+              width: width?.h,
+              height: width?.h,
+            )));
   }
 }
 

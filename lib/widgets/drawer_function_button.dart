@@ -10,13 +10,14 @@ class DrawerFunctionButton extends StatefulWidget {
   const DrawerFunctionButton(
       {Key? key,
       this.icon,
-      required this.text,
+      this.text = "",
       this.onTap,
       this.hasSwitch = false,
       this.initSwitch = false,
       this.enableSwitch = true,
       this.colorWithBG = true,
       this.iconColor,
+      this.controller,
       this.callBack})
       : super(key: key);
 
@@ -29,20 +30,48 @@ class DrawerFunctionButton extends StatefulWidget {
   final bool initSwitch;
   final bool enableSwitch;
   final Callback? callBack;
+  final ButtonController? controller;
 
   @override
   State<DrawerFunctionButton> createState() => _DrawerFunctionButtonState();
 }
 
-typedef Callback = void Function(bool check);
+typedef Callback = void Function(ButtonController controller, bool check);
+typedef GestureTapCallback = void Function(ButtonController controller);
+
+class ButtonController extends ChangeNotifier {
+  late String _textValue;
+  late bool _switchValue;
+
+  ButtonController(this._textValue, this._switchValue);
+
+  String get getText => _textValue;
+
+  bool get getSwitchValue => _switchValue;
+
+  set setSwitchValue(bool newValue) {
+    if (_switchValue != newValue) {
+      _switchValue = newValue;
+      notifyListeners();
+    }
+  }
+
+  set setTextValue(String newValue) {
+    if (_textValue != newValue) {
+      _textValue = newValue;
+      notifyListeners();
+    }
+  }
+}
 
 class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
-  late bool switchValue = widget.initSwitch;
+  late ButtonController bh =
+      widget.controller ?? ButtonController(widget.text, widget.initSwitch);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: widget.onTap,
+        onTap: () => widget.onTap?.call(bh),
         child: SizedBox(
           height: 30.h,
           child:
@@ -67,11 +96,13 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
                   } else {
                     mode = Get.isDarkMode;
                   }
-                  return Text(widget.text,
-                      style: TextStyle(fontSize: 14.sp).copyWith(
-                          color: mode ? ColorMs.colorEDF5FF : Colors.black),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis);
+                  return ListenableBuilder(
+                      listenable: bh,
+                      builder: (c, w) => Text(bh._textValue,
+                          style: TextStyle(fontSize: 14.sp).copyWith(
+                              color: mode ? ColorMs.colorEDF5FF : Colors.black),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis));
                 }))
               ],
             )),
@@ -85,22 +116,21 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
       if (widget.enableSwitch) {
         return Transform.scale(
           scale: 0.9,
-          child: CupertinoSwitch(
-              value: switchValue,
-              activeColor: const Color.fromARGB(255, 228, 0, 127),
-              onChanged: (value) {
-                switchValue = value;
-                if (widget.callBack != null) {
-                  widget.callBack!(value);
-                }
-                setState(() {});
-              }),
+          child: ListenableBuilder(
+              listenable: bh,
+              builder: (c, w) => CupertinoSwitch(
+                  value: bh._switchValue,
+                  activeColor: const Color.fromARGB(255, 228, 0, 127),
+                  onChanged: (value) {
+                    bh.setSwitchValue = value;
+                    widget.callBack?.call(bh, value);
+                  })),
         );
       } else {
         return Transform.scale(
             scale: 0.9,
             child: CupertinoSwitch(
-              value: switchValue,
+              value: bh._switchValue,
               activeColor: const Color.fromARGB(255, 228, 0, 127),
               onChanged: null,
             ));

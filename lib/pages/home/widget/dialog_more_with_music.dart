@@ -87,9 +87,9 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
             color: Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF,
           ),
           _buildItem(Assets.dialogIcAddPlayList, 'add_to_playlist'.tr, true,
-              () {
+              () async {
             SmartDialog.compatible.dismiss();
-            PlayerLogic.to.addNextMusic(widget.music, isNext: false);
+            await PlayerLogic.to.addNextMusic(widget.music, isNext: false);
             SmartDialog.compatible.showToast('add_success'.tr);
           }),
           _buildItem(Assets.dialogIcAddSongSheet, 'add_to_menu'.tr, true, () {
@@ -123,9 +123,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
     }
     return _buildItem(Assets.dialogIcSeeAlbum, 'view_album'.tr, true, () {
       SmartDialog.compatible.dismiss();
-      if (widget.onClosePanel != null) {
-        widget.onClosePanel!();
-      }
+      widget.onClosePanel?.call();
       if (album != null) {
         Get.toNamed(Routes.routeAlbumDetails, arguments: album, id: 1);
       }

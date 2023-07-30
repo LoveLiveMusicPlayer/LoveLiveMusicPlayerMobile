@@ -11,6 +11,7 @@ import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/position_data.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/control_buttons.dart';
@@ -68,6 +69,7 @@ class _PlayerState extends State<Player> {
   @override
   void dispose() {
     loginSubscription?.cancel();
+    stopServer();
     super.dispose();
   }
 
@@ -163,6 +165,7 @@ class _PlayerState extends State<Player> {
   }
 
   setStatus({bool? cover, bool? open}) {
+    stopServer();
     if (cover != null && cover != (showContent == Type.cover)) {
       showContent = cover ? Type.cover : Type.lyric;
     }
@@ -217,6 +220,7 @@ class _PlayerState extends State<Player> {
                 visible: GlobalLogic.to.hasSkin.value,
                 child: materialButton(Assets.playerPlayerCall, () {
                   if (showContent == Type.lyric) {
+                    startServer();
                     showContent = Type.tachie;
                   } else {
                     showContent = Type.lyric;
@@ -265,7 +269,7 @@ class _PlayerState extends State<Player> {
               PlayerLogic.to.playingMusic.value.isLove
                   ? Icons.favorite
                   : Assets.playerPlayLove,
-              () => PlayerLogic.to.toggleLove(),
+              () async => await PlayerLogic.to.toggleLove(),
               width: 32,
               height: 32,
               radius: 6,
@@ -328,12 +332,21 @@ class _PlayerState extends State<Player> {
       return Container();
     }
 
-    ImageProvider provider;
+    ImageProvider? provider;
     if (pic.isEmpty) {
       provider = const AssetImage(Assets.logoLogo);
-    } else {
-      provider = FileImage(File(SDUtils.path + pic));
+    } else if (currentMusic.existFile == true) {
+      final file = File(SDUtils.path + pic);
+      if (file.existsSync()) {
+        provider = FileImage(file);
+      }
+    } else if (remoteHttp.canUseHttpUrl()) {
+      provider = NetworkImage("${remoteHttp.httpUrl.value}$pic");
     }
+    final decoration = provider == null
+        ? BoxDecoration(color: GlobalLogic.to.iconColor.value)
+        : BoxDecoration(
+            image: DecorationImage(image: provider, fit: BoxFit.cover));
     return SizedBox(
       width: ScreenUtil().screenWidth,
       height: ScreenUtil().screenHeight,
@@ -341,8 +354,7 @@ class _PlayerState extends State<Player> {
         child: Stack(
           children: [
             Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(image: provider, fit: BoxFit.cover)),
+              decoration: decoration,
             ),
             Positioned.fill(
                 child: BackdropFilter(

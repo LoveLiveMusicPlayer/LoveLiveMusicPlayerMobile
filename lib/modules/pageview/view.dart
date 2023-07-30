@@ -150,94 +150,93 @@ class _PageViewComponentState extends State<PageViewComponent>
 
   Widget _buildListItem(int index, int page) {
     /// 0 歌曲  1 专辑  2 歌手  3 我喜欢  4 歌单  5  最近播放
-    if (page == 0) {
-      return ListViewItemSong(
-        index: index,
-        music: GlobalLogic.to.musicList[index],
-        checked: HomeController.to.isItemChecked(index),
-        onItemTap: (index, checked) {
-          HomeController.to.selectItem(index, checked);
-        },
-        onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
-        onMoreTap: (music) {
-          SmartDialog.compatible.show(
-              widget: DialogMoreWithMusic(music: music),
-              alignmentTemp: Alignment.bottomCenter);
-        },
-        onPlayNowTap: () {
-          PlayerLogic.to.playMusic(GlobalLogic.to.musicList, index: index);
-        },
-      );
-    } else if (page == 1) {
-      return ListViewItemAlbum(
-        album: GlobalLogic.to.albumList[index],
-        checked: HomeController.to.isItemChecked(index),
-        isSelect: HomeController.to.state.isSelect.value,
-        onItemTap: (album, checked) {
-          if (HomeController.to.state.isSelect.value) {
-            HomeController.to.selectItem(index, checked);
-          } else {
-            Get.toNamed(Routes.routeAlbumDetails,
-                arguments: GlobalLogic.to.albumList[index], id: 1);
-          }
-        },
-      );
-    } else if (page == 2) {
-      return ListViewItemSinger(
-        artist: GlobalLogic.to.artistList[index],
-        onItemTap: (artist) {
-          Get.toNamed(Routes.routeSingerDetails, arguments: artist, id: 1);
-        },
-      );
-    } else if (page == 3) {
-      return ListViewItemSong(
-        index: index,
-        music: GlobalLogic.to.loveList[index],
-        checked: HomeController.to.isItemChecked(index),
-        onItemTap: (index, checked) {
-          HomeController.to.selectItem(index, checked);
-        },
-        onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
-        onMoreTap: (music) {
-          SmartDialog.compatible.show(
-              widget: DialogMoreWithMusic(music: music),
-              alignmentTemp: Alignment.bottomCenter);
-        },
-        onPlayNowTap: () {
-          PlayerLogic.to.playMusic(GlobalLogic.to.loveList, index: index);
-        },
-      );
-    } else if (page == 4) {
-      return ListViewItemSongSheet(
-        onItemTap: (menu) {
-          Get.toNamed(Routes.routeMenuDetails, arguments: menu.id, id: 1);
-        },
-        onMoreTap: (menu) {
-          SmartDialog.compatible.show(
-              widget: DialogMoreWithMenu(menu: menu),
-              alignmentTemp: Alignment.bottomCenter);
-        },
-        menu: GlobalLogic.to.menuList[index],
-        showDevicePic: true,
-      );
-    } else {
-      return ListViewItemSong(
-        index: index,
-        music: GlobalLogic.to.recentList[index],
-        checked: HomeController.to.isItemChecked(index),
-        onItemTap: (index, checked) {
-          HomeController.to.selectItem(index, checked);
-        },
-        onPlayNextTap: (music) => PlayerLogic.to.addNextMusic(music),
-        onMoreTap: (music) {
-          SmartDialog.compatible.show(
-              widget: DialogMoreWithMusic(music: music),
-              alignmentTemp: Alignment.bottomCenter);
-        },
-        onPlayNowTap: () {
-          PlayerLogic.to.playMusic(GlobalLogic.to.recentList, index: index);
-        },
-      );
+    switch (page) {
+      case 0:
+        return ListViewItemSong(
+            index: index,
+            music: GlobalLogic.to.musicList[index],
+            checked: HomeController.to.isItemChecked(index),
+            onItemTap: (index, checked) {
+              HomeController.to.selectItem(index, checked);
+            },
+            onPlayNextTap: (music) async =>
+                await PlayerLogic.to.addNextMusic(music),
+            onMoreTap: (music) {
+              SmartDialog.compatible.show(
+                  widget: DialogMoreWithMusic(music: music),
+                  alignmentTemp: Alignment.bottomCenter);
+            },
+            onPlayNowTap: () {
+              PlayerLogic.to.playMusic(GlobalLogic.to.musicList, mIndex: index);
+            });
+      case 1:
+        return ListViewItemAlbum(
+            album: GlobalLogic.to.albumList[index],
+            checked: HomeController.to.isItemChecked(index),
+            isSelect: HomeController.to.state.isSelect.value,
+            onItemTap: (album, checked) {
+              if (HomeController.to.state.isSelect.value) {
+                HomeController.to.selectItem(index, checked);
+              } else {
+                Get.toNamed(Routes.routeAlbumDetails,
+                    arguments: GlobalLogic.to.albumList[index], id: 1);
+              }
+            });
+      case 2:
+        return ListViewItemSinger(
+            artist: GlobalLogic.to.artistList[index],
+            onItemTap: (artist) {
+              Get.toNamed(Routes.routeSingerDetails, arguments: artist, id: 1);
+            });
+      case 3:
+        return ListViewItemSong(
+            index: index,
+            music: GlobalLogic.to.loveList[index],
+            checked: HomeController.to.isItemChecked(index),
+            onItemTap: (index, checked) {
+              HomeController.to.selectItem(index, checked);
+            },
+            onPlayNextTap: (music) async =>
+                await PlayerLogic.to.addNextMusic(music),
+            onMoreTap: (music) {
+              SmartDialog.compatible.show(
+                  widget: DialogMoreWithMusic(music: music),
+                  alignmentTemp: Alignment.bottomCenter);
+            },
+            onPlayNowTap: () {
+              PlayerLogic.to.playMusic(GlobalLogic.to.loveList, mIndex: index);
+            });
+      case 4:
+        return ListViewItemSongSheet(
+            onItemTap: (menu) {
+              Get.toNamed(Routes.routeMenuDetails, arguments: menu.id, id: 1);
+            },
+            onMoreTap: (menu) {
+              SmartDialog.compatible.show(
+                  widget: DialogMoreWithMenu(menu: menu),
+                  alignmentTemp: Alignment.bottomCenter);
+            },
+            menu: GlobalLogic.to.menuList[index],
+            showDevicePic: true);
+      default:
+        return ListViewItemSong(
+            index: index,
+            music: GlobalLogic.to.recentList[index],
+            checked: HomeController.to.isItemChecked(index),
+            onItemTap: (index, checked) {
+              HomeController.to.selectItem(index, checked);
+            },
+            onPlayNextTap: (music) async =>
+                await PlayerLogic.to.addNextMusic(music),
+            onMoreTap: (music) {
+              SmartDialog.compatible.show(
+                  widget: DialogMoreWithMusic(music: music),
+                  alignmentTemp: Alignment.bottomCenter);
+            },
+            onPlayNowTap: () {
+              PlayerLogic.to
+                  .playMusic(GlobalLogic.to.recentList, mIndex: index);
+            });
     }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
@@ -15,7 +16,6 @@ import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/widgets/details_list_top.dart';
 import 'package:lovelivemusicplayer/widgets/listview_item_song.dart';
 import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
-import 'package:sticky_headers/sticky_headers.dart';
 
 class DetailsBody extends StatefulWidget {
   final DetailController logic;
@@ -25,15 +25,15 @@ class DetailsBody extends StatefulWidget {
   final bool? isAlbum;
   final bool? isMenu;
 
-  const DetailsBody(
-      {Key? key,
-      required this.logic,
-      required this.buildCover,
-      required this.music,
-      this.isAlbum,
-      this.isMenu,
-      this.onRemove})
-      : super(key: key);
+  const DetailsBody({
+    Key? key,
+    required this.logic,
+    required this.buildCover,
+    required this.music,
+    this.isAlbum,
+    this.isMenu,
+    this.onRemove,
+  }) : super(key: key);
 
   @override
   State<DetailsBody> createState() => _DetailsBodyState();
@@ -48,7 +48,9 @@ class _DetailsBodyState extends State<DetailsBody> {
     if (SDUtils.checkFileExist(bgPhoto)) {
       AppUtils.getImagePalette(bgPhoto).then((color) {
         if (color != null) {
-          bgColor = color.withAlpha(255);
+          setState(() {
+            bgColor = color.withAlpha(255);
+          });
         }
       });
     }
@@ -58,181 +60,171 @@ class _DetailsBodyState extends State<DetailsBody> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: widget.logic.state.isSelect
-            ? () async {
-                return false;
-              }
-            : null,
-        child: Expanded(
-            child: ListView(
-          padding: const EdgeInsets.all(0),
-          children: getListItems(widget.logic),
-        )));
-  }
-
-  List<Widget> getListItems(logic) {
-    List<Widget> list = [];
-    list.add(widget.buildCover);
-    list.add(SizedBox(
-      height: 10.h,
-    ));
-    list.add(StickyHeaderBuilder(
-        builder: (BuildContext context, double stuckAmount) {
-          var hasBg = stuckAmount < 0;
-          return DetailsListTop(
-              hasBg: hasBg,
-              bgColor: bgColor,
-              selectAll: logic.state.selectAll,
-              isSelect: logic.state.isSelect,
-              itemsLength: widget.music.length,
-              checkedItemLength: logic.getCheckedSong(),
-              onPlayTap: () {
-                PlayerLogic.to.playMusic(widget.music);
-              },
-              onScreenTap: () {
-                if (logic.state.isSelect) {
-                  SmartDialog.compatible.dismiss();
-                } else {
-                  logic.openSelect();
-                  showSelectDialog();
-                }
-              },
-              onSelectAllTap: (checked) {
-                logic.selectAll(checked);
-              },
-              onCancelTap: () {
-                SmartDialog.compatible.dismiss();
-              });
-        },
-        content: Column(
-          children: renderMusicList(logic),
-        )));
-    return list;
-  }
-
-  List<Widget> renderMusicList(logic) {
-    List<Widget> list = [];
-    list.add(SizedBox(
-      height: 10.h,
-    ));
-    for (var index = 0; index < widget.music.length; index++) {
-      list.add(Padding(
-        padding: EdgeInsets.only(bottom: 20.h),
-        child: ListViewItemSong(
-          index: index,
-          music: widget.music[index],
-          checked: logic.isItemChecked(index),
-          onItemTap: (index, checked) {
-            logic.selectItem(index, checked);
-          },
-          onPlayNextTap: (music) {
-            PlayerLogic.to.addNextMusic(music);
-            SmartDialog.compatible.showToast('add_success'.tr);
-          },
-          onMoreTap: (music) {
-            SmartDialog.compatible.show(
-                widget: showDialogMoreWithMusic(music),
-                alignmentTemp: Alignment.bottomCenter);
-          },
-          onPlayNowTap: () {
-            PlayerLogic.to.playMusic(widget.music, index: index);
-          },
+      onWillPop: widget.logic.state.isSelect ? () async => false : null,
+      child: Expanded(
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(child: widget.buildCover),
+            SliverPadding(padding: EdgeInsets.only(top: 10.h)),
+            SliverStickyHeader(
+              header: renderStickyHeader(),
+              sliver: renderMusicList(),
+            ),
+          ],
         ),
-      ));
-    }
-    return list;
+      ),
+    );
+  }
+
+  Widget renderStickyHeader() {
+    return DetailsListTop(
+      hasBg: true,
+      bgColor: bgColor,
+      selectAll: widget.logic.state.selectAll,
+      isSelect: widget.logic.state.isSelect,
+      itemsLength: widget.music.length,
+      checkedItemLength: widget.logic.getCheckedSong(),
+      onPlayTap: () {
+        PlayerLogic.to.playMusic(widget.music);
+      },
+      onScreenTap: () {
+        if (widget.logic.state.isSelect) {
+          SmartDialog.compatible.dismiss();
+        } else {
+          widget.logic.openSelect();
+          showSelectDialog();
+        }
+      },
+      onSelectAllTap: (checked) {
+        widget.logic.selectAll(checked);
+      },
+      onCancelTap: () {
+        SmartDialog.compatible.dismiss();
+      },
+    );
+  }
+
+  Widget renderMusicList() {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          final music = widget.music[index];
+          return Padding(
+            padding: EdgeInsets.only(bottom: 20.h),
+            child: ListViewItemSong(
+              index: index,
+              music: music,
+              checked: widget.logic.isItemChecked(index),
+              onItemTap: (index, checked) {
+                widget.logic.selectItem(index, checked);
+              },
+              onPlayNextTap: (music) async {
+                await PlayerLogic.to.addNextMusic(music);
+                SmartDialog.compatible.showToast('add_success'.tr);
+              },
+              onMoreTap: (music) {
+                SmartDialog.compatible.show(
+                  widget: showDialogMoreWithMusic(music),
+                  alignmentTemp: Alignment.bottomCenter,
+                );
+              },
+              onPlayNowTap: () {
+                PlayerLogic.to.playMusic(widget.music, mIndex: index);
+              },
+            ),
+          );
+        },
+        childCount: widget.music.length,
+      ),
+    );
   }
 
   Widget showDialogMoreWithMusic(Music music) {
-    if (widget.onRemove == null) {
-      return DialogMoreWithMusic(music: music, isAlbum: widget.isAlbum);
-    }
     return DialogMoreWithMusic(
-        music: music,
-        isAlbum: widget.isAlbum,
-        onRemove: (music) {
-          widget.onRemove!([music.musicId!]);
-        });
+      music: music,
+      isAlbum: widget.isAlbum,
+      onRemove: widget.onRemove != null
+          ? (music) => widget.onRemove!([music.musicId!])
+          : null,
+    );
   }
 
   showSelectDialog() {
     List<BtnItem> list = [];
+
+    void addToPlaylist() async {
+      final musicList = widget.logic.state.items;
+      final tempList = musicList.where((music) => music.checked).toList();
+      final isSuccess = await PlayerLogic.to.addMusicList(tempList);
+      if (isSuccess) {
+        SmartDialog.compatible.showToast('add_success'.tr);
+      }
+      SmartDialog.compatible.dismiss();
+    }
+
+    void addToMenu() async {
+      List<Music> musicList = widget.logic.state.items.cast();
+      var isHasChosen = musicList.any((element) => element.checked == true);
+      if (!isHasChosen) {
+        SmartDialog.compatible.dismiss();
+        return;
+      }
+      List<Music> tempList = musicList.where((music) => music.checked).toList();
+      SmartDialog.compatible.dismiss();
+      SmartDialog.compatible.show(
+        widget: DialogAddSongSheet(
+          musicList: tempList,
+          changeLoveStatusCallback: (status) {
+            widget.logic.changeLoveStatus(tempList, status);
+          },
+        ),
+        alignmentTemp: Alignment.bottomCenter,
+      );
+    }
+
+    void deleteFromMenu() async {
+      List<Music> musicList = widget.logic.state.items.cast();
+      var isHasChosen = musicList.any((element) => element.checked == true);
+      if (!isHasChosen) {
+        SmartDialog.compatible.dismiss();
+        return;
+      }
+      List<String> musicIds = musicList
+          .where((music) => music.checked)
+          .map((music) => music.musicId!)
+          .toList();
+
+      SmartDialog.compatible.show(
+        widget: TwoButtonDialog(
+          title: "confirm_delete_from_menu".tr,
+          isShowMsg: false,
+          onConfirmListener: () => widget.onRemove!(musicIds),
+        ),
+      );
+    }
+
     list.add(BtnItem(
-        imgPath: Assets.dialogIcAddPlayList2,
-        title: 'add_to_playlist'.tr,
-        onTap: () async {
-          final musicList = widget.logic.state.items;
-          final tempList = <Music>[];
-          await Future.forEach<Music>(musicList, (music) {
-            if (music.checked) {
-              tempList.add(music);
-            }
-          });
-          final isSuccess = PlayerLogic.to.addMusicList(tempList);
-          if (isSuccess) {
-            SmartDialog.compatible.showToast('add_success'.tr);
-          }
-          SmartDialog.compatible.dismiss();
-        }));
+      imgPath: Assets.dialogIcAddPlayList2,
+      title: 'add_to_playlist'.tr,
+      onTap: addToPlaylist,
+    ));
+
     list.add(BtnItem(
-        imgPath: Assets.dialogIcAddPlayList,
-        title: 'add_to_menu'.tr,
-        onTap: () async {
-          List<Music> musicList = widget.logic.state.items.cast();
-          var isHasChosen = widget.logic.state.items
-              .any((element) => element.checked == true);
-          if (!isHasChosen) {
-            SmartDialog.compatible.dismiss();
-            return;
-          }
-          List<Music> tempList = [];
-          await Future.forEach<Music>(musicList, (music) {
-            if (music.checked) {
-              tempList.add(music);
-            }
-          });
-          SmartDialog.compatible.dismiss();
-          SmartDialog.compatible.show(
-              widget: DialogAddSongSheet(
-                  musicList: tempList,
-                  changeLoveStatusCallback: (status) {
-                    widget.logic.changeLoveStatus(tempList, status);
-                  }),
-              alignmentTemp: Alignment.bottomCenter);
-        }));
+      imgPath: Assets.dialogIcAddPlayList,
+      title: 'add_to_menu'.tr,
+      onTap: addToMenu,
+    ));
+
     if (widget.isMenu == true) {
       list.add(BtnItem(
-          imgPath: Assets.dialogIcDelete2,
-          title: "delete_from_menu".tr,
-          onTap: () async {
-            List<Music> musicList = widget.logic.state.items.cast();
-            var isHasChosen = widget.logic.state.items
-                .any((element) => element.checked == true);
-            if (!isHasChosen) {
-              SmartDialog.compatible.dismiss();
-              return;
-            }
-            List<String> musicIds = [];
-            await Future.forEach<Music>(musicList, (music) {
-              if (music.checked) {
-                musicIds.add(music.musicId!);
-              }
-            });
-
-            // todo: 列表划到底部dialog无法被销毁
-            SmartDialog.compatible.show(
-                widget: TwoButtonDialog(
-                    title: "confirm_delete_from_menu".tr,
-                    isShowMsg: false,
-                    onConfirmListener: () {
-                      widget.onRemove!(musicIds);
-                    }));
-          }));
+        imgPath: Assets.dialogIcDelete2,
+        title: "delete_from_menu".tr,
+        onTap: deleteFromMenu,
+      ));
     }
+
     SmartDialog.show(
-      builder: (_) {
-        return DialogBottomBtn(list: list);
-      },
+      builder: (_) => DialogBottomBtn(list: list),
       usePenetrate: true,
       clickMaskDismiss: false,
       maskColor: Colors.transparent,

@@ -51,12 +51,9 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
             width: borderWidth,
             child: Hero(
                 tag: "album${widget.album.albumId}",
-                child: showImg(
-                    SDUtils.getImgPath(fileName: widget.album.coverPath!),
-                    borderWidth,
-                    borderWidth,
-                    hasShadow: false,
-                    onTap: clickItem)),
+                child: showImg(SDUtils.getImgPathFromAlbum(widget.album),
+                    borderWidth, borderWidth,
+                    hasShadow: false, onTap: clickItem)),
           ),
           SizedBox(
             height: 5.h,

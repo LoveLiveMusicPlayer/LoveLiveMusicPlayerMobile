@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -8,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/global/global_theme.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/models/artist.dart';
@@ -19,6 +21,7 @@ import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
+import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
 import 'package:open_appstore/open_appstore.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:updater/updater.dart';
@@ -72,6 +75,11 @@ class GlobalLogic extends SuperController
 
   Updater? updater;
   UpdaterController? controller;
+
+  /// 定时关闭功能
+  Timer? timer;
+  ButtonController? timerController;
+  var remainTime = ValueNotifier<int>(0);
 
   @override
   void onInit() {
@@ -379,6 +387,42 @@ class GlobalLogic extends SuperController
     }
     if (init) {
       Get.forceAppUpdate();
+    }
+  }
+
+  void startTimer(int? number) {
+    if (number == null || number < 0) {
+      return;
+    }
+    remainTime.value = number;
+    if (number == 0) {
+      timerController?.setTextValue = 'timed_to_stop'.tr;
+      _stopTimer();
+    } else {
+      timerController?.setTextValue =
+          "${'timed_to_stop_remain'.tr}${remainTime.value}${'minutes'.tr}";
+      timer = Timer.periodic(const Duration(minutes: 1), (Timer t) {
+        remainTime.value--;
+        Log4f.d(msg: "睡眠模式-倒计时:${remainTime.value}分钟");
+        if (remainTime.value <= 0) {
+          timerController?.setTextValue = 'timed_to_stop'.tr;
+          if (PlayerLogic.to.mPlayer.playing) {
+            PlayerLogic.to.mPlayer.pause();
+            PlayerLogic.to.mPlayer.stop();
+          }
+          t.cancel();
+        } else {
+          timerController?.setTextValue =
+              "${'timed_to_stop_remain'.tr}${remainTime.value}${'minutes'.tr}";
+        }
+      });
+    }
+  }
+
+  void _stopTimer() {
+    if (timer != null) {
+      timer?.cancel();
+      timer = null;
     }
   }
 }

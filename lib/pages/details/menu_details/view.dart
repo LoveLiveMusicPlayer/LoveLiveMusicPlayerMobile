@@ -84,17 +84,17 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
 
   Widget _buildCover() {
     if (menu == null || menu!.music.isEmpty) {
-      return showImg(SDUtils.getImgPath(), 240, 240, radius: 120);
+      return showImg(SDUtils.getImgPath(), 240, 240, radius: 24);
     }
     return Container(
       padding: EdgeInsets.only(top: 16.h),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          FutureBuilder<String>(
+          FutureBuilder<String?>(
             initialData: SDUtils.getImgPath(),
-            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-              return showImg(snapshot.data, 240, 240, radius: 120);
+            builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
+              return showImg(snapshot.data, 240, 240, radius: 24);
             },
             future: AppUtils.getMusicCoverPath(menu!.music.last),
           )

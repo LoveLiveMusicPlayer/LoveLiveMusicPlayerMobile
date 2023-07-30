@@ -198,7 +198,7 @@ class _DrawerPageState extends State<DrawerPage> {
               icon: Assets.drawerDrawerQuickTrans,
               text: 'music_trans'.tr,
               colorWithBG: false,
-              onTap: () async {
+              onTap: (controller) async {
                 Get.back();
                 Get.toNamed(Routes.routeTransform);
               },
@@ -208,7 +208,7 @@ class _DrawerPageState extends State<DrawerPage> {
               icon: Assets.drawerDrawerDataSync,
               text: 'data_sync'.tr,
               colorWithBG: false,
-              onTap: () {
+              onTap: (controller) {
                 Get.back();
                 Get.toNamed(Routes.routeDataSync);
               },
@@ -218,7 +218,7 @@ class _DrawerPageState extends State<DrawerPage> {
               icon: Assets.drawerDrawerDataDownload,
               text: 'fetch_songs'.tr,
               colorWithBG: false,
-              onTap: () {
+              onTap: (controller) {
                 handleUpdateData();
               },
             ),
@@ -227,7 +227,7 @@ class _DrawerPageState extends State<DrawerPage> {
               icon: Assets.drawerDrawerUpdate,
               text: 'update'.tr,
               colorWithBG: false,
-              onTap: () {
+              onTap: (controller) {
                 GlobalLogic.to.checkUpdate(manual: true);
               },
             ),
@@ -236,7 +236,7 @@ class _DrawerPageState extends State<DrawerPage> {
               icon: Assets.drawerDrawerSetting,
               text: 'system_settings'.tr,
               colorWithBG: false,
-              onTap: () {
+              onTap: (controller) {
                 Get.back();
                 Get.toNamed(Routes.routeSystemSettings, id: 1);
               },
@@ -246,7 +246,7 @@ class _DrawerPageState extends State<DrawerPage> {
               icon: Assets.drawerDrawerShare,
               text: "share".tr,
               colorWithBG: false,
-              onTap: () {
+              onTap: (controller) {
                 Get.back();
                 AppUtils.shareQQ();
               },
@@ -307,6 +307,10 @@ class _DrawerPageState extends State<DrawerPage> {
             SmartDialog.compatible.dismiss(status: SmartStatus.loading);
             SmartDialog.compatible.showToast('data_error'.tr);
           }
+        }, error: (err) {
+          Log4f.e(msg: err);
+          SmartDialog.compatible.dismiss(status: SmartStatus.loading);
+          SmartDialog.compatible.showToast('fetch_songs_fail'.tr);
         }, isShowDialog: false);
       } else {
         SmartDialog.compatible.dismiss(status: SmartStatus.loading);
@@ -344,9 +348,10 @@ class _DrawerPageState extends State<DrawerPage> {
   Future<void> loopParseData(List<InnerMusic> musicList,
       List<InnerAlbum> albumList, String group) async {
     await Future.forEach<InnerMusic>(musicList, (music) async {
-      if (music.export && checkFileExist(music)) {
+      if (music.export) {
         int albumId = music.albumId;
         InnerAlbum album = albumList.firstWhere((album) => album.id == albumId);
+        music.musicPath = AppUtils.flac2wav(music.musicPath);
         DownloadMusic downloadMusic = DownloadMusic(
             albumUId: album.albumUId,
             albumId: albumId,
@@ -363,7 +368,8 @@ class _DrawerPageState extends State<DrawerPage> {
             artistBin: music.artistBin,
             totalTime: music.time,
             baseUrl: music.baseUrl,
-            neteaseId: music.neteaseId);
+            neteaseId: music.neteaseId,
+            existFile: checkFileExist(music));
         await DBLogic.to.importMusic(downloadMusic);
       }
     });
@@ -380,9 +386,6 @@ class _DrawerPageState extends State<DrawerPage> {
   }
 
   bool checkFileExist(InnerMusic music) {
-    if (Platform.isIOS) {
-      music.musicPath = music.musicPath.replaceAll(".flac", ".wav");
-    }
     return File('${SDUtils.path}${music.baseUrl}${music.musicPath}')
         .existsSync();
   }
