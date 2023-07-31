@@ -71,7 +71,7 @@ dependencies:
   flutter_image_compress: ^2.0.3 # 图片压缩
   cached_network_image: # 网络图片缓存库
     git:
-      url: https://github.com/Carapacik/flutter_cached_network_image
+      url: https://github.com/zhushenwudi/flutter_cached_network_image
       path: cached_network_image
   color_thief_flutter: # 取色器
     git:
@@ -101,6 +101,10 @@ dependencies:
   vibration: ^1.8.1 # 振动
   flutter_inappwebview: ^6.0.0-beta.24+1 # WebView
   shorebird_code_push: ^1.1.0 # 热修复
+  flexible_scrollbar: # 滚动条
+    git:
+      url: https://github.com/zhushenwudi/flexible_scrollbar_fork
+      ref: master
   flutter_carplay: # Carplay支持
     git:
       url: https://github.com/zhushenwudi/flutter_carplay

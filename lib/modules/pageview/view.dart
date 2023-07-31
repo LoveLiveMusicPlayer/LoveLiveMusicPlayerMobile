@@ -1,3 +1,4 @@
+import 'package:flexible_scrollbar/flexible_scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -127,24 +128,38 @@ class _PageViewComponentState extends State<PageViewComponent>
   Widget _buildList(int page, ScrollController scrollController) {
     final currentPage = HomeController.to.state.currentIndex.value;
     final hasPadding = currentPage == 1 || currentPage == 2 || currentPage == 4;
-    return RefresherWidget(
-      scrollController: scrollController,
-      itemCount: GlobalLogic.to
-          .getListSize(page, GlobalLogic.to.databaseInitOver.value),
-      enablePullUp: false,
-      enablePullDown: false,
-      isGridView: page == 1,
-
-      ///当前列表是否网格显示
-      columnNum: 3,
-      crossAxisSpacing: 10.w,
-      mainAxisSpacing: 10.h,
-      leftPadding: hasPadding ? 16.w : 0,
-      rightPadding: hasPadding ? 16.w : 0,
-      aspectRatio: 0.9,
-      listItem: (cxt, index) {
-        return _buildListItem(index, page);
+    return FlexibleScrollbar(
+      controller: scrollController,
+      scrollThumbBuilder: (ScrollbarInfo info) {
+        return AnimatedContainer(
+          width: info.isDragging ? 10.w : 6.w,
+          height: info.thumbMainAxisSize,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5.r),
+            color: Get.isDarkMode ? Colors.grey.withOpacity(info.isDragging ? 1 : 0.6) : Colors.black.withOpacity(info.isDragging ? 1 : 0.6),
+          ),
+          duration: const Duration(seconds: 1),
+        );
       },
+      child: RefresherWidget(
+        scrollController: scrollController,
+        itemCount: GlobalLogic.to
+            .getListSize(page, GlobalLogic.to.databaseInitOver.value),
+        enablePullUp: false,
+        enablePullDown: false,
+        isGridView: page == 1,
+
+        ///当前列表是否网格显示
+        columnNum: 3,
+        crossAxisSpacing: 10.w,
+        mainAxisSpacing: 10.h,
+        leftPadding: hasPadding ? 16.w : 0,
+        rightPadding: hasPadding ? 16.w : 0,
+        aspectRatio: 0.9,
+        listItem: (cxt, index) {
+          return _buildListItem(index, page);
+        }
+      )
     );
   }
 
