@@ -124,6 +124,7 @@ class _RefresherWidgetState extends State<RefresherWidget> {
         ),
         child: !widget.isGridView
             ? ListView.separated(
+                cacheExtent: 3000,
                 itemCount: widget.itemCount,
                 itemBuilder: widget.listItem,
                 controller: widget.scrollController,
