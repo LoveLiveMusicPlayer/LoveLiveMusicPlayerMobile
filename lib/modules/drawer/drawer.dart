@@ -256,7 +256,7 @@ class _DrawerPageState extends State<DrawerPage> {
               icon: Assets.drawerDrawerShare,
               text: "强制刷新",
               colorWithBG: false,
-              onTap: () {
+              onTap: (controller) {
                 Get.back();
                 Carplay.getInstance().forceReload();
               },
