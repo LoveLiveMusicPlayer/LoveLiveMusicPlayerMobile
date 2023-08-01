@@ -9,12 +9,12 @@ import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/routes.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
-import 'package:vibration/vibration.dart';
 
 ///歌曲
 class ListViewItemSong extends StatefulWidget {
@@ -94,10 +94,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
     if (!SDUtils.allowEULA) {
       return;
     }
-    final hasVibrator = await Vibration.hasVibrator();
-    if (hasVibrator == true) {
-      Vibration.vibrate(amplitude: 50, duration: 150);
-    }
+    AppUtils.vibrate();
     if (!HomeController.to.state.isSelect.value) {
       SmartDialog.compatible.show(
           widget: TwoButtonDialog(

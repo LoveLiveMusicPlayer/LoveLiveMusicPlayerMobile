@@ -26,6 +26,7 @@ import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 import 'package:umeng_common_sdk/umeng_common_sdk.dart';
+import 'package:vibration/vibration.dart';
 
 class AppUtils {
   static CacheManager cacheManager = CacheManager(Config("imgSplash"));
@@ -505,5 +506,12 @@ class AppUtils {
 
   static wav2flac(String? path) {
     return path?.replaceAll(".wav", ".flac");
+  }
+
+  static vibrate() async {
+    final hasVibrator = await Vibration.hasVibrator();
+    if (hasVibrator == true) {
+      Vibration.vibrate(amplitude: 50, duration: 150);
+    }
   }
 }
