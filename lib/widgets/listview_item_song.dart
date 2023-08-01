@@ -96,7 +96,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
     }
     final hasVibrator = await Vibration.hasVibrator();
     if (hasVibrator == true) {
-      Vibration.vibrate();
+      Vibration.vibrate(amplitude: 50, duration: 150);
     }
     if (!HomeController.to.state.isSelect.value) {
       SmartDialog.compatible.show(

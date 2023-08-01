@@ -132,11 +132,11 @@ class _PageViewComponentState extends State<PageViewComponent>
       controller: scrollController,
       scrollThumbBuilder: (ScrollbarInfo info) {
         return AnimatedContainer(
-          width: info.isDragging ? 10.w : 6.w,
+          width: info.isDragging ? 12.w : 10.w,
           height: info.thumbMainAxisSize,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5.r),
-            color: Get.isDarkMode ? Colors.grey.withOpacity(info.isDragging ? 1 : 0.6) : Colors.black.withOpacity(info.isDragging ? 1 : 0.6),
+            color: Colors.grey.withOpacity(0.6),
           ),
           duration: const Duration(seconds: 1),
         );
