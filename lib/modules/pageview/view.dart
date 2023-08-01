@@ -13,6 +13,7 @@ import 'package:lovelivemusicplayer/pages/home/widget/listview_item_album.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_singer.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_song_sheet.dart';
 import 'package:lovelivemusicplayer/routes.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/widgets/listview_item_song.dart';
 import 'package:lovelivemusicplayer/widgets/refresher_widget.dart';
 
@@ -130,13 +131,14 @@ class _PageViewComponentState extends State<PageViewComponent>
     final hasPadding = currentPage == 1 || currentPage == 2 || currentPage == 4;
     return FlexibleScrollbar(
       controller: scrollController,
+      touchBar: () => AppUtils.vibrate(),
       scrollThumbBuilder: (ScrollbarInfo info) {
         return AnimatedContainer(
-          width: info.isDragging ? 10.w : 6.w,
+          width: info.isDragging ? 12.w : 10.w,
           height: info.thumbMainAxisSize,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5.r),
-            color: Get.isDarkMode ? Colors.grey.withOpacity(info.isDragging ? 1 : 0.6) : Colors.black.withOpacity(info.isDragging ? 1 : 0.6),
+            color: Colors.grey.withOpacity(0.6),
           ),
           duration: const Duration(seconds: 1),
         );
