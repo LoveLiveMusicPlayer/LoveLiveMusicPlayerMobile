@@ -317,7 +317,7 @@ class GlobalLogic extends SuperController
       controller.animateTo(0,
           duration: const Duration(milliseconds: 200), curve: Curves.ease);
     } catch (e) {
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }
   }
 

@@ -295,7 +295,7 @@ class _DataSyncState extends State<DataSync> {
       }
     }, onError: (e) {
       SmartDialog.compatible.showToast('connect_fail'.tr);
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }, cancelOnError: true);
     isConnected = true;
     setState(() {});

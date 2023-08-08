@@ -85,7 +85,7 @@ class SDUtils {
         file.createSync(recursive: true);
       }
     } catch (e) {
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }
   }
 
@@ -97,7 +97,7 @@ class SDUtils {
         file.createSync(recursive: true);
       }
     } catch (e) {
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }
   }
 
@@ -113,7 +113,7 @@ class SDUtils {
       SpUtil.put(Const.spBackgroundPhoto, fileName);
       GlobalLogic.to.setBgPhoto(filePath);
     } catch (e) {
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }
   }
 
@@ -130,7 +130,7 @@ class SDUtils {
         });
       }
     } catch (e) {
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }
   }
 

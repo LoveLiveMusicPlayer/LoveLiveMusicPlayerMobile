@@ -19,6 +19,9 @@ abstract class MusicDao {
   @Query("SELECT * FROM Music WHERE albumId = :albumId")
   Future<List<Music>> findAllMusicsByAlbumId(String albumId);
 
+  @Query("SELECT * FROM Music WHERE albumId = :albumId AND `existFile` = 1")
+  Future<List<Music>> findAllExistMusicsByAlbumId(String albumId);
+
   @Query('SELECT * FROM Music WHERE musicId = :musicId')
   Future<Music?> findMusicByUId(String musicId);
 
