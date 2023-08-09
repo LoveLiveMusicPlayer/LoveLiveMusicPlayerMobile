@@ -22,7 +22,7 @@ class MenuDetailsPage extends StatefulWidget {
 }
 
 class _MenuDetailsPageState extends State<MenuDetailsPage> {
-  final music = <Music>[];
+  final musicList = <Music>[];
   Menu? menu;
   late Widget bottom;
 
@@ -37,12 +37,12 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
   refreshData() {
     Future.delayed(Duration.zero, () async {
       menu = await DBLogic.to.menuDao.findMenuById(NestedController.to.menuId);
-      final musicList = menu?.music;
-      music.clear();
-      if (musicList != null && musicList.isNotEmpty) {
-        music.addAll(await DBLogic.to.findMusicByMusicIds(musicList));
+      final tempList = menu?.music;
+      musicList.clear();
+      if (tempList != null && tempList.isNotEmpty) {
+        musicList.addAll(await DBLogic.to.findMusicByMusicIds(tempList));
       }
-      DetailController.to.state.items = music;
+      DetailController.to.state.items = musicList;
       setState(() {});
     });
   }
@@ -58,7 +58,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
             return DetailsBody(
                 logic: logic,
                 buildCover: Hero(tag: "menu${menu?.id}", child: _buildCover()),
-                music: music,
+                music: musicList,
                 isMenu: true,
                 onRemove: (List<String> musicIds) async {
                   if (menu == null || menu!.id == 0) {

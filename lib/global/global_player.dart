@@ -72,10 +72,10 @@ class PlayerLogic extends SuperController
     mPlayer.playbackEventStream.listen((event) {},
         onError: (Object e, StackTrace st) {
       if (e is PlayerException) {
-        Log4f.e(msg: 'player error code: ${e.code}');
-        Log4f.e(msg: 'player error message: ${e.message}');
+        Log4f.i(msg: 'player error code: ${e.code}');
+        Log4f.i(msg: 'player error message: ${e.message}');
       } else {
-        Log4f.e(msg: e.toString());
+        Log4f.i(msg: e.toString());
       }
     });
 
@@ -259,7 +259,7 @@ class PlayerLogic extends SuperController
       getLrc(false);
       SmartDialog.compatible.dismiss();
     } catch (e) {
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     } finally {
       GlobalLogic.to.isHandlePlay = false;
     }

@@ -38,9 +38,9 @@ import 'utils/sd_utils.dart';
 import 'utils/sp_util.dart';
 
 // 是否需要清理数据
-const needClearApp = true;
+const needClearApp = false;
 // 当前环境
-const env = "pre";
+const env = "prod";
 
 // 是否是暗黑主题
 var isDark = false;
@@ -66,18 +66,17 @@ late RemoteHttp remoteHttp;
 late Carplay carplay;
 
 void main() async {
-  void reportErrorAndLog(FlutterErrorDetails details) {
-    if (details
-        .exceptionAsString()
-        .contains("ScrollController not attached to any scroll views")) {
+  Future<void> reportErrorAndLog(FlutterErrorDetails details) async {
+    final errorStr = details.exceptionAsString();
+    if (errorStr.contains("ScrollController not attached to any scroll views")) {
       return;
     }
     final errorMsg = {
-      "exception": details.exceptionAsString(),
+      "exception": errorStr,
       "stackTrace": details.stack.toString(),
     };
     if (kDebugMode) {
-      Log4f.e(msg: "$errorMsg");
+      Log4f.i(msg: "$errorMsg");
     }
   }
 
@@ -196,7 +195,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           AppUtils.handleShare(uri);
         }
       } catch (err) {
-        Log4f.e(msg: err.toString());
+        Log4f.i(msg: err.toString());
       }
     }
   }
@@ -208,7 +207,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         AppUtils.handleShare(uri);
       }
     }, onError: (Object err) {
-      Log4f.e(msg: err.toString());
+      Log4f.i(msg: err.toString());
     });
   }
 
@@ -385,7 +384,7 @@ addAllSplashPhoto(InitConfig config) {
 /// GetX 日志重定向
 void defaultLogWriterCallback(String value, {bool isError = false}) {
   if (isError && !value.contains("already removed")) {
-    Log4f.e(msg: value);
+    Log4f.i(msg: value);
   }
 }
 

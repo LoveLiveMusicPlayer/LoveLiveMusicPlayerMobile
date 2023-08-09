@@ -415,8 +415,8 @@ class AppUtils {
           ShareSDKPlatforms.qq);
     SharesdkPlugin.share(ShareSDKPlatforms.qq, sdkMap, (SSDKResponseState state,
         dynamic userdata, dynamic contentEntity, SSDKError error) {
-      Log4f.e(msg: "错误码: ${error.code}");
-      Log4f.e(msg: "错误原因: ${error.rawData}");
+      Log4f.i(msg: "错误码: ${error.code}");
+      Log4f.i(msg: "错误原因: ${error.rawData}");
       SmartDialog.compatible.showToast(error.rawData);
     });
   }

@@ -193,7 +193,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
       GlobalLogic.to.databaseInitOver.value = true;
     } catch (e) {
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }
     try {
       scrollToTop(HomeController.scrollController1);
@@ -293,7 +293,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         await musicDao.updateMusic(music);
       }
     } catch (e) {
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }
   }
 
@@ -318,6 +318,10 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         'SELECT * FROM Music WHERE musicId IN (${arr.join(",")}) ORDER BY INSTR($joinStr)');
     final musicArr = <Music>[];
     for (var row in tempList) {
+      final existFile = (row['existFile'] as int?) == 1;
+      if (!remoteHttp.isEnableHttp() && !existFile) {
+        continue;
+      }
       final music = Music(
           musicId: row['musicId'] as String?,
           musicName: row['musicName'] as String?,
@@ -335,7 +339,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
           timestamp: row['timestamp'] as int,
           isLove: (row['isLove'] as int) == 1,
           neteaseId: row['neteaseId'] as String?,
-          existFile: (row['existFile'] as int?) == 1);
+          existFile: existFile);
       musicArr.add(music);
     }
     return musicArr;
@@ -355,7 +359,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       await musicDao.deleteAllMusics();
       await artistDao.deleteAllArtists();
     } catch (e) {
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }
   }
 
@@ -389,13 +393,16 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       await splashDao.deleteAllSplashUrls();
       await playListMusicDao.deleteAllPlayListMusics();
     } catch (e) {
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }
   }
 
   /// 通过albumId获取专辑下的全部歌曲
   Future<List<Music>> findAllMusicsByAlbumId(String albumId) async {
-    return await musicDao.findAllMusicsByAlbumId(albumId);
+    if (remoteHttp.isEnableHttp()) {
+      return await musicDao.findAllMusicsByAlbumId(albumId);
+    }
+    return await musicDao.findAllExistMusicsByAlbumId(albumId);
   }
 
   /// 通过musicUId获取歌曲
@@ -465,7 +472,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       await findAllMenuList();
       return true;
     } catch (e) {
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }
     return false;
   }
@@ -498,7 +505,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       await findAllMenuList();
       return true;
     } catch (e) {
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }
     return false;
   }
@@ -513,7 +520,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         await findAllMenuList();
       }
     } catch (e) {
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }
   }
 
@@ -549,7 +556,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         return 1;
       }
     } catch (e) {
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }
     return -1;
   }
@@ -560,7 +567,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       await menuDao.deleteMenuById(menuId);
       await findAllMenuList();
     } catch (e) {
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }
   }
 
@@ -587,7 +594,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
             mIndex: willPlayMusicIndex, needPlay: false);
       }
     } catch (e) {
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }
   }
 
@@ -599,7 +606,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         await playListMusicDao.insertAllPlayListMusics(playMusics);
       }
     } catch (e) {
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }
   }
 
@@ -613,14 +620,14 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         if (group == Const.groupAll || music.group == group) {
           final isLove = (await loveDao.findLoveById(music.musicId!) != null);
           music.isLove = isLove;
-          if (isLove) {
+          if ((remoteHttp.isEnableHttp() || (music.existFile == true)) && isLove) {
             loveList.add(music);
           }
         }
       });
       GlobalLogic.to.loveList.value = loveList;
     } catch (e) {
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }
   }
 
@@ -643,7 +650,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
           .isLove = music.isLove;
       return music;
     } catch (e) {
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }
     return null;
   }

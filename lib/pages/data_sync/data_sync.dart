@@ -10,6 +10,7 @@ import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/ftp_cmd.dart';
 import 'package:lovelivemusicplayer/models/love.dart';
 import 'package:lovelivemusicplayer/models/menu.dart';
@@ -266,6 +267,15 @@ class _DataSyncState extends State<DataSync> {
     channel!.stream.listen((msg) async {
       final ftpCmd = ftpCmdFromJson(msg as String);
       switch (ftpCmd.cmd) {
+        case "version":
+          if ((int.tryParse(ftpCmd.body) ?? 0) != transVer) {
+            SmartDialog.compatible.showToast("version_incompatible".tr);
+            Get.back();
+            return;
+          }
+          final cmd = FtpCmd(cmd: "connected", body: '');
+          channel?.sink.add(ftpCmdToJson(cmd));
+          break;
         case "phone2pc":
           final data = transDataFromJson(ftpCmd.body);
           await replaceLoveList(data);
@@ -285,12 +295,12 @@ class _DataSyncState extends State<DataSync> {
       }
     }, onError: (e) {
       SmartDialog.compatible.showToast('connect_fail'.tr);
-      Log4f.e(msg: e.toString());
+      Log4f.i(msg: e.toString());
     }, cancelOnError: true);
     isConnected = true;
     setState(() {});
-    final cmd = FtpCmd(cmd: "connected", body: '');
-    channel?.sink.add(ftpCmdToJson(cmd));
+    final message = ftpCmdToJson(FtpCmd(cmd: "version", body: transVer.toString()));
+    channel?.sink.add(message);
   }
 
   replaceLoveList(TransData data) async {

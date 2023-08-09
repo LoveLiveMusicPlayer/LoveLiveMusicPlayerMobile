@@ -30,95 +30,98 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16.h), topRight: Radius.circular(16.h))),
       height: 560.h,
-      child: Column(
-        children: [
-          StreamBuilder<LoopMode>(
-            stream: PlayerLogic.to.mPlayer.loopModeStream,
-            builder: (context, snapshot) {
-              var loopMode = snapshot.data ?? LoopMode.off;
-              const icons = [
-                Assets.playerPlayShuffle,
-                Assets.playerPlayRecycle,
-                Assets.playerPlaySingle
-              ];
-              if (loopMode == LoopMode.all &&
-                  PlayerLogic.to.mPlayer.shuffleModeEnabled) {
-                loopMode = LoopMode.off;
-              }
-              final index = PlayerLogic.loopModes.indexOf(loopMode);
-              var header = 'shuffle_play'.tr;
-              if (index == 1) {
-                header = 'order_play'.tr;
-              } else if (index == 2) {
-                header = 'single_play'.tr;
-              }
-              return _buildItem(
-                  icons[index],
-                  "$header - ${mPlayList.length} ${'total_number_unit'.tr}",
-                  true, () {
-                final currentIndex = PlayerLogic.loopModes.indexOf(loopMode);
-                final nextIndex =
-                    (currentIndex + 1) % PlayerLogic.loopModes.length;
-                PlayerLogic.to.changeLoopMode(nextIndex);
-              }, () async {
-                mPlayList.clear();
-                await PlayerLogic.to.removeAllMusics();
-                setState(() {});
-              });
-            },
-          ),
-          Divider(
-            height: 0.5.h,
-            color: Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF,
-          ),
-          Expanded(
-              child: Padding(
-            padding: EdgeInsets.only(left: 16.h, right: 16.h),
-            child: ListView.separated(
-                itemCount: mPlayList.length,
-                padding: EdgeInsets.only(
-                    left: 0.w, top: 8.h, right: 0.w, bottom: 8.h),
-                separatorBuilder: (BuildContext context, int index) {
-                  return Container(
-                    color: Colors.transparent,
-                    height: 10.h,
-                  );
-                },
-                itemBuilder: (cxt, index) {
-                  if (mPlayList.isNotEmpty) {
-                    return ListViewItemPlaylist(
-                      index: index,
-                      musicId: mPlayList[index].musicId,
-                      name: mPlayList[index].musicName,
-                      artist: mPlayList[index].artist,
-                      onPlayTap: (index) {
-                        SmartDialog.compatible.showLoading(msg: "loading".tr);
-                        List<String> idList = [];
-                        for (var element in mPlayList) {
-                          idList.add(element.musicId);
+      child: SafeArea(
+        top: false,
+        child: Column(
+          children: [
+            StreamBuilder<LoopMode>(
+              stream: PlayerLogic.to.mPlayer.loopModeStream,
+              builder: (context, snapshot) {
+                var loopMode = snapshot.data ?? LoopMode.off;
+                const icons = [
+                  Assets.playerPlayShuffle,
+                  Assets.playerPlayRecycle,
+                  Assets.playerPlaySingle
+                ];
+                if (loopMode == LoopMode.all &&
+                    PlayerLogic.to.mPlayer.shuffleModeEnabled) {
+                  loopMode = LoopMode.off;
+                }
+                final index = PlayerLogic.loopModes.indexOf(loopMode);
+                var header = 'shuffle_play'.tr;
+                if (index == 1) {
+                  header = 'order_play'.tr;
+                } else if (index == 2) {
+                  header = 'single_play'.tr;
+                }
+                return _buildItem(
+                    icons[index],
+                    "$header - ${mPlayList.length} ${'total_number_unit'.tr}",
+                    true, () {
+                  final currentIndex = PlayerLogic.loopModes.indexOf(loopMode);
+                  final nextIndex =
+                      (currentIndex + 1) % PlayerLogic.loopModes.length;
+                  PlayerLogic.to.changeLoopMode(nextIndex);
+                }, () async {
+                  mPlayList.clear();
+                  await PlayerLogic.to.removeAllMusics();
+                  setState(() {});
+                });
+              },
+            ),
+            Divider(
+              height: 0.5.h,
+              color: Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF,
+            ),
+            Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 16.h, right: 16.h),
+                  child: ListView.separated(
+                      itemCount: mPlayList.length,
+                      padding: EdgeInsets.only(
+                          left: 0.w, top: 8.h, right: 0.w, bottom: 8.h),
+                      separatorBuilder: (BuildContext context, int index) {
+                        return Container(
+                          color: Colors.transparent,
+                          height: 10.h,
+                        );
+                      },
+                      itemBuilder: (cxt, index) {
+                        if (mPlayList.isNotEmpty) {
+                          return ListViewItemPlaylist(
+                            index: index,
+                            musicId: mPlayList[index].musicId,
+                            name: mPlayList[index].musicName,
+                            artist: mPlayList[index].artist,
+                            onPlayTap: (index) {
+                              SmartDialog.compatible.showLoading(msg: "loading".tr);
+                              List<String> idList = [];
+                              for (var element in mPlayList) {
+                                idList.add(element.musicId);
+                              }
+                              DBLogic.to
+                                  .findMusicByMusicIds(idList)
+                                  .then((musicList) {
+                                PlayerLogic.to.playMusic(musicList, mIndex: index);
+                                Future.delayed(const Duration(milliseconds: 1000))
+                                    .then((value) {
+                                  SmartDialog.compatible
+                                      .dismiss(status: SmartStatus.loading);
+                                });
+                              });
+                            },
+                            onDelTap: (index) async {
+                              await PlayerLogic.to.removeMusic(index);
+                              setState(() {});
+                            },
+                          );
+                        } else {
+                          return Container();
                         }
-                        DBLogic.to
-                            .findMusicByMusicIds(idList)
-                            .then((musicList) {
-                          PlayerLogic.to.playMusic(musicList, mIndex: index);
-                          Future.delayed(const Duration(milliseconds: 1000))
-                              .then((value) {
-                            SmartDialog.compatible
-                                .dismiss(status: SmartStatus.loading);
-                          });
-                        });
-                      },
-                      onDelTap: (index) async {
-                        await PlayerLogic.to.removeMusic(index);
-                        setState(() {});
-                      },
-                    );
-                  } else {
-                    return Container();
-                  }
-                }),
-          )),
-        ],
+                      }),
+                )),
+          ],
+        ),
       ),
     );
   }
