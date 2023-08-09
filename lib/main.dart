@@ -37,7 +37,7 @@ import 'utils/sd_utils.dart';
 import 'utils/sp_util.dart';
 
 // 是否需要清理数据
-const needClearApp = true;
+const needClearApp = false;
 // 当前环境
 const env = "prod";
 
