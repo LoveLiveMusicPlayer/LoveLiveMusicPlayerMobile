@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/global/global_theme.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
@@ -95,8 +96,20 @@ class GlobalLogic extends SuperController
       if (isWith) {
         Get.changeTheme(isDark ? darkTheme : lightTheme);
       }
+      Color color = const Color(Const.noMusicColorfulSkin);
+      final musicList = PlayerLogic.to.mPlayList;
+      if (musicList.isNotEmpty) {
+        final playListMusic =
+            musicList[PlayerLogic.to.mPlayer.currentIndex ?? 0];
+        final music =
+            await DBLogic.to.musicDao.findMusicByUId(playListMusic.musicId);
+        if (music != null) {
+          final tempColor = await AppUtils.getImagePaletteFromMusic(music);
+          color = tempColor ?? color;
+        }
+      }
       iconColor.value = hasSkin.value
-          ? const Color(Const.noMusicColorfulSkin)
+          ? color
           : isDark
               ? ColorMs.color1E2328
               : ColorMs.colorLightPrimary;
