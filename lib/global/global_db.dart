@@ -620,7 +620,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         if (group == Const.groupAll || music.group == group) {
           final isLove = (await loveDao.findLoveById(music.musicId!) != null);
           music.isLove = isLove;
-          if ((remoteHttp.isEnableHttp() || (music.existFile == true)) && isLove) {
+          if ((remoteHttp.isEnableHttp() || (music.existFile == true)) &&
+              isLove) {
             loveList.add(music);
           }
         }

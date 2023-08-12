@@ -299,7 +299,8 @@ class _DataSyncState extends State<DataSync> {
     }, cancelOnError: true);
     isConnected = true;
     setState(() {});
-    final message = ftpCmdToJson(FtpCmd(cmd: "version", body: transVer.toString()));
+    final message =
+        ftpCmdToJson(FtpCmd(cmd: "version", body: transVer.toString()));
     channel?.sink.add(message);
   }
 

@@ -61,13 +61,11 @@ class _HomeViewState extends State<HomeView>
             }, confirm: () {
               SpUtil.put(Const.spAllowPermission, true);
               initUmeng();
-              GlobalLogic.to.checkUpdate();
             }),
             backDismiss: false,
             clickBgDismissTemp: false);
       } else {
         initUmeng();
-        GlobalLogic.to.checkUpdate();
       }
     });
   }

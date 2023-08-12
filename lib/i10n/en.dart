@@ -141,6 +141,10 @@ const Map<String, String> enUS = {
   'timed_to_stop': 'Timed off',
   'timed_to_stop_remain': 'Timed off, remaining',
   'minutes': 'minute(s)',
+  'please_give_install_permission_manual':
+      'Please manually grant permission to install APK',
+  'please_give_install_permission':
+      'Upgrading requires permission to install APK, is it authorized?',
   'privacy_detail': '''Dear LLer,
 
 Please be sure to carefully read and understand all rights and restrictions set forth in the Software License Agreement (hereinafter referred to as the Agreement). Unless you accept the terms of the Agreement, you are not entitled to use the Software and related Services. Once you use the software, you will be deemed to accept the agreement.

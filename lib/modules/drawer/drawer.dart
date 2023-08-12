@@ -25,6 +25,7 @@ import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
 import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DrawerPage extends StatefulWidget {
   const DrawerPage({Key? key}) : super(key: key);
@@ -227,7 +228,11 @@ class _DrawerPageState extends State<DrawerPage> {
               text: 'update'.tr,
               colorWithBG: false,
               onTap: (controller) {
-                GlobalLogic.to.checkUpdate(manual: true);
+                if (Platform.isAndroid) {
+                  requestInstallPackagesPermission();
+                } else {
+                  GlobalLogic.to.checkUpdate(manual: true);
+                }
               },
             ),
             SizedBox(height: 8.h),
@@ -377,5 +382,34 @@ class _DrawerPageState extends State<DrawerPage> {
   bool checkFileExist(InnerMusic music) {
     return File('${SDUtils.path}${music.baseUrl}${music.musicPath}')
         .existsSync();
+  }
+
+  Future<void> requestInstallPackagesPermission() async {
+    PermissionStatus status = await Permission.requestInstallPackages.request();
+
+    if (status.isPermanentlyDenied) {
+      SmartDialog.compatible.show(
+        widget: TwoButtonDialog(
+            title: "please_give_install_permission_manual".tr,
+            isShowMsg: false,
+            onConfirmListener: () => openAppSettings()),
+      );
+    } else if (status.isDenied) {
+      // 如果权限被拒绝，你可以显示一个解释界面，然后再次请求权限
+      bool isShown =
+          await Permission.manageExternalStorage.shouldShowRequestRationale;
+      if (isShown) {
+        // 显示解释界面
+        SmartDialog.compatible.show(
+          widget: TwoButtonDialog(
+              title: "please_give_install_permission".tr,
+              isShowMsg: false,
+              onConfirmListener: () => requestInstallPackagesPermission()),
+        );
+      }
+    } else if (status.isGranted) {
+      // 权限已被授予
+      GlobalLogic.to.checkUpdate(manual: true);
+    }
   }
 }

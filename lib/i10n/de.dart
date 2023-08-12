@@ -147,6 +147,10 @@ const Map<String, String> deDE = {
   'timed_to_stop': 'Zeit abgelaufen',
   'timed_to_stop_remain': 'Auszeit, verbleibend',
   'minutes': 'Minuten',
+  'please_give_install_permission_manual':
+      'Bitte erteilen Sie manuell die Berechtigung zur Installation von APK',
+  'please_give_install_permission':
+      'Für das Upgrade ist eine Berechtigung zur Installation von APK erforderlich. Ist diese autorisiert?',
   'privacy_detail': '''Lieber LLer:
 
 Bitte stellen Sie sicher, dass Sie alle Rechte und Einschränkungen, die in der „Softwarelizenzvereinbarung“ (im Folgenden als diese Vereinbarung bezeichnet) festgelegt sind, sorgfältig lesen und verstehen, es sei denn, Sie akzeptieren die Bedingungen dieser Vereinbarung, andernfalls haben Sie kein Recht, die Software und damit verbundene zu verwenden Dienstleistungen. Sobald Sie diese Software verwenden, wird davon ausgegangen, dass Sie diese Vereinbarung akzeptiert haben.

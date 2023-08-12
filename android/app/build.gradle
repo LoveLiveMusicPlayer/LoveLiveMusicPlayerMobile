@@ -127,6 +127,19 @@ android {
         disable 'InvalidPackage'
     }
 
+    project.afterEvaluate {
+        project.android.applicationVariants.configureEach { variant ->
+            variant.outputs.each { output ->
+                output.processResources.doFirst { pm ->
+                    String manifestPath = output.processResources.manifestFile
+                    def manifestContent = file(manifestPath).getText()
+                    manifestContent = manifestContent.replace('<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>', '')
+                    println("manifestContent:" + manifestContent)
+                    file(manifestPath).write(manifestContent)
+                }
+            }
+        }
+    }
 }
 
 MobSDK {
@@ -165,6 +178,6 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation fileTree(dir: "libs", include: ["library-*.aar"])
-    implementation fileTree(dir: "libs", include: ["extension-*.aar"])
+//    implementation fileTree(dir: "libs", include: ["library-*.aar"])
+//    implementation fileTree(dir: "libs", include: ["extension-*.aar"])
 }

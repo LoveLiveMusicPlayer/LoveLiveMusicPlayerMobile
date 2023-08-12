@@ -120,7 +120,6 @@ class _DetailsBodyState extends State<DetailsBody> {
               },
               onPlayNextTap: (music) async {
                 await PlayerLogic.to.addNextMusic(music);
-                SmartDialog.compatible.showToast('add_success'.tr);
               },
               onMoreTap: (music) {
                 SmartDialog.compatible.show(

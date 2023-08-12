@@ -105,6 +105,7 @@ dependencies:
     git:
       url: https://github.com/zhushenwudi/flexible_scrollbar
       ref: master
+  permission_handler: ^10.4.3
 
 dependency_overrides:
   ffi: ^2.0.1
