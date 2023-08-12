@@ -40,7 +40,7 @@ import 'utils/sp_util.dart';
 // 是否需要清理数据
 const needClearApp = false;
 // 当前环境
-const env = "prod";
+const env = "pre";
 
 // 是否是暗黑主题
 var isDark = false;
@@ -68,7 +68,8 @@ late Carplay carplay;
 void main() async {
   Future<void> reportErrorAndLog(FlutterErrorDetails details) async {
     final errorStr = details.exceptionAsString();
-    if (errorStr.contains("ScrollController not attached to any scroll views")) {
+    if (errorStr
+        .contains("ScrollController not attached to any scroll views")) {
       return;
     }
     final errorMsg = {

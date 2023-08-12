@@ -75,51 +75,51 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
             ),
             Expanded(
                 child: Padding(
-                  padding: EdgeInsets.only(left: 16.h, right: 16.h),
-                  child: ListView.separated(
-                      itemCount: mPlayList.length,
-                      padding: EdgeInsets.only(
-                          left: 0.w, top: 8.h, right: 0.w, bottom: 8.h),
-                      separatorBuilder: (BuildContext context, int index) {
-                        return Container(
-                          color: Colors.transparent,
-                          height: 10.h,
-                        );
-                      },
-                      itemBuilder: (cxt, index) {
-                        if (mPlayList.isNotEmpty) {
-                          return ListViewItemPlaylist(
-                            index: index,
-                            musicId: mPlayList[index].musicId,
-                            name: mPlayList[index].musicName,
-                            artist: mPlayList[index].artist,
-                            onPlayTap: (index) {
-                              SmartDialog.compatible.showLoading(msg: "loading".tr);
-                              List<String> idList = [];
-                              for (var element in mPlayList) {
-                                idList.add(element.musicId);
-                              }
-                              DBLogic.to
-                                  .findMusicByMusicIds(idList)
-                                  .then((musicList) {
-                                PlayerLogic.to.playMusic(musicList, mIndex: index);
-                                Future.delayed(const Duration(milliseconds: 1000))
-                                    .then((value) {
-                                  SmartDialog.compatible
-                                      .dismiss(status: SmartStatus.loading);
-                                });
-                              });
-                            },
-                            onDelTap: (index) async {
-                              await PlayerLogic.to.removeMusic(index);
-                              setState(() {});
-                            },
-                          );
-                        } else {
-                          return Container();
-                        }
-                      }),
-                )),
+              padding: EdgeInsets.only(left: 16.h, right: 16.h),
+              child: ListView.separated(
+                  itemCount: mPlayList.length,
+                  padding: EdgeInsets.only(
+                      left: 0.w, top: 8.h, right: 0.w, bottom: 8.h),
+                  separatorBuilder: (BuildContext context, int index) {
+                    return Container(
+                      color: Colors.transparent,
+                      height: 10.h,
+                    );
+                  },
+                  itemBuilder: (cxt, index) {
+                    if (mPlayList.isNotEmpty) {
+                      return ListViewItemPlaylist(
+                        index: index,
+                        musicId: mPlayList[index].musicId,
+                        name: mPlayList[index].musicName,
+                        artist: mPlayList[index].artist,
+                        onPlayTap: (index) {
+                          SmartDialog.compatible.showLoading(msg: "loading".tr);
+                          List<String> idList = [];
+                          for (var element in mPlayList) {
+                            idList.add(element.musicId);
+                          }
+                          DBLogic.to
+                              .findMusicByMusicIds(idList)
+                              .then((musicList) {
+                            PlayerLogic.to.playMusic(musicList, mIndex: index);
+                            Future.delayed(const Duration(milliseconds: 1000))
+                                .then((value) {
+                              SmartDialog.compatible
+                                  .dismiss(status: SmartStatus.loading);
+                            });
+                          });
+                        },
+                        onDelTap: (index) async {
+                          await PlayerLogic.to.removeMusic(index);
+                          setState(() {});
+                        },
+                      );
+                    } else {
+                      return Container();
+                    }
+                  }),
+            )),
           ],
         ),
       ),

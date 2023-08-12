@@ -105,6 +105,7 @@ dependencies:
     git:
       url: https://github.com/zhushenwudi/flexible_scrollbar
       ref: master
+  permission_handler: ^10.4.3
   flutter_carplay: # Carplay支持
     git:
       url: https://github.com/zhushenwudi/flutter_carplay

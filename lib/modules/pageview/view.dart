@@ -130,39 +130,37 @@ class _PageViewComponentState extends State<PageViewComponent>
     final currentPage = HomeController.to.state.currentIndex.value;
     final hasPadding = currentPage == 1 || currentPage == 2 || currentPage == 4;
     return FlexibleScrollbar(
-      controller: scrollController,
-      touchBar: () => AppUtils.vibrate(),
-      scrollThumbBuilder: (ScrollbarInfo info) {
-        return AnimatedContainer(
-          width: info.isDragging ? 12.w : 10.w,
-          height: info.thumbMainAxisSize,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5.r),
-            color: Colors.grey.withOpacity(0.6),
-          ),
-          duration: const Duration(seconds: 1),
-        );
-      },
-      child: RefresherWidget(
-        scrollController: scrollController,
-        itemCount: GlobalLogic.to
-            .getListSize(page, GlobalLogic.to.databaseInitOver.value),
-        enablePullUp: false,
-        enablePullDown: false,
-        isGridView: page == 1,
+        controller: scrollController,
+        touchBar: () => AppUtils.vibrate(),
+        scrollThumbBuilder: (ScrollbarInfo info) {
+          return AnimatedContainer(
+            width: info.isDragging ? 12.w : 10.w,
+            height: info.thumbMainAxisSize,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.r),
+              color: Colors.grey.withOpacity(0.6),
+            ),
+            duration: const Duration(seconds: 1),
+          );
+        },
+        child: RefresherWidget(
+            scrollController: scrollController,
+            itemCount: GlobalLogic.to
+                .getListSize(page, GlobalLogic.to.databaseInitOver.value),
+            enablePullUp: false,
+            enablePullDown: false,
+            isGridView: page == 1,
 
-        ///当前列表是否网格显示
-        columnNum: 3,
-        crossAxisSpacing: 10.w,
-        mainAxisSpacing: 10.h,
-        leftPadding: hasPadding ? 16.w : 0,
-        rightPadding: hasPadding ? 16.w : 0,
-        aspectRatio: 0.9,
-        listItem: (cxt, index) {
-          return _buildListItem(index, page);
-        }
-      )
-    );
+            ///当前列表是否网格显示
+            columnNum: 3,
+            crossAxisSpacing: 10.w,
+            mainAxisSpacing: 10.h,
+            leftPadding: hasPadding ? 16.w : 0,
+            rightPadding: hasPadding ? 16.w : 0,
+            aspectRatio: 0.9,
+            listItem: (cxt, index) {
+              return _buildListItem(index, page);
+            }));
   }
 
   Widget _buildListItem(int index, int page) {

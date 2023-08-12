@@ -43,7 +43,8 @@ class _SystemSettingsState extends State<SystemSettings> {
 
   @override
   void initState() {
-    GlobalLogic.to.timerController ??= ButtonController('timed_to_stop'.tr, false);
+    GlobalLogic.to.timerController ??=
+        ButtonController('timed_to_stop'.tr, false);
     maxHeight = GlobalLogic.to.hasSkin.value
         ? scrollViewWithoutTachiHeight
         : scrollViewWithTachiHeight;

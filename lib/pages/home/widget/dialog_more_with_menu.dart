@@ -61,12 +61,12 @@ class DialogMoreWithMenu extends StatelessWidget {
             SmartDialog.compatible.dismiss();
             SmartDialog.compatible.show(
                 widget: TwoButtonDialog(
-                  title: 'warning_choose'.tr,
-                  msg: 'need_delete_menu'.tr,
-                  onConfirmListener: () {
-                    DBLogic.to.deleteMenuById(menu.id);
-                  },
-                ));
+              title: 'warning_choose'.tr,
+              msg: 'need_delete_menu'.tr,
+              onConfirmListener: () {
+                DBLogic.to.deleteMenuById(menu.id);
+              },
+            ));
           }),
           _buildItem(Assets.drawerDrawerShare, 'share_menu'.tr, true, () {
             SmartDialog.compatible.dismiss();

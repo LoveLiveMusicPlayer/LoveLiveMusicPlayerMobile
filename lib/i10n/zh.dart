@@ -136,6 +136,8 @@ const Map<String, String> zhCN = {
   'timed_to_stop': '定时关闭',
   'timed_to_stop_remain': '定时关闭，还剩',
   'minutes': '分钟',
+  'please_give_install_permission_manual': '请手动赋予安装APK权限',
+  'please_give_install_permission': '升级需要授予安装APK权限，是否授权？',
   'privacy_detail': '''亲爱的LLer：
 
 请务必认真阅读和理解《软件许可使用协议》（以下简称：本协议）中规定的所有权利和限制，除非您接受协议条款，否则您无权使用本软件及其相关服务。您一旦使用本软件，将视为对协议的接受。
