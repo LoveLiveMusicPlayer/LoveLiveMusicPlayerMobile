@@ -69,7 +69,6 @@
 		<string>mqqapi</string>
 		<string>timapi</string>
 		<string>mqqopensdkminiapp</string>
-		<string>mqqopensdknopasteboard</string>
 		<string>mqqopensdkapiV2</string>
 		<string>mqqopensdkapiV3</string>
 		<string>mqqopensdkapiV4</string>
@@ -122,9 +121,9 @@
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsArbitraryLoads</key>
-        <true/>
-    </dict>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>
