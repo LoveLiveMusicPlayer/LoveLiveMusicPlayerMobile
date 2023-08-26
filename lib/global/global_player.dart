@@ -16,6 +16,7 @@ import 'package:lovelivemusicplayer/models/lyric.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/models/play_list_music.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
+import 'package:lovelivemusicplayer/pages/carplay/carplay.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
@@ -106,6 +107,12 @@ class PlayerLogic extends SuperController
         await DBLogic.to.refreshMusicTimestamp(currentMusic.musicId);
         GlobalLogic.to.isHandlePlay = false;
         getLrc(false);
+        for (var music in GlobalLogic.to.musicList) {
+          if (music.musicId == mPlayList[index].musicId) {
+            Carplay.getInstance().changeMusicByMusic(music);
+            break;
+          }
+        }
       }
     });
   }
@@ -204,7 +211,7 @@ class PlayerLogic extends SuperController
   Future<void> playMusic(List<Music> musicList,
       {int? mIndex, bool needPlay = true}) async {
     if (isCanUseSmartDialog) {
-      SmartDialog.compatible.showLoading(msg: 'loading'.tr);
+      SmartDialog.showLoading(msg: 'loading'.tr);
     }
     // 随机播放时任取一个index
     int index = mIndex ?? 0;
@@ -214,6 +221,7 @@ class PlayerLogic extends SuperController
     AppUtils.uploadEvent("Playing",
         params: {"music": musicList[index].musicName ?? ""});
     Log4f.v(msg: "播放曲目: ${musicList[index].musicName}");
+    Carplay.getInstance().changeMusicByMusic(musicList[index]);
     try {
       // 如果上一次处理没有结束，直接跳过
       if (GlobalLogic.to.isHandlePlay) {
@@ -240,8 +248,8 @@ class PlayerLogic extends SuperController
       await mPlayer.stop();
       await audioSourceList.clear();
       if (audioList.isEmpty) {
-        SmartDialog.compatible.dismiss();
-        SmartDialog.compatible.showToast('now_can_not_play'.tr);
+        SmartDialog.dismiss();
+        SmartDialog.showToast('now_can_not_play'.tr);
         return;
       }
       await audioSourceList.addAll(audioList);
@@ -257,7 +265,7 @@ class PlayerLogic extends SuperController
       }
       await DBLogic.to.refreshMusicTimestamp(musicList[index].musicId!);
       getLrc(false);
-      SmartDialog.compatible.dismiss();
+      SmartDialog.dismiss();
     } catch (e) {
       Log4f.i(msg: e.toString());
     } finally {

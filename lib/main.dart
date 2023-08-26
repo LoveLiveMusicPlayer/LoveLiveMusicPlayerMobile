@@ -166,14 +166,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     subscription = eventBus.on<CloseOpen>().listen((event) {
       // 初始化结束后，将启动屏关闭
       FlutterNativeSplash.remove();
-      carplay = Carplay.getInstance();
       // 获取热修复补丁包
       CodePush.getInstance().hasNewVersion().then((hasNewVersion) {
         if (hasNewVersion) {
           CodePush.getInstance().upgrade();
         }
       });
-
     });
 
     handleInitialUri();

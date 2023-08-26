@@ -1,10 +1,25 @@
+import 'dart:async';
+
 import 'package:flutter_carplay/flutter_carplay.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/const.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/main.dart';
+import 'package:lovelivemusicplayer/models/album.dart';
+import 'package:lovelivemusicplayer/models/music.dart';
+import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:synchronized/synchronized.dart';
+import 'package:uuid/uuid.dart';
 
 class Carplay {
   static Carplay? _singleton;
   static final Lock _lock = Lock();
+  static String? currentPlayingUniqueId;
+  static final List<CPListSection> sectionMusic = [];
+  static final musicList = <CPListItem>[];
+  static final albumList = <CPListItem>[];
 
   static Carplay getInstance() {
     if (_singleton == null) {
@@ -25,160 +40,202 @@ class Carplay {
   final FlutterCarplay _flutterCarplay = FlutterCarplay();
 
   void _init() {
-    final List<CPListSection> section1Items = [];
-    section1Items.add(CPListSection(
+    sectionMusic.add(CPListSection(
       items: [
         CPListItem(
-          text: "点我播放",
-          isPlaying: false,
-          playbackProgress: 0,
-          image: Assets.logoLogo,
-          onPress: (complete, self) async {
-            print("随机播放");
-            await Future.delayed(const Duration(milliseconds: 1000));
-            complete();
-          },
-        ),
+            text: "当前播放: 暂无歌曲",
+            isPlaying: false,
+            playbackProgress: 0,
+            image: Assets.logoLogo,
+            onPress: (complete, self) async {
+              print("随机播放");
+              await DBLogic.to.findAllListByGroup(Const.groupAll);
+              await PlayerLogic.to.changeLoopMode(0);
+              await PlayerLogic.to
+                  .playMusic(GlobalLogic.to.filterMusicListByAlbums(0));
+              complete();
+            },
+            elementId: genUniqueId(null)),
       ],
       header: "音乐盲盒",
     ));
-    section1Items.add(CPListSection(
+    sectionMusic.add(CPListSection(
       items: [
         CPListItem(
-          text: "μ's",
-          detailText: "u咩",
-          onPress: (complete, self) {
-            openListTemplate();
-          },
-          image: Assets.logoLogoUs,
-          accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
-        ),
+            text: convertToName(Const.groupUs),
+            detailText: "u咩",
+            onPress: (complete, self) async {
+              GlobalLogic.to.currentGroup.value = Const.groupUs;
+              await openMusicList();
+              complete();
+            },
+            image: Assets.logoLogoUs,
+            accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
+            elementId: genUniqueId(null)),
         CPListItem(
-          text: "Aqours",
-          detailText: "u咩",
-          onPress: (complete, self) {
-            openListTemplate();
-          },
-          image: Assets.logoLogoAqours,
-          accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
-        ),
+            text: convertToName(Const.groupAqours),
+            detailText: "u咩",
+            onPress: (complete, self) async {
+              GlobalLogic.to.currentGroup.value = Const.groupAqours;
+              await openMusicList();
+              complete();
+            },
+            image: Assets.logoLogoAqours,
+            accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
+            elementId: genUniqueId(null)),
         CPListItem(
-          text: "虹咲学园学园偶像同好会",
-          detailText: "u咩",
-          onPress: (complete, self) {
-            openListTemplate();
-          },
-          image: Assets.logoLogoNiji,
-          accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
-        ),
+            text: convertToName(Const.groupSaki),
+            detailText: "u咩",
+            onPress: (complete, self) async {
+              GlobalLogic.to.currentGroup.value = Const.groupSaki;
+              await openMusicList();
+              complete();
+            },
+            image: Assets.logoLogoNiji,
+            accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
+            elementId: genUniqueId(null)),
         CPListItem(
-          text: "Liella!",
-          detailText: "u咩",
-          onPress: (complete, self) {
-            openListTemplate();
-          },
-          image: Assets.logoLogoLiella,
-          accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
-        ),
+            text: convertToName(Const.groupLiella),
+            detailText: "u咩",
+            onPress: (complete, self) async {
+              GlobalLogic.to.currentGroup.value = Const.groupLiella;
+              await openMusicList();
+              complete();
+            },
+            image: Assets.logoLogoLiella,
+            accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
+            elementId: genUniqueId(null)),
         CPListItem(
-          text: "莲之空女学院",
-          detailText: "u咩",
-          onPress: (complete, self) {
-            openListTemplate();
-          },
-          image: Assets.logoLogoHasunosora,
-          accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
-        ),
+            text: convertToName(Const.groupHasunosora),
+            detailText: "u咩",
+            onPress: (complete, self) async {
+              GlobalLogic.to.currentGroup.value = Const.groupHasunosora;
+              await openMusicList();
+              complete();
+            },
+            image: Assets.logoLogoHasunosora,
+            accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
+            elementId: genUniqueId(null)),
         CPListItem(
-          text: "幻日夜羽",
-          detailText: "u咩",
-          onPress: (complete, self) {
-            openListTemplate();
-          },
-          image: Assets.logoLogoYohane,
-          accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
-        ),
+            text: convertToName(Const.groupYohane),
+            detailText: "u咩",
+            onPress: (complete, self) async {
+              GlobalLogic.to.currentGroup.value = Const.groupYohane;
+              await openMusicList();
+              complete();
+            },
+            image: Assets.logoLogoYohane,
+            accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
+            elementId: genUniqueId(null)),
         CPListItem(
-          text: "其他",
-          detailText: "u咩",
-          onPress: (complete, self) {
-            openListTemplate();
-          },
-          image: Assets.logoLogoCombine,
-          accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
-        ),
+            text: convertToName(Const.groupCombine),
+            detailText: "u咩",
+            onPress: (complete, self) async {
+              GlobalLogic.to.currentGroup.value = Const.groupCombine;
+              await openMusicList();
+              complete();
+            },
+            image: Assets.logoLogoCombine,
+            accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
+            elementId: genUniqueId(null)),
       ],
       header: "团组列表",
     ));
 
-    // 点击同步播放
-    // await FlutterCarplay.showSharedNowPlaying(animated: true);
-
-    final List<CPListSection> section2Items = [];
-    section2Items.add(CPListSection(
+    final List<CPListSection> sectionAlbum = [];
+    sectionAlbum.add(CPListSection(
       items: [
         CPListItem(
-          text: "μ's",
-          detailText: "Action template that the user can perform on an alert",
-          onPress: (complete, self) {
-            showAlert();
-            complete();
-          },
-        ),
+            text: convertToName(Const.groupUs),
+            detailText: "u咩",
+            onPress: (complete, self) async {
+              GlobalLogic.to.currentGroup.value = Const.groupUs;
+              await openAlbumList();
+              complete();
+            },
+            image: Assets.logoLogoUs,
+            accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
+            elementId: genUniqueId(null)),
         CPListItem(
-          text: "Aqours",
-          detailText: "A template that displays and manages a grid of items",
-          onPress: (complete, self) {
-            openGridTemplate();
-            complete();
-          },
-        ),
+            text: convertToName(Const.groupAqours),
+            detailText: "u咩",
+            onPress: (complete, self) async {
+              GlobalLogic.to.currentGroup.value = Const.groupAqours;
+              await openAlbumList();
+              complete();
+            },
+            image: Assets.logoLogoAqours,
+            accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
+            elementId: genUniqueId(null)),
         CPListItem(
-          text: "",
-          detailText: "A template that displays a modal action sheet",
-          onPress: (complete, self) {
-            showActionSheet();
-            complete();
-          },
-        ),
+            text: convertToName(Const.groupSaki),
+            detailText: "u咩",
+            onPress: (complete, self) async {
+              GlobalLogic.to.currentGroup.value = Const.groupSaki;
+              await openAlbumList();
+              complete();
+            },
+            image: Assets.logoLogoNiji,
+            accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
+            elementId: genUniqueId(null)),
         CPListItem(
-          text: "List Template",
-          detailText: "Displays and manages a list of items",
-          onPress: (complete, self) {
-            openListTemplate();
-            complete();
-          },
-        ),
+            text: convertToName(Const.groupLiella),
+            detailText: "u咩",
+            onPress: (complete, self) async {
+              GlobalLogic.to.currentGroup.value = Const.groupLiella;
+              await openAlbumList();
+              complete();
+            },
+            image: Assets.logoLogoLiella,
+            accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
+            elementId: genUniqueId(null)),
         CPListItem(
-          text: "Information Template",
-          detailText: "Displays a list of items and up to three actions",
-          onPress: (complete, self) {
-            openInformationTemplate();
-            complete();
-          },
-        ),
+            text: convertToName(Const.groupHasunosora),
+            detailText: "u咩",
+            onPress: (complete, self) async {
+              GlobalLogic.to.currentGroup.value = Const.groupHasunosora;
+              await openAlbumList();
+              complete();
+            },
+            image: Assets.logoLogoHasunosora,
+            accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
+            elementId: genUniqueId(null)),
         CPListItem(
-          text: "Point Of Interest Template",
-          detailText: "Displays a Map with points of interest.",
-          onPress: (complete, self) {
-            openPoiTemplate();
-            complete();
-          },
-        ),
+            text: convertToName(Const.groupYohane),
+            detailText: "u咩",
+            onPress: (complete, self) async {
+              GlobalLogic.to.currentGroup.value = Const.groupYohane;
+              await openAlbumList();
+              complete();
+            },
+            image: Assets.logoLogoYohane,
+            accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
+            elementId: genUniqueId(null)),
+        CPListItem(
+            text: convertToName(Const.groupCombine),
+            detailText: "u咩",
+            onPress: (complete, self) async {
+              GlobalLogic.to.currentGroup.value = Const.groupCombine;
+              await openAlbumList();
+              complete();
+            },
+            image: Assets.logoLogoCombine,
+            accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
+            elementId: genUniqueId(null)),
       ],
-      header: "团组",
+      header: "团组列表",
     ));
 
     FlutterCarplay.setRootTemplate(
       rootTemplate: CPTabBarTemplate(
         templates: [
           CPListTemplate(
-            sections: section1Items,
+            sections: sectionMusic,
             title: "歌曲",
             systemIcon: "music.note.house",
           ),
           CPListTemplate(
-            sections: section2Items,
+            sections: sectionAlbum,
             title: "专辑",
             systemIcon: "music.note.list",
           ),
@@ -196,164 +253,85 @@ class Carplay {
       animated: true,
     );
 
+    _flutterCarplay.forceUpdateRootTemplate();
+
     _flutterCarplay.addListenerOnConnectionChange(onCarplayConnectionChange);
+
+    Future.delayed(const Duration(seconds: 1)).then((value) {
+      changeMusicByMusic(PlayerLogic.to.playingMusic.value);
+    });
+  }
+
+  void changeMusicByMusic(Music music) {
+    int index = -1;
+    for (var i = 0; i < musicList.length; i++) {
+      if (musicList[i].isPlaying == true) {
+        musicList[i].setIsPlaying(false);
+      }
+      if (musicList[i].uniqueId == music.musicId) {
+        index = i;
+      }
+    }
+    if (index > -1) {
+      currentPlayingUniqueId = music.musicId;
+      musicList[index].setIsPlaying(true);
+    }
+    String? imagePath;
+    if (music.existFile == true) {
+      imagePath = "file://${SDUtils.path}${music.baseUrl}${music.coverPath}";
+    } else if (remoteHttp.canUseHttpUrl()) {
+      imagePath =
+          "${remoteHttp.httpUrl.value}${music.baseUrl}${music.coverPath}";
+    }
+    sectionMusic[0].items[0].updateTextAndImage(
+        "当前播放: ${music.musicName ?? "暂无歌曲"}", imagePath ?? Assets.logoLogo);
   }
 
   void onCarplayConnectionChange(CPConnectionStatusTypes status) {
-    // Do things when carplay state is connected, background or disconnected
     connectionStatus = status;
   }
 
-  void showAlert() {
-    FlutterCarplay.showAlert(
-      template: CPAlertTemplate(
-        titleVariants: ["Alert Title"],
-        actions: [
-          CPAlertAction(
-            title: "Okay",
-            style: CPAlertActionStyles.normal,
-            onPress: () {
-              FlutterCarplay.popModal(animated: true);
-              print("Okay pressed");
-            },
-          ),
-          CPAlertAction(
-            title: "Cancel",
-            style: CPAlertActionStyles.cancel,
-            onPress: () {
-              FlutterCarplay.popModal(animated: true);
-              print("Cancel pressed");
-            },
-          ),
-          CPAlertAction(
-            title: "Remove",
-            style: CPAlertActionStyles.destructive,
-            onPress: () {
-              FlutterCarplay.popModal(animated: true);
-              print("Remove pressed");
-            },
-          ),
-        ],
-      ),
-    );
-  }
+  Function handlePlayMusic = (Function() complete, CPListItem cp) async {
+    for (var element in musicList) {
+      if (element.isPlaying == true) {
+        element.setIsPlaying(false);
+      }
+    }
+    cp.setIsPlaying(true);
+    currentPlayingUniqueId = cp.uniqueId;
+    for (var i = 0; i < GlobalLogic.to.musicList.length; i++) {
+      if (GlobalLogic.to.musicList[i].musicId == cp.uniqueId) {
+        var completer = Completer<void>();
+        await PlayerLogic.to
+            .playMusic(GlobalLogic.to.musicList, mIndex: i)
+            .then((_) => completer.complete());
+        await completer.future;
+        break;
+      }
+    }
+    complete();
+  };
 
-  void showActionSheet() {
-    FlutterCarplay.showActionSheet(
-      template: CPActionSheetTemplate(
-        title: "Action Sheet Template",
-        message: "This is an example message.",
-        actions: [
-          CPAlertAction(
-            title: "Cancel",
-            style: CPAlertActionStyles.cancel,
-            onPress: () {
-              print("Cancel pressed in action sheet");
-              FlutterCarplay.popModal(animated: true);
-            },
-          ),
-          CPAlertAction(
-            title: "Dismiss",
-            style: CPAlertActionStyles.destructive,
-            onPress: () {
-              print("Dismiss pressed in action sheet");
-              FlutterCarplay.popModal(animated: true);
-            },
-          ),
-          CPAlertAction(
-            title: "Ok",
-            style: CPAlertActionStyles.normal,
-            onPress: () {
-              print("Ok pressed in action sheet");
-              FlutterCarplay.popModal(animated: true);
-            },
-          ),
-        ],
-      ),
-    );
-  }
+  Future<void> openMusicList() async {
+    await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
+    musicList.clear();
+    await Future.forEach<Music>(GlobalLogic.to.musicList, (music) {
+      musicList.add(CPListItem(
+          text: music.musicName ?? "No name",
+          onPress: (complete, cp) => handlePlayMusic(complete, cp),
+          isPlaying: music.musicId == currentPlayingUniqueId,
+          elementId: genUniqueId(music.musicId)));
+    });
 
-  void addNewTemplate(CPListTemplate newTemplate) {
-    final currentRootTemplate = FlutterCarplay.rootTemplate!;
-
-    currentRootTemplate.templates.add(newTemplate);
-
-    FlutterCarplay.setRootTemplate(
-      rootTemplate: currentRootTemplate,
-      animated: true,
-    );
-    _flutterCarplay.forceUpdateRootTemplate();
-  }
-
-  void removeLastTemplate() {
-    final currentRootTemplate = FlutterCarplay.rootTemplate!;
-
-    currentRootTemplate.templates.remove(currentRootTemplate.templates.last);
-
-    FlutterCarplay.setRootTemplate(
-      rootTemplate: currentRootTemplate,
-      animated: true,
-    );
-    _flutterCarplay.forceUpdateRootTemplate();
-  }
-
-  void openGridTemplate() {
-    FlutterCarplay.push(
-      template: CPGridTemplate(
-        title: "Grid Template",
-        buttons: [
-          for (var i = 1; i < 9; i++)
-            CPGridButton(
-              titleVariants: ["Item $i"],
-              // ----- TRADEMARKS RIGHTS INFORMATION BEGIN -----
-              // The official Flutter logo is used from the link below.
-              // For more information, please visit and read
-              // Flutter Brand Guidelines Website: https://flutter.dev/brand
-              //
-              // FLUTTER AND THE RELATED LOGO ARE TRADEMARKS OF Google LLC.
-              // WE ARE NOT ENDORSED BY OR AFFILIATED WITH Google LLC.
-              // ----- TRADEMARKS RIGHTS INFORMATION END -----
-              image: Assets.logoLogo,
-              onPress: () {
-                print("Grid Button $i pressed");
-              },
-            ),
-        ],
-      ),
-      animated: true,
-    );
-  }
-
-  void openListTemplate() {
-    FlutterCarplay.push(
+    await FlutterCarplay.push(
       template: CPListTemplate(
         sections: [
           CPListSection(
-            header: "A Section",
-            items: [
-              CPListItem(text: "Item 1"),
-              CPListItem(text: "Item 2"),
-              CPListItem(text: "Item 3"),
-              CPListItem(text: "Item 4"),
-            ],
-          ),
-          CPListSection(
-            header: "B Section",
-            items: [
-              CPListItem(text: "Item 5"),
-              CPListItem(text: "Item 6"),
-            ],
-          ),
-          CPListSection(
-            header: "C Section",
-            items: [
-              CPListItem(text: "Item 7"),
-              CPListItem(text: "Item 8"),
-            ],
-          ),
+            items: musicList,
+          )
         ],
         systemIcon: "systemIcon",
-        title: "List Template",
+        title: convertToName(GlobalLogic.to.currentGroup.value),
         backButton: CPBarButton(
           title: "Back",
           style: CPBarButtonStyles.none,
@@ -366,55 +344,109 @@ class Carplay {
     );
   }
 
-  void openInformationTemplate() {
-    FlutterCarplay.push(
-        template: CPInformationTemplate(
-            title: "Title",
-            layout: CPInformationTemplateLayout.twoColumn,
-            actions: [
-          CPTextButton(
-              title: "Button Title 1",
-              onPress: () {
-                print("Button 1");
-              }),
-          CPTextButton(
-              title: "Button Title 2",
-              onPress: () {
-                print("Button 2");
-              }),
+  Future<void> openAlbumList() async {
+    await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
+    albumList.clear();
+    await Future.forEach<Album>(GlobalLogic.to.albumList, (album) {
+      albumList.add(CPListItem(
+        elementId: genUniqueId(album.albumId),
+        text: album.albumName ?? "No name",
+        onPress: (complete, cp) async {
+          GlobalLogic.to.musicList.value =
+              await DBLogic.to.findAllMusicsByAlbumId(album.albumId!);
+          await openAlbumMusicList(album);
+          complete();
+        },
+        accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
+      ));
+    });
+
+    await FlutterCarplay.push(
+      template: CPListTemplate(
+        sections: [
+          CPListSection(
+            items: albumList,
+          )
         ],
-            informationItems: [
-          CPInformationItem(title: "Item title 1", detail: "detail 1"),
-          CPInformationItem(title: "Item title 2", detail: "detail 2"),
-        ]));
+        systemIcon: "systemIcon",
+        title: convertToName(GlobalLogic.to.currentGroup.value),
+        backButton: CPBarButton(
+          title: "Back",
+          style: CPBarButtonStyles.none,
+          onPress: () {
+            FlutterCarplay.pop(animated: true);
+          },
+        ),
+      ),
+      animated: true,
+    );
   }
 
-  void openPoiTemplate() {
+  Future<void> openAlbumMusicList(Album album) async {
+    musicList.clear();
+    final tempList = await DBLogic.to.findAllMusicsByAlbumId(album.albumId!);
+    await Future.forEach<Music>(tempList, (music) {
+      musicList.add(CPListItem(
+          elementId: genUniqueId(music.musicId),
+          onPress: (complete, cp) => handlePlayMusic(complete, cp),
+          text: music.musicName ?? "No name"));
+    });
     FlutterCarplay.push(
-        template: CPPointOfInterestTemplate(title: "Title", poi: [
-          CPPointOfInterest(
-            latitude: 51.5052,
-            longitude: 7.4938,
-            title: "Title",
-            subtitle: "Subtitle",
-            summary: "Summary",
-            detailTitle: "DetailTitle",
-            detailSubtitle: "detailSubtitle",
-            detailSummary: "detailSummary",
-            image: Assets.logoLogo,
-            primaryButton: CPTextButton(
-                title: "Primary",
-                onPress: () {
-                  print("Primary button pressed");
-                }),
-            secondaryButton: CPTextButton(
-                title: "Secondary",
-                onPress: () {
-                  print("Secondary button pressed");
-                }),
-          ),
-        ]),
-        animated: true);
+      template: CPListTemplate(
+        sections: [
+          CPListSection(
+            items: musicList,
+          )
+        ],
+        systemIcon: "systemIcon",
+        title: splitName(album.albumName ?? "No name"),
+        backButton: CPBarButton(
+          title: "Back",
+          style: CPBarButtonStyles.none,
+          onPress: () {
+            FlutterCarplay.pop(animated: true);
+          },
+        ),
+      ),
+      animated: true,
+    );
+  }
+
+  String genUniqueId(String? musicId) {
+    return musicId ?? const Uuid().v4();
+  }
+
+  String convertToName(String group) {
+    String name = "";
+    switch (group) {
+      case Const.groupSaki:
+        name = "虹咲学园学园偶像同好会";
+        break;
+      case Const.groupHasunosora:
+        name = "莲之空女学院";
+        break;
+      case Const.groupYohane:
+        name = "幻日夜羽";
+        break;
+      case Const.groupCombine:
+        name = "其他";
+        break;
+      default:
+        name = group;
+        break;
+    }
+    return splitName(name);
+  }
+
+  String splitName(String name) {
+    String title;
+    const maxTitleLength = 30;
+    if (name.length > maxTitleLength) {
+      title = "${name.substring(0, maxTitleLength)}...";
+    } else {
+      title = name;
+    }
+    return title;
   }
 
   void forceReload() {

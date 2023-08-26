@@ -7,9 +7,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: windowScene)
 
-        let flutterEngine = FlutterEngine(name: "SceneDelegateEngine")
-        flutterEngine.run()
-        GeneratedPluginRegistrant.register(with: flutterEngine)
         let controller = FlutterViewController.init(engine: flutterEngine, nibName: nil, bundle: nil)
         window?.rootViewController = controller
         window?.makeKeyAndVisible()
