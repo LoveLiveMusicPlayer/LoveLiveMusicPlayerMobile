@@ -262,7 +262,7 @@ class _DrawerPageState extends State<DrawerPage> {
   handleUpdateData() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     int currentNumber = int.tryParse(packageInfo.buildNumber) ?? 0;
-    SmartDialog.compatible.showLoading(msg: 'downloading'.tr);
+    SmartDialog.showLoading(msg: 'downloading'.tr);
     Network.get(Const.dataUrl, success: (result) {
       if (result is List) {
         int index = -1;
@@ -283,42 +283,42 @@ class _DrawerPageState extends State<DrawerPage> {
             CloudData data = CloudData.fromJson(res);
             SpUtil.getInt(Const.spDataVersion).then((currentVersion) async {
               Log4f.d(msg: "云端版本号: ${data.version}");
-              await SmartDialog.compatible.dismiss(status: SmartStatus.loading);
+              await SmartDialog.dismiss(status: SmartStatus.loading);
               if (currentVersion == data.version) {
-                SmartDialog.compatible.show(
-                    widget: TwoButtonDialog(
-                  title: 'now_is_latest'.tr,
-                  isShowMsg: false,
-                  onConfirmListener: () {
-                    parseUpdateDataSource(data);
-                  },
-                ));
+                SmartDialog.show(
+                    builder: (BuildContext context) => TwoButtonDialog(
+                          title: 'now_is_latest'.tr,
+                          isShowMsg: false,
+                          onConfirmListener: () {
+                            parseUpdateDataSource(data);
+                          },
+                        ));
               } else if (currentVersion < data.version) {
                 parseUpdateDataSource(data);
               }
             });
           } else {
-            SmartDialog.compatible.dismiss(status: SmartStatus.loading);
-            SmartDialog.compatible.showToast('data_error'.tr);
+            SmartDialog.dismiss(status: SmartStatus.loading);
+            SmartDialog.showToast('data_error'.tr);
           }
         }, error: (err) {
           Log4f.i(msg: err);
-          SmartDialog.compatible.dismiss(status: SmartStatus.loading);
-          SmartDialog.compatible.showToast('fetch_songs_fail'.tr);
+          SmartDialog.dismiss(status: SmartStatus.loading);
+          SmartDialog.showToast('fetch_songs_fail'.tr);
         }, isShowDialog: false);
       } else {
-        SmartDialog.compatible.dismiss(status: SmartStatus.loading);
-        SmartDialog.compatible.showToast('data_error'.tr);
+        SmartDialog.dismiss(status: SmartStatus.loading);
+        SmartDialog.showToast('data_error'.tr);
       }
     }, error: (err) {
       Log4f.i(msg: err);
-      SmartDialog.compatible.dismiss(status: SmartStatus.loading);
-      SmartDialog.compatible.showToast('fetch_songs_fail'.tr);
+      SmartDialog.dismiss(status: SmartStatus.loading);
+      SmartDialog.showToast('fetch_songs_fail'.tr);
     }, isShowDialog: false);
   }
 
   parseUpdateDataSource(CloudData data) async {
-    SmartDialog.compatible.showLoading(msg: 'importing'.tr);
+    SmartDialog.showLoading(msg: 'importing'.tr);
     await DBLogic.to.clearAllMusic();
     await DBLogic.to.artistDao.deleteAllArtists();
     await loopParseData(data.music.us, data.album.us, Const.groupUs);
@@ -335,7 +335,7 @@ class _DrawerPageState extends State<DrawerPage> {
     await loopParseData(
         data.music.yohane, data.album.yohane, Const.groupYohane);
     await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
-    SmartDialog.compatible.dismiss(status: SmartStatus.loading);
+    SmartDialog.dismiss(status: SmartStatus.loading);
     SpUtil.put(Const.spDataVersion, data.version);
   }
 
@@ -388,24 +388,22 @@ class _DrawerPageState extends State<DrawerPage> {
     PermissionStatus status = await Permission.requestInstallPackages.request();
 
     if (status.isPermanentlyDenied) {
-      SmartDialog.compatible.show(
-        widget: TwoButtonDialog(
-            title: "please_give_install_permission_manual".tr,
-            isShowMsg: false,
-            onConfirmListener: () => openAppSettings()),
-      );
+      SmartDialog.show(
+          builder: (BuildContext context) => TwoButtonDialog(
+              title: "please_give_install_permission_manual".tr,
+              isShowMsg: false,
+              onConfirmListener: () => openAppSettings()));
     } else if (status.isDenied) {
       // 如果权限被拒绝，你可以显示一个解释界面，然后再次请求权限
       bool isShown =
           await Permission.manageExternalStorage.shouldShowRequestRationale;
       if (isShown) {
         // 显示解释界面
-        SmartDialog.compatible.show(
-          widget: TwoButtonDialog(
-              title: "please_give_install_permission".tr,
-              isShowMsg: false,
-              onConfirmListener: () => requestInstallPackagesPermission()),
-        );
+        SmartDialog.show(
+            builder: (BuildContext context) => TwoButtonDialog(
+                title: "please_give_install_permission".tr,
+                isShowMsg: false,
+                onConfirmListener: () => requestInstallPackagesPermission()));
       }
     } else if (status.isGranted) {
       // 权限已被授予
