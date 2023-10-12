@@ -107,12 +107,6 @@ class PlayerLogic extends SuperController
         await DBLogic.to.refreshMusicTimestamp(currentMusic.musicId);
         GlobalLogic.to.isHandlePlay = false;
         getLrc(false);
-        for (var music in GlobalLogic.to.musicList) {
-          if (music.musicId == mPlayList[index].musicId) {
-            Carplay.getInstance().changeMusicByMusic(music);
-            break;
-          }
-        }
       }
     });
   }
@@ -221,7 +215,6 @@ class PlayerLogic extends SuperController
     AppUtils.uploadEvent("Playing",
         params: {"music": musicList[index].musicName ?? ""});
     Log4f.v(msg: "播放曲目: ${musicList[index].musicName}");
-    Carplay.getInstance().changeMusicByMusic(musicList[index]);
     try {
       // 如果上一次处理没有结束，直接跳过
       if (GlobalLogic.to.isHandlePlay) {
@@ -640,6 +633,7 @@ class PlayerLogic extends SuperController
         GlobalLogic.to.iconColor.value = color ?? Get.theme.primaryColor;
       });
     }
+    Carplay.changePlayingMusic(playingMusic.value);
   }
 
   /// 按钮点击上一曲

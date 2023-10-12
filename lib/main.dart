@@ -20,6 +20,7 @@ import 'package:lovelivemusicplayer/global/global_binding.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/pages/carplay/carplay.dart';
+import 'package:lovelivemusicplayer/pages/carplay/carplay_mine.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/code_push.dart';
 import 'package:lovelivemusicplayer/utils/completer_ext.dart';
@@ -163,7 +164,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    subscription = eventBus.on<CloseOpen>().listen((event) {
+    subscription = eventBus.on<CloseOpen>().listen((event) async {
+      // 在Carplay的init函数中初始化CarplayMine会导致程序卡死，提前初始化
+      await CarplayMine.getInstance();
+      Carplay.init();
       // 初始化结束后，将启动屏关闭
       FlutterNativeSplash.remove();
       // 获取热修复补丁包
@@ -245,7 +249,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             fallbackLocale: Translation.fallbackLocale,
             translations: Translation(),
             builder: FlutterSmartDialog.init(builder: (context, widget) {
-              isCanUseSmartDialog = true;
               return MediaQuery(
                   // 设置文字大小不随系统设置改变
                   data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),

@@ -99,7 +99,7 @@ dependencies:
   uni_links: ^0.5.1 # 回跳APP插件
   crypto: ^3.0.3 # 加密
   vibration: ^1.8.1 # 振动
-  flutter_inappwebview: ^6.0.0-beta.24+1 # WebView
+  flutter_inappwebview: ^6.0.0-beta.25 # WebView
   shorebird_code_push: ^1.1.0 # 热修复
   flexible_scrollbar: # 滚动条
     git:

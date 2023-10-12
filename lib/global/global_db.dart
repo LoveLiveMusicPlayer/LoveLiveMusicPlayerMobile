@@ -32,6 +32,7 @@ import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/models/play_list_music.dart';
 import 'package:lovelivemusicplayer/models/trans_data.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
+import 'package:lovelivemusicplayer/pages/carplay/carplay.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
@@ -602,6 +603,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   Future<void> updatePlayingList(List<PlayListMusic> playMusics) async {
     try {
       if (playMusics.isNotEmpty) {
+        Carplay.parse4PlayList(playMusics);
         await playListMusicDao.deleteAllPlayListMusics();
         await playListMusicDao.insertAllPlayListMusics(playMusics);
       }
@@ -616,13 +618,15 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   Future<void> findAllLoveListByGroup(String group) async {
     try {
       final loveList = <Music>[];
-      await Future.forEach<Music>(GlobalLogic.to.musicList, (music) async {
-        if (group == Const.groupAll || music.group == group) {
-          final isLove = (await loveDao.findLoveById(music.musicId!) != null);
-          music.isLove = isLove;
-          if ((remoteHttp.isEnableHttp() || (music.existFile == true)) &&
-              isLove) {
-            loveList.add(music);
+      var allLoves = await DBLogic.to.loveDao.findAllLoves();
+      await Future.forEach<Love>(allLoves, (love) async {
+        final music = await DBLogic.to.musicDao.findMusicByUId(love.musicId);
+        if (music != null) {
+          if (group == Const.groupAll || music.group == group) {
+            music.isLove = true;
+            if ((remoteHttp.isEnableHttp() || (music.existFile == true))) {
+              loveList.add(music);
+            }
           }
         }
       });
