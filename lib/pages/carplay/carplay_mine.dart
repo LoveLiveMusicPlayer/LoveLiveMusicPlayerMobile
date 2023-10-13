@@ -65,7 +65,7 @@ class CarplayMine {
             await _openMenu(menu.id);
             complete();
           },
-          image: menuList.length < 200
+          image: menuList.length < 20
               ? CarplayUtil.music2Image(firstMusic)
               : null,
           accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
@@ -122,7 +122,7 @@ class CarplayMine {
           onPress: (complete, cp) {
             Carplay.handlePlayMusic(complete, cp, _loveList);
           },
-          image: allLoves.length < 200 ? CarplayUtil.music2Image(music) : null,
+          image: allLoves.length < 20 ? CarplayUtil.music2Image(music) : null,
           isPlaying: PlayerLogic.to.playingMusic.value.musicId == love.musicId,
           accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
         ));
@@ -176,7 +176,7 @@ class CarplayMine {
           onPress: (complete, cp) {
             Carplay.handlePlayMusic(complete, cp, _musicList);
           },
-          image: musicList.length < 200 ? CarplayUtil.music2Image(music) : null,
+          image: musicList.length < 20 ? CarplayUtil.music2Image(music) : null,
           isPlaying: music.musicId == PlayerLogic.to.playingMusic.value.musicId,
           elementId: CarplayUtil.genUniqueId(music.musicId)));
     });

@@ -52,6 +52,7 @@ s.public_header_files = 'Classes/**/*.h'
 s.dependency 'Flutter'
 s.dependency 'mob_sharesdk'
 s.dependency 'mob_sharesdk/ShareSDKPlatforms/QQ'
+s.dependency 'mob_sharesdk/ShareSDKPlatforms/QQ_Lite'
 
 s.ios.deployment_target = '12.0'
 end

@@ -52,7 +52,7 @@ dependencies:
   common_utils: ^2.1.0 # 工具类
   flutter_screenutil: ^5.8.4 # 屏幕适配方案
   we_slide: ^2.4.0 # 播放器屏幕操作组件
-  flutter_native_splash: ^2.3.1 # 启动页
+  flutter_native_splash: ^2.3.2 # 启动页
   marquee_text: # 走马灯滚动文字
     git:
       url: https://gitee.com/zhushenwudi/flutter-marquee-text

@@ -125,7 +125,7 @@ class CarplayAlbum {
           await openAlbumMusicList(album);
           complete();
         },
-        image: GlobalLogic.to.albumList.length < 200
+        image: GlobalLogic.to.albumList.length < 20
             ? CarplayUtil.album2Image(album)
             : null,
         accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
@@ -169,7 +169,7 @@ class CarplayAlbum {
           onPress: (complete, cp) {
             Carplay.handlePlayMusic(complete, cp, _musicList);
           },
-          image: tempList.length < 200 ? CarplayUtil.music2Image(music) : null,
+          image: tempList.length < 20 ? CarplayUtil.music2Image(music) : null,
           isPlaying: music.musicId == PlayerLogic.to.playingMusic.value.musicId,
           text: music.musicName ?? "No name",
           detailText: music.artist));

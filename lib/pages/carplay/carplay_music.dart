@@ -138,7 +138,7 @@ class CarplayMusic {
           onPress: (complete, cp) {
             Carplay.handlePlayMusic(complete, cp, _musicList);
           },
-          image: GlobalLogic.to.musicList.length < 200
+          image: GlobalLogic.to.musicList.length < 20
               ? CarplayUtil.music2Image(music)
               : null,
           isPlaying: music.musicId == PlayerLogic.to.playingMusic.value.musicId,

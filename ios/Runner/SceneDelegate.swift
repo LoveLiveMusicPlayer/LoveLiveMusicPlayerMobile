@@ -10,5 +10,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let controller = FlutterViewController.init(engine: flutterEngine, nibName: nil, bundle: nil)
         window?.rootViewController = controller
         window?.makeKeyAndVisible()
+        controller.loadDefaultSplashScreenView()
     }
 }
