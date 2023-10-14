@@ -178,6 +178,6 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-//    implementation fileTree(dir: "libs", include: ["library-*.aar"])
-//    implementation fileTree(dir: "libs", include: ["extension-*.aar"])
+    implementation fileTree(dir: "libs", include: ["library-*.aar"])
+    implementation fileTree(dir: "libs", include: ["extension-*.aar"])
 }
