@@ -665,4 +665,7 @@ class PlayerLogic extends SuperController
   void onResumed() {
     needRefreshLyric.value = true;
   }
+
+  @override
+  void onHidden() {}
 }

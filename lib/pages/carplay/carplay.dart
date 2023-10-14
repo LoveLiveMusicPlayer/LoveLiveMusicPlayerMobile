@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter_carplay/flutter_carplay.dart';
-import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
@@ -112,11 +111,6 @@ class Carplay {
     }
 
     complete();
-  }
-
-  static void forceReload() {
-    Log4f.d(msg: "forceReload");
-    _flutterCarplay.forceUpdateRootTemplate();
   }
 
   void dispose() {

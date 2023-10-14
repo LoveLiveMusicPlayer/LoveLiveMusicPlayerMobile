@@ -26,7 +26,6 @@ import 'package:lovelivemusicplayer/utils/code_push.dart';
 import 'package:lovelivemusicplayer/utils/completer_ext.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
-import 'package:uni_links/uni_links.dart';
 
 import 'global/const.dart';
 import 'global/global_player.dart';
@@ -120,6 +119,15 @@ void main() async {
       runApp(const MyApp());
 
       AppUtils.setStatusBar(isDark);
+
+      const platform = MethodChannel('llmp');
+      platform.setMethodCallHandler((call) async {
+        if (call.method == 'handleSchemeRequest') {
+          if (call.arguments != null) {
+            AppUtils.handleShare(call.arguments['url']);
+          }
+        }
+      });
     },
     (error, stackTrace) {
       // 没被catch的异常
@@ -137,8 +145,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   StreamSubscription? subscription;
-  bool isInitialUriIsHandled = false;
-  StreamSubscription? uriSub;
 
   @override
   void didChangeLocales(List<Locale>? locales) {
@@ -178,9 +184,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       });
     });
 
-    handleInitialUri();
-    handleIncomingLinks();
-
     PaintingBinding.instance.imageCache.maximumSizeBytes = 1024 * 1024 * 100;
 
     ShareSDKRegister register = ShareSDKRegister();
@@ -188,36 +191,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     SharesdkPlugin.regist(register);
   }
 
-  // 第一次打开
-  Future<void> handleInitialUri() async {
-    if (!isInitialUriIsHandled) {
-      isInitialUriIsHandled = true;
-      try {
-        final uri = await getInitialUri();
-        if (uri != null) {
-          AppUtils.handleShare(uri);
-        }
-      } catch (err) {
-        Log4f.i(msg: err.toString());
-      }
-    }
-  }
-
-  // 程序打开时介入
-  void handleIncomingLinks() {
-    uriSub = uriLinkStream.listen((Uri? uri) async {
-      if (uri != null) {
-        AppUtils.handleShare(uri);
-      }
-    }, onError: (Object err) {
-      Log4f.i(msg: err.toString());
-    });
-  }
-
   @override
   void dispose() {
     subscription?.cancel();
-    uriSub?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }

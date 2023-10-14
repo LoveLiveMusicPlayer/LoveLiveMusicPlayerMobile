@@ -48,7 +48,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 apply plugin: 'com.mob.sdk'
 
 android {
-    compileSdkVersion 33
+    compileSdk 34
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17

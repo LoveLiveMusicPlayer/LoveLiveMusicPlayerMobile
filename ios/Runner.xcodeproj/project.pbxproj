@@ -217,7 +217,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin";
+			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin\n";
 		};
 		43C767853172FD48E98AC0CD /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -266,7 +266,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build";
+			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build\n";
 		};
 		B423724E4A1CE21355C6A7C7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -616,8 +616,6 @@
 					"\"sqflite\"",
 					"-framework",
 					"\"umeng_common_sdk\"",
-					"-framework",
-					"\"uni_links\"",
 					"-framework",
 					"\"updater\"",
 					"-framework",
@@ -1012,8 +1010,6 @@
 					"-framework",
 					"\"umeng_common_sdk\"",
 					"-framework",
-					"\"uni_links\"",
-					"-framework",
 					"\"updater\"",
 					"-framework",
 					"\"url_launcher_ios\"",
@@ -1298,8 +1294,6 @@
 					"\"sqflite\"",
 					"-framework",
 					"\"umeng_common_sdk\"",
-					"-framework",
-					"\"uni_links\"",
 					"-framework",
 					"\"updater\"",
 					"-framework",

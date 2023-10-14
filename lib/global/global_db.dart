@@ -729,4 +729,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
   @override
   void onResumed() {}
+
+  @override
+  void onHidden() {}
 }

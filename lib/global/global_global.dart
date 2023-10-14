@@ -438,4 +438,7 @@ class GlobalLogic extends SuperController
       timer = null;
     }
   }
+
+  @override
+  void onHidden() {}
 }
