@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="42px" height="42px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 4</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="歌库-播放详情页-车载版-暗色" transform="translate(-60.000000, -548.000000)">
+            <g id="编组-4" transform="translate(60.000000, 548.000000)">
+                <rect id="矩形备份-6" x="0" y="0" width="42" height="42" rx="6"></rect>
+                <g id="编组" transform="translate(7.016512, 9.508856)">
+                    <rect id="矩形" fill-opacity="0.01" fill="#FFFFFF" fill-rule="nonzero" x="3.48348783" y="0.99114375" width="21" height="21"></rect>
+                    <path d="M7.69091831,0 C3.44334299,0 0,3.44336396 0,7.69091831 C0,15.3818366 9.08926709,22.3735805 13.9834878,24 C18.8777086,22.3735805 27.9669757,15.3818366 27.9669757,7.69091831 C27.9669757,3.44336396 24.5236117,0 20.2760574,0 C17.6749189,0 15.3753343,1.29130518 13.9834878,3.26780127 C12.5916414,1.29130518 10.2920568,0 7.69091831,0 Z" id="路径" fill="#F940A7"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

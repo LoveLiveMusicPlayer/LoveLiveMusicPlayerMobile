@@ -46,7 +46,7 @@ class CarplayMine {
               await _openLoveList();
               complete();
             },
-            image: Assets.carplayHeartFill,
+            image: Assets.driveCarplayFavorite,
             accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
             elementId: CarplayUtil.genUniqueId(null))
       ],

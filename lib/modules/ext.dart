@@ -361,14 +361,18 @@ Widget touchIcon(IconData icon, GestureTapCallback onTap,
 Widget touchIconByAsset(
     {required String path,
     GestureTapCallback? onTap,
+    double padding = 0,
     Color color = const Color(0xff999999),
     double width = 20,
     double height = 20}) {
   return InkWell(
     onTap: onTap,
-    child: SvgPicture.asset(path,
-        width: width.h,
-        height: height.h,
-        colorFilter: ColorFilter.mode(color, BlendMode.srcIn)),
+    child: Padding(
+      padding: EdgeInsets.all(padding),
+      child: SvgPicture.asset(path,
+          width: width.h,
+          height: height.h,
+          colorFilter: ColorFilter.mode(color, BlendMode.srcIn)),
+    ),
   );
 }

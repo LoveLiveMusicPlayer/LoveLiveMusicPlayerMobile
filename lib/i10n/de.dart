@@ -26,6 +26,7 @@ const Map<String, String> deDE = {
   'view_log': 'Protokoll ansehen',
   'privacy_agreement': 'Datenschutzvereinbarung',
   'system_settings': 'Systemeinstellungen',
+  'drive_mode': "Fahren ist",
   'night_mode': 'Nacht-Modus',
   'downloading': 'Wird heruntergeladen',
   'now_is_latest': 'Bereits die neuste Version, überschreiben?',

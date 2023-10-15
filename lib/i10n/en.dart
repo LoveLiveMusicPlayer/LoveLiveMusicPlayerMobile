@@ -25,6 +25,7 @@ const Map<String, String> enUS = {
   'view_log': 'View logs',
   'privacy_agreement': 'Privacy agreement',
   'system_settings': 'System settings',
+  'drive_mode': 'Drive mode',
   'night_mode': 'Night mode',
   'downloading': 'Downloading data',
   'now_is_latest': 'It is the latest version. Do you want to overwrite it?',

@@ -25,6 +25,7 @@ const Map<String, String> zhCN = {
   'view_log': '查看日志',
   'privacy_agreement': '隐私协议',
   'system_settings': '系统设置',
+  'drive_mode': '驾驶模式',
   'night_mode': '夜间模式',
   'downloading': '下载数据中',
   'now_is_latest': '已是最新版本，是否覆盖？',
