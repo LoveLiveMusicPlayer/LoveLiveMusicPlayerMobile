@@ -11,17 +11,15 @@ import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 
 class SwipeImageCarousel extends StatefulWidget {
-  final Music currentPlay;
-
-  const SwipeImageCarousel({super.key, required this.currentPlay});
+  const SwipeImageCarousel({super.key});
 
   @override
-  _SwipeImageCarouselState createState() => _SwipeImageCarouselState();
+  SwipeImageCarouselState createState() => SwipeImageCarouselState();
 }
 
-class _SwipeImageCarouselState extends State<SwipeImageCarousel>
-    with SingleTickerProviderStateMixin {
+class SwipeImageCarouselState extends State<SwipeImageCarousel> {
   late PageController _pageController;
+  late Worker playingMusicListener;
 
   int _currentPage = 0;
   int fingerCount = 0;
@@ -30,12 +28,24 @@ class _SwipeImageCarouselState extends State<SwipeImageCarousel>
 
   @override
   void initState() {
-    _currentPage = GlobalLogic.to.musicList.indexWhere((element) => element.musicId == PlayerLogic.to.playingMusic.value.musicId);
+    refreshCurrent(true);
     _pageController =
         PageController(initialPage: _currentPage, viewportFraction: 0.65);
     _pageController.addListener(_handlePageController);
 
+    final playerLogic = Get.find<PlayerLogic>();
+    playingMusicListener = ever(playerLogic.playingMusic, (Music music) {
+      refreshCurrent(false);
+    });
     super.initState();
+  }
+
+  refreshCurrent(bool isInit) {
+    _currentPage = PlayerLogic.to.mPlayList.indexWhere((element) =>
+        element.musicId == PlayerLogic.to.playingMusic.value.musicId);
+    if (!isInit) {
+      _pageController.jumpToPage(_currentPage);
+    }
   }
 
   void _handlePageController() {
@@ -52,14 +62,11 @@ class _SwipeImageCarouselState extends State<SwipeImageCarousel>
     });
     // Log4f.d(msg: "currentOffset: $currentOffset  screen: ${viewportFraction * Get.width}");
 
-    if (currentIndex < 0 || currentIndex >= GlobalLogic.to.musicList.length) {
+    if (currentIndex < 0 || currentIndex >= PlayerLogic.to.mPlayList.length) {
       return;
     }
     if (_currentPage != currentIndex) {
       Log4f.d(msg: "当前选中: $currentIndex");
-      // 如果位置发生变化，执行你想要的操作
-      // ...
-
       // 更新当前页面索引
       // 不调用setState，避免触发onPageChanged回调
       _currentPage = currentIndex;
@@ -68,6 +75,7 @@ class _SwipeImageCarouselState extends State<SwipeImageCarousel>
 
   @override
   void dispose() {
+    playingMusicListener.dispose();
     _pageController.removeListener(_handlePageController);
     _pageController.dispose();
     super.dispose();
@@ -110,7 +118,7 @@ class _SwipeImageCarouselState extends State<SwipeImageCarousel>
               _currentPage = page;
             });
           },
-          itemCount: GlobalLogic.to.musicList.length,
+          itemCount: PlayerLogic.to.mPlayList.length,
           itemBuilder: (context, index) {
             int currentIndex = _currentPage.round();
             double scaleFactor = 0.75;
@@ -125,27 +133,50 @@ class _SwipeImageCarouselState extends State<SwipeImageCarousel>
 
             Log4f.d(msg: "$centerViewOffset");
 
-            final imagePath =
-                SDUtils.getImgPathFromMusic(GlobalLogic.to.musicList[index]);
-            Image imageView;
-            if (imagePath == null) {
-              imageView = Image.asset(Assets.logoLogo, fit: BoxFit.cover, width: 240.r, height: 240.r);
-            } else {
-              imageView = Image.file(File(imagePath), fit: BoxFit.cover, width: 240.r, height: 240.r);
-            }
+            return FutureBuilder<String?>(
+              future: SDUtils.getImgPathFromMusicId(PlayerLogic.to.mPlayList[index].musicId),
+              builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Error: ${snapshot.error}'),
+                  );
+                } else {
+                  String? imagePath = snapshot.data;
 
-            return Center(
-                child: Transform.scale(
-              scale: scale,
-              child: Transform.translate(
-                offset: Offset(0, isCenter ? -centerViewOffset : 0),
-                // 乘以动画值
-                child: ClipOval(
-                  child: imageView,
-                ),
-              ),
-            ));
+                  Image imageView;
+                  if (imagePath == null) {
+                    imageView = Image.asset(
+                      Assets.logoLogo,
+                      fit: BoxFit.cover,
+                      width: 240.r,
+                      height: 240.r,
+                    );
+                  } else {
+                    imageView = Image.file(
+                      File(imagePath),
+                      fit: BoxFit.cover,
+                      width: 240.r,
+                      height: 240.r,
+                    );
+                  }
+
+                  return Center(
+                    child: Transform.scale(
+                      scale: scale,
+                      child: Transform.translate(
+                        offset: Offset(0, isCenter ? -centerViewOffset : 0),
+                        // 乘以动画值
+                        child: ClipOval(
+                          child: imageView,
+                        ),
+                      ),
+                    ),
+                  );
+                }
+              },
+            );
           },
-        ));
+        ),
+    );
   }
 }

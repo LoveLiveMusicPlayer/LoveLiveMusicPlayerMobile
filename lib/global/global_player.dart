@@ -204,6 +204,9 @@ class PlayerLogic extends SuperController
   /// 播放指定列表的歌曲
   Future<void> playMusic(List<Music> musicList,
       {int? mIndex, bool needPlay = true}) async {
+    if (musicList.isEmpty) {
+      return;
+    }
     if (isCanUseSmartDialog) {
       SmartDialog.showLoading(msg: 'loading'.tr);
     }

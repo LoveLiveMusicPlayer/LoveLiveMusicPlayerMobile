@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/const.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
@@ -34,11 +38,7 @@ class _DriveModeState extends State<DriveMode> {
                 color: ColorMs.color1E2328,
                 child: Column(
                   children: [
-                    Expanded(
-                      child: SwipeImageCarousel(
-                        currentPlay: PlayerLogic.to.playingMusic.value
-                      ),
-                    ),
+                    const Expanded(child: SwipeImageCarousel()),
                     SizedBox(
                       height: 280.h,
                       child: Column(
@@ -77,13 +77,18 @@ class _DriveModeState extends State<DriveMode> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       touchIconByAsset(
-                                          path: Assets.driveCarDisFavorite,
-                                          onTap: () {},
+                                          path: PlayerLogic
+                                                  .to.playingMusic.value.isLove
+                                              ? Assets.driveCarFavoriate
+                                              : Assets.driveCarDisFavorite,
+                                          onTap: () =>
+                                              PlayerLogic.to.toggleLove(),
                                           width: 38.w,
                                           height: 38.w,
-                                          color: Get.isDarkMode
-                                              ? ColorMs.colorCCCCCC
-                                              : ColorMs.color666666),
+                                          color: PlayerLogic
+                                                  .to.playingMusic.value.isLove
+                                              ? const Color(0xFFF940A7)
+                                              : Colors.white),
                                       SizedBox(width: 38.w),
                                       Padding(
                                         padding: EdgeInsets.all(8.w),
@@ -118,12 +123,30 @@ class _DriveModeState extends State<DriveMode> {
                           renderBottomItem(
                               text: "我喜欢",
                               assetPath: Assets.driveCarFavoriteBottom,
-                              onTap: () {},
+                              onTap: () async {
+                                GlobalLogic.to.currentGroup.value = Const.groupAll;
+                                await DBLogic.to.findAllListByGroup(Const.groupAll);
+                                final loveList = GlobalLogic.to.loveList;
+                                if (loveList.isEmpty) {
+                                  SmartDialog.showToast("暂无我喜欢的歌曲");
+                                  return;
+                                }
+                                PlayerLogic.to.playMusic(loveList);
+                              },
                               color: const Color(0xFFE650A4)),
                           renderBottomItem(
                               text: "最近播放",
                               assetPath: Assets.driveCarPlaylistBottom,
-                              onTap: () {},
+                              onTap: () async {
+                                GlobalLogic.to.currentGroup.value = Const.groupAll;
+                                await DBLogic.to.findAllListByGroup(Const.groupAll);
+                                final recentList = GlobalLogic.to.recentList;
+                                if (recentList.isEmpty) {
+                                  SmartDialog.showToast("暂无最近播放的歌曲");
+                                  return;
+                                }
+                                PlayerLogic.to.playMusic(recentList);
+                              },
                               color: const Color(0xFF7FCB90)),
                         ],
                       ),

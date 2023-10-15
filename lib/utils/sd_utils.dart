@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
@@ -54,6 +55,14 @@ class SDUtils {
           "${remoteHttp.httpUrl.value}${music.baseUrl}${music.coverPath}";
     }
     return imagePath;
+  }
+
+  static Future<String?> getImgPathFromMusicId(String musicId) async {
+    final music = await DBLogic.to.musicDao.findMusicByUId(musicId);
+    if (music == null) {
+      return null;
+    }
+    return getImgPathFromMusic(music);
   }
 
   ///从album中获取图片完整路径
