@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
@@ -30,12 +29,18 @@ class _DriveModeState extends State<DriveMode> {
         onWillPop: () async => false,
         child: Obx(() {
           return Scaffold(
-              backgroundColor: ColorMs.color2B333A,
-              appBar: MyAppbar(backgroundColor: ColorMs.color1E2328),
+              backgroundColor:
+                  Get.isDarkMode ? ColorMs.color2B333A : ColorMs.colorE7F2FF,
+              appBar: MyAppbar(
+                  backgroundColor: Get.isDarkMode
+                      ? ColorMs.color1E2328
+                      : ColorMs.colorLightPrimary),
               body: SafeArea(
                   child: Container(
                 padding: EdgeInsets.only(top: 10.h),
-                color: ColorMs.color1E2328,
+                color: Get.isDarkMode
+                    ? ColorMs.color1E2328
+                    : ColorMs.colorLightPrimary,
                 child: Column(
                   children: [
                     const Expanded(child: SwipeImageCarousel()),
@@ -52,7 +57,9 @@ class _DriveModeState extends State<DriveMode> {
                                     text: PlayerLogic
                                             .to.playingMusic.value.musicName ??
                                         'no_songs'.tr),
-                                style: TextStyleMs.whiteBold_24,
+                                style: Get.isDarkMode
+                                    ? TextStyleMs.whiteBold_24
+                                    : TextStyleMs.blackBold_24,
                                 textAlign: TextAlign.center,
                                 speed: 15),
                           ),
@@ -67,7 +74,9 @@ class _DriveModeState extends State<DriveMode> {
                                   child: Text(
                                       PlayerLogic.to.playingJPLrc["current"] ??
                                           "",
-                                      style: TextStyleMs.white_20,
+                                      style: Get.isDarkMode
+                                          ? TextStyleMs.white_20
+                                          : TextStyleMs.black_20,
                                       maxLines: 2,
                                       textAlign: TextAlign.center)),
                               Column(
@@ -88,7 +97,9 @@ class _DriveModeState extends State<DriveMode> {
                                           color: PlayerLogic
                                                   .to.playingMusic.value.isLove
                                               ? const Color(0xFFF940A7)
-                                              : Colors.white),
+                                              : Get.isDarkMode
+                                                  ? Colors.white
+                                                  : Colors.black),
                                       SizedBox(width: 38.w),
                                       Padding(
                                         padding: EdgeInsets.all(8.w),
@@ -101,15 +112,16 @@ class _DriveModeState extends State<DriveMode> {
                                 ],
                               )
                             ],
-                          ),
-                          SizedBox(height: 40.h),
+                          )
                         ],
                       ),
                     ),
                     Container(
                       height: 100.h,
                       decoration: BoxDecoration(
-                          color: ColorMs.color2B333A,
+                          color: Get.isDarkMode
+                              ? ColorMs.color2B333A
+                              : ColorMs.colorE7F2FF,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(16.w),
                               topRight: Radius.circular(16.w))),
@@ -124,8 +136,10 @@ class _DriveModeState extends State<DriveMode> {
                               text: "我喜欢",
                               assetPath: Assets.driveCarFavoriteBottom,
                               onTap: () async {
-                                GlobalLogic.to.currentGroup.value = Const.groupAll;
-                                await DBLogic.to.findAllListByGroup(Const.groupAll);
+                                GlobalLogic.to.currentGroup.value =
+                                    Const.groupAll;
+                                await DBLogic.to
+                                    .findAllListByGroup(Const.groupAll);
                                 final loveList = GlobalLogic.to.loveList;
                                 if (loveList.isEmpty) {
                                   SmartDialog.showToast("暂无我喜欢的歌曲");
@@ -138,8 +152,10 @@ class _DriveModeState extends State<DriveMode> {
                               text: "最近播放",
                               assetPath: Assets.driveCarPlaylistBottom,
                               onTap: () async {
-                                GlobalLogic.to.currentGroup.value = Const.groupAll;
-                                await DBLogic.to.findAllListByGroup(Const.groupAll);
+                                GlobalLogic.to.currentGroup.value =
+                                    Const.groupAll;
+                                await DBLogic.to
+                                    .findAllListByGroup(Const.groupAll);
                                 final recentList = GlobalLogic.to.recentList;
                                 if (recentList.isEmpty) {
                                   SmartDialog.showToast("暂无最近播放的歌曲");
@@ -164,8 +180,7 @@ class _DriveModeState extends State<DriveMode> {
         final playerState = snapshot.data;
         final processingState = playerState?.processingState;
         final playing = playerState?.playing;
-        final color =
-            Get.isDarkMode ? ColorMs.colorCCCCCC : ColorMs.color333333;
+        final color = Get.isDarkMode ? Colors.white : Colors.black;
         if (processingState == ProcessingState.loading ||
             processingState == ProcessingState.buffering) {
           return Container(
@@ -231,7 +246,7 @@ class _DriveModeState extends State<DriveMode> {
             width: 30.w,
             height: 30.w,
             padding: 4.w,
-            color: Get.isDarkMode ? ColorMs.colorCCCCCC : ColorMs.color666666);
+            color: Get.isDarkMode ? Colors.white : Colors.black);
       },
     );
   }

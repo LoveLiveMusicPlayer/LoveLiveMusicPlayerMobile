@@ -2,10 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
-import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
@@ -84,99 +85,109 @@ class SwipeImageCarouselState extends State<SwipeImageCarousel> {
   @override
   Widget build(BuildContext context) {
     return Listener(
-        onPointerDown: (PointerDownEvent event) {
-          if (fingerCount > 0 && fingerCount < event.pointer) {
-            return;
-          }
+      onPointerDown: (PointerDownEvent event) {
+        if (fingerCount > 0 && fingerCount < event.pointer) {
+          return;
+        }
+        setState(() {
+          fingerCount = event.pointer;
+        });
+      },
+      onPointerUp: (PointerUpEvent event) async {
+        if (fingerCount != event.pointer) {
+          return;
+        }
+        setState(() {
+          fingerCount = 0;
+        });
+
+        SmartDialog.showLoading(msg: "loading".tr);
+        List<String> idList = [];
+        for (var element in PlayerLogic.to.mPlayList) {
+          idList.add(element.musicId);
+        }
+        var musicList = await DBLogic.to.findMusicByMusicIds(idList);
+        PlayerLogic.to.playMusic(musicList, mIndex: _currentPage);
+        Future.delayed(const Duration(milliseconds: 1000)).then((value) {
+          SmartDialog.dismiss(status: SmartStatus.loading);
+        });
+      },
+      onPointerMove: (PointerMoveEvent event) {
+        if (fingerCount != event.pointer) {
+          return;
+        }
+        final dragDistance = event.delta.dx;
+        pageViewOffset = _pageController.offset - dragDistance;
+        _pageController.jumpTo(pageViewOffset);
+      },
+      child: PageView.builder(
+        controller: _pageController,
+        physics: const NeverScrollableScrollPhysics(),
+        onPageChanged: (int page) {
           setState(() {
-            fingerCount = event.pointer;
+            _currentPage = page;
           });
         },
-        onPointerUp: (PointerUpEvent event) {
-          if (fingerCount != event.pointer) {
-            return;
+        itemCount: PlayerLogic.to.mPlayList.length,
+        itemBuilder: (context, index) {
+          int currentIndex = _currentPage.round();
+          double scaleFactor = 0.75;
+          double value = 1.0 - (index - currentIndex).abs().toDouble();
+
+          if (value < 0.0) {
+            value = 0.0;
           }
-          setState(() {
-            fingerCount = 0;
-          });
 
-          Log4f.d(msg: "播放歌曲");
-        },
-        onPointerMove: (PointerMoveEvent event) {
-          if (fingerCount != event.pointer) {
-            return;
-          }
-          final dragDistance = event.delta.dx;
-          pageViewOffset = _pageController.offset - dragDistance;
-          _pageController.jumpTo(pageViewOffset);
-        },
-        child: PageView.builder(
-          controller: _pageController,
-          physics: const NeverScrollableScrollPhysics(),
-          onPageChanged: (int page) {
-            setState(() {
-              _currentPage = page;
-            });
-          },
-          itemCount: PlayerLogic.to.mPlayList.length,
-          itemBuilder: (context, index) {
-            int currentIndex = _currentPage.round();
-            double scaleFactor = 0.75;
-            double value = 1.0 - (index - currentIndex).abs().toDouble();
+          double scale = (1 - value) * scaleFactor + value;
+          bool isCenter = index - currentIndex == 0;
 
-            if (value < 0.0) {
-              value = 0.0;
-            }
+          Log4f.d(msg: "$centerViewOffset");
 
-            double scale = (1 - value) * scaleFactor + value;
-            bool isCenter = index - currentIndex == 0;
+          return FutureBuilder<String?>(
+            future: SDUtils.getImgPathFromMusicId(
+                PlayerLogic.to.mPlayList[index].musicId),
+            builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text('Error: ${snapshot.error}'),
+                );
+              } else {
+                String? imagePath = snapshot.data;
 
-            Log4f.d(msg: "$centerViewOffset");
-
-            return FutureBuilder<String?>(
-              future: SDUtils.getImgPathFromMusicId(PlayerLogic.to.mPlayList[index].musicId),
-              builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text('Error: ${snapshot.error}'),
+                Image imageView;
+                if (imagePath == null) {
+                  imageView = Image.asset(
+                    Assets.logoLogo,
+                    fit: BoxFit.cover,
+                    width: 240.r,
+                    height: 240.r,
                   );
                 } else {
-                  String? imagePath = snapshot.data;
-
-                  Image imageView;
-                  if (imagePath == null) {
-                    imageView = Image.asset(
-                      Assets.logoLogo,
-                      fit: BoxFit.cover,
-                      width: 240.r,
-                      height: 240.r,
-                    );
-                  } else {
-                    imageView = Image.file(
-                      File(imagePath),
-                      fit: BoxFit.cover,
-                      width: 240.r,
-                      height: 240.r,
-                    );
-                  }
-
-                  return Center(
-                    child: Transform.scale(
-                      scale: scale,
-                      child: Transform.translate(
-                        offset: Offset(0, isCenter ? -centerViewOffset : 0),
-                        // 乘以动画值
-                        child: ClipOval(
-                          child: imageView,
-                        ),
-                      ),
-                    ),
+                  imageView = Image.file(
+                    File(imagePath),
+                    fit: BoxFit.cover,
+                    width: 240.r,
+                    height: 240.r,
                   );
                 }
-              },
-            );
-          },
-        ),
+
+                return Center(
+                  child: Transform.scale(
+                    scale: scale,
+                    child: Transform.translate(
+                      offset: Offset(0, isCenter ? -centerViewOffset : 0),
+                      // 乘以动画值
+                      child: ClipOval(
+                        child: imageView,
+                      ),
+                    ),
+                  ),
+                );
+              }
+            },
+          );
+        },
+      ),
     );
   }
 }

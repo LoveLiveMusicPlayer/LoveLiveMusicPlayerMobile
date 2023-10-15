@@ -43,8 +43,12 @@ class TextStyleMs {
       color: ColorMs.color333333, fontSize: 17.sp, fontWeight: FontWeight.bold);
   static TextStyle black_18 =
       TextStyle(color: ColorMs.color333333, fontSize: 18.sp);
+  static TextStyle black_20 =
+      TextStyle(color: ColorMs.color333333, fontSize: 20.sp);
   static TextStyle blackBold_18 = TextStyle(
       color: ColorMs.color333333, fontSize: 18.sp, fontWeight: FontWeight.bold);
+  static TextStyle blackBold_24 = TextStyle(
+      color: ColorMs.color333333, fontSize: 24.sp, fontWeight: FontWeight.bold);
 
   static TextStyle white_12 =
       TextStyle(color: ColorMs.colorFFFFFF, fontSize: 12.sp);

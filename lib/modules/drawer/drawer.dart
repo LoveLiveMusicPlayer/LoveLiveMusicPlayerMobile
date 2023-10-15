@@ -237,6 +237,16 @@ class _DrawerPageState extends State<DrawerPage> {
             ),
             SizedBox(height: 8.h),
             DrawerFunctionButton(
+              icon: Assets.drawerDrawerCar,
+              text: "drive_mode".tr,
+              colorWithBG: false,
+              onTap: (controller) {
+                Get.back();
+                Get.toNamed(Routes.routeDriveMode);
+              },
+            ),
+            SizedBox(height: 8.h),
+            DrawerFunctionButton(
               icon: Assets.drawerDrawerSetting,
               text: 'system_settings'.tr,
               colorWithBG: false,
@@ -253,16 +263,6 @@ class _DrawerPageState extends State<DrawerPage> {
               onTap: (controller) {
                 Get.back();
                 AppUtils.shareQQ();
-              },
-            ),
-            SizedBox(height: 8.h),
-            DrawerFunctionButton(
-              icon: Assets.drawerDrawerCar,
-              text: "drive_mode".tr,
-              colorWithBG: false,
-              onTap: (controller) {
-                Get.back();
-                Get.toNamed(Routes.routeDriveMode);
               },
             )
           ],

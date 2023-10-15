@@ -65,9 +65,8 @@ class CarplayMine {
             await _openMenu(menu.id);
             complete();
           },
-          image: menuList.length < 20
-              ? CarplayUtil.music2Image(firstMusic)
-              : null,
+          image:
+              menuList.length < 20 ? CarplayUtil.music2Image(firstMusic) : null,
           accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
           elementId: CarplayUtil.genUniqueId(null)));
     });
