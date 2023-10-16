@@ -87,7 +87,7 @@ class _DriveModeState extends State<DriveMode> {
                                     children: [
                                       touchIconByAsset(
                                           path: PlayerLogic
-                                                  .to.playingMusic.value.isLove
+                                              .to.playingMusic.value.isLove
                                               ? Assets.driveCarFavoriate
                                               : Assets.driveCarDisFavorite,
                                           onTap: () =>
@@ -95,20 +95,23 @@ class _DriveModeState extends State<DriveMode> {
                                           width: 38.w,
                                           height: 38.w,
                                           color: PlayerLogic
-                                                  .to.playingMusic.value.isLove
+                                              .to.playingMusic.value.isLove
                                               ? const Color(0xFFF940A7)
                                               : Get.isDarkMode
-                                                  ? Colors.white
-                                                  : Colors.black),
+                                              ? Colors.white
+                                              : Colors.black),
                                       SizedBox(width: 38.w),
                                       Padding(
                                         padding: EdgeInsets.all(8.w),
-                                        child: renderPlayButton(),
+                                        child: SizedBox(
+                                            height: 90.h,
+                                            width: 90.h,
+                                            child: renderPlayButton()),
                                       ),
                                       SizedBox(width: 38.w),
                                       renderPlayMode(),
                                     ],
-                                  ),
+                                  )
                                 ],
                               )
                             ],

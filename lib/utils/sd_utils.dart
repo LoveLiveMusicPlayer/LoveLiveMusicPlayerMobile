@@ -81,6 +81,17 @@ class SDUtils {
     return file.existsSync();
   }
 
+  static bool checkMusicExist(Music music) {
+    if (music.existFile == true) {
+      final filePath = '${SDUtils.path}${music.baseUrl}${music.musicPath}';
+      return SDUtils.checkFileExist(filePath);
+    } else if (remoteHttp.canUseHttpUrl()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   static bool checkDirectoryExist(String dirPath) {
     var dir = Directory(dirPath);
     return dir.existsSync();
@@ -159,10 +170,10 @@ class SDUtils {
       return Device(
           physicalDevice: info.isPhysicalDevice,
           serialNo: info.identifierForVendor ?? "",
-          brand: info.localizedModel ?? "",
-          model: info.utsname.machine ?? "",
-          osName: info.utsname.sysname ?? "",
-          osVersion: info.systemVersion ?? "");
+          brand: info.localizedModel,
+          model: info.utsname.machine,
+          osName: info.utsname.sysname,
+          osVersion: info.systemVersion);
     }
   }
 

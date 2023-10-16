@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
@@ -22,6 +21,8 @@ class SwipeImageCarouselState extends State<SwipeImageCarousel> {
   late PageController _pageController;
   late Worker playingMusicListener;
 
+  // 切歌过程控制是否可以滚动
+  bool canScroll = true;
   int _currentPage = 0;
   int fingerCount = 0;
   double pageViewOffset = 0.0;
@@ -86,31 +87,39 @@ class SwipeImageCarouselState extends State<SwipeImageCarousel> {
   Widget build(BuildContext context) {
     return Listener(
       onPointerDown: (PointerDownEvent event) {
+        if (!canScroll) {
+          return;
+        }
         if (fingerCount > 0 && fingerCount < event.pointer) {
           return;
         }
-        setState(() {
-          fingerCount = event.pointer;
-        });
+        fingerCount = event.pointer;
       },
       onPointerUp: (PointerUpEvent event) async {
+        if (!canScroll) {
+          return;
+        }
         if (fingerCount != event.pointer) {
           return;
         }
-        setState(() {
-          fingerCount = 0;
-        });
+        fingerCount = 0;
+        final page = _currentPage;
+        if (PlayerLogic.to.mPlayList[page].musicId == PlayerLogic.to.playingMusic.value.musicId) {
+          return;
+        }
 
-        SmartDialog.showLoading(msg: "loading".tr);
+        canScroll = false;
         List<String> idList = [];
         for (var element in PlayerLogic.to.mPlayList) {
           idList.add(element.musicId);
         }
         var musicList = await DBLogic.to.findMusicByMusicIds(idList);
-        PlayerLogic.to.playMusic(musicList, mIndex: _currentPage);
-        Future.delayed(const Duration(milliseconds: 1000)).then((value) {
-          SmartDialog.dismiss(status: SmartStatus.loading);
-        });
+        // 延时500ms让动画流畅收尾
+        await Future.delayed(const Duration(milliseconds: 500));
+        await PlayerLogic.to.playMusic(musicList, mIndex: page, showDialog: false);
+        // 延时2s防止切换过快
+        await Future.delayed(const Duration(seconds: 2));
+        canScroll = true;
       },
       onPointerMove: (PointerMoveEvent event) {
         if (fingerCount != event.pointer) {

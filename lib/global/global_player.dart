@@ -202,13 +202,24 @@ class PlayerLogic extends SuperController
   }
 
   /// 播放指定列表的歌曲
-  Future<void> playMusic(List<Music> musicList,
-      {int? mIndex, bool needPlay = true}) async {
-    if (musicList.isEmpty) {
+  Future<void> playMusic(List<Music> uncheckedMusicList,
+      {int? mIndex, bool needPlay = true, bool showDialog = true}) async {
+    if (uncheckedMusicList.isEmpty) {
       return;
     }
-    if (isCanUseSmartDialog) {
+    if (isCanUseSmartDialog && showDialog) {
       SmartDialog.showLoading(msg: 'loading'.tr);
+    }
+    final musicList = <Music>[];
+    for (var i = 0; i < uncheckedMusicList.length; i++) {
+      final isExist = SDUtils.checkMusicExist(uncheckedMusicList[i]);
+      if (!isExist) {
+        if (mIndex != null && mIndex > i) {
+          mIndex--;
+        }
+      } else {
+        musicList.add(uncheckedMusicList[i]);
+      }
     }
     // 随机播放时任取一个index
     int index = mIndex ?? 0;
@@ -367,7 +378,11 @@ class PlayerLogic extends SuperController
   UriAudioSource? genAudioSourceUri(Music music) {
     Uri musicUri;
     if (music.existFile == true) {
-      musicUri = Uri.file('${SDUtils.path}${music.baseUrl}${music.musicPath}');
+      if (!SDUtils.checkMusicExist(music)) {
+        return null;
+      }
+      final filePath = '${SDUtils.path}${music.baseUrl}${music.musicPath}';
+      musicUri = Uri.file(filePath);
     } else if (remoteHttp.canUseHttpUrl()) {
       musicUri = Uri.parse(
           '${remoteHttp.httpUrl.value}${music.baseUrl}${AppUtils.wav2flac(music.musicPath)}');

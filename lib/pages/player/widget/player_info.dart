@@ -20,7 +20,7 @@ class PlayerInfo extends StatelessWidget {
             ? ColorMs.colorDFDFDF.withOpacity(0.4)
             : ColorMs.color999999;
         return Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             recentlyLrc(PlayerLogic.to.playingJPLrc["pre"], color: otherColor),
             SizedBox(height: 10.h),

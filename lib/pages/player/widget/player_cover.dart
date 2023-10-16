@@ -48,12 +48,8 @@ class _CoverState extends State<Cover> {
                 )),
             Visibility(
                 visible: SDUtils.allowEULA,
-                child: Column(
-                  children: [
-                    /// 信息
-                    SizedBox(height: 18.h),
-                    const PlayerInfo()
-                  ],
+                child: const Expanded(
+                  child: PlayerInfo(),
                 ))
           ],
         ),

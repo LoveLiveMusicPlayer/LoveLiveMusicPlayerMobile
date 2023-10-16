@@ -45,7 +45,7 @@ dependencies:
   web_socket_channel: ^2.4.0 # webSocket
   connectivity_plus: ^4.0.1 # 网络监测
   scan: ^1.6.0 # 扫码
-  flutter_smart_dialog: ^4.9.3+2 # 弹窗
+  flutter_smart_dialog: ^4.9.4 # 弹窗
   synchronized: ^3.1.0 # 锁
   another_transformer_page_view: ^2.0.1 # 轮播器
   get_storage: ^2.1.1 # sp存储
