@@ -14,6 +14,7 @@ import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/my_appbar.dart';
 import 'package:lovelivemusicplayer/widgets/swipe_image_carousel.dart';
 import 'package:marquee_text/marquee_text.dart';
+import 'package:wakelock/wakelock.dart';
 
 class DriveMode extends StatefulWidget {
   const DriveMode({super.key});
@@ -23,6 +24,12 @@ class DriveMode extends StatefulWidget {
 }
 
 class _DriveModeState extends State<DriveMode> {
+  @override
+  void initState() {
+    Wakelock.enable();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -87,7 +94,7 @@ class _DriveModeState extends State<DriveMode> {
                                     children: [
                                       touchIconByAsset(
                                           path: PlayerLogic
-                                              .to.playingMusic.value.isLove
+                                                  .to.playingMusic.value.isLove
                                               ? Assets.driveCarFavoriate
                                               : Assets.driveCarDisFavorite,
                                           onTap: () =>
@@ -95,11 +102,11 @@ class _DriveModeState extends State<DriveMode> {
                                           width: 38.w,
                                           height: 38.w,
                                           color: PlayerLogic
-                                              .to.playingMusic.value.isLove
+                                                  .to.playingMusic.value.isLove
                                               ? const Color(0xFFF940A7)
                                               : Get.isDarkMode
-                                              ? Colors.white
-                                              : Colors.black),
+                                                  ? Colors.white
+                                                  : Colors.black),
                                       SizedBox(width: 38.w),
                                       Padding(
                                         padding: EdgeInsets.all(8.w),
@@ -275,5 +282,11 @@ class _DriveModeState extends State<DriveMode> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    Wakelock.disable();
+    super.dispose();
   }
 }

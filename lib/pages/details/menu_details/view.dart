@@ -96,7 +96,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
             builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
               return showImg(snapshot.data, 240, 240, radius: 24);
             },
-            future: AppUtils.getMusicCoverPath(menu!.music.last),
+            future: AppUtils.getMusicCoverPath(menu!.music.first),
           )
         ],
       ),
