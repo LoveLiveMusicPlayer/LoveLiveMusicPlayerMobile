@@ -2,7 +2,6 @@ import 'dart:convert' as convert;
 import 'dart:io';
 import 'dart:math';
 
-import 'package:another_transformer_page_view/another_transformer_page_view.dart';
 import 'package:concurrent_queue/concurrent_queue.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +24,7 @@ import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
+import 'package:lovelivemusicplayer/widgets/another_page_view/another_transformer_page_view.dart';
 import 'package:lovelivemusicplayer/widgets/circle_widget.dart';
 import 'package:lovelivemusicplayer/widgets/horizontal_line.dart';
 import 'package:wakelock/wakelock.dart';
