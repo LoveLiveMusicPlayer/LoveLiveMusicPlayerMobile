@@ -35,7 +35,7 @@ class PlayerLogic extends SuperController
   final audioSourceList = ConcatenatingAudioSource(children: []);
 
   // 播放列表
-  var mPlayList = <PlayListMusic>[];
+  var mPlayList = <PlayListMusic>[].obs;
 
   // 当前播放的歌词
   var playingJPLrc = {"musicId": "", "pre": "", "current": "", "next": ""}.obs;
@@ -119,14 +119,16 @@ class PlayerLogic extends SuperController
   /// 持久化播放列表
   Future<void> persistencePlayList(List<Music> musicList, int index) async {
     mPlayList.clear();
+    final tempList = <PlayListMusic>[];
     for (var i = 0; i < musicList.length; i++) {
       final music = musicList[i];
-      mPlayList.add(PlayListMusic(
+      tempList.add(PlayListMusic(
           musicId: music.musicId!,
           musicName: music.musicName!,
           artist: music.artist!,
           isPlaying: index == i));
     }
+    mPlayList.addAll(tempList);
     for (var playListMusic in mPlayList) {
       playListMusic.isPlaying =
           playListMusic.musicId == musicList[index].musicId;

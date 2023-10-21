@@ -3,11 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:just_audio/just_audio.dart';
-import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
+import 'package:lovelivemusicplayer/models/play_list_music.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/widgets/another_page_view/another_transformer_page_view.dart';
 
@@ -22,6 +21,7 @@ class SwipeImageCarouselState extends State<SwipeImageCarousel>
     with AutomaticKeepAliveClientMixin {
   late TransformerPageController _pageController;
   late Worker playingMusicListener;
+  late Worker playListListener;
 
   // 切歌过程控制是否可以滚动
   bool canScroll = true;
@@ -35,32 +35,50 @@ class SwipeImageCarouselState extends State<SwipeImageCarousel>
   // 按下手指记录的横坐标位置
   double downDx = 0;
 
+  // 改变播放列表的时候重新生成一个PageView
+  Key key = UniqueKey();
+
   @override
   void initState() {
     // 初始化计算当前显示列表的page位置
     _currentPage = PlayerLogic.to.mPlayList.indexWhere((element) =>
         element.musicId == PlayerLogic.to.playingMusic.value.musicId);
-    _pageController = TransformerPageController(
-        initialPage: _currentPage,
-        viewportFraction: 0.62,
-        itemCount: PlayerLogic.to.mPlayList.length);
+    genPageController();
 
     final playerLogic = Get.find<PlayerLogic>();
     // 注册播放曲目监听
-    playingMusicListener = ever(playerLogic.playingMusic, (Music music) {
+    playingMusicListener = ever(playerLogic.playingMusic, (Music _) {
       // 将PageView同步滚动到当前播放的索引
       _currentPage = playerLogic.mPlayer.currentIndex ?? 0;
       _animateTo(_currentPage);
     });
+    // 注册播放列表监听
+    playListListener = ever(playerLogic.mPlayList, (List<PlayListMusic> _) {
+      genPageController();
+      setState(() {
+        key = UniqueKey();
+      });
+    });
     super.initState();
+  }
+
+  /// 生成一个PageView控制器
+  genPageController() {
+    _pageController = TransformerPageController(
+        initialPage: _currentPage,
+        viewportFraction: 0.62,
+        itemCount: PlayerLogic.to.mPlayList.length);
   }
 
   /// 计算当前PageView的索引值
   int _calcPageController() {
+    // 获取PageView滑动的具体路径偏移值
     final currentOffset = _pageController.offset;
+    // 获取PageView间隔比例
     final viewportFraction = _pageController.viewportFraction;
-    final ratio = currentOffset / (viewportFraction * Get.width);
-    final currentIndex = ratio.round();
+    // 计算当前滑动页数
+    final currentIndex =
+        (currentOffset / (viewportFraction * Get.width)).round();
 
     if (currentIndex < 0 || currentIndex >= PlayerLogic.to.mPlayList.length) {
       return _currentPage;
@@ -83,14 +101,20 @@ class SwipeImageCarouselState extends State<SwipeImageCarousel>
       idList.add(element.musicId);
     }
     var musicList = await DBLogic.to.findMusicByMusicIds(idList);
-    final currentPage = _currentPage + appendPage;
-    await PlayerLogic.to
-        .playMusic(musicList, mIndex: currentPage, showDialog: false);
+    var page = _currentPage + appendPage;
+    if (page > musicList.length - 1) {
+      page = 0;
+    } else if (page < 0) {
+      page = musicList.length - 1;
+    }
+    PlayerLogic.to.mPlayer.seek(Duration.zero, index: page);
+    _currentPage = page;
   }
 
   @override
   void dispose() {
     playingMusicListener.dispose();
+    playListListener.dispose();
     _pageController.dispose();
     super.dispose();
   }
@@ -132,25 +156,7 @@ class SwipeImageCarouselState extends State<SwipeImageCarousel>
         final needJump = dt.abs() > (Get.width / 3);
 
         if (needJump) {
-          // 由于播放器机制，需要单独适配单曲循环的情况
-          final isLoopOne = PlayerLogic.to.mPlayer.loopMode == LoopMode.one;
-          if (dt > 0) {
-            if (isLoopOne) {
-              // 上一曲 && 单曲循环模式
-              await resetMusic(-1);
-            } else {
-              // 上一曲 && (列表循环 || 随机播放)
-              await PlayerLogic.to.playPrev();
-            }
-          } else {
-            if (isLoopOne) {
-              // 下一曲 && 单曲循环模式
-              await resetMusic(1);
-            } else {
-              // 下一曲 && (列表循环 || 随机播放)
-              await PlayerLogic.to.playNext();
-            }
-          }
+          await resetMusic(dt > 0 ? -1 : 1);
           // 重新计算当前PageView的页位置
           _currentPage = _calcPageController();
         }
@@ -169,6 +175,7 @@ class SwipeImageCarouselState extends State<SwipeImageCarousel>
         _pageController.jumpTo(pageViewOffset);
       },
       child: TransformerPageView(
+        key: key,
         pageController: _pageController,
         pageSnapping: false,
         physics: const NeverScrollableScrollPhysics(),
@@ -187,15 +194,8 @@ class SwipeImageCarouselState extends State<SwipeImageCarousel>
               } else {
                 String? imagePath = snapshot.data;
 
-                Image imageView;
-                if (imagePath == null) {
-                  imageView = Image.asset(
-                    Assets.logoLogo,
-                    fit: BoxFit.cover,
-                    width: 240.r,
-                    height: 240.r,
-                  );
-                } else {
+                Image? imageView;
+                if (imagePath != null) {
                   imageView = Image.file(
                     File(imagePath),
                     fit: BoxFit.cover,
