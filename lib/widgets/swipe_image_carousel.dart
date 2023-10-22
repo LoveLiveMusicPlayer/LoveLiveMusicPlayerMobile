@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/models/play_list_music.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
@@ -196,12 +197,21 @@ class SwipeImageCarouselState extends State<SwipeImageCarousel>
 
                 Image? imageView;
                 if (imagePath != null) {
-                  imageView = Image.file(
-                    File(imagePath),
-                    fit: BoxFit.cover,
-                    width: 240.r,
-                    height: 240.r,
-                  );
+                  if (remoteHttp.canUseHttpUrl()) {
+                    imageView = Image.network(
+                      imagePath,
+                      fit: BoxFit.cover,
+                      width: 240.r,
+                      height: 240.r,
+                    );
+                  } else {
+                    imageView = Image.file(
+                      File(imagePath),
+                      fit: BoxFit.cover,
+                      width: 240.r,
+                      height: 240.r,
+                    );
+                  }
                 }
 
                 return Center(
