@@ -4,7 +4,6 @@ import 'package:flutter_carplay/flutter_carplay.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
-import 'package:lovelivemusicplayer/models/play_list_music.dart';
 import 'package:lovelivemusicplayer/pages/carplay/carplay_album.dart';
 import 'package:lovelivemusicplayer/pages/carplay/carplay_mine.dart';
 import 'package:lovelivemusicplayer/pages/carplay/carplay_music.dart';
@@ -58,26 +57,6 @@ class Carplay {
     });
   }
 
-  /// 播放列表转换为CP列表
-  static Future<void> parse4PlayList(List<PlayListMusic> playList) async {
-    if (CarplayUtil.isTouchFromCar) {
-      CarplayUtil.isTouchFromCar = false;
-      return;
-    }
-    musicList.clear();
-    for (var playListMusic in playList) {
-      musicList.add(CPListItem(
-          elementId: CarplayUtil.genUniqueId(playListMusic.musicId),
-          onPress: (complete, cp) {
-            Carplay.handlePlayMusic(complete, cp, musicList);
-          },
-          isPlaying: playListMusic.isPlaying,
-          text: playListMusic.musicName));
-    }
-
-    CarplayUtil.handleReCreatePage(musicList);
-  }
-
   static void changePlayingMusic(Music music) {
     final imagePath = CarplayUtil.music2Image(music);
     sectionMusic.first.items.first
@@ -100,7 +79,6 @@ class Carplay {
 
     for (var i = 0; i < musicList.length; i++) {
       if (musicList[i].musicId == cp.uniqueId) {
-        cp.setIsPlaying(true);
         var completer = Completer<void>();
         await PlayerLogic.to
             .playMusic(musicList, mIndex: i)

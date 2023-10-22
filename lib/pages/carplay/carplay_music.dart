@@ -38,16 +38,6 @@ class CarplayMusic {
 
   CarplayMusic._();
 
-  /// 切歌 && 处于歌曲页二级目录时 更新列表
-  refreshList(List<CPListItem> musicList) {
-    if (temp != null) {
-      FlutterCarplay.pop(animated: false);
-      _musicList.clear();
-      _musicList.addAll(musicList);
-      _createTemplate(false);
-    }
-  }
-
   static _init() {
     Carplay.sectionMusic.add(CPListSection(
       items: [
@@ -141,7 +131,6 @@ class CarplayMusic {
           image: GlobalLogic.to.musicList.length < 20
               ? CarplayUtil.music2Image(music)
               : null,
-          isPlaying: music.musicId == PlayerLogic.to.playingMusic.value.musicId,
           elementId: CarplayUtil.genUniqueId(music.musicId)));
     });
 

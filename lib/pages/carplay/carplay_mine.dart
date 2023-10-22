@@ -2,7 +2,6 @@ import 'package:flutter_carplay/flutter_carplay.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
-import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/love.dart';
 import 'package:lovelivemusicplayer/models/menu.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
@@ -122,7 +121,6 @@ class CarplayMine {
             Carplay.handlePlayMusic(complete, cp, _loveList);
           },
           image: allLoves.length < 20 ? CarplayUtil.music2Image(music) : null,
-          isPlaying: PlayerLogic.to.playingMusic.value.musicId == love.musicId,
           accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
         ));
       }
@@ -176,7 +174,6 @@ class CarplayMine {
             Carplay.handlePlayMusic(complete, cp, _musicList);
           },
           image: musicList.length < 20 ? CarplayUtil.music2Image(music) : null,
-          isPlaying: music.musicId == PlayerLogic.to.playingMusic.value.musicId,
           elementId: CarplayUtil.genUniqueId(music.musicId)));
     });
 

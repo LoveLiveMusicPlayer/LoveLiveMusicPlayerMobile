@@ -7,9 +7,7 @@ import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
-import 'package:lovelivemusicplayer/pages/carplay/carplay_album.dart';
 import 'package:lovelivemusicplayer/pages/carplay/carplay_enum.dart';
-import 'package:lovelivemusicplayer/pages/carplay/carplay_music.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:uuid/uuid.dart';
 
@@ -122,26 +120,8 @@ class CarplayUtil {
   static Future<List<Music>> cpList2MusicList(List<CPListItem> cpList) async {
     List<String> idList = [];
     for (var element in cpList) {
-      element.setIsPlaying(false);
       idList.add(element.uniqueId);
     }
     return await DBLogic.to.findMusicByMusicIds(idList);
-  }
-
-  static handleReCreatePage(List<CPListItem> musicList) async {
-    switch (CarplayUtil.page) {
-      case CarplayPageType.pageMain:
-        break;
-      case CarplayPageType.pageMusic:
-        CarplayMusic.getInstance().refreshList(musicList);
-        break;
-      case CarplayPageType.pageAlbumOne:
-      case CarplayPageType.pageAlbumTwo:
-        CarplayAlbum.getInstance().refreshList(musicList);
-        break;
-      case CarplayPageType.pageMineLove:
-      case CarplayPageType.pageMineMenu:
-        break;
-    }
   }
 }

@@ -32,7 +32,6 @@ import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/models/play_list_music.dart';
 import 'package:lovelivemusicplayer/models/trans_data.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
-import 'package:lovelivemusicplayer/pages/carplay/carplay.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
@@ -603,7 +602,6 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   Future<void> updatePlayingList(List<PlayListMusic> playMusics) async {
     try {
       if (playMusics.isNotEmpty) {
-        Carplay.parse4PlayList(playMusics);
         await playListMusicDao.deleteAllPlayListMusics();
         await playListMusicDao.insertAllPlayListMusics(playMusics);
       }

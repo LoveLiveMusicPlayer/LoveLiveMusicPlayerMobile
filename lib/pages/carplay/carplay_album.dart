@@ -7,7 +7,6 @@ import 'package:flutter_carplay/models/list/list_section.dart';
 import 'package:flutter_carplay/models/list/list_template.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/pages/carplay/carplay.dart';
@@ -170,7 +169,6 @@ class CarplayAlbum {
             Carplay.handlePlayMusic(complete, cp, _musicList);
           },
           image: tempList.length < 20 ? CarplayUtil.music2Image(music) : null,
-          isPlaying: music.musicId == PlayerLogic.to.playingMusic.value.musicId,
           text: music.musicName ?? "No name",
           detailText: music.artist));
     });
