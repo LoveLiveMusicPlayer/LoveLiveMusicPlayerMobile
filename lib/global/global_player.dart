@@ -644,10 +644,12 @@ class PlayerLogic extends SuperController
   }
 
   /// 设置当前播放歌曲
-  setCurrentMusic(Music? music) {
+  setCurrentMusic(Music? music) async {
     if (music == null) {
       playingMusic.value = Music();
     } else {
+      var isLove = await DBLogic.to.loveDao.findLoveById(music.musicId!);
+      music.isLove = isLove != null;
       playingMusic.value = music;
       AppUtils.getImagePaletteFromMusic(playingMusic.value).then((color) {
         GlobalLogic.to.iconColor.value = color ?? Get.theme.primaryColor;
