@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_carplay/flutter_carplay.dart';
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
@@ -60,7 +61,7 @@ class Carplay {
   static void changePlayingMusic(Music music) {
     final imagePath = CarplayUtil.music2Image(music);
     sectionMusic.first.items.first
-        .updateTextAndImage("当前播放: ${music.musicName ?? "暂无歌曲"}", imagePath);
+        .updateTextAndImage("${'now_playing'.tr}${music.musicName ?? 'no_songs'.tr}", imagePath);
   }
 
   void onCarplayConnectionChange(CPConnectionStatusTypes status) {

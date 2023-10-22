@@ -1,4 +1,5 @@
 import 'package:flutter_carplay/flutter_carplay.dart';
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
@@ -40,7 +41,7 @@ class CarplayMine {
     sectionMine.add(CPListSection(
       items: [
         CPListItem(
-            text: "我喜欢",
+            text: 'iLove'.tr,
             onPress: (complete, self) async {
               await _openLoveList();
               complete();
@@ -49,7 +50,7 @@ class CarplayMine {
             accessoryType: CPListItemAccessoryTypes.disclosureIndicator,
             elementId: CarplayUtil.genUniqueId(null))
       ],
-      header: "我喜欢",
+      header: 'iLove'.tr,
     ));
 
     final cpList = <CPListItem>[];
@@ -59,7 +60,7 @@ class CarplayMine {
           await DBLogic.to.musicDao.findMusicByUId(menu.music.first);
       cpList.add(CPListItem(
           text: menu.name,
-          detailText: menu.isPhone ? "手机" : "电脑",
+          detailText: menu.isPhone ? 'phone'.tr : 'computer'.tr,
           onPress: (complete, self) async {
             await _openMenu(menu.id);
             complete();
@@ -72,15 +73,15 @@ class CarplayMine {
 
     sectionMine.add(CPListSection(
       items: cpList,
-      header: "收藏歌单",
+      header: 'add_favorite_menu'.tr,
     ));
   }
 
   CPListTemplate get() {
     return CPListTemplate(
       sections: sectionMine,
-      title: "我的",
-      emptyViewTitleVariants: ["暂无"],
+      title: 'mine'.tr,
+      emptyViewTitleVariants: ['no_songs'.tr],
       systemIcon: "person.fill",
     );
   }
@@ -93,9 +94,9 @@ class CarplayMine {
         )
       ],
       systemIcon: "systemIcon",
-      title: "我喜欢",
+      title: 'iLove'.tr,
       backButton: CPBarButton(
-        title: "Back",
+        title: 'back'.tr,
         style: CPBarButtonStyles.none,
         onPress: () {
           FlutterCarplay.pop(animated: true);
@@ -115,7 +116,7 @@ class CarplayMine {
       if (music != null) {
         _loveList.add(CPListItem(
           elementId: CarplayUtil.genUniqueId(music.musicId),
-          text: music.musicName ?? "No Name",
+          text: music.musicName ?? 'unknown'.tr,
           detailText: music.artist,
           onPress: (complete, cp) {
             Carplay.handlePlayMusic(complete, cp, _loveList);
@@ -144,9 +145,9 @@ class CarplayMine {
         )
       ],
       systemIcon: "systemIcon",
-      title: CarplayUtil.splitName(menuName ?? "No name"),
+      title: CarplayUtil.splitName(menuName ?? 'unknown'.tr),
       backButton: CPBarButton(
-        title: "Back",
+        title: 'back'.tr,
         style: CPBarButtonStyles.none,
         onPress: () {
           FlutterCarplay.pop(animated: true);
@@ -168,7 +169,7 @@ class CarplayMine {
     final musicList = await DBLogic.to.findMusicByMusicIds(menu?.music ?? []);
     await Future.forEach<Music>(musicList, (music) {
       _musicList.add(CPListItem(
-          text: music.musicName ?? "No name",
+          text: music.musicName ?? 'unknown'.tr,
           detailText: music.artist,
           onPress: (complete, cp) {
             Carplay.handlePlayMusic(complete, cp, _musicList);

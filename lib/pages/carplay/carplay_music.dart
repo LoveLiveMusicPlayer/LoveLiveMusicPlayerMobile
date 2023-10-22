@@ -5,6 +5,7 @@ import 'package:flutter_carplay/models/list/list_constants.dart';
 import 'package:flutter_carplay/models/list/list_item.dart';
 import 'package:flutter_carplay/models/list/list_section.dart';
 import 'package:flutter_carplay/models/list/list_template.dart';
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
@@ -42,13 +43,12 @@ class CarplayMusic {
     Carplay.sectionMusic.add(CPListSection(
       items: [
         CPListItem(
-            text: "当前播放: 暂无歌曲",
-            detailText: "我知道你会悸动，但也要注意交通安全",
+            text: '${'now_playing'.tr}${'no_songs'.tr}',
+            detailText: 'throbbing'.tr,
             isPlaying: false,
             playbackProgress: 0,
             image: Assets.logoLogo,
             onPress: (complete, self) async {
-              print("随机播放");
               await DBLogic.to.findAllListByGroup(Const.groupAll);
               await PlayerLogic.to.changeLoopMode(0);
               await PlayerLogic.to
@@ -57,7 +57,7 @@ class CarplayMusic {
             },
             elementId: CarplayUtil.genUniqueId(null)),
       ],
-      header: "音乐盲盒",
+      header: 'music_blind_box'.tr,
     ));
 
     final cpList = <CPListItem>[];
@@ -77,15 +77,15 @@ class CarplayMusic {
 
     Carplay.sectionMusic.add(CPListSection(
       items: cpList,
-      header: "团组列表",
+      header: 'group_list'.tr,
     ));
   }
 
   CPListTemplate get() {
     return CPListTemplate(
       sections: Carplay.sectionMusic,
-      title: "歌曲",
-      emptyViewTitleVariants: ["暂无"],
+      title: 'music'.tr,
+      emptyViewTitleVariants: ['no_songs'.tr],
       systemIcon: "music.note.house",
     );
   }
@@ -100,7 +100,7 @@ class CarplayMusic {
       systemIcon: "systemIcon",
       title: CarplayUtil.convertToMainName(GlobalLogic.to.currentGroup.value),
       backButton: CPBarButton(
-        title: "Back",
+        title: 'back'.tr,
         style: CPBarButtonStyles.none,
         onPress: () {
           FlutterCarplay.pop(animated: true);
@@ -123,7 +123,7 @@ class CarplayMusic {
 
     await Future.forEach<Music>(GlobalLogic.to.musicList, (music) {
       _musicList.add(CPListItem(
-          text: music.musicName ?? "No name",
+          text: music.musicName ?? 'unknown'.tr,
           detailText: music.artist,
           onPress: (complete, cp) {
             Carplay.handlePlayMusic(complete, cp, _musicList);

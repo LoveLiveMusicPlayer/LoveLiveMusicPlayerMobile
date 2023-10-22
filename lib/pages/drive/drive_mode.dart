@@ -138,12 +138,12 @@ class _DriveModeState extends State<DriveMode> {
                       child: Row(
                         children: [
                           renderBottomItem(
-                              text: "退出",
+                              text: 'exit'.tr,
                               assetPath: Assets.driveCarExit,
                               onTap: () => Get.back(),
                               color: const Color(0xFFED6A65)),
                           renderBottomItem(
-                              text: "我喜欢",
+                              text: 'iLove'.tr,
                               assetPath: Assets.driveCarFavoriteBottom,
                               onTap: () async {
                                 GlobalLogic.to.currentGroup.value =
@@ -152,14 +152,14 @@ class _DriveModeState extends State<DriveMode> {
                                     .findAllListByGroup(Const.groupAll);
                                 final loveList = GlobalLogic.to.loveList;
                                 if (loveList.isEmpty) {
-                                  SmartDialog.showToast("暂无我喜欢的歌曲");
+                                  SmartDialog.showToast('no_songs'.tr);
                                   return;
                                 }
                                 PlayerLogic.to.playMusic(loveList);
                               },
                               color: const Color(0xFFE650A4)),
                           renderBottomItem(
-                              text: "最近播放",
+                              text: 'history'.tr,
                               assetPath: Assets.driveCarPlaylistBottom,
                               onTap: () async {
                                 GlobalLogic.to.currentGroup.value =
@@ -168,7 +168,7 @@ class _DriveModeState extends State<DriveMode> {
                                     .findAllListByGroup(Const.groupAll);
                                 final recentList = GlobalLogic.to.recentList;
                                 if (recentList.isEmpty) {
-                                  SmartDialog.showToast("暂无最近播放的歌曲");
+                                  SmartDialog.showToast('no_songs'.tr);
                                   return;
                                 }
                                 PlayerLogic.to.playMusic(recentList);

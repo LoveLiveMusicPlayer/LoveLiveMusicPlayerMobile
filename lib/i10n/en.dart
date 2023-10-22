@@ -185,5 +185,14 @@ Users shall use the Software in compliance with laws and agreements. Users are n
 Ⅲ. In violation of national regulations, delete, modify, increase or interfere with the functions of the computer information system, resulting in the failure of the computer information system to operate normally;
 Ⅳ. accessing computer information networks or using computer information network resources without permission;
 Ⅴ. Deleting, modifying or adding functions of computer information networks without permission.
-  '''
+  ''',
+  'now_playing': 'Now Playing: ',
+  'group_list': 'Group list',
+  'back': 'Back',
+  'phone': 'Phone',
+  'pc': 'Computer',
+  'add_favorite_menu': 'Favorite playlist',
+  'music_blind_box':"Music blind box",
+  'throbbing': 'I know you will be throbbing, but pay attention to traffic safety',
+  'exit': 'Exit'
 };

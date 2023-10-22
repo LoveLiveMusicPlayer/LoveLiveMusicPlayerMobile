@@ -191,5 +191,14 @@ Benutzer sollten die Software unter der Prämisse verwenden, Gesetze und Vereinb
 Ⅲ. Löschen, Ändern, Erweitern oder Reduzieren der Funktionen des Computerinformationssystems unter Verstoß gegen behördliche Vorschriften, wodurch eine Fehlfunktion des Computerinformationssystems verursacht wird;；
 Ⅳ. Unbefugter Zugriff auf oder Nutzung von Computerinformationsnetzressourcen；
 Ⅴ. Löschen, Ändern oder Hinzufügen von Computerinformationen zu Netzwerkfunktionen ohne Erlaubnis。
-  '''
+  ''',
+  'now_playing': 'Läuft gerade: ',
+  'group_list': 'Gruppenliste',
+  'back': 'Zurück',
+  'phone': 'Telefon',
+  'pc': 'Computer',
+  'add_favorite_menu': 'Lieblings-Playlist',
+  'music_blind_box': 'Musik-Blindbox',
+  'throbbing': 'Während Sie aufgeregt sind, sollten Sie auch auf die Verkehrssicherheit achten',
+  'exit': 'Schließung'
 };

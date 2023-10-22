@@ -5,6 +5,7 @@ import 'package:flutter_carplay/models/list/list_constants.dart';
 import 'package:flutter_carplay/models/list/list_item.dart';
 import 'package:flutter_carplay/models/list/list_section.dart';
 import 'package:flutter_carplay/models/list/list_template.dart';
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
@@ -72,15 +73,15 @@ class CarplayAlbum {
     });
     sectionAlbum.add(CPListSection(
       items: cpList,
-      header: "团组列表",
+      header: 'group_list'.tr,
     ));
   }
 
   CPListTemplate get() {
     return CPListTemplate(
       sections: sectionAlbum,
-      title: "专辑",
-      emptyViewTitleVariants: ["暂无"],
+      title: 'album'.tr,
+      emptyViewTitleVariants: ['no_songs'.tr],
       systemIcon: "music.note.list",
     );
   }
@@ -95,7 +96,7 @@ class CarplayAlbum {
       systemIcon: "systemIcon",
       title: CarplayUtil.convertToMainName(GlobalLogic.to.currentGroup.value),
       backButton: CPBarButton(
-        title: "Back",
+        title: 'back'.tr,
         style: CPBarButtonStyles.none,
         onPress: () {
           FlutterCarplay.pop(animated: true);
@@ -116,7 +117,7 @@ class CarplayAlbum {
     await Future.forEach<Album>(GlobalLogic.to.albumList, (album) {
       _albumList.add(CPListItem(
         elementId: CarplayUtil.genUniqueId(null),
-        text: album.albumName ?? "No name",
+        text: album.albumName ?? 'unknown'.tr,
         detailText: album.date,
         onPress: (complete, cp) async {
           GlobalLogic.to.musicList.value =
@@ -142,9 +143,9 @@ class CarplayAlbum {
         )
       ],
       systemIcon: "systemIcon",
-      title: CarplayUtil.splitName(albumName ?? "No name"),
+      title: CarplayUtil.splitName(albumName ?? 'unknown'.tr),
       backButton: CPBarButton(
-        title: "Back",
+        title: 'back'.tr,
         style: CPBarButtonStyles.none,
         onPress: () {
           FlutterCarplay.pop(animated: true);
@@ -169,7 +170,7 @@ class CarplayAlbum {
             Carplay.handlePlayMusic(complete, cp, _musicList);
           },
           image: tempList.length < 20 ? CarplayUtil.music2Image(music) : null,
-          text: music.musicName ?? "No name",
+          text: music.musicName ?? "unknown".tr,
           detailText: music.artist));
     });
 
