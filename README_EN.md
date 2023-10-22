@@ -39,6 +39,8 @@ Function list:
 - [Dynamic stand image] ✓
 - [DIY background image] ✓
 - [Long press the song to jump to detail through MoeGirl] ✓
+- [Drive mode] ✓
+- [Carplay support] ✓
 
 **--Project_by [zhushenwudi](https://space.bilibili.com/4367965)**
 
@@ -47,6 +49,8 @@ Function list:
 <img src="assets/simple/simple2.png" width="200">
 <img src="assets/simple/simple3.png" width="200">
 <img src="assets/simple/simple4.png" width="200">
+<img src="assets/simple/simple5.png" width="200">
+<img src="assets/simple/simple6.png" width="400">
 
 # Associated PC software
 Github:<https://github.com/zhushenwudi/LoveLiveMusicPlayer>

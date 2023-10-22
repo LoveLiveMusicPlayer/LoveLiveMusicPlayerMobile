@@ -39,6 +39,8 @@ Language: 中文 | [English Document](README_EN.md)
 - [动态立绘] ✓
 - [自定义背景图] ✓
 - [长按歌曲跳转萌娘百科搜索] ✓
+- [驾驶模式] ✓
+- [Carplay支持] ✓
 
 **--Project_by [朱神无敌](https://space.bilibili.com/4367965)**
 
@@ -47,6 +49,8 @@ Language: 中文 | [English Document](README_EN.md)
 <img src="assets/simple/simple2.png" width="200">
 <img src="assets/simple/simple3.png" width="200">
 <img src="assets/simple/simple4.png" width="200">
+<img src="assets/simple/simple5.png" width="200">
+<img src="assets/simple/simple6.png" width="400">
 
 # 关联PC软件
 Github:<https://github.com/zhushenwudi/LoveLiveMusicPlayer>
