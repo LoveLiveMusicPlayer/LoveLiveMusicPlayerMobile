@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.4.0+40
+version: 1.4.1+41
 
 environment:
   sdk: ">=2.17.0 <4.0.0"
@@ -99,7 +99,6 @@ dependencies:
   crypto: ^3.0.3 # 加密
   vibration: ^1.8.3 # 振动
   flutter_inappwebview: ^6.0.0-beta.25 # WebView
-  shorebird_code_push: ^1.1.2 # 热修复
   flexible_scrollbar: # 滚动条
     git:
       url: https://github.com/zhushenwudi/flexible_scrollbar
