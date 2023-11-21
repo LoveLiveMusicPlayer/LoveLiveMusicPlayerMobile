@@ -134,7 +134,6 @@ android {
                     String manifestPath = output.processResources.manifestFile
                     def manifestContent = file(manifestPath).getText()
                     manifestContent = manifestContent.replace('<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>', '')
-                    println("manifestContent:" + manifestContent)
                     file(manifestPath).write(manifestContent)
                 }
             }

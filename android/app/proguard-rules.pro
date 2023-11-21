@@ -13,6 +13,10 @@
 -keep class com.huawei.updatesdk.**{*;}
 -keep class com.huawei.hms.**{*;}
 
+# update
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Service
+
 # 友盟
 -keep class com.umeng.** {*;}
 -keep class org.repackage.** {*;}

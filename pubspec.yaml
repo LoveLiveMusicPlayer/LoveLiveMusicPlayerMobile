@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.4.1+41
+version: 1.4.2+42
 
 environment:
   sdk: ">=2.17.0 <4.0.0"
@@ -80,10 +80,7 @@ dependencies:
   log4f: ^0.0.3 # 日志
   device_info_plus: ^9.0.2 # 设备信息
   flutter_lyric: ^2.0.4+6 # 歌词显示
-  updater: # 版本升级
-    git:
-      url: https://github.com/zhushenwudi/flutter_updater
-      ref: 04d471d
+  flutter_app_update: ^3.0.3 # 版本升级
   flutter_sticky_header: ^0.6.5 # 粘性头
   url_launcher: ^6.1.12 # url跳转
   umeng_common_sdk: ^1.2.6 # 友盟sdk
@@ -103,7 +100,6 @@ dependencies:
     git:
       url: https://github.com/zhushenwudi/flexible_scrollbar
       ref: master
-  permission_handler: ^10.4.3 # 权限管理
   flutter_carplay: # Carplay支持
     git:
       url: https://github.com/zhushenwudi/flutter_carplay

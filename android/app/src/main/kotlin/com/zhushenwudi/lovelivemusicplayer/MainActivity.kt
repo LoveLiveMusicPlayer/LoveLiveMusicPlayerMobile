@@ -1,9 +1,11 @@
 package com.zhushenwudi.lovelivemusicplayer
 
 import android.os.Bundle
+import androidx.annotation.NonNull
 import com.ryanheise.audioservice.AudioServiceActivity
 import com.umeng.commonsdk.UMConfigure
 import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugins.GeneratedPluginRegistrant.registerWith
 import kotlinx.coroutines.CoroutineScope
@@ -11,11 +13,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import android.os.Process
 
 class MainActivity : AudioServiceActivity() {
     companion object {
         //通讯名称,回到手机桌面
-        const val CHANNEL = "android/back/desktop"
+        const val BACK_CHANNEL = "android/back/desktop"
+        const val UPDATE_CHANNEL = "android/update"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,11 +55,19 @@ class MainActivity : AudioServiceActivity() {
         registerWith(flutterEngine)
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
-            CHANNEL
+            BACK_CHANNEL
         ).setMethodCallHandler { methodCall, result ->
             if (methodCall.method == "backDesktop") {
                 result.success(true)
                 moveTaskToBack(false)
+            }
+        }
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            UPDATE_CHANNEL
+        ).setMethodCallHandler { methodCall, result ->
+            if (methodCall.method == "getAbi") {
+                result.success(Process.is64Bit())
             }
         }
     }

@@ -4,6 +4,8 @@ import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_app_update/flutter_app_update.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:log4f/log4f.dart';
@@ -12,9 +14,11 @@ import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/global/global_theme.dart';
+import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/models/artist.dart';
 import 'package:lovelivemusicplayer/models/menu.dart';
+import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
@@ -25,10 +29,7 @@ import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
 import 'package:open_appstore/open_appstore.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:updater/updater.dart';
 import 'package:we_slide/we_slide.dart';
-
-import '../models/music.dart';
 
 class GlobalLogic extends SuperController
     with GetSingleTickerProviderStateMixin {
@@ -74,13 +75,12 @@ class GlobalLogic extends SuperController
 
   static GlobalLogic get to => Get.find();
 
-  Updater? updater;
-  UpdaterController? controller;
-
   /// 定时关闭功能
   Timer? timer;
   ButtonController? timerController;
   var remainTime = ValueNotifier<int>(0);
+
+  static const MethodChannel _updateChannel = MethodChannel("android/update");
 
   @override
   void onInit() {
@@ -134,17 +134,11 @@ class GlobalLogic extends SuperController
       withSystemTheme.value = isWith;
     };
 
-    controller = UpdaterController(
-      listener: (UpdateStatus status) {
-        if (status == UpdateStatus.Failed) {
-          SmartDialog.compatible.showToast('update_fail'.tr);
-        }
-        Log4f.d(msg: 'Listener: $status');
-      },
-      onError: (status) {
-        Log4f.d(msg: 'Error: $status');
-      },
-    );
+    AzhonAppUpdate.listener((Map<String, dynamic> map) {
+      if (map.containsKey('error')) {
+        SmartDialog.compatible.showToast('update_fail'.tr);
+      }
+    });
 
     SpUtil.getBoolean(Const.spEnableBackgroundPhoto).then((value) {
       if (value) {
@@ -274,7 +268,7 @@ class GlobalLogic extends SuperController
 
   @override
   void dispose() {
-    controller?.dispose();
+    AzhonAppUpdate.dispose();
     super.dispose();
   }
 
@@ -334,25 +328,12 @@ class GlobalLogic extends SuperController
     }
   }
 
-  checkUpdate({bool manual = false}) async {
+  checkUpdate() async {
     final connection = await Connectivity().checkConnectivity();
     if (connection == ConnectivityResult.none) {
       return;
     }
-    if (Platform.isAndroid) {
-      updater ??= Updater(
-          context: Get.context!,
-          url: Const.updateUrl,
-          titleText: 'update'.tr,
-          confirmText: 'update_yes'.tr,
-          cancelText: 'update_no'.tr,
-          controller: controller);
-      updater!.check().then((hasNewVersion) {
-        if (manual && !hasNewVersion) {
-          SmartDialog.compatible.showToast('no_need_update'.tr);
-        }
-      });
-    } else if (manual) {
+    if (Platform.isIOS) {
       Network.get(Const.appstoreUrl, success: (resp) async {
         Map<String, dynamic> map = jsonDecode(resp);
         final tempList = map["results"] as List;
@@ -360,7 +341,7 @@ class GlobalLogic extends SuperController
           final packageInfo = await PackageInfo.fromPlatform();
           if (bundle["bundleId"] == packageInfo.packageName) {
             bool needUpdate =
-                AppUtils.compareVersion(packageInfo.version, bundle["version"]);
+            AppUtils.compareVersion(packageInfo.version, bundle["version"]);
             if (needUpdate) {
               OpenAppstore.launch(
                   androidAppId: packageInfo.packageName,
@@ -371,6 +352,23 @@ class GlobalLogic extends SuperController
             break;
           }
         }
+      });
+    } else {
+      bool is64Bit = await _updateChannel.invokeMethod("getAbi");
+      Network.get(Const.updateUrl, success: (map) async {
+        final isNewVersion = AppUtils.compareVersion(appVersion, map['versionName']);
+        if (!isNewVersion) {
+          SmartDialog.compatible.showToast('no_need_update'.tr);
+          return;
+        }
+        final model = UpdateModel(
+            is64Bit ? map['64bit_url'] : map['32bit_url'],
+            "update.apk",
+            "ic_launcher",
+            Const.appstoreUrl,
+            apkMD5: is64Bit ? map['64bit_md5'] : map['32bit_md5']
+        );
+        AzhonAppUpdate.update(model);
       });
     }
   }
