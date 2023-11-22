@@ -1,12 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_app_update/flutter_app_update.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
@@ -14,21 +8,17 @@ import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/global/global_theme.dart';
-import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/models/artist.dart';
 import 'package:lovelivemusicplayer/models/menu.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
-import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
-import 'package:open_appstore/open_appstore.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:we_slide/we_slide.dart';
 
 class GlobalLogic extends SuperController
@@ -79,8 +69,6 @@ class GlobalLogic extends SuperController
   Timer? timer;
   ButtonController? timerController;
   var remainTime = ValueNotifier<int>(0);
-
-  static const MethodChannel _updateChannel = MethodChannel("android/update");
 
   @override
   void onInit() {
@@ -133,12 +121,6 @@ class GlobalLogic extends SuperController
       }
       withSystemTheme.value = isWith;
     };
-
-    AzhonAppUpdate.listener((Map<String, dynamic> map) {
-      if (map.containsKey('error')) {
-        SmartDialog.compatible.showToast('update_fail'.tr);
-      }
-    });
 
     SpUtil.getBoolean(Const.spEnableBackgroundPhoto).then((value) {
       if (value) {
@@ -267,12 +249,6 @@ class GlobalLogic extends SuperController
   }
 
   @override
-  void dispose() {
-    AzhonAppUpdate.dispose();
-    super.dispose();
-  }
-
-  @override
   void onDetached() {}
 
   @override
@@ -325,51 +301,6 @@ class GlobalLogic extends SuperController
           duration: const Duration(milliseconds: 200), curve: Curves.ease);
     } catch (e) {
       Log4f.i(msg: e.toString());
-    }
-  }
-
-  checkUpdate() async {
-    final connection = await Connectivity().checkConnectivity();
-    if (connection == ConnectivityResult.none) {
-      return;
-    }
-    if (Platform.isIOS) {
-      Network.get(Const.appstoreUrl, success: (resp) async {
-        Map<String, dynamic> map = jsonDecode(resp);
-        final tempList = map["results"] as List;
-        for (var bundle in tempList) {
-          final packageInfo = await PackageInfo.fromPlatform();
-          if (bundle["bundleId"] == packageInfo.packageName) {
-            bool needUpdate =
-            AppUtils.compareVersion(packageInfo.version, bundle["version"]);
-            if (needUpdate) {
-              OpenAppstore.launch(
-                  androidAppId: packageInfo.packageName,
-                  iOSAppId: "1641625393");
-            } else {
-              SmartDialog.compatible.showToast('no_need_update'.tr);
-            }
-            break;
-          }
-        }
-      });
-    } else {
-      bool is64Bit = await _updateChannel.invokeMethod("getAbi");
-      Network.get(Const.updateUrl, success: (map) async {
-        final isNewVersion = AppUtils.compareVersion(appVersion, map['versionName']);
-        if (!isNewVersion) {
-          SmartDialog.compatible.showToast('no_need_update'.tr);
-          return;
-        }
-        final model = UpdateModel(
-            is64Bit ? map['64bit_url'] : map['32bit_url'],
-            "update.apk",
-            "ic_launcher",
-            Const.appstoreUrl,
-            apkMD5: is64Bit ? map['64bit_md5'] : map['32bit_md5']
-        );
-        AzhonAppUpdate.update(model);
-      });
     }
   }
 

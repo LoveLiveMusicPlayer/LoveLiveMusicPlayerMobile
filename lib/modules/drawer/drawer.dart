@@ -10,6 +10,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/global/global_update.dart';
 import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/cloud_data.dart';
 import 'package:lovelivemusicplayer/models/cloud_update.dart';
@@ -227,7 +228,7 @@ class _DrawerPageState extends State<DrawerPage> {
               text: 'update'.tr,
               colorWithBG: false,
               onTap: (controller) {
-                GlobalLogic.to.checkUpdate();
+                UpdateLogic.to.checkUpdate();
               },
             ),
             SizedBox(height: 8.h),
