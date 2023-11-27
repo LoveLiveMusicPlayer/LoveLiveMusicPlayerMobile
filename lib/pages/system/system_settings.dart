@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:croppy/croppy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -246,11 +247,16 @@ class _SystemSettingsState extends State<SystemSettings> {
                 if (image == null) {
                   return;
                 }
-                final cropImage = await ImageUtil.cropImage(
-                    image: image.path,
-                    width: ScreenUtil().screenWidth,
-                    height: ScreenUtil().screenHeight);
-                final picContent = await cropImage?.readAsBytes();
+                final cropImage = await showCupertinoImageCropper(
+                  Get.context!,
+                  locale: Get.locale,
+                  allowedAspectRatios: [
+                    CropAspectRatio(width: Get.width.toInt(), height: Get.height.toInt()),
+                  ],
+                  imageProvider: FileImage(File(image.path)), // Or any other image provider
+                );
+
+                final picContent = await ImageUtil.imageToBytes(cropImage?.uiImage);
                 if (picContent == null) {
                   return;
                 }

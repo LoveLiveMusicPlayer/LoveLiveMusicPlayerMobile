@@ -85,7 +85,10 @@ dependencies:
   url_launcher: ^6.1.12 # url跳转
   umeng_common_sdk: ^1.2.6 # 友盟sdk
   image_picker: ^1.0.1 # 图片选择
-  image_cropper: ^5.0.0 # 图片裁切
+  croppy: # 图片裁切
+    git:
+      url: https://github.com/zhushenwudi/croppy
+      ref: master
   colorful_safe_area: ^1.0.0 # 定制safe_area
   open_appstore: # 跳转到应用商店
     git:
