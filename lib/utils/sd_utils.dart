@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:http/http.dart' as http;
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
@@ -8,6 +10,7 @@ import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/models/device.dart';
+import 'package:lovelivemusicplayer/models/download_splash.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:path_provider/path_provider.dart';
@@ -16,6 +19,7 @@ class SDUtils {
   static String path = "";
   static bool allowEULA = false;
   static late String bgPhotoPath;
+  static late String splashPhotoPath;
 
   static init() async {
     Directory? appDocDir;
@@ -27,6 +31,10 @@ class SDUtils {
     bgPhotoPath = "${path}bg/";
     if (!checkDirectoryExist(bgPhotoPath)) {
       makeDir(bgPhotoPath);
+    }
+    splashPhotoPath = "${path}splash/";
+    if (!checkDirectoryExist(splashPhotoPath)) {
+      makeDir(splashPhotoPath);
     }
     allowEULA = Platform.isAndroid || checkDirectoryExist("${path}LLMP");
     Log4f.d(msg: path);
@@ -137,6 +145,19 @@ class SDUtils {
     }
   }
 
+  static List<String> getSplashPhotoList() {
+    final photoList = <String>[];
+    try {
+      var dir = Directory(splashPhotoPath);
+      dir.listSync().forEach((element) {
+        photoList.add(element.path);
+      });
+    } catch (e) {
+      Log4f.i(msg: e.toString());
+    }
+    return photoList;
+  }
+
   static clearBGPhotos() {
     try {
       final dir = Directory(bgPhotoPath);
@@ -195,5 +216,30 @@ class SDUtils {
     }
 
     return filePathList;
+  }
+
+  static void downloadSplashList(List<DownloadSplash> downloadList) {
+    print("downloadSplashList: ${downloadList.length}");
+    if (downloadList.isNotEmpty) {
+      Isolate.spawn(downloadFiles, downloadList);
+    }
+  }
+
+  static void downloadFiles(List<DownloadSplash> downloadList) async {
+    for (var item in downloadList) {
+      try {
+        final response = await http.get(Uri.parse(item.url));
+        if (response.statusCode == 200) {
+          // 保存图片到本地
+          var file = File(item.filePath);
+          file.writeAsBytesSync(response.bodyBytes);
+          print('图片下载成功');
+        } else {
+          print('图片下载失败: code=${response.statusCode}');
+        }
+      } catch (e) {
+        Log4f.i(msg: e.toString());
+      }
+    }
   }
 }

@@ -156,6 +156,7 @@ flutter:
     - assets/tachie/
     - assets/role/
     - assets/drive/
+    - assets/launch/
     - shorebird.yaml
 
   fonts:

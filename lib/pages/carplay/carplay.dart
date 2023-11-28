@@ -60,8 +60,8 @@ class Carplay {
 
   static void changePlayingMusic(Music music) {
     final imagePath = CarplayUtil.music2Image(music);
-    sectionMusic.first.items.first
-        .updateTextAndImage("${'now_playing'.tr}${music.musicName ?? 'no_songs'.tr}", imagePath);
+    sectionMusic.first.items.first.updateTextAndImage(
+        "${'now_playing'.tr}${music.musicName ?? 'no_songs'.tr}", imagePath);
   }
 
   void onCarplayConnectionChange(CPConnectionStatusTypes status) {

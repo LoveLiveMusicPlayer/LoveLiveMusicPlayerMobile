@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,7 +28,6 @@ import 'global/const.dart';
 import 'global/global_player.dart';
 import 'global/global_theme.dart';
 import 'i10n/translation.dart';
-import 'models/init_config.dart';
 import 'network/http_request.dart';
 import 'routes.dart';
 import 'utils/sd_utils.dart';
@@ -51,8 +48,6 @@ var hasAIPic = false;
 var enableBG = false;
 // 传输协议版本号
 const transVer = 1;
-// 开屏图片列表
-final splashList = <String>[];
 // 是否可以使用SmartDialog
 var isCanUseSmartDialog = false;
 // 是否初始化好SplashDao
@@ -63,6 +58,8 @@ InAppLocalhostServer? localhostServer;
 late RemoteHttp remoteHttp;
 
 late Carplay carplay;
+
+StreamSubscription? subscription;
 
 void main() async {
   Future<void> reportErrorAndLog(FlutterErrorDetails details) async {
@@ -106,6 +103,14 @@ void main() async {
         androidNotificationOngoing: true,
       );
 
+      subscription = eventBus.on<CloseOpen>().listen((event) async {
+        // 在Carplay的init函数中初始化CarplayMine会导致程序卡死，提前初始化
+        await CarplayMine.getInstance();
+        Carplay.init();
+        // 初始化结束后，将启动屏关闭
+        FlutterNativeSplash.remove();
+      });
+
       // 初始化
       await initServices();
       isDark = await SpUtil.getBoolean(Const.spDark);
@@ -143,8 +148,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  StreamSubscription? subscription;
-
   @override
   void didChangeLocales(List<Locale>? locales) {
     if (locales != null) {
@@ -169,13 +172,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    subscription = eventBus.on<CloseOpen>().listen((event) async {
-      // 在Carplay的init函数中初始化CarplayMine会导致程序卡死，提前初始化
-      await CarplayMine.getInstance();
-      Carplay.init();
-      // 初始化结束后，将启动屏关闭
-      FlutterNativeSplash.remove();
-    });
 
     PaintingBinding.instance.imageCache.maximumSizeBytes = 1024 * 1024 * 100;
 
@@ -242,8 +238,27 @@ initServices() async {
   enableBG = await SpUtil.getBoolean(Const.spEnableBackgroundPhoto, false);
   hasAIPic = await SpUtil.getBoolean(Const.spAIPicture, true);
   PlayerBinding().dependencies();
-  if (hasAIPic) await getOssUrl();
+  await waitForDBInitial();
   SpUtil.put(Const.spPrevPage, "");
+}
+
+Future<void> waitForDBInitial() async {
+  // 等待isInitSplashDao变化，避免数据库初始化未完成
+  await CompleterExt.awaitFor<bool>((run) {
+    var count = 0;
+    // 定时300ms检测一次变化
+    Timer.periodic(const Duration(milliseconds: 300), (timer) async {
+      count++;
+      if (isInitSplashDao) {
+        timer.cancel();
+        run(true);
+      } else if (count >= 10) {
+        // 轮询超过10次就强制停止
+        timer.cancel();
+        run(true);
+      }
+    });
+  });
 }
 
 startServer() {
@@ -262,94 +277,6 @@ stopServer() {
     localhostServer?.close();
   }
   localhostServer = null;
-}
-
-/// 获取资源oss url，解析开屏图片数据
-getOssUrl() async {
-  try {
-    final connection = await Connectivity().checkConnectivity();
-    if (connection != ConnectivityResult.none) {
-      final result = await Network.getSync(Const.splashConfigUrl);
-      if (result is Map<String, dynamic>) {
-        // 能够加载到开屏配置
-        final config = initConfigFromJson(jsonEncode(result));
-        Const.dataOssUrl = config.ossUrl;
-        Const.splashUrl = config.ossUrl + config.splash.route;
-        final forceMap = config.splash.forceChoose;
-
-        // 先将全部图片放到列表中
-        addAllSplashPhoto(config);
-
-        if (forceMap == null) {
-          return;
-        }
-
-        final endTime = forceMap["endTime"];
-        if (endTime != null &&
-            endTime < DateTime.now().millisecondsSinceEpoch) {
-          return;
-        }
-        final forceId = forceMap["uid"];
-        if (forceId == null) {
-          return;
-        }
-        final forceBg = config.splash.bg
-            .firstWhereOrNull((bg) => bg.uid == forceMap["uid"]);
-        if (forceBg == null) {
-          return;
-        }
-        final index = forceMap["index"];
-        if (index == null || index < 0 || index > forceBg.size) {
-          return;
-        }
-
-        // 需要强制开屏图，清空数组添加唯一一张
-        splashList.clear();
-        splashList.add(
-            "${Const.splashUrl}${forceBg.singer}/bg_${forceBg.singer}_$index.png");
-        return;
-      }
-    }
-    // 手机无网络、开屏配置无法加载
-    // 等待isInitSplashDao变化，避免数据库初始化未完成
-    await CompleterExt.awaitFor<bool>((run) {
-      var count = 0;
-      // 定时300ms检测一次变化
-      Timer.periodic(const Duration(milliseconds: 300), (timer) async {
-        count++;
-        if (isInitSplashDao) {
-          // 从数据库中加载全部开屏图地址
-          final tempList = await DBLogic.to.splashDao.findAllSplashUrls();
-          for (var splashItem in tempList) {
-            // 过滤只保留仍然缓存中的图片
-            final isExist = await AppUtils.checkUrlExist(splashItem.url);
-            if (isExist) {
-              splashList.add(splashItem.url);
-            }
-          }
-          timer.cancel();
-          run(true);
-        } else if (count >= 10) {
-          // 轮询超过10次就强制停止
-          timer.cancel();
-          run(true);
-        }
-      });
-    });
-  } catch (e) {
-    Log4f.d(msg: e.toString());
-  }
-}
-
-/// 将可用开屏界面地址全部添加到开屏图列表中
-addAllSplashPhoto(InitConfig config) {
-  for (var bg in config.splash.bg) {
-    for (var index = 1; index <= bg.size; index++) {
-      final photoUrl =
-          "${Const.splashUrl}${bg.singer}/bg_${bg.singer}_$index.png";
-      splashList.add(photoUrl);
-    }
-  }
 }
 
 /// GetX 日志重定向

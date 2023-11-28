@@ -251,12 +251,15 @@ class _SystemSettingsState extends State<SystemSettings> {
                   Get.context!,
                   locale: Get.locale,
                   allowedAspectRatios: [
-                    CropAspectRatio(width: Get.width.toInt(), height: Get.height.toInt()),
+                    CropAspectRatio(
+                        width: Get.width.toInt(), height: Get.height.toInt()),
                   ],
-                  imageProvider: FileImage(File(image.path)), // Or any other image provider
+                  imageProvider: FileImage(
+                      File(image.path)), // Or any other image provider
                 );
 
-                final picContent = await ImageUtil.imageToBytes(cropImage?.uiImage);
+                final picContent =
+                    await ImageUtil.imageToBytes(cropImage?.uiImage);
                 if (picContent == null) {
                   return;
                 }

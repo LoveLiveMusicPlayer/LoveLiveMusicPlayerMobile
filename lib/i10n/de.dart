@@ -199,6 +199,7 @@ Benutzer sollten die Software unter der Prämisse verwenden, Gesetze und Vereinb
   'pc': 'Computer',
   'add_favorite_menu': 'Lieblings-Playlist',
   'music_blind_box': 'Musik-Blindbox',
-  'throbbing': 'Während Sie aufgeregt sind, sollten Sie auch auf die Verkehrssicherheit achten',
+  'throbbing':
+      'Während Sie aufgeregt sind, sollten Sie auch auf die Verkehrssicherheit achten',
   'exit': 'Schließung'
 };

@@ -192,7 +192,8 @@ Users shall use the Software in compliance with laws and agreements. Users are n
   'phone': 'Phone',
   'pc': 'Computer',
   'add_favorite_menu': 'Favorite playlist',
-  'music_blind_box':"Music blind box",
-  'throbbing': 'I know you will be throbbing, but pay attention to traffic safety',
+  'music_blind_box': "Music blind box",
+  'throbbing':
+      'I know you will be throbbing, but pay attention to traffic safety',
   'exit': 'Exit'
 };
