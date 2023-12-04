@@ -22,7 +22,11 @@ class SplashPhoto {
     }
     splashList.shuffle();
     String imageUrl = splashList[0];
-    return Image.file(File(imageUrl));
+    return SizedBox(
+      width: double.infinity,
+      height: double.infinity,
+      child: Image.file(File(imageUrl), fit: BoxFit.fill),
+    );
   }
 
   /// 获取资源oss url，解析开屏图片数据

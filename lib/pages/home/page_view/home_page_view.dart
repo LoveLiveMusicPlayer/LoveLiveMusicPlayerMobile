@@ -34,8 +34,8 @@ class HomePageView extends GetView<HomeController> {
       children: [
         AppBar(
           toolbarHeight: 60.h,
-          elevation: 0,
           centerTitle: false,
+          titleSpacing: -35.w,
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
           title: _getTabBar(),
