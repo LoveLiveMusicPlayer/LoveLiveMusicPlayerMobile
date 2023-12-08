@@ -143,7 +143,7 @@ Welcome to gay me. Your support is my motivation to continue developing!
 	flutter pub get
 
 - Generate database helper file
-	flutter packages pub run build_runner build
+	dart run build_runner build
 
 ## License
 

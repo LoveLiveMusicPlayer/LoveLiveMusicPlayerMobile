@@ -143,7 +143,7 @@ B站空间：<https://space.bilibili.com/4367965>
     flutter pub get
 	
 - 生成数据库 helper 文件
-    flutter packages pub run build_runner build
+    dart run build_runner build
 
 ## 许可证
 
