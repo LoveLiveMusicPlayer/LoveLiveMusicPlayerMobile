@@ -41,6 +41,7 @@ class DetailsBody extends StatefulWidget {
 
 class _DetailsBodyState extends State<DetailsBody> {
   var bgColor = Get.theme.primaryColor;
+  var hasBgPhotoColor = Get.theme.primaryColor;
 
   @override
   void initState() {
@@ -48,8 +49,9 @@ class _DetailsBodyState extends State<DetailsBody> {
     if (SDUtils.checkFileExist(bgPhoto)) {
       AppUtils.getImagePalette(bgPhoto).then((color) {
         if (color != null) {
+          hasBgPhotoColor = color.withAlpha(255);
           setState(() {
-            bgColor = color.withAlpha(255);
+            bgColor = Colors.transparent;
           });
         }
       });
@@ -66,10 +68,21 @@ class _DetailsBodyState extends State<DetailsBody> {
           slivers: [
             SliverToBoxAdapter(child: widget.buildCover),
             SliverPadding(padding: EdgeInsets.only(top: 10.h)),
-            SliverStickyHeader(
-              header: renderStickyHeader(),
+            SliverStickyHeader.builder(
+              builder: (context, state) {
+                if (state.isPinned) {
+                  //置顶
+                  if (bgColor != hasBgPhotoColor) {
+                    bgColor = hasBgPhotoColor;
+                  }
+                } else {
+                  bgColor = Colors.transparent;
+                }
+
+                return renderStickyHeader();
+              },
               sliver: renderMusicList(),
-            ),
+            )
           ],
         ),
       ),
