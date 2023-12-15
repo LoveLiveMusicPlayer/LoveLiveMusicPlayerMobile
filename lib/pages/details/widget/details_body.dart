@@ -123,7 +123,7 @@ class _DetailsBodyState extends State<DetailsBody> {
         (BuildContext context, int index) {
           final music = widget.music[index];
           return Padding(
-            padding: EdgeInsets.only(bottom: 20.h),
+            padding: EdgeInsets.only(bottom: 10.h),
             child: ListViewItemSong(
               index: index,
               music: music,
