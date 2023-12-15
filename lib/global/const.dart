@@ -79,5 +79,9 @@ class Const {
   static const String shareKvUrl =
       "http://fc-mp-92601a5b-3adb-44ca-b6f6-fc4e8b3edbca.next.bspapp.com/saveShareKV";
 
+  // 萌娘百科主页
   static const String moeGirlUrl = "https://zh.moegirl.org.cn/";
+
+  // SentryDSN
+  static const String sentryUrl = "https://f93c602d2cca26365680f566db360ce7@o1185358.ingest.sentry.io/4506376468365312";
 }

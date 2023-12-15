@@ -21,6 +21,7 @@ import 'package:lovelivemusicplayer/pages/carplay/carplay.dart';
 import 'package:lovelivemusicplayer/pages/carplay/carplay_mine.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/completer_ext.dart';
+import 'package:lovelivemusicplayer/utils/sentry_util.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 
@@ -74,6 +75,8 @@ void main() async {
     };
     if (kDebugMode) {
       Log4f.i(msg: "$errorMsg");
+    } else {
+      SentryUtil.getInstance().exception(details);
     }
   }
 
@@ -84,6 +87,8 @@ void main() async {
 
   runZonedGuarded(
     () async {
+      // 初始化Sentry监控
+      await SentryUtil.getInstance().init();
       // 启动屏开启
       WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
       // 仅支持竖屏
