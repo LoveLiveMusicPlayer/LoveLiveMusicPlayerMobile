@@ -76,7 +76,7 @@ void main() async {
     if (kDebugMode) {
       Log4f.i(msg: "$errorMsg");
     } else {
-      SentryUtil.getInstance().exception(details);
+      SentryUtil.getInstance().exception(errorMsg);
     }
   }
 

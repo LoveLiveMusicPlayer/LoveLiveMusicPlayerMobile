@@ -79,11 +79,16 @@ class GlobalLogic extends SuperController
       hasSkin.value = await SpUtil.getBoolean(Const.spColorful, false);
       manualIsDark.value = await SpUtil.getBoolean(Const.spDark, false);
       bool isWith = await SpUtil.getBoolean(Const.spWithSystemTheme, false);
-      bool isDark =
-          MediaQuery.of(Get.context!).platformBrightness == Brightness.dark;
-      if (isWith) {
-        Get.changeTheme(isDark ? darkTheme : lightTheme);
+      final mContext = Get.context;
+      bool isDark = false;
+      if (mContext != null) {
+        if (!mContext.mounted) return;
+        isDark = MediaQuery.of(mContext).platformBrightness == Brightness.dark;
+        if (isWith) {
+          Get.changeTheme(isDark ? darkTheme : lightTheme);
+        }
       }
+
       Color color = const Color(Const.noMusicColorfulSkin);
       final musicList = PlayerLogic.to.mPlayList;
       if (musicList.isNotEmpty) {
