@@ -2,11 +2,16 @@
     <img src="assets/logo/svg_logo.svg" width="200" height="200">
 </p>
 <h1 align="center">LLMP-M</h1>
-<h3 align="center">一款送给 LLer 的专属移动播放器</h3>  
+<h3 align="center">一款送给 LLer 的专属移动播放器</h3>
 <h4 align="center">持续更新中....欢迎点波star</h4>
 <h4 align="center">
 
 Language: 中文 | [English Document](README_EN.md)
+
+![GitHub repo size](https://img.shields.io/github/repo-size/lovelivemusicplayer/lovelivemusicplayermobile)
+![GitHub Repo stars](https://img.shields.io/github/stars/lovelivemusicplayer/lovelivemusicplayermobile)
+![GitHub all downloads](https://img.shields.io/github/downloads/lovelivemusicplayer/lovelivemusicplayermobile/total)
+![GitHub all releases](https://img.shields.io/github/v/release/lovelivemusicplayer/lovelivemusicplayermobile)
 
 </h4>
 
@@ -32,7 +37,7 @@ Language: 中文 | [English Document](README_EN.md)
 - [自定义歌单] ✓
 - [我喜欢] ✓
 - [在线中文、日文、罗马音歌词] ✓
-- [播放数据上报] ✓
+- [播放数据上报] x
 - [歌曲快传 + 数据同步] ✓
 - [亮色模式 + 暗黑模式 + 炫彩模式] ✓
 - [睡眠模式定时停止] ✓
@@ -99,6 +104,8 @@ B站空间：<https://space.bilibili.com/4367965>
 
 - UI设计：<https://space.bilibili.com/202660950>
 
+- Logo及Icon设计：<https://space.bilibili.com/85421205>
+
 - 依然洳雪：<https://space.bilibili.com/13184888>
 
 - 虹之咲字幕组：<https://space.bilibili.com/238547115>
@@ -109,6 +116,10 @@ B站空间：<https://space.bilibili.com/4367965>
 
 - 播放器界面组件 [we_slide](https://github.com/luciano-work/we_slide)
 - 歌词组件 [flutter_lyric](https://github.com/ozyl/flutter_lyric)
+
+- [JetBrains](https://www.jetbrains.com/?from=lovelivemusicplayermobile) 
+为开源项目提供免费的 [IntelliJ IDEA](https://www.jetbrains.com/idea/?from=lovelivemusicplayermobile)等 IDE 的授权  
+[<img src="assets/jetbrains.png" width="200"/>](https://www.jetbrains.com/?from=lovelivemusicplayermobile)
 
 ## 鸣谢
 

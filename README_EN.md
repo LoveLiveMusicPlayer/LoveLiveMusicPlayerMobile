@@ -2,11 +2,16 @@
     <img src="assets/logo/svg_logo.svg" width="200" height="200">
 </p>
 <h1 align="center">LLMP-M</h1>
-<h3 align="center">A dedicated mobile player for LLer</h3>  
+<h3 align="center">A dedicated mobile player for LLer</h3>
 <h4 align="center">Continuously updating.... Welcome to Popstar</h4>
 <h4 align="center">
 
 Language: English | [中文](README.md)
+
+![GitHub repo size](https://img.shields.io/github/repo-size/lovelivemusicplayer/lovelivemusicplayermobile)
+![GitHub Repo stars](https://img.shields.io/github/stars/lovelivemusicplayer/lovelivemusicplayermobile)
+![GitHub all downloads](https://img.shields.io/github/downloads/lovelivemusicplayer/lovelivemusicplayermobile/total)
+![GitHub all releases](https://img.shields.io/github/v/release/lovelivemusicplayer/lovelivemusicplayermobile)
 
 </h4>
 
@@ -32,7 +37,7 @@ Function list:
 - [Customized song list] ✓
 - [I like it] ✓
 - [Online Chinese, Japanese and Roman lyrics] ✓
-- [Reporting of playing data] ✓
+- [Reporting of playing data] x
 - [Fast transmission of songs and data synchronization] ✓
 - [Bright color mode, dark color mode and dazzling color mode] ✓
 - [Sleep mode stops at regular intervals] ✓
@@ -99,6 +104,8 @@ Welcome to gay me. Your support is my motivation to continue developing!
 
 - UI Design：<https://space.bilibili.com/202660950>
 
+- Logo and Icon Design：<https://space.bilibili.com/85421205>
+
 - 依然洳雪：<https://space.bilibili.com/13184888>
 
 - 虹之咲 translators：<https://space.bilibili.com/238547115>
@@ -109,6 +116,11 @@ Welcome to gay me. Your support is my motivation to continue developing!
 
 - Player UI component [we_slide](https://github.com/luciano-work/we_slide)
 - Lyric component [flutter_lyric](https://github.com/ozyl/flutter_lyric)
+
+- Thanks to [JetBrains](https://www.jetbrains.com/?from=lovelivemusicplayermobile)
+for allocating free open-source licences for IDEs such as
+[IntelliJ IDEA](https://www.jetbrains.com/idea/?from=lovelivemusicplayermobile)
+[<img src="assets/jetbrains.png" width="200"/>](https://www.jetbrains.com/?from=lovelivemusicplayermobile)
 
 ## Thanks
 
