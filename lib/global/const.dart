@@ -83,5 +83,6 @@ class Const {
   static const String moeGirlUrl = "https://zh.moegirl.org.cn/";
 
   // SentryDSN
-  static const String sentryUrl = "https://f93c602d2cca26365680f566db360ce7@o1185358.ingest.sentry.io/4506376468365312";
+  static const String sentryUrl =
+      "https://f93c602d2cca26365680f566db360ce7@o1185358.ingest.sentry.io/4506376468365312";
 }

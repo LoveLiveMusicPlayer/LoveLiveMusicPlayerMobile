@@ -275,26 +275,9 @@ class GlobalLogic extends SuperController
 
     /// 防止长时间熄屏 PageView 重建回到首页
     try {
-      switch (HomeController.to.state.currentIndex.value) {
-        case 0:
-          scrollTo(HomeController.scrollController1);
-          break;
-        case 1:
-          scrollTo(HomeController.scrollController2);
-          break;
-        case 2:
-          scrollTo(HomeController.scrollController3);
-          break;
-        case 3:
-          scrollTo(HomeController.scrollController4);
-          break;
-        case 4:
-          scrollTo(HomeController.scrollController5);
-          break;
-        case 5:
-          scrollTo(HomeController.scrollController6);
-          break;
-      }
+      scrollTo(HomeController
+          .scrollControllers[HomeController.to.state.currentIndex.value]);
+
       PageViewLogic.to.controller
           .jumpToPage(HomeController.to.state.currentIndex.value);
     } catch (_) {}

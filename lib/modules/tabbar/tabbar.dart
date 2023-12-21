@@ -21,7 +21,8 @@ class TabBarComponent extends StatelessWidget {
       indicatorSize: TabBarIndicatorSize.label,
       indicatorColor: ColorMs.colorF940A7,
       dividerHeight: 0,
-      overlayColor: MaterialStateProperty.all(Colors.transparent), // 设置点击效果的颜色为透明
+      overlayColor: MaterialStateProperty.all(Colors.transparent),
+      // 设置点击效果的颜色为透明
       labelPadding: EdgeInsets.only(left: 4.w, right: 4.w),
       indicator: CustomUnderlineTabIndicator(
           insets: EdgeInsets.only(top: 0, bottom: 8.h),

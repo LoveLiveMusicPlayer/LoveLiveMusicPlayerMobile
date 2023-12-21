@@ -196,12 +196,9 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       Log4f.i(msg: e.toString());
     }
     try {
-      scrollToTop(HomeController.scrollController1);
-      scrollToTop(HomeController.scrollController2);
-      scrollToTop(HomeController.scrollController3);
-      scrollToTop(HomeController.scrollController4);
-      scrollToTop(HomeController.scrollController5);
-      scrollToTop(HomeController.scrollController6);
+      for (var scrollController in HomeController.scrollControllers) {
+        scrollToTop(scrollController);
+      }
     } catch (_) {}
   }
 
@@ -688,9 +685,14 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     return await findMusicByMusicIds(musicList);
   }
 
-  scrollToTop(ScrollController scrollController) {
+  scrollToTop(ScrollController scrollController, {bool withAnimation = false}) {
     if (scrollController.hasClients) {
-      scrollController.jumpTo(0);
+      if (withAnimation) {
+        scrollController.animateTo(0,
+            duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+      } else {
+        scrollController.jumpTo(0);
+      }
     }
   }
 

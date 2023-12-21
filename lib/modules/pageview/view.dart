@@ -28,35 +28,18 @@ class PageViewComponent extends StatefulWidget {
 
 class _PageViewComponentState extends State<PageViewComponent>
     with WidgetsBindingObserver {
-  var controller1Offset = 0.0;
-  var controller2Offset = 0.0;
-  var controller3Offset = 0.0;
-  var controller4Offset = 0.0;
-  var controller5Offset = 0.0;
-  var controller6Offset = 0.0;
+  final List<double> scrollOffsets = List<double>.generate(6, (index) => 0.0);
 
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
 
-    HomeController.scrollController1.addListener(() {
-      controller1Offset = HomeController.scrollController1.offset;
-    });
-    HomeController.scrollController2.addListener(() {
-      controller2Offset = HomeController.scrollController2.offset;
-    });
-    HomeController.scrollController3.addListener(() {
-      controller3Offset = HomeController.scrollController3.offset;
-    });
-    HomeController.scrollController4.addListener(() {
-      controller4Offset = HomeController.scrollController4.offset;
-    });
-    HomeController.scrollController5.addListener(() {
-      controller5Offset = HomeController.scrollController5.offset;
-    });
-    HomeController.scrollController6.addListener(() {
-      controller6Offset = HomeController.scrollController6.offset;
-    });
+    for (var i = 0; i <= HomeController.scrollControllers.length - 1; i++) {
+      final controller = HomeController.scrollControllers[i];
+      controller.addListener(() {
+        scrollOffsets[i] = controller.offset;
+      });
+    }
 
     super.initState();
   }
@@ -72,18 +55,19 @@ class _PageViewComponentState extends State<PageViewComponent>
     super.didChangeAppLifecycleState(state);
     switch (state) {
       case AppLifecycleState.resumed:
-        checkAndJump(HomeController.scrollController1, controller1Offset);
-        checkAndJump(HomeController.scrollController2, controller2Offset);
-        checkAndJump(HomeController.scrollController3, controller3Offset);
-        checkAndJump(HomeController.scrollController4, controller4Offset);
-        checkAndJump(HomeController.scrollController5, controller5Offset);
-        checkAndJump(HomeController.scrollController6, controller6Offset);
+        for (var i = 0; i <= HomeController.scrollControllers.length - 1; i++) {
+          final controller = HomeController.scrollControllers[i];
+          final controllerOffset = scrollOffsets[i];
+          checkAndJump(controller, controllerOffset);
+        }
         break;
       case AppLifecycleState.inactive:
         break;
       case AppLifecycleState.detached:
         break;
       case AppLifecycleState.paused:
+        break;
+      case AppLifecycleState.hidden:
         break;
     }
   }
@@ -99,6 +83,11 @@ class _PageViewComponentState extends State<PageViewComponent>
     final logic = Get.put(PageViewLogic());
 
     return Obx(() {
+      final children = <KeepAliveWrapper>[];
+      for (var i = 0; i <= HomeController.scrollControllers.length - 1; i++) {
+        children.add(KeepAliveWrapper(
+            child: _buildList(i, HomeController.scrollControllers[i])));
+      }
       return PageView(
         controller: logic.controller,
         physics: HomeController.to.state.isSelect.value
@@ -108,20 +97,7 @@ class _PageViewComponentState extends State<PageViewComponent>
           HomeController.to.tabController?.animateTo(index > 2 ? 1 : 0);
           HomeController.to.state.currentIndex.value = index;
         },
-        children: [
-          KeepAliveWrapper(
-              child: _buildList(0, HomeController.scrollController1)),
-          KeepAliveWrapper(
-              child: _buildList(1, HomeController.scrollController2)),
-          KeepAliveWrapper(
-              child: _buildList(2, HomeController.scrollController3)),
-          KeepAliveWrapper(
-              child: _buildList(3, HomeController.scrollController4)),
-          KeepAliveWrapper(
-              child: _buildList(4, HomeController.scrollController5)),
-          KeepAliveWrapper(
-              child: _buildList(5, HomeController.scrollController6))
-        ],
+        children: children,
       );
     });
   }

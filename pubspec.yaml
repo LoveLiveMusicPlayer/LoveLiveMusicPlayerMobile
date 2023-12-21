@@ -109,6 +109,7 @@ dependencies:
       ref: combine-all
   uuid: ^3.0.7 # 唯一码
   sentry_flutter: ^7.13.2 # Sentry
+  scrolls_to_top: ^2.1.1
 
 dependency_overrides:
   ffi: ^2.0.1

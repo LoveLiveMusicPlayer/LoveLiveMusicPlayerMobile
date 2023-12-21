@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/models/artist.dart';
@@ -9,9 +10,11 @@ import 'package:lovelivemusicplayer/pages/details/album_details/view.dart';
 import 'package:lovelivemusicplayer/pages/details/binding.dart';
 import 'package:lovelivemusicplayer/pages/details/menu_details/view.dart';
 import 'package:lovelivemusicplayer/pages/details/singer_details/view.dart';
+import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/page_view/home_page_view.dart';
 import 'package:lovelivemusicplayer/pages/system/system_settings.dart';
 import 'package:lovelivemusicplayer/routes.dart';
+import 'package:scrolls_to_top/scrolls_to_top.dart';
 
 class NestedController extends GetxController {
   static NestedController get to => Get.find();
@@ -61,7 +64,11 @@ class NestedController extends GetxController {
   Route? onGenerateRoute(RouteSettings settings) {
     if (settings.name == Routes.routeHome) {
       addNav(Routes.routeHome);
-      return GetPageRoute(settings: settings, page: () => const HomePageView());
+      return GetPageRoute(
+          settings: settings,
+          page: () => ScrollsToTop(
+              onScrollsToTop: (ScrollsToTopEvent event) => scrollViewToTop(),
+              child: const HomePageView()));
     } else if (settings.name == Routes.routeAlbumDetails) {
       addNav(Routes.routeAlbumDetails);
       album = settings.arguments as Album;
@@ -94,5 +101,14 @@ class NestedController extends GetxController {
           page: () => const SystemSettings());
     }
     return null;
+  }
+
+  scrollViewToTop() {
+    try {
+      DBLogic.to.scrollToTop(
+          HomeController
+              .scrollControllers[HomeController.to.state.currentIndex.value],
+          withAnimation: true);
+    } catch (_) {}
   }
 }

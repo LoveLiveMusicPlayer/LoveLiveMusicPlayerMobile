@@ -8,12 +8,8 @@ class HomeController extends GetxController {
 
   TabController? tabController;
 
-  static final ScrollController scrollController1 = ScrollController();
-  static final ScrollController scrollController2 = ScrollController();
-  static final ScrollController scrollController3 = ScrollController();
-  static final ScrollController scrollController4 = ScrollController();
-  static final ScrollController scrollController5 = ScrollController();
-  static final ScrollController scrollController6 = ScrollController();
+  static final List<ScrollController> scrollControllers =
+      List<ScrollController>.generate(6, (index) => ScrollController());
 
   static HomeController get to => Get.find();
 

@@ -53,17 +53,7 @@ class BottomBar2 extends StatelessWidget {
         unselectedItemColor: ColorMs.colorA9B9CD.withOpacity(0.5),
         onTap: (index) {
           if (HomeController.to.state.currentIndex.value == index + 3) {
-            switch (index + 3) {
-              case 3:
-                scrollTo(HomeController.scrollController4);
-                break;
-              case 4:
-                scrollTo(HomeController.scrollController5);
-                break;
-              case 5:
-                scrollTo(HomeController.scrollController6);
-                break;
-            }
+            scrollTo(HomeController.scrollControllers[index + 3]);
           }
           PageViewLogic.to.controller.jumpToPage(index + 3);
         },
