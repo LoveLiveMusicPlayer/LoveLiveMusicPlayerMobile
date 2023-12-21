@@ -358,7 +358,7 @@ class _PlayerState extends State<Player> {
             ),
             Positioned.fill(
                 child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
+              filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
               child: Container(
                 decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
               ),
