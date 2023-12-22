@@ -105,10 +105,10 @@ class _DrawerPageState extends State<DrawerPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            showGroupButton(Assets.drawerLogoLovelive, onTap: () {
+            showGroupButton(GroupKey.groupAll.getDrawable(), onTap: () {
               refreshList(GroupKey.groupAll);
             }),
-            showGroupButton(Assets.drawerLogoUs, onTap: () {
+            showGroupButton(GroupKey.groupUs.getDrawable(), onTap: () {
               refreshList(GroupKey.groupUs);
             }),
           ],
@@ -117,10 +117,10 @@ class _DrawerPageState extends State<DrawerPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            showGroupButton(Assets.drawerLogoAqours, onTap: () {
+            showGroupButton(GroupKey.groupAqours.getDrawable(), onTap: () {
               refreshList(GroupKey.groupAqours);
             }),
-            showGroupButton(Assets.drawerLogoNijigasaki, onTap: () {
+            showGroupButton(GroupKey.groupNijigasaki.getDrawable(), onTap: () {
               refreshList(GroupKey.groupNijigasaki);
             })
           ],
@@ -129,10 +129,10 @@ class _DrawerPageState extends State<DrawerPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            showGroupButton(Assets.drawerLogoLiella, onTap: () {
+            showGroupButton(GroupKey.groupLiella.getDrawable(), onTap: () {
               refreshList(GroupKey.groupLiella);
             }),
-            showGroupButton(Assets.drawerLogoHasunosora, onTap: () {
+            showGroupButton(GroupKey.groupHasunosora.getDrawable(), onTap: () {
               refreshList(GroupKey.groupHasunosora);
             }),
           ],
@@ -141,10 +141,7 @@ class _DrawerPageState extends State<DrawerPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            showGroupButton(
-                Get.isDarkMode
-                    ? Assets.drawerLogoYohaneNight
-                    : Assets.drawerLogoYohaneDay, onTap: () {
+            showGroupButton(GroupKey.groupYohane.getDrawable(), onTap: () {
               refreshList(GroupKey.groupYohane);
             }),
             Visibility(
@@ -152,7 +149,8 @@ class _DrawerPageState extends State<DrawerPage> {
               maintainAnimation: true,
               maintainSize: true,
               maintainState: true,
-              child: showGroupButton(Assets.drawerLogoAllstars, onTap: () {
+              child: showGroupButton(GroupKey.groupCombine.getDrawable(),
+                  onTap: () {
                 refreshList(GroupKey.groupCombine);
               }),
             )

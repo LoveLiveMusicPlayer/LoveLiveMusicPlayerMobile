@@ -22,6 +22,14 @@ extension GroupKeyExtension on GroupKey {
   String getName() {
     return Const.groupList[index].name;
   }
+
+  String getDrawable() {
+    return Const.groupList[index].drawable;
+  }
+
+  String getLogo() {
+    return Const.groupList[index].logo;
+  }
 }
 
 extension GroupListExtension on List<Group> {

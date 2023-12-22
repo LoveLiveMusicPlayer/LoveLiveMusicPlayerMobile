@@ -18,13 +18,13 @@ class CarplayUtil {
 
   static LinkedHashMap<String, String> groupMap =
       LinkedHashMap<String, String>.from({
-    GroupKey.groupUs.getName(): Assets.logoLogoUs,
-    GroupKey.groupAqours.getName(): Assets.logoLogoAqours,
-    GroupKey.groupNijigasaki.getName(): Assets.logoLogoNiji,
-    GroupKey.groupLiella.getName(): Assets.logoLogoLiella,
-    GroupKey.groupHasunosora.getName(): Assets.logoLogoHasunosora,
-    GroupKey.groupYohane.getName(): Assets.logoLogoYohane,
-    GroupKey.groupCombine.getName(): Assets.logoLogoCombine
+    GroupKey.groupUs.getName(): GroupKey.groupUs.getLogo(),
+    GroupKey.groupAqours.getName(): GroupKey.groupAqours.getLogo(),
+    GroupKey.groupNijigasaki.getName(): GroupKey.groupNijigasaki.getLogo(),
+    GroupKey.groupLiella.getName(): GroupKey.groupLiella.getLogo(),
+    GroupKey.groupHasunosora.getName(): GroupKey.groupHasunosora.getLogo(),
+    GroupKey.groupYohane.getName(): GroupKey.groupYohane.getLogo(),
+    GroupKey.groupCombine.getName(): GroupKey.groupCombine.getLogo()
   });
 
   static String genUniqueId(String? musicId) {
