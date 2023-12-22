@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:lovelivemusicplayer/global/const.dart';
+import 'package:lovelivemusicplayer/models/group.dart';
 
 CloudData cloudDataFromJson(String str) => CloudData.fromJson(json.decode(str));
 
@@ -57,13 +57,13 @@ class Album {
     }
 
     return Album(
-      us: json2Obj(json, Const.groupUs),
-      aqours: json2Obj(json, Const.groupAqours),
-      nijigasaki: json2Obj(json, Const.groupSaki),
-      liella: json2Obj(json, Const.groupLiella),
-      combine: json2Obj(json, Const.groupCombine),
-      hasunosora: json2Obj(json, Const.groupHasunosora),
-      yohane: json2Obj(json, Const.groupYohane),
+      us: json2Obj(json, GroupKey.groupUs.getName()),
+      aqours: json2Obj(json, GroupKey.groupAqours.getName()),
+      nijigasaki: json2Obj(json, GroupKey.groupNijigasaki.getName()),
+      liella: json2Obj(json, GroupKey.groupLiella.getName()),
+      combine: json2Obj(json, GroupKey.groupCombine.getName()),
+      hasunosora: json2Obj(json, GroupKey.groupHasunosora.getName()),
+      yohane: json2Obj(json, GroupKey.groupYohane.getName()),
     );
   }
 
@@ -72,13 +72,13 @@ class Album {
   }
 
   Map<String, dynamic> toJson() => {
-        Const.groupUs: obj2Json(us),
-        Const.groupAqours: obj2Json(aqours),
-        Const.groupSaki: obj2Json(nijigasaki),
-        Const.groupLiella: obj2Json(liella),
-        Const.groupCombine: obj2Json(combine),
-        Const.groupHasunosora: obj2Json(hasunosora),
-        Const.groupYohane: obj2Json(yohane),
+        GroupKey.groupUs.getName(): obj2Json(us),
+        GroupKey.groupAqours.getName(): obj2Json(aqours),
+        GroupKey.groupNijigasaki.getName(): obj2Json(nijigasaki),
+        GroupKey.groupLiella.getName(): obj2Json(liella),
+        GroupKey.groupCombine.getName(): obj2Json(combine),
+        GroupKey.groupHasunosora.getName(): obj2Json(hasunosora),
+        GroupKey.groupYohane.getName(): obj2Json(yohane),
       };
 }
 
@@ -149,13 +149,13 @@ class Music {
     }
 
     return Music(
-      us: json2Obj(json, Const.groupUs),
-      aqours: json2Obj(json, Const.groupAqours),
-      nijigasaki: json2Obj(json, Const.groupSaki),
-      liella: json2Obj(json, Const.groupLiella),
-      combine: json2Obj(json, Const.groupCombine),
-      hasunosora: json2Obj(json, Const.groupHasunosora),
-      yohane: json2Obj(json, Const.groupYohane),
+      us: json2Obj(json, GroupKey.groupUs.getName()),
+      aqours: json2Obj(json, GroupKey.groupAqours.getName()),
+      nijigasaki: json2Obj(json, GroupKey.groupNijigasaki.getName()),
+      liella: json2Obj(json, GroupKey.groupLiella.getName()),
+      combine: json2Obj(json, GroupKey.groupCombine.getName()),
+      hasunosora: json2Obj(json, GroupKey.groupHasunosora.getName()),
+      yohane: json2Obj(json, GroupKey.groupYohane.getName()),
     );
   }
 
@@ -164,13 +164,13 @@ class Music {
   }
 
   Map<String, dynamic> toJson() => {
-        Const.groupUs: obj2Json(us),
-        Const.groupAqours: obj2Json(aqours),
-        Const.groupSaki: obj2Json(nijigasaki),
-        Const.groupLiella: obj2Json(liella),
-        Const.groupCombine: obj2Json(combine),
-        Const.groupHasunosora: obj2Json(hasunosora),
-        Const.groupYohane: obj2Json(yohane),
+        GroupKey.groupUs.getName(): obj2Json(us),
+        GroupKey.groupAqours.getName(): obj2Json(aqours),
+        GroupKey.groupNijigasaki.getName(): obj2Json(nijigasaki),
+        GroupKey.groupLiella.getName(): obj2Json(liella),
+        GroupKey.groupCombine.getName(): obj2Json(combine),
+        GroupKey.groupHasunosora.getName(): obj2Json(hasunosora),
+        GroupKey.groupYohane.getName(): obj2Json(yohane),
       };
 }
 

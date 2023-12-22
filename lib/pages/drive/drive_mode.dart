@@ -4,10 +4,10 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
-import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/models/group.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
@@ -147,9 +147,9 @@ class _DriveModeState extends State<DriveMode> {
                               assetPath: Assets.driveCarFavoriteBottom,
                               onTap: () async {
                                 GlobalLogic.to.currentGroup.value =
-                                    Const.groupAll;
-                                await DBLogic.to
-                                    .findAllListByGroup(Const.groupAll);
+                                    GroupKey.groupAll.getName();
+                                await DBLogic.to.findAllListByGroup(
+                                    GroupKey.groupAll.getName());
                                 final loveList = GlobalLogic.to.loveList;
                                 if (loveList.isEmpty) {
                                   SmartDialog.showToast('no_songs'.tr);
@@ -163,9 +163,9 @@ class _DriveModeState extends State<DriveMode> {
                               assetPath: Assets.driveCarPlaylistBottom,
                               onTap: () async {
                                 GlobalLogic.to.currentGroup.value =
-                                    Const.groupAll;
-                                await DBLogic.to
-                                    .findAllListByGroup(Const.groupAll);
+                                    GroupKey.groupAll.getName();
+                                await DBLogic.to.findAllListByGroup(
+                                    GroupKey.groupAll.getName());
                                 final recentList = GlobalLogic.to.recentList;
                                 if (recentList.isEmpty) {
                                   SmartDialog.showToast('no_songs'.tr);

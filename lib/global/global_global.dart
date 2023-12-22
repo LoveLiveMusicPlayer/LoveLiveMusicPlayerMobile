@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:log4f/log4f.dart';
-import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/global/global_theme.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/models/artist.dart';
+import 'package:lovelivemusicplayer/models/group.dart';
 import 'package:lovelivemusicplayer/models/menu.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
@@ -24,7 +24,7 @@ import 'package:we_slide/we_slide.dart';
 class GlobalLogic extends SuperController
     with GetSingleTickerProviderStateMixin {
   /// all、μ's、Aqours、Nijigasaki、Liella!、Combine
-  final currentGroup = Const.groupAll.obs;
+  final currentGroup = GroupKey.groupAll.getName().obs;
   final databaseInitOver = false.obs;
 
   final musicList = <Music>[].obs;
@@ -233,24 +233,7 @@ class GlobalLogic extends SuperController
   }
 
   String getCurrentGroupIcon(String currentGroup) {
-    switch (currentGroup) {
-      case Const.groupUs:
-        return Assets.logoLogoUs;
-      case Const.groupAqours:
-        return Assets.logoLogoAqours;
-      case Const.groupSaki:
-        return Assets.logoLogoNiji;
-      case Const.groupLiella:
-        return Assets.logoLogoLiella;
-      case Const.groupCombine:
-        return Assets.logoLogoCombine;
-      case Const.groupHasunosora:
-        return Assets.logoLogoHasunosora;
-      case Const.groupYohane:
-        return Assets.logoLogoYohane;
-      default:
-        return Assets.logoLogo;
-    }
+    return Const.groupList.getLogo(currentGroup);
   }
 
   @override

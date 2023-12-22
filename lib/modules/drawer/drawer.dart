@@ -15,6 +15,7 @@ import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/cloud_data.dart';
 import 'package:lovelivemusicplayer/models/cloud_update.dart';
 import 'package:lovelivemusicplayer/models/ftp_music.dart';
+import 'package:lovelivemusicplayer/models/group.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/routes.dart';
@@ -36,6 +37,12 @@ class DrawerPage extends StatefulWidget {
 
 class _DrawerPageState extends State<DrawerPage> {
   final global = Get.find<GlobalLogic>();
+
+  refreshList(GroupKey key) {
+    final name = key.getName();
+    global.currentGroup.value = name;
+    DBLogic.to.findAllListByGroup(name);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,12 +106,10 @@ class _DrawerPageState extends State<DrawerPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             showGroupButton(Assets.drawerLogoLovelive, onTap: () {
-              global.currentGroup.value = Const.groupAll;
-              DBLogic.to.findAllListByGroup(Const.groupAll);
+              refreshList(GroupKey.groupAll);
             }),
             showGroupButton(Assets.drawerLogoUs, onTap: () {
-              global.currentGroup.value = Const.groupUs;
-              DBLogic.to.findAllListByGroup(Const.groupUs);
+              refreshList(GroupKey.groupUs);
             }),
           ],
         ),
@@ -113,12 +118,10 @@ class _DrawerPageState extends State<DrawerPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             showGroupButton(Assets.drawerLogoAqours, onTap: () {
-              global.currentGroup.value = Const.groupAqours;
-              DBLogic.to.findAllListByGroup(Const.groupAqours);
+              refreshList(GroupKey.groupAqours);
             }),
             showGroupButton(Assets.drawerLogoNijigasaki, onTap: () {
-              global.currentGroup.value = Const.groupSaki;
-              DBLogic.to.findAllListByGroup(Const.groupSaki);
+              refreshList(GroupKey.groupNijigasaki);
             })
           ],
         ),
@@ -127,12 +130,10 @@ class _DrawerPageState extends State<DrawerPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             showGroupButton(Assets.drawerLogoLiella, onTap: () {
-              global.currentGroup.value = Const.groupLiella;
-              DBLogic.to.findAllListByGroup(Const.groupLiella);
+              refreshList(GroupKey.groupLiella);
             }),
             showGroupButton(Assets.drawerLogoHasunosora, onTap: () {
-              global.currentGroup.value = Const.groupHasunosora;
-              DBLogic.to.findAllListByGroup(Const.groupHasunosora);
+              refreshList(GroupKey.groupHasunosora);
             }),
           ],
         ),
@@ -144,8 +145,7 @@ class _DrawerPageState extends State<DrawerPage> {
                 Get.isDarkMode
                     ? Assets.drawerLogoYohaneNight
                     : Assets.drawerLogoYohaneDay, onTap: () {
-              global.currentGroup.value = Const.groupYohane;
-              DBLogic.to.findAllListByGroup(Const.groupYohane);
+              refreshList(GroupKey.groupYohane);
             }),
             Visibility(
               visible: true,
@@ -153,8 +153,7 @@ class _DrawerPageState extends State<DrawerPage> {
               maintainSize: true,
               maintainState: true,
               child: showGroupButton(Assets.drawerLogoAllstars, onTap: () {
-                global.currentGroup.value = Const.groupCombine;
-                DBLogic.to.findAllListByGroup(Const.groupCombine);
+                refreshList(GroupKey.groupCombine);
               }),
             )
           ],
@@ -327,19 +326,21 @@ class _DrawerPageState extends State<DrawerPage> {
     SmartDialog.showLoading(msg: 'importing'.tr);
     await DBLogic.to.clearAllMusic();
     await DBLogic.to.artistDao.deleteAllArtists();
-    await loopParseData(data.music.us, data.album.us, Const.groupUs);
+
     await loopParseData(
-        data.music.aqours, data.album.aqours, Const.groupAqours);
+        data.music.us, data.album.us, GroupKey.groupUs.getName());
     await loopParseData(
-        data.music.nijigasaki, data.album.nijigasaki, Const.groupSaki);
+        data.music.aqours, data.album.aqours, GroupKey.groupAqours.getName());
+    await loopParseData(data.music.nijigasaki, data.album.nijigasaki,
+        GroupKey.groupNijigasaki.getName());
     await loopParseData(
-        data.music.liella, data.album.liella, Const.groupLiella);
+        data.music.liella, data.album.liella, GroupKey.groupLiella.getName());
+    await loopParseData(data.music.combine, data.album.combine,
+        GroupKey.groupCombine.getName());
+    await loopParseData(data.music.hasunosora, data.album.hasunosora,
+        GroupKey.groupHasunosora.getName());
     await loopParseData(
-        data.music.combine, data.album.combine, Const.groupCombine);
-    await loopParseData(
-        data.music.hasunosora, data.album.hasunosora, Const.groupHasunosora);
-    await loopParseData(
-        data.music.yohane, data.album.yohane, Const.groupYohane);
+        data.music.yohane, data.album.yohane, GroupKey.groupYohane.getName());
     await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
     SmartDialog.dismiss(status: SmartStatus.loading);
     SpUtil.put(Const.spDataVersion, data.version);

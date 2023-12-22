@@ -1,8 +1,8 @@
 import 'package:flutter_carplay/flutter_carplay.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
-import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
+import 'package:lovelivemusicplayer/models/group.dart';
 import 'package:lovelivemusicplayer/models/love.dart';
 import 'package:lovelivemusicplayer/models/menu.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
@@ -107,7 +107,7 @@ class CarplayMine {
   }
 
   static Future<void> _openLoveList() async {
-    await DBLogic.to.findAllLoveListByGroup(Const.groupAll);
+    await DBLogic.to.findAllLoveListByGroup(GroupKey.groupAll.getName());
     _loveList.clear();
     final allLoves = await DBLogic.to.loveDao.findAllLoves();
 

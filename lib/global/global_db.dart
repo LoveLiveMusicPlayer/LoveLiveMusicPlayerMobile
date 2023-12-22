@@ -25,6 +25,7 @@ import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/models/artist.dart';
 import 'package:lovelivemusicplayer/models/artist_model.dart';
 import 'package:lovelivemusicplayer/models/ftp_music.dart';
+import 'package:lovelivemusicplayer/models/group.dart';
 import 'package:lovelivemusicplayer/models/history.dart';
 import 'package:lovelivemusicplayer/models/love.dart';
 import 'package:lovelivemusicplayer/models/menu.dart';
@@ -81,7 +82,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
     await checkNeedClearApp();
 
-    await findAllListByGroup(Const.groupAll);
+    await findAllListByGroup(GroupKey.groupAll.getName());
     await PlayerLogic.to.initLoopMode();
     await findAllPlayListMusics();
     if (!hasAIPic) {
@@ -97,76 +98,34 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     try {
       /// 设置专辑、歌曲数据
       final allAlbums = <Album>[];
-      if (group == Const.groupAll) {
+      if (group == GroupKey.groupAll.getName()) {
         // 获取全部专辑列表
         final tempAlbumList = <Album>[];
-        if (remoteHttp.isEnableHttp()) {
-          tempAlbumList
-              .addAll(await albumDao.findAllAlbumsByGroup(Const.groupUs));
-          tempAlbumList
-              .addAll(await albumDao.findAllAlbumsByGroup(Const.groupAqours));
-          tempAlbumList
-              .addAll(await albumDao.findAllAlbumsByGroup(Const.groupSaki));
-          tempAlbumList
-              .addAll(await albumDao.findAllAlbumsByGroup(Const.groupLiella));
-          tempAlbumList
-              .addAll(await albumDao.findAllAlbumsByGroup(Const.groupCombine));
-          tempAlbumList.addAll(
-              await albumDao.findAllAlbumsByGroup(Const.groupHasunosora));
-          tempAlbumList
-              .addAll(await albumDao.findAllAlbumsByGroup(Const.groupYohane));
-        } else {
-          tempAlbumList
-              .addAll(await albumDao.findAllExistAlbumsByGroup(Const.groupUs));
-          tempAlbumList.addAll(
-              await albumDao.findAllExistAlbumsByGroup(Const.groupAqours));
-          tempAlbumList.addAll(
-              await albumDao.findAllExistAlbumsByGroup(Const.groupSaki));
-          tempAlbumList.addAll(
-              await albumDao.findAllExistAlbumsByGroup(Const.groupLiella));
-          tempAlbumList.addAll(
-              await albumDao.findAllExistAlbumsByGroup(Const.groupCombine));
-          tempAlbumList.addAll(
-              await albumDao.findAllExistAlbumsByGroup(Const.groupHasunosora));
-          tempAlbumList.addAll(
-              await albumDao.findAllExistAlbumsByGroup(Const.groupYohane));
-        }
-
-        allAlbums.addAll(tempAlbumList);
-
         // 获取全部歌曲列表
         final tempMusicList = <Music>[];
         if (remoteHttp.isEnableHttp()) {
-          tempMusicList
-              .addAll(await musicDao.findAllMusicsByGroup(Const.groupUs));
-          tempMusicList
-              .addAll(await musicDao.findAllMusicsByGroup(Const.groupAqours));
-          tempMusicList
-              .addAll(await musicDao.findAllMusicsByGroup(Const.groupSaki));
-          tempMusicList
-              .addAll(await musicDao.findAllMusicsByGroup(Const.groupLiella));
-          tempMusicList
-              .addAll(await musicDao.findAllMusicsByGroup(Const.groupCombine));
-          tempMusicList.addAll(
-              await musicDao.findAllMusicsByGroup(Const.groupHasunosora));
-          tempMusicList
-              .addAll(await musicDao.findAllMusicsByGroup(Const.groupYohane));
+          for (var group in Const.groupList) {
+            if (group.key == 0) {
+              continue;
+            }
+            tempAlbumList
+                .addAll(await albumDao.findAllAlbumsByGroup(group.name));
+            tempMusicList
+                .addAll(await musicDao.findAllMusicsByGroup(group.name));
+          }
         } else {
-          tempMusicList
-              .addAll(await musicDao.findAllExistMusicsByGroup(Const.groupUs));
-          tempMusicList.addAll(
-              await musicDao.findAllExistMusicsByGroup(Const.groupAqours));
-          tempMusicList.addAll(
-              await musicDao.findAllExistMusicsByGroup(Const.groupSaki));
-          tempMusicList.addAll(
-              await musicDao.findAllExistMusicsByGroup(Const.groupLiella));
-          tempMusicList.addAll(
-              await musicDao.findAllExistMusicsByGroup(Const.groupCombine));
-          tempMusicList.addAll(
-              await musicDao.findAllExistMusicsByGroup(Const.groupHasunosora));
-          tempMusicList.addAll(
-              await musicDao.findAllExistMusicsByGroup(Const.groupYohane));
+          for (var group in Const.groupList) {
+            if (group.key == 0) {
+              continue;
+            }
+            tempAlbumList
+                .addAll(await albumDao.findAllExistAlbumsByGroup(group.name));
+            tempMusicList
+                .addAll(await musicDao.findAllExistMusicsByGroup(group.name));
+          }
         }
+
+        allAlbums.addAll(tempAlbumList);
         GlobalLogic.to.musicList.value = tempMusicList;
         final artistArr = await artistDao.findAllArtists();
         artistArr.sort((a, b) => AppUtils.comparePeopleNumber(a.uid, b.uid));
@@ -437,7 +396,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     final tempList = <Music>[];
     for (var history in historyList) {
       for (var music in GlobalLogic.to.musicList) {
-        if (group == Const.groupAll || group == music.group) {
+        if (group == GroupKey.groupAll.getName() || group == music.group) {
           if (music.musicId == history.musicId) {
             tempList.add(music);
           }
@@ -617,7 +576,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       await Future.forEach<Love>(allLoves, (love) async {
         final music = await DBLogic.to.musicDao.findMusicByUId(love.musicId);
         if (music != null) {
-          if (group == Const.groupAll || music.group == group) {
+          if (group == GroupKey.groupAll.getName() || music.group == group) {
             music.isLove = true;
             if ((remoteHttp.isEnableHttp() || (music.existFile == true))) {
               loveList.add(music);
@@ -667,7 +626,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   Future<List<Music>> findAllMusicsByArtistBin(String artistBin) async {
     final Artist? artist;
     final musicList = <String>[];
-    if (GlobalLogic.to.currentGroup.value == Const.groupAll) {
+    if (GlobalLogic.to.currentGroup.value == GroupKey.groupAll.getName()) {
       final artistList = await artistDao.findArtistByArtistBin(artistBin);
       for (var artist in artistList) {
         if (artist != null) {

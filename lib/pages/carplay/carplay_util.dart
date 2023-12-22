@@ -6,6 +6,7 @@ import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
+import 'package:lovelivemusicplayer/models/group.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/pages/carplay/carplay_enum.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
@@ -17,13 +18,13 @@ class CarplayUtil {
 
   static LinkedHashMap<String, String> groupMap =
       LinkedHashMap<String, String>.from({
-    Const.groupUs: Assets.logoLogoUs,
-    Const.groupAqours: Assets.logoLogoAqours,
-    Const.groupSaki: Assets.logoLogoNiji,
-    Const.groupLiella: Assets.logoLogoLiella,
-    Const.groupHasunosora: Assets.logoLogoHasunosora,
-    Const.groupYohane: Assets.logoLogoYohane,
-    Const.groupCombine: Assets.logoLogoCombine
+    GroupKey.groupUs.getName(): Assets.logoLogoUs,
+    GroupKey.groupAqours.getName(): Assets.logoLogoAqours,
+    GroupKey.groupNijigasaki.getName(): Assets.logoLogoNiji,
+    GroupKey.groupLiella.getName(): Assets.logoLogoLiella,
+    GroupKey.groupHasunosora.getName(): Assets.logoLogoHasunosora,
+    GroupKey.groupYohane.getName(): Assets.logoLogoYohane,
+    GroupKey.groupCombine.getName(): Assets.logoLogoCombine
   });
 
   static String genUniqueId(String? musicId) {
@@ -31,55 +32,12 @@ class CarplayUtil {
   }
 
   static String convertToMainName(String group) {
-    String name = "";
-    switch (group) {
-      case Const.groupSaki:
-        name = "虹咲学园学园偶像同好会";
-        break;
-      case Const.groupHasunosora:
-        name = "莲之空女学院";
-        break;
-      case Const.groupYohane:
-        name = "幻日夜羽";
-        break;
-      case Const.groupCombine:
-        name = "其他";
-        break;
-      default:
-        name = group;
-        break;
-    }
+    String name = Const.groupList.getCarplayName(group);
     return splitName(name);
   }
 
   static String convertToDetailName(String group) {
-    String name = "";
-    switch (group) {
-      case Const.groupUs:
-        name = "ラブライブ！";
-        break;
-      case Const.groupAqours:
-        name = "ラブライブ！サンシャイン!!";
-        break;
-      case Const.groupSaki:
-        name = "虹ヶ咲学園スクールアイドル同好会";
-        break;
-      case Const.groupLiella:
-        name = "ラブライブ！スーパースター!!";
-        break;
-      case Const.groupHasunosora:
-        name = "蓮ノ空女学院スクールアイドルクラブ";
-        break;
-      case Const.groupYohane:
-        name = "幻日のヨハネ -SUNSHINE in the MIRROR-";
-        break;
-      case Const.groupCombine:
-        name = "u咩";
-        break;
-      default:
-        name = group;
-        break;
-    }
+    String name = Const.groupList.getCarplayDetail(group);
     return splitName(name);
   }
 

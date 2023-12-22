@@ -1,4 +1,7 @@
+import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/main.dart';
+import 'package:lovelivemusicplayer/models/group.dart';
 
 class Const {
   // 设计图宽度 dp
@@ -7,14 +10,72 @@ class Const {
   // 设计图高度 dp
   static const double uiHeight = 812;
 
-  static const String groupAll = "all";
-  static const String groupUs = "μ's";
-  static const String groupAqours = "Aqours";
-  static const String groupSaki = "Nijigasaki";
-  static const String groupLiella = "Liella!";
-  static const String groupCombine = "Combine";
-  static const String groupHasunosora = "Hasunosora";
-  static const String groupYohane = "Yohane";
+  static final List<Group> groupList = [
+    Group(
+        name: "all",
+        key: GroupKey.groupAll.index,
+        logo: Assets.logoLogo,
+        drawable: Assets.drawerLogoLovelive),
+    Group(
+      name: "μ's",
+      key: GroupKey.groupUs.index,
+      logo: Assets.logoLogo,
+      drawable: Assets.drawerLogoUs,
+      carplayName: "μ's",
+      carplayDetail: "ラブライブ！",
+    ),
+    Group(
+      name: "Aqours",
+      key: GroupKey.groupAqours.index,
+      drawable: Assets.drawerLogoAqours,
+      logo: Assets.logoLogoAqours,
+      carplayName: "Aqours",
+      carplayDetail: "ラブライブ！サンシャイン!!",
+    ),
+    Group(
+      name: "Nijigasaki",
+      key: GroupKey.groupNijigasaki.index,
+      drawable: Assets.drawerLogoNijigasaki,
+      logo: Assets.logoLogoNiji,
+      carplayName: "虹咲学园学园偶像同好会",
+      carplayDetail: "虹ヶ咲学園スクールアイドル同好会",
+    ),
+    Group(
+      name: "Liella!",
+      key: GroupKey.groupLiella.index,
+      drawable: Assets.drawerLogoLiella,
+      logo: Assets.logoLogoLiella,
+      carplayName: "Liella!",
+      carplayDetail: "ラブライブ！スーパースター!!",
+    ),
+    Group(
+      name: "Hasunosora",
+      key: GroupKey.groupHasunosora.index,
+      drawable: Assets.drawerLogoHasunosora,
+      logo: Assets.logoLogoHasunosora,
+      carplayName: "莲之空女学院",
+      carplayDetail: "蓮ノ空女学院スクールアイドルクラブ",
+    ),
+    Group(
+      name: "Yohane",
+      key: GroupKey.groupYohane.index,
+      drawable: Get.isDarkMode
+          ? Assets.drawerLogoYohaneNight
+          : Assets.drawerLogoYohaneDay,
+      logo: Assets.logoLogoYohane,
+      carplayName: "幻日夜羽",
+      carplayDetail: "幻日のヨハネ -SUNSHINE in the MIRROR-",
+    ),
+    // 最后一个必须是Combine
+    Group(
+      name: "Combine",
+      key: GroupKey.groupCombine.index,
+      drawable: Assets.drawerLogoAllstars,
+      logo: Assets.logoLogoCombine,
+      carplayName: "其他",
+      carplayDetail: "u咩",
+    ),
+  ];
 
   // Logan 加密键值对
   static const String aesKey = "0123456789012345";

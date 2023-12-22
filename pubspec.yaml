@@ -45,8 +45,8 @@ dependencies:
   web_socket_channel: ^2.4.0 # webSocket
   connectivity_plus: ^4.0.1 # 网络监测
   scan: ^1.6.0 # 扫码
-  flutter_smart_dialog: ^4.9.5+1 # 弹窗
-  synchronized: ^3.1.0 # 锁
+  flutter_smart_dialog: ^4.9.5+2 # 弹窗
+  synchronized: ^3.1.0+1 # 锁
   get_storage: ^2.1.1 # sp存储
   common_utils: ^2.1.0 # 工具类
   flutter_screenutil: ^5.9.0 # 屏幕适配方案
@@ -80,11 +80,11 @@ dependencies:
   log4f: ^0.0.3 # 日志
   device_info_plus: ^9.1.1 # 设备信息
   flutter_lyric: ^2.0.4+6 # 歌词显示
-  flutter_app_update: ^3.0.3 # 版本升级
+  flutter_app_update: ^3.0.4 # 版本升级
   flutter_sticky_header: ^0.6.5 # 粘性头
   url_launcher: ^6.2.2 # url跳转
   umeng_common_sdk: ^1.2.7 # 友盟sdk
-  image_picker: ^1.0.4 # 图片选择
+  image_picker: ^1.0.5 # 图片选择
   croppy: # 图片裁切
     git:
       url: https://github.com/zhushenwudi/croppy
@@ -108,7 +108,7 @@ dependencies:
       url: https://github.com/zhushenwudi/flutter_carplay
       ref: combine-all
   uuid: ^3.0.7 # 唯一码
-  sentry_flutter: ^7.13.2 # Sentry
+  sentry_flutter: ^7.14.0 # Sentry
   scrolls_to_top: ^2.1.1 # 滚动到顶部
 
 dependency_overrides:
