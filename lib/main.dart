@@ -19,6 +19,7 @@ import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/pages/carplay/carplay.dart';
 import 'package:lovelivemusicplayer/pages/carplay/carplay_mine.dart';
+import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/completer_ext.dart';
 import 'package:lovelivemusicplayer/utils/sentry_util.dart';
@@ -163,13 +164,37 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.resumed:
 
-    /// 进入后台 && 展开了player组件时 关闭滚动歌词
-    if (state == AppLifecycleState.inactive) {
-      if (GlobalLogic.mobileWeSlideController.isOpened) {
-        eventBus.fire(PlayerClosableEvent(true));
-      }
-      stopServer();
+        /// 进入前台时，恢复进入后台前列表的位置
+        final controllerSize = HomeController.scrollControllers.length;
+        if (controllerSize <= 0) {
+          return;
+        }
+        for (var i = 0; i <= controllerSize - 1; i++) {
+          final controller = HomeController.scrollControllers[i];
+          final controllerOffset = HomeController.scrollOffsets[i];
+          HomeController.checkAndJump(controller, controllerOffset);
+        }
+
+        /// 重新对歌曲主色调取值渲染
+        GlobalLogic.to.refreshIconColor();
+        break;
+      case AppLifecycleState.inactive:
+
+        /// 进入后台 && 展开了player组件时 关闭滚动歌词
+        if (GlobalLogic.mobileWeSlideController.isOpened) {
+          eventBus.fire(PlayerClosableEvent(true));
+        }
+        stopServer();
+        break;
+      case AppLifecycleState.detached:
+        break;
+      case AppLifecycleState.paused:
+        break;
+      case AppLifecycleState.hidden:
+        break;
     }
   }
 
@@ -221,7 +246,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             builder: FlutterSmartDialog.init(builder: (context, widget) {
               return MediaQuery(
                   // 设置文字大小不随系统设置改变
-                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                  data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
                   child: widget!);
             }));
       },

@@ -78,35 +78,7 @@ class GlobalLogic extends SuperController
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       hasSkin.value = await SpUtil.getBoolean(Const.spColorful, false);
       manualIsDark.value = await SpUtil.getBoolean(Const.spDark, false);
-      bool isWith = await SpUtil.getBoolean(Const.spWithSystemTheme, false);
-      final mContext = Get.context;
-      bool isDark = false;
-      if (mContext != null) {
-        if (!mContext.mounted) return;
-        isDark = MediaQuery.of(mContext).platformBrightness == Brightness.dark;
-        if (isWith) {
-          Get.changeTheme(isDark ? darkTheme : lightTheme);
-        }
-      }
-
-      Color color = const Color(Const.noMusicColorfulSkin);
-      final musicList = PlayerLogic.to.mPlayList;
-      if (musicList.isNotEmpty) {
-        final playListMusic =
-            musicList[PlayerLogic.to.mPlayer.currentIndex ?? 0];
-        final music =
-            await DBLogic.to.musicDao.findMusicByUId(playListMusic.musicId);
-        if (music != null) {
-          final tempColor = await AppUtils.getImagePaletteFromMusic(music);
-          color = tempColor ?? color;
-        }
-      }
-      iconColor.value = hasSkin.value
-          ? color
-          : isDark
-              ? ColorMs.color1E2328
-              : ColorMs.colorLightPrimary;
-      withSystemTheme.value = isWith;
+      await refreshIconColor();
       Future.delayed(const Duration(milliseconds: 500))
           .then((value) => isThemeDark(init: true));
     });
@@ -136,6 +108,36 @@ class GlobalLogic extends SuperController
         });
       }
     });
+  }
+
+  refreshIconColor() async {
+    bool isWith = await SpUtil.getBoolean(Const.spWithSystemTheme, false);
+    final mContext = Get.context;
+    bool isDark = false;
+    if (mContext != null) {
+      if (!mContext.mounted) return;
+      isDark = MediaQuery.of(mContext).platformBrightness == Brightness.dark;
+      if (isWith) {
+        Get.changeTheme(isDark ? darkTheme : lightTheme);
+      }
+    }
+    Color color = const Color(Const.noMusicColorfulSkin);
+    final musicList = PlayerLogic.to.mPlayList;
+    if (musicList.isNotEmpty) {
+      final playListMusic = musicList[PlayerLogic.to.mPlayer.currentIndex ?? 0];
+      final music =
+          await DBLogic.to.musicDao.findMusicByUId(playListMusic.musicId);
+      if (music != null) {
+        final tempColor = await AppUtils.getImagePaletteFromMusic(music);
+        color = tempColor ?? color;
+      }
+    }
+    iconColor.value = hasSkin.value
+        ? color
+        : isDark
+            ? ColorMs.color1E2328
+            : ColorMs.colorLightPrimary;
+    withSystemTheme.value = isWith;
   }
 
   setBgPhoto(String photoPath) {

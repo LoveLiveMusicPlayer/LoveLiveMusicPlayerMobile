@@ -528,17 +528,7 @@ class PlayerLogic extends SuperController
 
   /// 切换歌词类型
   toggleTranslate() {
-    switch (lrcType.value) {
-      case 0:
-        lrcType.value = 1;
-        break;
-      case 1:
-        lrcType.value = 2;
-        break;
-      case 2:
-        lrcType.value = 0;
-        break;
-    }
+    lrcType.value = (lrcType.value + 1) % 3;
     needRefreshLyric.value = true;
   }
 

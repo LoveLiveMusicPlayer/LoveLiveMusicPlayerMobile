@@ -5,6 +5,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/page_view/keep_alive_wrapper.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_more_with_menu.dart';
@@ -17,8 +18,6 @@ import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/widgets/listview_item_song.dart';
 import 'package:lovelivemusicplayer/widgets/refresher_widget.dart';
 
-import 'logic.dart';
-
 class PageViewComponent extends StatefulWidget {
   const PageViewComponent({Key? key}) : super(key: key);
 
@@ -26,55 +25,15 @@ class PageViewComponent extends StatefulWidget {
   State<PageViewComponent> createState() => _PageViewComponentState();
 }
 
-class _PageViewComponentState extends State<PageViewComponent>
-    with WidgetsBindingObserver {
-  final List<double> scrollOffsets = List<double>.generate(6, (index) => 0.0);
-
+class _PageViewComponentState extends State<PageViewComponent> {
   @override
   void initState() {
-    WidgetsBinding.instance.addObserver(this);
-
+    super.initState();
     for (var i = 0; i <= HomeController.scrollControllers.length - 1; i++) {
       final controller = HomeController.scrollControllers[i];
       controller.addListener(() {
-        scrollOffsets[i] = controller.offset;
+        HomeController.scrollOffsets[i] = controller.offset;
       });
-    }
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
-    switch (state) {
-      case AppLifecycleState.resumed:
-        for (var i = 0; i <= HomeController.scrollControllers.length - 1; i++) {
-          final controller = HomeController.scrollControllers[i];
-          final controllerOffset = scrollOffsets[i];
-          checkAndJump(controller, controllerOffset);
-        }
-        break;
-      case AppLifecycleState.inactive:
-        break;
-      case AppLifecycleState.detached:
-        break;
-      case AppLifecycleState.paused:
-        break;
-      case AppLifecycleState.hidden:
-        break;
-    }
-  }
-
-  checkAndJump(ScrollController controller, double offset) {
-    if (controller.hasClients) {
-      controller.jumpTo(offset);
     }
   }
 

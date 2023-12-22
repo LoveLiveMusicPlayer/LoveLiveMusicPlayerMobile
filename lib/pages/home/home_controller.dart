@@ -11,11 +11,15 @@ class HomeController extends GetxController {
   static final List<ScrollController> scrollControllers =
       List<ScrollController>.generate(6, (index) => ScrollController());
 
+  static final List<double> scrollOffsets =
+      List<double>.generate(6, (index) => 0.0);
+
   static HomeController get to => Get.find();
 
-  selectSongLibrary(bool value) {
-    state.isSelectSongLibrary = value;
-    refresh();
+  static checkAndJump(ScrollController controller, double offset) {
+    if (controller.hasClients) {
+      controller.jumpTo(offset);
+    }
   }
 
   openSelect() {
