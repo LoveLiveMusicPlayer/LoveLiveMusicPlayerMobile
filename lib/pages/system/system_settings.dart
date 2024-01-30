@@ -41,11 +41,14 @@ class _SystemSettingsState extends State<SystemSettings> {
   final scrollViewWithTachiHeight = Get.height - 210.h;
   final scrollViewWithoutTachiHeight = Get.height - 390.h;
   late double maxHeight;
+  ButtonController? darkModeController;
 
   @override
   void initState() {
     GlobalLogic.to.timerController ??=
         ButtonController('timed_to_stop'.tr, false);
+    darkModeController =
+        ButtonController('night_mode'.tr, GlobalLogic.to.manualIsDark.value);
     maxHeight = GlobalLogic.to.hasSkin.value
         ? scrollViewWithoutTachiHeight
         : scrollViewWithTachiHeight;
@@ -137,8 +140,16 @@ class _SystemSettingsState extends State<SystemSettings> {
 
                 // 将全局变量设置为所选值
                 GlobalLogic.to.withSystemTheme.value = check;
+                if (check) {
+                  // 如果跟随系统
+                  if (GlobalLogic.to.manualIsDark.value != isDark) {
+                    darkModeController?.setSwitchValue = isDark;
+                    GlobalLogic.to.manualIsDark.value = isDark;
+                  }
+                }
                 // 修改sp值
                 await SpUtil.put(Const.spWithSystemTheme, check);
+                await SpUtil.put(Const.spDark, isDark);
                 GlobalLogic.to.isThemeDark();
 
                 // 恢复原来操作的界面
@@ -153,9 +164,8 @@ class _SystemSettingsState extends State<SystemSettings> {
           DrawerFunctionButton(
               icon: Assets.drawerDrawerDayNight,
               iconColor: iconColor,
-              text: 'night_mode'.tr,
               hasSwitch: true,
-              initSwitch: GlobalLogic.to.manualIsDark.value,
+              controller: darkModeController,
               enableSwitch: !GlobalLogic.to.withSystemTheme.value,
               callBack: (controller, check) async {
                 Get.changeThemeMode(check ? ThemeMode.dark : ThemeMode.light);
