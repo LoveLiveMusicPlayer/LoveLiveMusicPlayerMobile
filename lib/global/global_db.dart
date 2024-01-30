@@ -14,7 +14,6 @@ import 'package:lovelivemusicplayer/dao/lyric_dao.dart';
 import 'package:lovelivemusicplayer/dao/menu_dao.dart';
 import 'package:lovelivemusicplayer/dao/music_dao.dart';
 import 'package:lovelivemusicplayer/dao/playlist_dao.dart';
-import 'package:lovelivemusicplayer/dao/splash_dao.dart';
 import 'package:lovelivemusicplayer/eventbus/close_open.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
@@ -47,7 +46,6 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   late ArtistDao artistDao;
   late LoveDao loveDao;
   late HistoryDao historyDao;
-  late SplashDao splashDao;
 
   final artistList = <ArtistModel>[];
   final singleMap = <String, String>{};
@@ -68,8 +66,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       migration4to5,
       migration5to6,
       migration6to7,
+      migration7to8,
     ]).build();
-    splashDao = database.splashDao;
     albumDao = database.albumDao;
     lyricDao = database.lyricDao;
     musicDao = database.musicDao;
@@ -346,7 +344,6 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       await menuDao.deleteAllMenus();
       await loveDao.deleteAllLoves();
       await historyDao.deleteAllHistorys();
-      await splashDao.deleteAllSplashUrls();
       await playListMusicDao.deleteAllPlayListMusics();
     } catch (e) {
       Log4f.i(msg: e.toString());

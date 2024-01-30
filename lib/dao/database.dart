@@ -9,7 +9,6 @@ import 'package:lovelivemusicplayer/dao/lyric_dao.dart';
 import 'package:lovelivemusicplayer/dao/menu_dao.dart';
 import 'package:lovelivemusicplayer/dao/music_dao.dart';
 import 'package:lovelivemusicplayer/dao/playlist_dao.dart';
-import 'package:lovelivemusicplayer/dao/splash_dao.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/models/artist.dart';
 import 'package:lovelivemusicplayer/models/history.dart';
@@ -18,7 +17,6 @@ import 'package:lovelivemusicplayer/models/lyric.dart';
 import 'package:lovelivemusicplayer/models/menu.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/models/play_list_music.dart';
-import 'package:lovelivemusicplayer/models/splash.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 import 'album_dao.dart';
@@ -26,17 +24,9 @@ import 'album_dao.dart';
 part 'database.g.dart';
 
 @TypeConverters([StringListConverter])
-@Database(version: 7, entities: [
-  Album,
-  Lyric,
-  Music,
-  PlayListMusic,
-  Menu,
-  Artist,
-  Love,
-  History,
-  Splash
-])
+@Database(
+    version: 8,
+    entities: [Album, Lyric, Music, PlayListMusic, Menu, Artist, Love, History])
 abstract class MusicDatabase extends FloorDatabase {
   AlbumDao get albumDao;
 
@@ -53,8 +43,6 @@ abstract class MusicDatabase extends FloorDatabase {
   LoveDao get loveDao;
 
   HistoryDao get historyDao;
-
-  SplashDao get splashDao;
 }
 
 final migration1to2 = Migration(1, 2, (database) async {
@@ -110,4 +98,9 @@ final migration6to7 = Migration(6, 7, (database) async {
   await database.execute(alterArtistTableSql2);
   await database.execute(alterArtistTableSql3);
   await database.execute(alterArtistTableSql4);
+});
+
+final migration7to8 = Migration(7, 8, (database) async {
+  const dropTableSql = '''DROP TABLE IF EXISTS Splash''';
+  await database.execute(dropTableSql);
 });

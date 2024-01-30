@@ -99,63 +99,34 @@ class _DrawerPageState extends State<DrawerPage> {
     );
   }
 
+  Widget renderItem(GroupKey groupLeft, GroupKey? groupRight) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        showGroupButton(groupLeft.getDrawable(),
+            onTap: () => refreshList(groupLeft)),
+        Visibility(
+          visible: groupRight != null,
+          maintainAnimation: true,
+          maintainSize: true,
+          maintainState: true,
+          child: showGroupButton(groupRight!.getDrawable(),
+              onTap: () => refreshList(groupRight)),
+        )
+      ],
+    );
+  }
+
   Widget groupView() {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            showGroupButton(GroupKey.groupAll.getDrawable(), onTap: () {
-              refreshList(GroupKey.groupAll);
-            }),
-            showGroupButton(GroupKey.groupUs.getDrawable(), onTap: () {
-              refreshList(GroupKey.groupUs);
-            }),
-          ],
-        ),
+        renderItem(GroupKey.groupAll, GroupKey.groupUs),
         SizedBox(height: 12.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            showGroupButton(GroupKey.groupAqours.getDrawable(), onTap: () {
-              refreshList(GroupKey.groupAqours);
-            }),
-            showGroupButton(GroupKey.groupNijigasaki.getDrawable(), onTap: () {
-              refreshList(GroupKey.groupNijigasaki);
-            })
-          ],
-        ),
+        renderItem(GroupKey.groupAqours, GroupKey.groupNijigasaki),
         SizedBox(height: 12.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            showGroupButton(GroupKey.groupLiella.getDrawable(), onTap: () {
-              refreshList(GroupKey.groupLiella);
-            }),
-            showGroupButton(GroupKey.groupHasunosora.getDrawable(), onTap: () {
-              refreshList(GroupKey.groupHasunosora);
-            }),
-          ],
-        ),
+        renderItem(GroupKey.groupLiella, GroupKey.groupHasunosora),
         SizedBox(height: 16.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            showGroupButton(GroupKey.groupYohane.getDrawable(), onTap: () {
-              refreshList(GroupKey.groupYohane);
-            }),
-            Visibility(
-              visible: true,
-              maintainAnimation: true,
-              maintainSize: true,
-              maintainState: true,
-              child: showGroupButton(GroupKey.groupCombine.getDrawable(),
-                  onTap: () {
-                refreshList(GroupKey.groupCombine);
-              }),
-            )
-          ],
-        ),
+        renderItem(GroupKey.groupYohane, GroupKey.groupCombine),
         SizedBox(height: 16.h),
       ],
     );
