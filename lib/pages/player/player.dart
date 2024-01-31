@@ -12,6 +12,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/main.dart';
+import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/models/position_data.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/control_buttons.dart';
@@ -118,14 +119,18 @@ class _PlayerState extends State<Player> {
                 }
                 SmartDialog.compatible.show(
                     widget: DialogMoreWithMusic(
-                      music: PlayerLogic.to.playingMusic.value,
-                      isPlayer: true,
-                      onClosePanel: () {
-                        GlobalLogic.mobileWeSlideController.hide();
-                        GlobalLogic.to.needHomeSafeArea.value = true;
-                        GlobalLogic.mobileWeSlideFooterController.hide();
-                      },
-                    ),
+                        music:
+                            Music.deepClone(PlayerLogic.to.playingMusic.value),
+                        isPlayer: true,
+                        onClosePanel: () {
+                          GlobalLogic.mobileWeSlideController.hide();
+                          GlobalLogic.to.needHomeSafeArea.value = true;
+                          GlobalLogic.mobileWeSlideFooterController.hide();
+                        },
+                        changeLoveStatusCallback: (status) {
+                          PlayerLogic.to.playingMusic.value = Music.deepClone(
+                              PlayerLogic.to.playingMusic.value);
+                        }),
                     alignmentTemp: Alignment.bottomCenter);
               }),
 
@@ -288,7 +293,14 @@ class _PlayerState extends State<Player> {
             }
             SmartDialog.compatible.show(
                 widget: DialogAddSongSheet(
-                    musicList: [PlayerLogic.to.playingMusic.value]),
+                  musicList: [
+                    Music.deepClone(PlayerLogic.to.playingMusic.value)
+                  ],
+                  changeLoveStatusCallback: (status) async {
+                    PlayerLogic.to.playingMusic.value =
+                        Music.deepClone(PlayerLogic.to.playingMusic.value);
+                  },
+                ),
                 alignmentTemp: Alignment.bottomCenter);
           },
               width: 32,

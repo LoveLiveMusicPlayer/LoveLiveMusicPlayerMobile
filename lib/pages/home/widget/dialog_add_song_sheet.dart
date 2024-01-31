@@ -120,8 +120,8 @@ class DialogAddSongSheet extends StatelessWidget {
 
   Widget renderLove() {
     bool notAllLove = musicList.any((music) => music.isLove == false);
-    return _buildItem('iLove'.tr, true, () {
-      PlayerLogic.to.toggleLoveList(musicList, notAllLove);
+    return _buildItem('iLove'.tr, true, () async {
+      await PlayerLogic.to.toggleLoveList(musicList, notAllLove);
       SmartDialog.compatible.dismiss();
       SmartDialog.compatible
           .showToast(notAllLove ? 'add_to_iLove'.tr : 'remove_from_iLove'.tr);

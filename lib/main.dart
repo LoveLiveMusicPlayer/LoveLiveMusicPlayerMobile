@@ -246,7 +246,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             builder: FlutterSmartDialog.init(builder: (context, widget) {
               return MediaQuery(
                   // 设置文字大小不随系统设置改变
-                  data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
+                  data: MediaQuery.of(context)
+                      .copyWith(textScaler: const TextScaler.linear(1.0)),
                   child: widget!);
             }));
       },

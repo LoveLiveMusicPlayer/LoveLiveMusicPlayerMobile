@@ -21,6 +21,7 @@ class DialogMoreWithMusic extends StatefulWidget {
   final Function()? onClosePanel;
   final bool? isAlbum;
   final bool? isPlayer;
+  final Function(bool)? changeLoveStatusCallback;
 
   const DialogMoreWithMusic(
       {Key? key,
@@ -28,7 +29,8 @@ class DialogMoreWithMusic extends StatefulWidget {
       this.onRemove,
       this.isAlbum,
       this.isPlayer,
-      this.onClosePanel})
+      this.onClosePanel,
+      this.changeLoveStatusCallback})
       : super(key: key);
 
   @override
@@ -95,7 +97,9 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
           _buildItem(Assets.dialogIcAddSongSheet, 'add_to_menu'.tr, true, () {
             SmartDialog.compatible.dismiss();
             SmartDialog.compatible.show(
-                widget: DialogAddSongSheet(musicList: [widget.music]),
+                widget: DialogAddSongSheet(
+                    musicList: [widget.music],
+                    changeLoveStatusCallback: widget.changeLoveStatusCallback),
                 alignmentTemp: Alignment.bottomCenter);
           }),
           _buildItem(Assets.dialogIcSongInfo, 'music_info'.tr, length > 5, () {
