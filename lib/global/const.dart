@@ -19,7 +19,7 @@ class Const {
     Group(
       name: "μ's",
       key: GroupKey.groupUs.index,
-      logo: Assets.logoLogo,
+      logo: Assets.logoLogoUs,
       drawable: Assets.drawerLogoUs,
       carplayName: "μ's",
       carplayDetail: "ラブライブ！",
