@@ -7,7 +7,7 @@ import 'package:get/get.dart' as get_x;
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/widgets/one_button_dialog.dart';
-import 'package:synchronized/extension.dart';
+import 'package:synchronized/synchronized.dart';
 
 class Network {
   static Network? _httpRequest;
@@ -40,9 +40,9 @@ class Network {
     if (dio == null) {
       BaseOptions options = BaseOptions(
           baseUrl: Const.dataOssUrl,
-          connectTimeout: 30000,
-          receiveTimeout: 30000,
-          sendTimeout: 30000,
+          connectTimeout: const Duration(seconds: 30),
+          receiveTimeout: const Duration(seconds: 30),
+          sendTimeout: const Duration(seconds: 30),
           headers: httpHeaders);
       dio = Dio(options);
       _addInterceptor(dio);
