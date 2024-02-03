@@ -34,6 +34,8 @@ class _MoeGirlState extends State<MoeGirl> {
 
   static const strDeleteDom = """
     var divElements = document.querySelectorAll("*");
+    // 广告标签关键词
+    var keywords = ["广告", "推广", "谷歌广告"];
     for (var parent of divElements) {
       // 删除父节点class名为adsbygoogle的
       if (parent.className === 'adsbygoogle') {
@@ -45,8 +47,8 @@ class _MoeGirlState extends State<MoeGirl> {
       if (childNodes.length <= 3) {
         for (var node of childNodes) {
           var elementText = node.textContent;
-          // 检查文本内容是否完全等于"广告"或"谷歌广告"
-          if (elementText === '广告' || elementText === '谷歌广告') {
+          // 检查文本内容是否符合广告标签条件
+          if (keywords.includes(elementText)) {
             // 移除匹配标签的父节点
             parent.remove();
             break;
