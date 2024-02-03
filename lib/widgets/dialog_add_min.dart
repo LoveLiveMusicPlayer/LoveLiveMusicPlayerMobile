@@ -77,10 +77,9 @@ class _AddMinDialogState extends State<AddMinDialog> {
                     : TextStyleMs.black_18),
           ),
           SizedBox(height: 18.h),
-          Visibility(
-              visible: _counter > 0,
-              child: Text("${'end_time'.tr}$_endTime",
-                  style: const TextStyle(color: Colors.red))),
+          Text(_counter.toString(), style: TextStyleMs.black_15),
+          Text("${'end_time'.tr}$_endTime",
+              style: const TextStyle(color: Colors.red)),
           SizedBox(height: 18.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -90,16 +89,12 @@ class _AddMinDialogState extends State<AddMinDialog> {
                   renderMinButton(twentyMin),
                   SizedBox(width: 5.w),
                   renderMinButton(tenMin),
-                ],
-              ),
-              Text(_counter.toString()),
-              Row(
-                children: [
+                  SizedBox(width: 5.w),
                   renderAddButton(tenMin),
                   SizedBox(width: 5.w),
                   renderAddButton(twentyMin),
                 ],
-              )
+              ),
             ],
           ),
           SizedBox(height: 18.h),
