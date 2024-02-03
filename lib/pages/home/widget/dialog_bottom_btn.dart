@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
@@ -43,27 +43,30 @@ class DialogBottomBtn extends StatelessWidget {
     return Expanded(
         child: GestureDetector(
       onTap: onTap,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(path,
-              width: 21.h,
-              height: 21.h,
-              colorFilter: ColorFilter.mode(
-                  Get.isDarkMode ? ColorMs.colorD1E0F3 : ColorMs.color666666,
-                  BlendMode.srcIn)),
-          SizedBox(height: 7.h),
-          Text(title,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: Get.isDarkMode
-                  ? TextStyleMs.colorD1E0F3_15
-                  : TextStyleMs.lightBlack_15),
-          SizedBox(
-            height: 20.h,
-          )
-        ],
+      child: Container(
+        color: Colors.transparent,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            touchIconByAsset(
+              path: path,
+              width: 21,
+              height: 21,
+              color: Get.isDarkMode ? ColorMs.colorD1E0F3 : ColorMs.color666666,
+            ),
+            SizedBox(height: 7.h),
+            Text(title,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: Get.isDarkMode
+                    ? TextStyleMs.colorD1E0F3_15
+                    : TextStyleMs.lightBlack_15),
+            SizedBox(
+              height: 20.h,
+            )
+          ],
+        ),
       ),
     ));
   }

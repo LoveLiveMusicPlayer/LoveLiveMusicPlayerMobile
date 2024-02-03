@@ -165,29 +165,33 @@ class _DetailsBodyState extends State<DetailsBody> {
     List<BtnItem> list = [];
 
     void addToPlaylist() async {
-      final musicList = widget.logic.state.items;
+      List<Music> musicList = widget.logic.state.items.cast();
       final tempList = musicList.where((music) => music.checked).toList();
+      if (tempList.isEmpty) {
+        return;
+      }
       final isSuccess = await PlayerLogic.to.addMusicList(tempList);
       if (isSuccess) {
         SmartDialog.compatible.showToast('add_success'.tr);
+        SmartDialog.compatible.dismiss();
       }
-      SmartDialog.compatible.dismiss();
     }
 
     void addToMenu() async {
       List<Music> musicList = widget.logic.state.items.cast();
-      var isHasChosen = musicList.any((element) => element.checked == true);
-      if (!isHasChosen) {
-        SmartDialog.compatible.dismiss();
+      List<Music> tempList = musicList.where((music) => music.checked).toList();
+      if (tempList.isEmpty) {
         return;
       }
-      List<Music> tempList = musicList.where((music) => music.checked).toList();
-      SmartDialog.compatible.dismiss();
       SmartDialog.compatible.show(
         widget: DialogAddSongSheet(
           musicList: tempList,
           changeLoveStatusCallback: (status) {
             widget.logic.changeLoveStatus(tempList, status);
+            SmartDialog.compatible.dismiss();
+          },
+          changeMenuStateCallback: (status) {
+            SmartDialog.compatible.dismiss();
           },
         ),
         alignmentTemp: Alignment.bottomCenter,
@@ -196,21 +200,20 @@ class _DetailsBodyState extends State<DetailsBody> {
 
     void deleteFromMenu() async {
       List<Music> musicList = widget.logic.state.items.cast();
-      var isHasChosen = musicList.any((element) => element.checked == true);
-      if (!isHasChosen) {
-        SmartDialog.compatible.dismiss();
+      List<Music> tempList = musicList.where((music) => music.checked).toList();
+      if (tempList.isEmpty) {
         return;
       }
-      List<String> musicIds = musicList
-          .where((music) => music.checked)
-          .map((music) => music.musicId!)
-          .toList();
+      List<String> musicIds = tempList.map((music) => music.musicId!).toList();
 
       SmartDialog.compatible.show(
         widget: TwoButtonDialog(
           title: "confirm_delete_from_menu".tr,
           isShowMsg: false,
-          onConfirmListener: () => widget.onRemove!(musicIds),
+          onConfirmListener: () {
+            widget.onRemove!(musicIds);
+            SmartDialog.compatible.dismiss();
+          },
         ),
       );
     }
