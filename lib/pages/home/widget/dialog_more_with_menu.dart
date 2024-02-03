@@ -82,7 +82,7 @@ class DialogMoreWithMenu extends StatelessWidget {
       String path, String title, bool showLin, GestureTapCallback? onTap) {
     return Padding(
       padding: EdgeInsets.only(left: 16.h, right: 16.h),
-      child: InkWell(
+      child: GestureDetector(
         onTap: onTap,
         child: Column(
           mainAxisSize: MainAxisSize.min,

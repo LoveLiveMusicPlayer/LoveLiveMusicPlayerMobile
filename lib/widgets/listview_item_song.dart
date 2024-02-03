@@ -109,7 +109,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
 
   ///缩列图
   Widget _buildIcon() {
-    return InkWell(
+    return GestureDetector(
       onTap: clickItem,
       onLongPress: onLongPress,
       child: showImg(SDUtils.getImgPathFromMusic(widget.music), 48, 48,
@@ -153,41 +153,44 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
     final hasBGPhoto = GlobalLogic.to.bgPhoto.value != "";
 
     return Expanded(
-      child: InkWell(
+      child: GestureDetector(
         onTap: clickItem,
         onLongPress: onLongPress,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(widget.music.musicName ?? "",
-                style: hasBGPhoto
-                    ? TextStyleMs.white_15_500
-                    : isCurrentPlayingMusic
-                        ? TextStyleMs.orange_15_500
-                        : Get.isDarkMode
-                            ? TextStyleMs.white_15_500
-                            : TextStyleMs.black_15_500,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis),
-            SizedBox(
-              height: 4.h,
-            ),
-            Text(
-              widget.music.artist ?? "",
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyleMs.f12_400.copyWith(
-                  color: hasBGPhoto
-                      ? ColorMs.colorD6D6D6
+        child: Container(
+          color: Colors.transparent,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(widget.music.musicName ?? "",
+                  style: hasBGPhoto
+                      ? TextStyleMs.white_15_500
                       : isCurrentPlayingMusic
-                          ? ColorMs.colorFFAE00
-                          : ColorMs.color999999),
-            ),
-            SizedBox(
-              width: 16.w,
-            )
-          ],
+                          ? TextStyleMs.orange_15_500
+                          : Get.isDarkMode
+                              ? TextStyleMs.white_15_500
+                              : TextStyleMs.black_15_500,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis),
+              SizedBox(
+                height: 4.h,
+              ),
+              Text(
+                widget.music.artist ?? "",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyleMs.f12_400.copyWith(
+                    color: hasBGPhoto
+                        ? ColorMs.colorD6D6D6
+                        : isCurrentPlayingMusic
+                            ? ColorMs.colorFFAE00
+                            : ColorMs.color999999),
+              ),
+              SizedBox(
+                width: 16.w,
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -214,16 +217,14 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
                   width: 20,
                   height: 20,
                   color: color)),
-          InkWell(
-            onTap: () {
-              widget.onMoreTap(widget.music);
-            },
-            child: Container(
+          Padding(
               padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
               child: touchIconByAsset(
-                  path: Assets.mainIcMore, width: 10, height: 20, color: color),
-            ),
-          ),
+                  path: Assets.mainIcMore,
+                  onTap: () => widget.onMoreTap(widget.music),
+                  width: 10,
+                  height: 20,
+                  color: color)),
           SizedBox(width: 4.r)
         ],
       ),

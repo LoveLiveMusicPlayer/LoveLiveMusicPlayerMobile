@@ -136,7 +136,7 @@ class DialogAddSongSheet extends StatelessWidget {
       {String? assetPath, IconData? icon}) {
     return Padding(
       padding: EdgeInsets.only(left: 16.h, right: 16.h),
-      child: InkWell(
+      child: GestureDetector(
         onTap: onTap,
         child: Column(
           mainAxisSize: MainAxisSize.min,

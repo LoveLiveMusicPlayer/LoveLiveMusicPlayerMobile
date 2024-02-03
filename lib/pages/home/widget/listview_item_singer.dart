@@ -36,33 +36,37 @@ class _ListViewItemSingerState extends State<ListViewItemSinger> {
           width: 10.w,
         ),
         Expanded(
-          child: InkWell(
+          child: GestureDetector(
             onTap: () {
               widget.onItemTap(widget.artist);
             },
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(widget.artist.name,
+            child: Container(
+              color: Colors.transparent,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(widget.artist.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style:
+                          Get.isDarkMode || GlobalLogic.to.bgPhoto.value != ""
+                              ? TextStyleMs.white_15_500
+                              : TextStyleMs.black_15_500),
+                  SizedBox(
+                    height: 4.h,
+                  ),
+                  Text(
+                    "${widget.artist.music.length} ${'total_number_unit'.tr}",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Get.isDarkMode || GlobalLogic.to.bgPhoto.value != ""
-                        ? TextStyleMs.white_15_500
-                        : TextStyleMs.black_15_500),
-                SizedBox(
-                  height: 4.h,
-                ),
-                Text(
-                  "${widget.artist.music.length} ${'total_number_unit'.tr}",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyleMs.f12_400.copyWith(
-                      color: GlobalLogic.to.bgPhoto.value == ""
-                          ? ColorMs.color999999
-                          : ColorMs.colorD6D6D6),
-                ),
-              ],
+                    style: TextStyleMs.f12_400.copyWith(
+                        color: GlobalLogic.to.bgPhoto.value == ""
+                            ? ColorMs.color999999
+                            : ColorMs.colorD6D6D6),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

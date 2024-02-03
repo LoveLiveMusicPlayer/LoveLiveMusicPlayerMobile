@@ -524,7 +524,7 @@ class _MusicTransformState extends State<MusicTransform> {
   }
 
   Widget btnFunc(String asset, String title, GestureTapCallback onTap) {
-    return InkWell(
+    return GestureDetector(
         onTap: onTap,
         child: Container(
             width: 220.w,

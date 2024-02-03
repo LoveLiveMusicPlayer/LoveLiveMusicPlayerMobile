@@ -114,9 +114,7 @@ Widget showImg(
         fit: fit,
       ).image;
     } else if (path.startsWith("http")) {
-      return InkWell(
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
+      return GestureDetector(
           onTap: () => onTap?.call(),
           onLongPress: () => onLongPress?.call(),
           child: ClipRRect(
@@ -157,9 +155,7 @@ Widget showImg(
         ).image;
       }
     }
-    return InkWell(
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent,
+    return GestureDetector(
         onTap: () => onTap?.call(),
         onLongPress: () => onLongPress?.call(),
         child: ClipRRect(
@@ -242,9 +238,7 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
       borderRadius: BorderRadius.circular(radius.h),
       child: Material(
         color: Colors.transparent,
-        child: InkWell(
-          splashColor: Get.isDarkMode ? Colors.grey : ColorMs.colorD3E0EC,
-          highlightColor: Get.isDarkMode ? Colors.grey : ColorMs.colorD3E0EC,
+        child: GestureDetector(
           onTap: onTap,
           child: Stack(
             children: [
@@ -290,9 +284,7 @@ Widget showGroupButton(String path,
     child: ClipRRect(
       borderRadius: BorderRadius.circular(8.h),
       child: Material(
-        child: InkWell(
-          splashColor: ColorMs.colorD3E0EC,
-          highlightColor: ColorMs.colorD3E0EC,
+        child: GestureDetector(
           onTap: onTap,
           child: Stack(
             children: [
@@ -352,7 +344,7 @@ Widget logoIcon(String path,
 
 Widget touchIcon(IconData icon, GestureTapCallback onTap,
     {Color color = const Color(0xff333333), double? size}) {
-  return InkWell(
+  return GestureDetector(
     onTap: onTap,
     child: Icon(icon, color: color, size: size),
   );
@@ -365,7 +357,7 @@ Widget touchIconByAsset(
     Color color = const Color(0xff999999),
     double width = 20,
     double height = 20}) {
-  return InkWell(
+  return GestureDetector(
     onTap: onTap,
     child: Padding(
       padding: EdgeInsets.all(padding),

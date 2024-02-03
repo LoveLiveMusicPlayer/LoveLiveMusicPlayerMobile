@@ -43,7 +43,7 @@ class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
   @override
   Widget build(BuildContext context) {
     final borderWidth = (ScreenUtil().screenWidth - 72.w) / 3;
-    return InkWell(
+    return GestureDetector(
         onTap: clickItem,
         child: Column(children: [
           SizedBox(

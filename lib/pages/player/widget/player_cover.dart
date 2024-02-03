@@ -21,8 +21,7 @@ class _CoverState extends State<Cover> {
   @override
   Widget build(BuildContext context) {
     Music? currentMusic = PlayerLogic.to.playingMusic.value;
-    return InkWell(
-      splashColor: Colors.transparent,
+    return GestureDetector(
       onTap: widget.onTap,
       child: SizedBox(
         height: 400.h,

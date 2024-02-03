@@ -50,9 +50,10 @@ class _ListViewItemPlaylist extends State<ListViewItemPlaylist> {
     final screenWidth = Get.width - 33.h;
     final isCurrentPlayIndex =
         widget.musicId == PlayerLogic.to.playingMusic.value.musicId;
-    return InkWell(
+    return GestureDetector(
         onTap: () => widget.onPlayTap(widget.index),
         child: Container(
+          color: Colors.transparent,
           constraints: BoxConstraints(maxWidth: screenWidth),
           height: 34.h,
           width: screenWidth,

@@ -70,7 +70,7 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
         onTap: () => widget.onTap?.call(bh),
         child: SizedBox(
           height: 30.h,

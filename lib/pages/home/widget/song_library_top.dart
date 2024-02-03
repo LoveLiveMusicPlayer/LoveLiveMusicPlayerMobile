@@ -75,7 +75,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
   ///播放按钮
   Widget _buildPlayBtn() {
     final hasShadow = GlobalLogic.to.bgPhoto.value == "";
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         onPlayTap();
       },
@@ -175,7 +175,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
             );
           }),
           Expanded(child: Container()),
-          InkWell(
+          GestureDetector(
             onTap: () {
               onCancelTap();
             },

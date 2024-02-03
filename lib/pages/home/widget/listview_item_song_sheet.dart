@@ -32,29 +32,32 @@ class ListViewItemSongSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () => onItemTap(menu),
-      child: Row(
-        children: [
-          _buildDevicePic(),
+      child: Container(
+        color: Colors.transparent,
+        child: Row(
+          children: [
+            _buildDevicePic(),
 
-          SizedBox(
-            width: 5.w,
-          ),
+            SizedBox(
+              width: 5.w,
+            ),
 
-          ///缩列图
-          Hero(tag: "menu${menu.id}", child: _buildIcon()),
+            ///缩列图
+            Hero(tag: "menu${menu.id}", child: _buildIcon()),
 
-          SizedBox(
-            width: 10.w,
-          ),
+            SizedBox(
+              width: 10.w,
+            ),
 
-          ///中间标题部分
-          _buildContent(),
+            ///中间标题部分
+            _buildContent(),
 
-          ///右侧操作按钮
-          _buildAction()
-        ],
+            ///右侧操作按钮
+            _buildAction()
+          ],
+        ),
       ),
     );
   }
@@ -133,7 +136,7 @@ class ListViewItemSongSheet extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          InkWell(
+          GestureDetector(
             onTap: () {
               onMoreTap!(menu);
             },

@@ -29,7 +29,7 @@ class CircularCheckBox extends StatefulWidget {
 class _CircularCheckBoxState extends State<CircularCheckBox> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         setState(() {
           widget.checkd = !widget.checkd;

@@ -70,7 +70,7 @@ class DetailsListTop extends StatelessWidget {
   ///播放按钮
   Widget _buildPlayBtn() {
     final hasShadow = GlobalLogic.to.bgPhoto.value == "";
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         onPlayTap();
       },
@@ -160,7 +160,7 @@ class DetailsListTop extends StatelessWidget {
             },
           ),
           Expanded(child: Container()),
-          InkWell(
+          GestureDetector(
             onTap: () {
               onCancelTap();
             },

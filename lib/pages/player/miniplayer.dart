@@ -182,7 +182,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
     const textStyle = TextStyle(fontWeight: FontWeight.bold);
     return SizedBox(
       width: maxWidth,
-      child: InkWell(
+      child: GestureDetector(
         onDoubleTap: () async {
           if (PlayerLogic.to.playingMusic.value.musicId != null) {
             await PlayerLogic.to.togglePlay();
