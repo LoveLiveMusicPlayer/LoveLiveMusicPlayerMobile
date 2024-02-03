@@ -103,6 +103,8 @@ const Map<String, String> zhCN = {
   'copy_success': '复制成功',
   'need_enable_bg': '请先启用背景图片',
   'search_lyric': '重新搜索歌词',
+  'search_lyric_success': '获取歌词成功',
+  'search_lyric_failed': '获取歌词失败',
   'share_app': 'Ta向你分享了LLMP',
   'outer_share_music': 'Ta向你分享了一首歌曲',
   'outer_share_menu': 'Ta向你分享了一个歌单',

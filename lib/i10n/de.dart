@@ -110,6 +110,8 @@ const Map<String, String> deDE = {
   'file_path_error': 'Dateipfadfehler',
   'crop_background_image': 'Hintergrundbild zuschneiden',
   'search_lyric': 'Songtexte noch mal downloaden',
+  'search_lyric_success': 'Songtexte erfolgreich abrufen',
+  'search_lyric_failed': 'Liedtext konnte nicht abgerufen werden',
   'share_app': 'Er/Sie hat LLMP mit Ihnen geteilt',
   'outer_share_music': 'Er/Sie hat ein Lied mit dir geteilt',
   'outer_share_menu': 'Er/Sie hat eine Playlist mit dir geteilt',

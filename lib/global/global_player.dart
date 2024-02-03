@@ -156,23 +156,42 @@ class PlayerLogic extends SuperController
   }
 
   /// 修改前一句、当前、后一句歌词内容
-  Future<void> changePlayingLyric(Duration duration) async {
+  Future<void> changePlayingLyric(Duration duration,
+      {bool isForce = false}) async {
     final musicId = playingMusic.value.musicId;
     if (musicId == null || playingJPLrc["musicId"] != musicId) {
       return;
     }
-    for (var index = 0; index < parsedJPLrc.length; index++) {
-      if (index == parsedJPLrc.length - 1 &&
-          (parsedJPLrc[index].startTime ?? 0) < duration.inMilliseconds) {
-        if (checkedLyricIndex(index)) return;
-        parsePlayingLyric(musicId, index, false);
-        break;
-      } else if ((parsedJPLrc[index].startTime ?? 0) <
-              duration.inMilliseconds &&
-          (parsedJPLrc[index + 1].startTime ?? 0) > duration.inMilliseconds) {
-        if (checkedLyricIndex(index)) return;
-        parsePlayingLyric(musicId, index, true);
-        break;
+
+    final currentTime = duration.inMilliseconds;
+    int left = 0;
+    int right = parsedJPLrc.length - 1;
+
+    while (left <= right) {
+      int mid = left + (right - left) ~/ 2;
+      final curLrcStartTime = parsedJPLrc[mid].startTime ?? 0;
+      final nextLrcStartTime = (mid < parsedJPLrc.length - 1)
+          ? parsedJPLrc[mid + 1].startTime ?? 0
+          : double.infinity;
+
+      if (curLrcStartTime <= currentTime && nextLrcStartTime > currentTime) {
+        if (isForce || !checkedLyricIndex(mid)) {
+          parsePlayingLyric(musicId, mid, true);
+        }
+        return;
+      } else if (curLrcStartTime < currentTime) {
+        left = mid + 1;
+      } else {
+        right = mid - 1;
+      }
+    }
+
+    if (left < parsedJPLrc.length) {
+      final lastLrcStartTime = parsedJPLrc[left].startTime ?? 0;
+      if (lastLrcStartTime <= currentTime) {
+        if (isForce || !checkedLyricIndex(left)) {
+          parsePlayingLyric(musicId, left, false);
+        }
       }
     }
   }
@@ -187,20 +206,21 @@ class PlayerLogic extends SuperController
   }
 
   /// 解析前一句、当前、后一句歌词内容
-  parsePlayingLyric(String musicId, int index, bool isLast) {
-    final pre = (index - 1 <= parsedJPLrc.length - 1 && index > 0)
-        ? parsedJPLrc[index - 1].mainText ?? ""
-        : "";
-    final current = (index <= parsedJPLrc.length - 1)
-        ? parsedJPLrc[index].mainText ?? ""
-        : "";
+  void parsePlayingLyric(String musicId, int index, bool isLast) {
+    index = _clamp(index, 0, parsedJPLrc.length - 1);
+
+    final pre = (index > 0) ? (parsedJPLrc[index - 1].mainText ?? "") : "";
+    final current = parsedJPLrc[index].mainText ?? "";
     String next = "";
-    if (isLast) {
-      next = (index + 1 <= parsedJPLrc.length - 1)
-          ? parsedJPLrc[index + 1].mainText ?? ""
-          : "";
+    if (isLast && index < parsedJPLrc.length - 1) {
+      next = parsedJPLrc[index + 1].mainText ?? "";
     }
+
     setPlayingJPLrc(musicId, pre, current, next);
+  }
+
+  int _clamp(int value, int min, int max) {
+    return value < min ? min : (value > max ? max : value);
   }
 
   /// 播放指定列表的歌曲
@@ -215,12 +235,10 @@ class PlayerLogic extends SuperController
     final musicList = <Music>[];
     for (var i = 0; i < uncheckedMusicList.length; i++) {
       final isExist = SDUtils.checkMusicExist(uncheckedMusicList[i]);
-      if (!isExist) {
-        if (mIndex != null && mIndex > i) {
-          mIndex--;
-        }
-      } else {
+      if (isExist) {
         musicList.add(uncheckedMusicList[i]);
+      } else if (mIndex != null && mIndex > i) {
+        mIndex--;
       }
     }
     // 随机播放时任取一个index
@@ -352,16 +370,17 @@ class PlayerLogic extends SuperController
       return true;
     }
 
-    // 从音乐列表中重复的歌曲删除 O(m*n)?
+    // 从音乐列表中重复的歌曲删除
+    Set<String> mPlayListIds =
+        Set<String>.from(mPlayList.map((item) => item.musicId));
     for (var index = 0; index < musicList.length; index++) {
-      for (var element in mPlayList) {
-        if (musicList[index].musicId == element.musicId) {
-          musicList.removeAt(index);
-          index = index - 1;
-          break;
-        }
+      if (mPlayListIds.contains(musicList[index].musicId)) {
+        musicList.removeAt(index);
+        index--;
+        break;
       }
     }
+
     // 将音乐列表插入到播放列表队尾
     await Future.forEach(musicList, (Music music) async {
       final genMusic = genAudioSourceUri(music);
@@ -436,26 +455,37 @@ class PlayerLogic extends SuperController
     final lyric = playingMusic.value.musicPath!
         .replaceAll("flac", "lrc")
         .replaceAll("wav", "lrc");
+    String fetchResultStr = 'search_lyric_success'.tr;
+    final zh = await handleLRC("zh", "ZH/$baseUrl$lyric", uid, forceRefresh);
+    if (zh == null) {
+      fetchResultStr = 'search_lyric_failed'.tr;
+    } else {
+      zhLrc = zh;
+    }
     if (SDUtils.allowEULA) {
       final jp = await handleLRC("jp", "JP/$baseUrl$lyric", uid, forceRefresh);
-      if (jp != null) {
+      if (jp == null) {
+        fetchResultStr = 'search_lyric_failed'.tr;
+      } else {
         jpLrc = jp;
       }
       final roma =
           await handleLRC("roma", "ROMA/$baseUrl$lyric", uid, forceRefresh);
-      if (roma != null) {
+      if (roma == null) {
+        fetchResultStr = 'search_lyric_failed'.tr;
+      } else {
         romaLrc = roma;
       }
-    }
-    final zh = await handleLRC("zh", "ZH/$baseUrl$lyric", uid, forceRefresh);
-    if (zh != null) {
-      zhLrc = zh;
     }
 
     fullLrc.value = {"jp": jpLrc, "zh": zhLrc, "roma": romaLrc};
     parsedJPLrc.clear();
     parsedJPLrc.addAll(ParserSmart(fullLrc["jp"]!).parseLines());
     setPlayingJPLrc(playingMusic.value.musicId ?? "");
+    changePlayingLyric(playingPosition.value, isForce: true);
+    if (forceRefresh) {
+      SmartDialog.compatible.showToast(fetchResultStr);
+    }
     Future.delayed(
         const Duration(milliseconds: 200), () => needRefreshLyric.value = true);
   }
