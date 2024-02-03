@@ -359,12 +359,15 @@ Widget touchIconByAsset(
     double height = 20}) {
   return GestureDetector(
     onTap: onTap,
-    child: Padding(
-      padding: padding ?? const EdgeInsets.all(0),
-      child: SvgPicture.asset(path,
-          width: width.h,
-          height: height.h,
-          colorFilter: ColorFilter.mode(color, BlendMode.srcIn)),
+    child: Container(
+      color: Colors.transparent,
+      child: Padding(
+        padding: padding ?? const EdgeInsets.all(0),
+        child: SvgPicture.asset(path,
+            width: width.h,
+            height: height.h,
+            colorFilter: ColorFilter.mode(color, BlendMode.srcIn)),
+      ),
     ),
   );
 }
