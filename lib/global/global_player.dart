@@ -129,11 +129,11 @@ class PlayerLogic extends SuperController
           isPlaying: index == i));
     }
     mPlayList.addAll(tempList);
+    await DBLogic.to.updatePlayingList(mPlayList);
     for (var playListMusic in mPlayList) {
       playListMusic.isPlaying =
           playListMusic.musicId == musicList[index].musicId;
     }
-    await DBLogic.to.updatePlayingList(mPlayList);
   }
 
   /// 持久化播放列表2
@@ -335,6 +335,7 @@ class PlayerLogic extends SuperController
 
     if (mIndex >= 0) {
       mPlayList.removeAt(mIndex);
+      await DBLogic.to.updatePlayingList(mPlayList);
       await audioSourceList.removeAt(mIndex);
     }
 
@@ -351,10 +352,12 @@ class PlayerLogic extends SuperController
 
       if (mIndex >= 0) {
         mPlayList.insert(mIndex + 1, pMusic);
+        await DBLogic.to.updatePlayingList(mPlayList);
         await audioSourceList.insert(mIndex + 1, genMusic);
       }
     } else {
       mPlayList.insert(mPlayList.length, pMusic);
+      await DBLogic.to.updatePlayingList(mPlayList);
       await audioSourceList.insert(audioSourceList.length, genMusic);
     }
   }
@@ -390,6 +393,7 @@ class PlayerLogic extends SuperController
             musicId: music.musicId!,
             musicName: music.musicName!,
             artist: music.artist!));
+        await DBLogic.to.updatePlayingList(mPlayList);
       }
     });
     return true;
@@ -618,6 +622,7 @@ class PlayerLogic extends SuperController
     if (audioSourceList.length == 1) {
       // 播放列表仅剩一个则停止播放，清空状态
       mPlayList.removeAt(index);
+      await DBLogic.to.updatePlayingList(mPlayList);
       await clearPlayerStatus();
       await audioSourceList.removeAt(index);
       return;
@@ -629,12 +634,30 @@ class PlayerLogic extends SuperController
     if (currentMusic.musicId != chooseMusic.musicId) {
       // 删除非当前播放的歌曲
       mPlayList.removeAt(index);
+      await DBLogic.to.updatePlayingList(mPlayList);
       await audioSourceList.removeAt(index);
       return;
     }
     // 删除当前播放的歌曲
     mPlayList.removeAt(index);
-    await audioSourceList.removeAt(index);
+    await DBLogic.to.updatePlayingList(mPlayList);
+    // 随机播放时任取一个index
+    int mIndex;
+    if (mPlayer.shuffleModeEnabled) {
+      // 随机播放，随机再获取一个索引
+      mIndex = Random().nextInt(mPlayList.length);
+    } else {
+      // 顺序播放或单曲循环，查看当前索引是否越界
+      if (index > mPlayList.length - 1) {
+        // 越界则从头开始播放
+        mIndex = 0;
+      } else {
+        // 不越界仍播放当前索引歌曲
+        mIndex = index;
+      }
+    }
+    await DBLogic.to.findAllPlayListMusics(
+        willPlayMusicIndex: mIndex, needPlay: mPlayer.playing);
   }
 
   /// 删除播放列表中全部歌曲

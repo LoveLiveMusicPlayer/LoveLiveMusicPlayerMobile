@@ -527,14 +527,14 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
   /****************  PlayList  ****************/
 
   /// 获取上一次持久化的播放列表并播放
-  Future<void> findAllPlayListMusics() async {
+  Future<void> findAllPlayListMusics(
+      {int willPlayMusicIndex = 0, bool needPlay = false}) async {
     try {
       final playList = await playListMusicDao.findAllPlayListMusics();
       if (playList.isEmpty) {
         return;
       }
       final musicIds = <String>[];
-      var willPlayMusicIndex = 0;
       for (var i = 0; i < playList.length; i++) {
         musicIds.add(playList[i].musicId);
         if (playList[i].isPlaying) {
@@ -544,7 +544,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       final musicList = await findMusicByMusicIds(musicIds);
       if (musicList.isNotEmpty) {
         playLogic.playMusic(musicList,
-            mIndex: willPlayMusicIndex, needPlay: false);
+            mIndex: willPlayMusicIndex, needPlay: needPlay);
       }
     } catch (e) {
       Log4f.i(msg: e.toString());
