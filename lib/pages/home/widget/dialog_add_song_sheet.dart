@@ -16,9 +16,13 @@ import 'package:lovelivemusicplayer/widgets/text_field_dialog.dart';
 class DialogAddSongSheet extends StatelessWidget {
   final List<Music> musicList;
   final Function(bool)? changeLoveStatusCallback;
+  final Function(bool)? changeMenuStateCallback;
 
   const DialogAddSongSheet(
-      {Key? key, required this.musicList, this.changeLoveStatusCallback})
+      {Key? key,
+      required this.musicList,
+      this.changeLoveStatusCallback,
+      this.changeMenuStateCallback})
       : super(key: key);
 
   @override
@@ -74,6 +78,7 @@ class DialogAddSongSheet extends StatelessWidget {
                       SmartDialog.compatible.showToast(isSuccess
                           ? 'create_success'.tr
                           : 'create_over_max'.tr);
+                      changeMenuStateCallback?.call(isSuccess);
                     }),
                 clickBgDismissTemp: false,
                 alignmentTemp: Alignment.center);
@@ -107,6 +112,7 @@ class DialogAddSongSheet extends StatelessWidget {
                         SmartDialog.compatible.dismiss();
                         SmartDialog.compatible.showToast(
                             isSuccess ? 'add_success'.tr : 'add_fail'.tr);
+                        changeMenuStateCallback?.call(isSuccess);
                       });
                     },
                     menu: menuList[index],

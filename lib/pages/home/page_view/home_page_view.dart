@@ -108,6 +108,11 @@ class HomePageView extends GetView<HomeController> {
         title: 'add_to_playlist'.tr,
         onTap: () async {
           List<Music> musicList = controller.state.items.cast();
+          var isHasChosen =
+              controller.state.items.any((element) => element.checked == true);
+          if (!isHasChosen) {
+            return;
+          }
           List<Music> tempList = [];
           await Future.forEach<Music>(musicList, (music) {
             if (music.checked) {
@@ -128,7 +133,6 @@ class HomePageView extends GetView<HomeController> {
           var isHasChosen =
               controller.state.items.any((element) => element.checked == true);
           if (!isHasChosen) {
-            SmartDialog.compatible.dismiss();
             return;
           }
           List<Music> tempList = [];
@@ -137,9 +141,13 @@ class HomePageView extends GetView<HomeController> {
               tempList.add(music);
             }
           });
-          SmartDialog.compatible.dismiss();
           SmartDialog.compatible.show(
-              widget: DialogAddSongSheet(musicList: tempList),
+              widget: DialogAddSongSheet(
+                  musicList: tempList, changeLoveStatusCallback: (status) {
+                SmartDialog.compatible.dismiss();
+              }, changeMenuStateCallback: (status) {
+                SmartDialog.compatible.dismiss();
+              }),
               alignmentTemp: Alignment.bottomCenter);
         }));
     if (HomeController.to.state.currentIndex.value == 3) {
@@ -152,7 +160,6 @@ class HomePageView extends GetView<HomeController> {
             var isHasChosen = controller.state.items
                 .any((element) => element.checked == true);
             if (!isHasChosen) {
-              SmartDialog.compatible.dismiss();
               return;
             }
             List<Music> tempList = [];
@@ -161,7 +168,6 @@ class HomePageView extends GetView<HomeController> {
                 tempList.add(music);
               }
             });
-            SmartDialog.compatible.dismiss();
             SmartDialog.compatible.show(
                 widget: TwoButtonDialog(
                     title: "confirm_to_delete_music".tr,
@@ -170,6 +176,7 @@ class HomePageView extends GetView<HomeController> {
                       bool notAllLove =
                           tempList.any((music) => music.isLove == false);
                       PlayerLogic.to.toggleLoveList(tempList, notAllLove);
+                      SmartDialog.compatible.dismiss();
                     }));
           }));
     }
