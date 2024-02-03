@@ -136,7 +136,7 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
           mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
-              height: 14.h,
+              height: 10.h,
             ),
             Row(
               children: [
@@ -159,6 +159,7 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                 ),
                 touchIconByAsset(
                     path: Assets.dialogIcDelete2,
+                    padding: EdgeInsets.all(8.r),
                     onTap: onRemove,
                     width: 16.h,
                     height: 16.h,
@@ -168,7 +169,7 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
               ],
             ),
             SizedBox(
-              height: 14.h,
+              height: 10.h,
             ),
             Visibility(
               visible: showLin,

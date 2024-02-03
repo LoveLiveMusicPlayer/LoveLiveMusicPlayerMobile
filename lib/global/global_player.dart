@@ -641,6 +641,7 @@ class PlayerLogic extends SuperController
   Future<void> removeAllMusics() async {
     await clearPlayerStatus();
     await audioSourceList.clear();
+    await DBLogic.to.playListMusicDao.deleteAllPlayListMusics();
   }
 
   /// 停止播放，清空状态

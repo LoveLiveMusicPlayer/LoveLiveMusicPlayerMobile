@@ -353,14 +353,14 @@ Widget touchIcon(IconData icon, GestureTapCallback onTap,
 Widget touchIconByAsset(
     {required String path,
     GestureTapCallback? onTap,
-    double padding = 0,
+    EdgeInsets? padding,
     Color color = const Color(0xff999999),
     double width = 20,
     double height = 20}) {
   return GestureDetector(
     onTap: onTap,
     child: Padding(
-      padding: EdgeInsets.all(padding),
+      padding: padding ?? const EdgeInsets.all(0),
       child: SvgPicture.asset(path,
           width: width.h,
           height: height.h,

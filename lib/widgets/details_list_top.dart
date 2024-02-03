@@ -122,14 +122,16 @@ class DetailsListTop extends StatelessWidget {
         ? ColorMs.colorFFFFFF
         : ColorMs.colorCCCCCC;
     return Padding(
-        padding:
-            EdgeInsets.only(right: 16.h, top: 5.h, bottom: 5.h, left: 30.h),
-        child: touchIconByAsset(
-            path: Assets.mainIcScreen,
-            onTap: onScreenTap,
-            width: 20,
-            height: 20,
-            color: color));
+      padding: EdgeInsets.only(right: 10.w),
+      child: touchIconByAsset(
+          path: Assets.mainIcScreen,
+          padding:
+              EdgeInsets.only(left: 8.w, top: 5.h, right: 8.w, bottom: 5.h),
+          onTap: onScreenTap,
+          width: 20,
+          height: 20,
+          color: color),
+    );
   }
 
   ///播放歌曲条目

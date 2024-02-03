@@ -140,12 +140,13 @@ class ListViewItemSongSheet extends StatelessWidget {
             onTap: () {
               onMoreTap!(menu);
             },
-            child: Container(
-              padding: EdgeInsets.only(
-                  left: 12.w, right: 10.w, top: 12.h, bottom: 12.h),
-              child: touchIconByAsset(
-                  path: Assets.mainIcMore, width: 10, height: 20, color: color),
-            ),
+            child: touchIconByAsset(
+                path: Assets.mainIcMore,
+                padding: EdgeInsets.only(
+                    left: 12.w, right: 10.w, top: 12.h, bottom: 12.h),
+                width: 10,
+                height: 20,
+                color: color),
           ),
           SizedBox(width: 4.r)
         ],

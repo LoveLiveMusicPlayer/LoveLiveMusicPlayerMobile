@@ -132,9 +132,11 @@ class SongLibraryTop extends GetView<GlobalLogic> {
       return Container();
     }
     return Padding(
-      padding: EdgeInsets.only(right: 22.w, top: 3.h, bottom: 3.h),
+      padding: EdgeInsets.only(right: 10.w),
       child: touchIconByAsset(
           path: Assets.mainIcScreen,
+          padding:
+              EdgeInsets.only(left: 8.w, top: 3.h, right: 8.w, bottom: 3.h),
           onTap: onScreenTap,
           width: 20,
           height: 20,

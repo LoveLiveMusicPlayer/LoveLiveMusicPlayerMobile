@@ -255,7 +255,7 @@ class _DriveModeState extends State<DriveMode> {
             },
             width: 30.w,
             height: 30.w,
-            padding: 4.w,
+            padding: EdgeInsets.all(4.w),
             color: Get.isDarkMode ? Colors.white : Colors.black);
       },
     );
@@ -276,7 +276,7 @@ class _DriveModeState extends State<DriveMode> {
               onTap: onTap,
               width: 30.w,
               height: 30.w,
-              padding: 4.w,
+              padding: EdgeInsets.all(4.w),
               color: color),
           Text(text, style: TextStyle(color: color, fontSize: 17.sp))
         ],

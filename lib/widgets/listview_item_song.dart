@@ -206,25 +206,25 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-              child: touchIconByAsset(
-                  path: Assets.mainIcAddNext,
-                  onTap: () {
-                    widget.onPlayNextTap(widget.music);
-                    SmartDialog.compatible.showToast('add_success'.tr);
-                  },
-                  width: 20,
-                  height: 20,
-                  color: color)),
-          Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-              child: touchIconByAsset(
-                  path: Assets.mainIcMore,
-                  onTap: () => widget.onMoreTap(widget.music),
-                  width: 10,
-                  height: 20,
-                  color: color)),
+          touchIconByAsset(
+              path: Assets.mainIcAddNext,
+              padding: EdgeInsets.only(
+                  left: 12.w, top: 12.h, right: 12.w, bottom: 12.h),
+              onTap: () {
+                widget.onPlayNextTap(widget.music);
+                SmartDialog.compatible.showToast('add_success'.tr);
+              },
+              width: 20,
+              height: 20,
+              color: color),
+          touchIconByAsset(
+              path: Assets.mainIcMore,
+              padding: EdgeInsets.only(
+                  left: 12.w, top: 12.h, right: 12.w, bottom: 12.h),
+              onTap: () => widget.onMoreTap(widget.music),
+              width: 10,
+              height: 20,
+              color: color),
           SizedBox(width: 4.r)
         ],
       ),

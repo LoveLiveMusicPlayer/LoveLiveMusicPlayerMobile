@@ -143,11 +143,13 @@ class HomePageView extends GetView<HomeController> {
           });
           SmartDialog.compatible.show(
               widget: DialogAddSongSheet(
-                  musicList: tempList, changeLoveStatusCallback: (status) {
-                SmartDialog.compatible.dismiss();
-              }, changeMenuStateCallback: (status) {
-                SmartDialog.compatible.dismiss();
-              }),
+                  musicList: tempList,
+                  changeLoveStatusCallback: (status) {
+                    SmartDialog.compatible.dismiss();
+                  },
+                  changeMenuStateCallback: (status) {
+                    SmartDialog.compatible.dismiss();
+                  }),
               alignmentTemp: Alignment.bottomCenter);
         }));
     if (HomeController.to.state.currentIndex.value == 3) {
