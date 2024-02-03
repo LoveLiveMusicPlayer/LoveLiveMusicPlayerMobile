@@ -283,12 +283,14 @@ class _SystemSettingsState extends State<SystemSettings> {
           ),
           SizedBox(height: 8.h),
           ListenableBuilder(
-              listenable: remoteHttp.enableHttp,
+              listenable:
+                  Listenable.merge([remoteHttp.enableHttp, remoteHttp.httpUrl]),
               builder: (c, w) {
                 return DrawerFunctionButton(
                     icon: Assets.drawerDrawerHttp,
                     iconColor: iconColor,
                     text: 'use_http_music'.tr,
+                    enableSwitch: remoteHttp.httpUrl.value.isNotEmpty,
                     hasSwitch: true,
                     initSwitch: remoteHttp.isEnableHttp(),
                     callBack: (controller, check) async {
@@ -319,12 +321,14 @@ class _SystemSettingsState extends State<SystemSettings> {
                                   RegExp('^[a-zA-Z0-9.:/_-]*\$'))
                             ],
                             onConfirm: (host) async {
-                              host = host.endsWith("/") ? host : "$host/";
-                              controller.setTextValue =
-                                  (host.isEmpty || host == "/")
-                                      ? 'input_http_url'.tr
-                                      : host;
-                              await remoteHttp.setHttpUrl(host);
+                              if (host.isEmpty) {
+                                controller.setTextValue = 'input_http_url'.tr;
+                                await remoteHttp.setHttpUrl("");
+                              } else {
+                                host = host.endsWith("/") ? host : "$host/";
+                                controller.setTextValue = host;
+                                await remoteHttp.setHttpUrl(host);
+                              }
                             }),
                         clickBgDismissTemp: false,
                         alignmentTemp: Alignment.center);
