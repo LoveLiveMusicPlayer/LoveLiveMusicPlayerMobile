@@ -58,10 +58,15 @@ class Carplay {
     });
   }
 
-  static void changePlayingMusic(Music music) {
+  static void changePlayingMusic(Music? music) {
+    if (_singleton == null) {
+      return;
+    }
     final imagePath = CarplayUtil.music2Image(music);
-    sectionMusic.first.items.first.updateTextAndImage(
-        "${'now_playing'.tr}${music.musicName ?? 'no_songs'.tr}", imagePath);
+    if (sectionMusic.isNotEmpty) {
+      sectionMusic.first.items.first.updateTextAndImage(
+          "${'now_playing'.tr}${music?.musicName ?? 'no_songs'.tr}", imagePath);
+    }
   }
 
   void onCarplayConnectionChange(CPConnectionStatusTypes status) {
@@ -81,6 +86,9 @@ class Carplay {
     for (var i = 0; i < musicList.length; i++) {
       if (musicList[i].musicId == cp.uniqueId) {
         var completer = Completer<void>();
+        musicList.first.toJson().forEach((key, value) {
+          print("$key : $value");
+        });
         await PlayerLogic.to
             .playMusic(musicList, mIndex: i)
             .then((_) => completer.complete());

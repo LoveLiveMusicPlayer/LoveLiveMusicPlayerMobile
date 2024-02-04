@@ -689,6 +689,7 @@ class PlayerLogic extends SuperController
 
   /// 设置当前播放歌曲
   setCurrentMusic(Music? music) async {
+    Carplay.changePlayingMusic(music);
     if (music == null) {
       playingMusic.value = Music();
     } else {
@@ -699,7 +700,6 @@ class PlayerLogic extends SuperController
         GlobalLogic.to.iconColor.value = color ?? Get.theme.primaryColor;
       });
     }
-    Carplay.changePlayingMusic(playingMusic.value);
   }
 
   /// 按钮点击上一曲
