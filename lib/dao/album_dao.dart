@@ -3,14 +3,14 @@ import 'package:lovelivemusicplayer/models/album.dart';
 
 @dao
 abstract class AlbumDao {
-  @Query('SELECT * FROM Album GROUP BY `date`')
+  @Query('SELECT * FROM Album ORDER BY `date`')
   Future<List<Album>> findAllAlbums();
 
-  @Query('SELECT * FROM Album WHERE `group` = :group GROUP BY `date`')
+  @Query('SELECT * FROM Album WHERE `group` = :group ORDER BY `date`')
   Future<List<Album>> findAllAlbumsByGroup(String group);
 
   @Query(
-      'SELECT * FROM Album WHERE `group` = :group AND `existFile` = 1 GROUP BY `date`')
+      'SELECT * FROM Album WHERE `group` = :group AND `existFile` = 1 ORDER BY `date`')
   Future<List<Album>> findAllExistAlbumsByGroup(String group);
 
   @Query('SELECT * FROM Album WHERE albumId = :albumId')
