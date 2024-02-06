@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter_lyric/lyric_parser/parser_smart.dart';
@@ -689,7 +690,9 @@ class PlayerLogic extends SuperController
 
   /// 设置当前播放歌曲
   setCurrentMusic(Music? music) async {
-    Carplay.changePlayingMusic(music);
+    if (Platform.isIOS) {
+      Carplay.changePlayingMusic(music);
+    }
     if (music == null) {
       playingMusic.value = Music();
     } else {

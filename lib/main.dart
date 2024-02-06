@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -112,11 +113,13 @@ void main() async {
       subscription = eventBus.on<CloseOpen>().listen((event) async {
         // 初始化结束后，将启动屏关闭
         FlutterNativeSplash.remove();
-        Future.delayed(const Duration(milliseconds: 300), () async {
-          // 在Carplay的init函数中初始化CarplayMine会导致程序卡死，提前初始化
-          await CarplayMine.getInstance();
-          Carplay.init();
-        });
+        if (Platform.isIOS) {
+          Future.delayed(const Duration(milliseconds: 300), () async {
+            // 在Carplay的init函数中初始化CarplayMine会导致程序卡死，提前初始化
+            await CarplayMine.getInstance();
+            Carplay.init();
+          });
+        }
       });
 
       // 初始化
