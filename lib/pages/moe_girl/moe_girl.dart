@@ -98,15 +98,17 @@ class _MoeGirlState extends State<MoeGirl> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          title: Text('moe_girl_wiki'.tr),
-          backgroundColor:
-              Get.isDarkMode ? ColorMs.colorNightPrimary : ColorMs.color28B3F7,
-        ),
-        body: Stack(
+      appBar: AppBar(
+        elevation: 0,
+        title: Text('moe_girl_wiki'.tr),
+        backgroundColor:
+            Get.isDarkMode ? ColorMs.colorNightPrimary : ColorMs.color28B3F7,
+      ),
+      body: SafeArea(
+        child: Column(
           children: [
-            InAppWebView(
+            Expanded(
+                child: InAppWebView(
               key: webViewKey,
               initialUrlRequest:
                   URLRequest(url: WebUri(Const.moeGirlUrl + Get.arguments)),
@@ -115,8 +117,27 @@ class _MoeGirlState extends State<MoeGirl> {
               onWebViewCreated: (controller) async {
                 webViewController = controller;
               },
+            )),
+            ButtonBar(
+              alignment: MainAxisAlignment.center,
+              children: <Widget>[
+                MaterialButton(
+                  child: const Icon(Icons.arrow_back),
+                  onPressed: () => webViewController?.goBack(),
+                ),
+                MaterialButton(
+                  child: const Icon(Icons.arrow_forward),
+                  onPressed: () => webViewController?.goForward(),
+                ),
+                MaterialButton(
+                  child: const Icon(Icons.refresh),
+                  onPressed: () => webViewController?.reload(),
+                ),
+              ],
             ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }
