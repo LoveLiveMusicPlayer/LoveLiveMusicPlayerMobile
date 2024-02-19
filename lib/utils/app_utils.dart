@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
@@ -26,7 +27,6 @@ import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 import 'package:umeng_common_sdk/umeng_common_sdk.dart';
-import 'package:vibration/vibration.dart';
 
 class AppUtils {
   static CacheManager cacheManager = CacheManager(Config("imgSplash"));
@@ -509,9 +509,14 @@ class AppUtils {
   }
 
   static vibrate() async {
-    final hasVibrator = await Vibration.hasVibrator();
-    if (hasVibrator == true) {
-      Vibration.vibrate(amplitude: 50, duration: 150);
+    final canVibrate = await Haptics.canVibrate();
+    if (!canVibrate) {
+      return;
+    }
+    if (Platform.isAndroid) {
+      await Haptics.vibrate(HapticsType.warning);
+    } else {
+      await Haptics.vibrate(HapticsType.medium);
     }
   }
 }

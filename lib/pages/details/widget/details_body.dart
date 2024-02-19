@@ -121,6 +121,7 @@ class _DetailsBodyState extends State<DetailsBody> {
   Widget renderMusicList() {
     if (widget.menuId != null && DetailController.to.state.isSelect) {
       return SliverReorderableList(
+        onReorderStart: (int index) => AppUtils.vibrate(),
         onReorder: (int oldIndex, int newIndex) {
           if (oldIndex < newIndex) {
             newIndex -= 1;

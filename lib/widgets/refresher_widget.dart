@@ -7,6 +7,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
+import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -132,6 +133,7 @@ class _RefresherWidgetState extends State<RefresherWidget> {
                 proxyDecorator: (child, index, animation) {
                   return child;
                 },
+                onReorderStart: (int index) => AppUtils.vibrate(),
                 onReorder: (int oldIndex, int newIndex) {
                   if (oldIndex < newIndex) {
                     newIndex -= 1;
