@@ -4,6 +4,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
@@ -23,17 +24,17 @@ class DetailsBody extends StatefulWidget {
   final List<Music> music;
   final Function(List<String>)? onRemove;
   final bool? isAlbum;
-  final bool? isMenu;
+  final int? menuId;
 
   const DetailsBody({
-    Key? key,
+    super.key,
     required this.logic,
     required this.buildCover,
     required this.music,
     this.isAlbum,
-    this.isMenu,
+    this.menuId,
     this.onRemove,
-  }) : super(key: key);
+  });
 
   @override
   State<DetailsBody> createState() => _DetailsBodyState();
@@ -118,36 +119,69 @@ class _DetailsBodyState extends State<DetailsBody> {
   }
 
   Widget renderMusicList() {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) {
-          final music = widget.music[index];
-          return Padding(
-            padding: EdgeInsets.only(bottom: 10.h),
-            child: ListViewItemSong(
-              index: index,
-              music: music,
-              checked: widget.logic.isItemChecked(index),
-              onItemTap: (index, checked) {
-                widget.logic.selectItem(index, checked);
-              },
-              onPlayNextTap: (music) async {
-                await PlayerLogic.to.addNextMusic(music);
-              },
-              onMoreTap: (music) {
-                SmartDialog.compatible.show(
-                  widget: showDialogMoreWithMusic(music),
-                  alignmentTemp: Alignment.bottomCenter,
-                );
-              },
-              onPlayNowTap: () {
-                PlayerLogic.to.playMusic(widget.music, mIndex: index);
-              },
-            ),
-          );
+    if (widget.menuId != null && DetailController.to.state.isSelect) {
+      return SliverReorderableList(
+        onReorder: (int oldIndex, int newIndex) {
+          if (oldIndex < newIndex) {
+            newIndex -= 1;
+          }
+
+          setState(() {
+            var child = widget.music.removeAt(oldIndex);
+            widget.music.insert(newIndex, child);
+
+            DBLogic.to.exchangeMenuItem(
+                widget.menuId!, widget.music[oldIndex], widget.music[newIndex]);
+          });
         },
-        childCount: widget.music.length,
-      ),
+        itemBuilder: (context, index) {
+          final music = widget.music[index];
+          return ReorderableDelayedDragStartListener(
+              index: index,
+              key: ValueKey("ListViewItemSong${music.musicId}"),
+              child: Padding(
+                  padding: EdgeInsets.only(bottom: 10.h),
+                  child: renderItem(index, music, isDraggable: true)));
+        },
+        itemCount: widget.music.length,
+      );
+    } else {
+      return SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            final music = widget.music[index];
+            return Padding(
+              padding: EdgeInsets.only(bottom: 10.h),
+              child: renderItem(index, music),
+            );
+          },
+          childCount: widget.music.length,
+        ),
+      );
+    }
+  }
+
+  Widget renderItem(int index, Music music, {bool isDraggable = false}) {
+    return ListViewItemSong(
+      index: index,
+      music: music,
+      isDraggable: isDraggable,
+      checked: widget.logic.isItemChecked(index),
+      onItemTap: (index, checked) {
+        widget.logic.selectItem(index, checked);
+      },
+      onPlayNextTap: (music) async {
+        await PlayerLogic.to.addNextMusic(music);
+      },
+      onMoreTap: (music) {
+        SmartDialog.compatible.show(
+          widget: showDialogMoreWithMusic(music),
+          alignmentTemp: Alignment.bottomCenter,
+        );
+      },
+      onPlayNowTap: () {
+        PlayerLogic.to.playMusic(widget.music, mIndex: index);
+      },
     );
   }
 
@@ -230,7 +264,7 @@ class _DetailsBodyState extends State<DetailsBody> {
       onTap: addToMenu,
     ));
 
-    if (widget.isMenu == true) {
+    if (widget.menuId != null) {
       list.add(BtnItem(
         imgPath: Assets.dialogIcDelete2,
         title: "delete_from_menu".tr,

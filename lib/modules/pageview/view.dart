@@ -19,7 +19,7 @@ import 'package:lovelivemusicplayer/widgets/listview_item_song.dart';
 import 'package:lovelivemusicplayer/widgets/refresher_widget.dart';
 
 class PageViewComponent extends StatefulWidget {
-  const PageViewComponent({Key? key}) : super(key: key);
+  const PageViewComponent({super.key});
 
   @override
   State<PageViewComponent> createState() => _PageViewComponentState();
@@ -85,6 +85,7 @@ class _PageViewComponentState extends State<PageViewComponent> {
             enablePullUp: false,
             enablePullDown: false,
             isGridView: page == 1,
+            canReorder: page == 3 && HomeController.to.state.isSelect.value,
 
             ///当前列表是否网格显示
             columnNum: 3,
@@ -92,7 +93,6 @@ class _PageViewComponentState extends State<PageViewComponent> {
             mainAxisSpacing: 10.h,
             leftPadding: hasPadding ? 16.w : 0,
             rightPadding: hasPadding ? 16.w : 0,
-            aspectRatio: 0.9,
             listItem: (cxt, index) {
               return _buildListItem(index, page);
             }));
@@ -100,9 +100,13 @@ class _PageViewComponentState extends State<PageViewComponent> {
 
   Widget _buildListItem(int index, int page) {
     /// 0 歌曲  1 专辑  2 歌手  3 我喜欢  4 歌单  5  最近播放
+    Widget widget;
+    Key key;
     switch (page) {
       case 0:
-        return ListViewItemSong(
+        key = ValueKey(
+            "ListViewItemSong${GlobalLogic.to.musicList[index].musicId}");
+        widget = ListViewItemSong(
             index: index,
             music: GlobalLogic.to.musicList[index],
             checked: HomeController.to.isItemChecked(index),
@@ -119,8 +123,11 @@ class _PageViewComponentState extends State<PageViewComponent> {
             onPlayNowTap: () {
               PlayerLogic.to.playMusic(GlobalLogic.to.musicList, mIndex: index);
             });
+        break;
       case 1:
-        return ListViewItemAlbum(
+        key = ValueKey(
+            "ListViewItemAlbum${GlobalLogic.to.albumList[index].albumId}");
+        widget = ListViewItemAlbum(
             album: GlobalLogic.to.albumList[index],
             checked: HomeController.to.isItemChecked(index),
             isSelect: HomeController.to.state.isSelect.value,
@@ -132,16 +139,23 @@ class _PageViewComponentState extends State<PageViewComponent> {
                     arguments: GlobalLogic.to.albumList[index], id: 1);
               }
             });
+        break;
       case 2:
-        return ListViewItemSinger(
+        key = ValueKey(
+            "ListViewItemSinger${GlobalLogic.to.artistList[index].id}");
+        widget = ListViewItemSinger(
             artist: GlobalLogic.to.artistList[index],
             onItemTap: (artist) {
               Get.toNamed(Routes.routeSingerDetails, arguments: artist, id: 1);
             });
+        break;
       case 3:
-        return ListViewItemSong(
+        key = ValueKey(
+            "ListViewItemSong${GlobalLogic.to.loveList[index].musicId}");
+        widget = ListViewItemSong(
             index: index,
             music: GlobalLogic.to.loveList[index],
+            isDraggable: true,
             checked: HomeController.to.isItemChecked(index),
             onItemTap: (index, checked) {
               HomeController.to.selectItem(index, checked);
@@ -156,8 +170,11 @@ class _PageViewComponentState extends State<PageViewComponent> {
             onPlayNowTap: () {
               PlayerLogic.to.playMusic(GlobalLogic.to.loveList, mIndex: index);
             });
+        break;
       case 4:
-        return ListViewItemSongSheet(
+        key = ValueKey(
+            "ListViewItemSongSheet${GlobalLogic.to.menuList[index].id}");
+        widget = ListViewItemSongSheet(
             onItemTap: (menu) {
               Get.toNamed(Routes.routeMenuDetails, arguments: menu.id, id: 1);
             },
@@ -168,8 +185,11 @@ class _PageViewComponentState extends State<PageViewComponent> {
             },
             menu: GlobalLogic.to.menuList[index],
             showDevicePic: true);
+        break;
       default:
-        return ListViewItemSong(
+        key = ValueKey(
+            "ListViewItemRecent${GlobalLogic.to.recentList[index].musicId}");
+        widget = ListViewItemSong(
             index: index,
             music: GlobalLogic.to.recentList[index],
             checked: HomeController.to.isItemChecked(index),
@@ -187,6 +207,9 @@ class _PageViewComponentState extends State<PageViewComponent> {
               PlayerLogic.to
                   .playMusic(GlobalLogic.to.recentList, mIndex: index);
             });
+        break;
     }
+    return Padding(
+        key: key, padding: EdgeInsets.symmetric(vertical: 5.h), child: widget);
   }
 }

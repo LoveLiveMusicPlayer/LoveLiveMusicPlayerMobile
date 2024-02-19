@@ -22,6 +22,7 @@ class ListViewItemSong extends StatefulWidget {
   final Function(Music) onPlayNextTap;
   final Function() onPlayNowTap;
   final Function(Music) onMoreTap;
+  final bool isDraggable;
 
   ///条目数据
   final Music music;
@@ -39,6 +40,7 @@ class ListViewItemSong extends StatefulWidget {
       required this.onPlayNowTap,
       required this.onMoreTap,
       required this.music,
+      this.isDraggable = false,
       this.checked = false})
       : super(key: key);
 
@@ -95,25 +97,26 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
       return;
     }
     AppUtils.vibrate();
-    if (!HomeController.to.state.isSelect.value) {
-      SmartDialog.compatible.show(
-          widget: TwoButtonDialog(
-        title: "search_at_moe".tr,
-        msg: "moe_address_error".tr,
-        onConfirmListener: () {
-          Get.toNamed(Routes.routeMoeGirl, arguments: widget.music.musicName!);
-        },
-      ));
-    }
+    SmartDialog.compatible.show(
+        widget: TwoButtonDialog(
+      title: "search_at_moe".tr,
+      msg: "moe_address_error".tr,
+      onConfirmListener: () {
+        Get.toNamed(Routes.routeMoeGirl, arguments: widget.music.musicName!);
+      },
+    ));
   }
 
   ///缩列图
   Widget _buildIcon() {
     return GestureDetector(
       onTap: clickItem,
-      onLongPress: onLongPress,
+      onLongPress: HomeController.to.state.isSelect.value ? null : onLongPress,
       child: showImg(SDUtils.getImgPathFromMusic(widget.music), 48, 48,
-          hasShadow: false, onTap: clickItem, onLongPress: onLongPress),
+          hasShadow: false,
+          onTap: clickItem,
+          onLongPress:
+              HomeController.to.state.isSelect.value ? null : onLongPress),
     );
   }
 
@@ -155,7 +158,8 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
     return Expanded(
       child: GestureDetector(
         onTap: clickItem,
-        onLongPress: onLongPress,
+        onLongPress:
+            HomeController.to.state.isSelect.value ? null : onLongPress,
         child: Container(
           color: Colors.transparent,
           child: Column(
@@ -201,15 +205,29 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
     final color = (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
         ? ColorMs.colorDFDFDF
         : ColorMs.colorCCCCCC;
-    return Visibility(
-      visible: !HomeController.to.state.isSelect.value,
-      child: Row(
+    if (HomeController.to.state.isSelect.value) {
+      if (widget.isDraggable) {
+        return touchIconByAsset(
+            path: Assets.mainIcDraggable,
+            padding: EdgeInsets.only(
+                left: 12.w, top: 12.h, right: 12.w, bottom: 12.h),
+            onTap: () {
+              widget.onPlayNextTap(widget.music);
+              SmartDialog.compatible.showToast('add_success'.tr);
+            },
+            width: 20,
+            height: 20,
+            color: color);
+      } else {
+        return const Row();
+      }
+    } else {
+      return Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           touchIconByAsset(
               path: Assets.mainIcAddNext,
-              padding: EdgeInsets.only(
-                  left: 12.w, top: 12.h, right: 12.w, bottom: 12.h),
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
               onTap: () {
                 widget.onPlayNextTap(widget.music);
                 SmartDialog.compatible.showToast('add_success'.tr);
@@ -227,7 +245,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
               color: color),
           SizedBox(width: 4.r)
         ],
-      ),
-    );
+      );
+    }
   }
 }

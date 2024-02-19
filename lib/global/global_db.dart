@@ -67,6 +67,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       migration5to6,
       migration6to7,
       migration7to8,
+      migration8to9,
     ]).build();
     albumDao = database.albumDao;
     lyricDao = database.lyricDao;
@@ -524,6 +525,39 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     }
   }
 
+  /// 交换两首歌的位置
+  Future<void> exchangeMenuItem(
+      int menuId, Music dragMusic, Music destMusic) async {
+    final menu = await menuDao.findMenuById(menuId);
+    if (menu == null) {
+      return;
+    }
+    final musicList = menu.music;
+    int dragIndex = -1;
+    int destIndex = -1;
+    for (int i = 0; i < musicList.length; i++) {
+      if (musicList[i] == dragMusic.musicId) {
+        dragIndex = i;
+      } else if (musicList[i] == destMusic.musicId) {
+        destIndex = i;
+      }
+      if (dragIndex != -1 && destIndex != -1) {
+        break;
+      }
+    }
+    if (dragIndex == -1 || destIndex == -1) {
+      return;
+    }
+    for (int i = 0; i < musicList.length; i++) {
+      if (i == dragIndex) {
+        musicList[i] = destMusic.musicId!;
+      } else if (i == destIndex) {
+        musicList[i] = dragMusic.musicId!;
+      }
+    }
+    await menuDao.updateMenu(menu);
+  }
+
   /****************  PlayList  ****************/
 
   /// 获取上一次持久化的播放列表并播放
@@ -616,6 +650,23 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     return await Future.forEach<Music>(musicList, (music) async {
       await updateLove(music, isLove: changeStatus);
     });
+  }
+
+  /// 交换两首歌的位置
+  Future<void> exchangeLoveItem(Music dragMusic, Music destMusic) async {
+    final dragItem = await loveDao.findLoveById(dragMusic.musicId!);
+    final destItem = await loveDao.findLoveById(destMusic.musicId!);
+    final dragId = dragItem?.id;
+    final destId = destItem?.id;
+    if (dragId == null || destId == null) {
+      return;
+    }
+    await loveDao.deleteLoveById(dragMusic.musicId!);
+    await loveDao.deleteLoveById(destMusic.musicId!);
+    await loveDao.insertLove(Love(
+        timestamp: dragItem!.timestamp, musicId: dragItem.musicId, id: destId));
+    await loveDao.insertLove(Love(
+        timestamp: destItem!.timestamp, musicId: destItem.musicId, id: dragId));
   }
 
   ///****************  Artist  ****************/

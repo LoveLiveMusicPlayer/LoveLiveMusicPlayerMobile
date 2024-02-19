@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_db.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -23,13 +26,13 @@ class RefresherWidget extends StatefulWidget {
   final Color spacingColor;
   final double leftPadding;
   final double rightPadding;
-  final double aspectRatio;
   final ScrollController? scrollController;
+  final bool canReorder;
 
   /// 长宽比
 
   const RefresherWidget({
-    Key? key,
+    super.key,
     required this.itemCount,
     required this.listItem,
     this.onRefresh,
@@ -46,8 +49,8 @@ class RefresherWidget extends StatefulWidget {
     this.spacingColor = Colors.transparent,
     this.leftPadding = 0,
     this.rightPadding = 0,
-    this.aspectRatio = 1.0,
-  }) : super(key: key);
+    this.canReorder = false,
+  });
 
   @override
   State<RefresherWidget> createState() => _RefresherWidgetState();
@@ -123,19 +126,32 @@ class _RefresherWidgetState extends State<RefresherWidget> {
           },
         ),
         child: !widget.isGridView
-            ? ListView.separated(
+            ? ReorderableListView.builder(
                 cacheExtent: 3000,
-                itemCount: widget.itemCount,
-                itemBuilder: widget.listItem,
-                controller: widget.scrollController,
-                separatorBuilder: (BuildContext context, int index) {
-                  return Container(
-                    color: widget.spacingColor,
-                    height: widget.mainAxisSpacing,
-                  );
+                buildDefaultDragHandles: widget.canReorder,
+                proxyDecorator: (child, index, animation) {
+                  return child;
                 },
+                onReorder: (int oldIndex, int newIndex) {
+                  if (oldIndex < newIndex) {
+                    newIndex -= 1;
+                  }
+                  setState(() {
+                    final Music child =
+                        GlobalLogic.to.loveList.removeAt(oldIndex);
+                    GlobalLogic.to.loveList.insert(newIndex, child);
+
+                    DBLogic.to.exchangeLoveItem(
+                        GlobalLogic.to.loveList[oldIndex],
+                        GlobalLogic.to.loveList[newIndex]);
+                  });
+                },
+                scrollController: widget.scrollController,
+                itemBuilder: widget.listItem,
+                itemCount: widget.itemCount,
               )
             : AlignedGridView.count(
+                cacheExtent: 3000,
                 controller: widget.scrollController,
                 itemCount: widget.itemCount,
                 crossAxisCount: widget.columnNum,

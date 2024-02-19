@@ -59,7 +59,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
                 logic: logic,
                 buildCover: Hero(tag: "menu${menu?.id}", child: _buildCover()),
                 music: musicList,
-                isMenu: true,
+                menuId: menu?.id,
                 onRemove: (List<String> musicIds) async {
                   if (menu == null || menu!.id == 0) {
                     return;

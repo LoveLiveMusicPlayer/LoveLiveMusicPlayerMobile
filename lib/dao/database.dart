@@ -25,7 +25,7 @@ part 'database.g.dart';
 
 @TypeConverters([StringListConverter])
 @Database(
-    version: 8,
+    version: 9,
     entities: [Album, Lyric, Music, PlayListMusic, Menu, Artist, Love, History])
 abstract class MusicDatabase extends FloorDatabase {
   AlbumDao get albumDao;
@@ -103,4 +103,20 @@ final migration6to7 = Migration(6, 7, (database) async {
 final migration7to8 = Migration(7, 8, (database) async {
   const dropTableSql = '''DROP TABLE IF EXISTS Splash''';
   await database.execute(dropTableSql);
+});
+
+final migration8to9 = Migration(8, 9, (database) async {
+  const copyFromLoveTable =
+      '''CREATE TABLE Love_temp AS SELECT ROW_NUMBER() OVER (ORDER BY timestamp) AS `id`, * FROM Love''';
+  await database.execute(copyFromLoveTable);
+  const dropLoveTableSql = '''DROP TABLE Love''';
+  await database.execute(dropLoveTableSql);
+  const insertLoveTableSql =
+      '''CREATE TABLE Love (`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, musicId TEXT, timestamp INTEGER)''';
+  await database.execute(insertLoveTableSql);
+  const copyFromTempTable =
+      '''INSERT INTO Love (musicId, `id`, timestamp) SELECT musicId, `id`, timestamp FROM Love_temp''';
+  await database.execute(copyFromTempTable);
+  const dropLoveTempTableSql = '''DROP TABLE Love_temp''';
+  await database.execute(dropLoveTempTableSql);
 });
