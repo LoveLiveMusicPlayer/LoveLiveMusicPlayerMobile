@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.4.4+44
+version: 1.4.5+45
 
 environment:
   sdk: ">=2.17.0 <4.0.0"
@@ -36,13 +36,13 @@ dependencies:
   provider: ^6.1.1
   get: ^4.6.6
   flutter_spinkit: ^5.2.0
-  dio: ^5.4.0 # 网络加载
+  dio: ^5.4.1 # 网络加载
   path_provider: ^2.1.2 # 路径提供
   pull_to_refresh:  # 下拉刷新上拉加载
     git:
       url: https://gitee.com/zhushenwudi/flutter_pulltorefresh
       ref: 6d7fbdd
-  web_socket_channel: ^2.4.3 # webSocket
+  web_socket_channel: ^2.4.4 # webSocket
   connectivity_plus: ^5.0.2 # 网络监测
   scan: ^1.6.0 # 扫码
   flutter_smart_dialog: ^4.9.6 # 弹窗
@@ -110,7 +110,7 @@ dependencies:
       url: https://github.com/zhushenwudi/flutter_carplay
       ref: combine-all
   uuid: ^3.0.7 # 唯一码
-  sentry_flutter: ^7.16.0 # Sentry
+  sentry_flutter: ^7.16.1 # Sentry
   scrolls_to_top: ^2.1.1 # 滚动到顶部
   haptic_feedback: ^0.4.2 # 震动
 
@@ -120,7 +120,7 @@ dependency_overrides:
       url: https://github.com/zhushenwudi/md5_file_checksum
       ref: main
   win32: ^5.2.0
-  web: ^0.4.2
+  web: ^0.5.0
 
 dev_dependencies:
   flutter_test:

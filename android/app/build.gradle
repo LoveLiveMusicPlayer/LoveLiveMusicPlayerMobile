@@ -1,14 +1,16 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+    id "com.mob.sdk"
+}
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
     localPropertiesFile.withReader('UTF-8') { reader ->
         localProperties.load(reader)
     }
-}
-
-def flutterRoot = localProperties.getProperty('flutter.sdk')
-if (flutterRoot == null) {
-    throw new RuntimeException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
 def flutterVersionName = localProperties.getProperty("flutter.versionName")
@@ -22,8 +24,8 @@ if (flutterVersionCode == null) {
 }
 
 // 判断是否为release模式
-boolean isReleaseBuildType(){
-    for(String s : gradle.startParameter.taskNames) {
+boolean isReleaseBuildType() {
+    for (String s : gradle.startParameter.taskNames) {
         if (s.contains("Release") | s.contains("release")) {
             return true
         }
@@ -41,11 +43,6 @@ if (isReleaseBuildType()) {
         throw new RuntimeException("release模式需要在app目录下创建key.properties")
     }
 }
-
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
-apply plugin: 'com.mob.sdk'
 
 android {
     compileSdk 34
