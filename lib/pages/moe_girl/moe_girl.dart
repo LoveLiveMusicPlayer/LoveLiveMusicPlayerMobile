@@ -5,6 +5,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class MoeGirl extends StatefulWidget {
   const MoeGirl({super.key});
@@ -101,76 +102,83 @@ class _MoeGirlState extends State<MoeGirl> {
 
   @override
   Widget build(BuildContext context) {
+    final bgColor =
+        Get.isDarkMode ? ColorMs.colorNightPrimary : ColorMs.color28B3F7;
     return Scaffold(
       appBar: _showLayout
           ? AppBar(
               elevation: 0,
-              title: Text('moe_girl_wiki'.tr),
-              backgroundColor: Get.isDarkMode
-                  ? ColorMs.colorNightPrimary
-                  : ColorMs.color28B3F7,
+              iconTheme: const IconThemeData(color: Colors.white),
+              title: Text('moe_girl_wiki'.tr, style: TextStyleMs.white_18),
+              backgroundColor: bgColor,
             )
           : null,
-      body: SafeArea(
-        bottom: _showLayout,
-        child: Stack(
-          children: [
-            InAppWebView(
-              key: webViewKey,
-              onScrollChanged: (controller, x, y) {
-                if (_showLayoutTimer?.isActive == true) {
-                  _showLayoutTimer?.cancel();
-                }
-                _showLayoutTimer =
-                    Timer.periodic(const Duration(seconds: 1), (timer) {
-                  if (!_showLayout) {
-                    setState(() {
-                      _showLayout = true;
-                    });
+      body: Container(
+        color: bgColor,
+        child: SafeArea(
+          bottom: _showLayout,
+          child: Stack(
+            children: [
+              InAppWebView(
+                key: webViewKey,
+                onScrollChanged: (controller, x, y) {
+                  if (_showLayoutTimer?.isActive == true) {
+                    _showLayoutTimer?.cancel();
                   }
-                });
-                setState(() {
-                  _showLayout = false;
-                });
-              },
-              initialUrlRequest:
-                  URLRequest(url: WebUri(Const.moeGirlUrl + Get.arguments)),
-              initialSettings:
-                  InAppWebViewSettings(contentBlockers: contentBlockers),
-              onWebViewCreated: (controller) async {
-                webViewController = controller;
-              },
-            ),
-            if (_showLayout)
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: Container(
-                  color: Get.theme.primaryColor,
-                  height: 50,
-                  child: Center(
-                    child: ButtonBar(
-                      alignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        MaterialButton(
-                          child: const Icon(Icons.arrow_back),
-                          onPressed: () => webViewController?.goBack(),
-                        ),
-                        MaterialButton(
-                          child: const Icon(Icons.arrow_forward),
-                          onPressed: () => webViewController?.goForward(),
-                        ),
-                        MaterialButton(
-                          child: const Icon(Icons.refresh),
-                          onPressed: () => webViewController?.reload(),
-                        ),
-                      ],
+                  _showLayoutTimer =
+                      Timer.periodic(const Duration(seconds: 1), (timer) {
+                    if (!_showLayout) {
+                      setState(() {
+                        _showLayout = true;
+                      });
+                    }
+                  });
+                  setState(() {
+                    _showLayout = false;
+                  });
+                },
+                initialUrlRequest:
+                    URLRequest(url: WebUri(Const.moeGirlUrl + Get.arguments)),
+                initialSettings:
+                    InAppWebViewSettings(contentBlockers: contentBlockers),
+                onWebViewCreated: (controller) async {
+                  webViewController = controller;
+                },
+              ),
+              if (_showLayout)
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    color: bgColor,
+                    height: 50,
+                    child: Center(
+                      child: ButtonBar(
+                        alignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          MaterialButton(
+                            child: const Icon(Icons.arrow_back,
+                                color: Colors.white),
+                            onPressed: () => webViewController?.goBack(),
+                          ),
+                          MaterialButton(
+                            child: const Icon(Icons.arrow_forward,
+                                color: Colors.white),
+                            onPressed: () => webViewController?.goForward(),
+                          ),
+                          MaterialButton(
+                            child:
+                                const Icon(Icons.refresh, color: Colors.white),
+                            onPressed: () => webViewController?.reload(),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );
