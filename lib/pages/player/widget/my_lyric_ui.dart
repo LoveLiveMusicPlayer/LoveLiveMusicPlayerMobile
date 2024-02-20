@@ -64,7 +64,7 @@ class MyLrcUI extends LyricUI {
 
   @override
   TextStyle getOtherMainTextStyle() =>
-      TextStyle(color: otherColor, fontSize: otherMainSize.sp);
+      TextStyle(color: otherColor, fontSize: otherMainSize.h);
 
   @override
   TextStyle getPlayingMainTextStyle() => TextStyle(

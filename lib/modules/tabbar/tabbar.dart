@@ -12,6 +12,7 @@ class TabBarComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TabBar(
+      tabAlignment: TabAlignment.start,
       physics: const NeverScrollableScrollPhysics(),
       onTap: (index) {
         PageViewLogic.to.controller.jumpToPage(
@@ -32,9 +33,9 @@ class TabBarComponent extends StatelessWidget {
       labelColor: ColorMs.colorF940A7,
       unselectedLabelColor: ColorMs.colorA9B9CD,
       labelStyle: TextStyle(
-          fontSize: 24.sp, fontWeight: FontWeight.bold, fontFamily: 'KaTong'),
+          fontSize: 20.h, fontWeight: FontWeight.bold, fontFamily: 'KaTong'),
       unselectedLabelStyle: TextStyle(
-          fontSize: 16.sp, fontWeight: FontWeight.bold, fontFamily: 'KaTong'),
+          fontSize: 16.h, fontWeight: FontWeight.bold, fontFamily: 'KaTong'),
       tabs: [
         Tab(text: 'song_lib'.tr),
         Tab(text: 'mine'.tr),

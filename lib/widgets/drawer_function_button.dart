@@ -99,7 +99,7 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
                   return ListenableBuilder(
                       listenable: bh,
                       builder: (c, w) => Text(bh._textValue,
-                          style: TextStyle(fontSize: 14.sp).copyWith(
+                          style: TextStyle(fontSize: 14.h).copyWith(
                               color: mode ? ColorMs.colorEDF5FF : Colors.black),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis));

@@ -71,10 +71,10 @@ class _TextFieldDialogState extends State<TextFieldDialog> {
                 decoration: InputDecoration(
                     isCollapsed: false,
                     labelText: widget.hint ?? 'hint'.tr,
-                    labelStyle: TextStyle(fontSize: 14.sp),
+                    labelStyle: TextStyle(fontSize: 14.h),
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 8.w, vertical: 14.h),
-                    counterStyle: TextStyle(fontSize: 10.sp),
+                    counterStyle: TextStyle(fontSize: 10.h),
                     focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue)),
                     border: const OutlineInputBorder(

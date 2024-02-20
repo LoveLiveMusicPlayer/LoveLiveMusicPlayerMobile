@@ -278,7 +278,7 @@ class _DriveModeState extends State<DriveMode> {
               height: 30.w,
               padding: EdgeInsets.all(4.w),
               color: color),
-          Text(text, style: TextStyle(color: color, fontSize: 17.sp))
+          Text(text, style: TextStyle(color: color, fontSize: 17.h))
         ],
       ),
     );

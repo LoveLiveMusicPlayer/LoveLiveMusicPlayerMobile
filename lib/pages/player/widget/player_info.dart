@@ -37,7 +37,7 @@ class PlayerInfo extends StatelessWidget {
   Widget recentlyLrc(String? text,
       {Color? color, FontWeight fontWeight = FontWeight.normal}) {
     if (text == null) {
-      return Text("", style: TextStyle(color: color, fontSize: 15.sp));
+      return Text("", style: TextStyle(color: color, fontSize: 15.h));
     }
     return Text(text,
         style: TextStyle(

@@ -92,7 +92,7 @@ class _DrawerPageState extends State<DrawerPage> {
         }),
         Text("LoveLiveMusicPlayer",
             style: TextStyle(
-                fontSize: 17.sp,
+                fontSize: 17.h,
                 color: Get.isDarkMode ? ColorMs.colorEDF5FF : Colors.black)),
         SizedBox(height: 16.h)
       ],
