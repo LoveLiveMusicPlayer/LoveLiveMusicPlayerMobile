@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
@@ -6,10 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/eventbus/close_open.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/modules/drawer/drawer.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
@@ -38,6 +41,9 @@ class _HomeViewState extends State<HomeView>
     with SingleTickerProviderStateMixin {
   final logic = Get.find<HomeController>();
   bool isInitListener = true;
+
+  static ImageStream? imageStream;
+  ImageStreamListener? imageStreamListener;
 
   @override
   void initState() {
@@ -80,6 +86,10 @@ class _HomeViewState extends State<HomeView>
   @override
   void dispose() {
     GlobalLogic.mobileWeSlideController.removeListener(addListener);
+    if (imageStreamListener != null) {
+      imageStream?.removeListener(imageStreamListener!);
+    }
+    imageStream = null;
     super.dispose();
   }
 
@@ -101,10 +111,29 @@ class _HomeViewState extends State<HomeView>
               final photo = logic.bgPhoto.value;
               final color = Theme.of(context).primaryColor;
               DecorationImage? di;
+              Completer<void> completer = Completer<void>();
               if (photo != "") {
                 di = DecorationImage(
                     image: FileImage(File(photo)), fit: BoxFit.cover);
+
+                imageStream = di.image.resolve(const ImageConfiguration());
+                imageStreamListener = ImageStreamListener(
+                  (ImageInfo imageInfo, bool synchronousCall) {
+                    // 图片加载完成时调用，解析出image对象并完成Completer
+                    completer.complete();
+                  },
+                );
+                imageStream?.addListener(imageStreamListener!);
+              } else {
+                completer.complete();
               }
+              completer.future.then((dynamic) {
+                if (!hasAIPic) {
+                  // 没有AI开屏时发送卸载窗口命令
+                  eventBus
+                      .fire(CloseOpen((DateTime.now().millisecondsSinceEpoch)));
+                }
+              });
               return Container(
                 decoration: BoxDecoration(image: di),
                 child: ColorfulSafeArea(
