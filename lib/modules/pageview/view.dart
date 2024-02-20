@@ -151,7 +151,7 @@ class _PageViewComponentState extends State<PageViewComponent> {
         break;
       case 3:
         key = ValueKey(
-            "ListViewItemSong${GlobalLogic.to.loveList[index].musicId}");
+            "ListViewItemLove${GlobalLogic.to.loveList[index].musicId}");
         widget = ListViewItemSong(
             index: index,
             music: GlobalLogic.to.loveList[index],
@@ -173,7 +173,7 @@ class _PageViewComponentState extends State<PageViewComponent> {
         break;
       case 4:
         key = ValueKey(
-            "ListViewItemSongSheet${GlobalLogic.to.menuList[index].id}");
+            "ListViewItemSheet${GlobalLogic.to.menuList[index].id}");
         widget = ListViewItemSongSheet(
             onItemTap: (menu) {
               Get.toNamed(Routes.routeMenuDetails, arguments: menu.id, id: 1);

@@ -30,8 +30,6 @@ class RefresherWidget extends StatefulWidget {
   final ScrollController? scrollController;
   final bool canReorder;
 
-  /// 长宽比
-
   const RefresherWidget({
     super.key,
     required this.itemCount,
@@ -126,41 +124,65 @@ class _RefresherWidgetState extends State<RefresherWidget> {
             );
           },
         ),
-        child: !widget.isGridView
-            ? ReorderableListView.builder(
-                cacheExtent: 3000,
-                buildDefaultDragHandles: widget.canReorder,
-                proxyDecorator: (child, index, animation) {
-                  return child;
-                },
-                onReorderStart: (int index) => AppUtils.vibrate(),
-                onReorder: (int oldIndex, int newIndex) {
-                  if (oldIndex < newIndex) {
-                    newIndex -= 1;
-                  }
-                  setState(() {
-                    final Music child =
-                        GlobalLogic.to.loveList.removeAt(oldIndex);
-                    GlobalLogic.to.loveList.insert(newIndex, child);
-
-                    DBLogic.to.exchangeLoveItem(
-                        GlobalLogic.to.loveList[oldIndex],
-                        GlobalLogic.to.loveList[newIndex]);
-                  });
-                },
-                scrollController: widget.scrollController,
-                itemBuilder: widget.listItem,
-                itemCount: widget.itemCount,
-              )
-            : AlignedGridView.count(
-                cacheExtent: 3000,
-                controller: widget.scrollController,
-                itemCount: widget.itemCount,
-                crossAxisCount: widget.columnNum,
-                mainAxisSpacing: widget.mainAxisSpacing,
-                crossAxisSpacing: widget.crossAxisSpacing,
-                itemBuilder: widget.listItem),
+        child: renderList(),
       ),
     );
+  }
+
+  Widget renderList() {
+    if (widget.isGridView) {
+      // Grid列表(专辑)
+      return AlignedGridView.count(
+          cacheExtent: 3000,
+          controller: widget.scrollController,
+          itemCount: widget.itemCount,
+          crossAxisCount: widget.columnNum,
+          mainAxisSpacing: widget.mainAxisSpacing,
+          crossAxisSpacing: widget.crossAxisSpacing,
+          itemBuilder: widget.listItem);
+    } else {
+      if (widget.canReorder) {
+        // 可排序List列表(我喜欢)
+        return ReorderableListView.builder(
+          cacheExtent: 3000,
+          buildDefaultDragHandles: widget.canReorder,
+          proxyDecorator: (child, index, animation) {
+            return child;
+          },
+          onReorderStart: (int index) => AppUtils.vibrate(),
+          onReorder: (int oldIndex, int newIndex) {
+            if (oldIndex < newIndex) {
+              newIndex -= 1;
+            }
+            setState(() {
+              final Music child =
+              GlobalLogic.to.loveList.removeAt(oldIndex);
+              GlobalLogic.to.loveList.insert(newIndex, child);
+
+              DBLogic.to.exchangeLoveItem(
+                  GlobalLogic.to.loveList[oldIndex],
+                  GlobalLogic.to.loveList[newIndex]);
+            });
+          },
+          scrollController: widget.scrollController,
+          itemBuilder: widget.listItem,
+          itemCount: widget.itemCount,
+        );
+      } else {
+        // 不可排序List列表(其他)
+        return ListView.separated(
+          cacheExtent: 3000,
+          itemCount: widget.itemCount,
+          itemBuilder: widget.listItem,
+          controller: widget.scrollController,
+          separatorBuilder: (BuildContext context, int index) {
+            return Container(
+              color: widget.spacingColor,
+              height: widget.mainAxisSpacing / 2,
+            );
+          },
+        );
+      }
+    }
   }
 }
