@@ -155,13 +155,10 @@ class _RefresherWidgetState extends State<RefresherWidget> {
               newIndex -= 1;
             }
             setState(() {
-              final Music child =
-              GlobalLogic.to.loveList.removeAt(oldIndex);
+              final Music child = GlobalLogic.to.loveList.removeAt(oldIndex);
               GlobalLogic.to.loveList.insert(newIndex, child);
 
-              DBLogic.to.exchangeLoveItem(
-                  GlobalLogic.to.loveList[oldIndex],
-                  GlobalLogic.to.loveList[newIndex]);
+              DBLogic.to.exchangeLoveItem(oldIndex, newIndex);
             });
           },
           scrollController: widget.scrollController,

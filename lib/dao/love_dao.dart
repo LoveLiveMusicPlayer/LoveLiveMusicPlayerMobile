@@ -12,6 +12,9 @@ abstract class LoveDao {
   @insert
   Future<void> insertLove(Love love);
 
+  @insert
+  Future<void> insertAllLoves(List<Love> loves);
+
   @update
   Future<void> updateLove(Love love);
 

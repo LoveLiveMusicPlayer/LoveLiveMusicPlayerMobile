@@ -128,11 +128,9 @@ class _DetailsBodyState extends State<DetailsBody> {
           }
 
           setState(() {
+            DBLogic.to.exchangeMenuItem(widget.menuId!, oldIndex, newIndex);
             var child = widget.music.removeAt(oldIndex);
             widget.music.insert(newIndex, child);
-
-            DBLogic.to.exchangeMenuItem(
-                widget.menuId!, widget.music[oldIndex], widget.music[newIndex]);
           });
         },
         itemBuilder: (context, index) {
