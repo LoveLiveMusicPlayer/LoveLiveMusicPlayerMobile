@@ -35,7 +35,7 @@ class _MoeGirlState extends State<MoeGirl> {
   static const strDeleteDom = """
     var divElements = document.querySelectorAll("*");
     // 广告标签关键词
-    var keywords = ["广告", "推广", "谷歌广告"];
+    var keywords = ["广告", "推广", "谷歌广告", "加载中"];
     for (var parent of divElements) {
       // 删除父节点class名为adsbygoogle的
       if (parent.className === 'adsbygoogle') {
@@ -59,8 +59,10 @@ class _MoeGirlState extends State<MoeGirl> {
   """;
 
   final List<ContentBlocker> contentBlockers = [];
-  late Timer _timer;
+  Timer? _deleteADTimer;
+  Timer? _showLayoutTimer;
   InAppWebViewController? webViewController;
+  bool _showLayout = true;
 
   @override
   void initState() {
@@ -84,32 +86,53 @@ class _MoeGirlState extends State<MoeGirl> {
             type: ContentBlockerActionType.CSS_DISPLAY_NONE,
             selector: ".banner, .banners, .ads, .ad, .advert")));
 
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _deleteADTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       webViewController?.evaluateJavascript(source: strDeleteDom);
     });
   }
 
   @override
   void dispose() {
-    _timer.cancel();
+    webViewController?.dispose();
+    _deleteADTimer?.cancel();
+    _showLayoutTimer?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Text('moe_girl_wiki'.tr),
-        backgroundColor:
-            Get.isDarkMode ? ColorMs.colorNightPrimary : ColorMs.color28B3F7,
-      ),
+      appBar: _showLayout
+          ? AppBar(
+              elevation: 0,
+              title: Text('moe_girl_wiki'.tr),
+              backgroundColor: Get.isDarkMode
+                  ? ColorMs.colorNightPrimary
+                  : ColorMs.color28B3F7,
+            )
+          : null,
       body: SafeArea(
-        child: Column(
+        bottom: _showLayout,
+        child: Stack(
           children: [
-            Expanded(
-                child: InAppWebView(
+            InAppWebView(
               key: webViewKey,
+              onScrollChanged: (controller, x, y) {
+                if (_showLayoutTimer?.isActive == true) {
+                  _showLayoutTimer?.cancel();
+                }
+                _showLayoutTimer =
+                    Timer.periodic(const Duration(seconds: 1), (timer) {
+                  if (!_showLayout) {
+                    setState(() {
+                      _showLayout = true;
+                    });
+                  }
+                });
+                setState(() {
+                  _showLayout = false;
+                });
+              },
               initialUrlRequest:
                   URLRequest(url: WebUri(Const.moeGirlUrl + Get.arguments)),
               initialSettings:
@@ -117,24 +140,36 @@ class _MoeGirlState extends State<MoeGirl> {
               onWebViewCreated: (controller) async {
                 webViewController = controller;
               },
-            )),
-            ButtonBar(
-              alignment: MainAxisAlignment.center,
-              children: <Widget>[
-                MaterialButton(
-                  child: const Icon(Icons.arrow_back),
-                  onPressed: () => webViewController?.goBack(),
-                ),
-                MaterialButton(
-                  child: const Icon(Icons.arrow_forward),
-                  onPressed: () => webViewController?.goForward(),
-                ),
-                MaterialButton(
-                  child: const Icon(Icons.refresh),
-                  onPressed: () => webViewController?.reload(),
-                ),
-              ],
             ),
+            if (_showLayout)
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  color: Get.theme.primaryColor,
+                  height: 50,
+                  child: Center(
+                    child: ButtonBar(
+                      alignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        MaterialButton(
+                          child: const Icon(Icons.arrow_back),
+                          onPressed: () => webViewController?.goBack(),
+                        ),
+                        MaterialButton(
+                          child: const Icon(Icons.arrow_forward),
+                          onPressed: () => webViewController?.goForward(),
+                        ),
+                        MaterialButton(
+                          child: const Icon(Icons.refresh),
+                          onPressed: () => webViewController?.reload(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),
