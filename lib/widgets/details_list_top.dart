@@ -168,7 +168,7 @@ class DetailsListTop extends StatelessWidget {
             },
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 16.h),
-              child: Text('cancel'.tr, style: textStyle),
+              child: Text('finish'.tr, style: textStyle),
             ),
           )
         ],

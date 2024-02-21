@@ -203,5 +203,6 @@ Benutzer sollten die Software unter der Prämisse verwenden, Gesetze und Vereinb
   'music_blind_box': 'Musik-Blindbox',
   'throbbing':
       'Während Sie aufgeregt sind, sollten Sie auch auf die Verkehrssicherheit achten',
-  'exit': 'Schließung'
+  'exit': 'Schließung',
+  'finish': 'Weg',
 };

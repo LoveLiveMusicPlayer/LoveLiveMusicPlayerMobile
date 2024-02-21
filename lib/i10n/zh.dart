@@ -189,5 +189,6 @@ const Map<String, String> zhCN = {
   'add_favorite_menu': '收藏歌单',
   'music_blind_box': '音乐盲盒',
   'throbbing': '我知道你会悸动，但也要注意交通安全',
-  'exit': '退出'
+  'exit': '退出',
+  'finish': '完成',
 };

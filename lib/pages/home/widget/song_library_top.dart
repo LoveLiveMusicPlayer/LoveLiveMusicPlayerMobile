@@ -184,7 +184,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 16.h),
               child: Text(
-                'cancel'.tr,
+                'finish'.tr,
                 style: textStyle,
               ),
             ),
