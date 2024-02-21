@@ -61,9 +61,9 @@ class _MoeGirlState extends State<MoeGirl> {
 
   final List<ContentBlocker> contentBlockers = [];
   Timer? _deleteADTimer;
-  Timer? _showLayoutTimer;
   InAppWebViewController? webViewController;
   bool _showLayout = true;
+  int lastY = -1;
 
   @override
   void initState() {
@@ -96,7 +96,6 @@ class _MoeGirlState extends State<MoeGirl> {
   void dispose() {
     webViewController?.dispose();
     _deleteADTimer?.cancel();
-    _showLayoutTimer?.cancel();
     super.dispose();
   }
 
@@ -122,20 +121,21 @@ class _MoeGirlState extends State<MoeGirl> {
               InAppWebView(
                 key: webViewKey,
                 onScrollChanged: (controller, x, y) {
-                  if (_showLayoutTimer?.isActive == true) {
-                    _showLayoutTimer?.cancel();
-                  }
-                  _showLayoutTimer =
-                      Timer.periodic(const Duration(seconds: 1), (timer) {
-                    if (!_showLayout) {
+                  if (y > 0) {
+                    if (y > lastY && _showLayout) {
                       setState(() {
-                        _showLayout = true;
+                        _showLayout = false;
                       });
+                    } else if (!_showLayout) {
+                      final isOnTop = y < 30;
+                      if ((isOnTop && y < lastY) || (lastY - y > 15)) {
+                        setState(() {
+                          _showLayout = true;
+                        });
+                      }
                     }
-                  });
-                  setState(() {
-                    _showLayout = false;
-                  });
+                  }
+                  lastY = y;
                 },
                 initialUrlRequest:
                     URLRequest(url: WebUri(Const.moeGirlUrl + Get.arguments)),
