@@ -29,7 +29,10 @@ class Tachie extends StatelessWidget {
             child: InAppWebView(
               key: ValueKey(musicId),
               initialSettings: InAppWebViewSettings(
-                  supportZoom: false, transparentBackground: true),
+                  supportZoom: false,
+                  transparentBackground: true,
+                  verticalScrollBarEnabled: false,
+                  horizontalScrollBarEnabled: false),
               onWebViewCreated: (controller) async {
                 final music = await DBLogic.to.findMusicById(musicId);
                 if (music == null || music.artistBin == null) {
