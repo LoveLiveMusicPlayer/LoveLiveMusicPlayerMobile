@@ -35,7 +35,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
   }
 
   refreshData() {
-    Future.delayed(Duration.zero, () async {
+    Future.delayed(const Duration(milliseconds: 100), () async {
       menu = await DBLogic.to.menuDao.findMenuById(NestedController.to.menuId);
       final tempList = menu?.music;
       musicList.clear();
@@ -60,6 +60,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
                 buildCover: Hero(tag: "menu${menu?.id}", child: _buildCover()),
                 music: musicList,
                 menuId: menu?.id,
+                onRefreshCover: () => refreshData(),
                 onRemove: (List<String> musicIds) async {
                   if (menu == null || menu!.id == 0) {
                     return;
@@ -86,6 +87,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
     if (menu == null || menu!.music.isEmpty) {
       return showImg(SDUtils.getImgPath(), 240, 240, radius: 24);
     }
+    print(menu!.music.first);
     return Container(
       padding: EdgeInsets.only(top: 16.h),
       child: Column(
@@ -94,6 +96,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
           FutureBuilder<String?>(
             initialData: SDUtils.getImgPath(),
             builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
+              // print(snapshot.data);
               return showImg(snapshot.data, 240, 240, radius: 24);
             },
             future: AppUtils.getMusicCoverPath(menu!.music.first),

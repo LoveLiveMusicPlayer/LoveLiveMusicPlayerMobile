@@ -529,6 +529,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     final item = musicList.removeAt(srcIndex);
     musicList.insert(destIndex, item);
     await menuDao.updateMenu(menu);
+    await findAllMenuList();
   }
 
   /****************  PlayList  ****************/

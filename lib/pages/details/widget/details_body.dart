@@ -25,6 +25,7 @@ class DetailsBody extends StatefulWidget {
   final Function(List<String>)? onRemove;
   final bool? isAlbum;
   final int? menuId;
+  final Function? onRefreshCover;
 
   const DetailsBody({
     super.key,
@@ -34,6 +35,7 @@ class DetailsBody extends StatefulWidget {
     this.isAlbum,
     this.menuId,
     this.onRemove,
+    this.onRefreshCover,
   });
 
   @override
@@ -122,7 +124,7 @@ class _DetailsBodyState extends State<DetailsBody> {
     if (widget.menuId != null && DetailController.to.state.isSelect) {
       return SliverReorderableList(
         onReorderStart: (int index) => AppUtils.vibrate(),
-        onReorder: (int oldIndex, int newIndex) {
+        onReorder: (int oldIndex, int newIndex) async {
           if (oldIndex < newIndex) {
             newIndex -= 1;
           }
@@ -131,6 +133,7 @@ class _DetailsBodyState extends State<DetailsBody> {
             DBLogic.to.exchangeMenuItem(widget.menuId!, oldIndex, newIndex);
             var child = widget.music.removeAt(oldIndex);
             widget.music.insert(newIndex, child);
+            widget.onRefreshCover?.call();
           });
         },
         itemBuilder: (context, index) {
