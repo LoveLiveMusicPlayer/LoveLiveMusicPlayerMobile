@@ -191,4 +191,5 @@ const Map<String, String> zhCN = {
   'throbbing': '我知道你会悸动，但也要注意交通安全',
   'exit': '退出',
   'finish': '完成',
+  'search_in_moe_girl': '在萌娘百科搜索',
 };

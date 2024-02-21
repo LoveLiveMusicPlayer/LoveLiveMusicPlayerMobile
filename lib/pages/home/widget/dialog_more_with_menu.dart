@@ -68,7 +68,7 @@ class DialogMoreWithMenu extends StatelessWidget {
               },
             ));
           }),
-          _buildItem(Assets.drawerDrawerShare, 'share_menu'.tr, true, () {
+          _buildItem(Assets.drawerDrawerShare, 'share_menu'.tr, false, () {
             SmartDialog.compatible.dismiss();
             AppUtils.shareQQ(menu: menu);
           }),

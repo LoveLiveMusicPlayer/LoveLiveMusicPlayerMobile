@@ -205,4 +205,5 @@ Benutzer sollten die Software unter der Prämisse verwenden, Gesetze und Vereinb
       'Während Sie aufgeregt sind, sollten Sie auch auf die Verkehrssicherheit achten',
   'exit': 'Schließung',
   'finish': 'Weg',
+  'search_in_moe_girl': 'Suche in MoeGirl',
 };

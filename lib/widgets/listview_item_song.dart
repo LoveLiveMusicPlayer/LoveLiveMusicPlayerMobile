@@ -93,18 +93,18 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
   }
 
   onLongPress() async {
-    if (!SDUtils.allowEULA) {
-      return;
-    }
-    AppUtils.vibrate();
-    SmartDialog.compatible.show(
-        widget: TwoButtonDialog(
-      title: "search_at_moe".tr,
-      msg: "moe_address_error".tr,
-      onConfirmListener: () {
-        Get.toNamed(Routes.routeMoeGirl, arguments: widget.music.musicName!);
-      },
-    ));
+    // if (!SDUtils.allowEULA) {
+    //   return;
+    // }
+    // AppUtils.vibrate();
+    // SmartDialog.compatible.show(
+    //     widget: TwoButtonDialog(
+    //   title: "search_at_moe".tr,
+    //   msg: "moe_address_error".tr,
+    //   onConfirmListener: () {
+    //     Get.toNamed(Routes.routeMoeGirl, arguments: widget.music.musicName!);
+    //   },
+    // ));
   }
 
   ///缩列图
