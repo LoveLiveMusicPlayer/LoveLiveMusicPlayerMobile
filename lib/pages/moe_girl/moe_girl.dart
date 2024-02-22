@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -104,7 +105,7 @@ class _MoeGirlState extends State<MoeGirl> {
     final bgColor =
         Get.isDarkMode ? ColorMs.colorNightPrimary : ColorMs.color28B3F7;
     return Scaffold(
-      appBar: _showLayout
+      appBar: (Platform.isAndroid || _showLayout)
           ? AppBar(
               elevation: 0,
               iconTheme: const IconThemeData(color: Colors.white),
