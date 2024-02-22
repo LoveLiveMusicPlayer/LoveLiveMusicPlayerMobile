@@ -147,15 +147,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
   Widget renderSearchInMoeGirl() {
     return _buildItem(Assets.drawerDrawerInspect, 'search_in_moe_girl'.tr, () {
       SmartDialog.compatible.dismiss();
-      AppUtils.vibrate();
-      SmartDialog.compatible.show(
-          widget: TwoButtonDialog(
-        title: "search_at_moe".tr,
-        msg: "moe_address_error".tr,
-        onConfirmListener: () {
-          Get.toNamed(Routes.routeMoeGirl, arguments: widget.music.musicName!);
-        },
-      ));
+      Get.toNamed(Routes.routeMoeGirl, arguments: widget.music.musicName!);
     });
   }
 

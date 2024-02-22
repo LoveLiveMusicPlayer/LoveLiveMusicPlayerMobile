@@ -132,8 +132,6 @@ const Map<String, String> deDE = {
   'confirm_to_delete_music':
       'Möchten Sie den ausgewählten Song wirklich aus „Meine Favoriten“ löschen?',
   'share': 'Aktie',
-  'search_at_moe': 'Auf MoeGirl suchen?',
-  'moe_address_error': 'Einige Adressen können Fehler enthalten',
   'skip': 'überspringen',
   'net_error': 'Netzwerkfehler',
   'hint': 'Tipp.',

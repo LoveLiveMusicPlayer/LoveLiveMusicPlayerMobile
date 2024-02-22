@@ -126,8 +126,6 @@ const Map<String, String> enUS = {
   'confirm_to_delete_music':
       'Are you sure you want to delete the selected song from My Likes?',
   'share': 'Share',
-  'search_at_moe': 'Search on MoeGirl?',
-  'moe_address_error': 'Some addresses may contain errors',
   'skip': 'Skip',
   'net_error': 'Network error',
   'hint': 'Hint',

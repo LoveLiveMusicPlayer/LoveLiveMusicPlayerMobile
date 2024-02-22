@@ -92,20 +92,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
     setState(() {});
   }
 
-  onLongPress() async {
-    // if (!SDUtils.allowEULA) {
-    //   return;
-    // }
-    // AppUtils.vibrate();
-    // SmartDialog.compatible.show(
-    //     widget: TwoButtonDialog(
-    //   title: "search_at_moe".tr,
-    //   msg: "moe_address_error".tr,
-    //   onConfirmListener: () {
-    //     Get.toNamed(Routes.routeMoeGirl, arguments: widget.music.musicName!);
-    //   },
-    // ));
-  }
+  onLongPress() async {}
 
   ///缩列图
   Widget _buildIcon() {

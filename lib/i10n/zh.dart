@@ -121,8 +121,6 @@ const Map<String, String> zhCN = {
   'cancel_i_like': '取消我喜欢',
   'confirm_to_delete_music': '确认要从我喜欢删除所选歌曲？',
   'share': '分享',
-  'search_at_moe': '是否在萌娘百科搜索？',
-  'moe_address_error': '部分地址可能存在错误',
   'skip': '跳过',
   'net_error': '网络错误',
   'hint': '提示',
