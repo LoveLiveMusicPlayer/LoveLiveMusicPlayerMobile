@@ -53,8 +53,8 @@ class _PageViewComponentState extends State<PageViewComponent> {
             ? const NeverScrollableScrollPhysics()
             : const AlwaysScrollableScrollPhysics(),
         onPageChanged: (index) {
-          HomeController.to.tabController?.animateTo(index > 2 ? 1 : 0);
           HomeController.to.state.currentIndex.value = index;
+          HomeController.to.tabController?.animateTo(index > 2 ? 1 : 0);
         },
         children: children,
       );
@@ -172,8 +172,7 @@ class _PageViewComponentState extends State<PageViewComponent> {
             });
         break;
       case 4:
-        key = ValueKey(
-            "ListViewItemSheet${GlobalLogic.to.menuList[index].id}");
+        key = ValueKey("ListViewItemSheet${GlobalLogic.to.menuList[index].id}");
         widget = ListViewItemSongSheet(
             onItemTap: (menu) {
               Get.toNamed(Routes.routeMenuDetails, arguments: menu.id, id: 1);
