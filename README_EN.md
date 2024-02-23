@@ -43,7 +43,7 @@ Function list:
 - [Sleep mode stops at regular intervals] ✓
 - [Dynamic stand image] ✓
 - [DIY background image] ✓
-- [Long press the song to jump to detail through MoeGirl] ✓
+- [Search in MoeGirl] ✓
 - [Drive mode] ✓
 - [Carplay support] ✓
 
