@@ -27,6 +27,24 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     SplashPhoto splashPhoto = SplashPhoto();
+
+    Completer<void> completer = Completer<void>();
+    const background = AssetImage(Assets.launchBackground);
+    final imageStream = background.resolve(const ImageConfiguration());
+    final imageStreamListener = ImageStreamListener(
+      (ImageInfo imageInfo, bool synchronousCall) {
+        // 图片加载完成时调用，解析出image对象并完成Completer
+        completer.complete();
+      },
+    );
+    imageStream.addListener(imageStreamListener);
+
+    completer.future.then((dynamic) {
+      imageStream.removeListener(imageStreamListener);
+      // 发送卸载窗口命令
+      eventBus.fire(CloseOpen((DateTime.now().millisecondsSinceEpoch)));
+    });
+
     myWidget = SizedBox(
       width: double.infinity,
       height: double.infinity,
@@ -53,9 +71,6 @@ class _SplashState extends State<Splash> {
         }
       },
     );
-
-    // 发送卸载窗口命令
-    eventBus.fire(CloseOpen((DateTime.now().millisecondsSinceEpoch)));
   }
 
   @override
