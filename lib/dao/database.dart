@@ -106,16 +106,13 @@ final migration7to8 = Migration(7, 8, (database) async {
 });
 
 final migration8to9 = Migration(8, 9, (database) async {
-  const copyFromLoveTable =
-      '''CREATE TABLE Love_temp AS SELECT ROW_NUMBER() OVER (ORDER BY timestamp) AS `id`, * FROM Love''';
-  await database.execute(copyFromLoveTable);
-  const dropLoveTableSql = '''DROP TABLE Love''';
-  await database.execute(dropLoveTableSql);
+  const alterLoveTableSql = '''ALTER TABLE Love RENAME TO Love_temp''';
+  await database.execute(alterLoveTableSql);
   const insertLoveTableSql =
       '''CREATE TABLE Love (`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, musicId TEXT, timestamp INTEGER)''';
   await database.execute(insertLoveTableSql);
   const copyFromTempTable =
-      '''INSERT INTO Love (musicId, `id`, timestamp) SELECT musicId, `id`, timestamp FROM Love_temp''';
+      '''INSERT INTO Love (musicId, timestamp) SELECT musicId, timestamp FROM Love_temp''';
   await database.execute(copyFromTempTable);
   const dropLoveTempTableSql = '''DROP TABLE Love_temp''';
   await database.execute(dropLoveTempTableSql);
