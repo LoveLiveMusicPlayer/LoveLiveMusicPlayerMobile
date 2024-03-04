@@ -417,7 +417,7 @@ class AppUtils {
         dynamic userdata, dynamic contentEntity, SSDKError error) {
       Log4f.i(msg: "错误码: ${error.code}");
       Log4f.i(msg: "错误原因: ${error.rawData}");
-      SmartDialog.compatible.showToast(error.rawData);
+      SmartDialog.compatible.showToast("${"share_error".tr} ${error.code}");
     });
   }
 

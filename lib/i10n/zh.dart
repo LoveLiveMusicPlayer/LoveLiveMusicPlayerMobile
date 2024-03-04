@@ -190,4 +190,5 @@ const Map<String, String> zhCN = {
   'exit': '退出',
   'finish': '完成',
   'search_in_moe_girl': '在萌娘百科搜索',
+  'share_error': '分享失败，错误代码：'
 };

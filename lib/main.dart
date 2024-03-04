@@ -143,6 +143,9 @@ void main() async {
           }
         }
       });
+
+      // 发送打开app埋点
+      SentryUtil.getInstance().upOpenApp();
     },
     (error, stackTrace) {
       // 没被catch的异常

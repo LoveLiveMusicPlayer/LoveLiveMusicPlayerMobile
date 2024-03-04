@@ -198,4 +198,5 @@ Users shall use the Software in compliance with laws and agreements. Users are n
   'exit': 'Exit',
   'finish': 'Finish',
   'search_in_moe_girl': 'Search in MoeGirl',
+  'share_error': 'Share fail, error code: '
 };

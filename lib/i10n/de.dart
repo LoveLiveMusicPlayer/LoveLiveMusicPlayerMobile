@@ -204,4 +204,5 @@ Benutzer sollten die Software unter der Prämisse verwenden, Gesetze und Vereinb
   'exit': 'Schließung',
   'finish': 'Weg',
   'search_in_moe_girl': 'Suche in MoeGirl',
+  'share_error': 'Freigabe fehlgeschlagen, Fehlercode: '
 };

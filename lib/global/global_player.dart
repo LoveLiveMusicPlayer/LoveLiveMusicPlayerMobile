@@ -242,6 +242,9 @@ class PlayerLogic extends SuperController
         mIndex--;
       }
     }
+    if (musicList.isEmpty) {
+      return;
+    }
     // 随机播放时任取一个index
     int index = mIndex ?? 0;
     if (mIndex == null && mPlayer.shuffleModeEnabled) {

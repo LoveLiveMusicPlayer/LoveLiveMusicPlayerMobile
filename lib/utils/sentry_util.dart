@@ -25,13 +25,12 @@ class SentryUtil {
   SentryUtil._();
 
   Future<void> init() async {
-    await SentryFlutter.init(
+    return await SentryFlutter.init(
       (options) {
         options.dsn = Const.sentryUrl;
         options.environment = env;
       },
     );
-    await upOpenApp();
   }
 
   exception(dynamic error) {
