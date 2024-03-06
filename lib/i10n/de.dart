@@ -152,7 +152,7 @@ const Map<String, String> deDE = {
       'Bitte erteilen Sie manuell die Berechtigung zur Installation von APK',
   'please_give_install_permission':
       'Für das Upgrade ist eine Berechtigung zur Installation von APK erforderlich. Ist diese autorisiert?',
-  'privacy_detail': '''Lieber LLer:
+  'privacy_detail1': '''Lieber LLer:
 
 Bitte stellen Sie sicher, dass Sie alle Rechte und Einschränkungen, die in der „Softwarelizenzvereinbarung“ (im Folgenden als diese Vereinbarung bezeichnet) festgelegt sind, sorgfältig lesen und verstehen, es sei denn, Sie akzeptieren die Bedingungen dieser Vereinbarung, andernfalls haben Sie kein Recht, die Software und damit verbundene zu verwenden Dienstleistungen. Sobald Sie diese Software verwenden, wird davon ausgegangen, dass Sie diese Vereinbarung akzeptiert haben.
 
@@ -172,18 +172,20 @@ Die gesammelten Daten werden verwendet, um die Software besser zu verbessern, in
 Verwenden Sie die folgenden statistischen Entwicklungstools:
   Ⅰ.SDK-Namen verwenden: U-App SDK
   Sammlung personenbezogener informationen: ausrüstung informationen (IMEI/Mac/android-plattform ausweis/IDFA/OPENUDID/GUID/sim-karte IMSI/geografischer)
-  Art der Dienstleistung: Datenerhebung und statistische Analyse
-  Link zur Datenschutzrichtlinie: https://www.umeng.com/page/policy
-  Ⅱ.SDK-Namen verwenden: MobTech ShareSDK
-  Art der Dienstleistung: Sharing realisieren und pushen
-  Link zur Datenschutzerklärung: https://www.mob.com/about/policy
-  Ⅲ.SDK-Namen verwenden: 360 gehärtetes SDK
+  Art der Dienstleistung: Datenerhebung und statistische Analyse''',
+  'privacy_umeng': '《Link zur Datenschutzrichtlinie》',
+  'privacy_detail2': '''
+\nⅡ.SDK-Namen verwenden: MobTech ShareSDK
+  Art der Dienstleistung: Sharing realisieren und pushen''',
+'privacy_share': '《Link zur Datenschutzerklärung》''',
+  'privacy_detail3': '''
+\nⅢ.SDK-Namen verwenden: 360 gehärtetes SDK
   Geräteberechtigungen: Keine
   Verwirklichte funktionale Zwecke: Wird verwendet, um App-Fehler zu erkennen und zu diagnostizieren, App-Sicherheitsverstärkungsschutz, Piraterieerkennungsdienste, Erkennungsdienste für Bedrohungsumgebungen, um Benutzern zu helfen, anormale Situationen schnell zu lösen
-  Berechtigungsautorisierungsmethode: Die Autorisierungsmethode wird vom App-Entwickler bestimmt und aktiviert, wenn der Endbenutzer zustimmt, die Berechtigung für die Entwickler-App zu autorisieren
-  Link zur Datenschutzerklärung: https://jiagu.360.cn/#/global/help/322
-
-4.Hinweis für Benutzer
+  Berechtigungsautorisierungsmethode: Die Autorisierungsmethode wird vom App-Entwickler bestimmt und aktiviert, wenn der Endbenutzer zustimmt, die Berechtigung für die Entwickler-App zu autorisieren''',
+  'privacy_360': '《Link zur Datenschutzerklärung》',
+  'privacy_detail4': '''
+\n\n4.Hinweis für Benutzer
 Diese Software wird spontan von LoveLive!-Fans verwendet und enthält keine urheberrechtlich geschützten Songs. Copyright-Songs werden vom Benutzer extrahiert und von der CD importiert. Die Importverzeichnisstruktur ist in der Github-Projektdokumentation dargestellt.
 Benutzer sollten die Software unter der Prämisse verwenden, Gesetze und Vereinbarungen einzuhalten, und Benutzer haben kein Recht, Maßnahmen zu ergreifen, einschließlich, aber nicht beschränkt auf die folgenden:
 Ⅰ. Löschen oder ändern Sie nicht alle elektronischen Informationen zur Rechteverwaltung in der Software；

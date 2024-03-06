@@ -139,7 +139,7 @@ const Map<String, String> zhCN = {
   'minutes': '分钟',
   'please_give_install_permission_manual': '请手动赋予安装APK权限',
   'please_give_install_permission': '升级需要授予安装APK权限，是否授权？',
-  'privacy_detail': '''亲爱的LLer：
+  'privacy_detail1': '''亲爱的LLer：
 
 请务必认真阅读和理解《软件许可使用协议》（以下简称：本协议）中规定的所有权利和限制，除非您接受协议条款，否则您无权使用本软件及其相关服务。您一旦使用本软件，将视为对协议的接受。
 
@@ -159,18 +159,20 @@ const Map<String, String> zhCN = {
 下面是使用的统计数据开发工具：
   Ⅰ.使用SDK名称：友盟SDK
   收集个人信息类型：设备信息（IMEI/Mac/android ID/IDFA/OPENUDID/GUID/SIM卡IMSI/地理位置信息）
-  服务类型：数据采集与统计分析
-  友盟隐私权政策链接：https://www.umeng.com/page/policy
-  Ⅱ.使用SDK名称：MobTech的ShareSDK
-  服务类型：实现分享和推送
-  MobTech隐私权政策链接：https://www.mob.com/about/policy
-  Ⅲ.使用SDK名称：360加固SDK (适用于APK/HAP/APK插件/SDK加固)
+  服务类型：数据采集与统计分析''',
+  'privacy_umeng': '《友盟隐私权政策链接》',
+  'privacy_detail2': '''
+\nⅡ.使用SDK名称：MobTech的ShareSDK
+  服务类型：实现分享和推送''',
+  'privacy_share': '《MobTech隐私权政策链接》',
+  'privacy_detail3': '''
+\nⅢ.使用SDK名称：360加固SDK (适用于APK/HAP/APK插件/SDK加固)
   设备权限: 无
   实现的功能目的: 用于检测App故障和诊断,App安全加固保护,盗版检测服务,威胁环境检测服务,以便帮助用户快速解决异常情况
-  权限授权方式: 授权方式由App开发者决定,当终端用户同意向开发者App授权该权限时开启
-  360加固隐私权政策链接：https://jiagu.360.cn/#/global/help/322
-
-4.用户须知
+  权限授权方式: 授权方式由App开发者决定,当终端用户同意向开发者App授权该权限时开启''',
+  'privacy_360': '《360加固隐私权政策链接》',
+  'privacy_detail4': '''
+\n\n4.用户须知
 本软件为LoveLive!圈内用户自发使用，不包含任何版权歌曲在内。版权歌曲均由用户本人自行从CD提取导入，导入目录结构详见Github项目文档。
 用户应在遵守法律及协议的前提下使用本软件，用户无权实施包括但不限于下列行为：
 Ⅰ. 不得删除或改变本软件上的所有权利管理电子信息；

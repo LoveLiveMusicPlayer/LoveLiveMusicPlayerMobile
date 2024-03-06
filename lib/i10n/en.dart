@@ -146,7 +146,7 @@ const Map<String, String> enUS = {
       'Please manually grant permission to install APK',
   'please_give_install_permission':
       'Upgrading requires permission to install APK, is it authorized?',
-  'privacy_detail': '''Dear LLer,
+  'privacy_detail1': '''Dear LLer,
 
 Please be sure to carefully read and understand all rights and restrictions set forth in the Software License Agreement (hereinafter referred to as the Agreement). Unless you accept the terms of the Agreement, you are not entitled to use the Software and related Services. Once you use the software, you will be deemed to accept the agreement.
 
@@ -166,18 +166,20 @@ The collected data can be used to better improve the software by analyzing the e
 Here are the statistical development tools used:
   Ⅰ. Use the SDK name: U-App SDK
   Personal information collection types: equipment information (IMEI/Mac/android ID/IDFA OPENUDID/GUID/SIM card IMSI/location)
-  Service type: Data collection and statistical analysis
-  Their Allies privacy policy links: https://www.umeng.com/page/policy
-  Ⅱ. Use SDK name: ShareSDK of MobTech
-  Service type: Share and push
-  Their Allies privacy policy links: https://www.mob.com/about/policy
-  Ⅲ. Use SDK name: 360 Hardening SDK (Applicable to APK/HAP/APK plug-in /SDK hardening)
+  Service type: Data collection and statistical analysis''',
+  'privacy_umeng': '《Umeng privacy policy links》',
+  'privacy_detail2': '''
+\nⅡ. Use SDK name: ShareSDK of MobTech
+  Service type: Share and push''',
+  'privacy_share': '《MobTech privacy policy links》',
+  'privacy_detail3': '''
+\nⅢ. Use SDK name: 360 Hardening SDK (Applicable to APK/HAP/APK plug-in /SDK hardening)
   Device permission: None
   Function purpose: Used for App fault detection and diagnosis,App security reinforcement protection, piracy detection services, threat environment detection services, so as to help users quickly solve abnormal situations
-  Authorization mode: The authorization mode is determined by the App developer and is enabled when the end user agrees to authorize the permission to the developer App
-  Their Allies privacy policy links: https://jiagu.360.cn/#/global/help/322
-
-4. User instructions
+  Authorization mode: The authorization mode is determined by the App developer and is enabled when the end user agrees to authorize the permission to the developer App''',
+  'privacy_360': '《360 privacy policy links》',
+  'privacy_detail4': '''
+\n\n4. User instructions
 This software is LoveLive! Users in the circle spontaneously use, not including any copyrighted songs. Copyright songs are extracted and imported from CDS by users themselves. See the Github project documentation for details about the import directory structure.
 Users shall use the Software in compliance with laws and agreements. Users are not entitled to perform any of the following actions, including but not limited to:
 Ⅰ. All rights management electronic information on the software shall not be deleted or changed;
