@@ -9,7 +9,6 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
-import 'package:sharesdk_plugin/sharesdk_interface.dart';
 
 class PermissionDialog extends StatelessWidget {
   final Callback? readPermission;
@@ -67,15 +66,9 @@ class PermissionDialog extends StatelessWidget {
                     color: ColorMs.color28B3F7,
                     borderRadius: BorderRadius.all(Radius.circular(20.r))),
                 child: TextButton(
-                    onPressed: () async {
-                      final callback =
-                          await SharesdkPlugin.uploadPrivacyPermissionStatus(1,
-                              (success) {
-                        SmartDialog.compatible
-                            .dismiss()
-                            .then((value) => confirm?.call());
-                      });
-                      print(callback);
+                    onPressed: () {
+                      SmartDialog.compatible.dismiss();
+                      confirm?.call();
                     },
                     child: Text(
                       'permission_agree'.tr,

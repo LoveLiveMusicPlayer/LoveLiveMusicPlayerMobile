@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.4.8+48
+version: 1.4.9+49
 
 environment:
   sdk: ">=2.17.0 <4.0.0"
@@ -112,6 +112,7 @@ dependencies:
   sentry_flutter: ^7.16.1 # Sentry
   scrolls_to_top: ^2.1.1 # 滚动到顶部
   haptic_feedback: ^0.4.2 # 震动
+  mobpush_plugin: ^1.2.6 # MobTech推送插件
 
 dependency_overrides:
   md5_file_checksum:

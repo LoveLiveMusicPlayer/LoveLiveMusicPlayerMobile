@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/eventbus/close_open.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
@@ -27,6 +29,8 @@ import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/bottom_bar1.dart';
 import 'package:lovelivemusicplayer/widgets/bottom_bar2.dart';
 import 'package:lovelivemusicplayer/widgets/permission_dialog.dart';
+import 'package:mobpush_plugin/mobpush_plugin.dart';
+import 'package:sharesdk_plugin/sharesdk_interface.dart';
 import 'package:umeng_common_sdk/umeng_common_sdk.dart';
 import 'package:we_slide/we_slide.dart';
 
@@ -66,21 +70,28 @@ class _HomeViewState extends State<HomeView>
               handlePermission();
             }, confirm: () {
               SpUtil.put(Const.spAllowPermission, true);
-              initUmeng();
+              initSDK();
             }),
             backDismiss: false,
             clickBgDismissTemp: false);
       } else {
-        initUmeng();
+        initSDK();
       }
     });
   }
 
-  initUmeng() {
+  initSDK() {
     UmengCommonSdk.initCommon(
         '634bd9c688ccdf4b7e4ac67b', '634bdfd305844627b56670a1', 'Umeng');
     UmengCommonSdk.setPageCollectionModeManual();
+    MobpushPlugin.updatePrivacyPermissionStatus(true);
+    SharesdkPlugin.uploadPrivacyPermissionStatus(1, (success) {});
     AppUtils.uploadEvent("Home");
+
+    if (Platform.isIOS) {
+      MobpushPlugin.setCustomNotification();
+      MobpushPlugin.setAPNsForProduction(env == "prod");
+    }
   }
 
   @override

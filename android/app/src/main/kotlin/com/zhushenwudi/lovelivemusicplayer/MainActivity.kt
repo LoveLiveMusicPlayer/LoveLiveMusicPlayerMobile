@@ -1,11 +1,9 @@
 package com.zhushenwudi.lovelivemusicplayer
 
 import android.os.Bundle
-import androidx.annotation.NonNull
 import com.ryanheise.audioservice.AudioServiceActivity
 import com.umeng.commonsdk.UMConfigure
 import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugins.GeneratedPluginRegistrant.registerWith
 import kotlinx.coroutines.CoroutineScope
@@ -24,6 +22,9 @@ class MainActivity : AudioServiceActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        flutterEngine?.run {
+            registerWith(this)
+        }
         UMConfigure.preInit(this, "634bd9c688ccdf4b7e4ac67b", "Umeng")
         UMConfigure.setLogEnabled(true)
         UMConfigure.setEncryptEnabled(true)
