@@ -1,6 +1,7 @@
 package com.zhushenwudi.lovelivemusicplayer
 
 import android.os.Bundle
+import android.os.Process
 import com.ryanheise.audioservice.AudioServiceActivity
 import com.umeng.commonsdk.UMConfigure
 import io.flutter.embedding.engine.FlutterEngine
@@ -11,7 +12,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import android.os.Process
 
 class MainActivity : AudioServiceActivity() {
     companion object {
@@ -54,6 +54,7 @@ class MainActivity : AudioServiceActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         registerWith(flutterEngine)
+        flutterEngine.plugins.add(DemoHelperPlugin())
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
             BACK_CHANNEL

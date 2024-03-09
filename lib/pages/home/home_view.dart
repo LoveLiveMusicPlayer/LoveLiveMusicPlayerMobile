@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
-import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/eventbus/close_open.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
@@ -26,12 +25,13 @@ import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/android_back_desktop.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
+import 'package:lovelivemusicplayer/utils/umeng_helper.dart';
 import 'package:lovelivemusicplayer/widgets/bottom_bar1.dart';
 import 'package:lovelivemusicplayer/widgets/bottom_bar2.dart';
 import 'package:lovelivemusicplayer/widgets/permission_dialog.dart';
-import 'package:mobpush_plugin/mobpush_plugin.dart';
 import 'package:sharesdk_plugin/sharesdk_interface.dart';
 import 'package:umeng_common_sdk/umeng_common_sdk.dart';
+import 'package:umeng_push_sdk/umeng_push.dart';
 import 'package:we_slide/we_slide.dart';
 
 class HomeView extends StatefulWidget {
@@ -84,14 +84,38 @@ class _HomeViewState extends State<HomeView>
     UmengCommonSdk.initCommon(
         '634bd9c688ccdf4b7e4ac67b', '634bdfd305844627b56670a1', 'Umeng');
     UmengCommonSdk.setPageCollectionModeManual();
-    MobpushPlugin.updatePrivacyPermissionStatus(true);
     SharesdkPlugin.uploadPrivacyPermissionStatus(1, (success) {});
     AppUtils.uploadEvent("Home");
 
-    if (Platform.isIOS) {
-      MobpushPlugin.setCustomNotification();
-      MobpushPlugin.setAPNsForProduction(env == "prod");
+    if (Platform.isAndroid) {
+      UmengPushSdk.setTokenCallback((deviceToken) {
+        print("deviceToken: $deviceToken");
+      });
     }
+
+    UmengPushSdk.setNotificationCallback((receive) {
+      final json = jsonDecode(receive);
+      final data = json["data"];
+      print(data["recent"]);
+      print(data["bangumi"]);
+      print(data["today"]);
+      print(data["timestamp"]);
+    }, (open) {
+      final json = jsonDecode(open);
+      final data = json["data"];
+      print(data["recent"]);
+      print(data["bangumi"]);
+      print(data["today"]);
+      print(data["timestamp"]);
+    });
+
+    UmengPushSdk.setLogEnable(true);
+    UmengHelper.agree().then((value) {
+      UmengPushSdk.register("5f69a20ba246501b677d0923", "IOS");
+      UmengPushSdk.getRegisteredId().then((deviceToken) {
+        print("deviceToken: $deviceToken");
+      });
+    });
   }
 
   @override

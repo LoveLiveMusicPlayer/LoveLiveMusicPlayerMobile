@@ -66,6 +66,28 @@ android {
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        manifestPlaceholders = [
+                UMENG_APPKEY        : '634bd9c688ccdf4b7e4ac67b',
+                UMENG_MESSAGE_SECRET: '0e2760e575260754b1808f0ff82604a7',
+                UMENG_CHANNEL       : 'PROD',
+
+                HUAWEI_APP_ID       : '110477941',
+
+                HONOR_APP_ID: '',
+
+                XIAOMI_APP_ID: '',
+                XIAOMI_APP_KEY: '',
+
+                OPPO_APP_KEY: '',
+                OPPO_APP_SECRET: '',
+
+                VIVO_APP_ID: '',
+                VIVO_APP_KEY: '',
+
+                MEIZU_APP_ID: '',
+                MEIZU_APP_KEY: '',
+        ]
     }
 
     splits {
@@ -96,6 +118,7 @@ android {
             zipAlignEnabled false
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [applicationName: "android.app.Application"]
         }
         if (releaseBuildType) {
             release {
@@ -103,6 +126,7 @@ android {
                 zipAlignEnabled true
                 signingConfig signingConfigs.release
                 proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+                manifestPlaceholders = [applicationName: "android.app.Application"]
             }
         }
     }
