@@ -21,6 +21,7 @@ import 'package:lovelivemusicplayer/pages/carplay/carplay.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
+import 'package:rxdart/rxdart.dart' as rx_dart;
 
 class PlayerLogic extends SuperController
     with GetSingleTickerProviderStateMixin {
@@ -64,6 +65,12 @@ class PlayerLogic extends SuperController
 
   // 检查过的歌词索引，避免重复解析歌词引起cpu性能损耗
   int mLrcIndex = -1;
+
+  // 处理播放业务逻辑的进度订阅
+  StreamSubscription? subscription;
+  final _playerLogicSubject = rx_dart.BehaviorSubject<bool>.seeded(false);
+
+  Stream<bool> get playerLogicStream => _playerLogicSubject.stream;
 
   static PlayerLogic get to => Get.find();
 
@@ -110,6 +117,24 @@ class PlayerLogic extends SuperController
         getLrc(false);
       }
     });
+
+    // 对两个stream进行捆绑订阅
+    subscription =
+        rx_dart.CombineLatestStream.combine2<PlayerState, bool, void>(
+            mPlayer.playerStateStream, playerLogicStream,
+            (processState, isHandled) {
+      // 当状态为缓冲中，并且播放逻辑执行完毕
+      if (processState.processingState == ProcessingState.buffering &&
+          isHandled) {
+        SmartDialog.dismiss();
+      }
+    }).listen(null);
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    subscription?.cancel();
   }
 
   Future<void> initLoopMode() async {
@@ -225,28 +250,45 @@ class PlayerLogic extends SuperController
   }
 
   /// 播放指定列表的歌曲
-  Future<void> playMusic(List<Music> uncheckedMusicList,
+  Future<void> playMusic(List<Music> musicList,
       {int? mIndex, bool needPlay = true, bool showDialog = true}) async {
-    if (uncheckedMusicList.isEmpty) {
+    if (musicList.isEmpty) {
       return;
     }
     if (isCanUseSmartDialog && showDialog) {
       SmartDialog.showLoading(msg: 'loading'.tr);
     }
-    final musicList = <Music>[];
-    for (var i = 0; i < uncheckedMusicList.length; i++) {
-      final isExist = SDUtils.checkMusicExist(uncheckedMusicList[i]);
-      if (isExist) {
-        musicList.add(uncheckedMusicList[i]);
-      } else if (mIndex != null && mIndex > i) {
-        mIndex--;
+    _playerLogicSubject.add(false);
+    bool isNoneExist = true;
+    for (var i = 0; i < musicList.length; i++) {
+      final isExist = SDUtils.checkMusicExist(musicList[i]);
+      musicList[i].isExist = isExist;
+      if (isNoneExist && isExist) {
+        isNoneExist = false;
       }
     }
-    if (musicList.isEmpty) {
+    if (isNoneExist) {
       return;
     }
+
     // 随机播放时任取一个index
     int index = mIndex ?? 0;
+    if (index < musicList.length && !musicList[index].isExist) {
+      // 如果指定的索引 mIndex 无效或对应的文件不存在
+      int nextExistIndex = -1;
+      for (var i = index + 1; i < musicList.length; i++) {
+        if (musicList[i].isExist) {
+          nextExistIndex = i;
+          break;
+        }
+      }
+      if (nextExistIndex != -1) {
+        index = nextExistIndex;
+      } else {
+        // 如果没有找到下一个存在的文件，则直接返回
+        return;
+      }
+    }
     if (mIndex == null && mPlayer.shuffleModeEnabled) {
       index = Random().nextInt(musicList.length);
     }
@@ -296,7 +338,7 @@ class PlayerLogic extends SuperController
       }
       await DBLogic.to.refreshMusicTimestamp(musicList[index].musicId!);
       getLrc(false);
-      SmartDialog.dismiss();
+      _playerLogicSubject.add(true);
     } catch (e) {
       Log4f.i(msg: e.toString());
     } finally {

@@ -26,7 +26,8 @@ class Music {
       this.neteaseId,
       this.isLove = false,
       this.existFile = false,
-      this.checked = false});
+      this.checked = false,
+      this.isExist = false});
 
   @primaryKey
   String? musicId; // id
@@ -49,6 +50,8 @@ class Music {
 
   @ignore
   bool checked; // 是否已选中
+  @ignore
+  bool isExist; // 本地是否有此文件
 
   factory Music.fromJson(Map<String, dynamic> json) => Music(
         musicId: json["musicId"],
