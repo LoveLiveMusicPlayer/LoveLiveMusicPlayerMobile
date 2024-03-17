@@ -25,7 +25,8 @@ class SplashPhoto {
     return SizedBox(
       width: double.infinity,
       height: double.infinity,
-      child: Image.file(File(imageUrl), fit: BoxFit.fill),
+      child: Image.file(File(imageUrl),
+          fit: BoxFit.cover, alignment: Alignment.topCenter),
     );
   }
 
