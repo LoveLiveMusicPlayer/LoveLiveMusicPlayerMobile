@@ -35,11 +35,10 @@ Widget showImg(
   ImageProvider<Object> shadowImage;
   bool isLogo = false;
   if (hasShadow) {
-    final shaColor = shadowColor ??=
-        Get.isDarkMode ? ColorMs.color05080C : ColorMs.colorD3E0EC;
+    final shaColor =
+        shadowColor ??= Get.isDarkMode ? ColorMs.color05080C : Colors.white;
     final boxShadow = [
-      BoxShadow(
-          color: shaColor, blurRadius: radius.h, offset: Offset(4.h, 8.h)),
+      BoxShadow(color: shaColor, blurRadius: 12, offset: Offset(4.h, 8.h)),
     ];
     if (path == null || path.isEmpty) {
       shadowImage = AssetImage(defPhoto);
@@ -55,7 +54,7 @@ Widget showImg(
           height: width?.h,
           decoration: BoxDecoration(
             color: shadowColor,
-            image: DecorationImage(image: imageProvider),
+            image: DecorationImage(image: imageProvider, fit: BoxFit.fill),
             borderRadius: BorderRadius.circular(radius.h),
             boxShadow: boxShadow,
           ),
@@ -93,7 +92,7 @@ Widget showImg(
       width: width?.h,
       height: width?.h,
       decoration: BoxDecoration(
-        image: DecorationImage(image: shadowImage),
+        image: DecorationImage(image: shadowImage, fit: BoxFit.fill),
         borderRadius: BorderRadius.circular(radius.h),
         boxShadow: boxShadow,
       ),

@@ -33,7 +33,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
-  provider: ^6.1.1
+  provider: ^6.1.2
   get: ^4.6.6
   flutter_spinkit: ^5.2.0
   dio: ^5.4.1 # 网络加载
@@ -56,7 +56,7 @@ dependencies:
     git:
       url: https://gitee.com/zhushenwudi/flutter-marquee-text
       ref: 015bdeb
-  flutter_svg: ^2.0.9 # svg图片支持
+  flutter_svg: ^2.0.10+1 # svg图片支持
   just_audio: # 音频播放
     git:
       url: https://github.com/zhushenwudi/just_audio
@@ -85,7 +85,7 @@ dependencies:
   flutter_lyric: ^2.0.4+6 # 歌词显示
   flutter_app_update: ^3.0.4 # 版本升级
   flutter_sticky_header: ^0.6.5 # 粘性头
-  url_launcher: ^6.2.4 # url跳转
+  url_launcher: ^6.2.5 # url跳转
   image_picker: ^1.0.7 # 图片选择
   croppy: # 图片裁切
     git:
@@ -108,7 +108,7 @@ dependencies:
     git:
       url: https://github.com/zhushenwudi/flutter_carplay
       ref: combine-all
-  sentry_flutter: ^7.16.1 # Sentry
+  sentry_flutter: ^7.18.0 # Sentry
   scrolls_to_top: ^2.1.1 # 滚动到顶部
   haptic_feedback: ^0.4.2 # 震动
   umeng_push_sdk: ^2.2.0 # 友盟推送
@@ -118,8 +118,8 @@ dependency_overrides:
     git:
       url: https://github.com/zhushenwudi/md5_file_checksum
       ref: main
-  win32: ^5.2.0
-  web: ^0.5.0
+  win32: ^5.3.0
+  web: ^0.5.1
   js: ^0.7.1
   uuid: ^4.3.3 # 唯一码
 
