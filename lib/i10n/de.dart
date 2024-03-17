@@ -131,7 +131,7 @@ const Map<String, String> deDE = {
   'cancel_i_like': 'Abbrechen gefällt mir',
   'confirm_to_delete_music':
       'Möchten Sie den ausgewählten Song wirklich aus „Meine Favoriten“ löschen?',
-  'share': 'Aktie',
+  'share': 'App teilen',
   'skip': 'überspringen',
   'net_error': 'Netzwerkfehler',
   'hint': 'Tipp.',
@@ -177,7 +177,7 @@ Verwenden Sie die folgenden statistischen Entwicklungstools:
   'privacy_detail2': '''
 \nⅡ.SDK-Namen verwenden: MobTech ShareSDK
   Art der Dienstleistung: Sharing realisieren und pushen''',
-'privacy_share': '《Link zur Datenschutzerklärung》''',
+  'privacy_share': '《Link zur Datenschutzerklärung》' '',
   'privacy_detail3': '''
 \nⅢ.SDK-Namen verwenden: 360 gehärtetes SDK
   Geräteberechtigungen: Keine
@@ -206,5 +206,9 @@ Benutzer sollten die Software unter der Prämisse verwenden, Gesetze und Vereinb
   'exit': 'Schließung',
   'finish': 'Weg',
   'search_in_moe_girl': 'Suche in MoeGirl',
-  'share_error': 'Freigabe fehlgeschlagen, Fehlercode: '
+  'share_error': 'Freigabe fehlgeschlagen, Fehlercode: ',
+  'daily_news': 'Daily news',
+  'recent_trends': 'Die jüngsten trends',
+  'live_notice': 'Live-Mitteilung',
+  'today_in_previous_years': 'Heute in den vergangenen Jahren',
 };

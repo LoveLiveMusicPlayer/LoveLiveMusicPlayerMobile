@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/eventbus/close_open.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
@@ -81,6 +82,7 @@ class _HomeViewState extends State<HomeView>
   }
 
   initSDK() {
+    UmengPushSdk.setLogEnable(true);
     UmengCommonSdk.initCommon(
         '634bd9c688ccdf4b7e4ac67b', '634bdfd305844627b56670a1', 'Umeng');
     UmengCommonSdk.setPageCollectionModeManual();
@@ -89,31 +91,20 @@ class _HomeViewState extends State<HomeView>
 
     if (Platform.isAndroid) {
       UmengPushSdk.setTokenCallback((deviceToken) {
-        print("deviceToken: $deviceToken");
+        AppUtils.isPre(() => Log4f.d(msg: "deviceToken: $deviceToken"));
       });
     }
 
-    UmengPushSdk.setNotificationCallback((receive) {
-      final json = jsonDecode(receive);
-      final data = json["data"];
-      print(data["recent"]);
-      print(data["bangumi"]);
-      print(data["today"]);
-      print(data["timestamp"]);
-    }, (open) {
+    UmengPushSdk.setNotificationCallback((receive) {}, (open) {
       final json = jsonDecode(open);
       final data = json["data"];
-      print(data["recent"]);
-      print(data["bangumi"]);
-      print(data["today"]);
-      print(data["timestamp"]);
+      Get.toNamed(Routes.routeDaily, arguments: data);
     });
 
-    UmengPushSdk.setLogEnable(true);
     UmengHelper.agree().then((value) {
       UmengPushSdk.register("5f69a20ba246501b677d0923", "IOS");
       UmengPushSdk.getRegisteredId().then((deviceToken) {
-        print("deviceToken: $deviceToken");
+        AppUtils.isPre(() => Log4f.d(msg: "deviceToken: $deviceToken"));
       });
     });
   }

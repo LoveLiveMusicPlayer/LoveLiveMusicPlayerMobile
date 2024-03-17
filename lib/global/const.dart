@@ -146,4 +146,7 @@ class Const {
   // SentryDSN
   static const String sentryUrl =
       "https://f93c602d2cca26365680f566db360ce7@o1185358.ingest.sentry.io/4506376468365312";
+
+  static const String pushUrl =
+      "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/push/push.txt";
 }

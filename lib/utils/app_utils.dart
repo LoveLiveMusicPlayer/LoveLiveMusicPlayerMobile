@@ -519,4 +519,10 @@ class AppUtils {
       await Haptics.vibrate(HapticsType.medium);
     }
   }
+
+  static isPre(Function func) {
+    if (env == "pre") {
+      func();
+    }
+  }
 }

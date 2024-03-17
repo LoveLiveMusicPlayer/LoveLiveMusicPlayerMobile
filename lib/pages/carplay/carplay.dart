@@ -86,9 +86,6 @@ class Carplay {
     for (var i = 0; i < musicList.length; i++) {
       if (musicList[i].musicId == cp.uniqueId) {
         var completer = Completer<void>();
-        musicList.first.toJson().forEach((key, value) {
-          print("$key : $value");
-        });
         await PlayerLogic.to
             .playMusic(musicList, mIndex: i)
             .then((_) => completer.complete());

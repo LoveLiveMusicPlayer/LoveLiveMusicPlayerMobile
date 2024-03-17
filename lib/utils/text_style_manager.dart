@@ -99,6 +99,11 @@ class TextStyleMs {
   static TextStyle colorBFBFBF_18 =
       TextStyle(color: ColorMs.colorBFBFBF, fontSize: 18.h);
 
+  static TextStyle colorB2246A_10 =
+      TextStyle(color: ColorMs.colorB2246A, fontSize: 10.h);
+  static TextStyle colorB2246A_18 =
+      TextStyle(color: ColorMs.colorB2246A, fontSize: 18.h);
+
   static TextStyle f12_400 = TextStyle(fontSize: 12.h);
   static TextStyle f14_400 = TextStyle(fontSize: 14.h);
   static TextStyle f15_400 = TextStyle(fontSize: 15.h);

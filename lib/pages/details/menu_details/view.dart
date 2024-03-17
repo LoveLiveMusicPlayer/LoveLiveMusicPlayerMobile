@@ -87,7 +87,6 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
     if (menu == null || menu!.music.isEmpty) {
       return showImg(SDUtils.getImgPath(), 240, 240, radius: 24);
     }
-    print(menu!.music.first);
     return Container(
       padding: EdgeInsets.only(top: 16.h),
       child: Column(
@@ -96,7 +95,6 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
           FutureBuilder<String?>(
             initialData: SDUtils.getImgPath(),
             builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
-              // print(snapshot.data);
               return showImg(snapshot.data, 240, 240, radius: 24);
             },
             future: AppUtils.getMusicCoverPath(menu!.music.first),

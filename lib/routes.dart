@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:log4f/log4f.dart';
+import 'package:lovelivemusicplayer/pages/daily/view.dart';
 import 'package:lovelivemusicplayer/pages/data_sync/data_sync.dart';
 import 'package:lovelivemusicplayer/pages/drive/drive_mode.dart';
 import 'package:lovelivemusicplayer/pages/home/home_binding.dart';
@@ -27,6 +28,7 @@ class Routes {
   static const String routeSystemSettings = "/system_settings";
   static const String routeDriveMode = "/drive_mode";
   static const String routeMoeGirl = "/moe_girl";
+  static const String routeDaily = "/daily";
 
   static List<GetPage> getRoutes() {
     return [
@@ -44,6 +46,7 @@ class Routes {
           name: Routes.routeSystemSettings, page: () => const SystemSettings()),
       GetPage(name: Routes.routeDriveMode, page: () => const DriveMode()),
       GetPage(name: Routes.routeMoeGirl, page: () => const MoeGirl()),
+      GetPage(name: Routes.routeDaily, page: () => DailyPage()),
     ];
   }
 }

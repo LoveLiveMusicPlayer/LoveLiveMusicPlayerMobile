@@ -163,6 +163,16 @@ class _DrawerPageState extends State<DrawerPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             DrawerFunctionButton(
+              icon: Assets.drawerDrawerCalendar,
+              text: "daily_news".tr,
+              colorWithBG: false,
+              onTap: (controller) {
+                Get.back();
+                Get.toNamed(Routes.routeDaily);
+              },
+            ),
+            SizedBox(height: 8.h),
+            DrawerFunctionButton(
               icon: Assets.drawerDrawerQuickTrans,
               text: 'music_trans'.tr,
               colorWithBG: false,

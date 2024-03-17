@@ -43,48 +43,48 @@ class _PermissionState extends State<Permission> {
             child: Column(
               children: [
                 RichText(
-                    text: TextSpan(
-                      style: textColor,
-                      children: [
-                        TextSpan(text: 'privacy_detail1'.tr, style: textColor),
-                        TextSpan(
-                          text: 'privacy_umeng'.tr,
-                          style: TextStyleMs.blue_12,
-                          // 设置点击事件
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () async {
-                              if (await canLaunchUrl(uriUmeng)) {
-                                await launchUrl(uriUmeng, mode: LaunchMode.inAppWebView);
-                              }
-                            },
-                        ),
-                        TextSpan(text: 'privacy_detail2'.tr, style: textColor),
-                        TextSpan(
-                          text: 'privacy_share'.tr,
-                          style: TextStyleMs.blue_12,
-                          // 设置点击事件
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () async {
-                              if (await canLaunchUrl(uriShare)) {
-                                await launchUrl(uriShare, mode: LaunchMode.inAppWebView);
-                              }
-                            },
-                        ),
-                        TextSpan(text: 'privacy_detail3'.tr, style: textColor),
-                        TextSpan(
-                          text: 'privacy_360'.tr,
-                          style: TextStyleMs.blue_12,
-                          // 设置点击事件
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () async {
-                              if (await canLaunchUrl(uri360)) {
-                                await launchUrl(uri360, mode: LaunchMode.inAppWebView);
-                              }
-                            },
-                        ),
-                        TextSpan(text: 'privacy_detail4'.tr, style: textColor),
-                      ]
-                    )),
+                    text: TextSpan(style: textColor, children: [
+                  TextSpan(text: 'privacy_detail1'.tr, style: textColor),
+                  TextSpan(
+                    text: 'privacy_umeng'.tr,
+                    style: TextStyleMs.blue_12,
+                    // 设置点击事件
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () async {
+                        if (await canLaunchUrl(uriUmeng)) {
+                          await launchUrl(uriUmeng,
+                              mode: LaunchMode.inAppWebView);
+                        }
+                      },
+                  ),
+                  TextSpan(text: 'privacy_detail2'.tr, style: textColor),
+                  TextSpan(
+                    text: 'privacy_share'.tr,
+                    style: TextStyleMs.blue_12,
+                    // 设置点击事件
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () async {
+                        if (await canLaunchUrl(uriShare)) {
+                          await launchUrl(uriShare,
+                              mode: LaunchMode.inAppWebView);
+                        }
+                      },
+                  ),
+                  TextSpan(text: 'privacy_detail3'.tr, style: textColor),
+                  TextSpan(
+                    text: 'privacy_360'.tr,
+                    style: TextStyleMs.blue_12,
+                    // 设置点击事件
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () async {
+                        if (await canLaunchUrl(uri360)) {
+                          await launchUrl(uri360,
+                              mode: LaunchMode.inAppWebView);
+                        }
+                      },
+                  ),
+                  TextSpan(text: 'privacy_detail4'.tr, style: textColor),
+                ])),
                 // Text('privacy_detail'.tr, style: textColor),
                 SizedBox(height: 12.h),
                 Center(
@@ -95,7 +95,8 @@ class _PermissionState extends State<Permission> {
                     recognizer: TapGestureRecognizer()
                       ..onTap = () async {
                         if (await canLaunchUrl(uriGithub)) {
-                          await launchUrl(uriGithub, mode: LaunchMode.inAppWebView);
+                          await launchUrl(uriGithub,
+                              mode: LaunchMode.inAppWebView);
                         }
                       },
                   )),

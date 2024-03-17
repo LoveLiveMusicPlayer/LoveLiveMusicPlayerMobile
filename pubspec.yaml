@@ -86,7 +86,6 @@ dependencies:
   flutter_app_update: ^3.0.4 # 版本升级
   flutter_sticky_header: ^0.6.5 # 粘性头
   url_launcher: ^6.2.4 # url跳转
-  umeng_common_sdk: ^1.2.7 # 友盟sdk
   image_picker: ^1.0.7 # 图片选择
   croppy: # 图片裁切
     git:

@@ -219,7 +219,6 @@ class SDUtils {
   }
 
   static void downloadSplashList(List<DownloadSplash> downloadList) {
-    print("downloadSplashList: ${downloadList.length}");
     if (downloadList.isNotEmpty) {
       Isolate.spawn(downloadFiles, downloadList);
     }
@@ -233,7 +232,6 @@ class SDUtils {
           // 保存图片到本地
           var file = File(item.filePath);
           file.writeAsBytesSync(response.bodyBytes);
-          print('图片下载成功');
         } else {
           print('图片下载失败: code=${response.statusCode}');
         }

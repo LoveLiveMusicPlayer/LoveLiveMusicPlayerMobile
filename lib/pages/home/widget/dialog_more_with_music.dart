@@ -15,7 +15,6 @@ import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
-import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 
 class DialogMoreWithMusic extends StatefulWidget {
   final Music music;

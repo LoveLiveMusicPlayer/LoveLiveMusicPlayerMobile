@@ -125,7 +125,7 @@ const Map<String, String> enUS = {
   'cancel_i_like': 'Cancel I like',
   'confirm_to_delete_music':
       'Are you sure you want to delete the selected song from My Likes?',
-  'share': 'Share',
+  'share': 'Share application',
   'skip': 'Skip',
   'net_error': 'Network error',
   'hint': 'Hint',
@@ -200,5 +200,9 @@ Users shall use the Software in compliance with laws and agreements. Users are n
   'exit': 'Exit',
   'finish': 'Finish',
   'search_in_moe_girl': 'Search in MoeGirl',
-  'share_error': 'Share fail, error code: '
+  'share_error': 'Share fail, error code: ',
+  'daily_news': 'Daily news',
+  'recent_trends': 'Recent trends',
+  'live_notice': 'Live notice',
+  'today_in_previous_years': 'Today in previous years',
 };

@@ -120,7 +120,7 @@ const Map<String, String> zhCN = {
   'confirm_delete_from_menu': '确认要从歌单删除所选歌曲？',
   'cancel_i_like': '取消我喜欢',
   'confirm_to_delete_music': '确认要从我喜欢删除所选歌曲？',
-  'share': '分享',
+  'share': '应用分享',
   'skip': '跳过',
   'net_error': '网络错误',
   'hint': '提示',
@@ -192,5 +192,9 @@ const Map<String, String> zhCN = {
   'exit': '退出',
   'finish': '完成',
   'search_in_moe_girl': '在萌娘百科搜索',
-  'share_error': '分享失败，错误代码：'
+  'share_error': '分享失败，错误代码：',
+  'daily_news': '每日资讯',
+  'recent_trends': '近期动态',
+  'live_notice': '放送预告',
+  'today_in_previous_years': '往年今日',
 };
