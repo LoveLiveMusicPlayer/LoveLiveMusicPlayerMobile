@@ -225,11 +225,11 @@ class AppUtils {
     return count > 1;
   }
 
-  /// 设置状态栏
-  static setStatusBar(bool isDark) {
-    SystemChrome.setSystemUIOverlayStyle(
-        (isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark)
-            .copyWith(statusBarColor: Colors.transparent));
+  // 动态隐藏状态栏和导航栏
+  static hideStateBarAndNavigationBar() {
+    if (Platform.isAndroid) {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    }
   }
 
   static uploadEvent(String eventName, {Map<String, String>? params}) {

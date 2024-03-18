@@ -133,7 +133,7 @@ void main() async {
 
       runApp(const MyApp());
 
-      AppUtils.setStatusBar(isDark);
+      AppUtils.hideStateBarAndNavigationBar();
 
       const platform = MethodChannel('llmp');
       platform.setMethodCallHandler((call) async {
