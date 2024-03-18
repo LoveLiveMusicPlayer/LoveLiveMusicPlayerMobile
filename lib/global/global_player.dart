@@ -123,8 +123,8 @@ class PlayerLogic extends SuperController
         rx_dart.CombineLatestStream.combine2<PlayerState, bool, void>(
             mPlayer.playerStateStream, playerLogicStream,
             (processState, isHandled) {
-      // 当状态为缓冲中，并且播放逻辑执行完毕
-      if (processState.processingState == ProcessingState.buffering &&
+      // 当状态不为缓冲中，并且播放逻辑执行完毕
+      if (processState.processingState != ProcessingState.loading &&
           isHandled) {
         SmartDialog.dismiss();
       }
