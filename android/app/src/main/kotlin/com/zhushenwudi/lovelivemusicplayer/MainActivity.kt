@@ -45,9 +45,10 @@ class MainActivity : AudioServiceActivity() {
     private fun getSchemeData() {
         val data = intent.data
         if (data != null) {
-            val uri = data.getQueryParameter("llmp")
-            if (uri != null) {
-                handleScheme(uri)
+            val url = data.toString()
+            if (url.startsWith("llmp://")) {
+                handleScheme(url)
+                intent.data = null
             }
         }
     }
@@ -74,11 +75,11 @@ class MainActivity : AudioServiceActivity() {
         }
     }
 
-    private fun handleScheme(uri: String) {
+    private fun handleScheme(url: String) {
         val binaryMessenger = flutterEngine?.dartExecutor?.binaryMessenger
         if (binaryMessenger != null) {
             val channel = MethodChannel(binaryMessenger, "llmp")
-            channel.invokeMethod("handleSchemeRequest", uri)
+            channel.invokeMethod("handleSchemeRequest", mapOf("url" to url))
         }
     }
 }
