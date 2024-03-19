@@ -54,7 +54,7 @@ Widget showImg(
           height: width?.h,
           decoration: BoxDecoration(
             color: shadowColor,
-            image: DecorationImage(image: imageProvider, fit: BoxFit.fill),
+            image: DecorationImage(image: imageProvider),
             borderRadius: BorderRadius.circular(radius.h),
             boxShadow: boxShadow,
           ),
@@ -92,7 +92,7 @@ Widget showImg(
       width: width?.h,
       height: width?.h,
       decoration: BoxDecoration(
-        image: DecorationImage(image: shadowImage, fit: BoxFit.fill),
+        image: DecorationImage(image: shadowImage),
         borderRadius: BorderRadius.circular(radius.h),
         boxShadow: boxShadow,
       ),
