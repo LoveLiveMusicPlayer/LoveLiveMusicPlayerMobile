@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.4.9+49
+version: 1.5.0+50
 
 environment:
   sdk: ">=2.17.0 <4.0.0"
@@ -35,15 +35,15 @@ dependencies:
   cupertino_icons: ^1.0.6
   provider: ^6.1.2
   get: ^4.6.6
-  flutter_spinkit: ^5.2.0
-  dio: ^5.4.1 # 网络加载
+  flutter_spinkit: ^5.2.1
+  dio: ^5.4.2+1 # 网络加载
   path_provider: ^2.1.2 # 路径提供
   pull_to_refresh:  # 下拉刷新上拉加载
     git:
       url: https://gitee.com/zhushenwudi/flutter_pulltorefresh
       ref: 6d7fbdd
   web_socket_channel: ^2.4.4 # webSocket
-  connectivity_plus: ^5.0.2 # 网络监测
+  connectivity_plus: ^6.0.1 # 网络监测
   scan: ^1.6.0 # 扫码
   flutter_smart_dialog: ^4.9.6 # 弹窗
   synchronized: ^3.1.0+1 # 锁
@@ -51,7 +51,7 @@ dependencies:
   common_utils: ^2.1.0 # 工具类
   flutter_screenutil: ^5.9.0 # 屏幕适配方案
   we_slide: ^2.4.0 # 播放器屏幕操作组件
-  flutter_native_splash: ^2.3.13 # 启动页
+  flutter_native_splash: ^2.4.0 # 启动页
   marquee_text: # 走马灯滚动文字
     git:
       url: https://gitee.com/zhushenwudi/flutter-marquee-text
@@ -72,16 +72,13 @@ dependencies:
     git:
       url: https://github.com/zhushenwudi/flutter_image_compress
       path: packages/flutter_image_compress
-  cached_network_image: # 网络图片缓存库
-    git:
-      url: https://github.com/zhushenwudi/flutter_cached_network_image
-      path: cached_network_image
+  cached_network_image: ^3.3.1 # 网络图片缓存库]\\
   color_thief_flutter: # 取色器
     git:
       url: https://gitee.com/zhushenwudi/color_thief_flutter
       ref: e9da75b
   log4f: ^0.0.3 # 日志
-  device_info_plus: ^9.1.2 # 设备信息
+  device_info_plus: ^10.0.1 # 设备信息
   flutter_lyric: ^2.0.4+6 # 歌词显示
   flutter_app_update: ^3.0.4 # 版本升级
   flutter_sticky_header: ^0.6.5 # 粘性头
@@ -127,14 +124,14 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   floor_generator: ^1.4.2
-  build_runner: ^2.4.8
+  build_runner: ^2.4.9
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.1
+  flutter_lints: ^3.0.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
