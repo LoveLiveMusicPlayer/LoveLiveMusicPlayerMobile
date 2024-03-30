@@ -55,8 +55,10 @@ class HomeController extends GetxController {
     handleData(List<Music> refList) {
       for (int i = 0; i < refList.length; i++) {
         final music = refList[i];
-        if (music.musicName?.contains(str.toLowerCase()) == true ||
-            music.musicName?.contains(str.toUpperCase()) == true) {
+        if (music.musicName?.toLowerCase().contains(str.toLowerCase()) ==
+                true ||
+            music.musicName?.toUpperCase().contains(str.toUpperCase()) ==
+                true) {
           musicList.add(music);
         }
       }
