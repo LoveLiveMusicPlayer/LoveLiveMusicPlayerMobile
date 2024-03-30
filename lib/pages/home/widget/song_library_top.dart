@@ -251,6 +251,13 @@ class SongLibraryTop extends GetView<GlobalLogic> {
     final bgColor = isDarkTheme
         ? const Color.fromRGBO(255, 255, 255, 0.1)
         : const Color.fromRGBO(0, 0, 0, 0.05);
+
+    InputBorder inputBorder() {
+      return const OutlineInputBorder(
+        borderSide: BorderSide(width: 0, color: Colors.transparent),
+      );
+    }
+
     return Container(
       color: Colors.transparent,
       height: 35.h,
@@ -275,11 +282,13 @@ class SongLibraryTop extends GetView<GlobalLogic> {
                         maxLines: 1,
                         controller: HomeController.to.state.searchControl,
                         autofocus: true,
+                        style: const TextStyle(
+                            textBaseline: TextBaseline.alphabetic),
                         cursorColor: isDarkTheme ? Colors.white : Colors.grey,
                         decoration: InputDecoration(
                             hintText: 'input_song_main_char'.tr,
-                            border: InputBorder.none,
                             hintStyle: textStyle,
+                            isCollapsed: false,
                             suffixIcon: IconButton(
                                 icon: const Icon(Icons.clear),
                                 color: isDarkTheme ? Colors.white : Colors.grey,
@@ -288,7 +297,13 @@ class SongLibraryTop extends GetView<GlobalLogic> {
                                   HomeController.to.state.searchControl.clear();
                                   HomeController.to.filterItem("");
                                 }),
-                            contentPadding: EdgeInsets.only(top: 4.h)),
+                            focusedBorder: inputBorder(),
+                            disabledBorder: inputBorder(),
+                            errorBorder: inputBorder(),
+                            focusedErrorBorder: inputBorder(),
+                            enabledBorder: inputBorder(),
+                            border: inputBorder(),
+                            contentPadding: const EdgeInsets.all(0)),
                         onSubmitted: onSearchTap,
                         textInputAction: TextInputAction.search),
                   ),
