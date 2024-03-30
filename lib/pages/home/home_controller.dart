@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/pages/home/home_state.dart';
 
 class HomeController extends GetxController {
@@ -45,7 +46,65 @@ class HomeController extends GetxController {
       default:
         break;
     }
-    state.isSelect.value = true;
+    state.selectMode.value = 1;
+  }
+
+  filterItem(String str) {
+    final musicList = <Music>[];
+
+    handleData(List<Music> refList) {
+      for (int i = 0; i < refList.length; i++) {
+        final music = refList[i];
+        if (music.musicName?.contains(str.toLowerCase()) == true ||
+            music.musicName?.contains(str.toUpperCase()) == true) {
+          musicList.add(music);
+        }
+      }
+    }
+
+    switch (state.currentIndex.value) {
+      case 0:
+        handleData(state.oldMusicList);
+        GlobalLogic.to.musicList.value = musicList;
+        break;
+      case 3:
+        handleData(state.oldLoveList);
+        GlobalLogic.to.loveList.value = musicList;
+        break;
+      case 5:
+        handleData(state.oldRecentList);
+        GlobalLogic.to.recentList.value = musicList;
+        break;
+      default:
+        break;
+    }
+  }
+
+  closeFilter() {
+    filterItem("");
+    state.searchControl.clear();
+    state.oldMusicList.clear();
+    state.oldLoveList.clear();
+    state.oldRecentList.clear();
+  }
+
+  sortItem() {
+    switch (state.currentIndex.value) {
+      case 0:
+        GlobalLogic.to.musicList.value =
+            GlobalLogic.to.musicList.reversed.toList();
+        break;
+      case 3:
+        GlobalLogic.to.loveList.value =
+            GlobalLogic.to.loveList.reversed.toList();
+        break;
+      case 5:
+        GlobalLogic.to.recentList.value =
+            GlobalLogic.to.recentList.reversed.toList();
+        break;
+      default:
+        break;
+    }
   }
 
   closeSelect() {
@@ -57,7 +116,7 @@ class HomeController extends GetxController {
     }
     state.selectAll = false;
     refresh();
-    state.isSelect.value = false;
+    state.selectMode.value = 0;
   }
 
   ///全选

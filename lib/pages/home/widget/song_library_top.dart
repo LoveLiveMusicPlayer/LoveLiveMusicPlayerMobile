@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
@@ -12,6 +13,8 @@ import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 class SongLibraryTop extends GetView<GlobalLogic> {
   final Function onPlayTap;
   final GestureTapCallback onScreenTap;
+  final Function(String) onSearchTap;
+  final GestureTapCallback onSortTap;
   final Function(bool) onSelectAllTap;
   final Function onCancelTap;
 
@@ -19,6 +22,8 @@ class SongLibraryTop extends GetView<GlobalLogic> {
     Key? key,
     required this.onPlayTap,
     required this.onScreenTap,
+    required this.onSearchTap,
+    required this.onSortTap,
     required this.onSelectAllTap,
     required this.onCancelTap,
   }) : super(key: key);
@@ -32,20 +37,17 @@ class SongLibraryTop extends GetView<GlobalLogic> {
 
   ///获取顶部显示布局
   Widget buildTopWidget() {
-    if (HomeController.to.state.isSelect.value) {
-      if (HomeController.to.state.currentIndex.value == 2 ||
-          HomeController.to.state.currentIndex.value == 4) {
-        return Container();
-      } else {
-        return _buildSelectSong();
-      }
+    if (HomeController.to.state.currentIndex.value == 2 ||
+        HomeController.to.state.currentIndex.value == 4) {
+      return Container();
+    }
+
+    if (HomeController.to.state.selectMode.value == 1) {
+      return _buildSelectSong();
+    } else if (HomeController.to.state.selectMode.value == 2) {
+      return _buildSearchSong();
     } else {
-      if (HomeController.to.state.currentIndex.value == 2 ||
-          HomeController.to.state.currentIndex.value == 4) {
-        return Container();
-      } else {
-        return _buildPlaySong();
-      }
+      return _buildPlaySong();
     }
   }
 
@@ -66,7 +68,9 @@ class SongLibraryTop extends GetView<GlobalLogic> {
             width: 10.w,
           ),
           _buildSongNumText(),
-          _buildScreen(),
+          _buildSearch(),
+          _buildSort(),
+          _buildFilter(),
         ],
       ),
     );
@@ -126,8 +130,53 @@ class SongLibraryTop extends GetView<GlobalLogic> {
     );
   }
 
+  Widget _buildSearch() {
+    if (HomeController.to.state.currentIndex.value == 1) {
+      return Container();
+    }
+    return Padding(
+      padding: EdgeInsets.only(right: 10.w),
+      child: touchIconByAsset(
+          path: Assets.mainIcSearch,
+          padding:
+              EdgeInsets.only(left: 8.w, top: 3.h, right: 8.w, bottom: 3.h),
+          onTap: () {
+            HomeController.to.state.selectMode.value = 2;
+            HomeController.to.state.oldMusicList = [...controller.musicList];
+            HomeController.to.state.oldLoveList = [...controller.loveList];
+            HomeController.to.state.oldRecentList = [...controller.recentList];
+          },
+          width: 20,
+          height: 20,
+          color: (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
+              ? ColorMs.colorFFFFFF
+              : ColorMs.colorCCCCCC),
+    );
+  }
+
+  Widget _buildSort() {
+    if (HomeController.to.state.currentIndex.value == 1) {
+      return Container();
+    }
+    return Padding(
+      padding: EdgeInsets.only(right: 10.w),
+      child: touchIconByAsset(
+          path: sortMode.value == "ASC"
+              ? Assets.mainIcSortAsc
+              : Assets.mainIcSortDesc,
+          padding:
+              EdgeInsets.only(left: 8.w, top: 3.h, right: 8.w, bottom: 3.h),
+          onTap: onSortTap,
+          width: 20,
+          height: 20,
+          color: (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
+              ? ColorMs.colorFFFFFF
+              : ColorMs.colorCCCCCC),
+    );
+  }
+
   ///筛选按钮
-  Widget _buildScreen() {
+  Widget _buildFilter() {
     if (HomeController.to.state.currentIndex.value == 1) {
       return Container();
     }
@@ -189,6 +238,83 @@ class SongLibraryTop extends GetView<GlobalLogic> {
               ),
             ),
           )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSearchSong() {
+    final isDarkTheme = Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "";
+    final textStyle = isDarkTheme
+        ? TextStyleMs.f15_400.copyWith(color: Colors.white)
+        : TextStyleMs.f15_400.copyWith(color: Colors.grey);
+    final bgColor = isDarkTheme
+        ? const Color.fromRGBO(255, 255, 255, 0.1)
+        : const Color.fromRGBO(0, 0, 0, 0.05);
+    return Container(
+      color: Colors.transparent,
+      height: 35.h,
+      child: Row(
+        children: [
+          Expanded(
+              child: Container(
+            height: 35.h,
+            margin: EdgeInsets.only(left: 8.w, right: 4.w),
+            padding: EdgeInsets.symmetric(horizontal: 8.w),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4.r), color: bgColor),
+            child: Row(
+              children: [
+                Icon(Icons.search,
+                    color: isDarkTheme ? Colors.white : Colors.grey),
+                SizedBox(width: 8.w),
+                Expanded(
+                  child: FocusScope(
+                    canRequestFocus: true,
+                    child: TextField(
+                        maxLines: 1,
+                        controller: HomeController.to.state.searchControl,
+                        autofocus: true,
+                        cursorColor: isDarkTheme ? Colors.white : Colors.grey,
+                        decoration: InputDecoration(
+                            hintText: 'input_song_main_char'.tr,
+                            border: InputBorder.none,
+                            hintStyle: textStyle,
+                            suffixIcon: IconButton(
+                                icon: const Icon(Icons.clear),
+                                color:
+                                    isDarkTheme ? Colors.white : Colors.grey,
+                                highlightColor: Colors.transparent,
+                                onPressed: () {
+                                  HomeController.to.state.searchControl.clear();
+                                  HomeController.to.filterItem("");
+                                }),
+                            contentPadding: EdgeInsets.only(top: 4.h)),
+                        onSubmitted: onSearchTap,
+                        textInputAction: TextInputAction.search),
+                  ),
+                )
+              ],
+            ),
+          )),
+          GestureDetector(
+            child: Container(
+              height: 45.h,
+              margin: EdgeInsets.only(left: 4.w, top: 0, right: 8.w, bottom: 0),
+              padding: EdgeInsets.symmetric(vertical: 8.r, horizontal: 10.r),
+              decoration: BoxDecoration(
+                color: bgColor,
+                borderRadius: BorderRadius.circular(4.r),
+              ),
+              child: Center(
+                child: Text('cancel'.tr, style: textStyle),
+              ),
+            ),
+            onTap: () {
+              HomeController.to.state.selectMode.value = 0;
+              HomeController.to.closeFilter();
+            },
+          ),
         ],
       ),
     );

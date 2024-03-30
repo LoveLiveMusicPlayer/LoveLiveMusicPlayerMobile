@@ -49,7 +49,7 @@ class _PageViewComponentState extends State<PageViewComponent> {
       }
       return PageView(
         controller: logic.controller,
-        physics: HomeController.to.state.isSelect.value
+        physics: HomeController.to.state.selectMode.value > 0
             ? const NeverScrollableScrollPhysics()
             : const AlwaysScrollableScrollPhysics(),
         onPageChanged: (index) {
@@ -85,7 +85,8 @@ class _PageViewComponentState extends State<PageViewComponent> {
             enablePullUp: false,
             enablePullDown: false,
             isGridView: page == 1,
-            canReorder: page == 3 && HomeController.to.state.isSelect.value,
+            canReorder:
+                page == 3 && HomeController.to.state.selectMode.value == 1,
 
             ///当前列表是否网格显示
             columnNum: 3,
@@ -130,9 +131,9 @@ class _PageViewComponentState extends State<PageViewComponent> {
         widget = ListViewItemAlbum(
             album: GlobalLogic.to.albumList[index],
             checked: HomeController.to.isItemChecked(index),
-            isSelect: HomeController.to.state.isSelect.value,
+            isSelect: HomeController.to.state.selectMode.value == 1,
             onItemTap: (album, checked) {
-              if (HomeController.to.state.isSelect.value) {
+              if (HomeController.to.state.selectMode.value == 1) {
                 HomeController.to.selectItem(index, checked);
               } else {
                 Get.toNamed(Routes.routeAlbumDetails,

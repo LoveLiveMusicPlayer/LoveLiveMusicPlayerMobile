@@ -52,7 +52,7 @@ class CarplayMusic {
               await DBLogic.to.findAllListByGroup(GroupKey.groupAll.getName());
               await PlayerLogic.to.changeLoopMode(0);
               await PlayerLogic.to
-                  .playMusic(GlobalLogic.to.filterMusicListByAlbums(0));
+                  .playMusic(GlobalLogic.to.filterMusicListByIndex(0));
               complete();
             },
             elementId: CarplayUtil.genUniqueId(null)),

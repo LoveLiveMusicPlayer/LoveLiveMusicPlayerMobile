@@ -222,7 +222,7 @@ class _HomeViewState extends State<HomeView>
       blurColor: Colors.transparent,
       overlayColor: color,
       panelHeader: MiniPlayer(onTap: () {
-        if (!HomeController.to.state.isSelect.value) {
+        if (HomeController.to.state.selectMode.value == 0) {
           GlobalLogic.mobileWeSlideController.show();
         }
       }),
@@ -266,9 +266,14 @@ class _HomeViewState extends State<HomeView>
   }
 
   Widget _buildTabBarView() {
-    return TabBarView(
-      controller: logic.tabController,
-      children: const [BottomBar(), BottomBar2()],
-    );
+    return Obx(() {
+      return TabBarView(
+        controller: logic.tabController,
+        physics: HomeController.to.state.selectMode.value > 0
+            ? const NeverScrollableScrollPhysics()
+            : const AlwaysScrollableScrollPhysics(),
+        children: const [BottomBar(), BottomBar2()],
+      );
+    });
   }
 }

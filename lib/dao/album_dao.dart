@@ -6,6 +6,9 @@ abstract class AlbumDao {
   @Query('SELECT * FROM Album ORDER BY `date`')
   Future<List<Album>> findAllAlbums();
 
+  @Query('SELECT * FROM Album WHERE `existFile` = 1 ORDER BY `date`')
+  Future<List<Album>> findAllExistAlbums();
+
   @Query('SELECT * FROM Album WHERE `group` = :group ORDER BY `date`')
   Future<List<Album>> findAllAlbumsByGroup(String group);
 

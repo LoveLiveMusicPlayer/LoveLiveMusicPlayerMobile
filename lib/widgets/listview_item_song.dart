@@ -81,7 +81,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
 
   clickItem() {
     widget.checked = !widget.checked;
-    if (HomeController.to.state.isSelect.value) {
+    if (HomeController.to.state.selectMode.value == 1) {
       widget.onItemTap(widget.index, widget.checked);
     } else {
       widget.onPlayNowTap();
@@ -95,12 +95,14 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
   Widget _buildIcon() {
     return GestureDetector(
       onTap: clickItem,
-      onLongPress: HomeController.to.state.isSelect.value ? null : onLongPress,
+      onLongPress:
+          HomeController.to.state.selectMode.value == 0 ? onLongPress : null,
       child: showImg(SDUtils.getImgPathFromMusic(widget.music), 48, 48,
           hasShadow: false,
           onTap: clickItem,
-          onLongPress:
-              HomeController.to.state.isSelect.value ? null : onLongPress),
+          onLongPress: HomeController.to.state.selectMode.value == 0
+              ? onLongPress
+              : null),
     );
   }
 
@@ -117,7 +119,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
   ///勾选按钮
   Widget _buildCheckBox() {
     return Visibility(
-      visible: HomeController.to.state.isSelect.value,
+      visible: HomeController.to.state.selectMode.value == 1,
       child: Padding(
         padding: EdgeInsets.only(right: 10.h),
         child: CircularCheckBox(
@@ -143,7 +145,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
       child: GestureDetector(
         onTap: clickItem,
         onLongPress:
-            HomeController.to.state.isSelect.value ? null : onLongPress,
+            HomeController.to.state.selectMode.value == 0 ? onLongPress : null,
         child: Container(
           color: Colors.transparent,
           child: Column(
@@ -189,7 +191,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
     final color = (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
         ? ColorMs.colorDFDFDF
         : ColorMs.colorCCCCCC;
-    if (HomeController.to.state.isSelect.value) {
+    if (HomeController.to.state.selectMode.value == 1) {
       if (widget.isDraggable) {
         return touchIconByAsset(
             path: Assets.mainIcDraggable,

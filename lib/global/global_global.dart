@@ -211,8 +211,8 @@ class GlobalLogic extends SuperController
     }
   }
 
-  List<Music> filterMusicListByAlbums(menuIndex) {
-    switch (menuIndex) {
+  List<Music> filterMusicListByIndex(index) {
+    switch (index) {
       case 0:
         return musicList;
       case 1:

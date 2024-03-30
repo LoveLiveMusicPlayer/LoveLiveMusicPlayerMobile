@@ -97,6 +97,7 @@ class Const {
   static const String spBackgroundPhoto = "SP_BACKGROUND_PHOTO";
   static const String spForceRemoveVersion = "SP_FORCE_REMOVE_VERSION";
   static const String spEnableBackgroundPhoto = "SP_ENABLE_BACKGROUND_PHOTO";
+  static const String spSortOrder = "SP_SORT_ORDER";
   static const String spEnableHttp = "SP_ENABLE_HTTP";
   static const String spHttpUrl = "SP_HTTP_URL";
   static const String spPrevPage = "prevPage";

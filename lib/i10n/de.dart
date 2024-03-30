@@ -211,4 +211,5 @@ Benutzer sollten die Software unter der Prämisse verwenden, Gesetze und Vereinb
   'recent_trends': 'Die jüngsten trends',
   'live_notice': 'Live-Mitteilung',
   'today_in_previous_years': 'Heute in den vergangenen Jahren',
+  'input_song_main_char': 'Die vermisse vermisse ich',
 };

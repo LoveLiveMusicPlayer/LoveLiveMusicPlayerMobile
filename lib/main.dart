@@ -55,6 +55,8 @@ const transVer = 1;
 var isCanUseSmartDialog = false;
 // 是否初始化好SplashDao
 var isInitSplashDao = false;
+// 排序模式(asc: 按时间顺序, desc: 按时间倒序)
+var sortMode = "".obs;
 
 InAppLocalhostServer? localhostServer;
 
@@ -276,6 +278,7 @@ initServices() async {
       await SpUtil.getString(Const.spHttpUrl, ""));
   enableBG = await SpUtil.getBoolean(Const.spEnableBackgroundPhoto, false);
   hasAIPic = await SpUtil.getBoolean(Const.spAIPicture, true);
+  sortMode.value = await SpUtil.getString(Const.spSortOrder, "ASC");
   PlayerBinding().dependencies();
   await waitForDBInitial();
   SpUtil.put(Const.spPrevPage, "");

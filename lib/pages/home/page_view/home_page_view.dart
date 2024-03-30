@@ -7,6 +7,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/modules/pageview/view.dart';
@@ -15,6 +16,7 @@ import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/song_library_top.dart';
+import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 
 class HomePageView extends GetView<HomeController> {
@@ -23,7 +25,7 @@ class HomePageView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Container(child: _getTabBarView(() {
-      if (!HomeController.to.state.isSelect.value) {
+      if (HomeController.to.state.selectMode.value == 0) {
         GlobalLogic.to.globalKey.currentState?.openEndDrawer();
       }
     }));
@@ -55,8 +57,7 @@ class HomePageView extends GetView<HomeController> {
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent),
         child: Obx(() {
-          final isSelect = HomeController.to.state.isSelect.value;
-          return isSelect
+          return HomeController.to.state.selectMode.value > 0
               ? const IgnorePointer(
                   child: TabBarComponent(),
                 )
@@ -85,7 +86,7 @@ class HomePageView extends GetView<HomeController> {
     return SongLibraryTop(
       onPlayTap: () {
         PlayerLogic.to.playMusic(GlobalLogic.to
-            .filterMusicListByAlbums(controller.state.currentIndex.value));
+            .filterMusicListByIndex(controller.state.currentIndex.value));
       },
       onScreenTap: () {
         controller.openSelect();
@@ -96,6 +97,15 @@ class HomePageView extends GetView<HomeController> {
       },
       onCancelTap: () {
         SmartDialog.compatible.dismiss();
+      },
+      onSearchTap: (str) {
+        controller.filterItem(str);
+      },
+      onSortTap: () {
+        final saveValue = sortMode.value == "ASC" ? "DESC" : "ASC";
+        sortMode.value = saveValue;
+        SpUtil.put(Const.spSortOrder, saveValue);
+        controller.sortItem();
       },
     );
   }

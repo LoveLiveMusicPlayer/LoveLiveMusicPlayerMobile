@@ -31,7 +31,7 @@ class DetailsHeader extends StatelessWidget {
                     padding: EdgeInsets.only(left: 16.w),
                     child: materialButton(Icons.keyboard_arrow_left, () {
                       if (onBack == null) {
-                        HomeController.to.state.isSelect.value = false;
+                        HomeController.to.state.selectMode.value = 0;
                         SmartDialog.compatible.dismiss();
                         NestedController.to.fromGestureBack = false;
                         NestedController.to.goBack(fromBtnBack: true);

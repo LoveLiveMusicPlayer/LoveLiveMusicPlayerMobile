@@ -3,8 +3,11 @@ import 'package:lovelivemusicplayer/models/love.dart';
 
 @dao
 abstract class LoveDao {
-  @Query('SELECT * FROM Love')
-  Future<List<Love>> findAllLoves();
+  @Query('SELECT * FROM Love ORDER BY `id` ASC')
+  Future<List<Love>> findAllLovesASC();
+
+  @Query('SELECT * FROM Love ORDER BY `id` DESC')
+  Future<List<Love>> findAllLovesDESC();
 
   @Query('SELECT * FROM Love WHERE musicId = :musicId')
   Future<Love?> findLoveById(String musicId);

@@ -197,4 +197,5 @@ const Map<String, String> zhCN = {
   'recent_trends': '近期动态',
   'live_notice': '放送预告',
   'today_in_previous_years': '往年今日',
+  'input_song_main_char': '请输入歌曲名关键字',
 };

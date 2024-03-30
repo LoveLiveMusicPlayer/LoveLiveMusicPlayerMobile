@@ -52,6 +52,9 @@ class BottomBar extends StatelessWidget {
         selectedItemColor: ColorMs.colorF940A7,
         unselectedItemColor: ColorMs.colorD1E0F3,
         onTap: (index) {
+          if (HomeController.to.state.selectMode.value > 0) {
+            return;
+          }
           if (HomeController.to.state.currentIndex.value == index) {
             scrollTo(HomeController.scrollControllers[index]);
           }

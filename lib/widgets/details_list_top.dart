@@ -61,7 +61,7 @@ class DetailsListTop extends StatelessWidget {
             width: 10.h,
           ),
           _buildSongNumText(),
-          _buildScreen(),
+          _buildFilter(),
         ],
       ),
     );
@@ -117,7 +117,7 @@ class DetailsListTop extends StatelessWidget {
   }
 
   ///筛选按钮
-  Widget _buildScreen() {
+  Widget _buildFilter() {
     final color = (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
         ? ColorMs.colorFFFFFF
         : ColorMs.colorCCCCCC;

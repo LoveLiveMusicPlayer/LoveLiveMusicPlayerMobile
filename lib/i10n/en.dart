@@ -205,4 +205,5 @@ Users shall use the Software in compliance with laws and agreements. Users are n
   'recent_trends': 'Recent trends',
   'live_notice': 'Live notice',
   'today_in_previous_years': 'Today in previous years',
+  'input_song_main_char': 'The song name keyword',
 };

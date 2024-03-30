@@ -3,15 +3,35 @@ import 'package:lovelivemusicplayer/models/music.dart';
 
 @dao
 abstract class MusicDao {
-  @Query('SELECT * FROM Music ORDER BY `date`')
-  Future<List<Music>> findAllMusics();
+  @Query('SELECT * FROM Music ORDER BY `date` ASC, `musicId` ASC')
+  Future<List<Music>> findAllMusicsASC();
 
-  @Query('SELECT * FROM Music WHERE `group` = :group ORDER BY `date`')
-  Future<List<Music>> findAllMusicsByGroup(String group);
+  @Query('SELECT * FROM Music ORDER BY `date` DESC, `musicId` DESC')
+  Future<List<Music>> findAllMusicsDESC();
 
   @Query(
-      'SELECT * FROM Music WHERE `group` = :group AND `existFile` = 1 ORDER BY `date`')
-  Future<List<Music>> findAllExistMusicsByGroup(String group);
+      'SELECT * FROM Music WHERE `existFile` = 1 ORDER BY `date` ASC, `musicId` ASC')
+  Future<List<Music>> findAllExistMusicsASC();
+
+  @Query(
+      'SELECT * FROM Music WHERE `existFile` = 1 ORDER BY `date` DESC, `musicId` DESC')
+  Future<List<Music>> findAllExistMusicsDESC();
+
+  @Query(
+      'SELECT * FROM Music WHERE `group` = :group ORDER BY `date` ASC, `musicId` ASC')
+  Future<List<Music>> findAllMusicsByGroupASC(String group);
+
+  @Query(
+      'SELECT * FROM Music WHERE `group` = :group ORDER BY `date` DESC, `musicId` DESC')
+  Future<List<Music>> findAllMusicsByGroupDESC(String group);
+
+  @Query(
+      'SELECT * FROM Music WHERE `group` = :group AND `existFile` = 1 ORDER BY `date` ASC, `musicId` ASC')
+  Future<List<Music>> findAllExistMusicsByGroupASC(String group);
+
+  @Query(
+      'SELECT * FROM Music WHERE `group` = :group AND `existFile` = 1 ORDER BY `date` DESC, `musicId` DESC')
+  Future<List<Music>> findAllExistMusicsByGroupDESC(String group);
 
   @Query('SELECT * FROM Music WHERE name like "%ん%"')
   Future<List<Music>> findAllMusicsTest();

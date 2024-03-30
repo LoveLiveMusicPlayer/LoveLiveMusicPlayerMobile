@@ -10,7 +10,7 @@ class DetailController extends GetxController {
 
   openSelect() {
     state.isSelect = true;
-    HomeController.to.state.isSelect.value = true;
+    HomeController.to.state.selectMode.value = 1;
     refresh();
   }
 
@@ -22,7 +22,7 @@ class DetailController extends GetxController {
       }
     }
     state.selectAll = false;
-    HomeController.to.state.isSelect.value = false;
+    HomeController.to.state.selectMode.value = 0;
     state.isSelect = false;
     refresh();
   }
