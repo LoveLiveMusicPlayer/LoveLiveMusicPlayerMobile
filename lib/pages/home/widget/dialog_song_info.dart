@@ -79,8 +79,8 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
     return GestureDetector(
         onLongPress: () {
           if (canPaste && message != null && message.isNotEmpty) {
-            Clipboard.setData(ClipboardData(text: message)).then(
-                (value) => SmartDialog.compatible.showToast("copy_success".tr));
+            Clipboard.setData(ClipboardData(text: message))
+                .then((value) => SmartDialog.showToast("copy_success".tr));
           }
         },
         child: Padding(

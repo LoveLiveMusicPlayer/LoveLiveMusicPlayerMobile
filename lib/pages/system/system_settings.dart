@@ -277,7 +277,7 @@ class _SystemSettingsState extends State<SystemSettings> {
                 final fileName = "${DateTime.now()}.jpg";
                 SDUtils.saveBGPhoto(fileName, picContent);
               } else {
-                SmartDialog.compatible.showToast('need_enable_bg'.tr);
+                SmartDialog.showToast('need_enable_bg'.tr);
               }
             },
           ),
@@ -309,29 +309,31 @@ class _SystemSettingsState extends State<SystemSettings> {
                   text: text,
                   iconColor: iconColor,
                   onTap: (controller) {
-                    SmartDialog.compatible.show(
-                        widget: TextFieldDialog(
-                            title: 'input_http_url'.tr,
-                            hint: 'support_http_characters'.tr,
-                            controller: TextEditingController(
-                                text: remoteHttp.httpUrl.value),
-                            maxLength: 50,
-                            formatter: [
-                              FilteringTextInputFormatter.allow(
-                                  RegExp('^[a-zA-Z0-9.:/_-]*\$'))
-                            ],
-                            onConfirm: (host) async {
-                              if (host.isEmpty) {
-                                controller.setTextValue = 'input_http_url'.tr;
-                                await remoteHttp.setHttpUrl("");
-                              } else {
-                                host = host.endsWith("/") ? host : "$host/";
-                                controller.setTextValue = host;
-                                await remoteHttp.setHttpUrl(host);
-                              }
-                            }),
-                        clickBgDismissTemp: false,
-                        alignmentTemp: Alignment.center);
+                    SmartDialog.show(
+                        clickMaskDismiss: false,
+                        alignment: Alignment.center,
+                        builder: (context) {
+                          return TextFieldDialog(
+                              title: 'input_http_url'.tr,
+                              hint: 'support_http_characters'.tr,
+                              controller: TextEditingController(
+                                  text: remoteHttp.httpUrl.value),
+                              maxLength: 50,
+                              formatter: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp('^[a-zA-Z0-9.:/_-]*\$'))
+                              ],
+                              onConfirm: (host) async {
+                                if (host.isEmpty) {
+                                  controller.setTextValue = 'input_http_url'.tr;
+                                  await remoteHttp.setHttpUrl("");
+                                } else {
+                                  host = host.endsWith("/") ? host : "$host/";
+                                  controller.setTextValue = host;
+                                  await remoteHttp.setHttpUrl(host);
+                                }
+                              });
+                        });
                   },
                 );
               }),
@@ -350,16 +352,18 @@ class _SystemSettingsState extends State<SystemSettings> {
             iconColor: iconColor,
             controller: logic.timerController,
             onTap: (controller) {
-              SmartDialog.compatible.show(
-                  widget: AddMinDialog(
-                    title: 'select_time'.tr,
-                    initTimer: logic.remainTime.value,
-                    onConfirmListener: ([number]) {
-                      logic.startTimer(number);
-                    },
-                  ),
-                  clickBgDismissTemp: false,
-                  alignmentTemp: Alignment.center);
+              SmartDialog.show(
+                  clickMaskDismiss: false,
+                  alignment: Alignment.center,
+                  builder: (context) {
+                    return AddMinDialog(
+                      title: 'select_time'.tr,
+                      initTimer: logic.remainTime.value,
+                      onConfirmListener: ([number]) {
+                        logic.startTimer(number);
+                      },
+                    );
+                  });
             },
           ),
           SizedBox(height: 8.h),
@@ -368,33 +372,34 @@ class _SystemSettingsState extends State<SystemSettings> {
             iconColor: iconColor,
             text: 'clear_database'.tr,
             onTap: (controller) {
-              SmartDialog.compatible.show(
-                  widget: ResetDataDialog(deleteMusicData: () async {
-                SpUtil.remove(Const.spDataVersion);
-                await DBLogic.to.clearAllMusic();
-              }, deleteUserData: () async {
-                await DBLogic.to.clearAllUserData();
-                await AppUtils.cacheManager.emptyCache();
-                SDUtils.clearBGPhotos();
-                SmartDialog.compatible.dismiss();
-                SpUtil.put(Const.spAllowPermission, true).then((value) async {
-                  SmartDialog.compatible.dismiss();
-                  SmartDialog.compatible.showLoading(msg: 'will_shutdown'.tr);
-                  Future.delayed(const Duration(seconds: 2), () {
-                    if (Platform.isIOS) {
-                      exit(0);
-                    } else {
-                      SystemNavigator.pop();
-                    }
+              SmartDialog.show(builder: (context) {
+                return ResetDataDialog(deleteMusicData: () async {
+                  SpUtil.remove(Const.spDataVersion);
+                  await DBLogic.to.clearAllMusic();
+                }, deleteUserData: () async {
+                  await DBLogic.to.clearAllUserData();
+                  await AppUtils.cacheManager.emptyCache();
+                  SDUtils.clearBGPhotos();
+                  SmartDialog.dismiss();
+                  SpUtil.put(Const.spAllowPermission, true).then((value) async {
+                    SmartDialog.dismiss();
+                    SmartDialog.showLoading(msg: 'will_shutdown'.tr);
+                    Future.delayed(const Duration(seconds: 2), () {
+                      if (Platform.isIOS) {
+                        exit(0);
+                      } else {
+                        SystemNavigator.pop();
+                      }
+                    });
                   });
+                }, afterDelete: () async {
+                  SmartDialog.dismiss();
+                  SmartDialog.showToast('clean_success'.tr,
+                      animationTime: const Duration(seconds: 5));
+                  await DBLogic.to
+                      .findAllListByGroup(GlobalLogic.to.currentGroup.value);
                 });
-              }, afterDelete: () async {
-                SmartDialog.compatible.dismiss();
-                SmartDialog.compatible.showToast('clean_success'.tr,
-                    time: const Duration(seconds: 5));
-                await DBLogic.to
-                    .findAllListByGroup(GlobalLogic.to.currentGroup.value);
-              }));
+              });
             },
           ),
           SizedBox(height: 8.h),

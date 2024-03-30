@@ -65,16 +65,18 @@ class _HomeViewState extends State<HomeView>
   void handlePermission() {
     SpUtil.getBoolean(Const.spAllowPermission).then((hasPermission) {
       if (!hasPermission) {
-        SmartDialog.compatible.show(
-            widget: PermissionDialog(readPermission: () async {
-              await Get.toNamed(Routes.routePermission);
-              handlePermission();
-            }, confirm: () {
-              SpUtil.put(Const.spAllowPermission, true);
-              initSDK();
-            }),
+        SmartDialog.show(
             backDismiss: false,
-            clickBgDismissTemp: false);
+            clickMaskDismiss: false,
+            builder: (context) {
+              return PermissionDialog(readPermission: () async {
+                await Get.toNamed(Routes.routePermission);
+                handlePermission();
+              }, confirm: () {
+                SpUtil.put(Const.spAllowPermission, true);
+                initSDK();
+              });
+            });
       } else {
         initSDK();
       }
@@ -181,7 +183,7 @@ class _HomeViewState extends State<HomeView>
                     const Duration(seconds: 1)) {
               //间隔时间大于1秒 则重新赋值
               lastPressTime = DateTime.now();
-              SmartDialog.compatible.showToast('click_again_to_back'.tr);
+              SmartDialog.showToast('click_again_to_back'.tr);
               return false;
             }
             AndroidBackDesktop.backToDesktop();

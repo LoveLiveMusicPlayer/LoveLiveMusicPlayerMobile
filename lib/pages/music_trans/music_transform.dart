@@ -402,7 +402,7 @@ class _MusicTransformState extends State<MusicTransform> {
       switch (ftpCmd.cmd) {
         case "version":
           if ((int.tryParse(ftpCmd.body) ?? 0) != transVer) {
-            SmartDialog.compatible.showToast("version_incompatible".tr);
+            SmartDialog.showToast("version_incompatible".tr);
             Get.back();
             return;
           }
@@ -481,7 +481,7 @@ class _MusicTransformState extends State<MusicTransform> {
           break;
       }
     }, onError: (e) {
-      SmartDialog.compatible.showToast('connect_fail'.tr);
+      SmartDialog.showToast('connect_fail'.tr);
       Log4f.i(msg: e.toString());
     }, cancelOnError: true);
     isConnected = true;
@@ -493,34 +493,35 @@ class _MusicTransformState extends State<MusicTransform> {
 
   showBackDialog() {
     final width = min(0.4 * Get.height, 0.8 * Get.width);
-    SmartDialog.compatible.show(
-        widget: Container(
-      width: width,
-      height: 150.h,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20.r),
-      ),
-      child: Column(mainAxisSize: MainAxisSize.min, children: [
-        Container(
-          margin: EdgeInsets.only(bottom: 30.h),
-          child: Text('terminate_trans'.tr,
-              style: TextStyleMs.black_14, textAlign: TextAlign.center),
+    SmartDialog.show(builder: (context) {
+      return Container(
+        width: width,
+        height: 150.h,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20.r),
         ),
-        ElevatedButton(
-          onPressed: () async {
-            final message = ftpCmdToJson(FtpCmd(cmd: "stop", body: ""));
-            channel?.sink.add(message);
-            release();
-          },
-          child: Padding(
-            padding: EdgeInsets.all(8.h),
-            child: Text('confirm'.tr, style: TextStyleMs.white_14),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Container(
+            margin: EdgeInsets.only(bottom: 30.h),
+            child: Text('terminate_trans'.tr,
+                style: TextStyleMs.black_14, textAlign: TextAlign.center),
           ),
-        )
-      ]),
-    ));
+          ElevatedButton(
+            onPressed: () async {
+              final message = ftpCmdToJson(FtpCmd(cmd: "stop", body: ""));
+              channel?.sink.add(message);
+              release();
+            },
+            child: Padding(
+              padding: EdgeInsets.all(8.h),
+              child: Text('confirm'.tr, style: TextStyleMs.white_14),
+            ),
+          )
+        ]),
+      );
+    });
   }
 
   Widget btnFunc(String asset, String title, GestureTapCallback onTap) {
@@ -563,7 +564,7 @@ class _MusicTransformState extends State<MusicTransform> {
       queue.clear();
     }
     cancelToken?.cancel();
-    SmartDialog.compatible.dismiss();
+    SmartDialog.dismiss();
     DBLogic.to
         .findAllListByGroup(GlobalLogic.to.currentGroup.value)
         .then((value) => Get.back());

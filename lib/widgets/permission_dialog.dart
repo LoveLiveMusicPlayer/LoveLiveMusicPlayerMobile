@@ -52,7 +52,7 @@ class PermissionDialog extends StatelessWidget {
                     // 设置点击事件
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        SmartDialog.compatible.dismiss();
+                        SmartDialog.dismiss();
                         readPermission?.call();
                       },
                   )
@@ -67,7 +67,7 @@ class PermissionDialog extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(20.r))),
                 child: TextButton(
                     onPressed: () {
-                      SmartDialog.compatible.dismiss();
+                      SmartDialog.dismiss();
                       confirm?.call();
                     },
                     child: Text(

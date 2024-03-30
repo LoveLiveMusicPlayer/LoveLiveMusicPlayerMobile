@@ -534,7 +534,7 @@ class PlayerLogic extends SuperController
     setPlayingJPLrc(playingMusic.value.musicId ?? "");
     changePlayingLyric(playingPosition.value, isForce: true);
     if (forceRefresh) {
-      SmartDialog.compatible.showToast(fetchResultStr);
+      SmartDialog.showToast(fetchResultStr);
     }
     Future.delayed(
         const Duration(milliseconds: 200), () => needRefreshLyric.value = true);

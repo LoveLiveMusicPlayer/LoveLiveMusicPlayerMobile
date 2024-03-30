@@ -62,9 +62,8 @@ class ResetDataDialog extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.r)),
         child: TextButton(
             onPressed: () {
-              SmartDialog.compatible.dismiss();
-              SmartDialog.compatible
-                  .showLoading(msg: 'resetting'.tr, backDismiss: false);
+              SmartDialog.dismiss();
+              SmartDialog.showLoading(msg: 'resetting'.tr, backDismiss: false);
               onBackListener();
               if (hasAfter) {
                 afterDelete();

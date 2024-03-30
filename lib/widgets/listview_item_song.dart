@@ -199,7 +199,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
                 left: 12.w, top: 12.h, right: 12.w, bottom: 12.h),
             onTap: () {
               widget.onPlayNextTap(widget.music);
-              SmartDialog.compatible.showToast('add_success'.tr);
+              SmartDialog.showToast('add_success'.tr);
             },
             width: 20,
             height: 20,
@@ -216,7 +216,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
               padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
               onTap: () {
                 widget.onPlayNextTap(widget.music);
-                SmartDialog.compatible.showToast('add_success'.tr);
+                SmartDialog.showToast('add_success'.tr);
               },
               width: 20,
               height: 20,

@@ -94,7 +94,7 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                         name: mPlayList[index].musicName,
                         artist: mPlayList[index].artist,
                         onPlayTap: (index) {
-                          SmartDialog.compatible.showLoading(msg: "loading".tr);
+                          SmartDialog.showLoading(msg: "loading".tr);
                           List<String> idList = [];
                           for (var element in mPlayList) {
                             idList.add(element.musicId);
@@ -105,8 +105,7 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
                             PlayerLogic.to.playMusic(musicList, mIndex: index);
                             Future.delayed(const Duration(milliseconds: 1000))
                                 .then((value) {
-                              SmartDialog.compatible
-                                  .dismiss(status: SmartStatus.loading);
+                              SmartDialog.dismiss(status: SmartStatus.loading);
                             });
                           });
                         },

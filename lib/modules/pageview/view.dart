@@ -117,9 +117,11 @@ class _PageViewComponentState extends State<PageViewComponent> {
             onPlayNextTap: (music) async =>
                 await PlayerLogic.to.addNextMusic(music),
             onMoreTap: (music) {
-              SmartDialog.compatible.show(
-                  widget: DialogMoreWithMusic(music: music),
-                  alignmentTemp: Alignment.bottomCenter);
+              SmartDialog.show(
+                  alignment: Alignment.bottomCenter,
+                  builder: (context) {
+                    return DialogMoreWithMusic(music: music);
+                  });
             },
             onPlayNowTap: () {
               PlayerLogic.to.playMusic(GlobalLogic.to.musicList, mIndex: index);
@@ -164,9 +166,11 @@ class _PageViewComponentState extends State<PageViewComponent> {
             onPlayNextTap: (music) async =>
                 await PlayerLogic.to.addNextMusic(music),
             onMoreTap: (music) {
-              SmartDialog.compatible.show(
-                  widget: DialogMoreWithMusic(music: music),
-                  alignmentTemp: Alignment.bottomCenter);
+              SmartDialog.show(
+                  alignment: Alignment.bottomCenter,
+                  builder: (context) {
+                    return DialogMoreWithMusic(music: music);
+                  });
             },
             onPlayNowTap: () {
               PlayerLogic.to.playMusic(GlobalLogic.to.loveList, mIndex: index);
@@ -179,9 +183,11 @@ class _PageViewComponentState extends State<PageViewComponent> {
               Get.toNamed(Routes.routeMenuDetails, arguments: menu.id, id: 1);
             },
             onMoreTap: (menu) {
-              SmartDialog.compatible.show(
-                  widget: DialogMoreWithMenu(menu: menu),
-                  alignmentTemp: Alignment.bottomCenter);
+              SmartDialog.show(
+                  alignment: Alignment.bottomCenter,
+                  builder: (context) {
+                    return DialogMoreWithMenu(menu: menu);
+                  });
             },
             menu: GlobalLogic.to.menuList[index],
             showDevicePic: true);
@@ -199,9 +205,11 @@ class _PageViewComponentState extends State<PageViewComponent> {
             onPlayNextTap: (music) async =>
                 await PlayerLogic.to.addNextMusic(music),
             onMoreTap: (music) {
-              SmartDialog.compatible.show(
-                  widget: DialogMoreWithMusic(music: music),
-                  alignmentTemp: Alignment.bottomCenter);
+              SmartDialog.show(
+                  alignment: Alignment.bottomCenter,
+                  builder: (context) {
+                    return DialogMoreWithMusic(music: music);
+                  });
             },
             onPlayNowTap: () {
               PlayerLogic.to

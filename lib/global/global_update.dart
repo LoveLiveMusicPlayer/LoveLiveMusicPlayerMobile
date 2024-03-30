@@ -25,7 +25,7 @@ class UpdateLogic extends SuperController
     super.onInit();
     AzhonAppUpdate.listener((Map<String, dynamic> map) {
       if (map.containsKey('error')) {
-        SmartDialog.compatible.showToast('update_fail'.tr);
+        SmartDialog.showToast('update_fail'.tr);
       }
     });
   }
@@ -49,7 +49,7 @@ class UpdateLogic extends SuperController
                   androidAppId: packageInfo.packageName,
                   iOSAppId: "1641625393");
             } else {
-              SmartDialog.compatible.showToast('no_need_update'.tr);
+              SmartDialog.showToast('no_need_update'.tr);
             }
             break;
           }
@@ -60,7 +60,7 @@ class UpdateLogic extends SuperController
         final isNewVersion =
             AppUtils.compareVersion(appVersion, map['versionName']);
         if (!isNewVersion) {
-          SmartDialog.compatible.showToast('no_need_update'.tr);
+          SmartDialog.showToast('no_need_update'.tr);
           return;
         }
         showUpdateDialog(map);

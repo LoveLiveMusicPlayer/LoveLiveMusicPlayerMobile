@@ -114,38 +114,42 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
   Widget renderAddPlayList() {
     return _buildItem(Assets.dialogIcAddPlayList, 'add_to_playlist'.tr,
         () async {
-      SmartDialog.compatible.dismiss();
+      SmartDialog.dismiss();
       await PlayerLogic.to.addNextMusic(widget.music, isNext: false);
-      SmartDialog.compatible.showToast('add_success'.tr);
+      SmartDialog.showToast('add_success'.tr);
     });
   }
 
   /// 添加到歌单
   Widget renderAddMenu() {
     return _buildItem(Assets.dialogIcAddSongSheet, 'add_to_menu'.tr, () {
-      SmartDialog.compatible.dismiss();
-      SmartDialog.compatible.show(
-          widget: DialogAddSongSheet(
-              musicList: [widget.music],
-              changeLoveStatusCallback: widget.changeLoveStatusCallback),
-          alignmentTemp: Alignment.bottomCenter);
+      SmartDialog.dismiss();
+      SmartDialog.show(
+          alignment: Alignment.bottomCenter,
+          builder: (context) {
+            return DialogAddSongSheet(
+                musicList: [widget.music],
+                changeLoveStatusCallback: widget.changeLoveStatusCallback);
+          });
     });
   }
 
   /// 歌曲信息
   Widget renderMusicInfo() {
     return _buildItem(Assets.dialogIcSongInfo, 'music_info'.tr, () {
-      SmartDialog.compatible.dismiss();
-      SmartDialog.compatible.show(
-          widget: DialogSongInfo(music: widget.music),
-          alignmentTemp: Alignment.bottomCenter);
+      SmartDialog.dismiss();
+      SmartDialog.show(
+          alignment: Alignment.bottomCenter,
+          builder: (context) {
+            return DialogSongInfo(music: widget.music);
+          });
     });
   }
 
   /// 在萌娘百科搜索
   Widget renderSearchInMoeGirl() {
     return _buildItem(Assets.drawerDrawerInspect, 'search_in_moe_girl'.tr, () {
-      SmartDialog.compatible.dismiss();
+      SmartDialog.dismiss();
       Get.toNamed(Routes.routeMoeGirl, arguments: widget.music.musicName!);
     });
   }
@@ -156,7 +160,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
       return Container();
     }
     return _buildItem(Assets.dialogIcSeeAlbum, 'view_album'.tr, () {
-      SmartDialog.compatible.dismiss();
+      SmartDialog.dismiss();
       widget.onClosePanel?.call();
       if (album != null) {
         Get.toNamed(Routes.routeAlbumDetails, arguments: album, id: 1);
@@ -168,7 +172,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
   Widget renderRemoveItem() {
     if (widget.onRemove != null) {
       return _buildItem(Assets.dialogIcDelete2, 'remove_music'.tr, () {
-        SmartDialog.compatible.dismiss();
+        SmartDialog.dismiss();
         widget.onRemove!(widget.music);
       });
     }
@@ -178,7 +182,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
   /// 分享歌曲
   Widget renderShareMusic() {
     return _buildItem(Assets.drawerDrawerShare, 'share_music'.tr, () {
-      SmartDialog.compatible.dismiss();
+      SmartDialog.dismiss();
       AppUtils.shareQQ(music: widget.music);
     });
   }
@@ -190,7 +194,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
     }
     return _buildItem(Assets.drawerDrawerReset, 'search_lyric'.tr, () {
       PlayerLogic.to.getLrc(true);
-      SmartDialog.compatible.dismiss();
+      SmartDialog.dismiss();
     });
   }
 

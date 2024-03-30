@@ -61,27 +61,29 @@ class DialogAddSongSheet extends StatelessWidget {
             color: Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF,
           ),
           _buildItem('create_menu'.tr, true, () {
-            SmartDialog.compatible.dismiss();
-            SmartDialog.compatible.show(
-                widget: TextFieldDialog(
-                    title: 'create_menu'.tr,
-                    hint: 'input_menu_name'.tr,
-                    onConfirm: (name) async {
-                      final idList = <String>[];
-                      for (var music in musicList) {
-                        final id = music.musicId;
-                        if (id != null) {
-                          idList.add(id);
+            SmartDialog.dismiss();
+            SmartDialog.show(
+                clickMaskDismiss: false,
+                alignment: Alignment.center,
+                builder: (context) {
+                  return TextFieldDialog(
+                      title: 'create_menu'.tr,
+                      hint: 'input_menu_name'.tr,
+                      onConfirm: (name) async {
+                        final idList = <String>[];
+                        for (var music in musicList) {
+                          final id = music.musicId;
+                          if (id != null) {
+                            idList.add(id);
+                          }
                         }
-                      }
-                      bool isSuccess = await DBLogic.to.addMenu(name, idList);
-                      SmartDialog.compatible.showToast(isSuccess
-                          ? 'create_success'.tr
-                          : 'create_over_max'.tr);
-                      changeMenuStateCallback?.call(isSuccess);
-                    }),
-                clickBgDismissTemp: false,
-                alignmentTemp: Alignment.center);
+                        bool isSuccess = await DBLogic.to.addMenu(name, idList);
+                        SmartDialog.showToast(isSuccess
+                            ? 'create_success'.tr
+                            : 'create_over_max'.tr);
+                        changeMenuStateCallback?.call(isSuccess);
+                      });
+                });
           }, assetPath: Assets.dialogIcNewSongList),
           renderLove(),
           Expanded(
@@ -109,8 +111,8 @@ class DialogAddSongSheet extends StatelessWidget {
                       DBLogic.to
                           .insertToMenu(menuList[index].id, idList)
                           .then((isSuccess) {
-                        SmartDialog.compatible.dismiss();
-                        SmartDialog.compatible.showToast(
+                        SmartDialog.dismiss();
+                        SmartDialog.showToast(
                             isSuccess ? 'add_success'.tr : 'add_fail'.tr);
                         changeMenuStateCallback?.call(isSuccess);
                       });
@@ -128,9 +130,9 @@ class DialogAddSongSheet extends StatelessWidget {
     bool notAllLove = musicList.any((music) => music.isLove == false);
     return _buildItem('iLove'.tr, true, () async {
       await PlayerLogic.to.toggleLoveList(musicList, notAllLove);
-      SmartDialog.compatible.dismiss();
-      SmartDialog.compatible
-          .showToast(notAllLove ? 'add_to_iLove'.tr : 'remove_from_iLove'.tr);
+      SmartDialog.dismiss();
+      SmartDialog.showToast(
+          notAllLove ? 'add_to_iLove'.tr : 'remove_from_iLove'.tr);
       changeLoveStatusCallback?.call(notAllLove);
     },
         assetPath: notAllLove ? Assets.playerPlayLove : null,

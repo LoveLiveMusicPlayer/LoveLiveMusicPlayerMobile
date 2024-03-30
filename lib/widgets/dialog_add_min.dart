@@ -111,7 +111,7 @@ class _AddMinDialogState extends State<AddMinDialog> {
                       )),
                   child: TextButton(
                       onPressed: () {
-                        SmartDialog.compatible.dismiss();
+                        SmartDialog.dismiss();
                         widget._onBackListener?.call();
                       },
                       child: Text('cancel'.tr,
@@ -132,7 +132,7 @@ class _AddMinDialogState extends State<AddMinDialog> {
                           bottomRight: Radius.circular(16.r))),
                   child: TextButton(
                       onPressed: () {
-                        SmartDialog.compatible.dismiss();
+                        SmartDialog.dismiss();
                         widget._onConfirmListener?.call(_counter);
                       },
                       child: Text(

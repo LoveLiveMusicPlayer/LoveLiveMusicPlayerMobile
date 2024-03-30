@@ -54,8 +54,7 @@ class Network {
       bool isShowError = false,
       String? loadingMessage}) async {
     if (isShowDialog) {
-      SmartDialog.compatible
-          .showLoading(msg: loadingMessage ?? 'requesting'.tr);
+      SmartDialog.showLoading(msg: loadingMessage ?? 'requesting'.tr);
     }
     var resp = await dio!.get(url).onError((error, stackTrace) {
       _handlerError(
@@ -63,7 +62,7 @@ class Network {
       return Future.error("");
     });
     if (isShowDialog) {
-      SmartDialog.compatible.dismiss(status: SmartStatus.loading);
+      SmartDialog.dismiss(status: SmartStatus.loading);
     }
     return resp.data;
   }
@@ -90,8 +89,7 @@ class Network {
       bool isShowError = false,
       String? loadingMessage}) async {
     if (isShowDialog) {
-      SmartDialog.compatible
-          .showLoading(msg: loadingMessage ?? 'requesting'.tr);
+      SmartDialog.showLoading(msg: loadingMessage ?? 'requesting'.tr);
     }
     var resp = await dio!.post(url, data: data).onError((error, stackTrace) {
       _handlerError(
@@ -99,7 +97,7 @@ class Network {
       return Future.error("");
     });
     if (isShowDialog) {
-      SmartDialog.compatible.dismiss(status: SmartStatus.loading);
+      SmartDialog.dismiss(status: SmartStatus.loading);
     }
     return resp.data;
   }
@@ -173,7 +171,7 @@ class Network {
       bool isShowError,
       String loadingMessage) {
     if (isShowDialog) {
-      SmartDialog.compatible.showLoading(msg: loadingMessage);
+      SmartDialog.showLoading(msg: loadingMessage);
     }
     dio!
         .request<dynamic>(url,
@@ -183,7 +181,7 @@ class Network {
         .then((value) {
       if (success != null) {
         if (isShowDialog) {
-          SmartDialog.compatible.dismiss(status: SmartStatus.loading);
+          SmartDialog.dismiss(status: SmartStatus.loading);
         }
         success(value.data);
       }
@@ -225,27 +223,29 @@ class Network {
   static _noNetwork(Function(String msg)? error, bool isShowError) {
     error?.call('please_check_network'.tr);
     if (isShowError) {
-      SmartDialog.compatible.show(
-          widget: OneButtonDialog(
-        title: 'please_check_network'.tr,
-        isShowMsg: false,
-      ));
+      SmartDialog.show(builder: (context) {
+        return OneButtonDialog(
+          title: 'please_check_network'.tr,
+          isShowMsg: false,
+        );
+      });
     }
   }
 
   static _handlerError(String url, bool isShowDialog, bool isShowError,
       String msg, Function(String msg)? error) {
     if (isShowDialog) {
-      SmartDialog.compatible.dismiss(status: SmartStatus.loading);
+      SmartDialog.dismiss(status: SmartStatus.loading);
     }
     Log4f.d(msg: Uri.decodeFull(url));
     Log4f.d(msg: msg);
     if (isShowError) {
-      SmartDialog.compatible.show(
-          widget: OneButtonDialog(
-        title: "net_error".tr,
-        isShowMsg: false,
-      ));
+      SmartDialog.show(builder: (context) {
+        return OneButtonDialog(
+          title: "net_error".tr,
+          isShowMsg: false,
+        );
+      });
     }
     error?.call(msg);
   }

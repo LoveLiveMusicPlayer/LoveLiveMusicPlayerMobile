@@ -282,8 +282,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
                             hintStyle: textStyle,
                             suffixIcon: IconButton(
                                 icon: const Icon(Icons.clear),
-                                color:
-                                    isDarkTheme ? Colors.white : Colors.grey,
+                                color: isDarkTheme ? Colors.white : Colors.grey,
                                 highlightColor: Colors.transparent,
                                 onPressed: () {
                                   HomeController.to.state.searchControl.clear();

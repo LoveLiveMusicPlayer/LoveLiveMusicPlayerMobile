@@ -162,9 +162,11 @@ class ControlButtons extends StatelessWidget {
                       : null),
             ),
             materialButton(Assets.playerPlayPlaylist, () {
-              SmartDialog.compatible.show(
-                  widget: const DialogPlaylist(),
-                  alignmentTemp: Alignment.bottomCenter);
+              SmartDialog.show(
+                  alignment: Alignment.bottomCenter,
+                  builder: (context) {
+                    return const DialogPlaylist();
+                  });
             },
                 width: 32,
                 height: 32,

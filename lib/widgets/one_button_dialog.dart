@@ -101,7 +101,7 @@ class OneButtonDialog extends StatelessWidget {
                     bottomRight: Radius.circular(16.r))),
             child: TextButton(
                 onPressed: () {
-                  SmartDialog.compatible.dismiss();
+                  SmartDialog.dismiss();
                   _onBackListener?.call();
                 },
                 child: Text(

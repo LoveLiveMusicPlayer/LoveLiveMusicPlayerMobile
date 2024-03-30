@@ -117,21 +117,40 @@ class _PlayerState extends State<Player> {
                 if (PlayerLogic.to.playingMusic.value.musicId == null) {
                   return;
                 }
-                SmartDialog.compatible.show(
-                    widget: DialogMoreWithMusic(
-                        music:
-                            Music.deepClone(PlayerLogic.to.playingMusic.value),
-                        isPlayer: true,
-                        onClosePanel: () {
-                          GlobalLogic.mobileWeSlideController.hide();
-                          GlobalLogic.to.needHomeSafeArea.value = true;
-                          GlobalLogic.mobileWeSlideFooterController.hide();
-                        },
-                        changeLoveStatusCallback: (status) {
-                          PlayerLogic.to.playingMusic.value = Music.deepClone(
-                              PlayerLogic.to.playingMusic.value);
-                        }),
-                    alignmentTemp: Alignment.bottomCenter);
+                SmartDialog.show(
+                    alignment: Alignment.bottomCenter,
+                    builder: (context) {
+                      return DialogMoreWithMusic(
+                          music: Music.deepClone(
+                              PlayerLogic.to.playingMusic.value),
+                          isPlayer: true,
+                          onClosePanel: () {
+                            GlobalLogic.mobileWeSlideController.hide();
+                            GlobalLogic.to.needHomeSafeArea.value = true;
+                            GlobalLogic.mobileWeSlideFooterController.hide();
+                          },
+                          changeLoveStatusCallback: (status) {
+                            PlayerLogic.to.playingMusic.value = Music.deepClone(
+                                PlayerLogic.to.playingMusic.value);
+                          });
+                    });
+                SmartDialog.show(
+                    alignment: Alignment.bottomCenter,
+                    builder: (context) {
+                      return DialogMoreWithMusic(
+                          music: Music.deepClone(
+                              PlayerLogic.to.playingMusic.value),
+                          isPlayer: true,
+                          onClosePanel: () {
+                            GlobalLogic.mobileWeSlideController.hide();
+                            GlobalLogic.to.needHomeSafeArea.value = true;
+                            GlobalLogic.mobileWeSlideFooterController.hide();
+                          },
+                          changeLoveStatusCallback: (status) {
+                            PlayerLogic.to.playingMusic.value = Music.deepClone(
+                                PlayerLogic.to.playingMusic.value);
+                          });
+                    });
               }),
 
           SizedBox(height: 10.h),
@@ -291,17 +310,28 @@ class _PlayerState extends State<Player> {
             if (PlayerLogic.to.playingMusic.value.musicId == null) {
               return;
             }
-            SmartDialog.compatible.show(
-                widget: DialogAddSongSheet(
-                  musicList: [
-                    Music.deepClone(PlayerLogic.to.playingMusic.value)
-                  ],
-                  changeLoveStatusCallback: (status) async {
-                    PlayerLogic.to.playingMusic.value =
-                        Music.deepClone(PlayerLogic.to.playingMusic.value);
-                  },
-                ),
-                alignmentTemp: Alignment.bottomCenter);
+            SmartDialog.show(builder: (context) {
+              return DialogAddSongSheet(
+                musicList: [Music.deepClone(PlayerLogic.to.playingMusic.value)],
+                changeLoveStatusCallback: (status) async {
+                  PlayerLogic.to.playingMusic.value =
+                      Music.deepClone(PlayerLogic.to.playingMusic.value);
+                },
+              );
+            });
+            SmartDialog.show(
+                alignment: Alignment.bottomCenter,
+                builder: (context) {
+                  return DialogAddSongSheet(
+                    musicList: [
+                      Music.deepClone(PlayerLogic.to.playingMusic.value)
+                    ],
+                    changeLoveStatusCallback: (status) async {
+                      PlayerLogic.to.playingMusic.value =
+                          Music.deepClone(PlayerLogic.to.playingMusic.value);
+                    },
+                  );
+                });
           },
               width: 32,
               height: 32,

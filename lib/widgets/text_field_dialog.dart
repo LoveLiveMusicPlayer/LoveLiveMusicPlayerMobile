@@ -115,7 +115,7 @@ class _TextFieldDialogState extends State<TextFieldDialog> {
                   child: TextButton(
                       onPressed: () {
                         widget.onBack?.call();
-                        SmartDialog.compatible.dismiss();
+                        SmartDialog.dismiss();
                       },
                       child: Text('cancel'.tr,
                           style: Get.isDarkMode
@@ -135,7 +135,7 @@ class _TextFieldDialogState extends State<TextFieldDialog> {
                   child: TextButton(
                       onPressed: () {
                         widget.onConfirm?.call(text);
-                        SmartDialog.compatible.dismiss();
+                        SmartDialog.dismiss();
                       },
                       child: Text('confirm'.tr, style: TextStyleMs.white_16)),
                 ),

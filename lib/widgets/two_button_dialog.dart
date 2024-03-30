@@ -107,7 +107,7 @@ class TwoButtonDialog extends StatelessWidget {
                       )),
                   child: TextButton(
                       onPressed: () {
-                        SmartDialog.compatible.dismiss();
+                        SmartDialog.dismiss();
                         _onBackListener?.call();
                       },
                       child: Text('cancel'.tr,
@@ -128,7 +128,7 @@ class TwoButtonDialog extends StatelessWidget {
                           bottomRight: Radius.circular(16.r))),
                   child: TextButton(
                       onPressed: () {
-                        SmartDialog.compatible.dismiss();
+                        SmartDialog.dismiss();
                         _onConfirmListener?.call();
                       },
                       child: Text(

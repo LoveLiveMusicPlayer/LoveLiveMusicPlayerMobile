@@ -96,7 +96,7 @@ class HomePageView extends GetView<HomeController> {
         controller.selectAll(checked);
       },
       onCancelTap: () {
-        SmartDialog.compatible.dismiss();
+        SmartDialog.dismiss();
       },
       onSearchTap: (str) {
         controller.filterItem(str);
@@ -130,9 +130,9 @@ class HomePageView extends GetView<HomeController> {
           });
           final isSuccess = await PlayerLogic.to.addMusicList(tempList);
           if (isSuccess) {
-            SmartDialog.compatible.showToast('add_success'.tr);
+            SmartDialog.showToast('add_success'.tr);
           }
-          SmartDialog.compatible.dismiss();
+          SmartDialog.dismiss();
         }));
     list.add(BtnItem(
         imgPath: Assets.dialogIcAddPlayList,
@@ -150,16 +150,18 @@ class HomePageView extends GetView<HomeController> {
               tempList.add(music);
             }
           });
-          SmartDialog.compatible.show(
-              widget: DialogAddSongSheet(
-                  musicList: tempList,
-                  changeLoveStatusCallback: (status) {
-                    SmartDialog.compatible.dismiss();
-                  },
-                  changeMenuStateCallback: (status) {
-                    SmartDialog.compatible.dismiss();
-                  }),
-              alignmentTemp: Alignment.bottomCenter);
+          SmartDialog.show(
+              alignment: Alignment.bottomCenter,
+              builder: (context) {
+                return DialogAddSongSheet(
+                    musicList: tempList,
+                    changeLoveStatusCallback: (status) {
+                      SmartDialog.dismiss();
+                    },
+                    changeMenuStateCallback: (status) {
+                      SmartDialog.dismiss();
+                    });
+              });
         }));
     if (HomeController.to.state.currentIndex.value == 3) {
       // 仅在我喜欢中添加此按钮
@@ -179,26 +181,29 @@ class HomePageView extends GetView<HomeController> {
                 tempList.add(music);
               }
             });
-            SmartDialog.compatible.show(
-                widget: TwoButtonDialog(
-                    title: "confirm_to_delete_music".tr,
-                    isShowMsg: false,
-                    onConfirmListener: () {
-                      bool notAllLove =
-                          tempList.any((music) => music.isLove == false);
-                      PlayerLogic.to.toggleLoveList(tempList, notAllLove);
-                      SmartDialog.compatible.dismiss();
-                    }));
+            SmartDialog.show(builder: (context) {
+              return TwoButtonDialog(
+                  title: "confirm_to_delete_music".tr,
+                  isShowMsg: false,
+                  onConfirmListener: () {
+                    bool notAllLove =
+                        tempList.any((music) => music.isLove == false);
+                    PlayerLogic.to.toggleLoveList(tempList, notAllLove);
+                    SmartDialog.dismiss();
+                  });
+            });
           }));
     }
-    SmartDialog.compatible.show(
-        widget: DialogBottomBtn(
-          list: list,
-        ),
-        isPenetrateTemp: true,
-        clickBgDismissTemp: false,
-        maskColorTemp: Colors.transparent,
-        alignmentTemp: Alignment.bottomCenter,
-        onDismiss: () => controller.closeSelect());
+    SmartDialog.show(
+        usePenetrate: true,
+        clickMaskDismiss: false,
+        maskColor: Colors.transparent,
+        alignment: Alignment.bottomCenter,
+        onDismiss: controller.closeSelect,
+        builder: (context) {
+          return DialogBottomBtn(
+            list: list,
+          );
+        });
   }
 }

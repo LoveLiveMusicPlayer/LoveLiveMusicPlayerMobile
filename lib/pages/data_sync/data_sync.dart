@@ -119,7 +119,7 @@ class _DataSyncState extends State<DataSync> {
               child: Column(children: [
                 btnFunc(Assets.syncIconPhone, 'phone2pc'.tr, () async {
                   if (isTransferring) {
-                    SmartDialog.compatible.showToast('transferring'.tr);
+                    SmartDialog.showToast('transferring'.tr);
                     return;
                   }
                   isTransferring = true;
@@ -128,7 +128,7 @@ class _DataSyncState extends State<DataSync> {
                 SizedBox(height: 28.h),
                 btnFunc(Assets.syncIconComputer, 'pc2phone'.tr, () async {
                   if (isTransferring) {
-                    SmartDialog.compatible.showToast('transferring'.tr);
+                    SmartDialog.showToast('transferring'.tr);
                     return;
                   }
                   isTransferring = true;
@@ -143,15 +143,16 @@ class _DataSyncState extends State<DataSync> {
                         activeColor: const Color.fromARGB(255, 228, 0, 127),
                         onChanged: (value) {
                           if (value) {
-                            SmartDialog.compatible.show(
-                                widget: TwoButtonDialog(
-                              title: 'warning_choose'.tr,
-                              msg: 'confirm_full_trans'.tr,
-                              onConfirmListener: () {
-                                switchValue = value;
-                                setState(() {});
-                              },
-                            ));
+                            SmartDialog.show(builder: (context) {
+                              return TwoButtonDialog(
+                                title: 'warning_choose'.tr,
+                                msg: 'confirm_full_trans'.tr,
+                                onConfirmListener: () {
+                                  switchValue = value;
+                                  setState(() {});
+                                },
+                              );
+                            });
                           } else {
                             switchValue = value;
                             setState(() {});
@@ -213,37 +214,38 @@ class _DataSyncState extends State<DataSync> {
 
   showBackDialog() {
     final width = min(0.4 * Get.height, 0.8 * Get.width);
-    SmartDialog.compatible.show(
-        widget: Container(
-      width: width,
-      height: 150.h,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20.r),
-      ),
-      child: Column(mainAxisSize: MainAxisSize.min, children: [
-        Container(
-          margin: EdgeInsets.only(bottom: 30.h),
-          child: Text('terminate_trans'.tr,
-              style: TextStyleMs.black_14, textAlign: TextAlign.center),
+    SmartDialog.show(builder: (context) {
+      return Container(
+        width: width,
+        height: 150.h,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20.r),
         ),
-        ElevatedButton(
-          onPressed: () async {
-            final message = ftpCmdToJson(FtpCmd(cmd: "stop", body: ""));
-            channel?.sink.add(message);
-            SmartDialog.compatible.dismiss();
-            DBLogic.to
-                .findAllListByGroup(GlobalLogic.to.currentGroup.value)
-                .then((value) => Get.back());
-          },
-          child: Padding(
-            padding: EdgeInsets.all(8.h),
-            child: Text('confirm'.tr, style: TextStyleMs.white_14),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Container(
+            margin: EdgeInsets.only(bottom: 30.h),
+            child: Text('terminate_trans'.tr,
+                style: TextStyleMs.black_14, textAlign: TextAlign.center),
           ),
-        )
-      ]),
-    ));
+          ElevatedButton(
+            onPressed: () async {
+              final message = ftpCmdToJson(FtpCmd(cmd: "stop", body: ""));
+              channel?.sink.add(message);
+              SmartDialog.dismiss();
+              DBLogic.to
+                  .findAllListByGroup(GlobalLogic.to.currentGroup.value)
+                  .then((value) => Get.back());
+            },
+            child: Padding(
+              padding: EdgeInsets.all(8.h),
+              child: Text('confirm'.tr, style: TextStyleMs.white_14),
+            ),
+          )
+        ]),
+      );
+    });
   }
 
   sendPhone2pc() async {
@@ -269,7 +271,7 @@ class _DataSyncState extends State<DataSync> {
       switch (ftpCmd.cmd) {
         case "version":
           if ((int.tryParse(ftpCmd.body) ?? 0) != transVer) {
-            SmartDialog.compatible.showToast("version_incompatible".tr);
+            SmartDialog.showToast("version_incompatible".tr);
             Get.back();
             return;
           }
@@ -294,7 +296,7 @@ class _DataSyncState extends State<DataSync> {
           break;
       }
     }, onError: (e) {
-      SmartDialog.compatible.showToast('connect_fail'.tr);
+      SmartDialog.showToast('connect_fail'.tr);
       Log4f.i(msg: e.toString());
     }, cancelOnError: true);
     isConnected = true;
@@ -339,7 +341,7 @@ class _DataSyncState extends State<DataSync> {
   release() {
     final message = ftpCmdToJson(FtpCmd(cmd: "finish", body: ""));
     channel?.sink.add(message);
-    SmartDialog.compatible.dismiss();
+    SmartDialog.dismiss();
     DBLogic.to
         .findAllListByGroup(GlobalLogic.to.currentGroup.value)
         .then((value) => Get.back());

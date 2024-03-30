@@ -105,7 +105,7 @@ class _DetailsBodyState extends State<DetailsBody> {
       },
       onScreenTap: () {
         if (widget.logic.state.isSelect) {
-          SmartDialog.compatible.dismiss();
+          SmartDialog.dismiss();
         } else {
           widget.logic.openSelect();
           showSelectDialog();
@@ -115,7 +115,7 @@ class _DetailsBodyState extends State<DetailsBody> {
         widget.logic.selectAll(checked);
       },
       onCancelTap: () {
-        SmartDialog.compatible.dismiss();
+        SmartDialog.dismiss();
       },
     );
   }
@@ -176,10 +176,11 @@ class _DetailsBodyState extends State<DetailsBody> {
         await PlayerLogic.to.addNextMusic(music);
       },
       onMoreTap: (music) {
-        SmartDialog.compatible.show(
-          widget: showDialogMoreWithMusic(music),
-          alignmentTemp: Alignment.bottomCenter,
-        );
+        SmartDialog.show(
+            alignment: Alignment.bottomCenter,
+            builder: (context) {
+              return showDialogMoreWithMusic(music);
+            });
       },
       onPlayNowTap: () {
         PlayerLogic.to.playMusic(widget.music, mIndex: index);
@@ -208,8 +209,8 @@ class _DetailsBodyState extends State<DetailsBody> {
       }
       final isSuccess = await PlayerLogic.to.addMusicList(tempList);
       if (isSuccess) {
-        SmartDialog.compatible.showToast('add_success'.tr);
-        SmartDialog.compatible.dismiss();
+        SmartDialog.showToast('add_success'.tr);
+        SmartDialog.dismiss();
       }
     }
 
@@ -219,19 +220,20 @@ class _DetailsBodyState extends State<DetailsBody> {
       if (tempList.isEmpty) {
         return;
       }
-      SmartDialog.compatible.show(
-        widget: DialogAddSongSheet(
-          musicList: tempList,
-          changeLoveStatusCallback: (status) {
-            widget.logic.changeLoveStatus(tempList, status);
-            SmartDialog.compatible.dismiss();
-          },
-          changeMenuStateCallback: (status) {
-            SmartDialog.compatible.dismiss();
-          },
-        ),
-        alignmentTemp: Alignment.bottomCenter,
-      );
+      SmartDialog.show(
+          alignment: Alignment.bottomCenter,
+          builder: (context) {
+            return DialogAddSongSheet(
+              musicList: tempList,
+              changeLoveStatusCallback: (status) {
+                widget.logic.changeLoveStatus(tempList, status);
+                SmartDialog.dismiss();
+              },
+              changeMenuStateCallback: (status) {
+                SmartDialog.dismiss();
+              },
+            );
+          });
     }
 
     void deleteFromMenu() async {
@@ -242,16 +244,16 @@ class _DetailsBodyState extends State<DetailsBody> {
       }
       List<String> musicIds = tempList.map((music) => music.musicId!).toList();
 
-      SmartDialog.compatible.show(
-        widget: TwoButtonDialog(
+      SmartDialog.show(builder: (context) {
+        return TwoButtonDialog(
           title: "confirm_delete_from_menu".tr,
           isShowMsg: false,
           onConfirmListener: () {
             widget.onRemove!(musicIds);
-            SmartDialog.compatible.dismiss();
+            SmartDialog.dismiss();
           },
-        ),
-      );
+        );
+      });
     }
 
     list.add(BtnItem(

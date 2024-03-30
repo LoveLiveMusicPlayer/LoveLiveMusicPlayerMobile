@@ -46,30 +46,33 @@ class DialogMoreWithMenu extends StatelessWidget {
             color: Get.isDarkMode ? ColorMs.color737373 : ColorMs.colorCFCFCF,
           ),
           _buildItem(Assets.dialogIcEdit, 'rename_menu'.tr, true, () {
-            SmartDialog.compatible.dismiss();
-            SmartDialog.compatible.show(
-                widget: TextFieldDialog(
-                    title: 'rename_menu'.tr,
-                    hint: 'input_menu_name'.tr,
-                    onConfirm: (name) {
-                      DBLogic.to.updateMenuName(name, menu.id);
-                    }),
-                clickBgDismissTemp: false,
-                alignmentTemp: Alignment.center);
+            SmartDialog.dismiss();
+            SmartDialog.show(
+                clickMaskDismiss: false,
+                alignment: Alignment.center,
+                builder: (context) {
+                  return TextFieldDialog(
+                      title: 'rename_menu'.tr,
+                      hint: 'input_menu_name'.tr,
+                      onConfirm: (name) {
+                        DBLogic.to.updateMenuName(name, menu.id);
+                      });
+                });
           }),
           _buildItem(Assets.dialogIcDelete2, 'delete_menu'.tr, true, () {
-            SmartDialog.compatible.dismiss();
-            SmartDialog.compatible.show(
-                widget: TwoButtonDialog(
-              title: 'warning_choose'.tr,
-              msg: 'need_delete_menu'.tr,
-              onConfirmListener: () {
-                DBLogic.to.deleteMenuById(menu.id);
-              },
-            ));
+            SmartDialog.dismiss();
+            SmartDialog.show(builder: (context) {
+              return TwoButtonDialog(
+                title: 'warning_choose'.tr,
+                msg: 'need_delete_menu'.tr,
+                onConfirmListener: () {
+                  DBLogic.to.deleteMenuById(menu.id);
+                },
+              );
+            });
           }),
           _buildItem(Assets.drawerDrawerShare, 'share_menu'.tr, false, () {
-            SmartDialog.compatible.dismiss();
+            SmartDialog.dismiss();
             AppUtils.shareQQ(menu: menu);
           }),
         ],

@@ -318,7 +318,7 @@ class AppUtils {
     if (music != null && menu != null) {
       return;
     }
-    SmartDialog.compatible.showLoading(msg: "loading".tr);
+    SmartDialog.showLoading(msg: "loading".tr);
     late String text;
     late String title;
     String params = "";
@@ -392,7 +392,7 @@ class AppUtils {
     } else if (!SDUtils.checkFileExist(path)) {
       path = Const.shareDefaultLogo;
     }
-    await SmartDialog.compatible.dismiss();
+    SmartDialog.dismiss();
 
     SSDKMap sdkMap = SSDKMap()
       ..setQQ(
@@ -417,7 +417,7 @@ class AppUtils {
         dynamic userdata, dynamic contentEntity, SSDKError error) {
       Log4f.i(msg: "错误码: ${error.code}");
       Log4f.i(msg: "错误原因: ${error.rawData}");
-      SmartDialog.compatible.showToast("${"share_error".tr} ${error.code}");
+      SmartDialog.showToast("${"share_error".tr} ${error.code}");
     });
   }
 
@@ -449,18 +449,19 @@ class AppUtils {
         final musicId = obj["musicId"];
         final music = await DBLogic.to.findMusicById(musicId);
         if (music == null) {
-          SmartDialog.compatible.showToast("no_found_music1".tr);
+          SmartDialog.showToast("no_found_music1".tr);
           return;
         }
-        SmartDialog.compatible.show(
-            widget: TwoButtonDialog(
-          isShowImg: false,
-          title: "need_play_share_music".tr,
-          msg: music.musicName,
-          onConfirmListener: () {
-            PlayerLogic.to.playMusic([music]);
-          },
-        ));
+        SmartDialog.show(builder: (context) {
+          return TwoButtonDialog(
+            isShowImg: false,
+            title: "need_play_share_music".tr,
+            msg: music.musicName,
+            onConfirmListener: () {
+              PlayerLogic.to.playMusic([music]);
+            },
+          );
+        });
         break;
       case "2":
         // 传递歌单
@@ -478,21 +479,22 @@ class AppUtils {
           }
         });
         if (tempArr.isEmpty) {
-          SmartDialog.compatible.showToast("no_found_music2".tr);
+          SmartDialog.showToast("no_found_music2".tr);
           return;
         }
         final menuName = json["menuName"];
-        SmartDialog.compatible.show(
-            widget: TwoButtonDialog(
-          isShowImg: false,
-          title: "need_import_share_menu".tr,
-          msg: menuName,
-          onConfirmListener: () async {
-            bool isSuccess = await DBLogic.to.addMenu(menuName, tempArr);
-            SmartDialog.compatible.showToast(
-                isSuccess ? 'create_success'.tr : 'create_over_max'.tr);
-          },
-        ));
+        SmartDialog.show(builder: (context) {
+          return TwoButtonDialog(
+            isShowImg: false,
+            title: "need_import_share_menu".tr,
+            msg: menuName,
+            onConfirmListener: () async {
+              bool isSuccess = await DBLogic.to.addMenu(menuName, tempArr);
+              SmartDialog.showToast(
+                  isSuccess ? 'create_success'.tr : 'create_over_max'.tr);
+            },
+          );
+        });
         break;
     }
   }

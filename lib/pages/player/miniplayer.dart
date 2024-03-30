@@ -127,9 +127,11 @@ class _MiniPlayerState extends State<MiniPlayer> {
             touchIconByAsset(
                 path: Assets.playerPlayPlaylist,
                 onTap: () {
-                  SmartDialog.compatible.show(
-                      widget: const DialogPlaylist(),
-                      alignmentTemp: Alignment.bottomCenter);
+                  SmartDialog.show(
+                      alignment: Alignment.bottomCenter,
+                      builder: (context) {
+                        return const DialogPlaylist();
+                      });
                 },
                 width: 24,
                 height: 24,
