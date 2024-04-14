@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:log4f/log4f.dart';
@@ -36,51 +35,48 @@ class SplashPhoto {
       // 从splash文件夹中获取已缓存的图片列表
       splashList = [...SDUtils.getSplashPhotoList()];
 
-      final connection = await Connectivity().checkConnectivity();
-      if (connection != ConnectivityResult.none) {
-        final result = await Network.getSync(Const.splashConfigUrl);
-        if (result is Map<String, dynamic>) {
-          // 能够加载到开屏配置
-          final config = initConfigFromJson(jsonEncode(result));
-          Const.dataOssUrl = config.ossUrl;
-          Const.splashUrl = config.ossUrl + config.splash.route;
-          final forceMap = config.splash.forceChoose;
+      final result = await Network.getSync(Const.splashConfigUrl);
+      if (result is Map<String, dynamic>) {
+        // 能够加载到开屏配置
+        final config = initConfigFromJson(jsonEncode(result));
+        Const.dataOssUrl = config.ossUrl;
+        Const.splashUrl = config.ossUrl + config.splash.route;
+        final forceMap = config.splash.forceChoose;
 
-          // 先将全部图片放到列表中
-          await addAllSplashPhoto(config);
-          SDUtils.downloadSplashList(downloadList);
+        // 先将全部图片放到列表中
+        await addAllSplashPhoto(config);
+        SDUtils.downloadSplashList(downloadList);
 
-          if (forceMap == null) {
-            return;
-          }
+        if (forceMap == null) {
+          return;
+        }
 
-          final endTime = forceMap["endTime"];
-          if (endTime != null &&
-              endTime < DateTime.now().millisecondsSinceEpoch) {
-            return;
-          }
-          final forceId = forceMap["uid"];
-          if (forceId == null) {
-            return;
-          }
-          final forceBg = config.splash.bg
-              .firstWhereOrNull((bg) => bg.uid == forceMap["uid"]);
-          if (forceBg == null) {
-            return;
-          }
-          final index = forceMap["index"];
-          if (index == null || index < 0 || index > forceBg.size) {
-            return;
-          }
+        final endTime = forceMap["endTime"];
+        if (endTime != null &&
+            endTime < DateTime.now().millisecondsSinceEpoch) {
+          return;
+        }
+        final forceId = forceMap["uid"];
+        if (forceId == null) {
+          return;
+        }
+        final forceBg = config.splash.bg
+            .firstWhereOrNull((bg) => bg.uid == forceMap["uid"]);
+        if (forceBg == null) {
+          return;
+        }
+        final index = forceMap["index"];
+        if (index == null || index < 0 || index > forceBg.size) {
+          return;
+        }
 
-          final path =
-              "${SDUtils.splashPhotoPath}${forceBg.singer}/bg_${forceBg.singer}_$index.png";
-          final mIndex = splashList.indexOf(path);
-          if (mIndex >= 0) {
-            // 缓存列表存在强制开屏图，清空数组并将其重新添加
-            splashList.clear();
-            splashList.add(path);
-          }
+        final path =
+            "${SDUtils.splashPhotoPath}${forceBg.singer}/bg_${forceBg.singer}_$index.png";
+        final mIndex = splashList.indexOf(path);
+        if (mIndex >= 0) {
+          // 缓存列表存在强制开屏图，清空数组并将其重新添加
+          splashList.clear();
+          splashList.add(path);
         }
       }
     } catch (e) {

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app_update/flutter_app_update.dart';
@@ -31,10 +30,6 @@ class UpdateLogic extends SuperController
   }
 
   checkUpdate() async {
-    final connection = await Connectivity().checkConnectivity();
-    if (connection == ConnectivityResult.none) {
-      return;
-    }
     if (Platform.isIOS) {
       Network.get(Const.appstoreUrl, success: (resp) async {
         Map<String, dynamic> map = jsonDecode(resp);

@@ -32,7 +32,7 @@ import 'package:lovelivemusicplayer/widgets/bottom_bar2.dart';
 import 'package:lovelivemusicplayer/widgets/permission_dialog.dart';
 import 'package:sharesdk_plugin/sharesdk_interface.dart';
 import 'package:umeng_common_sdk/umeng_common_sdk.dart';
-import 'package:umeng_push_sdk/umeng_push.dart';
+import 'package:umeng_push_sdk/umeng_push_sdk.dart';
 import 'package:we_slide/we_slide.dart';
 
 class HomeView extends StatefulWidget {
