@@ -6,7 +6,7 @@ import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 
 class PlayerInfo extends StatelessWidget {
-  const PlayerInfo({Key? key}) : super(key: key);
+  const PlayerInfo({super.key});
 
   @override
   Widget build(BuildContext context) {

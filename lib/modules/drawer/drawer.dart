@@ -29,7 +29,7 @@ import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class DrawerPage extends StatefulWidget {
-  const DrawerPage({Key? key}) : super(key: key);
+  const DrawerPage({super.key});
 
   @override
   State<DrawerPage> createState() => _DrawerPageState();

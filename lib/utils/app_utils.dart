@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui' as dart_ui;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:color_thief_flutter/color_thief_flutter.dart';
@@ -66,7 +67,7 @@ class AppUtils {
 
   /// Music提取主色
   static Future<Color?> getImagePaletteFromMusic(Music music) async {
-    var image;
+    dart_ui.Image? image;
     if (music.existFile == true) {
       final path = "${SDUtils.path}${music.baseUrl}${music.coverPath}";
       image = await getImageFromProvider(FileImage(File(path)));

@@ -26,7 +26,7 @@ import 'package:wakelock/wakelock.dart';
 import 'package:web_socket_channel/io.dart';
 
 class DataSync extends StatefulWidget {
-  const DataSync({Key? key}) : super(key: key);
+  const DataSync({super.key});
 
   @override
   State<DataSync> createState() => _DataSyncState();

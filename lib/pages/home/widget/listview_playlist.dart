@@ -17,14 +17,13 @@ class ListViewItemPlaylist extends StatefulWidget {
   final Function(int) onPlayTap;
 
   const ListViewItemPlaylist(
-      {Key? key,
+      {super.key,
       required this.index,
       required this.musicId,
       required this.name,
       required this.artist,
       required this.onDelTap,
-      required this.onPlayTap})
-      : super(key: key);
+      required this.onPlayTap});
 
   @override
   State<ListViewItemPlaylist> createState() => _ListViewItemPlaylist();

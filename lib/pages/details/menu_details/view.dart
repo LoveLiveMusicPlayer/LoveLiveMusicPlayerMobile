@@ -15,7 +15,7 @@ import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 
 class MenuDetailsPage extends StatefulWidget {
-  const MenuDetailsPage({Key? key}) : super(key: key);
+  const MenuDetailsPage({super.key});
 
   @override
   State<MenuDetailsPage> createState() => _MenuDetailsPageState();

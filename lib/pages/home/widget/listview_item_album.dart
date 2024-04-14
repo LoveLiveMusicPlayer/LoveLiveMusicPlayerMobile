@@ -23,12 +23,11 @@ class ListViewItemAlbum extends StatefulWidget {
   final Function(Album, bool) onItemTap;
 
   ListViewItemAlbum(
-      {Key? key,
+      {super.key,
       required this.album,
       required this.onItemTap,
       this.checked = false,
-      this.isSelect = false})
-      : super(key: key);
+      this.isSelect = false});
 
   @override
   State<ListViewItemAlbum> createState() => _ListViewItemAlbumState();

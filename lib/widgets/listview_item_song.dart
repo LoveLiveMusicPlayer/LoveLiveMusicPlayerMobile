@@ -30,7 +30,7 @@ class ListViewItemSong extends StatefulWidget {
   final int index;
 
   ListViewItemSong(
-      {Key? key,
+      {super.key,
       required this.index,
       required this.onItemTap,
       required this.onPlayNextTap,
@@ -38,8 +38,7 @@ class ListViewItemSong extends StatefulWidget {
       required this.onMoreTap,
       required this.music,
       this.isDraggable = false,
-      this.checked = false})
-      : super(key: key);
+      this.checked = false});
 
   @override
   State<ListViewItemSong> createState() => _ListViewItemSongState();

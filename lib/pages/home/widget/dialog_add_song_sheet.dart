@@ -19,11 +19,10 @@ class DialogAddSongSheet extends StatelessWidget {
   final Function(bool)? changeMenuStateCallback;
 
   const DialogAddSongSheet(
-      {Key? key,
+      {super.key,
       required this.musicList,
       this.changeLoveStatusCallback,
-      this.changeMenuStateCallback})
-      : super(key: key);
+      this.changeMenuStateCallback});
 
   @override
   Widget build(BuildContext context) {

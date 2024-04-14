@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:scan/scan.dart';
 
 class Scanner extends StatelessWidget {
-  const Scanner({Key? key}) : super(key: key);
+  const Scanner({super.key});
 
   @override
   Widget build(BuildContext context) {

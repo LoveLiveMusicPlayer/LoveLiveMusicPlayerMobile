@@ -22,7 +22,7 @@ class DetailsListTop extends StatelessWidget {
   final Color? bgColor;
 
   const DetailsListTop({
-    Key? key,
+    super.key,
     this.selectAll = false,
     this.isSelect = false,
     this.itemsLength = 0,
@@ -33,7 +33,7 @@ class DetailsListTop extends StatelessWidget {
     required this.onScreenTap,
     required this.onSelectAllTap,
     required this.onCancelTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

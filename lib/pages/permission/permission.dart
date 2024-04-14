@@ -9,7 +9,7 @@ import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Permission extends StatefulWidget {
-  const Permission({Key? key}) : super(key: key);
+  const Permission({super.key});
 
   @override
   State<Permission> createState() => _PermissionState();

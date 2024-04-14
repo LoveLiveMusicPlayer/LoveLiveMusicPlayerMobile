@@ -8,7 +8,7 @@ import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 class DialogBottomBtn extends StatelessWidget {
   final List<BtnItem> list;
 
-  const DialogBottomBtn({Key? key, required this.list}) : super(key: key);
+  const DialogBottomBtn({super.key, required this.list});
 
   @override
   Widget build(BuildContext context) {

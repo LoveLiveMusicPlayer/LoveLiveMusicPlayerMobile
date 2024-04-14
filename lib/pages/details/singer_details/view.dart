@@ -14,7 +14,7 @@ import 'package:lovelivemusicplayer/pages/home/nested_page/nested_controller.dar
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 
 class SingerDetailsPage extends StatefulWidget {
-  const SingerDetailsPage({Key? key}) : super(key: key);
+  const SingerDetailsPage({super.key});
 
   @override
   State<SingerDetailsPage> createState() => _SingerDetailsPageState();

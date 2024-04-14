@@ -31,7 +31,7 @@ import 'package:wakelock/wakelock.dart';
 import 'package:web_socket_channel/io.dart';
 
 class MusicTransform extends StatefulWidget {
-  const MusicTransform({Key? key}) : super(key: key);
+  const MusicTransform({super.key});
 
   @override
   State<MusicTransform> createState() => _MusicTransformState();

@@ -18,12 +18,12 @@ class AddMinDialog extends StatefulWidget {
   int? _initTimer;
 
   AddMinDialog({
-    Key? key,
+    super.key,
     String? title,
     Callback? onBackListener,
     Callback? onConfirmListener,
     int? initTimer = 0,
-  }) : super(key: key) {
+  }) {
     _title = title;
     _initTimer = initTimer;
     _onBackListener = onBackListener;

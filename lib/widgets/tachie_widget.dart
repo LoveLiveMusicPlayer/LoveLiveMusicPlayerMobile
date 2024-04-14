@@ -11,7 +11,7 @@ import 'package:lovelivemusicplayer/utils/app_utils.dart';
 class Tachie extends StatelessWidget {
   final bool canMove;
 
-  const Tachie({Key? key, this.canMove = true}) : super(key: key);
+  const Tachie({super.key, this.canMove = true});
 
   @override
   Widget build(BuildContext context) {

@@ -8,7 +8,7 @@ import 'package:lovelivemusicplayer/utils/color_manager.dart';
 
 class DrawerFunctionButton extends StatefulWidget {
   const DrawerFunctionButton(
-      {Key? key,
+      {super.key,
       this.icon,
       this.text = "",
       this.onTap,
@@ -18,8 +18,7 @@ class DrawerFunctionButton extends StatefulWidget {
       this.colorWithBG = true,
       this.iconColor,
       this.controller,
-      this.callBack})
-      : super(key: key);
+      this.callBack});
 
   final String? icon;
   final String text;

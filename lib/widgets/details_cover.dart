@@ -10,7 +10,7 @@ import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 class DetailsCover extends StatelessWidget {
   final Album album;
 
-  const DetailsCover({Key? key, required this.album}) : super(key: key);
+  const DetailsCover({super.key, required this.album});
 
   @override
   Widget build(BuildContext context) {

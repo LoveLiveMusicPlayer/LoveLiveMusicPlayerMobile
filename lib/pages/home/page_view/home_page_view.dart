@@ -20,7 +20,7 @@ import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 
 class HomePageView extends GetView<HomeController> {
-  const HomePageView({Key? key}) : super(key: key);
+  const HomePageView({super.key});
 
   @override
   Widget build(BuildContext context) {

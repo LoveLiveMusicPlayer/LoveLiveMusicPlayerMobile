@@ -23,12 +23,11 @@ class ListViewItemSongSheet extends StatelessWidget {
   final bool? showDevicePic;
 
   const ListViewItemSongSheet(
-      {Key? key,
+      {super.key,
       required this.onItemTap,
       this.onMoreTap,
       required this.menu,
-      this.showDevicePic})
-      : super(key: key);
+      this.showDevicePic});
 
   @override
   Widget build(BuildContext context) {

@@ -13,11 +13,10 @@ class ResetDataDialog extends StatelessWidget {
   final Callback afterDelete;
 
   const ResetDataDialog(
-      {Key? key,
+      {super.key,
       required this.deleteMusicData,
       required this.deleteUserData,
-      required this.afterDelete})
-      : super(key: key);
+      required this.afterDelete});
 
   @override
   Widget build(BuildContext context) {

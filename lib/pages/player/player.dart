@@ -29,7 +29,7 @@ import 'package:rxdart/rxdart.dart' as rx_dart;
 class Player extends StatefulWidget {
   final GestureTapCallback onTap;
 
-  const Player({Key? key, required this.onTap}) : super(key: key);
+  const Player({super.key, required this.onTap});
 
   @override
   State<Player> createState() => _PlayerState();

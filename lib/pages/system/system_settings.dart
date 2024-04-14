@@ -31,7 +31,7 @@ import 'package:lovelivemusicplayer/widgets/tachie_widget.dart';
 import 'package:lovelivemusicplayer/widgets/text_field_dialog.dart';
 
 class SystemSettings extends StatefulWidget {
-  const SystemSettings({Key? key}) : super(key: key);
+  const SystemSettings({super.key});
 
   @override
   State<SystemSettings> createState() => _SystemSettingsState();

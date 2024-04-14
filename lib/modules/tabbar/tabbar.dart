@@ -7,7 +7,7 @@ import 'package:lovelivemusicplayer/pages/home/widget/custom_underline_tab_indic
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 
 class TabBarComponent extends StatelessWidget {
-  const TabBarComponent({Key? key}) : super(key: key);
+  const TabBarComponent({super.key});
 
   @override
   Widget build(BuildContext context) {

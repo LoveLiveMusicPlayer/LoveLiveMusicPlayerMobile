@@ -11,7 +11,7 @@ import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 class DialogSongInfo extends StatefulWidget {
   final Music music;
 
-  const DialogSongInfo({Key? key, required this.music}) : super(key: key);
+  const DialogSongInfo({super.key, required this.music});
 
   @override
   State<DialogSongInfo> createState() => _DialogSongInfoState();

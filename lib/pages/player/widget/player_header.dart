@@ -12,11 +12,10 @@ class PlayerHeader extends StatelessWidget {
   final Color btnColor;
 
   const PlayerHeader(
-      {Key? key,
+      {super.key,
       required this.onCloseTap,
       required this.onMoreTap,
-      required this.btnColor})
-      : super(key: key);
+      required this.btnColor});
 
   @override
   Widget build(BuildContext context) {

@@ -10,7 +10,7 @@ import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 
 class BottomBar2 extends StatelessWidget {
-  const BottomBar2({Key? key}) : super(key: key);
+  const BottomBar2({super.key});
 
   @override
   Widget build(BuildContext context) {

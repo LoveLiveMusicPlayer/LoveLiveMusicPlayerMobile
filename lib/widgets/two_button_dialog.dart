@@ -19,7 +19,7 @@ class TwoButtonDialog extends StatelessWidget {
   Callback? _onConfirmListener;
 
   TwoButtonDialog({
-    Key? key,
+    super.key,
     String imgAsset = Assets.mainIcErr,
     String? title,
     String? msg,
@@ -28,7 +28,7 @@ class TwoButtonDialog extends StatelessWidget {
     bool isShowImg = true,
     Callback? onBackListener,
     Callback? onConfirmListener,
-  }) : super(key: key) {
+  }) {
     _imgAsset = imgAsset;
     _title = title;
     _msg = msg;

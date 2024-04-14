@@ -14,8 +14,7 @@ class PermissionDialog extends StatelessWidget {
   final Callback? readPermission;
   final Callback? confirm;
 
-  const PermissionDialog({Key? key, this.readPermission, this.confirm})
-      : super(key: key);
+  const PermissionDialog({super.key, this.readPermission, this.confirm});
 
   @override
   Widget build(BuildContext context) {

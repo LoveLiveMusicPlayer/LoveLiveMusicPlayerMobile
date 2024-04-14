@@ -19,14 +19,14 @@ class SongLibraryTop extends GetView<GlobalLogic> {
   final Function onCancelTap;
 
   const SongLibraryTop({
-    Key? key,
+    super.key,
     required this.onPlayTap,
     required this.onScreenTap,
     required this.onSearchTap,
     required this.onSortTap,
     required this.onSelectAllTap,
     required this.onCancelTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

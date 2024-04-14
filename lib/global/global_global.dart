@@ -84,7 +84,7 @@ class GlobalLogic extends SuperController
     });
 
     /// 监听系统主题色改变
-    final window = WidgetsBinding.instance.window;
+    final window = WidgetsBinding.instance.platformDispatcher;
     window.onPlatformBrightnessChanged = () async {
       if (isBackground) {
         // 后台不允许执行下面的方法

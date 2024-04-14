@@ -12,8 +12,7 @@ class DetailsHeader extends StatelessWidget {
   final String title;
   final Function()? onBack;
 
-  const DetailsHeader({Key? key, required this.title, this.onBack})
-      : super(key: key);
+  const DetailsHeader({super.key, required this.title, this.onBack});
 
   @override
   Widget build(BuildContext context) {

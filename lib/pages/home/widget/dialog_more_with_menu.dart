@@ -15,7 +15,7 @@ import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 class DialogMoreWithMenu extends StatelessWidget {
   final Menu menu;
 
-  const DialogMoreWithMenu({Key? key, required this.menu}) : super(key: key);
+  const DialogMoreWithMenu({super.key, required this.menu});
 
   @override
   Widget build(BuildContext context) {

@@ -12,7 +12,7 @@ import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class DialogPlaylist extends StatefulWidget {
-  const DialogPlaylist({Key? key}) : super(key: key);
+  const DialogPlaylist({super.key});
 
   @override
   State<DialogPlaylist> createState() => _DialogPlaylistState();

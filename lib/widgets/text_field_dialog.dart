@@ -18,15 +18,14 @@ class TextFieldDialog extends StatefulWidget {
   final TextEditingController? controller;
 
   const TextFieldDialog(
-      {Key? key,
+      {super.key,
       this.title,
       this.hint,
       this.formatter,
       this.onBack,
       this.controller,
       this.onConfirm,
-      this.maxLength})
-      : super(key: key);
+      this.maxLength});
 
   @override
   State<TextFieldDialog> createState() => _TextFieldDialogState();

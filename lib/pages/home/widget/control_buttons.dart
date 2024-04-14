@@ -11,7 +11,7 @@ import 'package:lovelivemusicplayer/pages/home/widget/dialog_playlist.dart';
 class ControlButtons extends StatelessWidget {
   final AudioPlayer player;
 
-  const ControlButtons(this.player, {Key? key}) : super(key: key);
+  const ControlButtons(this.player, {super.key});
 
   @override
   Widget build(BuildContext context) {

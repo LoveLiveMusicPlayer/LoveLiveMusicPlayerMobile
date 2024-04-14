@@ -21,7 +21,8 @@ import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:marquee_text/marquee_text.dart';
 
 class MiniPlayer extends StatefulWidget {
-  const MiniPlayer({Key? key, required this.onTap}) : super(key: key);
+  const MiniPlayer({super.key, required this.onTap});
+
   final GestureTapCallback onTap;
 
   @override

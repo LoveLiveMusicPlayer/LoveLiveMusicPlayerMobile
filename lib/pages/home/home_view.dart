@@ -36,7 +36,7 @@ import 'package:umeng_push_sdk/umeng_push_sdk.dart';
 import 'package:we_slide/we_slide.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView({super.key});
 
   @override
   State<HomeView> createState() => _HomeViewState();

@@ -6,7 +6,7 @@ import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 
 class WaterRipple extends StatefulWidget {
-  const WaterRipple({Key? key}) : super(key: key);
+  const WaterRipple({super.key});
 
   @override
   State<WaterRipple> createState() => WaterRippleState();

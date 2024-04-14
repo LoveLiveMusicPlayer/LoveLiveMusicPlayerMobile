@@ -14,8 +14,7 @@ class ListViewItemSinger extends StatefulWidget {
   final Function(Artist) onItemTap;
 
   const ListViewItemSinger(
-      {Key? key, required this.artist, required this.onItemTap})
-      : super(key: key);
+      {super.key, required this.artist, required this.onItemTap});
 
   @override
   State<ListViewItemSinger> createState() => _ListViewItemSingerState();

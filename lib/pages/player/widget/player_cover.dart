@@ -11,7 +11,7 @@ import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 class Cover extends StatefulWidget {
   final GestureTapCallback onTap;
 
-  const Cover({Key? key, required this.onTap}) : super(key: key);
+  const Cover({super.key, required this.onTap});
 
   @override
   State<Cover> createState() => _CoverState();

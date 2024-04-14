@@ -14,7 +14,7 @@ import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/widgets/details_cover.dart';
 
 class AlbumDetailsPage extends StatefulWidget {
-  const AlbumDetailsPage({Key? key}) : super(key: key);
+  const AlbumDetailsPage({super.key});
 
   @override
   State<AlbumDetailsPage> createState() => _AlbumDetailsPageState();
