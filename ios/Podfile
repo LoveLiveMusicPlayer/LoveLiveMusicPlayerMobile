@@ -1,4 +1,5 @@
-source 'https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git'
+# 解注释则为国内加速，详见：https://mirrors.tuna.tsinghua.edu.cn/help/CocoaPods/
+# source 'https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git'
 # Uncomment this line to define a global platform for your project
 platform :ios, '14.0'
 
