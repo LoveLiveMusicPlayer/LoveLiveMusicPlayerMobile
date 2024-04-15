@@ -8,69 +8,51 @@ class Assets {
   static const String assetsUpFace = 'assets/up_face.jpg';
   static const String assetsUpWx = 'assets/up_wx.png';
   static const String assetsUpZfb = 'assets/up_zfb.png';
-  static const String dialogIcAddPlayList =
-      'assets/dialog/ic_add_play_list.svg';
-  static const String dialogIcAddPlayList2 =
-      'assets/dialog/ic_add_play_list2.svg';
-  static const String dialogIcAddSongSheet =
-      'assets/dialog/ic_add_song_sheet.svg';
+  static const String dialogIcAddPlayList = 'assets/dialog/ic_add_play_list.svg';
+  static const String dialogIcAddPlayList2 = 'assets/dialog/ic_add_play_list2.svg';
+  static const String dialogIcAddSongSheet = 'assets/dialog/ic_add_song_sheet.svg';
   static const String dialogIcDelete = 'assets/dialog/ic_delete.svg';
   static const String dialogIcDelete2 = 'assets/dialog/ic_delete_2.svg';
   static const String dialogIcEdit = 'assets/dialog/ic_edit.svg';
-  static const String dialogIcNewSongList =
-      'assets/dialog/ic_new_song_list.svg';
+  static const String dialogIcNewSongList = 'assets/dialog/ic_new_song_list.svg';
   static const String dialogIcSeeAlbum = 'assets/dialog/ic_see_album.svg';
   static const String dialogIcSongInfo = 'assets/dialog/ic_song_info.svg';
   static const String drawerDrawerAiPic = 'assets/drawer/drawer_ai_pic.svg';
-  static const String drawerDrawerBackground =
-      'assets/drawer/drawer_background.svg';
-  static const String drawerDrawerCalendar =
-      'assets/drawer/drawer_calendar.svg';
+  static const String drawerDrawerBackground = 'assets/drawer/drawer_background.svg';
+  static const String drawerDrawerCalendar = 'assets/drawer/drawer_calendar.svg';
   static const String drawerDrawerCar = 'assets/drawer/drawer_car.svg';
-  static const String drawerDrawerColorful =
-      'assets/drawer/drawer_colorful.svg';
-  static const String drawerDrawerDataDownload =
-      'assets/drawer/drawer_data_download.svg';
-  static const String drawerDrawerDataSync =
-      'assets/drawer/drawer_data_sync.svg';
-  static const String drawerDrawerDayNight =
-      'assets/drawer/drawer_day_night.svg';
+  static const String drawerDrawerColorful = 'assets/drawer/drawer_colorful.svg';
+  static const String drawerDrawerDataDownload = 'assets/drawer/drawer_data_download.svg';
+  static const String drawerDrawerDataSync = 'assets/drawer/drawer_data_sync.svg';
+  static const String drawerDrawerDayNight = 'assets/drawer/drawer_day_night.svg';
   static const String drawerDrawerDebug = 'assets/drawer/drawer_debug.svg';
   static const String drawerDrawerHttp = 'assets/drawer/drawer_http.svg';
   static const String drawerDrawerInspect = 'assets/drawer/drawer_inspect.svg';
-  static const String drawerDrawerQuickTrans =
-      'assets/drawer/drawer_quick_trans.svg';
+  static const String drawerDrawerQuickTrans = 'assets/drawer/drawer_quick_trans.svg';
   static const String drawerDrawerReset = 'assets/drawer/drawer_reset.svg';
   static const String drawerDrawerSecret = 'assets/drawer/drawer_secret.svg';
   static const String drawerDrawerSetting = 'assets/drawer/drawer_setting.svg';
   static const String drawerDrawerShare = 'assets/drawer/drawer_share.svg';
-  static const String drawerDrawerSystemTheme =
-      'assets/drawer/drawer_system_theme.svg';
+  static const String drawerDrawerSystemTheme = 'assets/drawer/drawer_system_theme.svg';
   static const String drawerDrawerTimer = 'assets/drawer/drawer_timer.svg';
   static const String drawerDrawerUpdate = 'assets/drawer/drawer_update.svg';
   static const String drawerLogoAllstars = 'assets/drawer/logo_allstars.svg';
   static const String drawerLogoAqours = 'assets/drawer/logo_aqours.svg';
-  static const String drawerLogoHasunosora =
-      'assets/drawer/logo_hasunosora.svg';
+  static const String drawerLogoHasunosora = 'assets/drawer/logo_hasunosora.svg';
   static const String drawerLogoLiella = 'assets/drawer/logo_liella.svg';
   static const String drawerLogoLovelive = 'assets/drawer/logo_lovelive.svg';
-  static const String drawerLogoNijigasaki =
-      'assets/drawer/logo_nijigasaki.svg';
+  static const String drawerLogoNijigasaki = 'assets/drawer/logo_nijigasaki.svg';
   static const String drawerLogoUs = 'assets/drawer/logo_us.svg';
   static const String drawerLogoYohaneDay = 'assets/drawer/logo_yohane_day.svg';
-  static const String drawerLogoYohaneNight =
-      'assets/drawer/logo_yohane_night.svg';
+  static const String drawerLogoYohaneNight = 'assets/drawer/logo_yohane_night.svg';
   static const String driveCarDisFavorite = 'assets/drive/car_dis_favorite.svg';
   static const String driveCarExit = 'assets/drive/car_exit.svg';
   static const String driveCarFavoriate = 'assets/drive/car_favoriate.svg';
-  static const String driveCarFavoriteBottom =
-      'assets/drive/car_favorite_bottom.svg';
+  static const String driveCarFavoriteBottom = 'assets/drive/car_favorite_bottom.svg';
   static const String driveCarPauseButton = 'assets/drive/car_pause_button.svg';
   static const String driveCarPlayButton = 'assets/drive/car_play_button.svg';
-  static const String driveCarPlaylistBottom =
-      'assets/drive/car_playlist_bottom.svg';
-  static const String driveCarplayFavorite =
-      'assets/drive/carplay_favorite.png';
+  static const String driveCarPlaylistBottom = 'assets/drive/car_playlist_bottom.svg';
+  static const String driveCarplayFavorite = 'assets/drive/carplay_favorite.png';
   static const String driveDiscFill = 'assets/drive/disc-fill.png';
   static const String fontsKaTong = 'assets/fonts/KaTong.ttf';
   static const String launchBackground = 'assets/launch/background.png';
@@ -148,8 +130,11 @@ class Assets {
   static const String role4g = 'assets/role/4g.png';
   static const String role4w = 'assets/role/4w.png';
   static const String role61 = 'assets/role/61.png';
+  static const String role61s = 'assets/role/61s.png';
   static const String role62 = 'assets/role/62.png';
+  static const String role63k = 'assets/role/63k.png';
   static const String role64 = 'assets/role/64.png';
+  static const String role674 = 'assets/role/674.png';
   static const String role68 = 'assets/role/68.png';
   static const String role6g = 'assets/role/6g.png';
   static const String role6w = 'assets/role/6w.png';
@@ -172,4 +157,5 @@ class Assets {
   static const String tachieIndex = 'assets/tachie/index.css';
   static const String tachieSakana = 'assets/tachie/sakana.js';
   static const String tachieTachie = 'assets/tachie/tachie.json';
+
 }
