@@ -5,7 +5,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:log4f/log4f.dart';
+import 'package:lovelivemusicplayer/utils/log.dart';
 
 /**
  * @Author: Sky24n

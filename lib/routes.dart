@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/pages/daily/view.dart';
 import 'package:lovelivemusicplayer/pages/data_sync/data_sync.dart';
 import 'package:lovelivemusicplayer/pages/drive/drive_mode.dart';
@@ -12,6 +11,8 @@ import 'package:lovelivemusicplayer/pages/permission/permission.dart';
 import 'package:lovelivemusicplayer/pages/scan/scanner.dart';
 import 'package:lovelivemusicplayer/pages/splash/splash.dart';
 import 'package:lovelivemusicplayer/pages/system/system_settings.dart';
+import 'package:lovelivemusicplayer/utils/log.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 
 class Routes {
   static const String routeInitial = "/";
@@ -41,7 +42,7 @@ class Routes {
       GetPage(name: Routes.routeScan, page: () => const Scanner()),
       GetPage(name: Routes.routeTransform, page: () => const MusicTransform()),
       GetPage(name: Routes.routeDataSync, page: () => const DataSync()),
-      GetPage(name: Routes.routeLogger, page: () => const LogConsole()),
+      GetPage(name: Routes.routeLogger, page: () => TalkerScreen(talker: Log4f.getLogger())),
       GetPage(
           name: Routes.routeSystemSettings, page: () => const SystemSettings()),
       GetPage(name: Routes.routeDriveMode, page: () => const DriveMode()),

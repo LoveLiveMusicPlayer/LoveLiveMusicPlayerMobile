@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/dao/album_dao.dart';
 import 'package:lovelivemusicplayer/dao/artist_dao.dart';
 import 'package:lovelivemusicplayer/dao/dao_util.dart';
@@ -33,6 +32,7 @@ import 'package:lovelivemusicplayer/models/trans_data.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 
 class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {

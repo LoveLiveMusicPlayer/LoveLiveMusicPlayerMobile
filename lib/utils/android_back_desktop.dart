@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:log4f/log4f.dart';
+import 'package:lovelivemusicplayer/utils/log.dart';
 
 class AndroidBackDesktop {
   //设置回退到手机桌面事件

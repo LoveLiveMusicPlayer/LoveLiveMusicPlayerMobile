@@ -11,7 +11,6 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:just_audio_background/just_audio_background.dart';
-import 'package:log4f/log4f.dart';
 import 'package:lovelivemusicplayer/eventbus/close_open.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
@@ -23,6 +22,7 @@ import 'package:lovelivemusicplayer/pages/carplay/carplay_mine.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/completer_ext.dart';
+import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/sentry_util.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
@@ -268,7 +268,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 /// 初始化服务等一系列耗时任务
 initServices() async {
   appVersion = (await PackageInfo.fromPlatform()).version;
-  await FlutterLogan.init(Const.aesKey, Const.iV, 1024 * 1024 * 10);
+  Log4f.getLogger();
   Get.log = defaultLogWriterCallback;
   await GetStorage.init();
   SpUtil.getInstance();

@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.5.1+51
+version: 1.5.2+52
 
 environment:
   sdk: ">=2.17.0 <4.0.0"
@@ -32,24 +32,24 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.6
+  cupertino_icons: ^1.0.8
   provider: ^6.1.2
   get: ^4.6.6
   flutter_spinkit: ^5.2.1
-  dio: ^5.4.3 # 网络加载
+  dio: ^5.4.3+1 # 网络加载
   path_provider: ^2.1.3 # 路径提供
   pull_to_refresh:  # 下拉刷新上拉加载
     git:
       url: https://gitee.com/zhushenwudi/flutter_pulltorefresh
       ref: master
-  web_socket_channel: ^2.4.5 # webSocket
-  connectivity_plus: ^6.0.2 # 网络监测
+  web_socket_channel: ^3.0.0 # webSocket
+  connectivity_plus: ^6.0.3 # 网络监测
   scan: ^1.6.0 # 扫码
-  flutter_smart_dialog: ^4.9.6 # 弹窗
+  flutter_smart_dialog: ^4.9.7+7 # 弹窗
   synchronized: ^3.1.0+1 # 锁
   get_storage: ^2.1.1 # sp存储
   common_utils: ^2.1.0 # 工具类
-  flutter_screenutil: ^5.9.0 # 屏幕适配方案
+  flutter_screenutil: ^5.9.3 # 屏幕适配方案
   we_slide: ^2.4.0 # 播放器屏幕操作组件
   flutter_native_splash: ^2.4.0 # 启动页
   marquee_text: # 走马灯滚动文字
@@ -62,9 +62,9 @@ dependencies:
       url: https://github.com/zhushenwudi/just_audio
       path: just_audio
       ref: master
-  just_audio_background: ^0.0.1-beta.11 # 音频播放后台服务
+  just_audio_background: ^0.0.1-beta.12 # 音频播放后台服务
   event_bus: ^2.0.0 # 事件总线通信
-  floor: ^1.4.2 # 数据库服务
+  floor: ^1.5.0 # 数据库服务
   flutter_staggered_grid_view: ^0.7.0 # 分栏列表
   concurrent_queue: ^1.4.0 # 队列
   wakelock: ^0.6.2 # 屏幕常亮
@@ -77,13 +77,13 @@ dependencies:
     git:
       url: https://gitee.com/zhushenwudi/color_thief_flutter
       ref: master
-  log4f: ^0.0.3 # 日志
+  talker_flutter: ^4.2.4 # 日志
   device_info_plus: ^10.1.0 # 设备信息
   flutter_lyric: ^2.0.4+6 # 歌词显示
   flutter_app_update: ^3.0.4 # 版本升级
   flutter_sticky_header: ^0.6.5 # 粘性头
-  url_launcher: ^6.2.6 # url跳转
-  image_picker: ^1.0.8 # 图片选择
+  url_launcher: ^6.3.0 # url跳转
+  image_picker: ^1.1.2 # 图片选择
   croppy: # 图片裁切
     git:
       url: https://github.com/zhushenwudi/croppy
@@ -96,7 +96,10 @@ dependencies:
   mobcommonlib: ^1.1.5 # MobTech库
   sharesdk_plugin: ^1.3.10 # MobTech分享插件
   crypto: ^3.0.3 # 加密
-  flutter_inappwebview: ^6.0.0 # WebView
+  flutter_inappwebview: # WebView
+    git:
+      url: https://github.com/MobileEasternts/flutter_inappwebview.git
+      path: flutter_inappwebview
   flexible_scrollbar: # 滚动条
     git:
       url: https://github.com/zhushenwudi/flexible_scrollbar
@@ -105,9 +108,9 @@ dependencies:
     git:
       url: https://github.com/zhushenwudi/flutter_carplay
       ref: combine-all
-  sentry_flutter: ^7.19.0 # Sentry
+  sentry_flutter: ^8.3.0 # Sentry
   scrolls_to_top: ^2.1.1 # 滚动到顶部
-  haptic_feedback: ^0.4.2 # 震动
+  haptic_feedback: ^0.5.1+1 # 震动
   umeng_push_sdk: ^2.3.0 # 友盟推送
 
 dependency_overrides:
@@ -115,7 +118,7 @@ dependency_overrides:
     git:
       url: https://github.com/zhushenwudi/md5_file_checksum
       ref: main
-  win32: ^5.4.0
+  win32: ^5.5.1
   web: ^0.5.1
   js: ^0.7.1
   uuid: ^4.4.0 # 唯一码
@@ -123,15 +126,15 @@ dependency_overrides:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  floor_generator: ^1.4.2
-  build_runner: ^2.4.9
+  floor_generator: ^1.5.0
+  build_runner: ^2.4.11
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.2
+  flutter_lints: ^4.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
