@@ -109,7 +109,9 @@ void main() async {
         androidNotificationChannelId:
             'com.zhushenwudi.lovelivemusicplayer.channel.audio',
         androidNotificationChannelName: 'lovelive audio playback',
-        androidNotificationOngoing: true,
+        androidNotificationIcon: 'drawable/foreground',
+        fastForwardInterval: const Duration(seconds: 5),
+        rewindInterval: const Duration(seconds: 5),
       );
 
       subscription = eventBus.on<CloseOpen>().listen((event) async {
