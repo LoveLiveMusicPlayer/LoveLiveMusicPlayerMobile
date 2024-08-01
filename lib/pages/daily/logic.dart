@@ -28,20 +28,33 @@ class DailyLogic extends GetxController {
   }
 
   parseArgs(args) {
-    for (var r in args["recent"]) {
-      final event = RecentOrBangumi(color: r["color"], content: r["content"]);
-      recentList.add(event);
+    if (args["recent"] != null) {
+      for (var r in args["recent"]) {
+        final event = RecentOrBangumi(color: r["color"], content: r["content"]);
+        recentList.add(event);
+      }
     }
-    for (var b in args["bangumi"]) {
-      final event = RecentOrBangumi(color: b["color"], content: b["content"]);
-      bangumiList.add(event);
+    if (args["bangumi"] != null) {
+      for (var b in args["bangumi"]) {
+        final event = RecentOrBangumi(color: b["color"], content: b["content"]);
+        bangumiList.add(event);
+      }
     }
-    final contentList = <RecentOrBangumi>[];
-    for (var t in args["today"]["content"]) {
-      final event = RecentOrBangumi(color: t["color"], content: t["content"]);
-      contentList.add(event);
+
+    if (args["today"] != null) {
+      final contentList = <RecentOrBangumi>[];
+      if (args["today"]["content"] != null) {
+        for (var t in args["today"]["content"]) {
+          final event = RecentOrBangumi(color: t["color"], content: t["content"]);
+          contentList.add(event);
+        }
+      }
+      String day = '今天';
+      if (args["today"]["day"] != null) {
+        day = args["today"]["day"];
+      }
+      today = Today(day: day, content: contentList);
     }
-    today = Today(day: args["today"]["day"], content: contentList);
   }
 }
 

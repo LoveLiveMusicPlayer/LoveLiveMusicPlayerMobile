@@ -70,7 +70,9 @@ class WaterRippleState extends State<WaterRipple>
         .animate(CurvedAnimation(parent: controller, curve: Curves.linear));
     if (!init) {
       //5个基本动画控件初始化完成的情况下，每次添加新的动画控件时，移除第一个，确保动画控件始终保持5个
-      children.removeAt(0);
+      if (children.isNotEmpty) {
+        children.removeAt(0);
+      }
       //添加新的动画控件
       Future.delayed(const Duration(seconds: 1), () {
         if (!mounted) return;

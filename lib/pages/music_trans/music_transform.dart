@@ -121,12 +121,12 @@ class _MusicTransformState extends State<MusicTransform> {
                 if (progress == "100") {
                   final message = ftpCmdToJson(
                       FtpCmd(cmd: "download success", body: music.musicUId));
-                  channel?.sink.add(message);
+                  addMsgToChannel(message);
                 } else {
                   if (isRunning) {
                     final message = ftpCmdToJson(
                         FtpCmd(cmd: "downloading", body: music.musicUId));
-                    channel?.sink.add(message);
+                    addMsgToChannel(message);
                   }
                 }
                 setState(() {});
@@ -143,7 +143,7 @@ class _MusicTransformState extends State<MusicTransform> {
       } catch (e) {
         final message =
             ftpCmdToJson(FtpCmd(cmd: "download fail", body: music.musicUId));
-        channel?.sink.add(message);
+        addMsgToChannel(message);
         changeNextTaskView(music);
         setState(() {});
       }
@@ -151,7 +151,7 @@ class _MusicTransformState extends State<MusicTransform> {
     if (isLast) {
       await queue.onIdle();
       final message = ftpCmdToJson(FtpCmd(cmd: "finish", body: ""));
-      channel?.sink.add(message);
+      addMsgToChannel(message);
       await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
       Get.back();
     }
@@ -410,7 +410,7 @@ class _MusicTransformState extends State<MusicTransform> {
             "cmd": "system",
             "body": Platform.isAndroid ? "android" : "ios"
           };
-          channel?.sink.add(convert.jsonEncode(system));
+          addMsgToChannel(convert.jsonEncode(system));
           break;
         case "port":
           port = ftpCmd.body;
@@ -443,7 +443,7 @@ class _MusicTransformState extends State<MusicTransform> {
                 "cmd": "musicList",
                 "body": convert.jsonEncode(musicIdList)
               };
-              channel?.sink.add(convert.jsonEncode(message));
+              addMsgToChannel(convert.jsonEncode(message));
             });
           }
           break;
@@ -470,7 +470,7 @@ class _MusicTransformState extends State<MusicTransform> {
             } else {
               final message = ftpCmdToJson(
                   FtpCmd(cmd: "download fail", body: music.musicUId));
-              channel?.sink.add(message);
+              addMsgToChannel(message);
               Get.back();
             }
           }
@@ -480,7 +480,11 @@ class _MusicTransformState extends State<MusicTransform> {
           release();
           break;
       }
-    }, onError: (e) {
+    }, onDone: () {
+      isConnected = false;
+      print("stream is done");
+    },onError: (e) {
+      isConnected = false;
       SmartDialog.showToast('connect_fail'.tr);
       Log4f.i(msg: e.toString());
     }, cancelOnError: true);
@@ -488,7 +492,13 @@ class _MusicTransformState extends State<MusicTransform> {
     setState(() {});
     final message =
         ftpCmdToJson(FtpCmd(cmd: "version", body: transVer.toString()));
-    channel?.sink.add(message);
+    addMsgToChannel(message);
+  }
+
+  addMsgToChannel(String message) {
+    if (isConnected) {
+      channel?.sink.add(message);
+    }
   }
 
   showBackDialog() {
@@ -511,7 +521,7 @@ class _MusicTransformState extends State<MusicTransform> {
           ElevatedButton(
             onPressed: () async {
               final message = ftpCmdToJson(FtpCmd(cmd: "stop", body: ""));
-              channel?.sink.add(message);
+              addMsgToChannel(message);
               release();
             },
             child: Padding(
