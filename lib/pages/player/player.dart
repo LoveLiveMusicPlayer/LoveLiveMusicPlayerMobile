@@ -134,23 +134,6 @@ class _PlayerState extends State<Player> {
                                 PlayerLogic.to.playingMusic.value);
                           });
                     });
-                SmartDialog.show(
-                    alignment: Alignment.bottomCenter,
-                    builder: (context) {
-                      return DialogMoreWithMusic(
-                          music: Music.deepClone(
-                              PlayerLogic.to.playingMusic.value),
-                          isPlayer: true,
-                          onClosePanel: () {
-                            GlobalLogic.mobileWeSlideController.hide();
-                            GlobalLogic.to.needHomeSafeArea.value = true;
-                            GlobalLogic.mobileWeSlideFooterController.hide();
-                          },
-                          changeLoveStatusCallback: (status) {
-                            PlayerLogic.to.playingMusic.value = Music.deepClone(
-                                PlayerLogic.to.playingMusic.value);
-                          });
-                    });
               }),
 
           SizedBox(height: 10.h),
