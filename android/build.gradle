@@ -33,6 +33,10 @@ subprojects {
                     print "project namespace is $project.group \n"
                     namespace project.group
                 }
+                defaultConfig {
+                    minSdkVersion 23
+                    compileSdkVersion 34
+                }
             }
         }
     }

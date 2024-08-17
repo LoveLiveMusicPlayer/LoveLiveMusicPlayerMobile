@@ -6,21 +6,32 @@ part of 'database.dart';
 // FloorGenerator
 // **************************************************************************
 
+abstract class $MusicDatabaseBuilderContract {
+  /// Adds migrations to the builder.
+  $MusicDatabaseBuilderContract addMigrations(List<Migration> migrations);
+
+  /// Adds a database [Callback] to the builder.
+  $MusicDatabaseBuilderContract addCallback(Callback callback);
+
+  /// Creates the database and initializes it.
+  Future<MusicDatabase> build();
+}
+
 // ignore: avoid_classes_with_only_static_members
 class $FloorMusicDatabase {
   /// Creates a database builder for a persistent database.
   /// Once a database is built, you should keep a reference to it and re-use it.
-  static _$MusicDatabaseBuilder databaseBuilder(String name) =>
+  static $MusicDatabaseBuilderContract databaseBuilder(String name) =>
       _$MusicDatabaseBuilder(name);
 
   /// Creates a database builder for an in memory database.
   /// Information stored in an in memory database disappears when the process is killed.
   /// Once a database is built, you should keep a reference to it and re-use it.
-  static _$MusicDatabaseBuilder inMemoryDatabaseBuilder() =>
+  static $MusicDatabaseBuilderContract inMemoryDatabaseBuilder() =>
       _$MusicDatabaseBuilder(null);
 }
 
-class _$MusicDatabaseBuilder {
+class _$MusicDatabaseBuilder implements $MusicDatabaseBuilderContract {
   _$MusicDatabaseBuilder(this.name);
 
   final String? name;
@@ -29,19 +40,19 @@ class _$MusicDatabaseBuilder {
 
   Callback? _callback;
 
-  /// Adds migrations to the builder.
-  _$MusicDatabaseBuilder addMigrations(List<Migration> migrations) {
+  @override
+  $MusicDatabaseBuilderContract addMigrations(List<Migration> migrations) {
     _migrations.addAll(migrations);
     return this;
   }
 
-  /// Adds a database [Callback] to the builder.
-  _$MusicDatabaseBuilder addCallback(Callback callback) {
+  @override
+  $MusicDatabaseBuilderContract addCallback(Callback callback) {
     _callback = callback;
     return this;
   }
 
-  /// Creates the database and initializes it.
+  @override
   Future<MusicDatabase> build() async {
     final path = name != null
         ? await sqfliteDatabaseFactory.getDatabasePath(name!)

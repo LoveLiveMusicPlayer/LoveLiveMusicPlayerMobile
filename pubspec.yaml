@@ -68,10 +68,7 @@ dependencies:
   flutter_staggered_grid_view: ^0.7.0 # 分栏列表
   concurrent_queue: ^1.4.0 # 队列
   wakelock_plus: ^1.2.8 # 屏幕常亮
-  flutter_image_compress: # 图片压缩
-    git:
-      url: https://github.com/zhushenwudi/flutter_image_compress
-      path: packages/flutter_image_compress
+  flutter_image_compress: ^2.3.0 # 图片压缩
   cached_network_image: ^3.4.1 # 网络图片缓存库
   color_thief_flutter: # 取色器
     git:
@@ -84,10 +81,7 @@ dependencies:
   flutter_sticky_header: ^0.6.5 # 粘性头
   url_launcher: ^6.3.0 # url跳转
   image_picker: ^1.1.2 # 图片选择
-  croppy: # 图片裁切
-    git:
-      url: https://github.com/zhushenwudi/croppy
-      ref: master
+  croppy: ^1.2.0 # 图片裁切
   colorful_safe_area: ^1.0.0 # 定制safe_area
   open_appstore: # 跳转到应用商店
     git:
@@ -98,7 +92,7 @@ dependencies:
   crypto: ^3.0.5 # 加密
   flutter_inappwebview: # WebView
     git:
-      url: https://github.com/MobileEasternts/flutter_inappwebview.git
+      url: https://github.com/zhushenwudi/flutter_inappwebview.git
       path: flutter_inappwebview
   flexible_scrollbar: # 滚动条
     git:
