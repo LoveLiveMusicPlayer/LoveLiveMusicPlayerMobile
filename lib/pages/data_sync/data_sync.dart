@@ -22,7 +22,7 @@ import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 import 'package:lovelivemusicplayer/widgets/water_ripple.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:web_socket_channel/io.dart';
 
 class DataSync extends StatefulWidget {
@@ -44,7 +44,7 @@ class _DataSyncState extends State<DataSync> {
   @override
   void initState() {
     super.initState();
-    Wakelock.enable();
+    WakelockPlus.enable();
     AppUtils.uploadEvent("DataSync");
   }
 
@@ -349,7 +349,7 @@ class _DataSyncState extends State<DataSync> {
 
   @override
   void dispose() {
-    Wakelock.disable();
+    WakelockPlus.disable();
     channel?.sink.close();
     super.dispose();
   }

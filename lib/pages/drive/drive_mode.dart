@@ -14,7 +14,7 @@ import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/my_appbar.dart';
 import 'package:lovelivemusicplayer/widgets/swipe_image_carousel.dart';
 import 'package:marquee_text/marquee_text.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 class DriveMode extends StatefulWidget {
   const DriveMode({super.key});
@@ -26,7 +26,7 @@ class DriveMode extends StatefulWidget {
 class _DriveModeState extends State<DriveMode> {
   @override
   void initState() {
-    Wakelock.enable();
+    WakelockPlus.enable();
     super.initState();
   }
 
@@ -286,7 +286,7 @@ class _DriveModeState extends State<DriveMode> {
 
   @override
   void dispose() {
-    Wakelock.disable();
+    WakelockPlus.disable();
     super.dispose();
   }
 }

@@ -62,8 +62,8 @@ android {
 
     defaultConfig {
         applicationId "com.zhushenwudi.lovelivemusicplayer"
-        minSdkVersion 23
-        targetSdkVersion 34
+        minSdk 23
+        targetSdk 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
 

@@ -27,7 +27,7 @@ import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/another_page_view/another_transformer_page_view.dart';
 import 'package:lovelivemusicplayer/widgets/circle_widget.dart';
 import 'package:lovelivemusicplayer/widgets/horizontal_line.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:web_socket_channel/io.dart';
 
 class MusicTransform extends StatefulWidget {
@@ -71,7 +71,7 @@ class _MusicTransformState extends State<MusicTransform> {
   @override
   void initState() {
     super.initState();
-    Wakelock.enable();
+    WakelockPlus.enable();
     AppUtils.uploadEvent("MusicTransform");
   }
 
@@ -583,7 +583,7 @@ class _MusicTransformState extends State<MusicTransform> {
   @override
   void dispose() {
     musicList.clear();
-    Wakelock.disable();
+    WakelockPlus.disable();
     channel?.sink.close();
     super.dispose();
   }
