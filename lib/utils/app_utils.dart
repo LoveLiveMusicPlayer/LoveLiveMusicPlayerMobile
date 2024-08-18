@@ -6,23 +6,24 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:color_thief_flutter/color_thief_flutter.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:crypto/crypto.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
-import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/artist_model.dart';
 import 'package:lovelivemusicplayer/models/menu.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/models/share_menu.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
+import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
@@ -31,6 +32,13 @@ import 'package:umeng_common_sdk/umeng_common_sdk.dart';
 
 class AppUtils {
   static CacheManager cacheManager = CacheManager(Config("imgSplash"));
+
+  /// 禁用 Android WebView Inspect
+  static Future<void> disableWebDebugger() async {
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+      await InAppWebViewController.setWebContentsDebuggingEnabled(false);
+    }
+  }
 
   /// 异步获取歌单封面
   static Future<String?> getMusicCoverPath(String? musicPath) async {
@@ -45,8 +53,9 @@ class AppUtils {
     String? path;
     if (music.existFile == true) {
       path = "${SDUtils.path}${music.baseUrl}${music.coverPath}";
-    } else if (remoteHttp.canUseHttpUrl()) {
-      path = "${remoteHttp.httpUrl.value}${music.baseUrl}${music.coverPath}";
+    } else if (GlobalLogic.to.remoteHttp.canUseHttpUrl()) {
+      path =
+          "${GlobalLogic.to.remoteHttp.httpUrl.value}${music.baseUrl}${music.coverPath}";
     }
     return path;
   }
@@ -72,9 +81,9 @@ class AppUtils {
       final path = "${SDUtils.path}${music.baseUrl}${music.coverPath}";
       image = await getImageFromProvider(FileImage(File(path)));
     } else {
-      if (remoteHttp.canUseHttpUrl()) {
+      if (GlobalLogic.to.remoteHttp.canUseHttpUrl()) {
         final path =
-            "${remoteHttp.httpUrl.value}${music.baseUrl}${music.coverPath}";
+            "${GlobalLogic.to.remoteHttp.httpUrl.value}${music.baseUrl}${music.coverPath}";
         image = await getImageFromProvider(NetworkImage(path));
       }
     }
@@ -524,7 +533,7 @@ class AppUtils {
   }
 
   static isPre(Function func) {
-    if (env == "pre") {
+    if (GlobalLogic.to.env == "pre") {
       func();
     }
   }

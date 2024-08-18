@@ -8,13 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/eventbus/close_open.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/modules/drawer/drawer.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
@@ -25,6 +23,7 @@ import 'package:lovelivemusicplayer/pages/player/player.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/android_back_desktop.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/utils/umeng_helper.dart';
 import 'package:lovelivemusicplayer/widgets/bottom_bar1.dart';
@@ -156,7 +155,7 @@ class _HomeViewState extends State<HomeView>
                 completer.complete();
               }
               completer.future.then((dynamic) {
-                if (!hasAIPic) {
+                if (!GlobalLogic.to.hasAIPic) {
                   // 没有AI开屏时发送卸载窗口命令
                   eventBus
                       .fire(CloseOpen((DateTime.now().millisecondsSinceEpoch)));

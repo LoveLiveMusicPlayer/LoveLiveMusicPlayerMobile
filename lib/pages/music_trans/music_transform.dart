@@ -9,11 +9,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/ftp_cmd.dart';
 import 'package:lovelivemusicplayer/models/ftp_music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
@@ -22,6 +20,7 @@ import 'package:lovelivemusicplayer/pages/details/widget/details_header.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/another_page_view/another_transformer_page_view.dart';
@@ -401,7 +400,7 @@ class _MusicTransformState extends State<MusicTransform> {
       final ftpCmd = ftpCmdFromJson(msg as String);
       switch (ftpCmd.cmd) {
         case "version":
-          if ((int.tryParse(ftpCmd.body) ?? 0) != transVer) {
+          if ((int.tryParse(ftpCmd.body) ?? 0) != GlobalLogic.to.transVer) {
             SmartDialog.showToast("version_incompatible".tr);
             Get.back();
             return;
@@ -483,15 +482,15 @@ class _MusicTransformState extends State<MusicTransform> {
     }, onDone: () {
       isConnected = false;
       print("stream is done");
-    },onError: (e) {
+    }, onError: (e) {
       isConnected = false;
       SmartDialog.showToast('connect_fail'.tr);
       Log4f.i(msg: e.toString());
     }, cancelOnError: true);
     isConnected = true;
     setState(() {});
-    final message =
-        ftpCmdToJson(FtpCmd(cmd: "version", body: transVer.toString()));
+    final message = ftpCmdToJson(
+        FtpCmd(cmd: "version", body: GlobalLogic.to.transVer.toString()));
     addMsgToChannel(message);
   }
 

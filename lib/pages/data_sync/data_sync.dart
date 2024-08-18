@@ -6,11 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/ftp_cmd.dart';
 import 'package:lovelivemusicplayer/models/love.dart';
 import 'package:lovelivemusicplayer/models/menu.dart';
@@ -19,6 +17,7 @@ import 'package:lovelivemusicplayer/pages/details/widget/details_header.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 import 'package:lovelivemusicplayer/widgets/water_ripple.dart';
@@ -270,7 +269,7 @@ class _DataSyncState extends State<DataSync> {
       final ftpCmd = ftpCmdFromJson(msg as String);
       switch (ftpCmd.cmd) {
         case "version":
-          if ((int.tryParse(ftpCmd.body) ?? 0) != transVer) {
+          if ((int.tryParse(ftpCmd.body) ?? 0) != GlobalLogic.to.transVer) {
             SmartDialog.showToast("version_incompatible".tr);
             Get.back();
             return;
@@ -301,8 +300,8 @@ class _DataSyncState extends State<DataSync> {
     }, cancelOnError: true);
     isConnected = true;
     setState(() {});
-    final message =
-        ftpCmdToJson(FtpCmd(cmd: "version", body: transVer.toString()));
+    final message = ftpCmdToJson(
+        FtpCmd(cmd: "version", body: GlobalLogic.to.transVer.toString()));
     channel?.sink.add(message);
   }
 

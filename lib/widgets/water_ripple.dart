@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/log.dart';
 
 class WaterRipple extends StatefulWidget {
   const WaterRipple({super.key});

@@ -67,7 +67,8 @@ class NestedController extends GetxController {
       return GetPageRoute(
           settings: settings,
           page: () => ScrollsToTop(
-              onScrollsToTop: (ScrollsToTopEvent event) async => await scrollViewToTop(),
+              onScrollsToTop: (ScrollsToTopEvent event) async =>
+                  await scrollViewToTop(),
               child: const HomePageView()));
     } else if (settings.name == Routes.routeAlbumDetails) {
       addNav(Routes.routeAlbumDetails);

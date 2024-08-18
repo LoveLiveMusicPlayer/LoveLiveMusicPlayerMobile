@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
-import 'package:lovelivemusicplayer/main.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:synchronized/synchronized.dart';
 
@@ -28,7 +28,7 @@ class SentryUtil {
     return await SentryFlutter.init(
       (options) {
         options.dsn = Const.sentryUrl;
-        options.environment = env;
+        options.environment = GlobalLogic.to.env;
       },
     );
   }

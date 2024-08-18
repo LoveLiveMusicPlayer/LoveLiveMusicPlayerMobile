@@ -1,7 +1,6 @@
 import 'package:talker_flutter/talker_flutter.dart';
 
 class Log4f {
-
   static Talker? logcat;
 
   static Talker getLogger() {
@@ -27,5 +26,12 @@ class Log4f {
 
   static e({required String msg}) {
     logcat?.error(msg);
+  }
+
+  /// GetX 日志重定向
+  static void defaultLogWriterCallback(String value, {bool isError = false}) {
+    if (isError && !value.contains("already removed")) {
+      Log4f.i(msg: value);
+    }
   }
 }

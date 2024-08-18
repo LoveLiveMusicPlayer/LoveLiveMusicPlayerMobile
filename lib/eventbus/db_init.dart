@@ -1,0 +1,3 @@
+class DbInit {
+  DbInit();
+}

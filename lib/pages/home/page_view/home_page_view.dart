@@ -7,7 +7,6 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/modules/pageview/view.dart';
@@ -102,8 +101,9 @@ class HomePageView extends GetView<HomeController> {
         controller.filterItem(str);
       },
       onSortTap: () {
-        final saveValue = sortMode.value == "ASC" ? "DESC" : "ASC";
-        sortMode.value = saveValue;
+        final saveValue =
+            GlobalLogic.to.sortMode.value == "ASC" ? "DESC" : "ASC";
+        GlobalLogic.to.sortMode.value = saveValue;
         SpUtil.put(Const.spSortOrder, saveValue);
         controller.sortItem();
       },

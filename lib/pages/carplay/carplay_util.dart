@@ -4,7 +4,7 @@ import 'package:flutter_carplay/models/list/list_item.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
-import 'package:lovelivemusicplayer/main.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/models/group.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
@@ -57,9 +57,9 @@ class CarplayUtil {
     if (music != null) {
       if (music.existFile == true) {
         imagePath = "file://${SDUtils.path}${music.baseUrl}${music.coverPath}";
-      } else if (remoteHttp.canUseHttpUrl()) {
+      } else if (GlobalLogic.to.remoteHttp.canUseHttpUrl()) {
         imagePath =
-            "${remoteHttp.httpUrl.value}${music.baseUrl}${music.coverPath}";
+            "${GlobalLogic.to.remoteHttp.httpUrl.value}${music.baseUrl}${music.coverPath}";
       }
     }
     return imagePath ?? Assets.logoLogo;
@@ -67,8 +67,9 @@ class CarplayUtil {
 
   static String album2Image(Album album) {
     String? imagePath;
-    if (remoteHttp.canUseHttpUrl()) {
-      imagePath = "${remoteHttp.httpUrl.value}${album.coverPath}";
+    if (GlobalLogic.to.remoteHttp.canUseHttpUrl()) {
+      imagePath =
+          "${GlobalLogic.to.remoteHttp.httpUrl.value}${album.coverPath}";
     } else {
       imagePath = "file://${SDUtils.path}${album.coverPath}";
     }

@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter_carplay/flutter_carplay.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/pages/carplay/carplay_album.dart';
 import 'package:lovelivemusicplayer/pages/carplay/carplay_mine.dart';
@@ -53,7 +53,7 @@ class Carplay {
     _flutterCarplay.addListenerOnConnectionChange(onCarplayConnectionChange);
 
     Future.delayed(const Duration(seconds: 1)).then((value) {
-      isCanUseSmartDialog = true;
+      GlobalLogic.to.isCanUseSmartDialog = true;
       changePlayingMusic(PlayerLogic.to.playingMusic.value);
     });
   }

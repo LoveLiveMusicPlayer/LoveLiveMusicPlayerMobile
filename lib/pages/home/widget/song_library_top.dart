@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
@@ -161,7 +160,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
     return Padding(
       padding: EdgeInsets.only(right: 10.w),
       child: touchIconByAsset(
-          path: sortMode.value == "ASC"
+          path: GlobalLogic.to.sortMode.value == "ASC"
               ? Assets.mainIcSortAsc
               : Assets.mainIcSortDesc,
           padding:

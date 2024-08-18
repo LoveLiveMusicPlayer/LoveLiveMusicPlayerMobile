@@ -42,7 +42,9 @@ class Routes {
       GetPage(name: Routes.routeScan, page: () => const Scanner()),
       GetPage(name: Routes.routeTransform, page: () => const MusicTransform()),
       GetPage(name: Routes.routeDataSync, page: () => const DataSync()),
-      GetPage(name: Routes.routeLogger, page: () => TalkerScreen(talker: Log4f.getLogger())),
+      GetPage(
+          name: Routes.routeLogger,
+          page: () => TalkerScreen(talker: Log4f.getLogger())),
       GetPage(
           name: Routes.routeSystemSettings, page: () => const SystemSettings()),
       GetPage(name: Routes.routeDriveMode, page: () => const DriveMode()),

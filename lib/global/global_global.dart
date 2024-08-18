@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/utils/log.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
+import 'package:lovelivemusicplayer/global/global_binding.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/global/global_theme.dart';
@@ -12,13 +13,17 @@ import 'package:lovelivemusicplayer/models/artist.dart';
 import 'package:lovelivemusicplayer/models/group.dart';
 import 'package:lovelivemusicplayer/models/menu.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
+import 'package:lovelivemusicplayer/models/remote_http.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
+import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:we_slide/we_slide.dart';
 
 class GlobalLogic extends SuperController
@@ -40,6 +45,14 @@ class GlobalLogic extends SuperController
   static final mobileWeSlideController = WeSlideController();
   static final mobileWeSlideFooterController = WeSlideController(initial: true);
 
+  // 当前环境
+  var env = "prod";
+
+  var transVer = 1;
+
+  // 是否可以使用SmartDialog
+  var isCanUseSmartDialog = false;
+
   /// 主页是否需要预留底部安全区域
   var needHomeSafeArea = false.obs;
 
@@ -57,11 +70,28 @@ class GlobalLogic extends SuperController
 
   var isDarkTheme = false.obs;
 
+  // 排序模式(asc: 按时间顺序, desc: 按时间倒序)
+  var sortMode = "".obs;
+
   /// 炫彩模式下的按钮皮肤
   var iconColor = Get.theme.primaryColorDark.obs;
 
   /// 程序是否在后台（因为这个回调进入后台时也会被调用，所以该变量用于判断系统更改主题后，只有回到前台后才能修改）
   var isBackground = false;
+
+  // 是否有AI开屏
+  var hasAIPic = false;
+
+  // APP版本号
+  var appVersion = "1.0.0";
+
+  // 是否允许显示背景图片
+  var enableBG = false;
+
+  // 是否是暗黑主题
+  var isDark = false;
+
+  late RemoteHttp remoteHttp;
 
   static GlobalLogic get to => Get.find();
 
@@ -108,6 +138,25 @@ class GlobalLogic extends SuperController
         });
       }
     });
+  }
+
+  /// 初始化服务等一系列耗时任务
+  initServices() async {
+    appVersion = (await PackageInfo.fromPlatform()).version;
+    Log4f.getLogger();
+    Get.log = defaultLogWriterCallback;
+    await GetStorage.init();
+    SpUtil.getInstance();
+    Network.getInstance();
+    await SDUtils.init();
+    remoteHttp = RemoteHttp(await SpUtil.getBoolean(Const.spEnableHttp, false),
+        await SpUtil.getString(Const.spHttpUrl, ""));
+    enableBG = await SpUtil.getBoolean(Const.spEnableBackgroundPhoto, false);
+    hasAIPic = await SpUtil.getBoolean(Const.spAIPicture, true);
+    sortMode.value = await SpUtil.getString(Const.spSortOrder, "ASC");
+    SpUtil.put(Const.spPrevPage, "");
+    isDark = await SpUtil.getBoolean(Const.spDark);
+    PlayerBinding().dependencies();
   }
 
   refreshIconColor() async {

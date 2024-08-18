@@ -37,6 +37,7 @@ dependencies:
   get: ^4.6.6
   flutter_spinkit: ^5.2.1
   dio: ^5.6.0 # 网络加载
+  talker_dio_logger: ^4.4.1 # 网络请求日志
   path_provider: ^2.1.4 # 路径提供
   pull_to_refresh:  # 下拉刷新上拉加载
     git:

@@ -7,7 +7,7 @@ import 'package:flutter_app_update/flutter_app_update.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
-import 'package:lovelivemusicplayer/main.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:open_appstore/open_appstore.dart';
@@ -52,8 +52,8 @@ class UpdateLogic extends SuperController
       });
     } else {
       Network.get(Const.updateUrl, success: (map) async {
-        final isNewVersion =
-            AppUtils.compareVersion(appVersion, map['versionName']);
+        final isNewVersion = AppUtils.compareVersion(
+            GlobalLogic.to.appVersion, map['versionName']);
         if (!isNewVersion) {
           SmartDialog.showToast('no_need_update'.tr);
           return;

@@ -5,13 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_update.dart';
-import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/cloud_data.dart';
 import 'package:lovelivemusicplayer/models/cloud_update.dart';
 import 'package:lovelivemusicplayer/models/ftp_music.dart';
@@ -21,6 +19,7 @@ import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
@@ -359,7 +358,8 @@ class _DrawerPageState extends State<DrawerPage> {
     return SizedBox(
         height: 24.h,
         child: Center(
-          child: Text("Ver.$appVersion${env == "prod" ? "" : " Preview"}",
+          child: Text(
+              "Ver.${GlobalLogic.to.appVersion}${GlobalLogic.to.env == "prod" ? "" : " Preview"}",
               style:
                   Get.isDarkMode ? TextStyleMs.white_12 : TextStyleMs.black_12),
         ));

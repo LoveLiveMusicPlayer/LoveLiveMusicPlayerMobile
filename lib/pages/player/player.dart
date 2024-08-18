@@ -11,7 +11,6 @@ import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/models/position_data.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
@@ -22,6 +21,7 @@ import 'package:lovelivemusicplayer/pages/player/widget/player_cover.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_header.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/player_lyric.dart';
 import 'package:lovelivemusicplayer/pages/player/widget/seekbar.dart';
+import 'package:lovelivemusicplayer/utils/http_server.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/widgets/tachie_widget.dart';
 import 'package:rxdart/rxdart.dart' as rx_dart;
@@ -70,7 +70,7 @@ class _PlayerState extends State<Player> {
   @override
   void dispose() {
     loginSubscription?.cancel();
-    stopServer();
+    MyHttpServer.stopServer();
     super.dispose();
   }
 
@@ -172,7 +172,7 @@ class _PlayerState extends State<Player> {
   }
 
   setStatus({bool? cover, bool? open}) {
-    stopServer();
+    MyHttpServer.stopServer();
     if (cover != null && cover != (showContent == Type.cover)) {
       showContent = cover ? Type.cover : Type.lyric;
     }
@@ -227,7 +227,7 @@ class _PlayerState extends State<Player> {
                 visible: GlobalLogic.to.hasSkin.value,
                 child: materialButton(Assets.playerPlayerCall, () {
                   if (showContent == Type.lyric) {
-                    startServer();
+                    MyHttpServer.startServer();
                     showContent = Type.tachie;
                   } else {
                     showContent = Type.lyric;
@@ -365,8 +365,8 @@ class _PlayerState extends State<Player> {
       if (file.existsSync()) {
         provider = FileImage(file);
       }
-    } else if (remoteHttp.canUseHttpUrl()) {
-      provider = NetworkImage("${remoteHttp.httpUrl.value}$pic");
+    } else if (GlobalLogic.to.remoteHttp.canUseHttpUrl()) {
+      provider = NetworkImage("${GlobalLogic.to.remoteHttp.httpUrl.value}$pic");
     }
     final decoration = provider == null
         ? BoxDecoration(color: GlobalLogic.to.iconColor.value)

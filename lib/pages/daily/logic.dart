@@ -45,7 +45,8 @@ class DailyLogic extends GetxController {
       final contentList = <RecentOrBangumi>[];
       if (args["today"]["content"] != null) {
         for (var t in args["today"]["content"]) {
-          final event = RecentOrBangumi(color: t["color"], content: t["content"]);
+          final event =
+              RecentOrBangumi(color: t["color"], content: t["content"]);
           contentList.add(event);
         }
       }

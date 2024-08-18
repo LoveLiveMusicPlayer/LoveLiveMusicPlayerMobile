@@ -3,15 +3,14 @@ import 'dart:isolate';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:http/http.dart' as http;
-import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/models/device.dart';
 import 'package:lovelivemusicplayer/models/download_splash.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
+import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -58,9 +57,9 @@ class SDUtils {
     }
     if (music.existFile == true) {
       imagePath = "$path${music.baseUrl}${music.coverPath}";
-    } else if (remoteHttp.canUseHttpUrl()) {
+    } else if (GlobalLogic.to.remoteHttp.canUseHttpUrl()) {
       imagePath =
-          "${remoteHttp.httpUrl.value}${music.baseUrl}${music.coverPath}";
+          "${GlobalLogic.to.remoteHttp.httpUrl.value}${music.baseUrl}${music.coverPath}";
     }
     return imagePath;
   }
@@ -78,8 +77,9 @@ class SDUtils {
     String? imagePath;
     if (album.existFile == true) {
       imagePath = "$path${album.coverPath}";
-    } else if (remoteHttp.canUseHttpUrl()) {
-      imagePath = "${remoteHttp.httpUrl.value}${album.coverPath}";
+    } else if (GlobalLogic.to.remoteHttp.canUseHttpUrl()) {
+      imagePath =
+          "${GlobalLogic.to.remoteHttp.httpUrl.value}${album.coverPath}";
     }
     return imagePath;
   }
@@ -93,7 +93,7 @@ class SDUtils {
     if (music.existFile == true) {
       final filePath = '${SDUtils.path}${music.baseUrl}${music.musicPath}';
       return SDUtils.checkFileExist(filePath);
-    } else if (remoteHttp.canUseHttpUrl()) {
+    } else if (GlobalLogic.to.remoteHttp.canUseHttpUrl()) {
       return true;
     } else {
       return false;

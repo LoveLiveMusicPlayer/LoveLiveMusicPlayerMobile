@@ -14,10 +14,11 @@ import 'package:lovelivemusicplayer/dao/lyric_dao.dart';
 import 'package:lovelivemusicplayer/dao/menu_dao.dart';
 import 'package:lovelivemusicplayer/dao/music_dao.dart';
 import 'package:lovelivemusicplayer/dao/playlist_dao.dart';
+import 'package:lovelivemusicplayer/eventbus/db_init.dart';
+import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/models/artist.dart';
 import 'package:lovelivemusicplayer/models/artist_model.dart';
@@ -83,14 +84,14 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     await findAllListByGroup(GroupKey.groupAll.getName());
     await PlayerLogic.to.initLoopMode();
     await findAllPlayListMusics();
-    isInitSplashDao = true;
+    eventBus.fire(DbInit());
     super.onInit();
   }
 
   /// 初始化数据库数据
   Future<void> findAllListByGroup(String group) async {
     try {
-      final isUseHttp = remoteHttp.isEnableHttp();
+      final isUseHttp = GlobalLogic.to.remoteHttp.isEnableHttp();
 
       /// 设置专辑、歌曲、歌手数据
       if (group == GroupKey.groupAll.getName()) {
@@ -249,7 +250,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     final musicArr = <Music>[];
     for (var row in tempList) {
       final existFile = (row['existFile'] as int?) == 1;
-      if (!remoteHttp.isEnableHttp() && !existFile) {
+      if (!GlobalLogic.to.remoteHttp.isEnableHttp() && !existFile) {
         continue;
       }
       final music = Music(
@@ -299,17 +300,15 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     final oldVersion =
         await SpUtil.getString(Const.spForceRemoveVersion, "1.0.0");
     // 比较上一次记录的版本号与当前APP版本，判断是否进来了一个新版本
-    final isNewVersion = AppUtils.compareVersion(oldVersion, appVersion);
+    final isNewVersion =
+        AppUtils.compareVersion(oldVersion, GlobalLogic.to.appVersion);
     if (isNewVersion) {
       // 如果是新版本
-      if (needClearApp) {
-        // 需要清理APP
-        await clearAllMusic();
-        await clearAllUserData();
-        await SpUtil.clear();
-      }
+      await clearAllMusic();
+      await clearAllUserData();
+      await SpUtil.clear();
       // 无论如何都要将版本号记录在本地SP
-      await SpUtil.put(Const.spForceRemoveVersion, appVersion);
+      await SpUtil.put(Const.spForceRemoveVersion, GlobalLogic.to.appVersion);
     }
   }
 
@@ -328,7 +327,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
 
   /// 通过albumId获取专辑下的全部歌曲
   Future<List<Music>> findAllMusicsByAlbumId(String albumId) async {
-    if (remoteHttp.isEnableHttp()) {
+    if (GlobalLogic.to.remoteHttp.isEnableHttp()) {
       return await musicDao.findAllMusicsByAlbumId(albumId);
     }
     return await musicDao.findAllExistMusicsByAlbumId(albumId);
@@ -564,7 +563,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         if (music != null) {
           if (group == GroupKey.groupAll.getName() || music.group == group) {
             music.isLove = true;
-            if ((remoteHttp.isEnableHttp() || (music.existFile == true))) {
+            if ((GlobalLogic.to.remoteHttp.isEnableHttp() ||
+                (music.existFile == true))) {
               loveList.add(music);
             }
           }

@@ -7,18 +7,17 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
-import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/models/lyric.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/models/play_list_music.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/carplay/carplay.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:rxdart/rxdart.dart' as rx_dart;
@@ -255,7 +254,7 @@ class PlayerLogic extends SuperController
     if (musicList.isEmpty) {
       return;
     }
-    if (isCanUseSmartDialog && showDialog) {
+    if (GlobalLogic.to.isCanUseSmartDialog && showDialog) {
       SmartDialog.showLoading(msg: 'loading'.tr);
     }
     _playerLogicSubject.add(false);
@@ -454,9 +453,9 @@ class PlayerLogic extends SuperController
       }
       final filePath = '${SDUtils.path}${music.baseUrl}${music.musicPath}';
       musicUri = Uri.file(filePath);
-    } else if (remoteHttp.canUseHttpUrl()) {
+    } else if (GlobalLogic.to.remoteHttp.canUseHttpUrl()) {
       musicUri = Uri.parse(
-          '${remoteHttp.httpUrl.value}${music.baseUrl}${AppUtils.wav2flac(music.musicPath)}');
+          '${GlobalLogic.to.remoteHttp.httpUrl.value}${music.baseUrl}${AppUtils.wav2flac(music.musicPath)}');
     } else {
       return null;
     }
@@ -465,9 +464,9 @@ class PlayerLogic extends SuperController
       coverUri = Uri.parse(Assets.logoLogo);
     } else if (music.existFile == true) {
       coverUri = Uri.file('${SDUtils.path}${music.baseUrl}${music.coverPath}');
-    } else if (remoteHttp.canUseHttpUrl()) {
+    } else if (GlobalLogic.to.remoteHttp.canUseHttpUrl()) {
       coverUri = Uri.parse(
-          '${remoteHttp.httpUrl.value}${music.baseUrl}${music.coverPath}');
+          '${GlobalLogic.to.remoteHttp.httpUrl.value}${music.baseUrl}${music.coverPath}');
     }
     return AudioSource.uri(
       musicUri,

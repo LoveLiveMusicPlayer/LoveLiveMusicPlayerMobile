@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
-import 'package:lovelivemusicplayer/main.dart';
+import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/group.dart';
 
 class Const {
@@ -78,8 +78,8 @@ class Const {
   ];
 
   // Logan 加密键值对
-  static const String aesKey = "0123456789012345";
-  static const String iV = "0123456789012345";
+  static const String qqKey = "375f94ab8316c";
+  static const String qqSecret = "9cac7a0532d211eb04fcf6b25b197859";
 
   static const String bonus = "64198531396358024272298e";
 
@@ -121,13 +121,13 @@ class Const {
   static const String splashConfigUrl = "${ownOssUrl}splash_config.json";
 
   // 数据更新文件
-  static const String dataUrl = "$ownOssUrl$env/data.json";
+  static String dataUrl = "$ownOssUrl${GlobalLogic.to.env}/data.json";
 
   // 歌手文件
-  static const String artistModelUrl = "$ownOssUrl$env/artist.json";
+  static String artistModelUrl = "$ownOssUrl${GlobalLogic.to.env}/artist.json";
 
   // 版本更新文件
-  static const String updateUrl = "$ownOssUrl$env/version.json";
+  static String updateUrl = "$ownOssUrl${GlobalLogic.to.env}/version.json";
 
   // 默认LOGO
   static const String shareDefaultLogo =

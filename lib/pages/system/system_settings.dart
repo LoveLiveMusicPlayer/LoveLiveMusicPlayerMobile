@@ -14,13 +14,13 @@ import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/global/global_theme.dart';
-import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/details/widget/details_header.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/http_server.dart';
 import 'package:lovelivemusicplayer/utils/image_util.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
@@ -53,12 +53,12 @@ class _SystemSettingsState extends State<SystemSettings> {
         ? scrollViewWithoutTachiHeight
         : scrollViewWithTachiHeight;
     super.initState();
-    startServer();
+    MyHttpServer.startServer();
   }
 
   @override
   void dispose() {
-    stopServer();
+    MyHttpServer.stopServer();
     super.dispose();
   }
 
@@ -202,7 +202,7 @@ class _SystemSettingsState extends State<SystemSettings> {
                       : scrollViewWithTachiHeight;
                 });
                 if (check) {
-                  startServer();
+                  MyHttpServer.startServer();
                 }
                 // 将全局变量设置为所选值
                 GlobalLogic.to.hasSkin.value = check;
@@ -220,10 +220,10 @@ class _SystemSettingsState extends State<SystemSettings> {
               iconColor: iconColor,
               text: 'splash_photo'.tr,
               hasSwitch: true,
-              initSwitch: hasAIPic,
+              initSwitch: GlobalLogic.to.hasAIPic,
               callBack: (controller, check) async {
                 SpUtil.put(Const.spAIPicture, check);
-                hasAIPic = check;
+                GlobalLogic.to.hasAIPic = check;
               }),
           SizedBox(height: 8.h),
           DrawerFunctionButton(
@@ -231,9 +231,9 @@ class _SystemSettingsState extends State<SystemSettings> {
               iconColor: iconColor,
               text: 'enable_background_photo'.tr,
               hasSwitch: true,
-              initSwitch: enableBG,
+              initSwitch: GlobalLogic.to.enableBG,
               callBack: (controller, check) async {
-                enableBG = check;
+                GlobalLogic.to.enableBG = check;
                 SpUtil.put(Const.spEnableBackgroundPhoto, check);
                 if (check) {
                   SpUtil.getString(Const.spBackgroundPhoto).then((value) {
@@ -250,7 +250,7 @@ class _SystemSettingsState extends State<SystemSettings> {
             text: 'choose_background_photo'.tr,
             iconColor: iconColor,
             onTap: (controller) async {
-              if (enableBG) {
+              if (GlobalLogic.to.enableBG) {
                 final ImagePicker picker = ImagePicker();
                 final XFile? image =
                     await picker.pickImage(source: ImageSource.gallery);
@@ -283,28 +283,33 @@ class _SystemSettingsState extends State<SystemSettings> {
           ),
           SizedBox(height: 8.h),
           ListenableBuilder(
-              listenable:
-                  Listenable.merge([remoteHttp.enableHttp, remoteHttp.httpUrl]),
+              listenable: Listenable.merge([
+                GlobalLogic.to.remoteHttp.enableHttp,
+                GlobalLogic.to.remoteHttp.httpUrl
+              ]),
               builder: (c, w) {
                 return DrawerFunctionButton(
                     icon: Assets.drawerDrawerHttp,
                     iconColor: iconColor,
                     text: 'use_http_music'.tr,
-                    enableSwitch: remoteHttp.httpUrl.value.isNotEmpty,
+                    enableSwitch:
+                        GlobalLogic.to.remoteHttp.httpUrl.value.isNotEmpty,
                     hasSwitch: true,
-                    initSwitch: remoteHttp.isEnableHttp(),
+                    initSwitch: GlobalLogic.to.remoteHttp.isEnableHttp(),
                     callBack: (controller, check) async {
-                      await remoteHttp.setEnableHttp(check);
+                      await GlobalLogic.to.remoteHttp.setEnableHttp(check);
                     });
               }),
           SizedBox(height: 8.h),
           ListenableBuilder(
-              listenable:
-                  Listenable.merge([remoteHttp.enableHttp, remoteHttp.httpUrl]),
+              listenable: Listenable.merge([
+                GlobalLogic.to.remoteHttp.enableHttp,
+                GlobalLogic.to.remoteHttp.httpUrl
+              ]),
               builder: (c, w) {
-                final text = remoteHttp.noneHttpUrl()
+                final text = GlobalLogic.to.remoteHttp.noneHttpUrl()
                     ? 'input_http_url'.tr
-                    : remoteHttp.httpUrl.value;
+                    : GlobalLogic.to.remoteHttp.httpUrl.value;
                 return DrawerFunctionButton(
                   text: text,
                   iconColor: iconColor,
@@ -317,7 +322,8 @@ class _SystemSettingsState extends State<SystemSettings> {
                               title: 'input_http_url'.tr,
                               hint: 'support_http_characters'.tr,
                               controller: TextEditingController(
-                                  text: remoteHttp.httpUrl.value),
+                                  text:
+                                      GlobalLogic.to.remoteHttp.httpUrl.value),
                               maxLength: 50,
                               formatter: [
                                 FilteringTextInputFormatter.allow(
@@ -326,11 +332,13 @@ class _SystemSettingsState extends State<SystemSettings> {
                               onConfirm: (host) async {
                                 if (host.isEmpty) {
                                   controller.setTextValue = 'input_http_url'.tr;
-                                  await remoteHttp.setHttpUrl("");
+                                  await GlobalLogic.to.remoteHttp
+                                      .setHttpUrl("");
                                 } else {
                                   host = host.endsWith("/") ? host : "$host/";
                                   controller.setTextValue = host;
-                                  await remoteHttp.setHttpUrl(host);
+                                  await GlobalLogic.to.remoteHttp
+                                      .setHttpUrl(host);
                                 }
                               });
                         });

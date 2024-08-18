@@ -4,10 +4,12 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart' as get_x;
-import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
+import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/widgets/one_button_dialog.dart';
 import 'package:synchronized/synchronized.dart';
+import 'package:talker_dio_logger/talker_dio_logger_interceptor.dart';
+import 'package:talker_dio_logger/talker_dio_logger_settings.dart';
 
 class Network {
   static Network? _httpRequest;
@@ -45,7 +47,12 @@ class Network {
           sendTimeout: const Duration(seconds: 30),
           headers: httpHeaders);
       dio = Dio(options);
-      _addInterceptor(dio);
+      dio?.interceptors.add(TalkerDioLogger(
+          settings: TalkerDioLoggerSettings(
+              requestFilter: (RequestOptions options) =>
+                  !options.path.endsWith('.lrc'),
+              responseFilter: (response) =>
+                  !response.realUri.path.endsWith(".lrc"))));
     }
   }
 
@@ -187,37 +194,6 @@ class Network {
       }
     }).onError((e, stackTrace) =>
             _handlerError(url, isShowDialog, isShowError, e.toString(), error));
-  }
-
-  static _addInterceptor(Dio? dio) {
-    // 2.添加第一个拦截器
-    Interceptor inter = InterceptorsWrapper(
-        onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
-      // 1.在进行任何网络请求的时候, 可以添加一个loading显示
-      // 2.很多页面的访问必须要求携带Token,那么就可以在这里判断是有Token
-      // 3.对参数进行一些处理,比如序列化处理等
-      //     options.extra
-
-      if (!options.path.endsWith(".lrc")) {
-        if (options.path.startsWith("http") ||
-            options.path.startsWith("https")) {
-          print(options.path);
-        } else {
-          print(options.baseUrl + options.path);
-        }
-      }
-
-      // LogUtil.v(options.headers);
-      // LogUtil.v(options.queryParameters);
-      // LogUtil.d("拦截了请求");
-      handler.next(options);
-    }, onResponse: (Response e, ResponseInterceptorHandler handler) {
-      if (!e.realUri.path.endsWith(".lrc")) {
-        print(e.data);
-      }
-      handler.next(e);
-    });
-    dio?.interceptors.add(inter);
   }
 
   static _noNetwork(Function(String msg)? error, bool isShowError) {
