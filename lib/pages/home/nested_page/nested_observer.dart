@@ -24,7 +24,6 @@ class MyNavigator extends NavigatorObserver {
       });
     }
     NestedController.to.fromGestureBack = true;
-    // RouterReportManager.reportCurrentRoute(route);
   }
 
   @override
@@ -34,6 +33,5 @@ class MyNavigator extends NavigatorObserver {
       AppUtils.uploadPageStart(name);
     }
     super.didPush(route, previousRoute);
-    // RouterReportManager.reportRouteDispose(route);
   }
 }

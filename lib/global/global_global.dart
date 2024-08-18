@@ -46,7 +46,7 @@ class GlobalLogic extends SuperController
   static final mobileWeSlideFooterController = WeSlideController(initial: true);
 
   // 当前环境
-  var env = "prod";
+  var env = "pre";
 
   // 传输协议
   var transVer = 1;
