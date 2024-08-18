@@ -107,6 +107,7 @@ dependencies:
   scrolls_to_top: ^2.1.1 # 滚动到顶部
   haptic_feedback: ^0.5.1+1 # 震动
   umeng_push_sdk: ^2.3.0 # 友盟推送
+  flutter_displaymode: ^0.6.0
 
 dependency_overrides:
   md5_file_checksum:

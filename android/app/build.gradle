@@ -122,8 +122,8 @@ android {
         }
         if (releaseBuildType) {
             release {
-                minifyEnabled true
-                zipAlignEnabled true
+//                minifyEnabled true
+//                zipAlignEnabled true
                 signingConfig signingConfigs.release
                 proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
                 manifestPlaceholders = [applicationName: "android.app.Application"]

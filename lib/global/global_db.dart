@@ -304,9 +304,12 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
         AppUtils.compareVersion(oldVersion, GlobalLogic.to.appVersion);
     if (isNewVersion) {
       // 如果是新版本
-      await clearAllMusic();
-      await clearAllUserData();
-      await SpUtil.clear();
+      if (GlobalLogic.to.needClearApp) {
+        // 且此版本需要清理
+        await clearAllMusic();
+        await clearAllUserData();
+        await SpUtil.clear();
+      }
       // 无论如何都要将版本号记录在本地SP
       await SpUtil.put(Const.spForceRemoveVersion, GlobalLogic.to.appVersion);
     }

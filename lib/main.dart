@@ -66,6 +66,7 @@ void main() {
       };
 
       AppUtils.hideStateBarAndNavigationBar();
+      AppUtils.setHighPerformanceForAndroid();
 
       const platform = MethodChannel('llmp');
       platform.setMethodCallHandler((call) async {

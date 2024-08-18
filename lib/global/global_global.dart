@@ -51,6 +51,9 @@ class GlobalLogic extends SuperController
   // 传输协议
   var transVer = 1;
 
+  // 记录本次升级是否需要清空数据库
+  var needClearApp = false;
+
   // 是否可以使用SmartDialog
   var isCanUseSmartDialog = false;
 

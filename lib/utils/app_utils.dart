@@ -10,6 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
@@ -239,6 +240,13 @@ class AppUtils {
   static hideStateBarAndNavigationBar() {
     if (Platform.isAndroid) {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    }
+  }
+
+  static setHighPerformanceForAndroid() {
+    // 强制设置高帧率
+    if (Platform.isAndroid) {
+      FlutterDisplayMode.setHighRefreshRate();
     }
   }
 
