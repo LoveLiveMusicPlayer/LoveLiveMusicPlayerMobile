@@ -293,15 +293,6 @@ class _PlayerState extends State<Player> {
             if (PlayerLogic.to.playingMusic.value.musicId == null) {
               return;
             }
-            SmartDialog.show(builder: (context) {
-              return DialogAddSongSheet(
-                musicList: [Music.deepClone(PlayerLogic.to.playingMusic.value)],
-                changeLoveStatusCallback: (status) async {
-                  PlayerLogic.to.playingMusic.value =
-                      Music.deepClone(PlayerLogic.to.playingMusic.value);
-                },
-              );
-            });
             SmartDialog.show(
                 alignment: Alignment.bottomCenter,
                 builder: (context) {
