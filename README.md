@@ -156,6 +156,9 @@ B站空间：<https://space.bilibili.com/4367965>
 - 生成数据库 helper 文件
     dart run build_runner build
 
+- 编译打包
+  gradlew assembleRelease -x connectedAndroidTest
+
 ## 许可证
 
 [Apache-2.0](https://raw.githubusercontent.com/zhushenwudi/LoveLiveMusicPlayerMobile/master/LICENSE)

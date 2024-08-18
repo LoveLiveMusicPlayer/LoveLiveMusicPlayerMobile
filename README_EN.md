@@ -157,6 +157,9 @@ for allocating free open-source licences for IDEs such as
 - Generate database helper file
 	dart run build_runner build
 
+- Packaging
+  gradlew assembleRelease -x connectedAndroidTest
+
 ## License
 
 [Apache-2.0](https://raw.githubusercontent.com/zhushenwudi/LoveLiveMusicPlayerMobile/master/LICENSE)
