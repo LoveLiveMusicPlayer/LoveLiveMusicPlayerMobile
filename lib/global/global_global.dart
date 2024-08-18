@@ -48,6 +48,7 @@ class GlobalLogic extends SuperController
   // 当前环境
   var env = "prod";
 
+  // 传输协议
   var transVer = 1;
 
   // 是否可以使用SmartDialog
@@ -68,6 +69,7 @@ class GlobalLogic extends SuperController
   /// 是否跟随系统主题色
   var withSystemTheme = false.obs;
 
+  // 主题是否是深色模式
   var isDarkTheme = false.obs;
 
   // 排序模式(asc: 按时间顺序, desc: 按时间倒序)
@@ -91,6 +93,7 @@ class GlobalLogic extends SuperController
   // 是否是暗黑主题
   var isDark = false;
 
+  // 远端http服务
   late RemoteHttp remoteHttp;
 
   static GlobalLogic get to => Get.find();

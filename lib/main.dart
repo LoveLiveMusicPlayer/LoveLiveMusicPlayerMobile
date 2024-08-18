@@ -17,7 +17,10 @@ import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/error_log.dart';
 import 'package:lovelivemusicplayer/utils/sentry_util.dart';
 
-void main() async {
+StreamSubscription? dbInitSub;
+StreamSubscription? closeOpenSub;
+
+void main() {
   runZonedGuarded(
     () async {
       // 初始化Sentry监控
@@ -37,11 +40,11 @@ void main() async {
         rewindInterval: const Duration(seconds: 5),
       );
 
-      eventBus.on<DbInit>().listen((event) async {
+      dbInitSub = eventBus.on<DbInit>().listen((event) async {
         runApp(const AppPage());
       });
 
-      eventBus.on<CloseOpen>().listen((event) async {
+      closeOpenSub = eventBus.on<CloseOpen>().listen((event) async {
         // 初始化结束后，将启动屏关闭
         FlutterNativeSplash.remove();
         if (Platform.isIOS) {

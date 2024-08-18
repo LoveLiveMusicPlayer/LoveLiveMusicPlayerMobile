@@ -9,6 +9,7 @@ import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_theme.dart';
 import 'package:lovelivemusicplayer/i10n/translation.dart';
+import 'package:lovelivemusicplayer/main.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
@@ -119,6 +120,8 @@ class _AppPageState extends State<AppPage> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    dbInitSub?.cancel();
+    closeOpenSub?.cancel();
     super.dispose();
   }
 }
