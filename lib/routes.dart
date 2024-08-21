@@ -1,16 +1,17 @@
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/pages/daily/view.dart';
-import 'package:lovelivemusicplayer/pages/data_sync/data_sync.dart';
+import 'package:lovelivemusicplayer/pages/data_sync/view.dart';
 import 'package:lovelivemusicplayer/pages/drive/drive_mode.dart';
 import 'package:lovelivemusicplayer/pages/home/home_binding.dart';
 import 'package:lovelivemusicplayer/pages/home/home_view.dart';
 import 'package:lovelivemusicplayer/pages/home/nested_page/nested_binding.dart';
 import 'package:lovelivemusicplayer/pages/moe_girl/moe_girl.dart';
-import 'package:lovelivemusicplayer/pages/music_trans/music_transform.dart';
-import 'package:lovelivemusicplayer/pages/permission/permission.dart';
+import 'package:lovelivemusicplayer/pages/music_trans/view.dart';
+import 'package:lovelivemusicplayer/pages/permission/binding.dart';
+import 'package:lovelivemusicplayer/pages/permission/view.dart';
 import 'package:lovelivemusicplayer/pages/scan/scanner.dart';
 import 'package:lovelivemusicplayer/pages/splash/splash.dart';
-import 'package:lovelivemusicplayer/pages/system/system_settings.dart';
+import 'package:lovelivemusicplayer/pages/system/view.dart';
 import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
@@ -38,15 +39,19 @@ class Routes {
           name: Routes.routeInitial,
           page: () => const HomeView(),
           bindings: [HomeBinding(), NestedBinding()]),
-      GetPage(name: Routes.routePermission, page: () => const Permission()),
+      GetPage(
+          name: Routes.routePermission,
+          page: () => const PermissionPage(),
+          binding: PermissionBinding()),
       GetPage(name: Routes.routeScan, page: () => const Scanner()),
-      GetPage(name: Routes.routeTransform, page: () => const MusicTransform()),
-      GetPage(name: Routes.routeDataSync, page: () => const DataSync()),
+      GetPage(name: Routes.routeTransform, page: () => const MusicTransPage()),
+      GetPage(name: Routes.routeDataSync, page: () => const DataSyncPage()),
       GetPage(
           name: Routes.routeLogger,
           page: () => TalkerScreen(talker: Log4f.getLogger())),
       GetPage(
-          name: Routes.routeSystemSettings, page: () => const SystemSettings()),
+          name: Routes.routeSystemSettings,
+          page: () => const SystemSettingsPage()),
       GetPage(name: Routes.routeDriveMode, page: () => const DriveMode()),
       GetPage(name: Routes.routeMoeGirl, page: () => const MoeGirl()),
       GetPage(name: Routes.routeDaily, page: () => DailyPage()),

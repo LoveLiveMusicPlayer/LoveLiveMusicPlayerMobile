@@ -19,6 +19,7 @@ import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/global/global_theme.dart';
 import 'package:lovelivemusicplayer/models/artist_model.dart';
 import 'package:lovelivemusicplayer/models/menu.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
@@ -33,6 +34,11 @@ import 'package:umeng_common_sdk/umeng_common_sdk.dart';
 
 class AppUtils {
   static CacheManager cacheManager = CacheManager(Config("imgSplash"));
+
+  static changeTheme(bool isNight) {
+    Get.changeThemeMode(isNight ? ThemeMode.dark : ThemeMode.light);
+    Get.changeTheme(isNight ? darkTheme : lightTheme);
+  }
 
   /// 禁用 Android WebView Inspect
   static Future<void> disableWebDebugger() async {

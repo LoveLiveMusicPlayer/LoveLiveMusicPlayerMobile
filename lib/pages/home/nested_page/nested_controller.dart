@@ -12,7 +12,8 @@ import 'package:lovelivemusicplayer/pages/details/menu_details/view.dart';
 import 'package:lovelivemusicplayer/pages/details/singer_details/view.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/page_view/home_page_view.dart';
-import 'package:lovelivemusicplayer/pages/system/system_settings.dart';
+import 'package:lovelivemusicplayer/pages/system/binding.dart';
+import 'package:lovelivemusicplayer/pages/system/view.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:scrolls_to_top/scrolls_to_top.dart';
 
@@ -99,7 +100,8 @@ class NestedController extends GetxController {
       return GetPageRoute(
           routeName: "setting",
           settings: settings,
-          page: () => const SystemSettings());
+          page: () => const SystemSettingsPage(),
+          binding: SystemSettingBinding());
     }
     return null;
   }

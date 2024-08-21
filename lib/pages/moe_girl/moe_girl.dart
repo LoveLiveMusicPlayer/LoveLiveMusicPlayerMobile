@@ -95,7 +95,6 @@ class _MoeGirlState extends State<MoeGirl> {
 
   @override
   void dispose() {
-    webViewController?.dispose();
     _deleteADTimer?.cancel();
     super.dispose();
   }
