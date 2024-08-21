@@ -519,7 +519,7 @@ class _MusicTransformState extends State<MusicTransform> {
           ),
           ElevatedButton(
             onPressed: () async {
-              final message = ftpCmdToJson(FtpCmd(cmd: "stop", body: ""));
+              final message = ftpCmdToJson(FtpCmd(cmd: "finish", body: ""));
               addMsgToChannel(message);
               release();
             },

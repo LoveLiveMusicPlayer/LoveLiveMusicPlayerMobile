@@ -230,7 +230,7 @@ class _DataSyncState extends State<DataSync> {
           ),
           ElevatedButton(
             onPressed: () async {
-              final message = ftpCmdToJson(FtpCmd(cmd: "stop", body: ""));
+              final message = ftpCmdToJson(FtpCmd(cmd: "finish", body: ""));
               channel?.sink.add(message);
               SmartDialog.dismiss();
               DBLogic.to
