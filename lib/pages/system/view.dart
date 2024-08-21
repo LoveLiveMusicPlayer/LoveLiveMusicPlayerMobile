@@ -19,7 +19,6 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
-        // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: Stack(
           children: [
             const Align(

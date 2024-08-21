@@ -134,16 +134,6 @@ class GlobalLogic extends SuperController
       }
       withSystemTheme.value = isWith;
     };
-
-    SpUtil.getBoolean(Const.spEnableBackgroundPhoto).then((value) {
-      if (value) {
-        SpUtil.getString(Const.spBackgroundPhoto).then((value) {
-          if (SDUtils.checkFileExist(SDUtils.bgPhotoPath + value)) {
-            setBgPhoto(SDUtils.bgPhotoPath + value);
-          }
-        });
-      }
-    });
   }
 
   /// 初始化服务等一系列耗时任务
@@ -158,6 +148,13 @@ class GlobalLogic extends SuperController
     remoteHttp = RemoteHttp(await SpUtil.getBoolean(Const.spEnableHttp, false),
         await SpUtil.getString(Const.spHttpUrl, ""));
     enableBG = await SpUtil.getBoolean(Const.spEnableBackgroundPhoto, false);
+    if (enableBG) {
+      SpUtil.getString(Const.spBackgroundPhoto).then((value) {
+        if (SDUtils.checkFileExist(SDUtils.bgPhotoPath + value)) {
+          setBgPhoto(SDUtils.bgPhotoPath + value);
+        }
+      });
+    }
     hasAIPic = await SpUtil.getBoolean(Const.spAIPicture, true);
     sortMode.value = await SpUtil.getString(Const.spSortOrder, "ASC");
     SpUtil.put(Const.spPrevPage, "");
