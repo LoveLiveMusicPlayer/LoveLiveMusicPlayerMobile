@@ -83,9 +83,9 @@ class MusicTransLogic extends GetxController {
             final progress = (received / total * 100).toStringAsFixed(0);
             if (isMusic) {
               final p = double.parse(progress).truncate();
-              if (state.currentProgress != p) {
-                state.currentProgress = p;
-                state.currentMusic = music;
+              if (state.currentProgress.value != p) {
+                state.currentProgress.value = p;
+                state.currentMusic.value = music;
                 if (progress == "100") {
                   callback(FtpCmd(cmd: "download success", body: music.musicUId));
                 } else {
@@ -121,7 +121,7 @@ class MusicTransLogic extends GetxController {
       if (state.musicList[i].musicUId == music.musicUId) {
         if (state.index < state.musicList.length) {
           state.index = i + 1;
-          state.isStartDownload = true;
+          state.isStartDownload.value = true;
           break;
         }
       }

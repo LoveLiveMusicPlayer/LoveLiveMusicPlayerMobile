@@ -57,16 +57,18 @@ abstract class WebSocketState<T extends StatefulWidget> extends State<T> {
   List<Widget> body();
 
   void setConnect(bool isConnected) {
-    setState(() {
-      this.isConnected = isConnected;
-    });
+    if (mounted) {
+      setState(() {
+        this.isConnected = isConnected;
+      });
+    }
   }
 
-  Future<void> onHandleMsg(dynamic msg);
+  Future<void> onHandleMsg(String msg);
 
   void openWebsocket(String ipAddress, String port) {
     channel = IOWebSocketChannel.connect(Uri.parse("ws://$ipAddress:$port"));
-    channel!.stream.listen((msg) async => onHandleMsg, onDone: () {
+    channel!.stream.listen((msg) => onHandleMsg(msg as String), onDone: () {
       setConnect(false);
       print("stream is done");
     }, onError: (e) {

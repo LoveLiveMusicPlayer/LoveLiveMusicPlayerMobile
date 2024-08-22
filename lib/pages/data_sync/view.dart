@@ -19,7 +19,7 @@ class DataSyncPage extends StatefulWidget {
   const DataSyncPage({super.key});
 
   @override
-  WebSocketState createState() => _DataSyncPageState();
+  State<DataSyncPage> createState() => _DataSyncPageState();
 }
 
 class _DataSyncPageState extends WebSocketState<DataSyncPage> {
@@ -143,14 +143,8 @@ class _DataSyncPageState extends WebSocketState<DataSyncPage> {
   }
 
   @override
-  void dispose() {
-    Get.delete<DataSyncLogic>();
-    super.dispose();
-  }
-
-  @override
   Future<void> onHandleMsg(msg) async {
-    final ftpCmd = ftpCmdFromJson(msg as String);
+    final ftpCmd = ftpCmdFromJson(msg);
     switch (ftpCmd.cmd) {
       case "version":
         if ((int.tryParse(ftpCmd.body) ?? 0) != GlobalLogic.to.transVer) {
@@ -176,5 +170,11 @@ class _DataSyncPageState extends WebSocketState<DataSyncPage> {
         channel?.sink.close();
         break;
     }
+  }
+
+  @override
+  void dispose() {
+    Get.delete<DataSyncLogic>();
+    super.dispose();
   }
 }

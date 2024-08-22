@@ -1,13 +1,14 @@
 import 'package:concurrent_queue/concurrent_queue.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/models/ftp_music.dart';
 
 class MusicTransState {
   // 当前传输的歌曲
-  DownloadMusic? currentMusic;
+  Rx<DownloadMusic?> currentMusic = Rx<DownloadMusic?>(null);
 
   // 待下载的歌曲列表
-  late List<DownloadMusic> musicList;
+  late RxList<DownloadMusic> musicList;
 
   late ConcurrentQueue queue;
 
@@ -17,24 +18,23 @@ class MusicTransState {
   CancelToken? cancelToken;
 
   // 下载文件的进度
-  late int currentProgress;
+  late RxInt currentProgress;
   // 当前传输的索引
   late int index;
   // 是否准备开始传输任务
-  late bool isStartDownload;
+  late RxBool isStartDownload;
 
   late String? ipAddress;
   late String port;
 
   MusicTransState() {
-    currentMusic = null;
-    musicList = [];
+    musicList = <DownloadMusic>[].obs;
     queue = ConcurrentQueue(concurrency: 1);
     isRunning = false;
     cancelToken = null;
-    currentProgress = 0;
+    currentProgress = 0.obs;
     index = 0;
-    isStartDownload = false;
+    isStartDownload = false.obs;
 
     port = "4388";
   }

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/pages/daily/binding.dart';
 import 'package:lovelivemusicplayer/pages/daily/view.dart';
 import 'package:lovelivemusicplayer/pages/data_sync/view.dart';
 import 'package:lovelivemusicplayer/pages/drive/drive_mode.dart';
@@ -54,7 +55,10 @@ class Routes {
           page: () => const SystemSettingsPage()),
       GetPage(name: Routes.routeDriveMode, page: () => const DriveMode()),
       GetPage(name: Routes.routeMoeGirl, page: () => const MoeGirl()),
-      GetPage(name: Routes.routeDaily, page: () => DailyPage()),
+      GetPage(
+          name: Routes.routeDaily,
+          page: () => const DailyPage(),
+          binding: DailyBinding()),
     ];
   }
 }

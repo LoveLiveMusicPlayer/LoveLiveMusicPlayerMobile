@@ -47,16 +47,18 @@ class _MusicTransPageState extends WebSocketState<MusicTransPage> {
   }
 
   Widget renderTransView() {
-    return Column(
-      children: [
-        SizedBox(height: 35.h),
-        drawBody(),
-        SizedBox(height: 20.h),
-        drawMusicInfo(),
-        SizedBox(height: 40.h),
-        drawProgressBar()
-      ],
-    );
+    return Obx(() {
+      return Column(
+        children: [
+          SizedBox(height: 35.h),
+          drawBody(),
+          SizedBox(height: 20.h),
+          drawMusicInfo(),
+          SizedBox(height: 40.h),
+          drawProgressBar()
+        ],
+      );
+    });
   }
 
   Widget renderNoTransView() {
@@ -106,20 +108,20 @@ class _MusicTransPageState extends WebSocketState<MusicTransPage> {
   }
 
   Widget drawMusicInfo() {
-    if (state.currentMusic == null) {
+    if (state.currentMusic.value == null) {
       return SizedBox(height: 60.h);
     } else {
       return SizedBox(
         height: 60.h,
         child: Column(
           children: [
-            Text(state.currentMusic!.musicName,
+            Text(state.currentMusic.value!.musicName,
                 style: Get.isDarkMode
                     ? TextStyleMs.white_15
                     : TextStyleMs.black_15,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis),
-            Text(state.currentMusic!.artist,
+            Text(state.currentMusic.value!.artist,
                 style: TextStyleMs.gray_12,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis),
@@ -173,7 +175,7 @@ class _MusicTransPageState extends WebSocketState<MusicTransPage> {
               size: Size(160.h, 160.h),
               painter: CircleView(
                 completePercent:
-                    state.isStartDownload ? percent.roundToDouble() : 0,
+                    state.isStartDownload.value ? percent.roundToDouble() : 0,
                 completeColor: ColorMs.colorF940A7,
                 lineColors: [ColorMs.colorF940A7],
                 completeWidth: 8.w,
@@ -203,7 +205,7 @@ class _MusicTransPageState extends WebSocketState<MusicTransPage> {
   }
 
   Widget drawInnerText(int current, int total) {
-    if (state.isStartDownload) {
+    if (state.isStartDownload.value) {
       return SizedBox(
         width: 190.h,
         height: 190.h,
@@ -243,7 +245,7 @@ class _MusicTransPageState extends WebSocketState<MusicTransPage> {
 
   @override
   Future<void> onHandleMsg(msg) async {
-    final ftpCmd = ftpCmdFromJson(msg as String);
+    final ftpCmd = ftpCmdFromJson(msg);
     switch (ftpCmd.cmd) {
       case "version":
         if ((int.tryParse(ftpCmd.body) ?? 0) != GlobalLogic.to.transVer) {
@@ -299,12 +301,6 @@ class _MusicTransPageState extends WebSocketState<MusicTransPage> {
         release();
         break;
     }
-
-    @override
-    void dispose() {
-      Get.delete<MusicTransLogic>();
-      super.dispose();
-    }
   }
 
   @override
@@ -314,6 +310,12 @@ class _MusicTransPageState extends WebSocketState<MusicTransPage> {
       state.queue.clear();
     }
     state.cancelToken?.cancel();
+  }
+
+  @override
+  void dispose() {
+    Get.delete<MusicTransLogic>();
+    super.dispose();
   }
 }
 
