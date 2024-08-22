@@ -69,12 +69,11 @@ abstract class WebSocketState<T extends StatefulWidget> extends State<T> {
   void openWebsocket(String ipAddress, String port) {
     channel = IOWebSocketChannel.connect(Uri.parse("ws://$ipAddress:$port"));
     channel!.stream.listen((msg) => onHandleMsg(msg as String), onDone: () {
-      setConnect(false);
       print("stream is done");
     }, onError: (e) {
       setConnect(false);
       SmartDialog.showToast('connect_fail'.tr);
-      Log4f.i(msg: e.toString());
+      Log4f.w(msg: e.toString());
     }, cancelOnError: true);
     setConnect(true);
     addMsgToChannel(

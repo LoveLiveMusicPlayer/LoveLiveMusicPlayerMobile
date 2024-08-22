@@ -87,7 +87,7 @@ class _DataSyncPageState extends WebSocketState<DataSyncPage> {
               });
             }),
             SizedBox(height: 28.h),
-            btnFunc(Assets.syncIconComputer, 'pc2phone'.tr, () async {
+            btnFunc(Assets.syncIconComputer, 'pc2phone'.tr, () {
               if (state.isTransferring) {
                 SmartDialog.showToast('transferring'.tr);
                 return;
@@ -130,11 +130,13 @@ class _DataSyncPageState extends WebSocketState<DataSyncPage> {
           ])),
       Visibility(
           visible: !isConnected,
-          child: btnFunc(Assets.syncIconScanQr, 'device_pair'.tr, () async {
-            state.ipAddress = await Get.toNamed(Routes.routeScan) as String?;
-            if (state.ipAddress != null) {
-              openWebsocket(state.ipAddress!, state.port);
-            }
+          child: btnFunc(Assets.syncIconScanQr, 'device_pair'.tr, () {
+            Get.toNamed(Routes.routeScan)?.then((msg) {
+              state.ipAddress = msg as String?;
+              if (state.ipAddress != null) {
+                openWebsocket(state.ipAddress!, state.port);
+              }
+            });
           }))
     ];
   }

@@ -97,11 +97,13 @@ class _MusicTransPageState extends WebSocketState<MusicTransPage> {
         SizedBox(height: 85.h),
         Visibility(
             visible: !isConnected,
-            child: btnFunc(Assets.syncIconScanQr, 'device_pair'.tr, () async {
-              state.ipAddress = await Get.toNamed(Routes.routeScan) as String?;
-              if (state.ipAddress != null) {
-                openWebsocket(state.ipAddress!, state.port);
-              }
+            child: btnFunc(Assets.syncIconScanQr, 'device_pair'.tr, () {
+              Get.toNamed(Routes.routeScan)?.then((msg) {
+                state.ipAddress = msg as String?;
+                if (state.ipAddress != null) {
+                  openWebsocket(state.ipAddress!, state.port);
+                }
+              });
             }))
       ],
     );
