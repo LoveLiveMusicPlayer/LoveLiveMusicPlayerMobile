@@ -76,7 +76,7 @@ class PlayerLogic extends SuperController
   static PlayerLogic get to => Get.find();
 
   // miniPlayer底部Box样式
-  BoxDecorationData? miniPlayerBoxDecorationData;
+  Rx<BoxDecorationData>? miniPlayerBoxDecorationData;
 
   @override
   void onInit() {
@@ -298,7 +298,7 @@ class PlayerLogic extends SuperController
     }
     AppUtils.uploadEvent("Playing",
         params: {"music": musicList[index].musicName ?? ""});
-    Log4f.v(msg: "播放曲目: ${musicList[index].musicName}");
+    print("播放曲目: ${musicList[index].musicName}");
     try {
       // 如果上一次处理没有结束，直接跳过
       if (GlobalLogic.to.isHandlePlay) {
@@ -331,7 +331,7 @@ class PlayerLogic extends SuperController
       }
       await audioSourceList.addAll(audioList);
       audioList.clear();
-      Log4f.v(msg: "播放列表长度: ${audioSourceList.length}");
+      print("播放列表长度: ${audioSourceList.length}");
       mPlayer.setAudioSource(audioSourceList, initialIndex: index);
       if (needPlay) {
         mPlayer.play();
@@ -750,10 +750,16 @@ class PlayerLogic extends SuperController
       playingMusic.value = music;
       AppUtils.getImagePaletteFromMusic(playingMusic.value).then((color) {
         GlobalLogic.to.iconColor.value = color ?? Get.theme.primaryColor;
-        miniPlayerBoxDecorationData = BoxDecorationData(
+        final boxDecorationData = BoxDecorationData(
           color: GlobalLogic.to.iconColor.value.value,
           borderRadius: 34.r,
         );
+
+        if (miniPlayerBoxDecorationData == null) {
+          miniPlayerBoxDecorationData = Rx<BoxDecorationData>(boxDecorationData);
+        } else {
+          miniPlayerBoxDecorationData!.value = boxDecorationData;
+        }
       });
     }
   }

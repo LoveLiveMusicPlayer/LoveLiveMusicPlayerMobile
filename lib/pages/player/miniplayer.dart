@@ -11,6 +11,7 @@ import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_playlist.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:marquee_text/marquee_text.dart';
@@ -42,7 +43,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
   }
 
   Widget renderPanel() {
-    var boxDecoration = PlayerLogic.to.miniPlayerBoxDecorationData;
+    var boxDecoration = PlayerLogic.to.miniPlayerBoxDecorationData?.value;
     if (GlobalLogic.to.hasSkin.value && boxDecoration != null) {
       return Container(
         height: 60.h,
