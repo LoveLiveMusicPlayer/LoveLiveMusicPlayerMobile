@@ -19,8 +19,10 @@ class MusicTransState {
 
   // 下载文件的进度
   late RxInt currentProgress;
+
   // 当前传输的索引
   late int index;
+
   // 是否准备开始传输任务
   late RxBool isStartDownload;
 

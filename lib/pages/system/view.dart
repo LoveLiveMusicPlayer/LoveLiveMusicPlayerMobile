@@ -7,7 +7,6 @@ import 'package:lovelivemusicplayer/pages/details/widget/details_header.dart';
 import 'package:lovelivemusicplayer/pages/system/logic.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
-import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
 import 'package:lovelivemusicplayer/widgets/tachie_widget.dart';
 
@@ -21,10 +20,7 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
-            const Align(
-              alignment: Alignment.bottomCenter,
-              child: Tachie()
-            ),
+            const Align(alignment: Alignment.bottomCenter, child: Tachie()),
             Column(
               children: [
                 DetailsHeader(title: 'system_settings'.tr),
@@ -48,8 +44,7 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
               ],
             )
           ],
-        )
-    );
+        ));
   }
 
   Widget renderTopFunctionButtonArray() {

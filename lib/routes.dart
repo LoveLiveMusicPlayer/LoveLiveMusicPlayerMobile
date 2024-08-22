@@ -13,7 +13,8 @@ import 'package:lovelivemusicplayer/pages/music_trans/view.dart';
 import 'package:lovelivemusicplayer/pages/permission/binding.dart';
 import 'package:lovelivemusicplayer/pages/permission/view.dart';
 import 'package:lovelivemusicplayer/pages/scan/scanner.dart';
-import 'package:lovelivemusicplayer/pages/splash/splash.dart';
+import 'package:lovelivemusicplayer/pages/splash/binding.dart';
+import 'package:lovelivemusicplayer/pages/splash/view.dart';
 import 'package:lovelivemusicplayer/pages/system/view.dart';
 import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:talker_flutter/talker_flutter.dart';
@@ -37,7 +38,10 @@ class Routes {
 
   static List<GetPage> getRoutes() {
     return [
-      GetPage(name: Routes.routeSplash, page: () => const Splash()),
+      GetPage(
+          name: Routes.routeSplash,
+          page: () => const SplashPage(),
+          binding: SplashBinding()),
       GetPage(
           name: Routes.routeInitial,
           page: () => const HomeView(),

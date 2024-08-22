@@ -32,12 +32,12 @@ class MoeGirlPage extends GetView<MoeGirlLogic> {
             child: Stack(
               children: [
                 InAppWebView(
-                  key: controller.webViewKey,
-                  onScrollChanged: (_, x, y) => controller.scrollWebView(y),
-                  initialUrlRequest: controller.urlRequest,
-                  initialSettings: controller.webViewSettings,
-                  onWebViewCreated: (ctl) => controller.webViewController = ctl
-                ),
+                    key: controller.webViewKey,
+                    onScrollChanged: (_, x, y) => controller.scrollWebView(y),
+                    initialUrlRequest: controller.urlRequest,
+                    initialSettings: controller.webViewSettings,
+                    onWebViewCreated: (ctl) =>
+                        controller.webViewController = ctl),
                 if (showLayout) renderBottomBar(bgColor)
               ],
             ),

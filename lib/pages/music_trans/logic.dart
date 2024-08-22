@@ -1,3 +1,4 @@
+import 'dart:convert' as convert;
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -9,7 +10,7 @@ import 'package:lovelivemusicplayer/models/ftp_music.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
-import 'dart:convert' as convert;
+
 import 'state.dart';
 
 class MusicTransLogic extends GetxController {
@@ -87,7 +88,8 @@ class MusicTransLogic extends GetxController {
                 state.currentProgress.value = p;
                 state.currentMusic.value = music;
                 if (progress == "100") {
-                  callback(FtpCmd(cmd: "download success", body: music.musicUId));
+                  callback(
+                      FtpCmd(cmd: "download success", body: music.musicUId));
                 } else {
                   if (state.isRunning) {
                     callback(FtpCmd(cmd: "downloading", body: music.musicUId));

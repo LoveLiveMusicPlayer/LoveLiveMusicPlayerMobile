@@ -55,8 +55,7 @@ class _DataSyncPageState extends WebSocketState<DataSyncPage> {
       ),
       SizedBox(height: 20.h),
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        SvgPicture.asset(Assets.drawerDrawerSecret,
-            width: 15.r, height: 15.r),
+        SvgPicture.asset(Assets.drawerDrawerSecret, width: 15.r, height: 15.r),
         SizedBox(width: 10.r),
         ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 300.w),
@@ -65,13 +64,11 @@ class _DataSyncPageState extends WebSocketState<DataSyncPage> {
       ]),
       SizedBox(height: 4.h),
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        SvgPicture.asset(Assets.drawerDrawerSecret,
-            width: 15.r, height: 15.r),
+        SvgPicture.asset(Assets.drawerDrawerSecret, width: 15.r, height: 15.r),
         SizedBox(width: 10.r),
         ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 300.w),
-          child: Text('keep_screen_and_scan_qr'.tr,
-              style: TextStyleMs.gray_12),
+          child: Text('keep_screen_and_scan_qr'.tr, style: TextStyleMs.gray_12),
         )
       ]),
       SizedBox(height: 60.h),
@@ -85,8 +82,8 @@ class _DataSyncPageState extends WebSocketState<DataSyncPage> {
               }
               logic.setTransferring(true);
               logic.getPhone2PcData().then((transData) {
-                addMsgToChannel(FtpCmd(
-                    cmd: "phone2pc", body: transDataToJson(transData)));
+                addMsgToChannel(
+                    FtpCmd(cmd: "phone2pc", body: transDataToJson(transData)));
               });
             }),
             SizedBox(height: 28.h),
@@ -97,8 +94,8 @@ class _DataSyncPageState extends WebSocketState<DataSyncPage> {
               }
               logic.setTransferring(true);
               logic.getPc2PhoneData().then((transData) {
-                addMsgToChannel(FtpCmd(
-                    cmd: "pc2phone", body: transDataToJson(transData)));
+                addMsgToChannel(
+                    FtpCmd(cmd: "pc2phone", body: transDataToJson(transData)));
               });
             }),
             SizedBox(height: 28.h),

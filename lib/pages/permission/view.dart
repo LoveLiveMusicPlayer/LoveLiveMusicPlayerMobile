@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/pages/permission/logic.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
-import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class PermissionPage extends GetView<PermissionLogic> {
@@ -19,7 +18,8 @@ class PermissionPage extends GetView<PermissionLogic> {
           elevation: 0,
           iconTheme: const IconThemeData(color: Colors.white),
           title: Text('privacy_agreement'.tr, style: TextStyleMs.white_18),
-          backgroundColor: Get.isDarkMode ? ColorMs.colorNightPrimary : ColorMs.color28B3F7,
+          backgroundColor:
+              Get.isDarkMode ? ColorMs.colorNightPrimary : ColorMs.color28B3F7,
         ),
         body: SafeArea(
           child: SingleChildScrollView(
