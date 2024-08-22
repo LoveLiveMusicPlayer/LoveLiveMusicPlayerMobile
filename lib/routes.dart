@@ -2,7 +2,8 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/pages/daily/binding.dart';
 import 'package:lovelivemusicplayer/pages/daily/view.dart';
 import 'package:lovelivemusicplayer/pages/data_sync/view.dart';
-import 'package:lovelivemusicplayer/pages/drive/drive_mode.dart';
+import 'package:lovelivemusicplayer/pages/drive/binding.dart';
+import 'package:lovelivemusicplayer/pages/drive/view.dart';
 import 'package:lovelivemusicplayer/pages/home/home_binding.dart';
 import 'package:lovelivemusicplayer/pages/home/home_view.dart';
 import 'package:lovelivemusicplayer/pages/home/nested_page/nested_binding.dart';
@@ -53,7 +54,10 @@ class Routes {
       GetPage(
           name: Routes.routeSystemSettings,
           page: () => const SystemSettingsPage()),
-      GetPage(name: Routes.routeDriveMode, page: () => const DriveMode()),
+      GetPage(
+          name: Routes.routeDriveMode,
+          page: () => const DriveModePage(),
+          binding: DriveModeBinding()),
       GetPage(name: Routes.routeMoeGirl, page: () => const MoeGirl()),
       GetPage(
           name: Routes.routeDaily,
