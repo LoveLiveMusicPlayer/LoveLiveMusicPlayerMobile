@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart' as get_x;
 import 'package:lovelivemusicplayer/global/const.dart';
@@ -47,12 +48,14 @@ class Network {
           sendTimeout: const Duration(seconds: 30),
           headers: httpHeaders);
       dio = Dio(options);
-      dio?.interceptors.add(TalkerDioLogger(
-          settings: TalkerDioLoggerSettings(
-              requestFilter: (RequestOptions options) =>
-                  !options.path.endsWith('.lrc'),
-              responseFilter: (response) =>
-                  !response.realUri.path.endsWith(".lrc"))));
+      if (kDebugMode) {
+        dio?.interceptors.add(TalkerDioLogger(
+            settings: TalkerDioLoggerSettings(
+                requestFilter: (RequestOptions options) =>
+                    !options.path.endsWith('.lrc'),
+                responseFilter: (response) =>
+                    !response.realUri.path.endsWith(".lrc"))));
+      }
     }
   }
 
@@ -74,9 +77,8 @@ class Network {
     return resp.data;
   }
 
-  static get(String url,
+  static get(String url, Function(dynamic t)? success,
       {Map<String, dynamic>? params,
-      Function(dynamic t)? success,
       Function(String msg)? error,
       bool isShowDialog = true,
       bool isShowError = true,

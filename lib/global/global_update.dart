@@ -31,7 +31,7 @@ class UpdateLogic extends SuperController
 
   checkUpdate() async {
     if (Platform.isIOS) {
-      Network.get(Const.appstoreUrl, success: (resp) async {
+      Network.get(Const.appstoreUrl, (resp) async {
         Map<String, dynamic> map = jsonDecode(resp);
         final tempList = map["results"] as List;
         for (var bundle in tempList) {
@@ -51,7 +51,7 @@ class UpdateLogic extends SuperController
         }
       });
     } else {
-      Network.get(Const.updateUrl, success: (map) async {
+      Network.get(Const.updateUrl, (map) async {
         final isNewVersion = AppUtils.compareVersion(
             GlobalLogic.to.appVersion, map['versionName']);
         if (!isNewVersion) {

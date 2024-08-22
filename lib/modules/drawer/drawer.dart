@@ -242,14 +242,19 @@ class _DrawerPageState extends State<DrawerPage> {
         ));
   }
 
-  handleUpdateData() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    int currentNumber = int.tryParse(packageInfo.buildNumber) ?? 0;
+  Future<void> handleUpdateData() async {
     SmartDialog.showLoading(msg: 'downloading'.tr);
-    Network.get(Const.dataUrl, success: (result) {
+
+    try {
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      int currentNumber = int.tryParse(packageInfo.buildNumber) ?? 0;
+
+      final result = await Network.getSync(Const.dataUrl, isShowDialog: false);
+
       if (result is List) {
         int index = -1;
         int maxNumber = 0;
+
         for (var i = 0; i < result.length; i++) {
           final map = CloudUpdate.fromJson(result[i]);
           if (currentNumber > maxNumber && currentNumber <= map.maxVersion) {
@@ -257,47 +262,47 @@ class _DrawerPageState extends State<DrawerPage> {
             index = i;
           }
         }
+
         if (index == -1) {
           return;
         }
+
         String latestDataUrl = CloudUpdate.fromJson(result[index]).url;
-        Network.get(latestDataUrl, success: (res) {
-          if (res is Map<String, dynamic>) {
-            CloudData data = CloudData.fromJson(res);
-            SpUtil.getInt(Const.spDataVersion).then((currentVersion) async {
-              Log4f.d(msg: "云端版本号: ${data.version}");
-              await SmartDialog.dismiss(status: SmartStatus.loading);
-              if (currentVersion == data.version) {
-                SmartDialog.show(
-                    builder: (BuildContext context) => TwoButtonDialog(
-                          title: 'now_is_latest'.tr,
-                          isShowMsg: false,
-                          onConfirmListener: () {
-                            parseUpdateDataSource(data);
-                          },
-                        ));
-              } else if (currentVersion < data.version) {
-                parseUpdateDataSource(data);
-              }
-            });
-          } else {
-            SmartDialog.dismiss(status: SmartStatus.loading);
-            SmartDialog.showToast('data_error'.tr);
+        final res = await Network.getSync(latestDataUrl, isShowDialog: false);
+
+        if (res is Map<String, dynamic>) {
+          CloudData data = CloudData.fromJson(res);
+          int currentVersion = await SpUtil.getInt(Const.spDataVersion);
+
+          Log4f.d(msg: "云端版本号: ${data.version}");
+          await SmartDialog.dismiss(status: SmartStatus.loading);
+
+          if (currentVersion == data.version) {
+            SmartDialog.show(
+              builder: (BuildContext context) => TwoButtonDialog(
+                title: 'now_is_latest'.tr,
+                isShowMsg: false,
+                onConfirmListener: () {
+                  parseUpdateDataSource(data);
+                },
+              ),
+            );
+          } else if (currentVersion < data.version) {
+            parseUpdateDataSource(data);
           }
-        }, error: (err) {
-          Log4f.i(msg: err);
+        } else {
           SmartDialog.dismiss(status: SmartStatus.loading);
-          SmartDialog.showToast('fetch_songs_fail'.tr);
-        }, isShowDialog: false);
+          SmartDialog.showToast('data_error'.tr);
+        }
       } else {
         SmartDialog.dismiss(status: SmartStatus.loading);
         SmartDialog.showToast('data_error'.tr);
       }
-    }, error: (err) {
-      Log4f.i(msg: err);
+    } catch (err) {
+      Log4f.i(msg: err.toString());
       SmartDialog.dismiss(status: SmartStatus.loading);
       SmartDialog.showToast('fetch_songs_fail'.tr);
-    }, isShowDialog: false);
+    }
   }
 
   parseUpdateDataSource(CloudData data) async {
