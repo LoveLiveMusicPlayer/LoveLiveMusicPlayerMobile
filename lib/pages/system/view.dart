@@ -25,22 +25,25 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
               children: [
                 DetailsHeader(title: 'system_settings'.tr),
                 SizedBox(height: 16.h),
-                Container(
-                  constraints: BoxConstraints(maxHeight: controller.maxHeight),
-                  child: SingleChildScrollView(
-                    child: Column(children: [
-                      Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.w),
-                          child: renderTopFunctionButtonArray()),
-                      SizedBox(height: 2.h),
-                      renderRoleLogo(),
-                      SizedBox(height: 2.h),
-                      Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.w),
-                          child: renderBottomFunctionButtonArray())
-                    ]),
-                  ),
-                ),
+                Obx(() {
+                  return Container(
+                    constraints:
+                        BoxConstraints(maxHeight: controller.maxHeight.value),
+                    child: SingleChildScrollView(
+                      child: Column(children: [
+                        Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.w),
+                            child: renderTopFunctionButtonArray()),
+                        SizedBox(height: 2.h),
+                        renderRoleLogo(),
+                        SizedBox(height: 2.h),
+                        Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.w),
+                            child: renderBottomFunctionButtonArray())
+                      ]),
+                    ),
+                  );
+                }),
               ],
             )
           ],

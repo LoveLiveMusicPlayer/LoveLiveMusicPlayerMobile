@@ -12,7 +12,7 @@ import 'package:lovelivemusicplayer/pages/moe_girl/view.dart';
 import 'package:lovelivemusicplayer/pages/music_trans/view.dart';
 import 'package:lovelivemusicplayer/pages/permission/binding.dart';
 import 'package:lovelivemusicplayer/pages/permission/view.dart';
-import 'package:lovelivemusicplayer/pages/scan/scanner.dart';
+import 'package:lovelivemusicplayer/pages/scan/view.dart';
 import 'package:lovelivemusicplayer/pages/splash/binding.dart';
 import 'package:lovelivemusicplayer/pages/splash/view.dart';
 import 'package:lovelivemusicplayer/pages/system/view.dart';
@@ -50,7 +50,7 @@ class Routes {
           name: Routes.routePermission,
           page: () => const PermissionPage(),
           binding: PermissionBinding()),
-      GetPage(name: Routes.routeScan, page: () => const Scanner()),
+      GetPage(name: Routes.routeScan, page: () => const ScannerPage()),
       GetPage(name: Routes.routeTransform, page: () => const MusicTransPage()),
       GetPage(name: Routes.routeDataSync, page: () => const DataSyncPage()),
       GetPage(

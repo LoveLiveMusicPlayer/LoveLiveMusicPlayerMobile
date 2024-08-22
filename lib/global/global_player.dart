@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter_lyric/lyric_parser/parser_smart.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
@@ -17,6 +18,7 @@ import 'package:lovelivemusicplayer/models/play_list_music.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/carplay/carplay.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/models/box_decoration.dart';
 import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
@@ -72,6 +74,9 @@ class PlayerLogic extends SuperController
   Stream<bool> get playerLogicStream => _playerLogicSubject.stream;
 
   static PlayerLogic get to => Get.find();
+
+  // miniPlayer底部Box样式
+  BoxDecorationData? miniPlayerBoxDecorationData;
 
   @override
   void onInit() {
@@ -745,6 +750,10 @@ class PlayerLogic extends SuperController
       playingMusic.value = music;
       AppUtils.getImagePaletteFromMusic(playingMusic.value).then((color) {
         GlobalLogic.to.iconColor.value = color ?? Get.theme.primaryColor;
+        miniPlayerBoxDecorationData = BoxDecorationData(
+          color: GlobalLogic.to.iconColor.value.value,
+          borderRadius: 34.r,
+        );
       });
     }
   }

@@ -27,7 +27,7 @@ import 'package:lovelivemusicplayer/widgets/text_field_dialog.dart';
 class SystemSettingLogic extends GetxController {
   final scrollViewWithTachiHeight = Get.height - 210.h;
   final scrollViewWithoutTachiHeight = Get.height - 390.h;
-  late double maxHeight;
+  var maxHeight = .0.obs;
   ButtonController? darkModeController;
 
   @override
@@ -40,7 +40,7 @@ class SystemSettingLogic extends GetxController {
   }
 
   setMaxHeight(bool isColorfulMode) {
-    maxHeight = isColorfulMode
+    maxHeight.value = isColorfulMode
         ? scrollViewWithoutTachiHeight
         : scrollViewWithTachiHeight;
   }

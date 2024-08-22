@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'dart:isolate';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -10,12 +8,9 @@ import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_playlist.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
-import 'package:lovelivemusicplayer/utils/decoration_helper.dart'
-    show generateDecorationData, BoxDecorationData;
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:marquee_text/marquee_text.dart';
@@ -37,44 +32,29 @@ class _MiniPlayerState extends State<MiniPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(34.r),
-          ),
-          child: renderPanel());
-    });
+    return AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(34.r),
+        ),
+        child: Obx(() => renderPanel()));
   }
 
   Widget renderPanel() {
-    if (GlobalLogic.to.hasSkin.value) {
-      final music = PlayerLogic.to.playingMusic.value;
-      return FutureBuilder<BoxDecorationData>(
-        initialData: BoxDecorationData(
-            color: Get.isDarkMode
-                ? ColorMs.color05080C.value
-                : ColorMs.colorD3E0EC.value,
-            borderRadius: 48.h),
-        builder:
-            (BuildContext context, AsyncSnapshot<BoxDecorationData> snapshot) {
-          final decoration = snapshot.requireData.toBoxDecoration();
-
-          return Container(
-            height: 60.h,
-            margin: EdgeInsets.only(top: 6.h, left: 16.w, right: 16.w),
-            decoration: decoration,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(34.r),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-                child: body(),
-              ),
-            ),
-          );
-        },
-        future: setupIsolate(music, GlobalLogic.to.iconColor.value, 34.r),
+    var boxDecoration = PlayerLogic.to.miniPlayerBoxDecorationData;
+    if (GlobalLogic.to.hasSkin.value && boxDecoration != null) {
+      return Container(
+        height: 60.h,
+        margin: EdgeInsets.only(top: 6.h, left: 16.w, right: 16.w),
+        decoration: boxDecoration.toBoxDecoration(),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(34.r),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+            child: body(),
+          ),
+        ),
       );
     }
     return Container(
@@ -83,21 +63,6 @@ class _MiniPlayerState extends State<MiniPlayer> {
       child:
           ClipRRect(borderRadius: BorderRadius.circular(34.r), child: body()),
     );
-  }
-
-  Future<BoxDecorationData> setupIsolate(
-      Music music, Color color, double radius) async {
-    final receivePort = ReceivePort();
-    await Isolate.spawn(
-        generateDecorationData, [music, color, radius, receivePort.sendPort]);
-
-    final completer = Completer<BoxDecorationData>();
-    receivePort.listen((dynamic data) {
-      completer.complete(data);
-      receivePort.close();
-    });
-
-    return completer.future;
   }
 
   Widget body() {
