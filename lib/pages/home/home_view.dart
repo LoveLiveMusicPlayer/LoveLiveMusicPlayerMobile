@@ -92,7 +92,7 @@ class _HomeViewState extends State<HomeView>
 
     if (Platform.isAndroid) {
       UmengPushSdk.setTokenCallback((deviceToken) {
-        AppUtils.isPre(() => Log4f.d(msg: "deviceToken: $deviceToken"));
+        AppUtils.isPre(() => print("deviceToken: $deviceToken"));
       });
     }
 
@@ -105,7 +105,7 @@ class _HomeViewState extends State<HomeView>
     UmengHelper.agree().then((value) {
       UmengPushSdk.register("5f69a20ba246501b677d0923", "IOS");
       UmengPushSdk.getRegisteredId().then((deviceToken) {
-        AppUtils.isPre(() => Log4f.d(msg: "deviceToken: $deviceToken"));
+        AppUtils.isPre(() => print("deviceToken: $deviceToken"));
       });
     });
   }

@@ -42,6 +42,7 @@ class AppUtils {
 
   /// 禁用 Android WebView Inspect
   static Future<void> disableWebDebugger() async {
+    PlatformInAppWebViewController.debugLoggingSettings.enabled = false;
     if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
       await InAppWebViewController.setWebContentsDebuggingEnabled(false);
     }

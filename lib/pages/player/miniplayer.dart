@@ -42,7 +42,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
   }
 
   Widget renderPanel() {
-    var boxDecoration = PlayerLogic.to.miniPlayerBoxDecorationData;
+    var boxDecoration = PlayerLogic.to.miniPlayerBoxDecorationData?.value;
     if (GlobalLogic.to.hasSkin.value && boxDecoration != null) {
       return Container(
         height: 60.h,
