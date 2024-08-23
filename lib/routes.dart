@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/modules/drawer/binding.dart';
 import 'package:lovelivemusicplayer/pages/daily/binding.dart';
 import 'package:lovelivemusicplayer/pages/daily/view.dart';
 import 'package:lovelivemusicplayer/pages/data_sync/view.dart';
@@ -45,7 +46,7 @@ class Routes {
       GetPage(
           name: Routes.routeInitial,
           page: () => const HomeView(),
-          bindings: [HomeBinding(), NestedBinding()]),
+          bindings: [HomeBinding(), NestedBinding(), DrawerBinding()]),
       GetPage(
           name: Routes.routePermission,
           page: () => const PermissionPage(),

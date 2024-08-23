@@ -13,7 +13,7 @@ import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/modules/drawer/drawer.dart';
+import 'package:lovelivemusicplayer/modules/drawer/view.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/nested_page/nested_controller.dart';
@@ -23,7 +23,6 @@ import 'package:lovelivemusicplayer/pages/player/player.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/android_back_desktop.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
-import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/utils/umeng_helper.dart';
 import 'package:lovelivemusicplayer/widgets/bottom_bar1.dart';
@@ -132,7 +131,7 @@ class _HomeViewState extends State<HomeView>
                 : Colors.white,
             endDrawer: SizedBox(
               width: min(0.35 * Get.height, Get.width),
-              child: const DrawerPage(),
+              child: const DrawerLayout(),
             ),
             body: GetBuilder<GlobalLogic>(builder: (logic) {
               final photo = logic.bgPhoto.value;
