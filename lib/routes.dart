@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/modules/drawer/binding.dart';
 import 'package:lovelivemusicplayer/pages/daily/binding.dart';
 import 'package:lovelivemusicplayer/pages/daily/view.dart';
 import 'package:lovelivemusicplayer/pages/data_sync/view.dart';
@@ -7,7 +6,6 @@ import 'package:lovelivemusicplayer/pages/drive/binding.dart';
 import 'package:lovelivemusicplayer/pages/drive/view.dart';
 import 'package:lovelivemusicplayer/pages/home/home_binding.dart';
 import 'package:lovelivemusicplayer/pages/home/home_view.dart';
-import 'package:lovelivemusicplayer/pages/home/nested_page/nested_binding.dart';
 import 'package:lovelivemusicplayer/pages/moe_girl/binding.dart';
 import 'package:lovelivemusicplayer/pages/moe_girl/view.dart';
 import 'package:lovelivemusicplayer/pages/music_trans/view.dart';
@@ -46,7 +44,7 @@ class Routes {
       GetPage(
           name: Routes.routeInitial,
           page: () => const HomeView(),
-          bindings: [HomeBinding(), NestedBinding(), DrawerBinding()]),
+          binding: HomeBinding()),
       GetPage(
           name: Routes.routePermission,
           page: () => const PermissionPage(),

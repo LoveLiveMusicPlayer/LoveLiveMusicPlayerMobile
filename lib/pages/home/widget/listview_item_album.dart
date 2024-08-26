@@ -5,92 +5,61 @@ import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
-import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
-
-import '../../../utils/sd_utils.dart';
 
 ///专辑 item
-class ListViewItemAlbum extends StatefulWidget {
+class ListViewItemAlbum extends StatelessWidget {
   final Album album;
+  final Function(Album) onItemTap;
 
-  ///当前选中状态
-  bool checked;
-
-  ///是否选择条目
-  bool isSelect;
-
-  final Function(Album, bool) onItemTap;
-
-  ListViewItemAlbum(
-      {super.key,
-      required this.album,
-      required this.onItemTap,
-      this.checked = false,
-      this.isSelect = false});
-
-  @override
-  State<ListViewItemAlbum> createState() => _ListViewItemAlbumState();
-}
-
-class _ListViewItemAlbumState extends State<ListViewItemAlbum> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  const ListViewItemAlbum({
+    super.key,
+    required this.album,
+    required this.onItemTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     final borderWidth = (ScreenUtil().screenWidth - 72.w) / 3;
+    final style = (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
+        ? TextStyleMs.f12_400.copyWith(color: ColorMs.colorFFFFFF)
+        : TextStyleMs.f12_400.copyWith(color: Colors.black);
+
     return GestureDetector(
-        onTap: clickItem,
-        child: Column(children: [
+      onTap: () => onItemTap(album),
+      child: Column(
+        children: [
           SizedBox(
             height: borderWidth,
             width: borderWidth,
             child: Hero(
-                tag: "album${widget.album.albumId}",
-                child: showImg(SDUtils.getImgPathFromAlbum(widget.album),
-                    borderWidth, borderWidth,
-                    hasShadow: false, onTap: clickItem)),
+              tag: "album${album.albumId}",
+              child: showImg(
+                SDUtils.getImgPathFromAlbum(album),
+                borderWidth,
+                borderWidth,
+                hasShadow: false,
+                onTap: () => onItemTap(album),
+              ),
+            ),
           ),
-          SizedBox(
-            height: 5.h,
-          ),
+          SizedBox(height: 5.h),
           Row(
             children: [
-              Visibility(
-                visible: widget.isSelect,
-                child: Padding(
-                  padding: EdgeInsets.only(right: 2.w),
-                  child: CircularCheckBox(
-                      checkd: widget.checked,
-                      uncheckedIconColor: ColorMs.colorD6D6D6,
-                      checkIconColor: ColorMs.colorF940A7,
-                      onCheckd: (checked) {
-                        widget.checked = checked;
-                        widget.onItemTap(widget.album, checked);
-                      }),
+              Expanded(
+                child: Text(
+                  album.albumName!,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: style,
                 ),
               ),
-              Expanded(
-                  child: Text(widget.album.albumName!,
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: (Get.isDarkMode ||
-                              GlobalLogic.to.bgPhoto.value != "")
-                          ? TextStyleMs.f12_400
-                              .copyWith(color: ColorMs.colorFFFFFF)
-                          : TextStyleMs.f12_400.copyWith(color: Colors.black)))
             ],
-          )
-        ]));
-  }
-
-  clickItem() {
-    widget.checked = !widget.checked;
-    widget.onItemTap(widget.album, widget.checked);
-    setState(() {});
+          ),
+        ],
+      ),
+    );
   }
 }

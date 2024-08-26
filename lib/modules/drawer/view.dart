@@ -18,23 +18,23 @@ class DrawerLayout extends GetView<DrawerLogic> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      Color bgColor = Get.isDarkMode ? ColorMs.colorNightPrimary : Colors.white;
-      return Drawer(
-          backgroundColor: bgColor,
-          child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                topView(),
-                groupView(),
-                functionView(context),
-                SizedBox(height: 6.h),
-                versionView(),
-              ],
-            ),
-          ));
-    });
+    Color bgColor = Get.isDarkMode ? ColorMs.colorNightPrimary : Colors.white;
+    return Drawer(
+        backgroundColor: bgColor,
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Obx(() => topView()),
+              SizedBox(height: 16.h),
+              groupView(),
+              SizedBox(height: 16.h),
+              functionView(context),
+              SizedBox(height: 6.h),
+              versionView(),
+            ],
+          ),
+        ));
   }
 
   Widget topView() {
@@ -55,7 +55,6 @@ class DrawerLayout extends GetView<DrawerLogic> {
             )),
         Text("LoveLiveMusicPlayer",
             style: TextStyle(fontSize: 17.h, color: textColor)),
-        SizedBox(height: 16.h)
       ],
     );
   }
@@ -70,7 +69,6 @@ class DrawerLayout extends GetView<DrawerLogic> {
         renderItem(GroupKey.groupLiella, GroupKey.groupHasunosora),
         SizedBox(height: 12.h),
         renderItem(GroupKey.groupYohane, GroupKey.groupCombine),
-        SizedBox(height: 16.h),
       ],
     );
   }
@@ -106,9 +104,7 @@ class DrawerLayout extends GetView<DrawerLogic> {
               borderRadius: BorderRadius.circular(8.r),
               boxShadow: [
                 BoxShadow(
-                    color: sColor,
-                    offset: Offset(5.w, 3.h),
-                    blurRadius: 6.r),
+                    color: sColor, offset: Offset(5.w, 3.h), blurRadius: 6.r),
               ],
             ),
             child: Padding(

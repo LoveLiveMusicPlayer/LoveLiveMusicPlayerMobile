@@ -315,7 +315,7 @@ class GlobalLogic extends SuperController
       scrollTo(HomeController
           .scrollControllers[HomeController.to.state.currentIndex.value]);
 
-      PageViewLogic.to.controller
+      PageViewLogic.to.pageController
           .jumpToPage(HomeController.to.state.currentIndex.value);
     } catch (_) {}
   }

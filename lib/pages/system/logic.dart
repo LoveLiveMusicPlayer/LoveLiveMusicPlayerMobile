@@ -74,7 +74,7 @@ class SystemSettingLogic extends GetxController {
     // 恢复原来操作的界面
     Future.delayed(const Duration(milliseconds: 300)).then((value) {
       Get.forceAppUpdate().then((value) {
-        PageViewLogic.to.controller
+        PageViewLogic.to.pageController
             .jumpToPage(HomeController.to.state.currentIndex.value);
       });
     });
@@ -94,7 +94,7 @@ class SystemSettingLogic extends GetxController {
     // 恢复原来操作的界面
     Future.delayed(const Duration(milliseconds: 300)).then((value) {
       Get.forceAppUpdate().then((value) {
-        PageViewLogic.to.controller
+        PageViewLogic.to.pageController
             .jumpToPage(HomeController.to.state.currentIndex.value);
       });
     });

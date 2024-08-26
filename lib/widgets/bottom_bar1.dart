@@ -58,7 +58,7 @@ class BottomBar extends StatelessWidget {
           if (HomeController.to.state.currentIndex.value == index) {
             scrollTo(HomeController.scrollControllers[index]);
           }
-          PageViewLogic.to.controller.jumpToPage(index);
+          PageViewLogic.to.pageController.jumpToPage(index);
         },
       );
     });

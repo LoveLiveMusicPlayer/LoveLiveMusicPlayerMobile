@@ -182,7 +182,7 @@ class _DetailsBodyState extends State<DetailsBody> {
               return showDialogMoreWithMusic(music);
             });
       },
-      onPlayNowTap: () {
+      onPlayTap: () {
         PlayerLogic.to.playMusic(widget.music, mIndex: index);
       },
     );

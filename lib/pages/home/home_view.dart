@@ -55,7 +55,7 @@ class _HomeViewState extends State<HomeView>
     logic.tabController?.addListener(() {
       final position = HomeController.to.state.currentIndex.value;
       final index = (logic.tabController?.index ?? 0) * 3 + position % 3;
-      PageViewLogic.to.controller.jumpToPage(index);
+      PageViewLogic.to.pageController.jumpToPage(index);
     });
     handlePermission();
   }

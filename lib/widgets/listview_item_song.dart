@@ -17,7 +17,7 @@ import 'package:lovelivemusicplayer/widgets/circular_check_box.dart';
 class ListViewItemSong extends StatefulWidget {
   final Function(int, bool) onItemTap;
   final Function(Music) onPlayNextTap;
-  final Function() onPlayNowTap;
+  final Function() onPlayTap;
   final Function(Music) onMoreTap;
   final bool isDraggable;
 
@@ -34,7 +34,7 @@ class ListViewItemSong extends StatefulWidget {
       required this.index,
       required this.onItemTap,
       required this.onPlayNextTap,
-      required this.onPlayNowTap,
+      required this.onPlayTap,
       required this.onMoreTap,
       required this.music,
       this.isDraggable = false,
@@ -83,7 +83,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
     if (HomeController.to.state.selectMode.value == 1) {
       widget.onItemTap(widget.index, widget.checked);
     } else {
-      widget.onPlayNowTap();
+      widget.onPlayTap();
     }
     setState(() {});
   }
