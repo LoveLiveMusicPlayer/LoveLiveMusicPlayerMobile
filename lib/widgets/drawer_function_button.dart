@@ -1,5 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -114,23 +113,30 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
     if (widget.hasSwitch) {
       if (widget.enableSwitch) {
         return Transform.scale(
-          scale: 0.9,
+          scale: 0.8,
           child: ListenableBuilder(
               listenable: bh,
-              builder: (c, w) => CupertinoSwitch(
-                  value: bh._switchValue,
-                  activeColor: const Color.fromARGB(255, 228, 0, 127),
-                  onChanged: (value) {
-                    bh.setSwitchValue = value;
-                    widget.callBack?.call(bh, value);
-                  })),
+              builder: (c, w) => NeumorphicSwitch(
+                    value: bh._switchValue,
+                    style: const NeumorphicSwitchStyle(
+                      thumbShape: NeumorphicShape
+                          .concave, // concave or flat with elevation
+                    ),
+                    onChanged: (value) {
+                      bh.setSwitchValue = value;
+                      widget.callBack?.call(bh, value);
+                    },
+                  )),
         );
       } else {
         return Transform.scale(
-            scale: 0.9,
-            child: CupertinoSwitch(
+            scale: 0.8,
+            child: NeumorphicSwitch(
               value: bh._switchValue,
-              activeColor: const Color.fromARGB(255, 228, 0, 127),
+              style: const NeumorphicSwitchStyle(
+                thumbShape:
+                    NeumorphicShape.concave, // concave or flat with elevation
+              ),
               onChanged: null,
             ));
       }

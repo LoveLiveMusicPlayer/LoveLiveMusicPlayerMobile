@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -255,6 +255,61 @@ Widget materialButton(dynamic icon, GestureTapCallback? onTap,
           ),
         ),
       ),
+    ),
+  );
+}
+
+Widget neumorphicButton(dynamic icon, GestureTapCallback? onTap,
+    {double width = 32,
+    double height = 32,
+    EdgeInsets? margin,
+    double radius = 5,
+    Color? innerColor,
+    Color? shadowColor,
+    double iconSize = 15,
+    Color? iconColor,
+    Color? bgColor,
+    bool hasShadow = true}) {
+  Widget child;
+  iconColor =
+      iconColor ?? (Get.isDarkMode ? Colors.white : ColorMs.color333333);
+  if (icon is IconData) {
+    child = Icon(icon, color: iconColor, size: iconSize.h);
+  } else if (icon is String &&
+      icon.startsWith("assets") &&
+      icon.endsWith(".svg")) {
+    final colorFilter = ColorFilter.mode(iconColor, BlendMode.srcIn);
+    child = SvgPicture.asset(icon,
+        colorFilter: colorFilter, width: iconSize.h, height: iconSize.h);
+  } else if (icon.endsWith(".gif")) {
+    child = Image.asset(icon, width: iconSize.h, height: iconSize.h);
+  } else {
+    child = Container();
+  }
+  shadowColor = shadowColor ??
+      (Get.isDarkMode ? ColorMs.color05080C : ColorMs.colorD3E0EC);
+  return Container(
+    width: width,
+    height: height,
+    margin: margin,
+    decoration: BoxDecoration(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(radius.h),
+    ),
+    child: NeumorphicButton(
+      onPressed: onTap,
+      style: NeumorphicStyle(
+        color: innerColor ?? Colors.transparent,
+        shape: NeumorphicShape.flat,
+        lightSource: LightSource.bottomRight,
+        shadowLightColor: shadowColor,
+        shadowDarkColor: shadowColor,
+        depth: hasShadow ? 3 : 0,
+        boxShape: NeumorphicBoxShape.roundRect(
+            BorderRadius.all(Radius.circular(radius.r))),
+      ),
+      padding: EdgeInsets.all(7.r),
+      child: child,
     ),
   );
 }

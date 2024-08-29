@@ -21,14 +21,14 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
         body: Stack(
           children: [
             const Align(alignment: Alignment.bottomCenter, child: Tachie()),
-            Column(
-              children: [
-                DetailsHeader(title: 'system_settings'.tr),
-                SizedBox(height: 16.h),
-                Obx(() {
-                  return Container(
+            Obx(() {
+              return Column(
+                children: [
+                  DetailsHeader(title: 'system_settings'.tr),
+                  SizedBox(height: 16.h),
+                  Container(
                     constraints:
-                        BoxConstraints(maxHeight: controller.maxHeight.value),
+                    BoxConstraints(maxHeight: controller.maxHeight.value),
                     child: SingleChildScrollView(
                       child: Column(children: [
                         Padding(
@@ -42,10 +42,10 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
                             child: renderBottomFunctionButtonArray())
                       ]),
                     ),
-                  );
-                }),
-              ],
-            )
+                  )
+                ],
+              );
+            })
           ],
         ));
   }
@@ -113,7 +113,7 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
                     iconColor: iconColor,
                     text: 'use_http_music'.tr,
                     enableSwitch:
-                        GlobalLogic.to.remoteHttp.httpUrl.value.isNotEmpty,
+                    GlobalLogic.to.remoteHttp.httpUrl.value.isNotEmpty,
                     hasSwitch: true,
                     initSwitch: GlobalLogic.to.remoteHttp.isEnableHttp(),
                     callBack: (_, check) => controller.enableRemoteHttp(check));
