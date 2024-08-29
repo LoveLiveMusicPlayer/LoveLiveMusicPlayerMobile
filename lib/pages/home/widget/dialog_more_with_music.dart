@@ -4,6 +4,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
+import 'package:lovelivemusicplayer/global/global_lyric.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
@@ -193,7 +194,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
       return Container();
     }
     return _buildItem(Assets.drawerDrawerReset, 'search_lyric'.tr, () {
-      PlayerLogic.to.getLrc(true);
+      LyricLogic.getLrc(true);
       SmartDialog.dismiss();
     });
   }

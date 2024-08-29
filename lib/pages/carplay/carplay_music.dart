@@ -6,6 +6,7 @@ import 'package:flutter_carplay/models/list/list_item.dart';
 import 'package:flutter_carplay/models/list/list_section.dart';
 import 'package:flutter_carplay/models/list/list_template.dart';
 import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
@@ -50,7 +51,7 @@ class CarplayMusic {
             image: Assets.logoLogo,
             onPress: (complete, self) async {
               await DBLogic.to.findAllListByGroup(GroupKey.groupAll.getName());
-              await PlayerLogic.to.changeLoopMode(0);
+              await PlayerLogic.to.changeLoopMode(LoopMode.off);
               await PlayerLogic.to
                   .playMusic(GlobalLogic.to.filterMusicListByIndex(0));
               complete();

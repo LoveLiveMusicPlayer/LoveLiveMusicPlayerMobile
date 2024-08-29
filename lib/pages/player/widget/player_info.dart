@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/global/global_lyric.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 
 class PlayerInfo extends StatelessWidget {
@@ -22,12 +22,12 @@ class PlayerInfo extends StatelessWidget {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            recentlyLrc(PlayerLogic.to.playingJPLrc["pre"], color: otherColor),
+            recentlyLrc(LyricLogic.playingJPLrc.value.pre, color: otherColor),
             SizedBox(height: 10.h),
-            recentlyLrc(PlayerLogic.to.playingJPLrc["current"],
+            recentlyLrc(LyricLogic.playingJPLrc.value.current,
                 color: playingColor, fontWeight: FontWeight.bold),
             SizedBox(height: 10.h),
-            recentlyLrc(PlayerLogic.to.playingJPLrc["next"], color: otherColor)
+            recentlyLrc(LyricLogic.playingJPLrc.value.next, color: otherColor)
           ],
         );
       }),

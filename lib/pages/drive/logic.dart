@@ -38,12 +38,6 @@ class DriveModeLogic extends GetxController {
     playMusicWithListFetcher(() async => GlobalLogic.to.recentList);
   }
 
-  changeLoopMode(LoopMode loopMode) {
-    final currentIndex = PlayerLogic.loopModes.indexOf(loopMode);
-    final nextIndex = (currentIndex + 1) % PlayerLogic.loopModes.length;
-    PlayerLogic.to.changeLoopMode(nextIndex);
-  }
-
   togglePlay(bool isPlayingNow, ProcessingState? playerState) {
     if (isPlayingNow) {
       PlayerLogic.to.mPlayer.pause();

@@ -9,6 +9,7 @@ import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_playlist.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/player_util.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 class DialogPlaylist extends StatefulWidget {
@@ -37,32 +38,19 @@ class _DialogPlaylistState extends State<DialogPlaylist> {
             StreamBuilder<LoopMode>(
               stream: PlayerLogic.to.mPlayer.loopModeStream,
               builder: (context, snapshot) {
-                var loopMode = snapshot.data ?? LoopMode.off;
-                const icons = [
-                  Assets.playerPlayShuffle,
-                  Assets.playerPlayRecycle,
-                  Assets.playerPlaySingle
-                ];
-                if (loopMode == LoopMode.all &&
-                    PlayerLogic.to.mPlayer.shuffleModeEnabled) {
-                  loopMode = LoopMode.off;
-                }
-                final index = PlayerLogic.loopModes.indexOf(loopMode);
+                final loopMode = PlayerUtil.calcLoopMode(snapshot.data);
                 var header = 'shuffle_play'.tr;
-                if (index == 1) {
+                if (loopMode == LoopMode.all) {
                   header = 'order_play'.tr;
-                } else if (index == 2) {
+                } else if (loopMode == LoopMode.one) {
                   header = 'single_play'.tr;
                 }
                 return _buildItem(
-                    icons[index],
+                    PlayerUtil.getLoopIconFromLoopMode(loopMode),
                     "$header - ${mPlayList.length} ${'total_number_unit'.tr}",
-                    true, () {
-                  final currentIndex = PlayerLogic.loopModes.indexOf(loopMode);
-                  final nextIndex =
-                      (currentIndex + 1) % PlayerLogic.loopModes.length;
-                  PlayerLogic.to.changeLoopMode(nextIndex);
-                }, () async {
+                    true,
+                    () => PlayerUtil.changeLoopModeByLoopTap(loopMode),
+                    () async {
                   mPlayList.clear();
                   await PlayerLogic.to.removeAllMusics();
                   setState(() {});

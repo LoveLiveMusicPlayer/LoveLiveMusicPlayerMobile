@@ -19,7 +19,7 @@ import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/nested_page/nested_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/nested_page/nested_observer.dart';
 import 'package:lovelivemusicplayer/pages/player/miniplayer.dart';
-import 'package:lovelivemusicplayer/pages/player/player.dart';
+import 'package:lovelivemusicplayer/pages/player/player/view.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/android_back_desktop.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
@@ -226,7 +226,8 @@ class _HomeViewState extends State<HomeView>
           GlobalLogic.mobileWeSlideController.show();
         }
       }),
-      panel: Player(onTap: () => GlobalLogic.mobileWeSlideController.hide()),
+      panel:
+          PlayerPage(onTap: () => GlobalLogic.mobileWeSlideController.hide()),
       footer: _buildTabBarView(),
       footerHeight: 77.h,
       blur: true,

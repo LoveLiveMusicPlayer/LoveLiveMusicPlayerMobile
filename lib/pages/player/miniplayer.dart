@@ -29,6 +29,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
   ImageProvider? provider;
   double startPosition = 0;
   final maxWidth = ScreenUtil().screenWidth - 85.w - 96.h;
+  final player = PlayerLogic.to.mPlayer;
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +124,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
         if (playlistSize <= 1) {
           return;
         }
-        final loopMode = PlayerLogic.to.mPlayer.loopMode;
+        final loopMode = player.loopMode;
         if (loopMode == LoopMode.one) {
           return;
         }
@@ -151,11 +152,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
     return SizedBox(
       width: maxWidth,
       child: GestureDetector(
-        onDoubleTap: () async {
-          if (PlayerLogic.to.playingMusic.value.musicId != null) {
-            await PlayerLogic.to.togglePlay();
-          }
-        },
+        onDoubleTap: PlayerLogic.to.togglePlay,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -174,7 +171,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
 
   Widget playButton() {
     return StreamBuilder<PlayerState>(
-      stream: PlayerLogic.to.mPlayer.playerStateStream,
+      stream: player.playerStateStream,
       builder: (context, snapshot) {
         final playerState = snapshot.data;
         final processingState = playerState?.processingState;
@@ -194,7 +191,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
               path: Assets.playerPlayPlay,
               onTap: () {
                 if (PlayerLogic.to.playingMusic.value.musicId != null) {
-                  PlayerLogic.to.mPlayer.play();
+                  player.play();
                 }
               },
               width: 24,
@@ -203,15 +200,15 @@ class _MiniPlayerState extends State<MiniPlayer> {
         } else if (processingState != ProcessingState.completed) {
           return touchIconByAsset(
               path: Assets.playerPlayPause,
-              onTap: () => PlayerLogic.to.mPlayer.pause(),
+              onTap: () => player.pause(),
               width: 24,
               height: 24,
               color: color);
         } else {
           return touchIconByAsset(
               path: Assets.playerPlayPlay,
-              onTap: () => PlayerLogic.to.mPlayer.seek(Duration.zero,
-                  index: PlayerLogic.to.mPlayer.effectiveIndices!.first),
+              onTap: () => player.seek(Duration.zero,
+                  index: player.effectiveIndices!.first),
               width: 24,
               height: 24,
               color: color);

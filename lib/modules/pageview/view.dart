@@ -96,16 +96,14 @@ class PageViewComponent extends GetView<PageViewLogic> {
       case 1:
         final album = GlobalLogic.to.albumList[index];
         key = ValueKey("ListViewItemAlbum${album.albumId}");
-        widget = ListViewItemAlbum(
-            album: album,
-            onItemTap: controller.onItemTap);
+        widget =
+            ListViewItemAlbum(album: album, onItemTap: controller.onItemTap);
         break;
       case 2:
         final artist = GlobalLogic.to.artistList[index];
         key = ValueKey("ListViewItemSinger${artist.id}");
-        widget = ListViewItemSinger(
-            artist: artist,
-            onItemTap: controller.onItemTap);
+        widget =
+            ListViewItemSinger(artist: artist, onItemTap: controller.onItemTap);
         break;
       case 3:
         final music = GlobalLogic.to.loveList[index];

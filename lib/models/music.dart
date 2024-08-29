@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:floor/floor.dart';
+import 'package:lovelivemusicplayer/models/play_list_music.dart';
 
 Music albumFromJson(String str) => Music.fromJson(json.decode(str));
 
@@ -113,4 +114,19 @@ class Music {
         date: music.date,
         existFile: music.existFile,
       );
+}
+
+extension MusicListExtension on List<Music> {
+  List<PlayListMusic> cloneFromMusicList(int playingIndex) {
+    final tempList = <PlayListMusic>[];
+    for (var i = 0; i < length; i++) {
+      final music = this[i];
+      tempList.add(PlayListMusic(
+          musicId: music.musicId!,
+          musicName: music.musicName!,
+          artist: music.artist!,
+          isPlaying: playingIndex == i));
+    }
+    return tempList;
+  }
 }

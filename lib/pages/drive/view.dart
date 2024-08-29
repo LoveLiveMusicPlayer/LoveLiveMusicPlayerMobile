@@ -3,10 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/global_lyric.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/drive/logic.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/player_util.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/my_appbar.dart';
 import 'package:lovelivemusicplayer/widgets/swipe_image_carousel.dart';
@@ -14,12 +16,6 @@ import 'package:marquee_text/marquee_text.dart';
 
 class DriveModePage extends GetView<DriveModeLogic> {
   const DriveModePage({super.key});
-
-  static const icons = [
-    Assets.playerPlayShuffle,
-    Assets.playerPlayRecycle,
-    Assets.playerPlaySingle
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +64,7 @@ class DriveModePage extends GetView<DriveModeLogic> {
                       width: double.infinity,
                       height: 60.h,
                       margin: EdgeInsets.symmetric(horizontal: 24.w),
-                      child: Text(PlayerLogic.to.playingJPLrc["current"] ?? "",
+                      child: Text(LyricLogic.playingJPLrc.value.current ?? "",
                           style: Get.isDarkMode
                               ? TextStyleMs.white_20
                               : TextStyleMs.black_20,
@@ -151,8 +147,7 @@ class DriveModePage extends GetView<DriveModeLogic> {
         final playing = playerState?.playing;
         final color = Get.isDarkMode ? Colors.white : Colors.black;
 
-        if (processingState == ProcessingState.idle ||
-            processingState == ProcessingState.loading ||
+        if (processingState == ProcessingState.loading ||
             processingState == ProcessingState.buffering) {
           return Container(
             margin: const EdgeInsets.all(8.0),
@@ -181,14 +176,10 @@ class DriveModePage extends GetView<DriveModeLogic> {
     return StreamBuilder<LoopMode>(
       stream: player.loopModeStream,
       builder: (context, snapshot) {
-        var loopMode = snapshot.data ?? LoopMode.off;
-        if (loopMode == LoopMode.all && player.shuffleModeEnabled) {
-          loopMode = LoopMode.off;
-        }
-        final index = PlayerLogic.loopModes.indexOf(loopMode);
+        final loopMode = PlayerUtil.calcLoopMode(snapshot.data);
         return touchIconByAsset(
-            path: icons[index],
-            onTap: () => controller.changeLoopMode(loopMode),
+            path: PlayerUtil.getLoopIconFromLoopMode(loopMode),
+            onTap: () => PlayerUtil.changeLoopModeByLoopTap(loopMode),
             width: 30.w,
             height: 30.w,
             padding: EdgeInsets.all(4.w),
