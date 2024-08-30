@@ -9,7 +9,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
-import 'package:lovelivemusicplayer/pages/home/widget/dialog_playlist.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/dialog_playlist/view.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
@@ -70,42 +70,39 @@ class _MiniPlayerState extends State<MiniPlayer> {
     return Container(
         alignment: Alignment.center,
         color: Colors.grey.withOpacity(0.15),
-        child: Row(
-          children: [
-            SizedBox(width: 6.w),
+        child: Row(children: [
+          SizedBox(width: 6.w),
 
-            /// 迷你封面
-            miniCover(),
-            SizedBox(width: 8.w),
+          /// 迷你封面
+          miniCover(),
+          SizedBox(width: 8.w),
 
-            /// 滚动歌名
-            marqueeMusicName(),
-            SizedBox(width: 14.w),
+          /// 滚动歌名
+          marqueeMusicName(),
+          SizedBox(width: 14.w),
 
-            /// 播放按钮
-            SizedBox(
-              width: 24.h,
-              height: 24.h,
-              child: playButton(),
-            ),
-            SizedBox(width: 10.w),
+          /// 播放按钮
+          SizedBox(
+            width: 24.h,
+            height: 24.h,
+            child: playButton(),
+          ),
+          SizedBox(width: 10.w),
 
-            /// 播放列表按钮
-            touchIconByAsset(
-                path: Assets.playerPlayPlaylist,
-                onTap: () {
-                  SmartDialog.show(
-                      alignment: Alignment.bottomCenter,
-                      builder: (context) {
-                        return const DialogPlaylist();
-                      });
-                },
-                width: 24,
-                height: 24,
-                color:
-                    Get.isDarkMode ? ColorMs.colorCCCCCC : ColorMs.color333333)
-          ],
-        ));
+          /// 播放列表按钮
+          neumorphicButton(Assets.playerPlayPlaylist, () {
+            SmartDialog.show(
+                alignment: Alignment.bottomCenter,
+                builder: (context) {
+                  return const DialogPlaylist();
+                });
+          },
+              width: 24,
+              height: 24,
+              hasShadow: false,
+              iconColor:
+                  Get.isDarkMode ? ColorMs.colorCCCCCC : ColorMs.color333333)
+        ]));
   }
 
   Widget miniCover() {
@@ -187,31 +184,23 @@ class _MiniPlayerState extends State<MiniPlayer> {
             child: const CircularProgressIndicator(),
           );
         } else if (playing != true) {
-          return touchIconByAsset(
-              path: Assets.playerPlayPlay,
-              onTap: () {
-                if (PlayerLogic.to.playingMusic.value.musicId != null) {
-                  player.play();
-                }
-              },
-              width: 24,
-              height: 24,
-              color: color);
+          return neumorphicButton(Assets.playerPlayPlay, () {
+            if (PlayerLogic.to.playingMusic.value.musicId != null) {
+              player.play();
+            }
+          }, width: 24, height: 24, iconColor: color, hasShadow: false);
         } else if (processingState != ProcessingState.completed) {
-          return touchIconByAsset(
-              path: Assets.playerPlayPause,
-              onTap: () => player.pause(),
-              width: 24,
-              height: 24,
-              color: color);
+          return neumorphicButton(Assets.playerPlayPause, player.pause,
+              width: 24, height: 24, iconColor: color, hasShadow: false);
         } else {
-          return touchIconByAsset(
-              path: Assets.playerPlayPlay,
-              onTap: () => player.seek(Duration.zero,
+          return neumorphicButton(
+              Assets.playerPlayPlay,
+              () => player.seek(Duration.zero,
                   index: player.effectiveIndices!.first),
               width: 24,
               height: 24,
-              color: color);
+              iconColor: color,
+              hasShadow: false);
         }
       },
     );

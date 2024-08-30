@@ -192,17 +192,18 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
         : ColorMs.colorCCCCCC;
     if (HomeController.to.state.selectMode.value == 1) {
       if (widget.isDraggable) {
-        return touchIconByAsset(
-            path: Assets.mainIcDraggable,
-            padding: EdgeInsets.only(
-                left: 12.w, top: 12.h, right: 12.w, bottom: 12.h),
-            onTap: () {
-              widget.onPlayNextTap(widget.music);
-              SmartDialog.showToast('add_success'.tr);
-            },
-            width: 20,
-            height: 20,
-            color: color);
+        return neumorphicButton(
+          Assets.mainIcDraggable,
+          () {
+            widget.onPlayNextTap(widget.music);
+            SmartDialog.showToast('add_success'.tr);
+          },
+          width: 20,
+          height: 20,
+          iconColor: color,
+          hasShadow: false,
+          margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+        );
       } else {
         return const Row();
       }
@@ -210,24 +211,27 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
       return Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          touchIconByAsset(
-              path: Assets.mainIcAddNext,
-              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-              onTap: () {
-                widget.onPlayNextTap(widget.music);
-                SmartDialog.showToast('add_success'.tr);
-              },
-              width: 20,
-              height: 20,
-              color: color),
-          touchIconByAsset(
-              path: Assets.mainIcMore,
-              padding: EdgeInsets.only(
-                  left: 12.w, top: 12.h, right: 12.w, bottom: 12.h),
-              onTap: () => widget.onMoreTap(widget.music),
-              width: 10,
-              height: 20,
-              color: color),
+          neumorphicButton(
+            Assets.mainIcAddNext,
+            () {
+              widget.onPlayNextTap(widget.music);
+              SmartDialog.showToast('add_success'.tr);
+            },
+            width: 20,
+            height: 20,
+            iconColor: color,
+            hasShadow: false,
+            margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+          ),
+          neumorphicButton(
+            Assets.mainIcMore,
+            () => widget.onMoreTap(widget.music),
+            width: 10,
+            height: 20,
+            iconColor: color,
+            hasShadow: false,
+            margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+          ),
           SizedBox(width: 4.r)
         ],
       );

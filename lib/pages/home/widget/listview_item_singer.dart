@@ -31,9 +31,7 @@ class _ListViewItemSingerState extends State<ListViewItemSinger> {
                 radius: 24,
                 hasShadow: false,
                 onTap: () => widget.onItemTap(widget.artist))),
-        SizedBox(
-          width: 10.w,
-        ),
+        SizedBox(width: 10.w),
         Expanded(
           child: GestureDetector(
             onTap: () {
@@ -52,9 +50,7 @@ class _ListViewItemSingerState extends State<ListViewItemSinger> {
                           Get.isDarkMode || GlobalLogic.to.bgPhoto.value != ""
                               ? TextStyleMs.white_15_500
                               : TextStyleMs.black_15_500),
-                  SizedBox(
-                    height: 4.h,
-                  ),
+                  SizedBox(height: 4.h),
                   Text(
                     "${widget.artist.music.length} ${'total_number_unit'.tr}",
                     maxLines: 1,
@@ -69,9 +65,7 @@ class _ListViewItemSingerState extends State<ListViewItemSinger> {
             ),
           ),
         ),
-        SizedBox(
-          width: 10.h,
-        ),
+        SizedBox(width: 10.h),
       ],
     );
   }

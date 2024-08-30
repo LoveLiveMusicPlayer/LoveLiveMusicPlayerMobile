@@ -7,7 +7,7 @@ import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
-import 'package:lovelivemusicplayer/pages/home/widget/dialog_playlist.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/dialog_playlist/view.dart';
 import 'package:lovelivemusicplayer/utils/player_util.dart';
 
 class ControlButtons extends GetView {
@@ -30,32 +30,27 @@ class ControlButtons extends GetView {
                 stream: PlayerLogic.to.mPlayer.loopModeStream,
                 builder: (context, snapshot) {
                   final loopMode = PlayerUtil.calcLoopMode(snapshot.data);
-                  return materialButton(
+                  return neumorphicButton(
                       PlayerUtil.getLoopIconFromLoopMode(loopMode),
                       () => PlayerUtil.changeLoopModeByLoopTap(loopMode),
-                      width: 32,
-                      height: 32,
-                      radius: 6,
-                      iconSize: 15,
                       hasShadow: !hasSkin,
                       iconColor: iconColor,
                       bgColor: bgColor,
-                      outerColor: bgColor);
+                      padding: EdgeInsets.all(9.r));
                 },
               ),
               StreamBuilder<SequenceState?>(
                 stream: PlayerLogic.to.mPlayer.sequenceStateStream,
                 builder: (context, snapshot) {
-                  return materialButton(
+                  return neumorphicButton(
                       Assets.playerPlayPrev, PlayerLogic.to.playPrev,
                       width: 60,
                       height: 60,
                       radius: 40,
-                      iconSize: 16,
                       hasShadow: !hasSkin,
                       iconColor: iconColor,
                       bgColor: bgColor,
-                      outerColor: bgColor);
+                      padding: EdgeInsets.all(20.r));
                 },
               ),
               StreamBuilder<PlayerState>(
@@ -73,71 +68,72 @@ class ControlButtons extends GetView {
                       child: const CircularProgressIndicator(),
                     );
                   } else if (playing != true) {
-                    return materialButton(Assets.playerPlayPlay, () {
+                    return neumorphicButton(Assets.playerPlayPlay, () {
                       if (hasPlayingMusic.musicId != null) {
                         PlayerLogic.to.mPlayer.play();
                       }
                     },
+                        width: 80,
+                        height: 80,
                         radius: 40,
                         iconSize: 26,
                         hasShadow: !hasSkin,
                         iconColor: iconColor,
                         bgColor: bgColor,
-                        outerColor: bgColor);
+                        padding: EdgeInsets.all(25.r));
                   } else if (processingState != ProcessingState.completed) {
-                    return materialButton(
+                    return neumorphicButton(
                         Assets.playerPlayPause, PlayerLogic.to.mPlayer.pause,
+                        width: 80,
+                        height: 80,
                         radius: 40,
                         iconSize: 26,
                         hasShadow: !hasSkin,
                         iconColor: iconColor,
                         bgColor: bgColor,
-                        outerColor: bgColor);
+                        padding: EdgeInsets.all(25.r));
                   } else {
-                    return materialButton(
+                    return neumorphicButton(
                         Assets.playerPlayPlay,
                         () => PlayerLogic.to.mPlayer.seek(Duration.zero,
                             index:
                                 PlayerLogic.to.mPlayer.effectiveIndices!.first),
+                        width: 80,
+                        height: 80,
                         radius: 40,
                         iconSize: 26,
                         hasShadow: !hasSkin,
                         iconColor: iconColor,
                         bgColor: bgColor,
-                        outerColor: bgColor);
+                        padding: EdgeInsets.all(25.r));
                   }
                 },
               ),
               StreamBuilder<SequenceState?>(
                 stream: PlayerLogic.to.mPlayer.sequenceStateStream,
                 builder: (context, snapshot) {
-                  return materialButton(
+                  return neumorphicButton(
                       Assets.playerPlayNext, PlayerLogic.to.playNext,
                       width: 60,
                       height: 60,
                       radius: 40,
-                      iconSize: 16,
                       hasShadow: !hasSkin,
                       iconColor: iconColor,
                       bgColor: bgColor,
-                      outerColor: bgColor);
+                      padding: EdgeInsets.all(20.r));
                 },
               ),
-              materialButton(Assets.playerPlayPlaylist, () {
+              neumorphicButton(Assets.playerPlayPlaylist, () {
                 SmartDialog.show(
                     alignment: Alignment.bottomCenter,
                     builder: (context) {
                       return const DialogPlaylist();
                     });
               },
-                  width: 32,
-                  height: 32,
-                  radius: 6,
-                  iconSize: 15,
                   hasShadow: !hasSkin,
                   iconColor: iconColor,
                   bgColor: bgColor,
-                  outerColor: bgColor)
+                  padding: EdgeInsets.all(9.r))
             ],
           ),
         ),

@@ -19,6 +19,9 @@ class PlayerHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hasSkin = GlobalLogic.to.hasSkin.value;
+    final iconColor = hasSkin ? Colors.white : null;
+    final bgColor = hasSkin ? btnColor : null;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: SizedBox(
@@ -27,15 +30,14 @@ class PlayerHeader extends StatelessWidget {
         child: Row(
           children: <Widget>[
             /// 折叠向下箭头
-            materialButton(Icons.keyboard_arrow_down, onCloseTap,
-                width: 32,
-                height: 32,
-                iconSize: 20,
-                radius: 6,
-                hasShadow: !GlobalLogic.to.hasSkin.value,
-                iconColor: GlobalLogic.to.hasSkin.value ? Colors.white : null,
-                bgColor: GlobalLogic.to.hasSkin.value ? btnColor : null,
-                outerColor: GlobalLogic.to.hasSkin.value ? btnColor : null),
+            neumorphicButton(
+              Icons.keyboard_arrow_down,
+              onCloseTap,
+              iconSize: 20,
+              iconColor: iconColor,
+              hasShadow: !hasSkin,
+              bgColor: bgColor,
+            ),
 
             /// 曲名 + 歌手
             Expanded(
@@ -45,7 +47,7 @@ class PlayerHeader extends StatelessWidget {
                 Text(
                   PlayerLogic.to.playingMusic.value.musicName ?? 'no_songs'.tr,
                   overflow: TextOverflow.ellipsis,
-                  style: GlobalLogic.to.hasSkin.value || Get.isDarkMode
+                  style: hasSkin || Get.isDarkMode
                       ? TextStyleMs.whiteBold_15
                       : TextStyleMs.blackBold_15,
                   maxLines: 1,
@@ -53,7 +55,7 @@ class PlayerHeader extends StatelessWidget {
                 Text(
                   PlayerLogic.to.playingMusic.value.artist ?? "",
                   overflow: TextOverflow.ellipsis,
-                  style: GlobalLogic.to.hasSkin.value
+                  style: hasSkin
                       ? TextStyleMs.colorDFDFDF_12
                       : TextStyleMs.gray_12,
                   maxLines: 1,
@@ -62,15 +64,14 @@ class PlayerHeader extends StatelessWidget {
             )),
 
             /// 更多功能
-            materialButton(Icons.more_horiz, onMoreTap,
-                width: 32,
-                height: 32,
-                iconSize: 18,
-                radius: 6,
-                hasShadow: !GlobalLogic.to.hasSkin.value,
-                iconColor: GlobalLogic.to.hasSkin.value ? Colors.white : null,
-                bgColor: GlobalLogic.to.hasSkin.value ? btnColor : null,
-                outerColor: GlobalLogic.to.hasSkin.value ? btnColor : null),
+            neumorphicButton(
+              Icons.more_horiz,
+              onMoreTap,
+              iconSize: 18,
+              hasShadow: !hasSkin,
+              iconColor: iconColor,
+              bgColor: bgColor,
+            )
           ],
         ),
       ),

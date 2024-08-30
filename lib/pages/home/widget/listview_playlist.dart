@@ -91,14 +91,12 @@ class _ListViewItemPlaylist extends State<ListViewItemPlaylist> {
                   )
                 ],
               ),
-              touchIconByAsset(
-                  path: Assets.dialogIcDelete,
-                  onTap: () {
-                    widget.onDelTap(widget.index);
-                  },
-                  width: 20.h,
-                  height: 20.h,
-                  color: ColorMs.color999999)
+              neumorphicButton(
+                  Assets.dialogIcDelete, () => widget.onDelTap(widget.index),
+                  width: 20,
+                  height: 20,
+                  iconColor: ColorMs.color999999,
+                  hasShadow: false)
             ],
           ),
         ));

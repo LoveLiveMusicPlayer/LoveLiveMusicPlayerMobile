@@ -47,9 +47,7 @@ class _CircularCheckBoxState extends State<CircularCheckBox> {
                 : widget.uncheckedIconColor,
             size: widget.iconSize,
           ),
-          SizedBox(
-            width: widget.spacing,
-          ),
+          SizedBox(width: widget.spacing),
           Text(
             widget.title,
             style: widget.textStyle,

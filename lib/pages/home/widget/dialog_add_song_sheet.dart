@@ -148,15 +148,11 @@ class DialogAddSongSheet extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(
-              height: 14.h,
-            ),
+            SizedBox(height: 14.h),
             Row(
               children: [
                 renderIcon(assetPath, icon),
-                SizedBox(
-                  width: 10.h,
-                ),
+                SizedBox(width: 10.h),
                 Expanded(
                   child: Text(title,
                       style: Get.isDarkMode
@@ -165,9 +161,7 @@ class DialogAddSongSheet extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(
-              height: 14.h,
-            ),
+            SizedBox(height: 14.h),
             Visibility(
               visible: showLin,
               child: Divider(
@@ -184,13 +178,21 @@ class DialogAddSongSheet extends StatelessWidget {
 
   Widget renderIcon(String? assetPath, IconData? icon) {
     if (assetPath != null) {
-      return touchIconByAsset(
-          path: assetPath,
-          width: 16.h,
-          height: 16.h,
-          color: Get.isDarkMode ? Colors.white : ColorMs.color666666);
+      return neumorphicButton(
+        assetPath,
+        null,
+        width: 20,
+        height: 20,
+        iconColor: Get.isDarkMode ? Colors.white : ColorMs.color666666,
+        hasShadow: false,
+      );
     } else if (icon != null) {
-      return touchIcon(icon, () {}, color: Colors.pinkAccent);
+      return neumorphicButton(icon, null,
+          width: 20,
+          height: 20,
+          iconSize: 20,
+          iconColor: Colors.pinkAccent,
+          hasShadow: false);
     } else {
       return const SizedBox();
     }

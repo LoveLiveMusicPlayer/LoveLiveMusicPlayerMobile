@@ -79,9 +79,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
   Widget _buildPlayBtn() {
     final hasShadow = GlobalLogic.to.bgPhoto.value == "";
     return GestureDetector(
-      onTap: () {
-        onPlayTap();
-      },
+      onTap: () => onPlayTap(),
       child: Container(
           width: 56.h,
           height: 24.h,
@@ -134,12 +132,10 @@ class SongLibraryTop extends GetView<GlobalLogic> {
       return Container();
     }
     return Padding(
-      padding: EdgeInsets.only(right: 10.w),
-      child: touchIconByAsset(
-          path: Assets.mainIcSearch,
-          padding:
-              EdgeInsets.only(left: 8.w, top: 3.h, right: 8.w, bottom: 3.h),
-          onTap: () {
+        padding: EdgeInsets.only(right: 10.w),
+        child: neumorphicButton(
+          Assets.mainIcSearch,
+          () {
             HomeController.to.state.selectMode.value = 2;
             HomeController.to.state.oldMusicList = [...controller.musicList];
             HomeController.to.state.oldLoveList = [...controller.loveList];
@@ -147,10 +143,12 @@ class SongLibraryTop extends GetView<GlobalLogic> {
           },
           width: 20,
           height: 20,
-          color: (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
+          iconColor: (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
               ? ColorMs.colorFFFFFF
-              : ColorMs.colorCCCCCC),
-    );
+              : ColorMs.colorCCCCCC,
+          hasShadow: false,
+          margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
+        ));
   }
 
   Widget _buildSort() {
@@ -158,20 +156,20 @@ class SongLibraryTop extends GetView<GlobalLogic> {
       return Container();
     }
     return Padding(
-      padding: EdgeInsets.only(right: 10.w),
-      child: touchIconByAsset(
-          path: GlobalLogic.to.sortMode.value == "ASC"
+        padding: EdgeInsets.only(right: 10.w),
+        child: neumorphicButton(
+          GlobalLogic.to.sortMode.value == "ASC"
               ? Assets.mainIcSortAsc
               : Assets.mainIcSortDesc,
-          padding:
-              EdgeInsets.only(left: 8.w, top: 3.h, right: 8.w, bottom: 3.h),
-          onTap: onSortTap,
+          onSortTap,
           width: 20,
           height: 20,
-          color: (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
+          iconColor: (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
               ? ColorMs.colorFFFFFF
-              : ColorMs.colorCCCCCC),
-    );
+              : ColorMs.colorCCCCCC,
+          hasShadow: false,
+          margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
+        ));
   }
 
   ///筛选按钮
@@ -179,19 +177,14 @@ class SongLibraryTop extends GetView<GlobalLogic> {
     if (HomeController.to.state.currentIndex.value == 1) {
       return Container();
     }
-    return Padding(
-      padding: EdgeInsets.only(right: 10.w),
-      child: touchIconByAsset(
-          path: Assets.mainIcScreen,
-          padding:
-              EdgeInsets.only(left: 8.w, top: 3.h, right: 8.w, bottom: 3.h),
-          onTap: onScreenTap,
-          width: 20,
-          height: 20,
-          color: (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
-              ? ColorMs.colorFFFFFF
-              : ColorMs.colorCCCCCC),
-    );
+    return neumorphicButton(Assets.mainIcScreen, onScreenTap,
+        width: 20,
+        height: 20,
+        iconColor: (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
+            ? ColorMs.colorFFFFFF
+            : ColorMs.colorCCCCCC,
+        hasShadow: false,
+        margin: EdgeInsets.only(left: 8.w, top: 3.h, right: 18.w, bottom: 3.h));
   }
 
   ///播放歌曲条目
@@ -226,9 +219,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
           }),
           Expanded(child: Container()),
           GestureDetector(
-            onTap: () {
-              onCancelTap();
-            },
+            onTap: () => onCancelTap(),
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 16.h),
               child: Text(

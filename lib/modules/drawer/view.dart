@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
@@ -26,9 +26,9 @@ class DrawerLayout extends GetView<DrawerLogic> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Obx(() => topView()),
-              SizedBox(height: 16.h),
+              SizedBox(height: 10.h),
               groupView(),
-              SizedBox(height: 16.h),
+              SizedBox(height: 10.h),
               functionView(context),
               SizedBox(height: 6.h),
               versionView(),
@@ -39,22 +39,23 @@ class DrawerLayout extends GetView<DrawerLogic> {
 
   Widget topView() {
     final currentLogo = controller.getLogo(GlobalLogic.to.currentGroup.value);
-    final diameter = currentLogo == Assets.logoLogo ? 165.h : 120.0;
+    final diameter = currentLogo == Assets.logoLogo ? 165.h : 130.0;
     final textColor = Get.isDarkMode ? ColorMs.colorEDF5FF : Colors.black;
     return Column(
       children: [
-        SizedBox(
-            height: 130.h,
-            child: logoIcon(
-              currentLogo,
-              color: Colors.transparent,
-              width: diameter,
-              height: diameter,
-              radius: diameter,
-              hasShadow: false,
-            )),
-        Text("LoveLiveMusicPlayer",
-            style: TextStyle(fontSize: 17.h, color: textColor)),
+        neumorphicButton(
+          currentLogo,
+          null,
+          width: diameter,
+          height: diameter,
+          radius: diameter,
+          hasShadow: false,
+        ),
+        SizedBox(height: 5.h),
+        NeumorphicText("LoveLiveMusicPlayer",
+            style: NeumorphicStyle(depth: 2, color: textColor),
+            textStyle: NeumorphicTextStyle(
+                fontSize: 17.3.h, fontWeight: FontWeight.w700))
       ],
     );
   }
@@ -134,7 +135,7 @@ class DrawerLayout extends GetView<DrawerLogic> {
         icon: Assets.drawerDrawerQuickTrans,
         text: 'music_trans'.tr,
         colorWithBG: false,
-        onTap: (controller) async {
+        onTap: (controller) {
           Get.back();
           Get.toNamed(Routes.routeTransform);
         },

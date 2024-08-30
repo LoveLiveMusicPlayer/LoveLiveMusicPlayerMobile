@@ -71,9 +71,7 @@ class DetailsListTop extends StatelessWidget {
   Widget _buildPlayBtn() {
     final hasShadow = GlobalLogic.to.bgPhoto.value == "";
     return GestureDetector(
-      onTap: () {
-        onPlayTap();
-      },
+      onTap: () => onPlayTap(),
       child: Container(
           width: 56.h,
           height: 24.h,
@@ -122,16 +120,16 @@ class DetailsListTop extends StatelessWidget {
         ? ColorMs.colorFFFFFF
         : ColorMs.colorCCCCCC;
     return Padding(
-      padding: EdgeInsets.only(right: 10.w),
-      child: touchIconByAsset(
-          path: Assets.mainIcScreen,
-          padding:
-              EdgeInsets.only(left: 8.w, top: 5.h, right: 8.w, bottom: 5.h),
-          onTap: onScreenTap,
+        padding: EdgeInsets.only(right: 10.w),
+        child: neumorphicButton(
+          Assets.mainIcScreen,
+          onScreenTap,
           width: 20,
           height: 20,
-          color: color),
-    );
+          iconColor: color,
+          hasShadow: false,
+          margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.h),
+        ));
   }
 
   ///播放歌曲条目
@@ -163,9 +161,7 @@ class DetailsListTop extends StatelessWidget {
           ),
           Expanded(child: Container()),
           GestureDetector(
-            onTap: () {
-              onCancelTap();
-            },
+            onTap: () => onCancelTap(),
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 16.h),
               child: Text('finish'.tr, style: textStyle),

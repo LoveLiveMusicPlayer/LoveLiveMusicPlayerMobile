@@ -153,53 +153,46 @@ class PlayerPage extends GetView<PlayerPageLogic> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: controller.showContent.value == PlayerType.cover
                 ? [
-                    materialButton(
+                    neumorphicButton(
                         PlayerLogic.to.playingMusic.value.isLove
                             ? Icons.favorite
                             : Assets.playerPlayLove,
                         PlayerLogic.to.toggleLove,
-                        width: 32,
-                        height: 32,
-                        radius: 6,
+                        iconSize: 18,
                         iconColor: Colors.pinkAccent,
-                        iconSize: 15,
                         hasShadow: !hasSkin,
                         bgColor: bgColor,
-                        outerColor: bgColor),
-                    materialButton(Icons.add, controller.onAddSong,
-                        width: 32,
-                        height: 32,
-                        radius: 6,
-                        iconSize: 20,
-                        hasShadow: !hasSkin,
-                        iconColor: iconColor,
-                        bgColor: bgColor,
-                        outerColor: bgColor)
+                        padding: EdgeInsets.all(7.r)),
+                    neumorphicButton(
+                      Icons.add,
+                      controller.onAddSong,
+                      iconSize: 20,
+                      iconColor: iconColor,
+                      hasShadow: !hasSkin,
+                      bgColor: bgColor,
+                    )
                   ]
                 : [
                     Visibility(
                         visible: hasSkin,
-                        child: materialButton(
+                        child: neumorphicButton(
                             Assets.playerPlayerCall, controller.onTachiTap,
-                            width: 32,
-                            height: 32,
-                            radius: 6,
                             iconSize: 20,
-                            hasShadow: !hasSkin,
                             iconColor: iconColor,
+                            hasShadow: !hasSkin,
                             bgColor: bgColor,
-                            outerColor: bgColor)),
+                            padding: EdgeInsets.all(7.r))),
                     Visibility(
                         visible: SDUtils.allowEULA,
-                        child: materialButton(
-                            LyricLogic.renderIcon(), LyricLogic.toggleTranslate,
-                            width: 32,
-                            height: 32,
-                            radius: 6,
-                            hasShadow: !hasSkin,
-                            iconColor: iconColor,
-                            bgColor: bgColor,
-                            outerColor: bgColor))
+                        child: neumorphicButton(
+                          LyricLogic.renderIcon(),
+                          LyricLogic.toggleTranslate,
+                          iconSize: 20,
+                          padding: EdgeInsets.all(2.r),
+                          iconColor: iconColor,
+                          hasShadow: !hasSkin,
+                          bgColor: bgColor,
+                        ))
                   ]));
   }
 

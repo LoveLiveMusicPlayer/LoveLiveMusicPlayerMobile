@@ -20,7 +20,18 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
-            const Align(alignment: Alignment.bottomCenter, child: Tachie()),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: ValueListenableBuilder<bool>(
+                  valueListenable: GlobalLogic.mobileWeSlideController,
+                  builder: (_, bool isOpened, __) {
+                    return Visibility(
+                      visible: !isOpened,
+                      maintainState: true,
+                      child: const Tachie(),
+                    );
+                  }),
+            ),
             Obx(() {
               return Column(
                 children: [
@@ -28,7 +39,7 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
                   SizedBox(height: 16.h),
                   Container(
                     constraints:
-                    BoxConstraints(maxHeight: controller.maxHeight.value),
+                        BoxConstraints(maxHeight: controller.maxHeight.value),
                     child: SingleChildScrollView(
                       child: Column(children: [
                         Padding(
@@ -113,7 +124,7 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
                     iconColor: iconColor,
                     text: 'use_http_music'.tr,
                     enableSwitch:
-                    GlobalLogic.to.remoteHttp.httpUrl.value.isNotEmpty,
+                        GlobalLogic.to.remoteHttp.httpUrl.value.isNotEmpty,
                     hasSwitch: true,
                     initSwitch: GlobalLogic.to.remoteHttp.isEnableHttp(),
                     callBack: (_, check) => controller.enableRemoteHttp(check));

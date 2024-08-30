@@ -102,12 +102,10 @@ class ListViewItemSongSheet extends StatelessWidget {
           Text(menu.name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Get.isDarkMode || GlobalLogic.to.bgPhoto.value != ""
-                  ? TextStyleMs.white_15_500
-                  : TextStyleMs.black_15_500),
-          SizedBox(
-            height: 4.w,
-          ),
+              style: Get.isDarkMode
+                  ? TextStyleMs.white_15
+                  : TextStyleMs.lightBlack_15),
+          SizedBox(height: 4.w),
           Text(
             "${menu.music.length} ${'total_number_unit'.tr}",
             maxLines: 1,
@@ -117,9 +115,7 @@ class ListViewItemSongSheet extends StatelessWidget {
                     ? ColorMs.color999999
                     : ColorMs.colorD6D6D6),
           ),
-          SizedBox(
-            width: 16.w,
-          )
+          SizedBox(width: 16.w)
         ],
       ),
     );
@@ -135,17 +131,15 @@ class ListViewItemSongSheet extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          GestureDetector(
-            onTap: () {
-              onMoreTap!(menu);
-            },
-            child: touchIconByAsset(
-                path: Assets.mainIcMore,
-                padding: EdgeInsets.only(
-                    left: 12.w, right: 10.w, top: 12.h, bottom: 12.h),
-                width: 10,
-                height: 20,
-                color: color),
+          neumorphicButton(
+            Assets.mainIcMore,
+            () => onMoreTap!(menu),
+            width: 20,
+            height: 20,
+            iconColor: color,
+            hasShadow: false,
+            margin: EdgeInsets.only(
+                left: 12.w, right: 10.w, top: 12.h, bottom: 12.h),
           ),
           SizedBox(width: 4.r)
         ],

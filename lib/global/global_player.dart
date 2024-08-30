@@ -95,7 +95,7 @@ class PlayerLogic extends GetxController
       // 当状态不为缓冲中，并且播放逻辑执行完毕
       if (processState.processingState != ProcessingState.loading &&
           isHandled) {
-        SmartDialog.dismiss();
+        SmartDialog.dismiss(status: SmartStatus.loading);
       }
     }).listen(null);
 
@@ -111,9 +111,9 @@ class PlayerLogic extends GetxController
   }
 
   @override
-  void onClose() {
-    super.onClose();
+  void dispose() {
     playerSubscription?.cancel();
+    super.dispose();
   }
 
   Future<void> initLoopMode() async {
@@ -147,7 +147,6 @@ class PlayerLogic extends GetxController
   /// 播放指定列表的歌曲
   Future<void> playMusic(List<Music> musicList,
       {int? mIndex, bool needPlay = true, bool showDialog = true}) async {
-    return;
     if (musicList.isEmpty) {
       return;
     }

@@ -76,18 +76,19 @@ class DriveModePage extends GetView<DriveModeLogic> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          touchIconByAsset(
-                              path: music.isLove
+                          neumorphicButton(
+                              music.isLove
                                   ? Assets.driveCarFavoriate
                                   : Assets.driveCarDisFavorite,
-                              onTap: () => controller.toggleLove(),
-                              width: 38.w,
-                              height: 38.w,
-                              color: music.isLove
+                              controller.toggleLove,
+                              width: 58,
+                              height: 58,
+                              iconColor: music.isLove
                                   ? const Color(0xFFF940A7)
                                   : Get.isDarkMode
                                       ? Colors.white
-                                      : Colors.black),
+                                      : Colors.black,
+                              hasShadow: false),
                           SizedBox(width: 38.w),
                           Padding(
                             padding: EdgeInsets.all(8.w),
@@ -157,15 +158,15 @@ class DriveModePage extends GetView<DriveModeLogic> {
           );
         } else {
           bool isPlayingNow = playing == true;
-          return touchIconByAsset(
-            path: isPlayingNow
-                ? Assets.driveCarPlayButton
-                : Assets.driveCarPauseButton,
-            onTap: () => controller.togglePlay(isPlayingNow, processingState),
-            width: 90,
-            height: 90,
-            color: color,
-          );
+          return neumorphicButton(
+              isPlayingNow
+                  ? Assets.driveCarPlayButton
+                  : Assets.driveCarPauseButton,
+              () => controller.togglePlay(isPlayingNow, processingState),
+              width: 90,
+              height: 90,
+              iconColor: color,
+              hasShadow: false);
         }
       },
     );
@@ -177,13 +178,13 @@ class DriveModePage extends GetView<DriveModeLogic> {
       stream: player.loopModeStream,
       builder: (context, snapshot) {
         final loopMode = PlayerUtil.calcLoopMode(snapshot.data);
-        return touchIconByAsset(
-            path: PlayerUtil.getLoopIconFromLoopMode(loopMode),
-            onTap: () => PlayerUtil.changeLoopModeByLoopTap(loopMode),
-            width: 30.w,
-            height: 30.w,
-            padding: EdgeInsets.all(4.w),
-            color: Get.isDarkMode ? Colors.white : Colors.black);
+        return neumorphicButton(PlayerUtil.getLoopIconFromLoopMode(loopMode),
+            () => PlayerUtil.changeLoopModeByLoopTap(loopMode),
+            width: 48,
+            height: 48,
+            iconColor: Get.isDarkMode ? Colors.white : Colors.black,
+            margin: EdgeInsets.only(left: 2.w),
+            hasShadow: false);
       },
     );
   }
@@ -198,13 +199,12 @@ class DriveModePage extends GetView<DriveModeLogic> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          touchIconByAsset(
-              path: assetPath,
-              onTap: onTap,
-              width: 30.w,
-              height: 30.w,
-              padding: EdgeInsets.all(4.w),
-              color: color),
+          neumorphicButton(assetPath, onTap,
+              width: 40,
+              height: 40,
+              iconColor: color,
+              padding: EdgeInsets.all(2.w),
+              hasShadow: false),
           Text(text, style: TextStyle(color: color, fontSize: 17.h))
         ],
       ),

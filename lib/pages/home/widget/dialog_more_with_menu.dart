@@ -90,20 +90,19 @@ class DialogMoreWithMenu extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(
-              height: 14.h,
-            ),
+            SizedBox(height: 14.h),
             Row(
               children: [
-                touchIconByAsset(
-                    path: path,
-                    onTap: () {},
-                    width: 16.h,
-                    height: 16.h,
-                    color: Get.isDarkMode ? Colors.white : ColorMs.color666666),
-                SizedBox(
-                  width: 10.h,
+                neumorphicButton(
+                  path,
+                  onTap,
+                  width: 20,
+                  height: 20,
+                  iconColor:
+                      Get.isDarkMode ? Colors.white : ColorMs.color666666,
+                  hasShadow: false,
                 ),
+                SizedBox(width: 10.h),
                 Expanded(
                   child: Text(
                     title,
@@ -114,9 +113,7 @@ class DialogMoreWithMenu extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(
-              height: 14.h,
-            ),
+            SizedBox(height: 14.h),
             Visibility(
               visible: showLin,
               child: Divider(

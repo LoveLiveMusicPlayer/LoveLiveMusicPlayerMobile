@@ -88,9 +88,7 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
-                height: 14.h,
-              ),
+              SizedBox(height: 14.h),
               Row(
                 children: [
                   Text(
@@ -99,9 +97,7 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
                         ? TextStyleMs.white_15
                         : TextStyleMs.lightBlack_15,
                   ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
+                  SizedBox(width: 10.w),
                   Expanded(
                       child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
@@ -112,9 +108,7 @@ class _DialogSongInfoState extends State<DialogSongInfo> {
                   ))
                 ],
               ),
-              SizedBox(
-                height: 14.h,
-              ),
+              SizedBox(height: 14.h),
               Visibility(
                 visible: showLin,
                 child: Divider(

@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
+import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/pages/home/home_state.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';
+import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';
+import 'package:lovelivemusicplayer/utils/sp_util.dart';
+import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 
 class HomeController extends GetxController {
   final HomeState state = HomeState();
@@ -47,6 +55,100 @@ class HomeController extends GetxController {
         break;
     }
     state.selectMode.value = 1;
+    showSelectDialog();
+  }
+
+  showSelectDialog() {
+    List<BtnItem> list = [];
+    list.add(BtnItem(
+        imgPath: Assets.dialogIcAddPlayList2,
+        title: 'add_to_playlist'.tr,
+        onTap: () async {
+          List<Music> musicList = state.items.cast();
+          var isHasChosen =
+              state.items.any((element) => element.checked == true);
+          if (!isHasChosen) {
+            return;
+          }
+          List<Music> tempList = [];
+          await Future.forEach<Music>(musicList, (music) {
+            if (music.checked) {
+              tempList.add(music);
+            }
+          });
+          final isSuccess = await PlayerLogic.to.addMusicList(tempList);
+          if (isSuccess) {
+            SmartDialog.showToast('add_success'.tr);
+          }
+          SmartDialog.dismiss();
+        }));
+    list.add(BtnItem(
+        imgPath: Assets.dialogIcAddPlayList,
+        title: 'add_to_menu'.tr,
+        onTap: () async {
+          List<Music> musicList = state.items.cast();
+          var isHasChosen =
+              state.items.any((element) => element.checked == true);
+          if (!isHasChosen) {
+            return;
+          }
+          List<Music> tempList = [];
+          await Future.forEach<Music>(musicList, (music) {
+            if (music.checked) {
+              tempList.add(music);
+            }
+          });
+          SmartDialog.show(
+              alignment: Alignment.bottomCenter,
+              builder: (context) {
+                return DialogAddSongSheet(
+                    musicList: tempList,
+                    changeLoveStatusCallback: (status) {
+                      SmartDialog.dismiss();
+                    },
+                    changeMenuStateCallback: (status) {
+                      SmartDialog.dismiss();
+                    });
+              });
+        }));
+    if (HomeController.to.state.currentIndex.value == 3) {
+      // 仅在我喜欢中添加此按钮
+      list.add(BtnItem(
+          imgPath: Assets.dialogIcDelete2,
+          title: "cancel_i_like".tr,
+          onTap: () async {
+            List<Music> musicList = state.items.cast();
+            var isHasChosen =
+                state.items.any((element) => element.checked == true);
+            if (!isHasChosen) {
+              return;
+            }
+            List<Music> tempList = [];
+            await Future.forEach<Music>(musicList, (music) {
+              if (music.checked) {
+                tempList.add(music);
+              }
+            });
+            SmartDialog.show(builder: (context) {
+              return TwoButtonDialog(
+                  title: "confirm_to_delete_music".tr,
+                  isShowMsg: false,
+                  onConfirmListener: () {
+                    bool notAllLove =
+                        tempList.any((music) => music.isLove == false);
+                    PlayerLogic.to.toggleLoveList(tempList, notAllLove);
+                    SmartDialog.dismiss();
+                  });
+            });
+          }));
+    }
+    SmartDialog.show(
+        usePenetrate: true,
+        clickMaskDismiss: false,
+        maskColor: Colors.transparent,
+        alignment: Alignment.bottomCenter,
+        onDismiss: closeSelect,
+        builder: (context) => DialogBottomBtn(list: list));
   }
 
   filterItem(String str) {
@@ -89,6 +191,9 @@ class HomeController extends GetxController {
   }
 
   sortItem() {
+    final saveValue = GlobalLogic.to.sortMode.value == "ASC" ? "DESC" : "ASC";
+    GlobalLogic.to.sortMode.value = saveValue;
+    SpUtil.put(Const.spSortOrder, saveValue);
     switch (state.currentIndex.value) {
       case 0:
         GlobalLogic.to.musicList.value =
@@ -105,6 +210,11 @@ class HomeController extends GetxController {
       default:
         break;
     }
+  }
+
+  onPlayTap() {
+    PlayerLogic.to.playMusic(
+        GlobalLogic.to.filterMusicListByIndex(state.currentIndex.value));
   }
 
   closeSelect() {

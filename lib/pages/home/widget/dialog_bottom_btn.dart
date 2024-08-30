@@ -48,11 +48,14 @@ class DialogBottomBtn extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            touchIconByAsset(
-              path: path,
+            neumorphicButton(
+              path,
+              onTap,
               width: 21,
               height: 21,
-              color: Get.isDarkMode ? ColorMs.colorD1E0F3 : ColorMs.color666666,
+              iconColor:
+                  Get.isDarkMode ? ColorMs.colorD1E0F3 : ColorMs.color666666,
+              hasShadow: false,
             ),
             SizedBox(height: 7.h),
             Text(title,
@@ -62,9 +65,7 @@ class DialogBottomBtn extends StatelessWidget {
                 style: Get.isDarkMode
                     ? TextStyleMs.colorD1E0F3_15
                     : TextStyleMs.lightBlack_15),
-            SizedBox(
-              height: 20.h,
-            )
+            SizedBox(height: 20.h)
           ],
         ),
       ),
