@@ -21,7 +21,7 @@ class DailyLogic extends GetxController {
   }
 
   fetchData() {
-    Network.get(Const.pushUrl, (resp) async {
+    Network.get(Const.pushUrl, (resp) {
       parseArgs(jsonDecode(resp));
       update([1]);
     });

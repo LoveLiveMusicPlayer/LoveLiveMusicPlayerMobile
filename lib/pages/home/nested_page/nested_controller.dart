@@ -68,8 +68,7 @@ class NestedController extends GetxController {
       return GetPageRoute(
           settings: settings,
           page: () => ScrollsToTop(
-              onScrollsToTop: (ScrollsToTopEvent event) async =>
-                  await scrollViewToTop(),
+              onScrollsToTop: (_) async => scrollViewToTop(),
               child: const HomePageView()));
     } else if (settings.name == Routes.routeAlbumDetails) {
       addNav(Routes.routeAlbumDetails);
@@ -106,7 +105,7 @@ class NestedController extends GetxController {
     return null;
   }
 
-  Future<void> scrollViewToTop() async {
+  void scrollViewToTop()  {
     try {
       DBLogic.to.scrollToTop(
           HomeController

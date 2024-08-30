@@ -124,7 +124,7 @@ class _DetailsBodyState extends State<DetailsBody> {
     if (widget.menuId != null && DetailController.to.state.isSelect) {
       return SliverReorderableList(
         onReorderStart: (int index) => AppUtils.vibrate(),
-        onReorder: (int oldIndex, int newIndex) async {
+        onReorder: (int oldIndex, int newIndex) {
           if (oldIndex < newIndex) {
             newIndex -= 1;
           }
@@ -172,9 +172,7 @@ class _DetailsBodyState extends State<DetailsBody> {
       onItemTap: (index, checked) {
         widget.logic.selectItem(index, checked);
       },
-      onPlayNextTap: (music) async {
-        await PlayerLogic.to.addNextMusic(music);
-      },
+      onPlayNextTap: PlayerLogic.to.addNextMusic,
       onMoreTap: (music) {
         SmartDialog.show(
             alignment: Alignment.bottomCenter,
@@ -214,7 +212,7 @@ class _DetailsBodyState extends State<DetailsBody> {
       }
     }
 
-    void addToMenu() async {
+    void addToMenu() {
       List<Music> musicList = widget.logic.state.items.cast();
       List<Music> tempList = musicList.where((music) => music.checked).toList();
       if (tempList.isEmpty) {
@@ -236,7 +234,7 @@ class _DetailsBodyState extends State<DetailsBody> {
           });
     }
 
-    void deleteFromMenu() async {
+    void deleteFromMenu() {
       List<Music> musicList = widget.logic.state.items.cast();
       List<Music> tempList = musicList.where((music) => music.checked).toList();
       if (tempList.isEmpty) {

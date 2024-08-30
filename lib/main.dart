@@ -40,11 +40,11 @@ void main() {
         rewindInterval: const Duration(seconds: 5),
       );
 
-      dbInitSub = eventBus.on<DbInit>().listen((event) async {
+      dbInitSub = eventBus.on<DbInit>().listen((event) {
         runApp(const AppPage());
       });
 
-      closeOpenSub = eventBus.on<CloseOpen>().listen((event) async {
+      closeOpenSub = eventBus.on<CloseOpen>().listen((event) {
         // 初始化结束后，将启动屏关闭
         FlutterNativeSplash.remove();
         if (Platform.isIOS) {
