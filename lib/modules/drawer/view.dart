@@ -43,14 +43,16 @@ class DrawerLayout extends GetView<DrawerLogic> {
     final textColor = Get.isDarkMode ? ColorMs.colorEDF5FF : Colors.black;
     return Column(
       children: [
-        neumorphicButton(
-          currentLogo,
-          null,
-          width: diameter,
-          height: diameter,
-          radius: diameter,
-          hasShadow: false,
-        ),
+        SizedBox(
+            height: 130.h,
+            child: neumorphicButton(
+              currentLogo,
+              null,
+              width: diameter,
+              height: diameter,
+              radius: diameter,
+              hasShadow: false,
+            )),
         SizedBox(height: 5.h),
         NeumorphicText("LoveLiveMusicPlayer",
             style: NeumorphicStyle(depth: 2, color: textColor),
