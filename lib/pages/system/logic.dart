@@ -46,15 +46,7 @@ class SystemSettingLogic extends GetxController {
   enableFollowSystemMode(bool isEnable) async {
     bool isDark =
         MediaQuery.of(Get.context!).platformBrightness == Brightness.dark;
-    GlobalLogic.to.withSystemTheme.value = isEnable;
-    GlobalLogic.to.isDarkTheme.value = isDark;
-
-    if (isEnable) {
-      AppUtils.changeTheme(isDark);
-    }
-    await SpUtil.put(Const.spWithSystemTheme, isEnable);
-    await SpUtil.put(Const.spDark, isDark);
-
+    AppUtils.changeTheme(isDark, enableAuto: isEnable);
     AppUtils.reloadApp();
   }
 

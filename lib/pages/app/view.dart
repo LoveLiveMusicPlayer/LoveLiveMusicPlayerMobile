@@ -42,8 +42,6 @@ class _AppPageState extends State<AppPage> with WidgetsBindingObserver {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, _) {
-        print("withSystemTheme ${GlobalLogic.to.withSystemTheme.value}");
-        print("isDarkTheme ${GlobalLogic.to.isDarkTheme.value}");
         return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             enableLog: kDebugMode,

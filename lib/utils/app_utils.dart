@@ -37,7 +37,12 @@ import 'package:umeng_common_sdk/umeng_common_sdk.dart';
 class AppUtils {
   static CacheManager cacheManager = CacheManager(Config("imgSplash"));
 
-  static changeTheme(bool isNight) {
+  static changeTheme(bool isNight, {bool? enableAuto}) async {
+    if (enableAuto != null) {
+      GlobalLogic.to.withSystemTheme.value = enableAuto;
+    }
+    GlobalLogic.to.isDarkTheme.value = isNight;
+
     if (GlobalLogic.to.withSystemTheme.value) {
       Get.changeThemeMode(ThemeMode.system);
       Get.changeTheme(isNight ? darkTheme : lightTheme);
@@ -45,6 +50,11 @@ class AppUtils {
       Get.changeThemeMode(isNight ? ThemeMode.dark : ThemeMode.light);
       Get.changeTheme(isNight ? darkTheme : lightTheme);
     }
+
+    if (enableAuto != null) {
+      await SpUtil.put(Const.spWithSystemTheme, enableAuto);
+    }
+    await SpUtil.put(Const.spDark, isNight);
   }
 
   static reloadApp() {

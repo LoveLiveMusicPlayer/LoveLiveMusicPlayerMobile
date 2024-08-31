@@ -110,9 +110,7 @@ class GlobalLogic extends SuperController
     window.onPlatformBrightnessChanged = () async {
       bool isDark = window.platformBrightness == Brightness.dark;
       if (withSystemTheme.value) {
-        GlobalLogic.to.isDarkTheme.value = isDark;
         AppUtils.changeTheme(isDark);
-        await SpUtil.put(Const.spDark, isDark);
       }
       WidgetsBinding.instance.handlePlatformBrightnessChanged();
       AppUtils.reloadApp();
