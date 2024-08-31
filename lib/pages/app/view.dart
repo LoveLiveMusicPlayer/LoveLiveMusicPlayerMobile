@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:fps_widget/fps_widget.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/eventbus/player_closable_event.dart';
@@ -71,7 +72,7 @@ class _AppPageState extends State<AppPage> with WidgetsBindingObserver {
                   // 设置文字大小不随系统设置改变
                   data: MediaQuery.of(context)
                       .copyWith(textScaler: const TextScaler.linear(1.0)),
-                  child: widget!);
+                  child: FPSWidget(show: false, child: widget!));
             }));
       },
     );
