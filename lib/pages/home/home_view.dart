@@ -129,6 +129,7 @@ class _HomeViewState extends State<HomeView>
             backgroundColor: GlobalLogic.to.needHomeSafeArea.value
                 ? Get.theme.primaryColor
                 : Colors.white,
+            drawerEdgeDragWidth: 0,
             endDrawer: SizedBox(
               width: min(0.35 * Get.height, Get.width),
               child: const DrawerLayout(),
