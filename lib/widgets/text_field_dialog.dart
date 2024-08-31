@@ -84,11 +84,7 @@ class _TextFieldDialogState extends State<TextFieldDialog> {
                     return;
                   }
                   final len = str.length;
-                  if (len < maxLength) {
-                    text = str.substring(0, len);
-                  } else {
-                    text = str.substring(0, maxLength);
-                  }
+                  text = str.substring(0, min(len, maxLength));
 
                   controller.value = TextEditingValue(
                       text: text,

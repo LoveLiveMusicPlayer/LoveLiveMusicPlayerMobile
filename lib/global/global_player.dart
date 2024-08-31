@@ -478,7 +478,13 @@ class PlayerLogic extends GetxController
     if (Platform.isIOS) {
       Carplay.changePlayingMusic(music);
     }
-    playingMusic.value = music ?? Music();
+    if (music == null) {
+      playingMusic.value = Music();
+    } else {
+      var isLove = await DBLogic.to.loveDao.findLoveById(music.musicId!);
+      music.isLove = isLove != null;
+      playingMusic.value = music;
+    }
     // 取歌曲主颜色生成miniPlayer的BoxDecorationData
     PlayerUtil.refreshMiniPlayerBoxDecorationData();
   }

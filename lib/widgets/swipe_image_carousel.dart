@@ -1,13 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
-import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/models/play_list_music.dart';
+import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/widgets/another_page_view/another_transformer_page_view.dart';
 
@@ -189,36 +186,12 @@ class SwipeImageCarouselState extends State<SwipeImageCarousel>
                 PlayerLogic.to.mPlayList[index].musicId),
             builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
               if (snapshot.hasError) {
-                return Center(
-                  child: Text('Error: ${snapshot.error}'),
-                );
+                return Center(child: Text('Error: ${snapshot.error}'));
               } else {
-                String? imagePath = snapshot.data;
-
-                Image? imageView;
-                if (imagePath != null) {
-                  if (GlobalLogic.to.remoteHttp.canUseHttpUrl()) {
-                    imageView = Image.network(
-                      imagePath,
-                      fit: BoxFit.cover,
-                      width: 240.r,
-                      height: 240.r,
-                    );
-                  } else {
-                    imageView = Image.file(
-                      File(imagePath),
-                      fit: BoxFit.cover,
-                      width: 240.r,
-                      height: 240.r,
-                    );
-                  }
-                }
-
                 return Center(
-                  child: ClipOval(
-                    child: imageView,
-                  ),
-                );
+                    child: ClipOval(
+                        child: showImg(snapshot.data, 230, 230,
+                            fit: BoxFit.cover)));
               }
             },
           );
