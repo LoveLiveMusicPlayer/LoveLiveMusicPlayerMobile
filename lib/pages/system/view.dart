@@ -74,7 +74,6 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
               initSwitch: GlobalLogic.to.withSystemTheme.value,
               callBack: (_, check) => controller.enableFollowSystemMode(check)),
           SizedBox(height: 8.h),
-          SizedBox(height: 8.h),
           DrawerFunctionButton(
               icon: Assets.drawerDrawerColorful,
               iconColor: iconColor,
