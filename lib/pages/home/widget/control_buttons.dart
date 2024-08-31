@@ -46,7 +46,7 @@ class ControlButtons extends GetView {
                       Assets.playerPlayPrev, PlayerLogic.to.playPrev,
                       width: 60,
                       height: 60,
-                      radius: 40,
+                      radius: 60,
                       hasShadow: !hasSkin,
                       iconColor: iconColor,
                       bgColor: bgColor,

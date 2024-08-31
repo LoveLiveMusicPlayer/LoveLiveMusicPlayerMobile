@@ -50,14 +50,12 @@ class DrawerLayout extends GetView<DrawerLogic> {
       children: [
         SizedBox(
             height: 130.h,
-            child: neumorphicButton(
-              currentLogo,
-              null,
-              width: diameter,
-              height: diameter,
-              radius: diameter,
-              hasShadow: false,
-            )),
+            child: neumorphicButton(currentLogo, null,
+                width: diameter,
+                height: diameter,
+                radius: diameter,
+                hasShadow: false,
+                padding: const EdgeInsets.all(0))),
         SizedBox(height: 5.h),
         NeumorphicText("LoveLiveMusicPlayer",
             style: NeumorphicStyle(depth: 2, color: textColor),

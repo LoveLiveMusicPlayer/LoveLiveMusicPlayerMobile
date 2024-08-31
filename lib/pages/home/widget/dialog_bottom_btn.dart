@@ -51,13 +51,12 @@ class DialogBottomBtn extends StatelessWidget {
             neumorphicButton(
               path,
               onTap,
-              width: 21,
-              height: 21,
+              width: 36,
+              height: 36,
               iconColor:
                   Get.isDarkMode ? ColorMs.colorD1E0F3 : ColorMs.color666666,
               hasShadow: false,
             ),
-            SizedBox(height: 7.h),
             Text(title,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,

@@ -79,15 +79,15 @@ class _MiniPlayerState extends State<MiniPlayer> {
 
           /// 滚动歌名
           marqueeMusicName(),
-          SizedBox(width: 14.w),
+          SizedBox(width: 10.w),
 
           /// 播放按钮
           SizedBox(
-            width: 24.h,
-            height: 24.h,
+            width: 30.w,
+            height: 30.h,
             child: playButton(),
           ),
-          SizedBox(width: 10.w),
+          SizedBox(width: 5.w),
 
           /// 播放列表按钮
           neumorphicButton(Assets.playerPlayPlaylist, () {
@@ -97,8 +97,8 @@ class _MiniPlayerState extends State<MiniPlayer> {
                   return const DialogPlaylist();
                 });
           },
-              width: 24,
-              height: 24,
+              width: 30,
+              height: 30,
               hasShadow: false,
               iconColor:
                   Get.isDarkMode ? ColorMs.colorCCCCCC : ColorMs.color333333)
@@ -179,8 +179,8 @@ class _MiniPlayerState extends State<MiniPlayer> {
             processingState == ProcessingState.buffering) {
           return Container(
             margin: const EdgeInsets.all(8.0),
-            width: 24.h,
-            height: 24.h,
+            width: 30.w,
+            height: 30.h,
             child: const CircularProgressIndicator(),
           );
         } else if (playing != true) {
@@ -188,17 +188,17 @@ class _MiniPlayerState extends State<MiniPlayer> {
             if (PlayerLogic.to.playingMusic.value.musicId != null) {
               player.play();
             }
-          }, width: 24, height: 24, iconColor: color, hasShadow: false);
+          }, width: 30, height: 30, iconColor: color, hasShadow: false);
         } else if (processingState != ProcessingState.completed) {
           return neumorphicButton(Assets.playerPlayPause, player.pause,
-              width: 24, height: 24, iconColor: color, hasShadow: false);
+              width: 30, height: 30, iconColor: color, hasShadow: false);
         } else {
           return neumorphicButton(
               Assets.playerPlayPlay,
               () => player.seek(Duration.zero,
                   index: player.effectiveIndices!.first),
-              width: 24,
-              height: 24,
+              width: 30,
+              height: 30,
               iconColor: color,
               hasShadow: false);
         }

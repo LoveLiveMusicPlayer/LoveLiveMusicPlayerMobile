@@ -181,15 +181,15 @@ class DialogAddSongSheet extends StatelessWidget {
       return neumorphicButton(
         assetPath,
         null,
-        width: 20,
-        height: 20,
+        width: 28,
+        height: 28,
         iconColor: Get.isDarkMode ? Colors.white : ColorMs.color666666,
         hasShadow: false,
       );
     } else if (icon != null) {
       return neumorphicButton(icon, null,
-          width: 20,
-          height: 20,
+          width: 28,
+          height: 28,
           iconSize: 20,
           iconColor: Colors.pinkAccent,
           hasShadow: false);

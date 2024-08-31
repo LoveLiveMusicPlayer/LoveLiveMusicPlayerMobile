@@ -81,13 +81,14 @@ class DriveModePage extends GetView<DriveModeLogic> {
                                   ? Assets.driveCarFavoriate
                                   : Assets.driveCarDisFavorite,
                               controller.toggleLove,
-                              width: 58,
-                              height: 58,
+                              width: 52,
+                              height: 52,
                               iconColor: music.isLove
                                   ? const Color(0xFFF940A7)
                                   : Get.isDarkMode
                                       ? Colors.white
                                       : Colors.black,
+                              padding: EdgeInsets.all(10.w),
                               hasShadow: false),
                           SizedBox(width: 38.w),
                           Padding(
@@ -180,10 +181,10 @@ class DriveModePage extends GetView<DriveModeLogic> {
         final loopMode = PlayerUtil.calcLoopMode(snapshot.data);
         return neumorphicButton(PlayerUtil.getLoopIconFromLoopMode(loopMode),
             () => PlayerUtil.changeLoopModeByLoopTap(loopMode),
-            width: 48,
-            height: 48,
+            width: 52,
+            height: 52,
             iconColor: Get.isDarkMode ? Colors.white : Colors.black,
-            margin: EdgeInsets.only(left: 2.w),
+            padding: EdgeInsets.all(14.w),
             hasShadow: false);
       },
     );
@@ -200,10 +201,10 @@ class DriveModePage extends GetView<DriveModeLogic> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           neumorphicButton(assetPath, onTap,
-              width: 40,
-              height: 40,
+              width: 30,
+              height: 30,
               iconColor: color,
-              padding: EdgeInsets.all(2.w),
+              padding: const EdgeInsets.all(0),
               hasShadow: false),
           Text(text, style: TextStyle(color: color, fontSize: 17.h))
         ],

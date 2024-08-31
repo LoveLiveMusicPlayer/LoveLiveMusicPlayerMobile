@@ -25,8 +25,8 @@ import 'package:lovelivemusicplayer/utils/android_back_desktop.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
 import 'package:lovelivemusicplayer/utils/umeng_helper.dart';
-import 'package:lovelivemusicplayer/widgets/bottom_bar1.dart';
-import 'package:lovelivemusicplayer/widgets/bottom_bar2.dart';
+import 'package:lovelivemusicplayer/widgets/bottom_bar/bottom_bar1.dart';
+import 'package:lovelivemusicplayer/widgets/bottom_bar/bottom_bar2.dart';
 import 'package:lovelivemusicplayer/widgets/permission_dialog.dart';
 import 'package:sharesdk_plugin/sharesdk_interface.dart';
 import 'package:umeng_common_sdk/umeng_common_sdk.dart';
@@ -274,7 +274,7 @@ class _HomeViewState extends State<HomeView>
         physics: HomeController.to.state.selectMode.value > 0
             ? const NeverScrollableScrollPhysics()
             : const AlwaysScrollableScrollPhysics(),
-        children: const [BottomBar(), BottomBar2()],
+        children: const [BottomBar1(), BottomBar2()],
       );
     });
   }

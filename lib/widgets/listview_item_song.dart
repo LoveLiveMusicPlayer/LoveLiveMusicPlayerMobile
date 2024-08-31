@@ -122,8 +122,8 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
       child: Padding(
         padding: EdgeInsets.only(right: 10.h),
         child: CircularCheckBox(
-          checkd: widget.checked,
-          onCheckd: (value) {
+          checked: widget.checked,
+          onChecked: (value) {
             widget.checked = value;
             widget.onItemTap(widget.index, widget.checked);
           },
@@ -213,22 +213,21 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
               widget.onPlayNextTap(widget.music);
               SmartDialog.showToast('add_success'.tr);
             },
-            width: 20,
-            height: 20,
+            width: 30,
+            height: 30,
             iconColor: color,
             hasShadow: false,
-            margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+            margin: EdgeInsets.symmetric(horizontal: 3.w, vertical: 12.h),
           ),
           neumorphicButton(
             Assets.mainIcMore,
             () => widget.onMoreTap(widget.music),
-            width: 10,
-            height: 20,
+            width: 30,
+            height: 30,
             iconColor: color,
             hasShadow: false,
-            margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-          ),
-          SizedBox(width: 4.r)
+            margin: EdgeInsets.symmetric(horizontal: 3.w, vertical: 12.h),
+          )
         ],
       );
     }

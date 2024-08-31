@@ -53,19 +53,14 @@ class SongLibraryTop extends GetView<GlobalLogic> {
   ///播放歌曲条目
   Widget _buildPlaySong() {
     return Container(
-      padding: EdgeInsets.only(bottom: 10.h),
       height: 35.h,
       color: Colors.transparent,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            width: 14.w,
-          ),
+          SizedBox(width: 14.w),
           _buildPlayBtn(),
-          SizedBox(
-            width: 10.w,
-          ),
+          SizedBox(width: 10.w),
           _buildSongNumText(),
           _buildSearch(),
           _buildSort(),
@@ -131,45 +126,41 @@ class SongLibraryTop extends GetView<GlobalLogic> {
     if (HomeController.to.state.currentIndex.value == 1) {
       return Container();
     }
-    return Padding(
-        padding: EdgeInsets.only(right: 10.w),
-        child: neumorphicButton(
-          Assets.mainIcSearch,
-          () {
-            HomeController.to.state.selectMode.value = 2;
-            HomeController.to.state.oldMusicList = [...controller.musicList];
-            HomeController.to.state.oldLoveList = [...controller.loveList];
-            HomeController.to.state.oldRecentList = [...controller.recentList];
-          },
-          width: 20,
-          height: 20,
-          iconColor: (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
-              ? ColorMs.colorFFFFFF
-              : ColorMs.colorCCCCCC,
-          hasShadow: false,
-          margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
-        ));
+    return neumorphicButton(
+      Assets.mainIcSearch,
+      () {
+        HomeController.to.state.selectMode.value = 2;
+        HomeController.to.state.oldMusicList = [...controller.musicList];
+        HomeController.to.state.oldLoveList = [...controller.loveList];
+        HomeController.to.state.oldRecentList = [...controller.recentList];
+      },
+      width: 30,
+      height: 30,
+      iconColor: (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
+          ? ColorMs.colorFFFFFF
+          : ColorMs.colorCCCCCC,
+      hasShadow: false,
+      margin: EdgeInsets.symmetric(horizontal: 3.w, vertical: 3.h),
+    );
   }
 
   Widget _buildSort() {
     if (HomeController.to.state.currentIndex.value == 1) {
       return Container();
     }
-    return Padding(
-        padding: EdgeInsets.only(right: 10.w),
-        child: neumorphicButton(
-          GlobalLogic.to.sortMode.value == "ASC"
-              ? Assets.mainIcSortAsc
-              : Assets.mainIcSortDesc,
-          onSortTap,
-          width: 20,
-          height: 20,
-          iconColor: (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
-              ? ColorMs.colorFFFFFF
-              : ColorMs.colorCCCCCC,
-          hasShadow: false,
-          margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
-        ));
+    return neumorphicButton(
+      GlobalLogic.to.sortMode.value == "ASC"
+          ? Assets.mainIcSortAsc
+          : Assets.mainIcSortDesc,
+      onSortTap,
+      width: 30,
+      height: 30,
+      iconColor: (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
+          ? ColorMs.colorFFFFFF
+          : ColorMs.colorCCCCCC,
+      hasShadow: false,
+      margin: EdgeInsets.symmetric(horizontal: 3.w, vertical: 3.h),
+    );
   }
 
   ///筛选按钮
@@ -178,13 +169,13 @@ class SongLibraryTop extends GetView<GlobalLogic> {
       return Container();
     }
     return neumorphicButton(Assets.mainIcScreen, onScreenTap,
-        width: 20,
-        height: 20,
+        width: 30,
+        height: 30,
         iconColor: (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
             ? ColorMs.colorFFFFFF
             : ColorMs.colorCCCCCC,
         hasShadow: false,
-        margin: EdgeInsets.only(left: 8.w, top: 3.h, right: 18.w, bottom: 3.h));
+        margin: EdgeInsets.only(left: 3.h, top: 3.h, right: 18.w, bottom: 3.h));
   }
 
   ///播放歌曲条目
@@ -203,7 +194,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
           ),
           GetBuilder<HomeController>(builder: (logic) {
             return CircularCheckBox(
-              checkd: HomeController.to.state.selectAll,
+              checked: HomeController.to.state.selectAll,
               checkIconColor: ColorMs.colorF940A7,
               uncheckedIconColor: ColorMs.colorD6D6D6,
               spacing: 10.h,
@@ -211,7 +202,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
               title:
                   "${'select_items'.tr} ${HomeController.to.getCheckedSong()} ${'total_number_unit'.tr}",
               textStyle: textStyle,
-              onCheckd: (value) {
+              onChecked: (value) {
                 HomeController.to.state.selectAll = value;
                 onSelectAllTap(value);
               },

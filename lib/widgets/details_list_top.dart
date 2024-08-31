@@ -53,13 +53,9 @@ class DetailsListTop extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            width: 16.h,
-          ),
+          SizedBox(width: 16.h),
           _buildPlayBtn(),
-          SizedBox(
-            width: 10.h,
-          ),
+          SizedBox(width: 10.h),
           _buildSongNumText(),
           _buildFilter(),
         ],
@@ -93,7 +89,7 @@ class DetailsListTop extends StatelessWidget {
                           blurRadius: 6,
                           offset: const Offset(5, 3)),
                     ]
-                  : []),
+                  : null),
           child: Icon(
             Icons.play_arrow_rounded,
             color: Colors.white,
@@ -124,10 +120,11 @@ class DetailsListTop extends StatelessWidget {
         child: neumorphicButton(
           Assets.mainIcScreen,
           onScreenTap,
-          width: 20,
-          height: 20,
+          width: 30,
+          height: 30,
           iconColor: color,
           hasShadow: false,
+          padding: EdgeInsets.all(6.w),
           margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.h),
         ));
   }
@@ -147,7 +144,7 @@ class DetailsListTop extends StatelessWidget {
             width: 16.h,
           ),
           CircularCheckBox(
-            checkd: selectAll,
+            checked: selectAll,
             checkIconColor: ColorMs.colorF940A7,
             uncheckedIconColor: ColorMs.colorD6D6D6,
             spacing: 10.h,
@@ -155,15 +152,13 @@ class DetailsListTop extends StatelessWidget {
             title:
                 "${'select_items'.tr} $checkedItemLength ${'total_number_unit'.tr}",
             textStyle: textStyle,
-            onCheckd: (value) {
-              onSelectAllTap(value);
-            },
+            onChecked: onSelectAllTap,
           ),
           Expanded(child: Container()),
           GestureDetector(
             onTap: () => onCancelTap(),
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 16.h),
+              padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 5.h),
               child: Text('finish'.tr, style: textStyle),
             ),
           )

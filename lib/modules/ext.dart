@@ -223,24 +223,20 @@ Widget neumorphicButton(dynamic icon, GestureTapCallback? onTap,
       borderRadius: BorderRadius.circular(radius.r),
     ),
     child: NeumorphicButton(
-      pressed: onTap != null,
-      onPressed: onTap,
-      style: NeumorphicStyle(
-        color: bgColor ?? Colors.transparent,
-        shape: NeumorphicShape.flat,
-        lightSource: LightSource.bottomRight,
-        shadowLightColor: shadowColor,
-        shadowDarkColor: shadowColor,
-        depth: hasShadow ? 3 : 0,
-        boxShape: NeumorphicBoxShape.roundRect(
-            BorderRadius.all(Radius.circular(radius.r))),
-      ),
-      padding: padding ?? const EdgeInsets.all(0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(radius.h),
-        child: child,
-      ),
-    ),
+        pressed: onTap != null,
+        onPressed: onTap,
+        style: NeumorphicStyle(
+          color: bgColor ?? Colors.transparent,
+          shape: NeumorphicShape.flat,
+          lightSource: LightSource.bottomRight,
+          shadowLightColor: shadowColor,
+          shadowDarkColor: shadowColor,
+          depth: hasShadow ? 3 : 0,
+          boxShape: NeumorphicBoxShape.roundRect(
+              BorderRadius.all(Radius.circular(radius.r))),
+        ),
+        padding: padding ?? EdgeInsets.all(5.r),
+        child: child),
   );
 }
 
@@ -250,5 +246,9 @@ Widget neumorphicButton(dynamic icon, GestureTapCallback? onTap,
 /// [onTap] 触摸事件回调
 Widget showGroupButton(String path, {GestureTapCallback? onTap}) {
   return neumorphicButton(path, onTap,
-      width: 120, height: 50, radius: 8, iconSize: 50, svgColorFilter: false);
+      width: 120,
+      height: 50,
+      radius: 8,
+      svgColorFilter: false,
+      padding: const EdgeInsets.all(0));
 }

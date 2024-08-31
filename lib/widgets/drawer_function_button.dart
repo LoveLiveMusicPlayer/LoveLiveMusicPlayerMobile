@@ -1,8 +1,8 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 
 class DrawerFunctionButton extends StatefulWidget {
@@ -78,14 +78,9 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
                 child: Row(
               children: [
                 widget.icon != null
-                    ? SvgPicture.asset(widget.icon!,
-                        height: 20.h,
-                        width: 20.h,
-                        colorFilter: widget.iconColor == null
-                            ? null
-                            : ColorFilter.mode(
-                                widget.iconColor!, BlendMode.srcIn))
-                    : SizedBox(height: 20.h, width: 20.h),
+                    ? neumorphicButton(widget.icon!, null,
+                        width: 28, height: 28, iconColor: widget.iconColor)
+                    : SizedBox(height: 28.h, width: 28.h),
                 SizedBox(width: 8.r),
                 Expanded(child: GetBuilder<GlobalLogic>(builder: (logic) {
                   late bool mode;
@@ -97,7 +92,7 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
                   return ListenableBuilder(
                       listenable: bh,
                       builder: (c, w) => Text(bh._textValue,
-                          style: TextStyle(fontSize: 14.h).copyWith(
+                          style: TextStyle(fontSize: 15.sp).copyWith(
                               color: mode ? ColorMs.colorEDF5FF : Colors.black),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis));
@@ -119,9 +114,7 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
               builder: (c, w) => NeumorphicSwitch(
                     value: bh._switchValue,
                     style: const NeumorphicSwitchStyle(
-                      thumbShape: NeumorphicShape
-                          .concave, // concave or flat with elevation
-                    ),
+                        thumbShape: NeumorphicShape.concave),
                     onChanged: (value) {
                       bh.setSwitchValue = value;
                       widget.callBack?.call(bh, value);
@@ -134,9 +127,7 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
             child: NeumorphicSwitch(
               value: bh._switchValue,
               style: const NeumorphicSwitchStyle(
-                thumbShape:
-                    NeumorphicShape.concave, // concave or flat with elevation
-              ),
+                  thumbShape: NeumorphicShape.concave),
               onChanged: null,
             ));
       }

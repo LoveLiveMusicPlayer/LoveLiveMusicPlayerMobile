@@ -39,16 +39,12 @@ class ListViewItemSongSheet extends StatelessWidget {
           children: [
             _buildDevicePic(),
 
-            SizedBox(
-              width: 5.w,
-            ),
+            SizedBox(width: 5.w),
 
             ///缩列图
             Hero(tag: "menu${menu.id}", child: _buildIcon()),
 
-            SizedBox(
-              width: 10.w,
-            ),
+            SizedBox(width: 10.w),
 
             ///中间标题部分
             _buildContent(),
@@ -134,12 +130,11 @@ class ListViewItemSongSheet extends StatelessWidget {
           neumorphicButton(
             Assets.mainIcMore,
             () => onMoreTap!(menu),
-            width: 20,
-            height: 20,
+            width: 30,
+            height: 30,
             iconColor: color,
             hasShadow: false,
-            margin: EdgeInsets.only(
-                left: 12.w, right: 10.w, top: 12.h, bottom: 12.h),
+            margin: EdgeInsets.symmetric(vertical: 12.h),
           ),
           SizedBox(width: 4.r)
         ],
