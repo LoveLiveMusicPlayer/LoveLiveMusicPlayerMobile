@@ -13,7 +13,6 @@ class SplashLogic extends GetxController {
   bool isStartHomePage = false;
   var count = 3.obs;
   Timer? mTimer;
-  Future<Widget?>? futureData;
 
   @override
   void onInit() {
@@ -34,12 +33,6 @@ class SplashLogic extends GetxController {
       // 发送卸载窗口命令
       eventBus.fire(CloseOpen((DateTime.now().millisecondsSinceEpoch)));
     });
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-    futureData = fetchImageView();
   }
 
   Future<Widget?> fetchImageView() async {

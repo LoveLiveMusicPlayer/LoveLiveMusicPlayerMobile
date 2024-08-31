@@ -24,7 +24,7 @@ class SplashPage extends GetView<SplashLogic> {
                   return snapshot.data ?? renderEmptyUI(); // 数据状态
                 }
               },
-              future: controller.futureData,
+              future: controller.fetchImageView(),
             ),
             Positioned(
               bottom: 50.h,
