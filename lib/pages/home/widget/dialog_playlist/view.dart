@@ -101,11 +101,19 @@ class DialogPlaylist extends GetView<DialogPlaylistLogic> {
             Row(
               children: [
                 neumorphicButton(path, onTap,
-                    width: 20, height: 20, iconColor: color, hasShadow: false),
+                    width: 20,
+                    height: 20,
+                    iconColor: color,
+                    hasShadow: false,
+                    padding: const EdgeInsets.all(0)),
                 SizedBox(width: 10.h),
                 Expanded(child: Text(title, style: textStyle)),
                 neumorphicButton(Assets.dialogIcDelete2, onRemove,
-                    width: 20, height: 20, iconColor: color, hasShadow: false)
+                    width: 20,
+                    height: 20,
+                    iconColor: color,
+                    hasShadow: false,
+                    padding: const EdgeInsets.all(0))
               ],
             ),
             SizedBox(height: 10.h),

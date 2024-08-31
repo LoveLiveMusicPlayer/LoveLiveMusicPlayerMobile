@@ -127,15 +127,13 @@ class ListViewItemSongSheet extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          neumorphicButton(
-            Assets.mainIcMore,
-            () => onMoreTap!(menu),
-            width: 30,
-            height: 30,
-            iconColor: color,
-            hasShadow: false,
-            margin: EdgeInsets.symmetric(vertical: 12.h),
-          ),
+          neumorphicButton(Assets.mainIcMore, () => onMoreTap!(menu),
+              width: 30,
+              height: 30,
+              iconColor: color,
+              hasShadow: false,
+              margin: EdgeInsets.symmetric(vertical: 12.h),
+              padding: const EdgeInsets.all(0)),
           SizedBox(width: 4.r)
         ],
       ),

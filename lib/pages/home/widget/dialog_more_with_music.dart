@@ -222,15 +222,13 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
             SizedBox(height: 14.h),
             Row(
               children: [
-                neumorphicButton(
-                  path,
-                  onTap,
-                  width: 20,
-                  height: 20,
-                  iconColor:
-                      Get.isDarkMode ? Colors.white : ColorMs.color666666,
-                  hasShadow: false,
-                ),
+                neumorphicButton(path, onTap,
+                    width: 20,
+                    height: 20,
+                    iconColor:
+                        Get.isDarkMode ? Colors.white : ColorMs.color666666,
+                    hasShadow: false,
+                    padding: const EdgeInsets.all(0)),
                 SizedBox(width: 10.h),
                 Expanded(
                   child: Text(

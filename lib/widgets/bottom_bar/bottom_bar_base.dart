@@ -40,12 +40,17 @@ abstract class BottomBar extends GetView<HomeController> {
   BottomNavigationBarItem bottomBar(
       String iconPath, bool isChoice, String label) {
     return BottomNavigationBarItem(
-        icon: SvgPicture.asset(iconPath,
-            height: 18.h,
-            width: 18.h,
-            colorFilter: ColorFilter.mode(
-                isChoice ? ColorMs.colorF940A7 : ColorMs.colorD1E0F3,
-                BlendMode.srcIn)),
+        icon: Column(
+          children: [
+            SvgPicture.asset(iconPath,
+                height: 18.h,
+                width: 18.h,
+                colorFilter: ColorFilter.mode(
+                    isChoice ? ColorMs.colorF940A7 : ColorMs.colorD1E0F3,
+                    BlendMode.srcIn)),
+            SizedBox(height: 5.h)
+          ],
+        ),
         label: label);
   }
 

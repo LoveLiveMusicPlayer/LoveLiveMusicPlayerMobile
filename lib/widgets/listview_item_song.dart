@@ -188,18 +188,16 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
         : ColorMs.colorCCCCCC;
     if (HomeController.to.state.selectMode.value == 1) {
       if (widget.isDraggable) {
-        return neumorphicButton(
-          Assets.mainIcDraggable,
-          () {
-            widget.onPlayNextTap(widget.music);
-            SmartDialog.showToast('add_success'.tr);
-          },
-          width: 20,
-          height: 20,
-          iconColor: color,
-          hasShadow: false,
-          margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-        );
+        return neumorphicButton(Assets.mainIcDraggable, () {
+          widget.onPlayNextTap(widget.music);
+          SmartDialog.showToast('add_success'.tr);
+        },
+            width: 20,
+            height: 20,
+            iconColor: color,
+            hasShadow: false,
+            margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+            padding: const EdgeInsets.all(0));
       } else {
         return const Row();
       }
