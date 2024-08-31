@@ -63,11 +63,12 @@ android {
     defaultConfig {
         applicationId "com.zhushenwudi.lovelivemusicplayer"
         minSdk 23
-        targetSdk 34
+        targetSdk 35
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
 
         manifestPlaceholders = [
+                applicationName     : "android.app.Application",
                 UMENG_APPKEY        : '634bd9c688ccdf4b7e4ac67b',
                 UMENG_MESSAGE_SECRET: '0e2760e575260754b1808f0ff82604a7',
                 UMENG_CHANNEL       : 'PROD',
@@ -118,7 +119,6 @@ android {
             zipAlignEnabled false
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [applicationName: "android.app.Application"]
         }
         if (releaseBuildType) {
             release {
@@ -126,7 +126,6 @@ android {
                 zipAlignEnabled true
                 signingConfig signingConfigs.release
                 proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-                manifestPlaceholders = [applicationName: "android.app.Application"]
             }
         }
     }
