@@ -24,7 +24,9 @@ import 'package:lovelivemusicplayer/models/artist_model.dart';
 import 'package:lovelivemusicplayer/models/menu.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/models/share_menu.dart';
+import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
+import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
@@ -36,8 +38,22 @@ class AppUtils {
   static CacheManager cacheManager = CacheManager(Config("imgSplash"));
 
   static changeTheme(bool isNight) {
-    Get.changeThemeMode(isNight ? ThemeMode.dark : ThemeMode.light);
-    Get.changeTheme(isNight ? darkTheme : lightTheme);
+    if (GlobalLogic.to.withSystemTheme.value) {
+      Get.changeThemeMode(ThemeMode.system);
+      Get.changeTheme(isNight ? darkTheme : lightTheme);
+    } else {
+      Get.changeThemeMode(isNight ? ThemeMode.dark : ThemeMode.light);
+      Get.changeTheme(isNight ? darkTheme : lightTheme);
+    }
+  }
+
+  static reloadApp() {
+    Future.delayed(const Duration(milliseconds: 300)).then((value) {
+      Get.forceAppUpdate().then((value) {
+        PageViewLogic.to.pageController
+            .jumpToPage(HomeController.to.state.currentIndex.value);
+      });
+    });
   }
 
   /// 禁用 Android WebView Inspect

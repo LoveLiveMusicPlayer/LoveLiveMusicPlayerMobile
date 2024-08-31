@@ -147,6 +147,7 @@ class PlayerLogic extends GetxController
   /// 播放指定列表的歌曲
   Future<void> playMusic(List<Music> musicList,
       {int? mIndex, bool needPlay = true, bool showDialog = true}) async {
+    return;
     if (musicList.isEmpty) {
       return;
     }

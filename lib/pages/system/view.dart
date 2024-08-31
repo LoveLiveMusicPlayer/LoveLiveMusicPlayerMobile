@@ -74,14 +74,6 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
               initSwitch: GlobalLogic.to.withSystemTheme.value,
               callBack: (_, check) => controller.enableFollowSystemMode(check)),
           SizedBox(height: 8.h),
-          DrawerFunctionButton(
-              icon: Assets.drawerDrawerDayNight,
-              iconColor: iconColor,
-              text: 'night_mode'.tr,
-              hasSwitch: true,
-              controller: controller.darkModeController,
-              enableSwitch: !GlobalLogic.to.withSystemTheme.value,
-              callBack: (_, check) => controller.changeDayOrNightMode(check)),
           SizedBox(height: 8.h),
           DrawerFunctionButton(
               icon: Assets.drawerDrawerColorful,

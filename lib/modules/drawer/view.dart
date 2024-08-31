@@ -18,29 +18,34 @@ class DrawerLayout extends GetView<DrawerLogic> {
 
   @override
   Widget build(BuildContext context) {
-    Color bgColor = Get.isDarkMode ? ColorMs.colorNightPrimary : Colors.white;
-    return Drawer(
-        backgroundColor: bgColor,
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Obx(() => topView()),
-              SizedBox(height: 10.h),
-              groupView(),
-              SizedBox(height: 10.h),
-              functionView(context),
-              SizedBox(height: 6.h),
-              versionView(),
-            ],
-          ),
-        ));
+
+    return Obx(() {
+      Color bgColor = GlobalLogic.to.isDarkTheme.value
+          ? ColorMs.colorNightPrimary
+          : Colors.white;
+      return Drawer(
+          backgroundColor: bgColor,
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                topView(),
+                SizedBox(height: 10.h),
+                groupView(),
+                SizedBox(height: 10.h),
+                functionView(context),
+                SizedBox(height: 6.h),
+                versionView(),
+              ],
+            ),
+          ));
+    });
   }
 
   Widget topView() {
     final currentLogo = controller.getLogo(GlobalLogic.to.currentGroup.value);
     final diameter = currentLogo == Assets.logoLogo ? 165.h : 130.0;
-    final textColor = Get.isDarkMode ? ColorMs.colorEDF5FF : Colors.black;
+    final textColor = GlobalLogic.to.isDarkTheme.value ? ColorMs.colorEDF5FF : Colors.black;
     return Column(
       children: [
         SizedBox(
@@ -95,8 +100,8 @@ class DrawerLayout extends GetView<DrawerLogic> {
   }
 
   Widget functionView(BuildContext context) {
-    final bColor = Get.isDarkMode ? ColorMs.colorNightPrimary : Colors.white;
-    final sColor = Get.isDarkMode ? ColorMs.color05080C : ColorMs.colorEEEEEE;
+    final bColor = GlobalLogic.to.isDarkTheme.value ? ColorMs.colorNightPrimary : Colors.white;
+    final sColor = GlobalLogic.to.isDarkTheme.value ? ColorMs.color05080C : ColorMs.colorEEEEEE;
     return Expanded(
         flex: 1,
         child: Container(
@@ -202,7 +207,7 @@ class DrawerLayout extends GetView<DrawerLogic> {
   Widget versionView() {
     final version = GlobalLogic.to.appVersion;
     final isPre = GlobalLogic.to.env == "pre";
-    final style = Get.isDarkMode ? TextStyleMs.white_12 : TextStyleMs.black_12;
+    final style = GlobalLogic.to.isDarkTheme.value ? TextStyleMs.white_12 : TextStyleMs.black_12;
     return SizedBox(
         height: 24.h,
         child: Center(

@@ -105,7 +105,7 @@ class NestedController extends GetxController {
     return null;
   }
 
-  void scrollViewToTop()  {
+  void scrollViewToTop() {
     try {
       DBLogic.to.scrollToTop(
           HomeController

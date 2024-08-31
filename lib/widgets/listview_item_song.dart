@@ -156,14 +156,12 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
                       ? TextStyleMs.white_15_500
                       : isCurrentPlayingMusic
                           ? TextStyleMs.orange_15_500
-                          : Get.isDarkMode
+                          : GlobalLogic.to.isDarkTheme.value
                               ? TextStyleMs.white_15_500
                               : TextStyleMs.black_15_500,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis),
-              SizedBox(
-                height: 4.h,
-              ),
+              SizedBox(height: 4.h),
               Text(
                 widget.music.artist ?? "",
                 maxLines: 1,
@@ -175,9 +173,7 @@ class _ListViewItemSongState extends State<ListViewItemSong> {
                             ? ColorMs.colorFFAE00
                             : ColorMs.color999999),
               ),
-              SizedBox(
-                width: 16.w,
-              )
+              SizedBox(width: 16.w)
             ],
           ),
         ),

@@ -7,7 +7,6 @@ import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_binding.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/global/global_theme.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/models/artist.dart';
 import 'package:lovelivemusicplayer/models/group.dart';
@@ -63,9 +62,6 @@ class GlobalLogic extends SuperController
   /// 是否正在处理播放逻辑
   var isHandlePlay = false;
 
-  /// 是否手动选择的是暗色主题
-  var manualIsDark = false.obs;
-
   /// 是否使用封面皮肤
   var hasSkin = false.obs;
 
@@ -81,9 +77,6 @@ class GlobalLogic extends SuperController
   /// 炫彩模式下的按钮皮肤
   var iconColor = Get.theme.primaryColorDark.obs;
 
-  /// 程序是否在后台（因为这个回调进入后台时也会被调用，所以该变量用于判断系统更改主题后，只有回到前台后才能修改）
-  var isBackground = false;
-
   // 是否有AI开屏
   var hasAIPic = false;
 
@@ -92,9 +85,6 @@ class GlobalLogic extends SuperController
 
   // 是否允许显示背景图片
   var enableBG = false;
-
-  // 是否是暗黑主题
-  var isDark = false;
 
   // 远端http服务
   late RemoteHttp remoteHttp;
@@ -111,28 +101,21 @@ class GlobalLogic extends SuperController
     super.onInit();
 
     /// widget树构建完毕后执行
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      hasSkin.value = await SpUtil.getBoolean(Const.spColorful, false);
-      manualIsDark.value = await SpUtil.getBoolean(Const.spDark, false);
-      await refreshIconColor();
-      Future.delayed(const Duration(milliseconds: 500))
-          .then((value) => isThemeDark(init: true));
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      refreshIconColor();
     });
 
     /// 监听系统主题色改变
     final window = WidgetsBinding.instance.platformDispatcher;
     window.onPlatformBrightnessChanged = () async {
-      if (isBackground) {
-        // 后台不允许执行下面的方法
-        return;
+      bool isDark = window.platformBrightness == Brightness.dark;
+      if (withSystemTheme.value) {
+        GlobalLogic.to.isDarkTheme.value = isDark;
+        AppUtils.changeTheme(isDark);
+        await SpUtil.put(Const.spDark, isDark);
       }
       WidgetsBinding.instance.handlePlatformBrightnessChanged();
-      bool isWith = await SpUtil.getBoolean(Const.spWithSystemTheme, false);
-      bool isDark = window.platformBrightness == Brightness.dark;
-      if (isWith && Get.context != null) {
-        Get.changeTheme(isDark ? darkTheme : lightTheme);
-      }
-      withSystemTheme.value = isWith;
+      AppUtils.reloadApp();
     };
   }
 
@@ -145,9 +128,9 @@ class GlobalLogic extends SuperController
     SpUtil.getInstance();
     Network.getInstance();
     await SDUtils.init();
-    remoteHttp = RemoteHttp(await SpUtil.getBoolean(Const.spEnableHttp, false),
+    remoteHttp = RemoteHttp(await SpUtil.getBoolean(Const.spEnableHttp),
         await SpUtil.getString(Const.spHttpUrl, ""));
-    enableBG = await SpUtil.getBoolean(Const.spEnableBackgroundPhoto, false);
+    enableBG = await SpUtil.getBoolean(Const.spEnableBackgroundPhoto);
     if (enableBG) {
       SpUtil.getString(Const.spBackgroundPhoto).then((value) {
         if (SDUtils.checkFileExist(SDUtils.bgPhotoPath + value)) {
@@ -157,22 +140,20 @@ class GlobalLogic extends SuperController
     }
     hasAIPic = await SpUtil.getBoolean(Const.spAIPicture, true);
     sortMode.value = await SpUtil.getString(Const.spSortOrder, "ASC");
-    SpUtil.put(Const.spPrevPage, "");
-    isDark = await SpUtil.getBoolean(Const.spDark);
+    hasSkin.value = await SpUtil.getBoolean(Const.spColorful);
+    isDarkTheme.value = await SpUtil.getBoolean(Const.spDark);
+    withSystemTheme.value = await SpUtil.getBoolean(Const.spWithSystemTheme);
+    await SpUtil.put(Const.spPrevPage, "");
     PlayerBinding().dependencies();
   }
 
   refreshIconColor() async {
-    bool isWith = await SpUtil.getBoolean(Const.spWithSystemTheme, false);
     final mContext = Get.context;
     bool isDark = false;
-    if (mContext != null) {
-      if (!mContext.mounted) return;
-      isDark = MediaQuery.of(mContext).platformBrightness == Brightness.dark;
-      if (isWith) {
-        Get.changeTheme(isDark ? darkTheme : lightTheme);
-      }
+    if (mContext == null || !mContext.mounted) {
+      return;
     }
+    isDark = MediaQuery.of(mContext).platformBrightness == Brightness.dark;
     Color color = const Color(Const.noMusicColorfulSkin);
     final musicList = PlayerLogic.to.mPlayList;
     if (musicList.isNotEmpty) {
@@ -189,7 +170,6 @@ class GlobalLogic extends SuperController
         : isDark
             ? ColorMs.color1E2328
             : ColorMs.colorLightPrimary;
-    withSystemTheme.value = isWith;
   }
 
   setBgPhoto(String photoPath) {
@@ -296,20 +276,16 @@ class GlobalLogic extends SuperController
   @override
   void onInactive() {
     // 这个函数进入前台还是进入后台都会被调用
-    isBackground = false;
   }
 
   @override
   void onPaused() {
     // 在 onInactive 之后被调用
-    isBackground = true;
   }
 
   @override
   void onResumed() {
     // 在 onInactive 之后被调用
-    isBackground = false;
-
     /// 防止长时间熄屏 PageView 重建回到首页
     try {
       scrollTo(HomeController
@@ -332,29 +308,14 @@ class GlobalLogic extends SuperController
   Color getThemeColor(Color? darkColor, Color? lightColor) {
     Color? color;
     final withSystemTheme = GlobalLogic.to.withSystemTheme.value;
-    final manualIsDark = GlobalLogic.to.manualIsDark.value;
     if (withSystemTheme) {
       bool isDark =
           MediaQuery.of(Get.context!).platformBrightness == Brightness.dark;
       color = isDark ? darkColor : lightColor;
     } else {
-      color = manualIsDark ? darkColor : lightColor;
+      color = isDarkTheme.value ? darkColor : lightColor;
     }
     return color!;
-  }
-
-  isThemeDark({bool init = false}) {
-    final withSystemTheme = GlobalLogic.to.withSystemTheme.value;
-    final manualIsDark = GlobalLogic.to.manualIsDark.value;
-    if (withSystemTheme) {
-      isDarkTheme.value =
-          MediaQuery.of(Get.context!).platformBrightness == Brightness.dark;
-    } else {
-      isDarkTheme.value = manualIsDark;
-    }
-    if (init) {
-      Get.forceAppUpdate();
-    }
   }
 
   void startTimer(int? number) {

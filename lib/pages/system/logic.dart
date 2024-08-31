@@ -12,8 +12,6 @@ import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
-import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
-import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/http_server.dart';
 import 'package:lovelivemusicplayer/utils/image_util.dart';
@@ -46,58 +44,18 @@ class SystemSettingLogic extends GetxController {
   }
 
   enableFollowSystemMode(bool isEnable) async {
-    // 获取当前系统主题色
     bool isDark =
         MediaQuery.of(Get.context!).platformBrightness == Brightness.dark;
-    if (isEnable) {
-      // 设置为系统主题色
-      AppUtils.changeTheme(isDark);
-    } else {
-      // 设置为原来手动设置的主题色
-      AppUtils.changeTheme(GlobalLogic.to.manualIsDark.value);
-    }
-
-    // 将全局变量设置为所选值
     GlobalLogic.to.withSystemTheme.value = isEnable;
+    GlobalLogic.to.isDarkTheme.value = isDark;
+
     if (isEnable) {
-      // 如果跟随系统
-      if (GlobalLogic.to.manualIsDark.value != isDark) {
-        darkModeController?.setSwitchValue = isDark;
-        GlobalLogic.to.manualIsDark.value = isDark;
-      }
+      AppUtils.changeTheme(isDark);
     }
-    // 修改sp值
     await SpUtil.put(Const.spWithSystemTheme, isEnable);
     await SpUtil.put(Const.spDark, isDark);
-    GlobalLogic.to.isThemeDark();
 
-    // 恢复原来操作的界面
-    Future.delayed(const Duration(milliseconds: 300)).then((value) {
-      Get.forceAppUpdate().then((value) {
-        PageViewLogic.to.pageController
-            .jumpToPage(HomeController.to.state.currentIndex.value);
-      });
-    });
-  }
-
-  changeDayOrNightMode(bool isNightMode) async {
-    AppUtils.changeTheme(isNightMode);
-    if (GlobalLogic.to.hasSkin.value &&
-        PlayerLogic.to.playingMusic.value.musicId == null) {
-      GlobalLogic.to.iconColor.value = const Color(Const.noMusicColorfulSkin);
-    }
-    // 将全局变量设置为所选值
-    GlobalLogic.to.manualIsDark.value = isNightMode;
-    // 修改sp值
-    await SpUtil.put(Const.spDark, isNightMode);
-    GlobalLogic.to.isThemeDark();
-    // 恢复原来操作的界面
-    Future.delayed(const Duration(milliseconds: 300)).then((value) {
-      Get.forceAppUpdate().then((value) {
-        PageViewLogic.to.pageController
-            .jumpToPage(HomeController.to.state.currentIndex.value);
-      });
-    });
+    AppUtils.reloadApp();
   }
 
   changeColorfulMode(bool isColorfulMode) async {
