@@ -96,7 +96,8 @@ class _ListViewItemPlaylist extends State<ListViewItemPlaylist> {
                   width: 20,
                   height: 20,
                   iconColor: ColorMs.color999999,
-                  hasShadow: false)
+                  hasShadow: false,
+                  padding: const EdgeInsets.all(0))
             ],
           ),
         ));
