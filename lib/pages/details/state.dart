@@ -1,9 +1,11 @@
 import 'package:lovelivemusicplayer/models/music.dart';
 
-class AlbumDetailState {
-  AlbumDetailState() {
+class DetailState {
+  DetailState() {
     ///Initialize variables
   }
+
+  String title = "";
 
   ///选择条目模式
   bool isSelect = false;

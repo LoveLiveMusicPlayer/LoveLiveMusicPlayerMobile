@@ -11,7 +11,7 @@ import 'circular_check_box.dart';
 
 class DetailsListTop extends StatelessWidget {
   final Function onPlayTap;
-  final GestureTapCallback onScreenTap;
+  final GestureTapCallback onFunctionTap;
   final Function(bool) onSelectAllTap;
   final Function onCancelTap;
   final bool selectAll;
@@ -30,7 +30,7 @@ class DetailsListTop extends StatelessWidget {
     this.hasBg = false,
     this.bgColor,
     required this.onPlayTap,
-    required this.onScreenTap,
+    required this.onFunctionTap,
     required this.onSelectAllTap,
     required this.onCancelTap,
   });
@@ -118,8 +118,8 @@ class DetailsListTop extends StatelessWidget {
     return Padding(
         padding: EdgeInsets.only(right: 10.w),
         child: neumorphicButton(
-          Assets.mainIcScreen,
-          onScreenTap,
+          Assets.mainIcFunction,
+          onFunctionTap,
           width: 30,
           height: 30,
           iconColor: color,

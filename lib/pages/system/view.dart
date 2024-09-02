@@ -3,11 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/pages/details/widget/details_header.dart';
 import 'package:lovelivemusicplayer/pages/system/logic.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
+import 'package:lovelivemusicplayer/widgets/header.dart';
 import 'package:lovelivemusicplayer/widgets/tachie_widget.dart';
 
 class SystemSettingsPage extends GetView<SystemSettingLogic> {
@@ -35,7 +35,7 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
             Obx(() {
               return Column(
                 children: [
-                  DetailsHeader(title: 'system_settings'.tr),
+                  AppHeader(title: 'system_settings'.tr),
                   SizedBox(height: 16.h),
                   Container(
                     constraints:

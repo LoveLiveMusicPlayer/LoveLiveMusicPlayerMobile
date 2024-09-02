@@ -132,8 +132,7 @@ class ListViewItemSongSheet extends StatelessWidget {
               height: 30,
               iconColor: color,
               hasShadow: false,
-              margin: EdgeInsets.symmetric(vertical: 12.h),
-              padding: const EdgeInsets.all(0)),
+              margin: EdgeInsets.symmetric(vertical: 12.h)),
           SizedBox(width: 4.r)
         ],
       ),

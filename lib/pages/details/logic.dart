@@ -3,10 +3,8 @@ import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/pages/details/state.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 
-class DetailController extends GetxController {
-  final AlbumDetailState state = AlbumDetailState();
-
-  static DetailController get to => Get.find();
+abstract class DetailController extends GetxController {
+  final DetailState state = DetailState();
 
   openSelect() {
     state.isSelect = true;
@@ -80,4 +78,6 @@ class DetailController extends GetxController {
     }
     refresh();
   }
+
+  refreshData();
 }

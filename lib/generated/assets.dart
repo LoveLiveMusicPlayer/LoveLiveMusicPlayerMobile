@@ -87,9 +87,9 @@ class Assets {
   static const String mainIcAddNext = 'assets/main/ic_add_next.svg';
   static const String mainIcDraggable = 'assets/main/ic_draggable.svg';
   static const String mainIcErr = 'assets/main/ic_err.png';
+  static const String mainIcFunction = 'assets/main/ic_function.svg';
   static const String mainIcMore = 'assets/main/ic_more.svg';
   static const String mainIcNull = 'assets/main/ic_null.png';
-  static const String mainIcScreen = 'assets/main/ic_screen.svg';
   static const String mainIcSearch = 'assets/main/ic_search.svg';
   static const String mainIcSortAsc = 'assets/main/ic_sort_asc.svg';
   static const String mainIcSortDesc = 'assets/main/ic_sort_desc.svg';

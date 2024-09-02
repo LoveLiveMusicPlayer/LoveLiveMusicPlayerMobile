@@ -8,11 +8,11 @@ import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/nested_page/nested_controller.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
-class DetailsHeader extends GetView {
+class AppHeader extends GetView {
   final String title;
   final Function()? onBack;
 
-  const DetailsHeader({super.key, required this.title, this.onBack});
+  const AppHeader({super.key, required this.title, this.onBack});
 
   @override
   Widget build(BuildContext context) {

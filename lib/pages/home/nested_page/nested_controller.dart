@@ -6,9 +6,12 @@ import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/models/artist.dart';
+import 'package:lovelivemusicplayer/models/menu.dart';
+import 'package:lovelivemusicplayer/pages/details/album_details/binding.dart';
 import 'package:lovelivemusicplayer/pages/details/album_details/view.dart';
-import 'package:lovelivemusicplayer/pages/details/binding.dart';
+import 'package:lovelivemusicplayer/pages/details/menu_details/binding.dart';
 import 'package:lovelivemusicplayer/pages/details/menu_details/view.dart';
+import 'package:lovelivemusicplayer/pages/details/singer_details/binding.dart';
 import 'package:lovelivemusicplayer/pages/details/singer_details/view.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/page_view/home_page_view.dart';
@@ -22,7 +25,7 @@ class NestedController extends GetxController {
 
   late Album album;
   late Artist artist;
-  late int menuId;
+  late Menu menu;
   String currentIndex = Routes.routeHome;
   final routeList = <String>[];
   bool fromGestureBack = true;
@@ -77,7 +80,7 @@ class NestedController extends GetxController {
           routeName: "album_details",
           settings: settings,
           page: () => const AlbumDetailsPage(),
-          binding: DetailBinding());
+          binding: AlbumDetailBinding());
     } else if (settings.name == Routes.routeSingerDetails) {
       addNav(Routes.routeSingerDetails);
       artist = settings.arguments as Artist;
@@ -85,15 +88,15 @@ class NestedController extends GetxController {
           routeName: "singer_details",
           settings: settings,
           page: () => const SingerDetailsPage(),
-          binding: DetailBinding());
+          binding: SingerDetailBinding());
     } else if (settings.name == Routes.routeMenuDetails) {
       addNav(Routes.routeMenuDetails);
-      menuId = settings.arguments as int;
+      menu = settings.arguments as Menu;
       return GetPageRoute(
           routeName: "menu_details",
           settings: settings,
           page: () => const MenuDetailsPage(),
-          binding: DetailBinding());
+          binding: MenuDetailBinding());
     } else if (settings.name == Routes.routeSystemSettings) {
       addNav(Routes.routeSystemSettings);
       return GetPageRoute(

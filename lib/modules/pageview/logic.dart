@@ -52,7 +52,7 @@ class PageViewLogic extends GetxController {
     } else if (model is Artist) {
       Get.toNamed(Routes.routeSingerDetails, arguments: model, id: 1);
     } else if (model is Menu) {
-      Get.toNamed(Routes.routeMenuDetails, arguments: model.id, id: 1);
+      Get.toNamed(Routes.routeMenuDetails, arguments: model, id: 1);
     }
   }
 }

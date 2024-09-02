@@ -8,11 +8,11 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/ftp_cmd.dart';
-import 'package:lovelivemusicplayer/pages/details/widget/details_header.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
+import 'package:lovelivemusicplayer/widgets/header.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -40,7 +40,7 @@ abstract class WebSocketState<T extends StatefulWidget> extends State<T> {
             : null,
         child: Scaffold(
           body: Column(children: [
-            DetailsHeader(
+            AppHeader(
                 title: title,
                 onBack: () {
                   if (isConnected) {

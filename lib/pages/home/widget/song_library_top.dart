@@ -168,7 +168,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
     if (HomeController.to.state.currentIndex.value == 1) {
       return Container();
     }
-    return neumorphicButton(Assets.mainIcScreen, onScreenTap,
+    return neumorphicButton(Assets.mainIcFunction, onScreenTap,
         width: 30,
         height: 30,
         iconColor: (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
