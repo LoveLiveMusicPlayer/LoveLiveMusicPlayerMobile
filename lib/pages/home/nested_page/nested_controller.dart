@@ -42,8 +42,10 @@ class NestedController extends GetxController {
     routeList.add(route);
     currentIndex = route;
     if (route != Routes.routeHome) {
-      GlobalLogic.to.needHomeSafeArea.value = true;
-      GlobalLogic.mobileWeSlideFooterController.hide();
+      Timer(const Duration(milliseconds: 500), () {
+        GlobalLogic.to.needHomeSafeArea.value = true;
+        GlobalLogic.mobileWeSlideFooterController.hide();
+      });
     }
   }
 
