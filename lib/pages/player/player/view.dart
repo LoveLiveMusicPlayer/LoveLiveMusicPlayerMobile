@@ -160,7 +160,7 @@ class PlayerPage extends GetView<PlayerPageLogic> {
                         PlayerLogic.to.toggleLove,
                         iconSize: 18,
                         iconColor: Colors.pinkAccent,
-                        hasShadow: !hasSkin,
+                        shadowColor: bgColor,
                         bgColor: bgColor,
                         padding: EdgeInsets.all(7.r)),
                     neumorphicButton(
@@ -168,7 +168,7 @@ class PlayerPage extends GetView<PlayerPageLogic> {
                       controller.onAddSong,
                       iconSize: 20,
                       iconColor: iconColor,
-                      hasShadow: !hasSkin,
+                      shadowColor: bgColor,
                       bgColor: bgColor,
                     )
                   ]
@@ -179,7 +179,7 @@ class PlayerPage extends GetView<PlayerPageLogic> {
                             Assets.playerPlayerCall, controller.onTachiTap,
                             iconSize: 20,
                             iconColor: iconColor,
-                            hasShadow: !hasSkin,
+                            shadowColor: bgColor,
                             bgColor: bgColor,
                             padding: EdgeInsets.all(7.r))),
                     Visibility(
@@ -190,7 +190,7 @@ class PlayerPage extends GetView<PlayerPageLogic> {
                           iconSize: 20,
                           padding: EdgeInsets.all(2.r),
                           iconColor: iconColor,
-                          hasShadow: !hasSkin,
+                          shadowColor: bgColor,
                           bgColor: bgColor,
                         ))
                   ]));

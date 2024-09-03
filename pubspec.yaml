@@ -46,7 +46,7 @@ dependencies:
   web_socket_channel: ^3.0.1 # webSocket
   connectivity_plus: ^6.0.5 # 网络监测
   scan: ^1.6.0 # 扫码
-  flutter_smart_dialog: ^4.9.8 # 弹窗
+  flutter_smart_dialog: ^4.9.8+1 # 弹窗
   synchronized: ^3.2.0 # 锁
   get_storage: ^2.1.1 # sp存储
   common_utils: ^2.1.0 # 工具类
@@ -82,7 +82,7 @@ dependencies:
   flutter_sticky_header: ^0.6.5 # 粘性头
   url_launcher: ^6.3.0 # url跳转
   image_picker: ^1.1.2 # 图片选择
-  croppy: ^1.2.0 # 图片裁切
+  croppy: ^1.2.1 # 图片裁切
   colorful_safe_area: ^1.0.0 # 定制safe_area
   open_appstore: # 跳转到应用商店
     git:
@@ -108,7 +108,7 @@ dependencies:
   haptic_feedback: ^0.5.1+1 # 震动
   umeng_push_sdk: ^2.3.0 # 友盟推送
   flutter_displaymode: ^0.6.0
-  flutter_neumorphic:
+  flutter_neumorphic: # 拟态化组件
     git:
       url: https://github.com/zhushenwudi/Flutter-Neumorphic
       ref: master
@@ -122,7 +122,7 @@ dependency_overrides:
   win32: ^5.5.4
   web: ^1.0.0
   js: ^0.7.1
-  uuid: ^4.4.2 # 唯一码
+  uuid: ^4.5.0 # 唯一码
 
 dev_dependencies:
   flutter_test:

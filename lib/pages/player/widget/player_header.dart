@@ -35,7 +35,7 @@ class PlayerHeader extends StatelessWidget {
               onCloseTap,
               iconSize: 20,
               iconColor: iconColor,
-              hasShadow: !hasSkin,
+              shadowColor: bgColor,
               bgColor: bgColor,
             ),
 
@@ -68,7 +68,7 @@ class PlayerHeader extends StatelessWidget {
               Icons.more_horiz,
               onMoreTap,
               iconSize: 18,
-              hasShadow: !hasSkin,
+              shadowColor: bgColor,
               iconColor: iconColor,
               bgColor: bgColor,
             )

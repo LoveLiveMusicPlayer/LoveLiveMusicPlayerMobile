@@ -33,7 +33,7 @@ class ControlButtons extends GetView {
                   return neumorphicButton(
                       PlayerUtil.getLoopIconFromLoopMode(loopMode),
                       () => PlayerUtil.changeLoopModeByLoopTap(loopMode),
-                      hasShadow: !hasSkin,
+                      shadowColor: bgColor,
                       iconColor: iconColor,
                       bgColor: bgColor,
                       padding: EdgeInsets.all(9.r));
@@ -47,7 +47,7 @@ class ControlButtons extends GetView {
                       width: 60,
                       height: 60,
                       radius: 60,
-                      hasShadow: !hasSkin,
+                      shadowColor: bgColor,
                       iconColor: iconColor,
                       bgColor: bgColor,
                       padding: EdgeInsets.all(20.r));
@@ -77,7 +77,7 @@ class ControlButtons extends GetView {
                         height: 80,
                         radius: 40,
                         iconSize: 26,
-                        hasShadow: !hasSkin,
+                        shadowColor: bgColor,
                         iconColor: iconColor,
                         bgColor: bgColor,
                         padding: EdgeInsets.all(25.r));
@@ -88,7 +88,7 @@ class ControlButtons extends GetView {
                         height: 80,
                         radius: 40,
                         iconSize: 26,
-                        hasShadow: !hasSkin,
+                        shadowColor: bgColor,
                         iconColor: iconColor,
                         bgColor: bgColor,
                         padding: EdgeInsets.all(25.r));
@@ -102,7 +102,7 @@ class ControlButtons extends GetView {
                         height: 80,
                         radius: 40,
                         iconSize: 26,
-                        hasShadow: !hasSkin,
+                        shadowColor: bgColor,
                         iconColor: iconColor,
                         bgColor: bgColor,
                         padding: EdgeInsets.all(25.r));
@@ -117,7 +117,7 @@ class ControlButtons extends GetView {
                       width: 60,
                       height: 60,
                       radius: 40,
-                      hasShadow: !hasSkin,
+                      shadowColor: bgColor,
                       iconColor: iconColor,
                       bgColor: bgColor,
                       padding: EdgeInsets.all(20.r));
@@ -130,7 +130,7 @@ class ControlButtons extends GetView {
                       return const DialogPlaylist();
                     });
               },
-                  hasShadow: !hasSkin,
+                  shadowColor: bgColor,
                   iconColor: iconColor,
                   bgColor: bgColor,
                   padding: EdgeInsets.all(9.r))

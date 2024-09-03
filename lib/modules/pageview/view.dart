@@ -69,8 +69,7 @@ class PageViewComponent extends GetView<PageViewLogic> {
 
             ///当前列表是否网格显示
             columnNum: 3,
-            crossAxisSpacing: 10.w,
-            mainAxisSpacing: 10.h,
+            mainAxisSpacing: 0,
             leftPadding: hasPadding ? 16.w : 0,
             rightPadding: hasPadding ? 16.w : 0,
             listItem: (cxt, index) => _buildListItem(index, page)));
