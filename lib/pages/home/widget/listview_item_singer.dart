@@ -65,7 +65,7 @@ class _ListViewItemSingerState extends State<ListViewItemSinger> {
             ),
           ),
         ),
-        SizedBox(width: 10.h),
+        SizedBox(width: 10.w),
       ],
     );
   }

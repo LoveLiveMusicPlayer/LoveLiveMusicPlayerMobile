@@ -26,7 +26,7 @@ class DailyPage extends GetView<DailyLogic> {
               builder: (logic) {
                 return Column(
                   children: [
-                    SizedBox(width: 0, height: 6.h),
+                    SizedBox(height: 6.h),
                     Text("提示：除特别注明外，此页面或章节的时间均以北京时间（UTC+8）为准。",
                         style: TextStyleMs.black_12,
                         textAlign: TextAlign.center),

@@ -56,7 +56,7 @@ class _DataSyncPageState extends WebSocketState<DataSyncPage> {
       SizedBox(height: 20.h),
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         SvgPicture.asset(Assets.drawerDrawerSecret, width: 15.r, height: 15.r),
-        SizedBox(width: 10.r),
+        SizedBox(width: 10.w),
         ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 300.w),
           child: Text('keep_same_lan'.tr, style: TextStyleMs.gray_12),
@@ -65,7 +65,7 @@ class _DataSyncPageState extends WebSocketState<DataSyncPage> {
       SizedBox(height: 4.h),
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         SvgPicture.asset(Assets.drawerDrawerSecret, width: 15.r, height: 15.r),
-        SizedBox(width: 10.r),
+        SizedBox(width: 10.w),
         ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 300.w),
           child: Text('keep_screen_and_scan_qr'.tr, style: TextStyleMs.gray_12),

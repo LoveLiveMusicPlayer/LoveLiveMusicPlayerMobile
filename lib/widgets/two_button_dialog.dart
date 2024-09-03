@@ -52,9 +52,7 @@ class TwoButtonDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 28.h,
-          ),
+          SizedBox(height: 28.h),
           Visibility(
               visible: _isShowImg,
               child: Image.asset(
@@ -62,9 +60,7 @@ class TwoButtonDialog extends StatelessWidget {
                 width: 78.r,
                 height: 78.r,
               )),
-          SizedBox(
-            height: 12.w,
-          ),
+          SizedBox(height: 12.h),
           Visibility(
             visible: _isShowTitle,
             child: Padding(
@@ -78,9 +74,7 @@ class TwoButtonDialog extends StatelessWidget {
                       : TextStyleMs.black_18),
             ),
           ),
-          SizedBox(
-            height: 8.h,
-          ),
+          SizedBox(height: 8.h),
           Visibility(
             visible: _isShowMsg,
             maintainAnimation: true,
@@ -91,9 +85,7 @@ class TwoButtonDialog extends StatelessWidget {
                 child: Text(_msg ?? 'message'.tr,
                     style: TextStyleMs.gray_14, textAlign: TextAlign.center)),
           ),
-          SizedBox(
-            height: 8.h,
-          ),
+          SizedBox(height: 8.h),
           Row(
             children: [
               Expanded(

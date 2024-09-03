@@ -47,9 +47,7 @@ class OneButtonDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 28.h,
-          ),
+          SizedBox(height: 28.h),
           Visibility(
               visible: _isShowImg,
               child: Image.asset(
@@ -57,9 +55,7 @@ class OneButtonDialog extends StatelessWidget {
                 width: 78.r,
                 height: 78.r,
               )),
-          SizedBox(
-            height: 12.h,
-          ),
+          SizedBox(height: 12.h),
           Visibility(
             visible: _isShowTitle,
             child: Padding(
@@ -70,9 +66,7 @@ class OneButtonDialog extends StatelessWidget {
                   style: TextStyleMs.black_18),
             ),
           ),
-          SizedBox(
-            height: 8.h,
-          ),
+          SizedBox(height: 8.h),
           Visibility(
             visible: _isShowMsg,
             maintainState: true,
@@ -87,9 +81,7 @@ class OneButtonDialog extends StatelessWidget {
                   maxLines: 2,
                 )),
           ),
-          SizedBox(
-            height: 8.h,
-          ),
+          SizedBox(height: 8.h),
           Container(
             width: double.infinity,
             height: 44.h,

@@ -107,7 +107,7 @@ class _RefresherWidgetState extends State<RefresherWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const CupertinoActivityIndicator(),
-                  SizedBox(width: 10.r),
+                  SizedBox(width: 10.w),
                   const Text("加载中")
                 ],
               );

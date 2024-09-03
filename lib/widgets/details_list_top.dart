@@ -53,9 +53,9 @@ class DetailsListTop extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: 16.h),
+          SizedBox(width: 16.w),
           _buildPlayBtn(),
-          SizedBox(width: 10.h),
+          SizedBox(width: 10.w),
           _buildSongNumText(),
           _buildFilter(),
         ],

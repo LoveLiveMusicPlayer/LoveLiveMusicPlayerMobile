@@ -152,7 +152,7 @@ class DialogAddSongSheet extends StatelessWidget {
             Row(
               children: [
                 renderIcon(assetPath, icon),
-                SizedBox(width: 10.h),
+                SizedBox(width: 10.w),
                 Expanded(
                   child: Text(title,
                       style: Get.isDarkMode
@@ -161,7 +161,7 @@ class DialogAddSongSheet extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(height: 14.h),
+            SizedBox(height: 14.w),
             Visibility(
               visible: showLin,
               child: Divider(

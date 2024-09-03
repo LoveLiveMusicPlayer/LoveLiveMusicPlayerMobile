@@ -229,7 +229,7 @@ class _DialogMoreWithMusicState extends State<DialogMoreWithMusic> {
                         Get.isDarkMode ? Colors.white : ColorMs.color666666,
                     hasShadow: false,
                     padding: const EdgeInsets.all(0)),
-                SizedBox(width: 10.h),
+                SizedBox(width: 10.w),
                 Expanded(
                   child: Text(
                     title,

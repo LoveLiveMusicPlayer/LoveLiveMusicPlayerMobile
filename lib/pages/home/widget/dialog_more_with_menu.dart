@@ -102,7 +102,7 @@ class DialogMoreWithMenu extends StatelessWidget {
                       Get.isDarkMode ? Colors.white : ColorMs.color666666,
                   hasShadow: false,
                 ),
-                SizedBox(width: 12.h),
+                SizedBox(width: 12.w),
                 Expanded(
                   child: Text(
                     title,

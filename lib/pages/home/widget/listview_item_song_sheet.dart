@@ -101,7 +101,7 @@ class ListViewItemSongSheet extends StatelessWidget {
               style: Get.isDarkMode
                   ? TextStyleMs.white_15
                   : TextStyleMs.lightBlack_15),
-          SizedBox(height: 4.w),
+          SizedBox(height: 4.h),
           Text(
             "${menu.music.length} ${'total_number_unit'.tr}",
             maxLines: 1,
@@ -111,7 +111,7 @@ class ListViewItemSongSheet extends StatelessWidget {
                     ? ColorMs.color999999
                     : ColorMs.colorD6D6D6),
           ),
-          SizedBox(width: 16.w)
+          SizedBox(width: 16.h)
         ],
       ),
     );
@@ -133,7 +133,7 @@ class ListViewItemSongSheet extends StatelessWidget {
               iconColor: color,
               hasShadow: false,
               margin: EdgeInsets.symmetric(vertical: 12.h)),
-          SizedBox(width: 4.r)
+          SizedBox(width: 4.w)
         ],
       ),
     );

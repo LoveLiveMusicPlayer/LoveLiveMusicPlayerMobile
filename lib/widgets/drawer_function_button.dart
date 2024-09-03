@@ -81,7 +81,7 @@ class _DrawerFunctionButtonState extends State<DrawerFunctionButton> {
                     ? neumorphicButton(widget.icon!, null,
                         width: 28, height: 28, iconColor: widget.iconColor)
                     : SizedBox(height: 28.h, width: 28.h),
-                SizedBox(width: 8.r),
+                SizedBox(width: 8.w),
                 Expanded(child: GetBuilder<GlobalLogic>(builder: (logic) {
                   late bool mode;
                   if (widget.colorWithBG) {

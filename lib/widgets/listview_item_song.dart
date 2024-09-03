@@ -80,7 +80,7 @@ class ListViewItemSongState extends State<ListViewItemSong> {
                         hasShadow: false, onTap: clickItem),
                   ),
 
-                  SizedBox(width: 10.r),
+                  SizedBox(width: 10.w),
 
                   /// 中间标题部分
                   Expanded(
@@ -114,7 +114,7 @@ class ListViewItemSongState extends State<ListViewItemSong> {
                                           ? ColorMs.colorFFAE00
                                           : ColorMs.color999999),
                             ),
-                            SizedBox(width: 16.w)
+                            SizedBox(width: 16.h)
                           ],
                         ),
                       ),
