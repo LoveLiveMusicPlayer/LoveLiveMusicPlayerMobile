@@ -140,9 +140,7 @@ class DetailsListTop extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            width: 16.h,
-          ),
+          SizedBox(width: 16.w),
           CircularCheckBox(
             checked: selectAll,
             checkIconColor: ColorMs.colorF940A7,

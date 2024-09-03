@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/pages/details/album_details/logic.dart';
 import 'package:lovelivemusicplayer/pages/details/logic.dart';
@@ -109,14 +108,11 @@ class DetailsBody extends GetView<DetailsBodyLogic> {
   Widget renderItem(int index, Music music, {bool isDraggable = false}) {
     return ListViewItemSong(
         index: index,
-        music: music,
+        musicList: logic.state.items,
         isDraggable: isDraggable,
         checked: logic.isItemChecked(index),
         onItemTap: logic.selectItem,
-        onPlayNextTap: PlayerLogic.to.addNextMusic,
         onMoreTap: (music) => controller.onMoreTap(
-            music, logic is AlbumDetailController, onRemove),
-        onPlayTap: () =>
-            PlayerLogic.to.playMusic(logic.state.items, mIndex: index));
+            music, logic is AlbumDetailController, onRemove));
   }
 }

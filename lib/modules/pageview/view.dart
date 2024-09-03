@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/page_view/keep_alive_wrapper.dart';
@@ -85,12 +84,10 @@ class PageViewComponent extends GetView<PageViewLogic> {
         key = ValueKey("ListViewItemSong${music.musicId}");
         widget = ListViewItemSong(
             index: index,
-            music: music,
-            checked: HomeController.to.isItemChecked(index),
+            musicList: GlobalLogic.to.musicList,
             onItemTap: HomeController.to.selectItem,
-            onPlayNextTap: PlayerLogic.to.addNextMusic,
             onMoreTap: controller.showMoreDialog,
-            onPlayTap: () => controller.play(GlobalLogic.to.musicList, index));
+            checked: HomeController.to.isItemChecked(index));
         break;
       case 1:
         final album = GlobalLogic.to.albumList[index];
@@ -109,13 +106,11 @@ class PageViewComponent extends GetView<PageViewLogic> {
         key = ValueKey("ListViewItemLove${music.musicId}");
         widget = ListViewItemSong(
             index: index,
-            music: music,
-            isDraggable: true,
-            checked: HomeController.to.isItemChecked(index),
+            musicList: GlobalLogic.to.loveList,
             onItemTap: HomeController.to.selectItem,
-            onPlayNextTap: PlayerLogic.to.addNextMusic,
             onMoreTap: controller.showMoreDialog,
-            onPlayTap: () => controller.play(GlobalLogic.to.loveList, index));
+            isDraggable: true,
+            checked: HomeController.to.isItemChecked(index));
         break;
       case 4:
         final menu = GlobalLogic.to.menuList[index];
@@ -131,12 +126,10 @@ class PageViewComponent extends GetView<PageViewLogic> {
         key = ValueKey("ListViewItemRecent${music.musicId}");
         widget = ListViewItemSong(
             index: index,
-            music: music,
-            checked: HomeController.to.isItemChecked(index),
+            musicList: GlobalLogic.to.recentList,
             onItemTap: HomeController.to.selectItem,
-            onPlayNextTap: PlayerLogic.to.addNextMusic,
             onMoreTap: controller.showMoreDialog,
-            onPlayTap: () => controller.play(GlobalLogic.to.recentList, index));
+            checked: HomeController.to.isItemChecked(index));
         break;
     }
     return Padding(

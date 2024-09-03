@@ -189,9 +189,7 @@ class SongLibraryTop extends GetView<GlobalLogic> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            width: 16.h,
-          ),
+          SizedBox(width: 16.w),
           GetBuilder<HomeController>(builder: (logic) {
             return CircularCheckBox(
               checked: HomeController.to.state.selectAll,
