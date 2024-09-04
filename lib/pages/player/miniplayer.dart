@@ -36,7 +36,6 @@ class _MiniPlayerState extends State<MiniPlayer> {
     return AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
-          color: Colors.transparent,
           borderRadius: BorderRadius.circular(34.r),
         ),
         child: Obx(() => renderPanel()));

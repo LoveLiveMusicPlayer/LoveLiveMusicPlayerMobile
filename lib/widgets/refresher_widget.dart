@@ -139,6 +139,7 @@ class _RefresherWidgetState extends State<RefresherWidget> {
           crossAxisCount: widget.columnNum,
           mainAxisSpacing: widget.mainAxisSpacing,
           crossAxisSpacing: widget.crossAxisSpacing,
+          padding: EdgeInsets.only(bottom: 70.h),
           itemBuilder: widget.listItem);
     } else {
       if (widget.canReorder) {
@@ -164,6 +165,7 @@ class _RefresherWidgetState extends State<RefresherWidget> {
           scrollController: widget.scrollController,
           itemBuilder: widget.listItem,
           itemCount: widget.itemCount,
+          footer: SizedBox(height: 70.h)
         );
       } else {
         // 不可排序List列表(其他)
@@ -172,6 +174,7 @@ class _RefresherWidgetState extends State<RefresherWidget> {
           itemCount: widget.itemCount,
           itemBuilder: widget.listItem,
           controller: widget.scrollController,
+          padding: EdgeInsets.only(bottom: 70.h),
           separatorBuilder: (BuildContext context, int index) {
             return Container(
               color: widget.spacingColor,

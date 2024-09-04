@@ -71,6 +71,7 @@ class DetailsBody extends GetView<DetailsBodyLogic> {
   }
 
   Widget renderMusicList() {
+    final musicList = logic.state.items;
     if (logic is MenuDetailController && logic.state.isSelect) {
       return SliverReorderableList(
         onReorderStart: (int index) => AppUtils.vibrate(),
@@ -79,27 +80,29 @@ class DetailsBody extends GetView<DetailsBodyLogic> {
           controller.onReorder(oldIndex, newIndex, menu.id);
         },
         itemBuilder: (context, index) {
-          final music = logic.state.items[index];
+          final music = musicList[index];
           return ReorderableDelayedDragStartListener(
               index: index,
               key: ValueKey("ListViewItemSong${music.musicId}"),
               child: Padding(
-                  padding: EdgeInsets.only(bottom: 10.h),
+                  padding: EdgeInsets.only(
+                      bottom: musicList.length - 1 == index ? 80.h : 10.h),
                   child: renderItem(index, music, isDraggable: true)));
         },
-        itemCount: logic.state.items.length,
+        itemCount: musicList.length,
       );
     } else {
       return SliverList(
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
-            final music = logic.state.items[index];
+            final music = musicList[index];
             return Padding(
-              padding: EdgeInsets.only(bottom: 10.h),
+              padding: EdgeInsets.only(
+                  bottom: musicList.length - 1 == index ? 80.h : 10.h),
               child: renderItem(index, music),
             );
           },
-          childCount: logic.state.items.length,
+          childCount: musicList.length,
         ),
       );
     }

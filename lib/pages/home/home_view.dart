@@ -195,8 +195,6 @@ class _HomeViewState extends State<HomeView>
   }
 
   Widget _weSlider(String photo) {
-    const double panelMinSize = 150;
-    final double panelMaxSize = ScreenUtil().screenHeight;
     final color = Theme.of(context).primaryColor;
     if (isInitListener) {
       isInitListener = false;
@@ -206,14 +204,12 @@ class _HomeViewState extends State<HomeView>
     return WeSlide(
       controller: GlobalLogic.mobileWeSlideController,
       footerController: GlobalLogic.mobileWeSlideFooterController,
-      panelMinSize: panelMinSize.h,
-      panelMaxSize: panelMaxSize,
-      overlayOpacity: 0,
+      panelMinSize: 150.h,
+      panelMaxSize: ScreenUtil().screenHeight,
       backgroundColor: photo == ""
           ? color
           : const Color(0x00000000).withOpacity(Get.isDarkMode ? 0.4 : 0.15),
       overlay: true,
-      isDismissible: true,
       body: Navigator(
         key: Get.nestedKey(1),
         initialRoute: Routes.routeHome,
@@ -235,7 +231,6 @@ class _HomeViewState extends State<HomeView>
       parallax: true,
       isUpSlide: false,
       transformScale: true,
-      blurSigma: 5.0,
       fadeSequence: [
         TweenSequenceItem<double>(weight: 1.0, tween: Tween(begin: 1, end: 0)),
         TweenSequenceItem<double>(weight: 8.0, tween: Tween(begin: 0, end: 0)),
