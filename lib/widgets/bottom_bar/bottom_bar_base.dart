@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/pages/home/nested_page/nested_controller.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/log.dart';
 
@@ -55,6 +56,9 @@ abstract class BottomBar extends GetView<HomeController> {
   }
 
   onTap(int index) {
+    if (!NestedController.to.isHomePage) {
+      return;
+    }
     if (controller.state.selectMode.value > 0) {
       return;
     }

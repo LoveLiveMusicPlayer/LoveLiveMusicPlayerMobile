@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:lovelivemusicplayer/pages/home/nested_page/nested_controller.dart';
 import 'package:lovelivemusicplayer/routes.dart';
@@ -19,9 +17,7 @@ class MyNavigator extends NavigatorObserver {
       return;
     }
     if (previousName == Routes.routeHome) {
-      Timer(const Duration(milliseconds: 500), () {
-        NestedController.to.reduceNav();
-      });
+      NestedController.to.reduceNav();
     }
     NestedController.to.fromGestureBack = true;
   }

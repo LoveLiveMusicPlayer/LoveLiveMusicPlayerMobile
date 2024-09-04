@@ -38,6 +38,8 @@ class NestedController extends GetxController {
     Routes.routeSystemSettings
   ];
 
+  get isHomePage => routeList.last == Routes.routeHome;
+
   addNav(String route) {
     routeList.add(route);
     currentIndex = route;
@@ -50,10 +52,12 @@ class NestedController extends GetxController {
   }
 
   reduceNav() {
-    if (currentIndex == Routes.routeHome) {
-      GlobalLogic.mobileWeSlideFooterController.show();
-    }
-    GlobalLogic.to.needHomeSafeArea.value = routeList.last != Routes.routeHome;
+    Timer(const Duration(milliseconds: 500), () {
+      if (currentIndex == Routes.routeHome) {
+        GlobalLogic.mobileWeSlideFooterController.show();
+      }
+      GlobalLogic.to.needHomeSafeArea.value = !isHomePage;
+    });
   }
 
   goBack({bool fromBtnBack = false}) {
@@ -62,9 +66,7 @@ class NestedController extends GetxController {
     if (fromBtnBack) {
       Get.back(id: 1);
     }
-    Timer(const Duration(milliseconds: 500), () {
-      reduceNav();
-    });
+    reduceNav();
   }
 
   Route? onGenerateRoute(RouteSettings settings) {
