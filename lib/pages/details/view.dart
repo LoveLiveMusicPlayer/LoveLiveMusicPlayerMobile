@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -25,8 +23,7 @@ abstract class DetailsPage<T extends DetailController> extends GetView<T> {
               buildCover: renderCover(),
               onRemove: isMenuPage ? logic.onRemoveTap : null,
             );
-          }),
-          Container(height: Platform.isIOS ? 24.h : null)
+          })
         ]));
   }
 
