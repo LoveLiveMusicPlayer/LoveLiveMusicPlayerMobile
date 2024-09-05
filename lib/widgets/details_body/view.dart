@@ -86,7 +86,7 @@ class DetailsBody extends GetView<DetailsBodyLogic> {
               key: ValueKey("ListViewItemSong${music.musicId}"),
               child: Padding(
                   padding: EdgeInsets.only(
-                      bottom: musicList.length - 1 == index ? 80.h : 10.h),
+                      bottom: musicList.length - 1 == index ? 95.h : 10.h),
                   child: renderItem(index, music, isDraggable: true)));
         },
         itemCount: musicList.length,
@@ -98,7 +98,7 @@ class DetailsBody extends GetView<DetailsBodyLogic> {
             final music = musicList[index];
             return Padding(
               padding: EdgeInsets.only(
-                  bottom: musicList.length - 1 == index ? 80.h : 10.h),
+                  bottom: musicList.length - 1 == index ? 95.h : 10.h),
               child: renderItem(index, music),
             );
           },
