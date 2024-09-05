@@ -145,28 +145,27 @@ class _RefresherWidgetState extends State<RefresherWidget> {
       if (widget.canReorder) {
         // 可排序List列表(我喜欢)
         return ReorderableListView.builder(
-          cacheExtent: 3000,
-          buildDefaultDragHandles: widget.canReorder,
-          proxyDecorator: (child, index, animation) {
-            return child;
-          },
-          onReorderStart: (int index) => AppUtils.vibrate(),
-          onReorder: (int oldIndex, int newIndex) {
-            if (oldIndex < newIndex) {
-              newIndex -= 1;
-            }
-            setState(() {
-              final Music child = GlobalLogic.to.loveList.removeAt(oldIndex);
-              GlobalLogic.to.loveList.insert(newIndex, child);
+            cacheExtent: 3000,
+            buildDefaultDragHandles: widget.canReorder,
+            proxyDecorator: (child, index, animation) {
+              return child;
+            },
+            onReorderStart: (int index) => AppUtils.vibrate(),
+            onReorder: (int oldIndex, int newIndex) {
+              if (oldIndex < newIndex) {
+                newIndex -= 1;
+              }
+              setState(() {
+                final Music child = GlobalLogic.to.loveList.removeAt(oldIndex);
+                GlobalLogic.to.loveList.insert(newIndex, child);
 
-              DBLogic.to.exchangeLoveItem(oldIndex, newIndex);
-            });
-          },
-          scrollController: widget.scrollController,
-          itemBuilder: widget.listItem,
-          itemCount: widget.itemCount,
-          footer: SizedBox(height: 70.h)
-        );
+                DBLogic.to.exchangeLoveItem(oldIndex, newIndex);
+              });
+            },
+            scrollController: widget.scrollController,
+            itemBuilder: widget.listItem,
+            itemCount: widget.itemCount,
+            footer: SizedBox(height: 70.h));
       } else {
         // 不可排序List列表(其他)
         return ListView.separated(

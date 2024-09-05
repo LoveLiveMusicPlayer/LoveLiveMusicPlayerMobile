@@ -36,7 +36,7 @@ dependencies:
   provider: ^6.1.2
   get: ^4.6.6
   flutter_spinkit: ^5.2.1
-  dio: ^5.6.0 # 网络加载
+  dio: ^5.7.0 # 网络加载
   talker_dio_logger: ^4.4.1 # 网络请求日志
   path_provider: ^2.1.4 # 路径提供
   pull_to_refresh:  # 下拉刷新上拉加载
@@ -51,7 +51,10 @@ dependencies:
   get_storage: ^2.1.1 # sp存储
   common_utils: ^2.1.0 # 工具类
   flutter_screenutil: ^5.9.3 # 屏幕适配方案
-  we_slide: ^2.4.0 # 播放器屏幕操作组件
+  we_slide: # 播放器屏幕操作组件
+    git:
+      url: https://github.com/zhushenwudi/we_slide
+      ref: master
   flutter_native_splash: ^2.4.1 # 启动页
   marquee_text: # 走马灯滚动文字
     git:

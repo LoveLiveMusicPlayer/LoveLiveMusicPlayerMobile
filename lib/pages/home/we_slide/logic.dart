@@ -1,5 +1,3 @@
 import 'package:get/get.dart';
 
-class WeSlideLogic extends GetxController {
-
-}
+class WeSlideLogic extends GetxController {}

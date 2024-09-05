@@ -22,7 +22,7 @@ class Tachie extends StatelessWidget {
       }
       return Padding(
           padding: EdgeInsets.only(
-              bottom: GlobalLogic.to.needHomeSafeArea.value ? 25.h : 0),
+              bottom: GlobalLogic.to.needHomeSafeArea.value ? 90.h : 0),
           child: SizedBox(
             height: 180.h,
             width: double.infinity,

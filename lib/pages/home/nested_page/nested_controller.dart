@@ -27,7 +27,7 @@ class NestedController extends GetxController {
   late Artist artist;
   late Menu menu;
   String currentIndex = Routes.routeHome;
-  final routeList = <String>[];
+  static final routeList = <String>[];
   bool fromGestureBack = true;
 
   final pages = <String>[
@@ -38,7 +38,12 @@ class NestedController extends GetxController {
     Routes.routeSystemSettings
   ];
 
-  get isHomePage => routeList.last == Routes.routeHome;
+  static get isHomePage {
+    if (routeList.isEmpty) {
+      return true;
+    }
+    return routeList.last == Routes.routeHome;
+  }
 
   addNav(String route) {
     routeList.add(route);

@@ -56,7 +56,7 @@ abstract class BottomBar extends GetView<HomeController> {
   }
 
   onTap(int index) {
-    if (!NestedController.to.isHomePage) {
+    if (!NestedController.isHomePage) {
       return;
     }
     if (controller.state.selectMode.value > 0) {

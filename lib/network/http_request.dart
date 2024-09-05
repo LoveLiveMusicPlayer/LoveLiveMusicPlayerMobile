@@ -55,8 +55,8 @@ class Network {
                     !options.path.endsWith('.lrc'),
                 responseFilter: (response) =>
                     !response.realUri.path.endsWith(".lrc"),
-              errorFilter: (DioException ex) => ex.response?.statusCode != 404
-            )));
+                errorFilter: (DioException ex) =>
+                    ex.response?.statusCode != 404)));
       }
     }
   }

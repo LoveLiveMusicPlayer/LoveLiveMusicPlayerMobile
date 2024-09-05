@@ -37,18 +37,18 @@ class _WeSlideComponentState extends State<WeSlideComponent> {
   void initState() {
     super.initState();
     imageStreamListener = ImageStreamListener(
-          (ImageInfo imageInfo, bool synchronousCall) {
+      (ImageInfo imageInfo, bool synchronousCall) {
         // 图片加载完成时调用，解析出image对象并完成Completer
-        completer.complete();
+        if (!completer.isCompleted) {
+          completer.complete();
+        }
       },
     );
 
     completer.future.then((dynamic) {
       if (!GlobalLogic.to.hasAIPic) {
         // 没有AI开屏时发送卸载窗口命令
-        eventBus.fire(CloseOpen((DateTime
-            .now()
-            .millisecondsSinceEpoch)));
+        eventBus.fire(CloseOpen((DateTime.now().millisecondsSinceEpoch)));
       }
     });
 
@@ -64,7 +64,7 @@ class _WeSlideComponentState extends State<WeSlideComponent> {
       return null;
     }
     DecorationImage di =
-    DecorationImage(image: FileImage(File(photo)), fit: BoxFit.cover);
+        DecorationImage(image: FileImage(File(photo)), fit: BoxFit.cover);
     imageStream = di.image.resolve(const ImageConfiguration());
     imageStream?.addListener(imageStreamListener!);
     return di;
@@ -75,7 +75,6 @@ class _WeSlideComponentState extends State<WeSlideComponent> {
     return GetBuilder<GlobalLogic>(
       assignId: true,
       builder: (logic) {
-        print("into here");
         final photo = logic.bgPhoto.value;
         return Container(
           decoration: BoxDecoration(image: loadDecorationImage(photo)),
@@ -87,7 +86,7 @@ class _WeSlideComponentState extends State<WeSlideComponent> {
             backgroundColor: photo.isEmpty
                 ? Theme.of(context).primaryColor
                 : const Color(0x00000000)
-                .withOpacity(Get.isDarkMode ? 0.4 : 0.15),
+                    .withOpacity(Get.isDarkMode ? 0.4 : 0.15),
             overlay: true,
             body: Navigator(
               key: Get.nestedKey(1),
@@ -96,9 +95,7 @@ class _WeSlideComponentState extends State<WeSlideComponent> {
               observers: [HeroController(), MyNavigator()],
             ),
             blurColor: Colors.transparent,
-            overlayColor: Theme
-                .of(context)
-                .primaryColor,
+            overlayColor: Theme.of(context).primaryColor,
             panelHeader: MiniPlayer(onTap: () {
               if (HomeController.to.state.selectMode.value == 0) {
                 GlobalLogic.openPanel();
@@ -106,7 +103,7 @@ class _WeSlideComponentState extends State<WeSlideComponent> {
             }),
             panel: const PlayerPage(onTap: GlobalLogic.closePanel),
             footer: _buildTabBarView(),
-            footerHeight: 77.h,
+            footerHeight: logic.needHomeSafeArea.value ? 67.h : 77.h,
             blur: true,
             parallax: true,
             isUpSlide: false,
@@ -143,23 +140,20 @@ class _WeSlideComponentState extends State<WeSlideComponent> {
     if (isOpen == true) {
       // 如果Panel打开，则隐藏BottomBar
       GlobalLogic.closeBottomBar();
-    } else if (NestedController.to.isHomePage) {
+    } else if (NestedController.isHomePage) {
       GlobalLogic.openBottomBar();
     }
-
-    addFooterListener();
 
     eventBus.fire(
         PlayerClosableEvent(GlobalLogic.mobileWeSlideController.isOpened));
   }
 
   addFooterListener() {
-    if (!NestedController.to.isHomePage &&
-        !GlobalLogic.mobileWeSlideController.isOpened) {
-      // 不在主界面 && 歌词页没有展开
-      GlobalLogic.to.needHomeSafeArea.value = true;
-    } else {
-      GlobalLogic.to.needHomeSafeArea.value = false;
+    bool needHomeSafeArea = !NestedController.isHomePage &&
+        !GlobalLogic.mobileWeSlideController.isOpened;
+    if (GlobalLogic.to.needHomeSafeArea.value != needHomeSafeArea) {
+      GlobalLogic.to.needHomeSafeArea.value = needHomeSafeArea;
+      setState(() {});
     }
   }
 

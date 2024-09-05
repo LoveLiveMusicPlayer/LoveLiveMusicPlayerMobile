@@ -6,8 +6,8 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
-import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
+import 'package:lovelivemusicplayer/models/box_decoration.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_playlist/view.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
@@ -42,7 +42,14 @@ class _MiniPlayerState extends State<MiniPlayer> {
   }
 
   Widget renderPanel() {
-    var boxDecoration = PlayerLogic.to.miniPlayerBoxDecorationData.value;
+    BoxDecorationData boxDecoration;
+    try {
+      boxDecoration = PlayerLogic.to.miniPlayerBoxDecorationData.value;
+    } catch (_) {
+      boxDecoration = BoxDecorationData(
+          color: Get.theme.primaryColor.value, borderRadius: 34.r);
+    }
+
     return Container(
       height: 60.h,
       margin: EdgeInsets.only(top: 6.h, left: 16.w, right: 16.w),

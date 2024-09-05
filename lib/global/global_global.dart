@@ -18,7 +18,6 @@ import 'package:lovelivemusicplayer/models/remote_http.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
-import 'package:lovelivemusicplayer/pages/home/nested_page/nested_controller.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/log.dart';
@@ -107,7 +106,8 @@ class GlobalLogic extends SuperController
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       refreshIconColor();
       PlayerLogic.to.miniPlayerBoxDecorationData = BoxDecorationData(
-          color: Get.theme.primaryColor.value, borderRadius: 34.r).obs;
+              color: Get.theme.primaryColor.value, borderRadius: 34.r)
+          .obs;
     });
 
     /// 监听系统主题色改变
