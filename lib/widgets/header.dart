@@ -16,34 +16,41 @@ class AppHeader extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: Colors.transparent,
-        child: Column(children: [
-          SizedBox(height: MediaQuery.of(Get.context!).padding.top + 14.56.h),
-          Stack(alignment: Alignment.center, children: [
-            Row(children: [
-              neumorphicButton(Icons.arrow_back_ios_rounded, () {
-                if (onBack == null) {
-                  HomeController.to.state.selectMode.value = 0;
-                  SmartDialog.dismiss();
-                  NestedController.to.fromGestureBack = false;
-                  NestedController.to.goBack(fromBtnBack: true);
-                } else {
-                  onBack!();
-                }
-              }, margin: EdgeInsets.only(left: 16.w))
-            ]),
-            ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: Get.width - 120.w),
-                child: Text(title,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                    style:
-                        (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
-                            ? TextStyleMs.white_15
-                            : TextStyleMs.black_15))
-          ])
-        ]));
+    return Obx(() {
+      final bgPhoto = GlobalLogic.to.bgPhoto.value;
+      final isDarkTheme = Get.isDarkMode || bgPhoto != "";
+      return Container(
+          color: Colors.transparent,
+          child: Column(children: [
+            SizedBox(height: MediaQuery.of(Get.context!).padding.top + 14.56.h),
+            Stack(alignment: Alignment.center, children: [
+              Row(children: [
+                neumorphicButton(Icons.arrow_back_ios_rounded, onTapBackButton,
+                    margin: EdgeInsets.only(left: 16.w),
+                    iconColor: isDarkTheme ? Colors.white : Colors.black)
+              ]),
+              ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: Get.width - 120.w),
+                  child: Text(title,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      style: isDarkTheme
+                          ? TextStyleMs.white_15
+                          : TextStyleMs.black_15))
+            ])
+          ]));
+    });
+  }
+
+  onTapBackButton() {
+    if (onBack == null) {
+      HomeController.to.state.selectMode.value = 0;
+      SmartDialog.dismiss();
+      NestedController.to.fromGestureBack = false;
+      NestedController.to.goBack(fromBtnBack: true);
+    } else {
+      onBack!();
+    }
   }
 }

@@ -9,7 +9,10 @@ import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/pages/home/home_state.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_add_song_sheet.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_bottom_btn.dart';
+import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
+import 'package:lovelivemusicplayer/utils/umeng_helper.dart';
+import 'package:lovelivemusicplayer/widgets/permission_dialog.dart';
 import 'package:lovelivemusicplayer/widgets/two_button_dialog.dart';
 
 class HomeController extends GetxController {
@@ -271,5 +274,26 @@ class HomeController extends GetxController {
       }
     }
     return num;
+  }
+
+  handlePermission() {
+    SpUtil.getBoolean(Const.spAllowPermission).then((hasPermission) {
+      if (!hasPermission) {
+        SmartDialog.show(
+            backDismiss: false,
+            clickMaskDismiss: false,
+            builder: (context) {
+              return PermissionDialog(readPermission: () async {
+                await Get.toNamed(Routes.routePermission);
+                handlePermission();
+              }, confirm: () {
+                SpUtil.put(Const.spAllowPermission, true);
+                UmengHelper.initSDK();
+              });
+            });
+      } else {
+        UmengHelper.initSDK();
+      }
+    });
   }
 }

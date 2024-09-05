@@ -32,12 +32,12 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
                     );
                   }),
             ),
-            Obx(() {
-              return Column(
-                children: [
-                  AppHeader(title: 'system_settings'.tr),
-                  SizedBox(height: 16.h),
-                  Container(
+            Column(
+              children: [
+                AppHeader(title: 'system_settings'.tr),
+                SizedBox(height: 16.h),
+                Obx(() {
+                  return Container(
                     constraints:
                         BoxConstraints(maxHeight: controller.maxHeight.value),
                     child: SingleChildScrollView(
@@ -53,10 +53,10 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
                             child: renderBottomFunctionButtonArray())
                       ]),
                     ),
-                  )
-                ],
-              );
-            })
+                  );
+                })
+              ],
+            )
           ],
         ));
   }
@@ -189,13 +189,14 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               renderClipOval(7.r, dotColor),
-              renderSpacer(),
+              SizedBox(width: 35.w),
               renderClipOval(9.r, dotColor),
-              renderSpacer(),
-              renderImage(snapshot.data?.keys.first ?? ""),
-              renderSpacer(),
+              SizedBox(width: 35.w),
+              Image.asset(snapshot.data?.keys.first ?? "",
+                  width: 32.r, height: 32.r),
+              SizedBox(width: 35.w),
               renderClipOval(9.r, dotColor),
-              renderSpacer(),
+              SizedBox(width: 35.w),
               renderClipOval(7.r, dotColor),
             ],
           );
@@ -215,17 +216,5 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
         color: dotColor,
       ),
     );
-  }
-
-  Widget renderImage(String url) {
-    return Image.asset(
-      url,
-      width: 32.r,
-      height: 32.r,
-    );
-  }
-
-  Widget renderSpacer() {
-    return SizedBox(width: 35.w);
   }
 }
