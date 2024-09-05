@@ -45,18 +45,16 @@ class NestedController extends GetxController {
     currentIndex = route;
     if (route != Routes.routeHome) {
       Timer(const Duration(milliseconds: 500), () {
-        GlobalLogic.to.needHomeSafeArea.value = true;
-        GlobalLogic.mobileWeSlideFooterController.hide();
+        GlobalLogic.closeBottomBar();
       });
     }
   }
 
   reduceNav() {
     Timer(const Duration(milliseconds: 500), () {
-      if (currentIndex == Routes.routeHome) {
-        GlobalLogic.mobileWeSlideFooterController.show();
+      if (isHomePage) {
+        GlobalLogic.openBottomBar();
       }
-      GlobalLogic.to.needHomeSafeArea.value = !isHomePage;
     });
   }
 

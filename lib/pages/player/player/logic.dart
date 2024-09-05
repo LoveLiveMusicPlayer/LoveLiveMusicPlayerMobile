@@ -74,9 +74,8 @@ class PlayerPageLogic extends GetxController {
               music: Music.deepClone(PlayerLogic.to.playingMusic.value),
               isPlayer: true,
               onClosePanel: () {
-                GlobalLogic.mobileWeSlideController.hide();
-                GlobalLogic.to.needHomeSafeArea.value = true;
-                GlobalLogic.mobileWeSlideFooterController.hide();
+                GlobalLogic.closePanel();
+                // GlobalLogic.mobileWeSlideFooterController.hide();
               },
               changeLoveStatusCallback: (status) {
                 PlayerLogic.to.playingMusic.value =

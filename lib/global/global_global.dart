@@ -18,6 +18,7 @@ import 'package:lovelivemusicplayer/models/remote_http.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
+import 'package:lovelivemusicplayer/pages/home/nested_page/nested_controller.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/log.dart';
@@ -272,32 +273,6 @@ class GlobalLogic extends SuperController
     return Const.groupList.getLogo(currentGroup);
   }
 
-  @override
-  void onDetached() {}
-
-  @override
-  void onInactive() {
-    // 这个函数进入前台还是进入后台都会被调用
-  }
-
-  @override
-  void onPaused() {
-    // 在 onInactive 之后被调用
-  }
-
-  @override
-  void onResumed() {
-    // 在 onInactive 之后被调用
-    /// 防止长时间熄屏 PageView 重建回到首页
-    try {
-      scrollTo(HomeController
-          .scrollControllers[HomeController.to.state.currentIndex.value]);
-
-      PageViewLogic.to.pageController
-          .jumpToPage(HomeController.to.state.currentIndex.value);
-    } catch (_) {}
-  }
-
   scrollTo(ScrollController controller) {
     try {
       controller.animateTo(0,
@@ -354,6 +329,48 @@ class GlobalLogic extends SuperController
       timer?.cancel();
       timer = null;
     }
+  }
+
+  static openPanel() {
+    mobileWeSlideController.show();
+  }
+
+  static closePanel() {
+    mobileWeSlideController.hide();
+  }
+
+  static openBottomBar() {
+    mobileWeSlideFooterController.show();
+  }
+
+  static closeBottomBar() {
+    mobileWeSlideFooterController.hide();
+  }
+
+  @override
+  void onDetached() {}
+
+  @override
+  void onInactive() {
+    // 这个函数进入前台还是进入后台都会被调用
+  }
+
+  @override
+  void onPaused() {
+    // 在 onInactive 之后被调用
+  }
+
+  @override
+  void onResumed() {
+    // 在 onInactive 之后被调用
+    /// 防止长时间熄屏 PageView 重建回到首页
+    try {
+      scrollTo(HomeController
+          .scrollControllers[HomeController.to.state.currentIndex.value]);
+
+      PageViewLogic.to.pageController
+          .jumpToPage(HomeController.to.state.currentIndex.value);
+    } catch (_) {}
   }
 
   @override
