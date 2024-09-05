@@ -98,7 +98,7 @@ class ListViewItemSongSheet extends StatelessWidget {
           Text(menu.name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Get.isDarkMode
+              style: GlobalLogic.to.bgPhoto.value != "" || Get.isDarkMode
                   ? TextStyleMs.white_15
                   : TextStyleMs.lightBlack_15),
           SizedBox(height: 4.h),
