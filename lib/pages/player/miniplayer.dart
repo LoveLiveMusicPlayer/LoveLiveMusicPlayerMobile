@@ -42,26 +42,18 @@ class _MiniPlayerState extends State<MiniPlayer> {
   }
 
   Widget renderPanel() {
-    var boxDecoration = PlayerLogic.to.miniPlayerBoxDecorationData?.value;
-    if (GlobalLogic.to.hasSkin.value && boxDecoration != null) {
-      return Container(
-        height: 60.h,
-        margin: EdgeInsets.only(top: 6.h, left: 16.w, right: 16.w),
-        decoration: boxDecoration.toBoxDecoration(),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(34.r),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-            child: body(),
-          ),
-        ),
-      );
-    }
+    var boxDecoration = PlayerLogic.to.miniPlayerBoxDecorationData.value;
     return Container(
       height: 60.h,
       margin: EdgeInsets.only(top: 6.h, left: 16.w, right: 16.w),
-      child:
-          ClipRRect(borderRadius: BorderRadius.circular(34.r), child: body()),
+      decoration: boxDecoration.toBoxDecoration(),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(34.r),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+          child: body(),
+        ),
+      ),
     );
   }
 

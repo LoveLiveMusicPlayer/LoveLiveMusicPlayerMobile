@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
@@ -9,6 +10,7 @@ import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/models/artist.dart';
+import 'package:lovelivemusicplayer/models/box_decoration.dart';
 import 'package:lovelivemusicplayer/models/group.dart';
 import 'package:lovelivemusicplayer/models/menu.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
@@ -103,6 +105,8 @@ class GlobalLogic extends SuperController
     /// widget树构建完毕后执行
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       refreshIconColor();
+      PlayerLogic.to.miniPlayerBoxDecorationData = BoxDecorationData(
+          color: Get.theme.primaryColor.value, borderRadius: 34.r).obs;
     });
 
     /// 监听系统主题色改变

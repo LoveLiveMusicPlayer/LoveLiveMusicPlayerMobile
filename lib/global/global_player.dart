@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
@@ -47,7 +48,7 @@ class PlayerLogic extends GetxController
   final playerLogic = false.obs;
 
   // miniPlayer底部Box样式
-  Rx<BoxDecorationData>? miniPlayerBoxDecorationData;
+  late Rx<BoxDecorationData> miniPlayerBoxDecorationData;
 
   static PlayerLogic get to => Get.find();
 

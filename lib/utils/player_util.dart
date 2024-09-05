@@ -80,12 +80,7 @@ class PlayerUtil {
         borderRadius: 34.r,
       );
 
-      if (PlayerLogic.to.miniPlayerBoxDecorationData == null) {
-        PlayerLogic.to.miniPlayerBoxDecorationData =
-            Rx<BoxDecorationData>(boxDecorationData);
-      } else {
-        PlayerLogic.to.miniPlayerBoxDecorationData!.value = boxDecorationData;
-      }
+      PlayerLogic.to.miniPlayerBoxDecorationData.value = boxDecorationData;
     });
   }
 }
