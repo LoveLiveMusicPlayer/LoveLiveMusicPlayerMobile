@@ -12,7 +12,7 @@ import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 ///歌单
-class ListViewItemSongSheet extends StatelessWidget {
+class ListViewItemSongSheet extends GetView {
   final Function(Menu) onItemTap;
 
   ///条目数据
@@ -42,7 +42,7 @@ class ListViewItemSongSheet extends StatelessWidget {
             SizedBox(width: 5.w),
 
             ///缩列图
-            Hero(tag: "menu${menu.id}", child: _buildIcon()),
+            _buildIcon(),
 
             SizedBox(width: 10.w),
 
@@ -63,8 +63,13 @@ class ListViewItemSongSheet extends StatelessWidget {
       return FutureBuilder<String?>(
         initialData: SDUtils.getImgPath(),
         builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
-          return showImg(snapshot.data, 48, 48,
+          final image = showImg(snapshot.data, 48, 48,
               hasShadow: false, onTap: () => onItemTap(menu));
+          if (snapshot.connectionState == ConnectionState.done) {
+            menu.coverPath = snapshot.data;
+            return Hero(tag: "menu${menu.id}", child: image);
+          }
+          return image;
         },
         future: AppUtils.getMusicCoverPath(menu.music.first),
       );
@@ -75,17 +80,14 @@ class ListViewItemSongSheet extends StatelessWidget {
   }
 
   Widget _buildDevicePic() {
-    final colorFilter = ColorFilter.mode(ColorMs.colorF940A7, BlendMode.srcIn);
-    if (showDevicePic == true) {
-      if (menu.id <= 100) {
-        return SvgPicture.asset(Assets.syncIconComputer,
-            colorFilter: colorFilter, width: 13.h, height: 20.h);
-      } else {
-        return SvgPicture.asset(Assets.syncIconPhone,
-            colorFilter: colorFilter, width: 13.h, height: 20.h);
-      }
+    if (showDevicePic == null || showDevicePic == false) {
+      return Container();
     }
-    return Container();
+    final assets =
+        menu.id <= 100 ? Assets.syncIconComputer : Assets.syncIconPhone;
+    final colorFilter = ColorFilter.mode(ColorMs.colorF940A7, BlendMode.srcIn);
+    return SvgPicture.asset(assets,
+        colorFilter: colorFilter, width: 13.h, height: 20.h);
   }
 
   ///中间标题部分

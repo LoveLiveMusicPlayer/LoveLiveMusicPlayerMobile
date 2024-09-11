@@ -31,8 +31,14 @@ class DetailsBody extends GetView<DetailsBodyLogic> {
       child: Expanded(
         child: CustomScrollView(
           slivers: [
-            SliverToBoxAdapter(child: buildCover),
-            SliverPadding(padding: EdgeInsets.only(top: 10.h)),
+            SliverToBoxAdapter(
+                child: Container(
+              padding: EdgeInsets.only(top: 16.h, bottom: 10.h),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [buildCover],
+              ),
+            )),
             SliverStickyHeader.builder(
               builder: (context, state) {
                 if (state.isPinned) {

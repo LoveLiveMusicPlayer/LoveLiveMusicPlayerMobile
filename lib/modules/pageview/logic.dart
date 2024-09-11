@@ -55,4 +55,9 @@ class PageViewLogic extends GetxController {
       Get.toNamed(Routes.routeMenuDetails, arguments: model, id: 1);
     }
   }
+
+  onPageChanged(int index) {
+    HomeController.to.state.currentIndex.value = index;
+    HomeController.to.tabController?.animateTo(index > 2 ? 1 : 0);
+  }
 }

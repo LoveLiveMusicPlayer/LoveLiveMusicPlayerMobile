@@ -9,7 +9,7 @@ import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 ///专辑 item
-class ListViewItemAlbum extends StatelessWidget {
+class ListViewItemAlbum extends GetView {
   final Album album;
   final Function(Album) onItemTap;
 

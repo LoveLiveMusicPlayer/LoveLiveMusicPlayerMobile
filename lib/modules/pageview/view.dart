@@ -24,10 +24,7 @@ class PageViewComponent extends GetView<PageViewLogic> {
           physics: HomeController.to.state.selectMode.value > 0
               ? const NeverScrollableScrollPhysics()
               : const AlwaysScrollableScrollPhysics(),
-          onPageChanged: (index) {
-            HomeController.to.state.currentIndex.value = index;
-            HomeController.to.tabController?.animateTo(index > 2 ? 1 : 0);
-          },
+          onPageChanged: controller.onPageChanged,
           children: HomeController.scrollControllers
               .asMap()
               .entries

@@ -11,27 +11,26 @@ class MenuDetailsPage extends DetailsPage<MenuDetailController> {
 
   @override
   Widget renderCover() {
-    return Container(
-      padding: EdgeInsets.only(top: 16.h),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Hero(
-              tag: "menu${controller.menu.id}",
-              child: Container(
-                padding: EdgeInsets.only(top: 16.h),
-                child: FutureBuilder<String?>(
-                  initialData: SDUtils.getImgPath(),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<String?> snapshot) {
-                    return showImg(snapshot.data, 240, 240, radius: 24);
-                  },
-                  future:
-                      AppUtils.getMusicCoverPath(controller.menu.music.first),
-                ),
-              ))
-        ],
-      ),
-    );
+    final coverPath = controller.menu.coverPath;
+    if (coverPath == null) {
+      return Container(
+        padding: EdgeInsets.only(top: 16.h),
+        child: FutureBuilder<String?>(
+          initialData: SDUtils.getImgPath(),
+          builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
+            final image =
+                showImg(snapshot.data, 240, 240, radius: 24, hasShadow: false);
+            if (snapshot.connectionState == ConnectionState.done) {
+              return Hero(tag: "menu${controller.menu.id}", child: image);
+            }
+            return image;
+          },
+          future: AppUtils.getMusicCoverPath(controller.menu.music.first),
+        ),
+      );
+    } else {
+      final image = showImg(coverPath, 240, 240, radius: 24, hasShadow: false);
+      return Hero(tag: "menu${controller.menu.id}", child: image);
+    }
   }
 }

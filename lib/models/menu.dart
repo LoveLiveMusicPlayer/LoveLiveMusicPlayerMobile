@@ -14,7 +14,8 @@ class Menu {
       this.music = const <String>[],
       required this.date,
       required this.name,
-      this.checked = false});
+      this.checked = false,
+      this.coverPath});
 
   @primaryKey
   int id;
@@ -25,6 +26,8 @@ class Menu {
 
   @ignore
   bool checked;
+  @ignore
+  String? coverPath;
 
   factory Menu.fromJson(Map<String, dynamic> json) => Menu(
         id: json["id"],

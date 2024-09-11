@@ -8,42 +8,32 @@ import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 ///歌手 item
-class ListViewItemSinger extends StatefulWidget {
+class ListViewItemSinger extends GetView {
   final Artist artist;
-
   final Function(Artist) onItemTap;
 
   const ListViewItemSinger(
       {super.key, required this.artist, required this.onItemTap});
 
   @override
-  State<ListViewItemSinger> createState() => _ListViewItemSingerState();
-}
-
-class _ListViewItemSingerState extends State<ListViewItemSinger> {
-  @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Hero(
-            tag: "singer${widget.artist.uid}",
-            child: showImg(widget.artist.photo, 48, 48,
-                radius: 24,
-                hasShadow: false,
-                onTap: () => widget.onItemTap(widget.artist))),
+            tag: "singer${artist.uid}",
+            child: showImg(artist.photo, 48, 48,
+                radius: 24, hasShadow: false, onTap: () => onItemTap(artist))),
         SizedBox(width: 10.w),
         Expanded(
           child: GestureDetector(
-            onTap: () {
-              widget.onItemTap(widget.artist);
-            },
+            onTap: () => onItemTap(artist),
             child: Container(
               color: Colors.transparent,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(widget.artist.name,
+                  Text(artist.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style:
@@ -52,7 +42,7 @@ class _ListViewItemSingerState extends State<ListViewItemSinger> {
                               : TextStyleMs.black_15_500),
                   SizedBox(height: 4.h),
                   Text(
-                    "${widget.artist.music.length} ${'total_number_unit'.tr}",
+                    "${artist.music.length} ${'total_number_unit'.tr}",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyleMs.f12_400.copyWith(

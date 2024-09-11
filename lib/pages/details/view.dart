@@ -11,6 +11,7 @@ abstract class DetailsPage<T extends DetailController> extends GetView<T> {
 
   @override
   Widget build(BuildContext context) {
+    final cover = renderCover(); // 防止多次渲染，提前渲染对象
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: Column(children: [
@@ -20,7 +21,7 @@ abstract class DetailsPage<T extends DetailController> extends GetView<T> {
             final isMenuPage = logic is MenuDetailController;
             return DetailsBody(
               logic: logic,
-              buildCover: renderCover(),
+              buildCover: cover,
               onRemove: isMenuPage ? logic.onRemoveTap : null,
             );
           })
