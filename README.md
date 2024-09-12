@@ -157,7 +157,7 @@ B站空间：<https://space.bilibili.com/4367965>
     dart run build_runner build
 
 - 编译打包
-  gradlew assembleRelease -x connectedAndroidTest
+  gradlew assembleRelease
 
 ## 许可证
 

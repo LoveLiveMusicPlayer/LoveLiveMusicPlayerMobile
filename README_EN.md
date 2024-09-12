@@ -158,7 +158,7 @@ for allocating free open-source licences for IDEs such as
 	dart run build_runner build
 
 - Packaging
-  gradlew assembleRelease -x connectedAndroidTest
+  gradlew assembleRelease
 
 ## License
 

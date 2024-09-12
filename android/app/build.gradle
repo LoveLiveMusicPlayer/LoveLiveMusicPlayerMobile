@@ -45,8 +45,6 @@ if (isReleaseBuildType()) {
 }
 
 android {
-    compileSdk 34
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
@@ -62,33 +60,8 @@ android {
 
     defaultConfig {
         applicationId "com.zhushenwudi.lovelivemusicplayer"
-        minSdk 23
-        targetSdk 35
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-
-        manifestPlaceholders = [
-                applicationName     : "android.app.Application",
-                UMENG_APPKEY        : '634bd9c688ccdf4b7e4ac67b',
-                UMENG_MESSAGE_SECRET: '0e2760e575260754b1808f0ff82604a7',
-                UMENG_CHANNEL       : 'PROD',
-
-                HUAWEI_APP_ID       : '110477941',
-
-                HONOR_APP_ID: '',
-
-                XIAOMI_APP_ID: '',
-                XIAOMI_APP_KEY: '',
-
-                OPPO_APP_KEY: '',
-                OPPO_APP_SECRET: '',
-
-                VIVO_APP_ID: '',
-                VIVO_APP_KEY: '',
-
-                MEIZU_APP_ID: '',
-                MEIZU_APP_KEY: '',
-        ]
     }
 
     splits {
@@ -130,7 +103,7 @@ android {
         }
     }
 
-    android.applicationVariants.all { variant ->
+    android.applicationVariants.configureEach { variant ->
         variant.outputs.each { output ->
             def abi = output.getFilter(com.android.build.OutputFile.ABI)
             if (abi != null) {
@@ -150,8 +123,8 @@ android {
     project.afterEvaluate {
         project.android.applicationVariants.configureEach { variant ->
             variant.outputs.each { output ->
-                output.processResources.doFirst { pm ->
-                    String manifestPath = output.processResources.manifestFile
+                output.processResourcesProvider.get().doFirst { pm ->
+                    String manifestPath = output.processResourcesProvider.get().manifestFile
                     def manifestContent = file(manifestPath).getText()
                     manifestContent = manifestContent.replace('<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>', '')
                     file(manifestPath).write(manifestContent)
