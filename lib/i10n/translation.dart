@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'de.dart';
 import 'en.dart';
 import 'zh.dart';
+import 'ja.dart';
 
 class Translation extends Translations {
   static Locale get locale => Get.deviceLocale ?? const Locale("zh", "CN");
@@ -14,5 +15,6 @@ class Translation extends Translations {
         'en_US': enUS,
         'zh_CN': zhCN,
         'de_DE': deDE,
+        'ja_JP': jaJP,
       };
 }
