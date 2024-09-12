@@ -50,7 +50,11 @@ class _ListViewItemPlaylist extends State<ListViewItemPlaylist> {
     final isCurrentPlayIndex =
         widget.musicId == PlayerLogic.to.playingMusic.value.musicId;
     return GestureDetector(
-        onTap: () => widget.onPlayTap(widget.index),
+        onTap: () {
+          if (!isCurrentPlayIndex) {
+            widget.onPlayTap(widget.index);
+          }
+        },
         child: Container(
           color: Colors.transparent,
           constraints: BoxConstraints(maxWidth: screenWidth),

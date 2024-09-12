@@ -6,7 +6,7 @@ import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/nested_page/nested_controller.dart';
 import 'package:lovelivemusicplayer/pages/home/nested_page/nested_observer.dart';
 import 'package:lovelivemusicplayer/pages/home/we_slide/logic.dart';
-import 'package:lovelivemusicplayer/pages/player/miniplayer.dart';
+import 'package:lovelivemusicplayer/pages/player/mini_player/view.dart';
 import 'package:lovelivemusicplayer/pages/player/player/view.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/widgets/bottom_bar/bottom_bar1.dart';
@@ -42,7 +42,7 @@ class WeSlideComponent extends GetView<WeSlideLogic> {
           body: body,
           blurColor: Colors.transparent,
           overlayColor: Theme.of(context).primaryColor,
-          panelHeader: MiniPlayer(onTap: controller.miniPlayerTapCover),
+          panelHeader: MiniPlayer(controller.miniPlayerTapCover),
           panel: PlayerPage(onTap: controller.panelTapCloseButton),
           footer: TabBarView(
             controller: HomeController.to.tabController,

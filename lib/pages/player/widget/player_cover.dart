@@ -23,7 +23,8 @@ class _CoverState extends State<Cover> {
     Music? currentMusic = PlayerLogic.to.playingMusic.value;
     return GestureDetector(
       onTap: widget.onTap,
-      child: SizedBox(
+      child: Container(
+        color: Colors.transparent,
         height: 400.h,
         width: double.infinity,
         child: Column(
