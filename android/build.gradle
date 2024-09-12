@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.6.0'
+        classpath 'com.android.tools.build:gradle:8.3.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         //noinspection GradleDynamicVersion
         classpath "com.mob.sdk:MobSDK2:+"
@@ -34,37 +34,27 @@ subprojects {
                     namespace project.group
                 }
                 if (project.android.hasProperty('compileSdk')) {
-                    project.android.compileSdk 35
+                    if (project.android.compileSdk < 34) {
+                        project.android.compileSdk 34
+                    }
                 }
                 if (project.android.hasProperty('buildToolsVersion')) {
-                    project.android.buildToolsVersion "35.0.0"
+                    project.android.buildToolsVersion "34.0.0"
                 }
                 defaultConfig {
                     minSdkVersion 23
-                    compileSdkVersion 35
 
-                    manifestPlaceholders = [
-                            applicationName     : "android.app.Application",
-                            UMENG_APPKEY        : '634bd9c688ccdf4b7e4ac67b',
-                            UMENG_MESSAGE_SECRET: '0e2760e575260754b1808f0ff82604a7',
-                            UMENG_CHANNEL       : 'PROD',
+                    if (project.android.defaultConfig.hasProperty('compileSdkVersion')) {
+                        if (project.android.defaultConfig.compileSdkVersion < 34) {
+                            project.android.defaultConfig.compileSdkVersion 34
+                        }
+                    }
 
-                            HUAWEI_APP_ID       : '110477941',
-
-                            HONOR_APP_ID: '',
-
-                            XIAOMI_APP_ID: '',
-                            XIAOMI_APP_KEY: '',
-
-                            OPPO_APP_KEY: '',
-                            OPPO_APP_SECRET: '',
-
-                            VIVO_APP_ID: '',
-                            VIVO_APP_KEY: '',
-
-                            MEIZU_APP_ID: '',
-                            MEIZU_APP_KEY: '',
-                    ]
+                    if (project.android.defaultConfig.hasProperty('targetSdk')) {
+                        if (project.android.defaultConfig.targetSdk < 34) {
+                            project.android.defaultConfig.targetSdk 34
+                        }
+                    }
                 }
             }
         }
@@ -78,6 +68,7 @@ tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
 
+// 丢弃全部 test gradle task
 gradle.startParameter.excludedTaskNames.addAll(
         gradle.startParameter.taskNames.findAll { it.contains("testClasses") }
 )
