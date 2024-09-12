@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
@@ -132,15 +131,18 @@ class _RefresherWidgetState extends State<RefresherWidget> {
   Widget renderList() {
     if (widget.isGridView) {
       // Grid列表(专辑)
-      return AlignedGridView.count(
-          cacheExtent: 3000,
-          controller: widget.scrollController,
-          itemCount: widget.itemCount,
-          crossAxisCount: widget.columnNum,
-          mainAxisSpacing: widget.mainAxisSpacing,
-          crossAxisSpacing: widget.crossAxisSpacing,
-          padding: EdgeInsets.only(bottom: 70.h),
-          itemBuilder: widget.listItem);
+      return GridView.builder(
+        cacheExtent: 3000,
+        controller: widget.scrollController,
+        itemCount: widget.itemCount,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: widget.columnNum,
+            mainAxisSpacing: widget.mainAxisSpacing,
+            crossAxisSpacing: widget.crossAxisSpacing,
+            mainAxisExtent: 152.h),
+        padding: EdgeInsets.only(bottom: 70.h),
+        itemBuilder: widget.listItem,
+      );
     } else {
       if (widget.canReorder) {
         // 可排序List列表(我喜欢)
@@ -177,7 +179,7 @@ class _RefresherWidgetState extends State<RefresherWidget> {
           separatorBuilder: (BuildContext context, int index) {
             return Container(
               color: widget.spacingColor,
-              height: widget.mainAxisSpacing / 2,
+              height: widget.mainAxisSpacing,
             );
           },
         );
