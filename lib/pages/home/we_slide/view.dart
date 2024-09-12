@@ -18,6 +18,13 @@ class WeSlideComponent extends GetView<WeSlideLogic> {
 
   @override
   Widget build(BuildContext context) {
+    // 这里提取出来，防止频繁刷新产生列表重绘，严重影响性能
+    final body = Navigator(
+      key: Get.nestedKey(1),
+      initialRoute: Routes.routeHome,
+      onGenerateRoute: NestedController.to.onGenerateRoute,
+      observers: [HeroController(), MyNavigator()],
+    );
     return Obx(() {
       final photo = GlobalLogic.to.bgPhoto.value;
       return Container(
@@ -32,12 +39,7 @@ class WeSlideComponent extends GetView<WeSlideLogic> {
               : const Color(0x00000000)
                   .withOpacity(Get.isDarkMode ? 0.4 : 0.15),
           overlay: true,
-          body: Navigator(
-            key: Get.nestedKey(1),
-            initialRoute: Routes.routeHome,
-            onGenerateRoute: NestedController.to.onGenerateRoute,
-            observers: [HeroController(), MyNavigator()],
-          ),
+          body: body,
           blurColor: Colors.transparent,
           overlayColor: Theme.of(context).primaryColor,
           panelHeader: MiniPlayer(onTap: controller.miniPlayerTapCover),
