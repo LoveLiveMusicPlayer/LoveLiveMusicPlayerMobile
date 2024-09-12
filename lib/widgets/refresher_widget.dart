@@ -132,7 +132,6 @@ class _RefresherWidgetState extends State<RefresherWidget> {
     if (widget.isGridView) {
       // Grid列表(专辑)
       return GridView.builder(
-        cacheExtent: 3000,
         controller: widget.scrollController,
         itemCount: widget.itemCount,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -147,7 +146,6 @@ class _RefresherWidgetState extends State<RefresherWidget> {
       if (widget.canReorder) {
         // 可排序List列表(我喜欢)
         return ReorderableListView.builder(
-            cacheExtent: 3000,
             buildDefaultDragHandles: widget.canReorder,
             proxyDecorator: (child, index, animation) {
               return child;
@@ -171,7 +169,6 @@ class _RefresherWidgetState extends State<RefresherWidget> {
       } else {
         // 不可排序List列表(其他)
         return ListView.separated(
-          cacheExtent: 3000,
           itemCount: widget.itemCount,
           itemBuilder: widget.listItem,
           controller: widget.scrollController,
