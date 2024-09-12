@@ -77,7 +77,6 @@ class NestedController extends GetxController {
       addNav(Routes.routeHome);
       return GetPageRoute(
           settings: settings,
-          transition: Transition.zoom,
           page: () => ScrollsToTop(
               onScrollsToTop: (_) async => scrollViewToTop(),
               child: const HomePageView()));
@@ -87,7 +86,6 @@ class NestedController extends GetxController {
       return GetPageRoute(
           routeName: "album_details",
           settings: settings,
-          transition: Transition.zoom,
           page: () => const AlbumDetailsPage(),
           binding: AlbumDetailBinding());
     } else if (settings.name == Routes.routeSingerDetails) {
@@ -96,7 +94,6 @@ class NestedController extends GetxController {
       return GetPageRoute(
           routeName: "singer_details",
           settings: settings,
-          transition: Transition.zoom,
           page: () => const SingerDetailsPage(),
           binding: SingerDetailBinding());
     } else if (settings.name == Routes.routeMenuDetails) {
@@ -105,7 +102,6 @@ class NestedController extends GetxController {
       return GetPageRoute(
           routeName: "menu_details",
           settings: settings,
-          transition: Transition.zoom,
           page: () => const MenuDetailsPage(),
           binding: MenuDetailBinding());
     } else if (settings.name == Routes.routeSystemSettings) {
@@ -113,7 +109,6 @@ class NestedController extends GetxController {
       return GetPageRoute(
           routeName: "setting",
           settings: settings,
-          transition: Transition.zoom,
           page: () => const SystemSettingsPage(),
           binding: SystemSettingBinding());
     }

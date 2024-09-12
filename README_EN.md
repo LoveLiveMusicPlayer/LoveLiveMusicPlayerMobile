@@ -157,7 +157,7 @@ for allocating free open-source licences for IDEs such as
 - Generate database helper file
 	dart run build_runner build
 
-- Packaging
+- Packaging(Disable Gradle Parallel)
   gradlew assembleRelease
 
 ## License

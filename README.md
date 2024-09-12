@@ -156,7 +156,7 @@ B站空间：<https://space.bilibili.com/4367965>
 - 生成数据库 helper 文件
     dart run build_runner build
 
-- 编译打包
+- 编译打包（禁用 Gradle Parallel）
   gradlew assembleRelease
 
 ## 许可证
