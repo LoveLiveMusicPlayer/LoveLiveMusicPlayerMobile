@@ -157,8 +157,41 @@ for allocating free open-source licences for IDEs such as
 - Generate database helper file
 	dart run build_runner build
 
-- Packaging(Disable Gradle Parallel)
+- Android Packaging(Disable Gradle Parallel)
   gradlew assembleRelease
+
+- IOS Packaging
+  #
+  # Copy and replace the contents of sharesdk_plugin below to the following path through XCode
+  # Pods/Development Pods/sharesdk_plugin/Pod/sharesdk_plugin.podspec
+  #
+    ```swift
+      Pod::Spec.new do |s|
+        s.name             = 'sharesdk_plugin'
+        s.version          = '1.1.7'
+        s.summary          = 'Flutter plugin for ShareSDK.'
+        s.description      = <<-DESC
+        ShareSDK is the most comprehensive Social SDK in the world,which share easily with 40+ platforms.
+        DESC
+        s.homepage         = 'http://www.mob.com/mobService/sharesdk'
+        s.license          = { :file => '../LICENSE' }
+        s.author           = { 'Mob' => 'www.mob.com' }
+        s.source           = { :path => '.' }
+        s.source_files = 'Classes/**/*'
+        s.public_header_files = 'Classes/**/*.h'
+        s.dependency 'Flutter'
+        s.dependency 'mob_sharesdk'
+        s.dependency 'mob_sharesdk/ShareSDKExtension'
+        s.dependency 'mob_sharesdk/ShareSDKUI'
+        s.dependency 'mob_sharesdk/ShareSDKPlatforms/QQ'
+        
+        s.static_framework = true
+        
+        s.ios.deployment_target = '12.0'
+        end
+    ```
+
+  if an #import <MOBFoundation/MOBFDataModel.h> error is reported, you can comment it out.
 
 ## License
 

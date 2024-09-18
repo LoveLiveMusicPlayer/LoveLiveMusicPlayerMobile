@@ -193,6 +193,8 @@ const Map<String, String> zhCN = {
   'finish': '完成',
   'search_in_moe_girl': '在萌娘百科搜索',
   'share_error': '分享失败，错误代码：',
+  'share_success': '分享成功',
+  'share_cancel': '分享取消',
   'daily_news': '每日资讯',
   'recent_trends': '近期动态',
   'live_notice': '放送预告',

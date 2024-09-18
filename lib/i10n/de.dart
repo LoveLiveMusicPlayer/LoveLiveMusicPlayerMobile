@@ -207,6 +207,8 @@ Benutzer sollten die Software unter der Prämisse verwenden, Gesetze und Vereinb
   'finish': 'Weg',
   'search_in_moe_girl': 'Suche in MoeGirl',
   'share_error': 'Freigabe fehlgeschlagen, Fehlercode: ',
+  'share_success': 'Freigabe erfolge',
+  'share_cancel': 'Freigabe Absagen',
   'daily_news': 'Daily news',
   'recent_trends': 'Die jüngsten trends',
   'live_notice': 'Live-Mitteilung',

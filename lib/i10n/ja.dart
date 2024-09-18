@@ -193,6 +193,8 @@ const Map<String, String> jaJP = {
   'finish': '完了',
   'search_in_moe_girl': '萌娘百科で検索',
   'share_error': '共有に失敗しました。エラーコード：',
+  'share_success': '成功を分かち合います',
+  'share_cancel': 'キャンセルを共有します',
   'daily_news': '日々のニュース',
   'recent_trends': '最近のトレンド',
   'live_notice': '放送予告',

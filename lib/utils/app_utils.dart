@@ -466,9 +466,21 @@ class AppUtils {
           ShareSDKPlatforms.qq);
     SharesdkPlugin.share(ShareSDKPlatforms.qq, sdkMap, (SSDKResponseState state,
         dynamic userdata, dynamic contentEntity, SSDKError error) {
-      Log4f.i(msg: "错误码: ${error.code}");
-      Log4f.i(msg: "错误原因: ${error.rawData}");
-      SmartDialog.showToast("${"share_error".tr} ${error.code}");
+      switch (state) {
+        case SSDKResponseState.Success:
+          SmartDialog.showToast("share_success".tr);
+          break;
+        case SSDKResponseState.Fail:
+          Log4f.i(msg: "错误码: ${error.code}");
+          Log4f.i(msg: "错误原因: ${error.rawData}");
+          SmartDialog.showToast("${"share_error".tr} ${error.code}");
+          break;
+        case SSDKResponseState.Cancel:
+          SmartDialog.showToast("share_cancel".tr);
+          break;
+        default:
+          break;
+      }
     });
   }
 

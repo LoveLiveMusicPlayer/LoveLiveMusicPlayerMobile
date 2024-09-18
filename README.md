@@ -156,8 +156,41 @@ B站空间：<https://space.bilibili.com/4367965>
 - 生成数据库 helper 文件
     dart run build_runner build
 
-- 编译打包（禁用 Gradle Parallel）
-  gradlew assembleRelease
+- Android编译打包（禁用 Gradle Parallel）
+    gradlew assembleRelease
+
+- IOS编译打包
+    #
+    # 要把下面sharesdk_plugin的内容通过XCode复制替换到如下路径
+    # Pods/Development Pods/sharesdk_plugin/Pod/sharesdk_plugin.podspec
+    #
+    ```swift
+      Pod::Spec.new do |s|
+        s.name             = 'sharesdk_plugin'
+        s.version          = '1.1.7'
+        s.summary          = 'Flutter plugin for ShareSDK.'
+        s.description      = <<-DESC
+        ShareSDK is the most comprehensive Social SDK in the world,which share easily with 40+ platforms.
+        DESC
+        s.homepage         = 'http://www.mob.com/mobService/sharesdk'
+        s.license          = { :file => '../LICENSE' }
+        s.author           = { 'Mob' => 'www.mob.com' }
+        s.source           = { :path => '.' }
+        s.source_files = 'Classes/**/*'
+        s.public_header_files = 'Classes/**/*.h'
+        s.dependency 'Flutter'
+        s.dependency 'mob_sharesdk'
+        s.dependency 'mob_sharesdk/ShareSDKExtension'
+        s.dependency 'mob_sharesdk/ShareSDKUI'
+        s.dependency 'mob_sharesdk/ShareSDKPlatforms/QQ'
+        
+        s.static_framework = true
+        
+        s.ios.deployment_target = '12.0'
+        end
+    ```
+
+    如果 #import <MOBFoundation/MOBFDataModel.h> 报错，可以注释掉
 
 ## 许可证
 
