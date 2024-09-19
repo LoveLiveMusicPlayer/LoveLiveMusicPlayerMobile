@@ -46,8 +46,8 @@ dependencies:
   web_socket_channel: ^3.0.1 # webSocket
   connectivity_plus: ^6.0.5 # 网络监测
   scan: ^1.6.0 # 扫码
-  flutter_smart_dialog: ^4.9.8+1 # 弹窗
-  synchronized: ^3.2.0 # 锁
+  flutter_smart_dialog: ^4.9.8+2 # 弹窗
+  synchronized: ^3.3.0+2 # 锁
   get_storage: ^2.1.1 # sp存储
   common_utils: ^2.1.0 # 工具类
   flutter_screenutil: ^5.9.3 # 屏幕适配方案
@@ -80,7 +80,7 @@ dependencies:
   talker_flutter: ^4.4.1 # 日志
   device_info_plus: ^10.1.2 # 设备信息
   flutter_lyric: ^2.0.4+6 # 歌词显示
-  flutter_app_update: ^3.1.0 # 版本升级
+  flutter_app_update: ^3.1.1 # 版本升级
   flutter_sticky_header: ^0.6.5 # 粘性头
   url_launcher: ^6.3.0 # url跳转
   image_picker: ^1.1.2 # 图片选择
