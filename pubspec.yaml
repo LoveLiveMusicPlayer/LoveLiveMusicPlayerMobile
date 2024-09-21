@@ -114,6 +114,8 @@ dependencies:
       url: https://github.com/zhushenwudi/Flutter-Neumorphic
       ref: master
   fps_widget: ^1.0.1+2 # fps监控
+  home_widget: ^0.7.0 # 桌面小组件
+  workmanager: ^0.5.2 # 后台任务
 
 dependency_overrides:
   md5_file_checksum:

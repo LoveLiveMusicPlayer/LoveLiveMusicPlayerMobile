@@ -84,7 +84,7 @@ const Map<String, String> jaJP = {
   'privacy_policy': 'プライバシー保護方針',
   'permission_show_full': '完全版を表示',
   'permission_main_message':
-  'LoveLiveMusicPlayerをご利用いただきありがとうございます！\n\nユーザー契約及びプライバシーポリシーを通じて、本ソフトウェアが提供するサービスや、個人データの収集・処理方法についてご理解いただけます。\n「同意して続行」ボタンをクリックすることで、同意したことになります。',
+      'LoveLiveMusicPlayerをご利用いただきありがとうございます！\n\nユーザー契約及びプライバシーポリシーを通じて、本ソフトウェアが提供するサービスや、個人データの収集・処理方法についてご理解いただけます。\n「同意して続行」ボタンをクリックすることで、同意したことになります。',
   'permission_external_link': '《ユーザー契約及びプライバシーポリシー》',
   'permission_agree': '同意して続行',
   'permission_disagree': '同意しない',
@@ -138,7 +138,8 @@ const Map<String, String> jaJP = {
   'timed_to_stop_remain': '定時停止まで残り',
   'minutes': '分',
   'please_give_install_permission_manual': 'APKのインストール権限を手動で付与してください',
-  'please_give_install_permission': 'アップグレードにはAPKのインストール権限を付与する必要があります。権限を付与しますか？',
+  'please_give_install_permission':
+      'アップグレードにはAPKのインストール権限を付与する必要があります。権限を付与しますか？',
   'privacy_detail1': '''親愛なるLLer：
 
 「ソフトウェア使用許諾契約」（以下「本契約」）に記載されたすべての権利および制限を必ずお読みください。契約条件に同意しない限り、本ソフトウェアおよびその関連サービスを使用する権利はありません。本ソフトウェアを使用することにより、契約に同意したものとみなされます。
@@ -200,4 +201,6 @@ const Map<String, String> jaJP = {
   'live_notice': '放送予告',
   'today_in_previous_years': '過去の今日',
   'input_song_main_char': '曲名のキーワードを入力してください',
+  'playing': '放送中',
+  'paused': '停止しました'
 };

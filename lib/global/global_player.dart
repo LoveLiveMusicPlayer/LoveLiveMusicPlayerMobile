@@ -16,6 +16,7 @@ import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/models/play_list_music.dart';
 import 'package:lovelivemusicplayer/pages/carplay/carplay.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/utils/home_widget_util.dart';
 import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/player_util.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
@@ -61,6 +62,10 @@ class PlayerLogic extends GetxController
       } else {
         Log4f.i(msg: e.toString());
       }
+    });
+
+    mPlayer.playingStream.listen((event) {
+      HomeWidgetUtil.sendSongInfoAndUpdate(playingMusic.value);
     });
 
     /// 播放位置监听
@@ -475,6 +480,7 @@ class PlayerLogic extends GetxController
 
   /// 设置当前播放歌曲
   setCurrentMusic(Music? music) async {
+    HomeWidgetUtil.sendSongInfoAndUpdate(music);
     if (Platform.isIOS) {
       Carplay.changePlayingMusic(music);
     }

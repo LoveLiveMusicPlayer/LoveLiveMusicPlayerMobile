@@ -10,15 +10,18 @@ import 'package:lovelivemusicplayer/eventbus/close_open.dart';
 import 'package:lovelivemusicplayer/eventbus/db_init.dart';
 import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/pages/app/view.dart';
 import 'package:lovelivemusicplayer/pages/carplay/carplay.dart';
 import 'package:lovelivemusicplayer/pages/carplay/carplay_mine.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/error_log.dart';
+import 'package:lovelivemusicplayer/utils/home_widget_util.dart';
 import 'package:lovelivemusicplayer/utils/sentry_util.dart';
 
 StreamSubscription? dbInitSub;
 StreamSubscription? closeOpenSub;
+bool isInForeground = true;
 
 void main() {
   runZonedGuarded(
@@ -54,6 +57,7 @@ void main() {
             Carplay.init();
           });
         }
+        HomeWidgetUtil.sendSongInfoAndUpdate(PlayerLogic.to.playingMusic.value);
       });
 
       // 初始化服务
@@ -68,11 +72,31 @@ void main() {
       AppUtils.hideStateBarAndNavigationBar();
       AppUtils.setHighPerformanceForAndroid();
 
-      const platform = MethodChannel('llmp');
-      platform.setMethodCallHandler((call) async {
+      const deepLinkChannel = MethodChannel('llmp');
+      deepLinkChannel.setMethodCallHandler((call) async {
         if (call.method == 'handleSchemeRequest') {
           if (call.arguments != null) {
             AppUtils.handleShare(call.arguments['url']);
+          }
+        }
+      });
+
+      const homeWidgetChannel = MethodChannel('home_widget');
+      homeWidgetChannel.setMethodCallHandler((call) async {
+        if (call.method == 'host') {
+          if (call.arguments != null) {
+            final data =
+                Uri.parse(Uri.decodeQueryComponent(call.arguments['url']));
+            switch (data.host) {
+              case "toggle_love":
+                PlayerLogic.to.toggleLove();
+                break;
+              case "toggle_play":
+                PlayerLogic.to.togglePlay();
+                break;
+              default:
+                break;
+            }
           }
         }
       });

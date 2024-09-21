@@ -1,7 +1,7 @@
 # 解注释则为国内加速，详见：https://mirrors.tuna.tsinghua.edu.cn/help/CocoaPods/
 # source 'https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git'
 # Uncomment this line to define a global platform for your project
-platform :ios, '14.0'
+platform :ios, '17.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -34,9 +34,14 @@ target 'Runner' do
   use_modular_headers!
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
-  target 'RunnerTests' do
-    inherit! :search_paths
-  end
+
+  target 'HomeWidgetExampleExtension' do
+      use_frameworks!
+      use_modular_headers!
+      inherit! :search_paths
+
+      pod 'home_widget', :path => '.symlinks/plugins/home_widget/ios'
+    end
 end
 
 post_install do |installer|

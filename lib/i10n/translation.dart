@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 
 import 'de.dart';
 import 'en.dart';
-import 'zh.dart';
 import 'ja.dart';
+import 'zh.dart';
 
 class Translation extends Translations {
   static Locale get locale => Get.deviceLocale ?? const Locale("zh", "CN");

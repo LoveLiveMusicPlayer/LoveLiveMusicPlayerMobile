@@ -90,6 +90,7 @@ class _AppPageState extends State<AppPage> with WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
     switch (state) {
       case AppLifecycleState.resumed:
+        isInForeground = true;
 
         /// 进入前台时，恢复进入后台前列表的位置
         final controllerSize = HomeController.scrollControllers.length;
@@ -106,6 +107,7 @@ class _AppPageState extends State<AppPage> with WidgetsBindingObserver {
         GlobalLogic.to.refreshIconColor();
         break;
       case AppLifecycleState.inactive:
+        isInForeground = false;
 
         /// 进入后台 && 展开了player组件时 关闭滚动歌词
         if (GlobalLogic.mobileWeSlideController.isOpened) {

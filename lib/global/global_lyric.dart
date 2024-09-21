@@ -10,6 +10,7 @@ import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/lyric.dart';
 import 'package:lovelivemusicplayer/models/playing_jp_lyric.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
+import 'package:lovelivemusicplayer/utils/home_widget_util.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 
 class LyricLogic {
@@ -101,6 +102,7 @@ class LyricLogic {
   static setPlayingJPLrc([musicId = "", pre = "", current = "", next = ""]) {
     playingJPLrc.value =
         JpLrc(musicId: musicId, pre: pre, current: current, next: next);
+    HomeWidgetUtil.sendSongInfoAndUpdate();
   }
 
   /// 检查是否检测过该Lyric索引，如果检测过就跳过节约cpu性能

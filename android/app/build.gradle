@@ -3,6 +3,7 @@ plugins {
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
     id "com.mob.sdk"
+    id "org.jetbrains.kotlin.plugin.compose"
 }
 
 def localProperties = new Properties()
@@ -54,6 +55,14 @@ android {
         jvmTarget = "17"
     }
 
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"
+    }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
@@ -101,6 +110,13 @@ android {
                 signingConfig signingConfigs.release
                 proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             }
+        }
+    }
+
+    configurations.configureEach {
+        // 解决依赖冲突
+        resolutionStrategy {
+            force 'androidx.work:work-runtime-ktx:2.8.1'
         }
     }
 
@@ -182,4 +198,6 @@ dependencies {
 
     implementation fileTree(dir: "libs", include: ["library-*.aar"])
     implementation fileTree(dir: "libs", include: ["extension-*.aar"])
+
+    implementation "androidx.glance:glance-appwidget:1.1.0"
 }

@@ -214,4 +214,6 @@ Benutzer sollten die Software unter der Prämisse verwenden, Gesetze und Vereinb
   'live_notice': 'Live-Mitteilung',
   'today_in_previous_years': 'Heute in den vergangenen Jahren',
   'input_song_main_char': 'Die vermisse vermisse ich',
+  'playing': 'Spielen',
+  'paused': 'Pausierte'
 };

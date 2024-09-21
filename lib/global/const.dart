@@ -150,4 +150,10 @@ class Const {
 
   static const String pushUrl =
       "https://zhushenwudi1.oss-cn-hangzhou.aliyuncs.com/LLMP-M/push/push.txt";
+
+  static const String homeWidgetGroupId =
+      "group.com.zhushenwudi.lovelivemusicplayer";
+
+  static const String androidReceiverName =
+      "com.zhushenwudi.lovelivemusicplayer.home_widget.widget1.HomeWidgetReceiver";
 }

@@ -20,6 +20,7 @@ import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/home_widget_util.dart';
 import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/utils/sp_util.dart';
@@ -148,6 +149,7 @@ class GlobalLogic extends SuperController
     withSystemTheme.value = await SpUtil.getBoolean(Const.spWithSystemTheme);
     await SpUtil.put(Const.spPrevPage, "");
     PlayerBinding().dependencies();
+    await HomeWidgetUtil.init();
   }
 
   refreshIconColor() async {
