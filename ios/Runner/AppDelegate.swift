@@ -67,7 +67,9 @@ let widgetGroupId = "group.com.zhushenwudi.lovelivemusicplayer"
     
     @objc func handleNotification(_ notification: Notification) {
         if let url = notification.userInfo?["url"] as? String {
-            FlutterChannelManager.shared.homeWidgetChannel?.invokeMethod("host", arguments: ["url": url])
+            DispatchQueue.main.async {
+                FlutterChannelManager.shared.homeWidgetChannel?.invokeMethod("host", arguments: ["url": url])
+            }
         }
     }
 }

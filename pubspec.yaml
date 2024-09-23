@@ -67,7 +67,7 @@ dependencies:
       path: just_audio
       ref: master
   just_audio_background: ^0.0.1-beta.13 # 音频播放后台服务
-  event_bus: ^2.0.0 # 事件总线通信
+  event_bus: ^2.0.1 # 事件总线通信
   floor: ^1.5.0 # 数据库服务
   concurrent_queue: ^1.4.0 # 队列
   wakelock_plus: ^1.2.8 # 屏幕常亮
