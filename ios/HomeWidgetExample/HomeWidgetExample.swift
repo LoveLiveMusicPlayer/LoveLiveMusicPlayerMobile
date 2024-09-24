@@ -22,7 +22,8 @@ struct Provider: TimelineProvider {
             playText: "paused",
             curJpLrc: "",
             nextJpLrc: "",
-            isShutdown: true
+            isShutdown: true,
+            bgColor: "255,255,255"
         )
     }
 
@@ -36,6 +37,7 @@ struct Provider: TimelineProvider {
         let curJpLrc = data?.string(forKey: "curJpLrc") ?? ""
         let nextJpLrc = data?.string(forKey: "nextJpLrc") ?? ""
         let isShutdown = data?.bool(forKey: "isShutdown") ?? false
+        let bgColor = data?.string(forKey: "bgColor") ?? "255,255,255"
         
         completion(ExampleEntry(
             date: Date(),
@@ -47,7 +49,8 @@ struct Provider: TimelineProvider {
             playText: playText,
             curJpLrc: curJpLrc,
             nextJpLrc: nextJpLrc,
-            isShutdown: isShutdown
+            isShutdown: isShutdown,
+            bgColor: bgColor
         ))
     }
 
@@ -70,6 +73,7 @@ struct ExampleEntry: TimelineEntry {
     let curJpLrc: String
     let nextJpLrc: String
     let isShutdown: Bool
+    let bgColor: String
 }
 
 struct HomeWidgetExampleEntryView: View {
@@ -89,6 +93,8 @@ struct HomeWidgetExampleEntryView: View {
             let offsetX = calcCdOffsetX(entry: entry, geometry: geometry)
             let offsetY = calcCdOffsetY(entry: entry, geometry: geometry)
             let lyricMaxWidth = geometry.size.width - cdSize
+            let bgColor = calcBgColor(entry: entry)
+            
             ZStack {
                 // 填充整个布局颜色
                 Rectangle()
@@ -97,8 +103,8 @@ struct HomeWidgetExampleEntryView: View {
                             gradient: Gradient(
                                 colors: [
                                     Color(red: 229/255, green: 233/255, blue: 235/255),
-                                    Color(red: 229/255, green: 228/255, blue: 225/255),
-                                    Color(red: 230/255, green: 215/255, blue: 210/255)
+                                    Color(red: 219/255, green: 223/255, blue: 225/255),
+                                    bgColor
                                 ]
                             ),
                             center: .topLeading,
@@ -253,6 +259,18 @@ struct HomeWidgetExampleEntryView: View {
         return offset
     }
     
+    func calcBgColor(entry: ExampleEntry) -> Color {
+        var intColors: [Double] = [230.0, 215.0, 210.0]
+        if entry.bgColor.contains(",") {
+            intColors = entry.bgColor.components(separatedBy: ",").compactMap(Double.init)
+        }
+        return Color(
+            red: Double(intColors[0]) / 255,
+            green: Double(intColors[1]) / 255,
+            blue: Double(intColors[2]) / 255
+        )
+    }
+    
     func loadImageFromFile() -> UIImage? {
         let fileURL = FileManager.default.containerURL(
             forSecurityApplicationGroupIdentifier: widgetGroupId
@@ -288,6 +306,7 @@ struct HomeWidgetExample: Widget {
         playText: "paused",
         curJpLrc: "",
         nextJpLrc: "",
-        isShutdown: true
+        isShutdown: true,
+        bgColor: "255,255,255"
     )
 }

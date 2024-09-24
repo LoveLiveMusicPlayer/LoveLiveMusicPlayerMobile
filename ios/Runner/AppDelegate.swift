@@ -89,11 +89,11 @@ class FlutterChannelManager {
             if call.method == "shareImage" {
                 if let args = call.arguments as? [String: Any],
                     let path = args["path"] as? String {
-                    self?.saveImageToFile(imagePath: path)
-                    result("Image shared successfully")
-                } else {
-                    result(FlutterError(code: "INVALID_ARGUMENT", message: "Invalid arguments", details: nil))
-                }
+                        self?.saveImageToFile(imagePath: path)
+                        result("Image shared successfully")
+                    } else {
+                        result(FlutterError(code: "INVALID_ARGUMENT", message: "Invalid arguments", details: nil))
+                    }
             } else {
                 result(FlutterMethodNotImplemented)
             }
@@ -120,6 +120,13 @@ class FlutterChannelManager {
                 print("Error saving image: \(error)")
             }
         }
+        
+        // 提取图片主颜色
+        if let color = image.dominantColor() {
+            let userDefaults = UserDefaults(suiteName: widgetGroupId)
+            userDefaults?.set("\(color.red),\(color.green),\(color.blue)", forKey: "bgColor")
+            userDefaults?.synchronize()
+        }
     }
     
     func calculateAspectRatioSize(image: UIImage, targetWidth: CGFloat) -> CGSize {
@@ -133,5 +140,31 @@ class FlutterChannelManager {
         return renderer.image { _ in
             image.draw(in: CGRect(origin: .zero, size: targetSize))
         }
+    }
+}
+
+extension UIImage {
+    func dominantColor() -> (red: CGFloat, green: CGFloat, blue: CGFloat)? {
+        guard let cgImage = self.cgImage else { return nil }
+        
+        let width = 1
+        let height = 1
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
+        
+        guard let context = CGContext(data: nil,
+                                      width: width,
+                                      height: height,
+                                      bitsPerComponent: 8,
+                                      bytesPerRow: 0,
+                                      space: colorSpace,
+                                      bitmapInfo: bitmapInfo.rawValue) else {
+            return nil
+        }
+        
+        context.draw(cgImage, in: CGRect(x: 0, y: 0, width: CGFloat(cgImage.width), height: CGFloat(cgImage.height)))
+        guard let data = context.data else { return nil }
+        let pixel = data.bindMemory(to: UInt8.self, capacity: 3)
+        return (red: CGFloat(pixel[0]), green: CGFloat(pixel[1]), blue: CGFloat(pixel[2]))
     }
 }
