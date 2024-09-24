@@ -46,7 +46,7 @@ class MiniPlayer extends GetView<MiniPlayerController> {
                       SizedBox(width: 8.w),
 
                       /// 播放按钮
-                      playButton(),
+                      SizedBox(child: playButton()),
                       SizedBox(width: 1.w),
 
                       /// 播放列表按钮
@@ -108,9 +108,9 @@ class MiniPlayer extends GetView<MiniPlayerController> {
         if (processingState == ProcessingState.loading ||
             processingState == ProcessingState.buffering) {
           return Container(
-            margin: const EdgeInsets.all(8.0),
-            width: 30.h,
-            height: 30.h,
+            margin: EdgeInsets.all(8.r),
+            width: 16.r,
+            height: 16.r,
             child: const CircularProgressIndicator(),
           );
         } else if (playing != true) {

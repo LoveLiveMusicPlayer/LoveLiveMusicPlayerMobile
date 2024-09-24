@@ -15,11 +15,11 @@ struct Provider: TimelineProvider {
         ExampleEntry(
             date: Date(),
             widgetFamily: context.family,
-            songName: "Song Name",
-            songArtist: "Song Artist",
-            isFavorite: true,
-            isPlaying: true,
-            playText: "paused",
+            songName: "",
+            songArtist: "",
+            isFavorite: false,
+            isPlaying: false,
+            playText: "",
             curJpLrc: "",
             nextJpLrc: "",
             isShutdown: true,
@@ -29,14 +29,14 @@ struct Provider: TimelineProvider {
 
     func getSnapshot(in context: Context, completion: @escaping (ExampleEntry) -> Void) {
         let data = UserDefaults.init(suiteName: widgetGroupId)
-        let songName = data?.string(forKey: "songName") ?? "Song Name"
-        let songArtist = data?.string(forKey: "songArtist") ?? "Song Artist"
+        let songName = data?.string(forKey: "songName") ?? ""
+        let songArtist = data?.string(forKey: "songArtist") ?? ""
         let isFavorite = data?.bool(forKey: "songFavorite") ?? false
         let isPlaying = data?.bool(forKey: "isPlaying") ?? false
-        let playText = data?.string(forKey: "playText") ?? "paused"
+        let playText = data?.string(forKey: "playText") ?? ""
         let curJpLrc = data?.string(forKey: "curJpLrc") ?? ""
         let nextJpLrc = data?.string(forKey: "nextJpLrc") ?? ""
-        let isShutdown = data?.bool(forKey: "isShutdown") ?? false
+        let isShutdown = data?.bool(forKey: "isShutdown") ?? true
         let bgColor = data?.string(forKey: "bgColor") ?? "255,255,255"
         
         completion(ExampleEntry(
@@ -94,6 +94,7 @@ struct HomeWidgetExampleEntryView: View {
             let offsetY = calcCdOffsetY(entry: entry, geometry: geometry)
             let lyricMaxWidth = geometry.size.width - cdSize
             let bgColor = calcBgColor(entry: entry)
+            let playText = calcPlayText(entry: entry)
             
             ZStack {
                 // 填充整个布局颜色
@@ -178,7 +179,7 @@ struct HomeWidgetExampleEntryView: View {
                     
                     Spacer()
                     
-                    Text(entry.playText)
+                    Text(playText)
                         .font(.system(size: 10))
                         .bold()
                         .foregroundColor(.gray)
@@ -277,6 +278,14 @@ struct HomeWidgetExampleEntryView: View {
         )?.appendingPathComponent("sharedImage.png")
         return UIImage(contentsOfFile: fileURL!.path)
     }
+    
+    func calcPlayText(entry: ExampleEntry) -> String {
+        var playTextArr: [String] = ["播放中", "已暂停"]
+        if entry.playText.contains(",") {
+            playTextArr = entry.playText.components(separatedBy: ",")
+        }
+        return entry.isPlaying ? playTextArr[0] : playTextArr[1]
+    }
 }
 
 struct HomeWidgetExample: Widget {
@@ -303,7 +312,7 @@ struct HomeWidgetExample: Widget {
         songArtist: "Song Artist",
         isFavorite: true,
         isPlaying: true,
-        playText: "paused",
+        playText: "playing,paused",
         curJpLrc: "",
         nextJpLrc: "",
         isShutdown: true,

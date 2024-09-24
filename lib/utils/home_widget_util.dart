@@ -51,7 +51,7 @@ class HomeWidgetUtil {
     workArr.add(HomeWidget.saveWidgetData<bool>('songFavorite', music.isLove));
     workArr.add(HomeWidget.saveWidgetData<bool>('isPlaying', isPlaying));
     workArr.add(HomeWidget.saveWidgetData<String>(
-        'playText', isPlaying ? "playing".tr : "paused".tr));
+        'playText', '${"playing".tr},${"paused".tr}'));
     try {
       return Future.wait(workArr);
     } on PlatformException catch (exception) {
