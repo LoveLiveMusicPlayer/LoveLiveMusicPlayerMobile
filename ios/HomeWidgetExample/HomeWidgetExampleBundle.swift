@@ -11,7 +11,8 @@ import SwiftUI
 @main
 struct HomeWidgetExampleBundle: WidgetBundle {
     var body: some Widget {
-        HomeWidgetExample()
+        HomeWidgetExampleWhite()
+        HomeWidgetExampleBlack()
         if #available(iOS 18.0, *) {
             HomeWidgetExampleControl()
         }

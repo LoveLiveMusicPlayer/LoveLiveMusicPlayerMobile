@@ -79,15 +79,17 @@ struct ExampleEntry: TimelineEntry {
 struct HomeWidgetExampleEntryView: View {
     var entry: Provider.Entry
     let data = UserDefaults.init(suiteName: widgetGroupId)
+    var isWhiteBackground = true
     
-    init(entry: Provider.Entry) {
+    init(entry: Provider.Entry, isWhiteBackground: Bool) {
         self.entry = entry
+        self.isWhiteBackground = isWhiteBackground
     }
 
     var body: some View {
         GeometryReader { geometry in
             let cdSize: CGFloat = 140
-            let coverSize: CGFloat = cdSize * 0.6
+            let coverSize: CGFloat = cdSize * 0.55
             let coverAndCdDiffSize: CGFloat = (cdSize - coverSize) / 2
             let playButtonAndCdDiffSize: CGFloat = (cdSize - 34) / 2 // width:18 + padding:8x2
             let offsetX = calcCdOffsetX(entry: entry, geometry: geometry)
@@ -98,25 +100,32 @@ struct HomeWidgetExampleEntryView: View {
             
             ZStack {
                 // 填充整个布局颜色
-                Rectangle()
-                    .fill(
-                        AngularGradient(
-                            gradient: Gradient(
-                                colors: [
-                                    Color(red: 229/255, green: 233/255, blue: 235/255),
-                                    Color(red: 219/255, green: 223/255, blue: 225/255),
-                                    bgColor
-                                ]
-                            ),
-                            center: .topLeading,
-                            angle: .degrees(180 + 45)
+                if isWhiteBackground {
+                    Rectangle()
+                        .fill(
+                            AngularGradient(
+                                gradient: Gradient(
+                                    colors: [
+                                        Color(red: 229/255, green: 233/255, blue: 235/255),
+                                        Color(red: 219/255, green: 223/255, blue: 225/255),
+                                        bgColor
+                                    ]
+                                ),
+                                center: .topLeading,
+                                angle: .degrees(180 + 45)
+                            )
                         )
-                    )
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    Rectangle()
+                        .fill(Color(red: 49/255, green: 49/255, blue: 49/255))
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+                
                 
                 // 绘制右上角唱片
                 ZStack(alignment: .topTrailing) {
-                    Image("cd")
+                    Image(isWhiteBackground ? "cd_white" : "cd_black")
                         .resizable()
                         .scaledToFit()
                         .frame(width: cdSize, height: cdSize)
@@ -162,19 +171,25 @@ struct HomeWidgetExampleEntryView: View {
                     if entry.widgetFamily == .systemMedium {
                         Text(entry.curJpLrc)
                             .font(.system(size: 15))
-                            .foregroundColor(.black)
+                            .foregroundColor(
+                                isWhiteBackground ? .black : .white
+                            )
                             .frame(
                                 maxWidth: entry.isPlaying ? .infinity : lyricMaxWidth,
                                 alignment: .leading
                             )
                             .padding(.leading, -5)
+                            .padding(.trailing, 20)
 
                         Text(entry.nextJpLrc)
                             .font(.system(size: 15))
-                            .foregroundColor(.black)
+                            .foregroundColor(
+                                isWhiteBackground ? .black : .white
+                            )
                             .frame(
                                 maxWidth: entry.isPlaying ? .infinity : lyricMaxWidth, alignment: .leading)
                             .padding(.leading, -5)
+                            .padding(.trailing, 10)
                     }
                     
                     Spacer()
@@ -189,14 +204,19 @@ struct HomeWidgetExampleEntryView: View {
                     Text(entry.songName)
                         .font(.system(size: 12))
                         .bold()
-                        .foregroundColor(.black)
+                        .foregroundColor(
+                            isWhiteBackground ? .black : .white
+                        )
                         .frame(maxWidth: .infinity, alignment: .leading)
+//                        .padding(50)
                         .padding(.bottom, 2)
                     
                     Text(entry.songArtist)
                         .font(.system(size: 12, weight: .light))
                         .foregroundColor(.gray)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.trailing, 30)
+                        
                 }
                 .padding()
                 
@@ -236,7 +256,7 @@ struct HomeWidgetExampleEntryView: View {
         var offset = 0.0
         switch(entry.widgetFamily) {
             case WidgetFamily.systemSmall:
-                offset = (geometry.size.width - 75) / 2
+                offset = (geometry.size.width - 70) / 2
                 break
             case WidgetFamily.systemMedium:
                 offset = (geometry.size.width - 152) / 2 + (entry.isPlaying ? 40 : 0)
@@ -251,7 +271,7 @@ struct HomeWidgetExampleEntryView: View {
         var offset = 0.0
         switch(entry.widgetFamily) {
             case WidgetFamily.systemSmall:
-                offset = (75 - geometry.size.height) / 2
+                offset = (70 - geometry.size.height) / 2
             case WidgetFamily.systemMedium:
                 offset = (152 - geometry.size.height) / 2 - (entry.isPlaying ? 40 : 0)
             default:
@@ -288,12 +308,29 @@ struct HomeWidgetExampleEntryView: View {
     }
 }
 
-struct HomeWidgetExample: Widget {
-    let kind = "HomeWidgetExample"
+struct HomeWidgetExampleWhite: Widget {
+    let kind = "HomeWidgetExampleWhite"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { (entry) in
-            HomeWidgetExampleEntryView(entry: entry).containerBackground(.fill.tertiary, for: .widget)
+            HomeWidgetExampleEntryView(entry: entry, isWhiteBackground: true)
+                .containerBackground(.fill.tertiary, for: .widget)
+        }
+            .configurationDisplayName("LLMP音乐组件")
+            .contentMarginsDisabled()
+            .supportedFamilies([.systemSmall, .systemMedium])
+            .description("LoveLive!媒体播放器")
+    }
+}
+
+struct HomeWidgetExampleBlack: Widget {
+    let kind = "HomeWidgetExampleBlack"
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: Provider()) { (entry) in
+            
+            HomeWidgetExampleEntryView(entry: entry, isWhiteBackground: false)
+                .containerBackground(.fill.tertiary, for: .widget)
         }
             .configurationDisplayName("LLMP音乐组件")
             .contentMarginsDisabled()
@@ -303,7 +340,7 @@ struct HomeWidgetExample: Widget {
 }
 
 #Preview(as: .systemSmall) {
-    HomeWidgetExample()
+    HomeWidgetExampleWhite()
 } timeline: {
     ExampleEntry(
         date: Date(),

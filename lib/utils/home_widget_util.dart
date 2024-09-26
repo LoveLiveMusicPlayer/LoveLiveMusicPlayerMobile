@@ -12,7 +12,8 @@ import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:workmanager/workmanager.dart';
 
 class HomeWidgetUtil {
-  static const iosName = "HomeWidgetExample";
+  static const iosNameWhite = "HomeWidgetExampleWhite";
+  static const iosNameBlack = "HomeWidgetExampleBlack";
   static const MethodChannel _channel = MethodChannel('refreshWidgetPhoto');
 
   static init() async {
@@ -72,10 +73,12 @@ class HomeWidgetUtil {
 
   static Future _updateWidget() async {
     try {
-      return Future.wait([
-        HomeWidget.updateWidget(
-            iOSName: iosName, qualifiedAndroidName: Const.androidReceiverName)
-      ]);
+      await HomeWidget.updateWidget(
+          iOSName: iosNameWhite,
+          qualifiedAndroidName: Const.androidReceiverName);
+      await HomeWidget.updateWidget(
+          iOSName: iosNameBlack,
+          qualifiedAndroidName: Const.androidReceiverName);
     } on PlatformException catch (exception) {
       print('Error Updating Widget. $exception');
     }
