@@ -2,6 +2,7 @@ package com.zhushenwudi.lovelivemusicplayer
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.ryanheise.audioservice.AudioServiceActivity
 import com.zhushenwudi.lovelivemusicplayer.plugin.BackPlugin
 import com.zhushenwudi.lovelivemusicplayer.plugin.UPushPlugin
@@ -14,10 +15,19 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainActivity : AudioServiceActivity() {
+    private var deepLinkChannel: MethodChannel? = null
+    private var homeWidgetChannel: MethodChannel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        flutterEngine?.apply { registerWith(this) }
+        flutterEngine?.apply {
+            registerWith(this)
+            dartExecutor.binaryMessenger.run {
+                deepLinkChannel = MethodChannel(this, LLMP_CHANNEL)
+                homeWidgetChannel = MethodChannel(this, HOME_WIDGET_CHANNEL)
+            }
+        }
+        initLiveEventBus()
         AppUtils.initUmeng(this)
         getSchemeData(2000)
     }
@@ -40,16 +50,26 @@ class MainActivity : AudioServiceActivity() {
         lifecycleScope.launch {
             delay(delayTime)
             AppUtils.getSchemeData(intent) {
-                flutterEngine?.dartExecutor?.binaryMessenger?.run {
-                    val channel = MethodChannel(this, LLMP_CHANNEL)
-                    channel.invokeMethod(HANDLE_SCHEME_REQUEST_METHOD, mapOf("url" to it))
-                }
+                deepLinkChannel?.invokeMethod(HANDLE_SCHEME_REQUEST_METHOD, mapOf("url" to it))
             }
         }
     }
 
+    private fun initLiveEventBus() {
+        LiveEventBus
+            .get(HANDLE_HOME_WIDGET_REQUEST_METHOD, String::class.java)
+            .observeForever {
+                homeWidgetChannel?.invokeMethod(
+                    HANDLE_HOME_WIDGET_REQUEST_METHOD,
+                    mapOf("url" to it)
+                )
+            }
+    }
+
     companion object {
         private const val LLMP_CHANNEL = "llmp"
+        private const val HOME_WIDGET_CHANNEL = "home_widget"
         private const val HANDLE_SCHEME_REQUEST_METHOD = "handleSchemeRequest"
+        private const val HANDLE_HOME_WIDGET_REQUEST_METHOD = "host"
     }
 }

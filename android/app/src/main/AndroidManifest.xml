@@ -27,10 +27,10 @@
 
         <activity
             android:name=".MainActivity"
-            android:configChanges="screenSize"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:exported="true"
             android:hardwareAccelerated="true"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
             android:windowSoftInputMode="adjustResize">
             <meta-data
@@ -60,6 +60,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
                 <!-- 添加音乐类别 -->
                 <category android:name="android.intent.category.MUSIC" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="es.antonborri.home_widget.action.LAUNCH" />
             </intent-filter>
         </activity>
 
@@ -92,22 +96,62 @@
 
         <!-- home_widget start -->
         <receiver
-            android:name=".home_widget.widget1.HomeWidgetReceiver"
+            android:name="com.zhushenwudi.lovelivemusicplayer.home_widget.small_home_widget.WhiteSmallHomeWidgetReceiver"
             android:exported="true"
-            android:label="Glance">
+            android:label="LLMP"
+            android:permission="android.permission.BIND_APPWIDGET">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/home_widget1" />
+                android:resource="@xml/small_home_widget" />
+        </receiver>
+
+        <receiver
+            android:name="com.zhushenwudi.lovelivemusicplayer.home_widget.small_home_widget.BlackSmallHomeWidgetReceiver"
+            android:exported="true"
+            android:label="LLMP"
+            android:permission="android.permission.BIND_APPWIDGET">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/small_home_widget" />
+        </receiver>
+
+        <receiver
+            android:name="com.zhushenwudi.lovelivemusicplayer.home_widget.large_home_widget.WhiteLargeHomeWidgetReceiver"
+            android:exported="true"
+            android:label="LLMP"
+            android:permission="android.permission.BIND_APPWIDGET">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/large_home_widget" />
+        </receiver>
+        <receiver
+            android:name="com.zhushenwudi.lovelivemusicplayer.home_widget.large_home_widget.BlackLargeHomeWidgetReceiver"
+            android:exported="true"
+            android:label="LLMP"
+            android:permission="android.permission.BIND_APPWIDGET">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/large_home_widget" />
         </receiver>
 
         <receiver
             android:name="es.antonborri.home_widget.HomeWidgetBackgroundReceiver"
-            android:exported="true">
+            android:exported="true"
+            android:permission="android.permission.BIND_APPWIDGET">
             <intent-filter>
-                <action android:name="es.antonborri.home_widget.action.BACKGROUND" />
+                <action android:name="com.zhushenwudi.home_widget.action.BACKGROUND" />
             </intent-filter>
         </receiver>
 

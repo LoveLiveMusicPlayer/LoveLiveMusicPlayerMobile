@@ -14,6 +14,14 @@ import 'package:workmanager/workmanager.dart';
 class HomeWidgetUtil {
   static const iosNameWhite = "HomeWidgetExampleWhite";
   static const iosNameBlack = "HomeWidgetExampleBlack";
+  static const androidNameWhiteSmall =
+      "${Const.androidReceiverName}small_home_widget.WhiteSmallHomeWidgetReceiver";
+  static const androidNameBlackSmall =
+      "${Const.androidReceiverName}small_home_widget.BlackSmallHomeWidgetReceiver";
+  static const androidNameWhiteLarge =
+      "${Const.androidReceiverName}large_home_widget.WhiteLargeHomeWidgetReceiver";
+  static const androidNameBlackLarge =
+      "${Const.androidReceiverName}large_home_widget.BlackLargeHomeWidgetReceiver";
   static const MethodChannel _channel = MethodChannel('refreshWidgetPhoto');
 
   static init() async {
@@ -45,8 +53,12 @@ class HomeWidgetUtil {
     }
     final isPlaying = PlayerLogic.to.mPlayer.playing;
     final List<Future<dynamic>> workArr = [];
-    workArr.add(_channel.invokeMethod(
-        'shareImage', {'path': SDUtils.getImgPathFromMusic(music)}));
+    final imagePath = SDUtils.getImgPathFromMusic(music);
+    if (Platform.isAndroid) {
+      workArr.add(HomeWidget.saveWidgetData<String>('shareImage', imagePath));
+    } else if (Platform.isIOS) {
+      workArr.add(_channel.invokeMethod('shareImage', {'path': imagePath}));
+    }
     workArr.add(HomeWidget.saveWidgetData<String>('songName', music.musicName));
     workArr.add(HomeWidget.saveWidgetData<String>('songArtist', music.artist));
     workArr.add(HomeWidget.saveWidgetData<bool>('songFavorite', music.isLove));
@@ -73,12 +85,19 @@ class HomeWidgetUtil {
 
   static Future _updateWidget() async {
     try {
-      await HomeWidget.updateWidget(
-          iOSName: iosNameWhite,
-          qualifiedAndroidName: Const.androidReceiverName);
-      await HomeWidget.updateWidget(
-          iOSName: iosNameBlack,
-          qualifiedAndroidName: Const.androidReceiverName);
+      if (Platform.isIOS) {
+        await HomeWidget.updateWidget(iOSName: iosNameWhite);
+        await HomeWidget.updateWidget(iOSName: iosNameBlack);
+      } else {
+        await HomeWidget.updateWidget(
+            qualifiedAndroidName: androidNameWhiteSmall);
+        await HomeWidget.updateWidget(
+            qualifiedAndroidName: androidNameBlackSmall);
+        await HomeWidget.updateWidget(
+            qualifiedAndroidName: androidNameWhiteLarge);
+        await HomeWidget.updateWidget(
+            qualifiedAndroidName: androidNameBlackLarge);
+      }
     } on PlatformException catch (exception) {
       print('Error Updating Widget. $exception');
     }

@@ -155,5 +155,5 @@ class Const {
       "group.com.zhushenwudi.lovelivemusicplayer";
 
   static const String androidReceiverName =
-      "com.zhushenwudi.lovelivemusicplayer.home_widget.widget1.HomeWidgetReceiver";
+      "com.zhushenwudi.lovelivemusicplayer.home_widget.";
 }
