@@ -10,6 +10,8 @@ object AppUtils {
     private const val UMENG_KEY = "634bd9c688ccdf4b7e4ac67b"
     private const val UMENG_TAG = "Umeng"
     private const val PREFIX_URL = "llmp://"
+    const val SAVE_FILE_NAME = "sharedImage.png"
+    const val SP_NAME = "HomeWidgetPreferences"
 
     val SMALL_SQUARE = DpSize(150.dp, 120.dp)
     val HORIZONTAL_RECTANGLE = DpSize(325.dp, 165.dp)

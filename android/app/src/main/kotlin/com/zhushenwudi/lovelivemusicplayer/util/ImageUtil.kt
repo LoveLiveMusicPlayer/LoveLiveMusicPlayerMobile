@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
-import android.graphics.BitmapFactory
 import android.graphics.BitmapShader
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -20,17 +19,10 @@ import java.io.IOException
 import kotlin.math.min
 
 object ImageUtil {
-    private const val SAVE_FILE_NAME = "sharedImage.png"
-    private const val SP_NAME = "HomeWidgetPreferences"
 
     fun squareAndCircularBitmap(bitmap: Bitmap, size: Int): Bitmap {
-        // 1. 将 Bitmap 缩放为正方形
         val squareBitmap = getSquareBitmap(bitmap)
-
-        // 1. 裁切为圆形
         val circularBitmap = getCircularBitmap(squareBitmap)
-
-        // 2. 压缩为 300x300
         return Bitmap.createScaledBitmap(circularBitmap, size, size, false)
     }
 
@@ -40,11 +32,8 @@ object ImageUtil {
     fun saveBitmapToFile(context: Context, bitmap: Bitmap): String? {
         var fos: FileOutputStream? = null
         try {
-            // 获取私有目录
             val dir = context.filesDir
-            // 创建文件
-            val file = File(dir, SAVE_FILE_NAME)
-            // 保存 Bitmap
+            val file = File(dir, AppUtils.SAVE_FILE_NAME)
             fos = FileOutputStream(file)
             bitmap.compress(CompressFormat.PNG, 100, fos) // 以 PNG 格式保存
             return file.absolutePath // 返回文件的绝对路径
@@ -95,57 +84,33 @@ object ImageUtil {
     }
 
     fun savePathToSp(context: Context, path: String?) {
-        val sharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
+        val sharedPreferences = context.getSharedPreferences(AppUtils.SP_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putString("shareImage", path)
         editor.apply()
     }
 
-    @SuppressLint("DefaultLocale")
-    fun parsePhotoDomainColor(imgFile: File, callback: (color: Color, strColor: String) -> Unit) {
-        val options = BitmapFactory.Options()
-        options.inJustDecodeBounds = true
-        BitmapFactory.decodeFile(imgFile.absolutePath, options)
-        options.inSampleSize = calculateInSampleSize(options)
-        options.inJustDecodeBounds = false
-        val bitmap = BitmapFactory.decodeFile(imgFile.absolutePath, options)
-        val palette = Palette.from(bitmap).generate()
+    fun parsePhotoDomainColor(imgBitmap: Bitmap): Color {
+        val palette = Palette.from(imgBitmap).generate()
         val dominantColor = palette.getDominantColor(0x000000)
-        val bgColor = Color(
+        return Color(
             red = android.graphics.Color.red(dominantColor) / 255,
             green = android.graphics.Color.green(dominantColor) / 255,
             blue = android.graphics.Color.blue(dominantColor) / 255
         )
+    }
+
+    @SuppressLint("DefaultLocale")
+    fun saveColorToSp(context: Context, bgColor: Color) {
+        val sharedPreferences = context.getSharedPreferences(AppUtils.SP_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
         val strBgColor = String.format("%.2f", bgColor.red)
             .plus(",")
             .plus(String.format("%.2f", bgColor.green))
             .plus(",")
             .plus(String.format("%.2f", bgColor.blue))
-        callback.invoke(bgColor, strBgColor)
-    }
-
-    private fun calculateInSampleSize(
-        options: BitmapFactory.Options,
-        reqWidth: Int = 200,
-        reqHeight: Int = 200
-    ): Int {
-        // 源图像的宽高
-        val height = options.outHeight
-        val width = options.outWidth
-        var inSampleSize = 1
-
-        if (height > reqHeight || width > reqWidth) {
-            // 计算缩放因子
-            val halfHeight = height / 2
-            val halfWidth = width / 2
-
-            // 逐步减小 inSampleSize 直到满足要求
-            while ((halfHeight / inSampleSize) >= reqHeight && (halfWidth / inSampleSize) >= reqWidth) {
-                inSampleSize *= 2
-            }
-        }
-
-        return inSampleSize
+        editor.putString("bgColor", strBgColor)
+        editor.apply()
     }
 
     fun createGradientImage(width: Float, height: Float, color: Color): Bitmap {

@@ -11,11 +11,13 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
 
 class HomeWidgetPlugin(override val lifecycle: Lifecycle) : FlutterPlugin,
     MethodChannel.MethodCallHandler, LifecycleOwner {
     private var mChannel: MethodChannel? = null
     private var mContext: Context? = null
+    private var preImagePath: String? = null
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         mContext = flutterPluginBinding.applicationContext
@@ -31,20 +33,30 @@ class HomeWidgetPlugin(override val lifecycle: Lifecycle) : FlutterPlugin,
                 val arguments: Map<String, Any>? = methodCall.arguments()
                 arguments?.let {
                     val coverPath = it["path"] as String?
+                    if (preImagePath == coverPath) {
+                        result.success(true)
+                        return@let
+                    }
+                    preImagePath = coverPath
+                    if (coverPath == null || !File(coverPath).exists()) {
+                        result.success(false)
+                        return@let
+                    }
                     lifecycleScope.launch(Dispatchers.IO) {
                         try {
-                            coverPath?.let { path ->
-                                val originBitmap = BitmapFactory.decodeFile(path)
-                                val coverBitmap =
-                                    ImageUtil.squareAndCircularBitmap(originBitmap, 180)
-                                val handledCoverPath =
-                                    ImageUtil.saveBitmapToFile(mContext!!, coverBitmap)
-                                ImageUtil.savePathToSp(mContext!!, handledCoverPath)
-                                originBitmap.recycle()
-                                coverBitmap.recycle()
-                                result.success(true)
-                            } ?: result.success(false)
+                            val originBitmap = BitmapFactory.decodeFile(coverPath)
+                            val coverBitmap =
+                                ImageUtil.squareAndCircularBitmap(originBitmap, 180)
+                            val handledCoverPath =
+                                ImageUtil.saveBitmapToFile(mContext!!, coverBitmap)
+                            ImageUtil.savePathToSp(mContext!!, handledCoverPath)
+                            val color = ImageUtil.parsePhotoDomainColor(coverBitmap)
+                            ImageUtil.saveColorToSp(mContext!!, color)
+                            originBitmap.recycle()
+                            coverBitmap.recycle()
+                            result.success(true)
                         } catch (e: Exception) {
+                            result.success(false)
                             e.printStackTrace()
                         }
                     }

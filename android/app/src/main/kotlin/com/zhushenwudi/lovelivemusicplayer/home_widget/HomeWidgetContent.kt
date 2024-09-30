@@ -43,7 +43,6 @@ import es.antonborri.home_widget.actionStartActivity
 import java.io.File
 
 abstract class HomeWidgetContent : GlanceAppWidget() {
-
     open var size: DpSize = AppUtils.SMALL_SQUARE
     open var radius: Dp = 6.dp
     open val cdSize = 80.dp
@@ -74,48 +73,29 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
         curJpLrc = sp.getString("curJpLrc", "")!!
         nextJpLrc = sp.getString("nextJpLrc", "")!!
         isShutdown = sp.getBoolean("isShutdown", false)
-        parsePhoto()
+        coverPath = sp.getString("shareImage", null)
+        val strBgColor = sp.getString("bgColor", "")!!
+
+        coverPath?.let {
+            if (!File(it).exists()) {
+                coverPath = null
+            }
+        }
+
+        if (strBgColor.contains(",")) {
+            val bgColorArr = strBgColor.split(",")
+            musicColor = Color(
+                red = bgColorArr[0].toDoubleOrNull()?.toInt() ?: 1,
+                green = bgColorArr[1].toDoubleOrNull()?.toInt() ?: 1,
+                blue = bgColorArr[2].toDoubleOrNull()?.toInt() ?: 1
+            )
+        }
 
         if (isShutdown) {
             isPlaying = false
         }
 
         RenderAppWidget(context)
-    }
-
-    private fun parsePhoto() {
-        var strBgColor = sp.getString("bgColor", "")!!
-        coverPath = sp.getString("shareImage", null)
-        val preCoverPath = sp.getString("preShareImage", "")!!
-
-        var isCoverExist = false
-
-        coverPath?.let {
-            val imgFile = File(it)
-            if (imgFile.exists()) {
-                isCoverExist = true
-                if (it == preCoverPath) {
-                    val bgColorArr = strBgColor.split(",")
-                    musicColor = Color(
-                        red = bgColorArr[0].toDoubleOrNull()?.toInt() ?: 1,
-                        green = bgColorArr[1].toDoubleOrNull()?.toInt() ?: 1,
-                        blue = bgColorArr[2].toDoubleOrNull()?.toInt() ?: 1
-                    )
-                } else {
-                    sp.edit().putString("preShareImage", it).apply()
-
-                    ImageUtil.parsePhotoDomainColor(imgFile) { color, strColor ->
-                        musicColor = color
-                        strBgColor = strColor
-                        sp.edit().putString("bgColor", strBgColor).apply()
-                    }
-                }
-            }
-        }
-
-        if (!isCoverExist) {
-            coverPath = null
-        }
     }
 
     @Composable
@@ -150,9 +130,6 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
                     modifier = GlanceModifier
                         .size(size.height)
                         .cornerRadius(radius)
-                        .clickable {
-                            LiveEventBus.get<String>("host").post("homeWidgetExample://toggle_play")
-                        }
                 ) {
                     RenderCD(isLargePauseWidget = false)
                     RenderCover(isLargePauseWidget = false)
@@ -274,18 +251,36 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
 
         val startPadding = if (isLargePauseWidget) 0.dp else offsetX
         val radio = if (isLargePauseWidget) 0.9f else 1f
-        Image(
-            provider = ImageProvider(cdDrawable),
-            contentDescription = "cd",
-            modifier = GlanceModifier
-                .size(size.height * radio)
-                .padding(
-                    start = startPadding,
-                    top = -offsetY,
-                    end = -offsetX,
-                    bottom = offsetY
-                )
-        )
+        if (isShutdown) {
+            Image(
+                provider = ImageProvider(cdDrawable),
+                contentDescription = "cd",
+                modifier = GlanceModifier
+                    .size(size.height * radio)
+                    .padding(
+                        start = startPadding,
+                        top = -offsetY,
+                        end = -offsetX,
+                        bottom = offsetY
+                    )
+            )
+        } else {
+            Image(
+                provider = ImageProvider(cdDrawable),
+                contentDescription = "cd",
+                modifier = GlanceModifier
+                    .size(size.height * radio)
+                    .padding(
+                        start = startPadding,
+                        top = -offsetY,
+                        end = -offsetX,
+                        bottom = offsetY
+                    )
+                    .clickable(rippleOverride = R.drawable.click_ripple) {
+                        LiveEventBus.get<String>("host").post("homeWidgetExample://toggle_play")
+                    }
+            )
+        }
     }
 
     @Composable
@@ -359,15 +354,24 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
         ) {
             val loveIcon =
                 if (isFavorite) R.drawable.widget_fav_click else R.drawable.widget_fav_unclick
-            Image(
-                provider = ImageProvider(loveIcon),
-                contentDescription = "love",
-                modifier = GlanceModifier
-                    .size(imageSize)
-                    .clickable {
-                        LiveEventBus.get<String>("host").post("homeWidgetExample://toggle_love")
-                    }
-            )
+            if (isShutdown) {
+                Image(
+                    provider = ImageProvider(loveIcon),
+                    contentDescription = "love",
+                    modifier = GlanceModifier
+                        .size(imageSize)
+                )
+            } else {
+                Image(
+                    provider = ImageProvider(loveIcon),
+                    contentDescription = "love",
+                    modifier = GlanceModifier
+                        .size(imageSize)
+                        .clickable(rippleOverride = R.drawable.click_ripple) {
+                            LiveEventBus.get<String>("host").post("homeWidgetExample://toggle_love")
+                        }
+                )
+            }
         }
     }
 
