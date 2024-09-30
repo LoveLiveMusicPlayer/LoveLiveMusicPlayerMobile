@@ -5,6 +5,7 @@
     android:initialLayout="@layout/glance_default_loading_layout"
     android:minWidth="120dp"
     android:minHeight="40dp"
+    android:previewImage="@mipmap/ic_widget_white_small"
     android:maxResizeWidth="120dp"
     android:maxResizeHeight="40dp"
     android:updatePeriodMillis="10000" />

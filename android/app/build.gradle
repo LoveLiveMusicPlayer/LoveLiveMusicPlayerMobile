@@ -203,5 +203,5 @@ dependencies {
     implementation 'androidx.glance:glance-preview:1.1.0'
     implementation 'androidx.glance:glance-appwidget-preview:1.1.0'
     implementation 'androidx.palette:palette-ktx:1.0.0'
-    implementation 'io.github.jeremyliao:live-event-bus-x:1.8.0'
+    implementation 'com.github.angcyo:LiveEventBus:1.8.1'
 }

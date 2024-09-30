@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
 
     <application
         android:name="${applicationName}"
@@ -98,52 +99,53 @@
         <receiver
             android:name="com.zhushenwudi.lovelivemusicplayer.home_widget.small_home_widget.WhiteSmallHomeWidgetReceiver"
             android:exported="true"
-            android:label="LLMP"
+            android:label="LLMP White Small Widget"
             android:permission="android.permission.BIND_APPWIDGET">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/small_home_widget" />
+                android:resource="@xml/white_small_home_widget" />
         </receiver>
 
         <receiver
             android:name="com.zhushenwudi.lovelivemusicplayer.home_widget.small_home_widget.BlackSmallHomeWidgetReceiver"
             android:exported="true"
-            android:label="LLMP"
+            android:label="LLMP Black Small Widget"
             android:permission="android.permission.BIND_APPWIDGET">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/small_home_widget" />
+                android:resource="@xml/black_small_home_widget" />
         </receiver>
 
         <receiver
             android:name="com.zhushenwudi.lovelivemusicplayer.home_widget.large_home_widget.WhiteLargeHomeWidgetReceiver"
             android:exported="true"
-            android:label="LLMP"
+            android:label="LLMP White Large Widget"
             android:permission="android.permission.BIND_APPWIDGET">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/large_home_widget" />
+                android:resource="@xml/white_large_home_widget" />
         </receiver>
+
         <receiver
             android:name="com.zhushenwudi.lovelivemusicplayer.home_widget.large_home_widget.BlackLargeHomeWidgetReceiver"
             android:exported="true"
-            android:label="LLMP"
+            android:label="LLMP Black Large Widget"
             android:permission="android.permission.BIND_APPWIDGET">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/large_home_widget" />
+                android:resource="@xml/black_large_home_widget" />
         </receiver>
 
         <receiver

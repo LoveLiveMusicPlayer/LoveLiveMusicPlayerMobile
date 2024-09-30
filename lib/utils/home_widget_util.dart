@@ -54,11 +54,7 @@ class HomeWidgetUtil {
     final isPlaying = PlayerLogic.to.mPlayer.playing;
     final List<Future<dynamic>> workArr = [];
     final imagePath = SDUtils.getImgPathFromMusic(music);
-    if (Platform.isAndroid) {
-      workArr.add(HomeWidget.saveWidgetData<String>('shareImage', imagePath));
-    } else if (Platform.isIOS) {
-      workArr.add(_channel.invokeMethod('shareImage', {'path': imagePath}));
-    }
+    workArr.add(_channel.invokeMethod('shareImage', {'path': imagePath}));
     workArr.add(HomeWidget.saveWidgetData<String>('songName', music.musicName));
     workArr.add(HomeWidget.saveWidgetData<String>('songArtist', music.artist));
     workArr.add(HomeWidget.saveWidgetData<bool>('songFavorite', music.isLove));

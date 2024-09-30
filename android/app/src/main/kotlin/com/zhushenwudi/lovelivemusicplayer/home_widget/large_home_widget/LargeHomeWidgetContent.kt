@@ -8,12 +8,12 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zhushenwudi.lovelivemusicplayer.home_widget.HomeWidgetContent
-import com.zhushenwudi.lovelivemusicplayer.home_widget.HomeWidgetUtil
+import com.zhushenwudi.lovelivemusicplayer.util.AppUtils
 
 @SuppressLint("CommitPrefEdits", "DefaultLocale")
 
 abstract class LargeHomeWidgetContent(
-    override var size: DpSize = HomeWidgetUtil.HORIZONTAL_RECTANGLE,
+    override var size: DpSize = AppUtils.HORIZONTAL_RECTANGLE,
     override var radius: Dp = 12.dp,
     override var cdSize: Dp = 120.dp
 ) : HomeWidgetContent() {
@@ -48,8 +48,8 @@ abstract class LargeHomeWidgetContent(
     }
 
     @Composable
-    override fun RenderTextArr(stateFontSize: TextUnit, infoFontSize: TextUnit, paddingInDp: Dp) {
-        super.RenderTextArr(stateFontSize = 12.sp, infoFontSize = 13.sp, paddingInDp = 2.dp)
+    override fun RenderTextArr(stateFontSize: TextUnit, infoFontSize: TextUnit) {
+        super.RenderTextArr(stateFontSize = 12.sp, infoFontSize = 13.sp)
     }
 
     @Composable

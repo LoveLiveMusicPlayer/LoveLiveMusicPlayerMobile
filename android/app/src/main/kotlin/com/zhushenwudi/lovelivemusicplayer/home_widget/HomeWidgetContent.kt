@@ -37,11 +37,14 @@ import androidx.glance.unit.ColorProvider
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.zhushenwudi.lovelivemusicplayer.MainActivity
 import com.zhushenwudi.lovelivemusicplayer.R
+import com.zhushenwudi.lovelivemusicplayer.util.AppUtils
+import com.zhushenwudi.lovelivemusicplayer.util.ImageUtil
 import es.antonborri.home_widget.actionStartActivity
 import java.io.File
 
 abstract class HomeWidgetContent : GlanceAppWidget() {
-    open var size: DpSize = HomeWidgetUtil.SMALL_SQUARE
+
+    open var size: DpSize = AppUtils.SMALL_SQUARE
     open var radius: Dp = 6.dp
     open val cdSize = 80.dp
     abstract var isWhite: Boolean
@@ -63,15 +66,19 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
     fun GlanceContent(context: Context, currentState: HomeWidgetGlanceState) {
         fontColor = if (isWhite) Color.Black else Color.White
         sp = currentState.preferences
-        songName = sp.getString("songName", "songName")!!
-        songArtist = sp.getString("songArtist", "songArtist")!!
+        songName = sp.getString("songName", "")!!
+        songArtist = sp.getString("songArtist", "")!!
         isFavorite = sp.getBoolean("songFavorite", false)
         isPlaying = sp.getBoolean("isPlaying", false)
-        playText = sp.getString("playText", "Playing,Pausing")!!
-        curJpLrc = sp.getString("curJpLrc", "Current Jp Lyric")!!
-        nextJpLrc = sp.getString("nextJpLrc", "Next Jp Lyric")!!
+        playText = sp.getString("playText", "")!!
+        curJpLrc = sp.getString("curJpLrc", "")!!
+        nextJpLrc = sp.getString("nextJpLrc", "")!!
         isShutdown = sp.getBoolean("isShutdown", false)
         parsePhoto()
+
+        if (isShutdown) {
+            isPlaying = false
+        }
 
         RenderAppWidget(context)
     }
@@ -97,7 +104,7 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
                 } else {
                     sp.edit().putString("preShareImage", it).apply()
 
-                    HomeWidgetUtil.parsePhotoDomainColor(imgFile) { color, strColor ->
+                    ImageUtil.parsePhotoDomainColor(imgFile) { color, strColor ->
                         musicColor = color
                         strBgColor = strColor
                         sp.edit().putString("bgColor", strBgColor).apply()
@@ -108,10 +115,6 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
 
         if (!isCoverExist) {
             coverPath = null
-        }
-
-        if (isShutdown) {
-            isPlaying = false
         }
     }
 
@@ -147,6 +150,9 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
                     modifier = GlanceModifier
                         .size(size.height)
                         .cornerRadius(radius)
+                        .clickable {
+                            LiveEventBus.get<String>("host").post("homeWidgetExample://toggle_play")
+                        }
                 ) {
                     RenderCD(isLargePauseWidget = false)
                     RenderCover(isLargePauseWidget = false)
@@ -164,14 +170,14 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
                     modifier = GlanceModifier.defaultWeight()
                 ) {
                     Column {
-                        RenderLogo(size = 20.dp, paddingInDp = (-6).dp)
-                        if (size.width == HomeWidgetUtil.HORIZONTAL_RECTANGLE.width) {
+                        RenderLogo(size = 22.dp, paddingInDp = (-6).dp)
+                        if (size.width == AppUtils.HORIZONTAL_RECTANGLE.width) {
                             RenderLyric(isLargePauseWidget = false)
                         }
                     }
                 }
 
-                RenderTextArr(stateFontSize = 8.sp, infoFontSize = 9.sp, paddingInDp = 1.dp)
+                RenderTextArr(stateFontSize = 9.sp, infoFontSize = 11.sp)
             }
 
             RenderFavorite(imageSize = 20.dp, paddingInDp = radius)
@@ -185,8 +191,7 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
     @Composable
     open fun RenderTextArr(
         stateFontSize: TextUnit,
-        infoFontSize: TextUnit,
-        paddingInDp: Dp
+        infoFontSize: TextUnit
     ) {
         val playTextArr = playText.split(",")
         var playStateText = playTextArr[1]
@@ -199,8 +204,7 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
                 fontSize = stateFontSize,
                 fontWeight = FontWeight.Bold,
                 color = ColorProvider(Color.Gray)
-            ),
-            modifier = GlanceModifier.padding(bottom = paddingInDp)
+            )
         )
 
         Text(
@@ -209,8 +213,7 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
                 fontSize = infoFontSize,
                 fontWeight = FontWeight.Bold,
                 color = ColorProvider(fontColor)
-            ),
-            modifier = GlanceModifier.padding(bottom = paddingInDp)
+            )
         )
 
         Text(
@@ -219,8 +222,7 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
                 fontSize = infoFontSize,
                 fontWeight = FontWeight.Bold,
                 color = ColorProvider(Color.Gray)
-            ),
-            modifier = GlanceModifier.padding(bottom = paddingInDp)
+            )
         )
     }
 
@@ -288,7 +290,7 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
 
     @Composable
     open fun RenderCover(isLargePauseWidget: Boolean) {
-        val coverSize = cdSize * 0.55f
+        val coverSize = cdSize * 0.4f
         val coverAndCdDiffSize = (cdSize - coverSize) / 2
         val offsetX = calcCdOffsetX()
         val offsetY = calcCdOffsetY()
@@ -297,9 +299,8 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
         val radio = if (isLargePauseWidget) 0.95f else 1f
         coverPath?.let {
             if (File(it).exists()) {
-                val bitmap = HomeWidgetUtil.getCircularBitmap(BitmapFactory.decodeFile(it))
                 Image(
-                    provider = ImageProvider(bitmap),
+                    provider = ImageProvider(BitmapFactory.decodeFile(it)),
                     contentDescription = "cover",
                     modifier = GlanceModifier
                         .size(size.height * radio)
@@ -325,13 +326,10 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
                 colorFilter = ColorFilter.tint(colorProvider = ColorProvider(Color.White)),
                 modifier = GlanceModifier
                     .size(20.dp)
-                    .clickable {
-                        LiveEventBus.get<String>("host").post("homeWidgetExample://toggle_play")
-                    }
             )
         } else {
             val padding =
-                if (size.width == HomeWidgetUtil.HORIZONTAL_RECTANGLE.width) 22.dp else 14.dp
+                if (size.width == AppUtils.HORIZONTAL_RECTANGLE.width) 26.dp else 23.dp
             Box(
                 contentAlignment = Alignment.TopEnd,
                 modifier = GlanceModifier
@@ -344,9 +342,6 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
                     colorFilter = ColorFilter.tint(colorProvider = ColorProvider(Color.White)),
                     modifier = GlanceModifier
                         .size(15.dp)
-                        .clickable {
-                            LiveEventBus.get<String>("host").post("homeWidgetExample://toggle_play")
-                        }
                 )
             }
         }
@@ -378,7 +373,7 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
 
     @Composable
     fun GradientRectangle(color: Color) {
-        val bitmap = HomeWidgetUtil.createGradientImage(size.width.value, size.height.value, color)
+        val bitmap = ImageUtil.createGradientImage(size.width.value, size.height.value, color)
 
         Box(
             modifier = GlanceModifier

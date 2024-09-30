@@ -5,6 +5,7 @@ import androidx.lifecycle.lifecycleScope
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.ryanheise.audioservice.AudioServiceActivity
 import com.zhushenwudi.lovelivemusicplayer.plugin.BackPlugin
+import com.zhushenwudi.lovelivemusicplayer.plugin.HomeWidgetPlugin
 import com.zhushenwudi.lovelivemusicplayer.plugin.UPushPlugin
 import com.zhushenwudi.lovelivemusicplayer.plugin.UpdatePlugin
 import com.zhushenwudi.lovelivemusicplayer.util.AppUtils
@@ -43,6 +44,7 @@ class MainActivity : AudioServiceActivity() {
             add(UPushPlugin())
             add(BackPlugin { moveTaskToBack(false) })
             add(UpdatePlugin())
+            add(HomeWidgetPlugin(lifecycle))
         }
     }
 

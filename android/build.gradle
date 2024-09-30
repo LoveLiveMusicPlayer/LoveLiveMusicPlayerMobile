@@ -4,6 +4,7 @@ buildscript {
         mavenCentral()
         google()
         maven { url "https://mvn.mob.com/android" }
+        maven { url 'https://jitpack.io' }
     }
 
     dependencies {
@@ -18,6 +19,8 @@ allprojects {
     repositories {
         mavenCentral()
         google()
+        maven { url "https://mvn.mob.com/android" }
+        maven { url 'https://jitpack.io' }
     }
 }
 

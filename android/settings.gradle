@@ -14,6 +14,8 @@ pluginManagement {
         mavenCentral()
         google()
         gradlePluginPortal()
+        maven { url "https://mvn.mob.com/android" }
+        maven { url 'https://jitpack.io' }
     }
 }
 
