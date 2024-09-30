@@ -138,7 +138,7 @@ class _RefresherWidgetState extends State<RefresherWidget> {
             crossAxisCount: widget.columnNum,
             mainAxisSpacing: widget.mainAxisSpacing,
             crossAxisSpacing: widget.crossAxisSpacing,
-            mainAxisExtent: 152.h),
+            mainAxisExtent: 153.h),
         padding: EdgeInsets.only(bottom: 70.h),
         itemBuilder: widget.listItem,
       );
