@@ -199,9 +199,9 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["library-*.aar"])
     implementation fileTree(dir: "libs", include: ["extension-*.aar"])
 
-    implementation "androidx.glance:glance-appwidget:1.1.0"
-    implementation 'androidx.glance:glance-preview:1.1.0'
-    implementation 'androidx.glance:glance-appwidget-preview:1.1.0'
+    implementation "androidx.glance:glance-appwidget:$glance_version"
+    implementation "androidx.glance:glance-preview:$glance_version"
+    implementation "androidx.glance:glance-appwidget-preview:$glance_version"
     implementation 'androidx.palette:palette-ktx:1.0.0'
     implementation 'com.github.angcyo:LiveEventBus:1.8.1'
 }

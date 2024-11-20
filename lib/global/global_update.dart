@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app_update/flutter_app_update.dart';
+import 'package:flutter_app_update/result_model.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
@@ -22,8 +23,8 @@ class UpdateLogic extends SuperController
   @override
   void onInit() {
     super.onInit();
-    AzhonAppUpdate.listener((Map<String, dynamic> map) {
-      if (map.containsKey('error')) {
+    AzhonAppUpdate.listener((ResultModel model) {
+      if (model.type == ResultType.error) {
         SmartDialog.showToast('update_fail'.tr);
       }
     });

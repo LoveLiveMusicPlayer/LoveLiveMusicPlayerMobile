@@ -25,6 +25,7 @@ class HomeWidgetUtil {
   static const MethodChannel _channel = MethodChannel('refreshWidgetPhoto');
 
   static init() async {
+    Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
     await HomeWidget.setAppGroupId(Const.homeWidgetGroupId);
     await HomeWidget.initiallyLaunchedFromHomeWidget()
         .then(_launchedFromWidget);
