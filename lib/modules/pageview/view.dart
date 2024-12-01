@@ -64,9 +64,8 @@ class PageViewComponent extends GetView<PageViewLogic> {
             canReorder: canReorder,
 
             ///当前列表是否网格显示
-            columnNum: 3,
             mainAxisSpacing: 0,
-            crossAxisSpacing: page == 1 ? 20.w : 10.w,
+            crossAxisSpacing: 10.w,
             leftPadding: hasPadding ? 16.w : 0,
             rightPadding: hasPadding ? 16.w : 0,
             listItem: (cxt, index) => _buildListItem(index, page)));

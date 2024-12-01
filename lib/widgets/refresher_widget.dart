@@ -20,7 +20,6 @@ class RefresherWidget extends StatefulWidget {
   final bool enablePullDown;
   final bool enablePullUp;
   final bool isGridView;
-  final int columnNum;
   final double mainAxisSpacing;
   final double crossAxisSpacing;
   final Color spacingColor;
@@ -41,7 +40,6 @@ class RefresherWidget extends StatefulWidget {
     this.enablePullUp = true,
     this.enablePullDown = true,
     this.isGridView = false,
-    this.columnNum = 1,
     this.mainAxisSpacing = 10,
     this.crossAxisSpacing = 10,
     this.spacingColor = Colors.transparent,
@@ -134,13 +132,13 @@ class _RefresherWidgetState extends State<RefresherWidget> {
       return GridView.builder(
         controller: widget.scrollController,
         itemCount: widget.itemCount,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: widget.columnNum,
-            mainAxisSpacing: widget.mainAxisSpacing,
-            crossAxisSpacing: widget.crossAxisSpacing,
-            mainAxisExtent: 153.h),
-        padding: EdgeInsets.only(bottom: 70.h),
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 180,
+          crossAxisSpacing: widget.crossAxisSpacing,
+          mainAxisSpacing: 75,
+        ),
         itemBuilder: widget.listItem,
+        padding: EdgeInsets.only(bottom: 70.h),
       );
     } else {
       if (widget.canReorder) {

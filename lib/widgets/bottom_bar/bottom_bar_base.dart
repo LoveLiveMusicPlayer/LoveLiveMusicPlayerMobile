@@ -21,8 +21,8 @@ abstract class BottomBar extends GetView<HomeController> {
       return BottomNavigationBar(
         showUnselectedLabels: true,
         currentIndex: mIndex,
-        selectedFontSize: 10.sp,
-        unselectedFontSize: 10.sp,
+        selectedFontSize: 10.h,
+        unselectedFontSize: 10.h,
         items: renderBottomNavigationBarItemList(mIndex),
         elevation: 0,
         backgroundColor: GlobalLogic.to.bgPhoto.value == ""
