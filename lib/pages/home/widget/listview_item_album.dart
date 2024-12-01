@@ -6,7 +6,6 @@ import 'package:lovelivemusicplayer/models/album.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
-import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 
 ///专辑 item
 class ListViewItemAlbum extends GetView {
@@ -21,45 +20,38 @@ class ListViewItemAlbum extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    final borderWidth = (ScreenUtil().screenWidth - 72.w) / 3;
     final style = (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
-        ? TextStyleMs.f12_400.copyWith(color: ColorMs.colorFFFFFF)
-        : TextStyleMs.f12_400.copyWith(color: Colors.black);
+        ? TextStyle(fontSize: 12).copyWith(color: ColorMs.colorFFFFFF)
+        : TextStyle(fontSize: 12).copyWith(color: Colors.black);
 
     return GestureDetector(
-      onTap: () => onItemTap(album),
-      child: Column(
-        children: [
-          SizedBox(
-            height: borderWidth,
-            width: borderWidth,
-            child: Hero(
+        onTap: () => onItemTap(album),
+        child: Column(
+          children: [
+            Hero(
               tag: "album${album.albumId}",
-              child: showImg(
-                SDUtils.getImgPathFromAlbum(album),
-                borderWidth,
-                borderWidth,
-                hasShadow: false,
-                onTap: () => onItemTap(album),
-              ),
-            ),
-          ),
-          SizedBox(height: 5.h),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  album.albumName!,
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: style,
+              child: SizedBox(
+                height: 146.h, // 确保容器高度一致
+                child: showImg(
+                  SDUtils.getImgPathFromAlbum(album),
+                  146,
+                  146,
+                  hasShadow: false,
+                  onTap: () => onItemTap(album),
                 ),
               ),
-            ],
-          ),
-        ],
-      ),
-    );
+            ),
+            SizedBox(
+              height: 30.h,
+              child: Text(
+                album.albumName!,
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: style,
+              ),
+            )
+          ],
+        ));
   }
 }

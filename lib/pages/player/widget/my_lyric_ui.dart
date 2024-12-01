@@ -53,13 +53,13 @@ class MyLrcUI extends LyricUI {
   @override
   TextStyle getPlayingExtTextStyle() => TextStyle(
       color: playingColor,
-      fontSize: defaultSize.sp,
+      fontSize: defaultSize.h,
       fontWeight: FontWeight.bold);
 
   @override
   TextStyle getOtherExtTextStyle() => TextStyle(
         color: otherColor,
-        fontSize: defaultSize.sp,
+        fontSize: defaultSize.h,
       );
 
   @override
@@ -69,7 +69,7 @@ class MyLrcUI extends LyricUI {
   @override
   TextStyle getPlayingMainTextStyle() => TextStyle(
       color: playingColor,
-      fontSize: otherMainSize.sp,
+      fontSize: otherMainSize.h,
       fontWeight: FontWeight.bold);
 
   @override

@@ -45,7 +45,7 @@ class PlayerInfo extends StatelessWidget {
                 (GlobalLogic.to.hasSkin.value || Get.isDarkMode
                     ? ColorMs.colorDFDFDF
                     : ColorMs.colorB7BCC1),
-            fontSize: 15.sp,
+            fontSize: 15.h,
             fontWeight: fontWeight),
         maxLines: 1,
         overflow: TextOverflow.ellipsis);
