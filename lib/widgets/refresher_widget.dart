@@ -138,7 +138,7 @@ class _RefresherWidgetState extends State<RefresherWidget> {
           mainAxisSpacing: 75,
         ),
         itemBuilder: widget.listItem,
-        padding: EdgeInsets.only(bottom: 70.h),
+        padding: EdgeInsets.only(bottom: 145.h),
       );
     } else {
       if (widget.canReorder) {
