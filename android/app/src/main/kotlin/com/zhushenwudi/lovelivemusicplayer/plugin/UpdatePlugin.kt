@@ -30,7 +30,7 @@ class UpdatePlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     override fun onDetachedFromEngine(p0: FlutterPlugin.FlutterPluginBinding) {}
 
     companion object {
-        private const val UPDATE_CHANNEL ="android/update"
+        private const val UPDATE_CHANNEL = "android/update"
 
         fun registerWith(registrar: PluginRegistry.Registrar) {
             val channel = MethodChannel(registrar.messenger(), UPDATE_CHANNEL)

@@ -49,7 +49,7 @@ class UPushPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
 
     companion object {
         private const val TAG = "UPushHelper"
-        private const val PUSH_CHANNEL ="u-push-helper"
+        private const val PUSH_CHANNEL = "u-push-helper"
 
         fun registerWith(registrar: PluginRegistry.Registrar) {
             val channel = MethodChannel(registrar.messenger(), PUSH_CHANNEL)

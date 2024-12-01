@@ -13,7 +13,7 @@ object AppUtils {
     const val SAVE_FILE_NAME = "sharedImage.png"
     const val SP_NAME = "HomeWidgetPreferences"
 
-    val SMALL_SQUARE = DpSize(150.dp, 120.dp)
+    val SMALL_SQUARE = DpSize(170.dp, 120.dp)
     val HORIZONTAL_RECTANGLE = DpSize(325.dp, 165.dp)
 
     fun initUmeng(context: Context) {
