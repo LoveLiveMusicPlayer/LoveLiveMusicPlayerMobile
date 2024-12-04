@@ -8,6 +8,7 @@ import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
+import 'package:lovelivemusicplayer/widgets/option_gridview.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class RefresherWidget extends StatefulWidget {
@@ -129,16 +130,13 @@ class _RefresherWidgetState extends State<RefresherWidget> {
   Widget renderList() {
     if (widget.isGridView) {
       // Grid列表(专辑)
-      return GridView.builder(
-        controller: widget.scrollController,
+      return OptionGridView(
         itemCount: widget.itemCount,
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 180,
-          crossAxisSpacing: widget.crossAxisSpacing,
-          mainAxisSpacing: 75,
-        ),
+        rowCount: AppUtils.calcAlbumColumn(),
+        mainAxisSpacing: widget.mainAxisSpacing,
+        crossAxisSpacing: widget.crossAxisSpacing,
         itemBuilder: widget.listItem,
-        padding: EdgeInsets.only(bottom: 145.h),
+        padding: EdgeInsets.only(bottom: 70.h),
       );
     } else {
       if (widget.canReorder) {

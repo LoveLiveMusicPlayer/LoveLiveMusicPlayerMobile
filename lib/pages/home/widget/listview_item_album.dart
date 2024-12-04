@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/models/album.dart';
@@ -30,26 +29,20 @@ class ListViewItemAlbum extends GetView {
           children: [
             Hero(
               tag: "album${album.albumId}",
-              child: SizedBox(
-                height: 146.h, // 确保容器高度一致
-                child: showImg(
-                  SDUtils.getImgPathFromAlbum(album),
-                  146,
-                  146,
-                  hasShadow: false,
-                  onTap: () => onItemTap(album),
-                ),
+              child: showImg(
+                SDUtils.getImgPathFromAlbum(album),
+                null,
+                null,
+                hasShadow: false,
+                onTap: () => onItemTap(album),
               ),
             ),
-            SizedBox(
-              height: 30.h,
-              child: Text(
-                album.albumName!,
-                maxLines: 2,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: style,
-              ),
+            Text(
+              album.albumName!,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: style,
             )
           ],
         ));
