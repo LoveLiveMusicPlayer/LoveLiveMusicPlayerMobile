@@ -37,7 +37,7 @@ Function list:
 - [Customized song list] ✓
 - [I like it] ✓
 - [Online Chinese, Japanese and Roman lyrics] ✓
-- [Reporting of playing data] x
+- [Reporting of playing data] ✓
 - [Fast transmission of songs and data synchronization] ✓
 - [Bright color mode, dark color mode and dazzling color mode] ✓
 - [Sleep mode stops at regular intervals] ✓
@@ -46,6 +46,7 @@ Function list:
 - [Search in MoeGirl] ✓
 - [Drive mode] ✓
 - [Carplay support] ✓
+- [Home Widget] ✓
 
 **--Project_by [zhushenwudi](https://space.bilibili.com/4367965)**
 
@@ -63,7 +64,8 @@ Github:<https://github.com/zhushenwudi/LoveLiveMusicPlayer>
 Gitee:<https://gitee.com/zhushenwudi/love-live-music-player>
 
 # Using guide
-Bilibili:
+
+BiliBili:
 Software introduction and guide:<https://www.bilibili.com/video/BV1cW4y177eX>
 
 IOS software introduction and guide:<https://www.bilibili.com/video/BV1R3411Z7Zs>
@@ -130,12 +132,12 @@ for allocating free open-source licences for IDEs such as
 - 萌娘百科 <https://zh.moegirl.org.cn>
 - LLWiki <https://llwiki.org>
 
-## Support languague
+## Support language
 
 - English ✓
 - Chinese ✓
 - German ✓
-- Japanese x
+- Japanese ✓
 - French x
 - Russian x
 - Italian x
@@ -161,10 +163,11 @@ for allocating free open-source licences for IDEs such as
   gradlew assembleRelease
 
 - IOS Packaging
-  #
-  # Copy and replace the contents of sharesdk_plugin below to the following path through XCode
-  # Pods/Development Pods/sharesdk_plugin/Pod/sharesdk_plugin.podspec
-  #
+
+  Copy and replace the contents of sharesdk_plugin below to the following path through XCode
+
+  Pods/Development Pods/sharesdk_plugin/Pod/sharesdk_plugin.podspec
+
     ```swift
       Pod::Spec.new do |s|
         s.name             = 'sharesdk_plugin'
@@ -191,7 +194,7 @@ for allocating free open-source licences for IDEs such as
         end
     ```
 
-  if an #import <MOBFoundation/MOBFDataModel.h> error is reported, you can comment it out.
+  if an ```#import <MOBFoundation/MOBFDataModel.h>``` error is reported, you can comment it out.
 
 ## License
 

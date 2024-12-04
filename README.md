@@ -37,7 +37,7 @@ Language: 中文 | [English Document](README_EN.md)
 - [自定义歌单] ✓
 - [我喜欢] ✓
 - [在线中文、日文、罗马音歌词] ✓
-- [播放数据上报] x
+- [播放数据上报] ✓
 - [歌曲快传 + 数据同步] ✓
 - [亮色模式 + 暗黑模式 + 炫彩模式] ✓
 - [睡眠模式定时停止] ✓
@@ -46,6 +46,7 @@ Language: 中文 | [English Document](README_EN.md)
 - [萌娘百科搜索] ✓
 - [驾驶模式] ✓
 - [Carplay支持] ✓
+- [桌面小组件] ✓
 
 **--Project_by [朱神无敌](https://space.bilibili.com/4367965)**
 
@@ -134,7 +135,7 @@ B站空间：<https://space.bilibili.com/4367965>
 - 英文 √
 - 中文 √
 - 德文 √
-- 日文 x
+- 日文 √
 - 法文 x
 - 俄文 x
 - 意大利文 x
@@ -160,10 +161,11 @@ B站空间：<https://space.bilibili.com/4367965>
     gradlew assembleRelease
 
 - IOS编译打包
-    #
-    # 要把下面sharesdk_plugin的内容通过XCode复制替换到如下路径
-    # Pods/Development Pods/sharesdk_plugin/Pod/sharesdk_plugin.podspec
-    #
+
+  要把下面sharesdk_plugin的内容通过XCode复制替换到如下路径
+
+  Pods/Development Pods/sharesdk_plugin/Pod/sharesdk_plugin.podspec
+
     ```swift
       Pod::Spec.new do |s|
         s.name             = 'sharesdk_plugin'
@@ -190,7 +192,7 @@ B站空间：<https://space.bilibili.com/4367965>
         end
     ```
 
-    如果 #import <MOBFoundation/MOBFDataModel.h> 报错，可以注释掉
+  如果 ```#import <MOBFoundation/MOBFDataModel.h>``` 报错，可以注释掉
 
 ## 许可证
 
