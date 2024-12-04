@@ -21,7 +21,6 @@ import 'package:lovelivemusicplayer/utils/sentry_util.dart';
 
 StreamSubscription? dbInitSub;
 StreamSubscription? closeOpenSub;
-bool isInForeground = true;
 
 void main() {
   runZonedGuarded(
