@@ -32,7 +32,6 @@
             android:exported="true"
             android:hardwareAccelerated="true"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
             android:theme="@style/LaunchTheme"
             android:windowSoftInputMode="adjustResize">
             <meta-data
@@ -73,7 +72,6 @@
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <!-- cropper end -->
 

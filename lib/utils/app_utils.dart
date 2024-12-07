@@ -12,7 +12,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
@@ -590,13 +589,5 @@ class AppUtils {
     if (GlobalLogic.to.env == "pre") {
       func();
     }
-  }
-
-  static int calcAlbumColumn() {
-    double width = ScreenUtil().screenWidth;
-    if (width >= 600) {
-      return (width / 150).ceil();
-    }
-    return 3;
   }
 }
