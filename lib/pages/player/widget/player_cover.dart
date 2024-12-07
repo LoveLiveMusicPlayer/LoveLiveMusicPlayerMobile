@@ -38,7 +38,8 @@ class _CoverState extends State<Cover> {
                 child: Stack(
                   children: [
                     /// 封面
-                    showImg(imagePath, 273, 273, radius: 24),
+                    showImg(imagePath, 273, 273,
+                        radius: 24, onTap: widget.onTap),
                     renderBlackFilter()
                   ],
                 )),

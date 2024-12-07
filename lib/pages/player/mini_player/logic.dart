@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/box_decoration.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/dialog_playlist/view.dart';
@@ -38,14 +37,6 @@ class MiniPlayerController extends GetxController {
   }
 
   onMarqueeTouchUp(PointerUpEvent event) {
-    final playlistSize = PlayerLogic.to.mPlayList.length;
-    if (playlistSize <= 1) {
-      return;
-    }
-    final loopMode = PlayerLogic.to.mPlayer.loopMode;
-    if (loopMode == LoopMode.one) {
-      return;
-    }
     final endPosition = event.position.dx;
     if ((endPosition - startPosition).abs() > 130.w) {
       // 距离大于50认为滑动切歌有效
