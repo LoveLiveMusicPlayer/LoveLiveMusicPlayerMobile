@@ -2,6 +2,7 @@ import 'package:flexible_scrollbar/flexible_scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/modules/pageview/logic.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
@@ -10,6 +11,8 @@ import 'package:lovelivemusicplayer/pages/home/widget/listview_item_album.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_singer.dart';
 import 'package:lovelivemusicplayer/pages/home/widget/listview_item_song_sheet.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
+import 'package:lovelivemusicplayer/widgets/dynamic_height_gridview.dart';
 import 'package:lovelivemusicplayer/widgets/listview_item_song.dart';
 import 'package:lovelivemusicplayer/widgets/refresher_widget.dart';
 
@@ -34,11 +37,37 @@ class PageViewComponent extends GetView<PageViewLogic> {
   }
 
   Widget _buildList(int page) {
-    final currentPage = HomeController.to.state.currentIndex.value;
-    final hasPadding = currentPage == 1 || currentPage == 2 || currentPage == 4;
     final scrollController = HomeController.scrollControllers[page];
     final itemCount =
         GlobalLogic.to.getListSize(page, GlobalLogic.to.databaseInitOver.value);
+
+    /// 处理空白页
+    if (itemCount <= 0) {
+      return Padding(
+        padding: EdgeInsets.only(top: (page == 2 || page == 4) ? 35.h : 0),
+        child: _buildNullWidget(),
+      );
+    }
+
+    /// 渲染专辑页
+    if (page == 1) {
+      return Padding(
+        padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 75.h),
+        child: DynamicHeightGridView(
+          controller: scrollController,
+          builder: (BuildContext context, int index) =>
+              _buildListItem(index, page),
+          itemCount: itemCount,
+          crossAxisCount: AppUtils.calcAlbumColumn(),
+          mainAxisSpacing: 0,
+          crossAxisSpacing: 10.w,
+        ),
+      );
+    }
+
+    /// 渲染其他页
+    final currentPage = HomeController.to.state.currentIndex.value;
+    final hasPadding = currentPage == 2 || currentPage == 4;
     final canReorder =
         page == 3 && HomeController.to.state.selectMode.value == 1;
     return FlexibleScrollbar(
@@ -60,7 +89,6 @@ class PageViewComponent extends GetView<PageViewLogic> {
             itemCount: itemCount,
             enablePullUp: false,
             enablePullDown: false,
-            isGridView: page == 1,
             canReorder: canReorder,
 
             ///当前列表是否网格显示
@@ -69,6 +97,21 @@ class PageViewComponent extends GetView<PageViewLogic> {
             leftPadding: hasPadding ? 16.w : 0,
             rightPadding: hasPadding ? 16.w : 0,
             listItem: (cxt, index) => _buildListItem(index, page)));
+  }
+
+  /// 空白页
+  Widget _buildNullWidget() {
+    return Align(
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(Assets.mainIcNull, width: 80.h, height: 80.h),
+          SizedBox(height: 10.h),
+          Text('no_data'.tr, style: TextStyleMs.colorBFBFBF_18)
+        ],
+      ),
+    );
   }
 
   Widget _buildListItem(int index, int page) {

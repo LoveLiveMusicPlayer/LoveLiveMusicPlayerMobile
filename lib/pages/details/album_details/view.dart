@@ -13,13 +13,12 @@ class AlbumDetailsPage extends DetailsPage<AlbumDetailController> {
 
   @override
   Widget renderCover() {
+    final imagePath = SDUtils.getImgPathFromAlbum(controller.album);
     return Column(
       children: [
         Hero(
             tag: "album${controller.album.albumId}",
-            child: showImg(
-                SDUtils.getImgPathFromAlbum(controller.album), 240, 240,
-                radius: 24, hasShadow: false)),
+            child: showImg(imagePath, 240, 240)),
         SizedBox(height: 20.h),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),

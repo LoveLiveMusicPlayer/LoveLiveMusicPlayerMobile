@@ -44,6 +44,7 @@ class ListViewItemSongState extends State<ListViewItemSong> {
     return Obx(() {
       final hasBGPhoto = GlobalLogic.to.bgPhoto.value != "";
       final music = widget.musicList[widget.index];
+      final imagePath = SDUtils.getImgPathFromMusic(music);
       return Row(
         children: [
           /// 标记当前播放歌曲
@@ -76,8 +77,7 @@ class ListViewItemSongState extends State<ListViewItemSong> {
                   /// 缩列图
                   GestureDetector(
                     onTap: clickItem,
-                    child: showImg(SDUtils.getImgPathFromMusic(music), 48, 48,
-                        hasShadow: false, onTap: clickItem),
+                    child: showImg(imagePath, 48, 48, onTap: clickItem),
                   ),
 
                   SizedBox(width: 10.w),

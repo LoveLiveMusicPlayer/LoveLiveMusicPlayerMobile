@@ -371,6 +371,7 @@ class PlayerLogic extends GetxController
     final tempMusic = await DBLogic.to.updateLove(mMusic, isLove: isLove);
     // 切换的歌曲如果是当前播放的歌曲，需要手动深拷贝一下对象使得player界面状态正确
     if (tempMusic != null && tempMusic.musicId == playingMusic.value.musicId) {
+      print("isLove: ${tempMusic.musicName} ${tempMusic.isLove}");
       setCurrentMusic(Music.deepClone(tempMusic));
     }
     await DBLogic.to.findAllLoveListByGroup(GlobalLogic.to.currentGroup.value);

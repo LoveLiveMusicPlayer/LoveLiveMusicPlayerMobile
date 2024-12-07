@@ -11,6 +11,6 @@ class SingerDetailsPage extends DetailsPage<SingerDetailController> {
     final artist = controller.artist;
     return Hero(
         tag: "singer${artist.uid}",
-        child: showImg(artist.photo, 240, 240, radius: 120, hasShadow: false));
+        child: showImg(artist.photo, 240, 240, isCircle: true));
   }
 }

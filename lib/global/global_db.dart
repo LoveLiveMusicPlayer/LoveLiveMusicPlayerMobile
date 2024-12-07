@@ -593,9 +593,6 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       } else {
         await loveDao.deleteLoveById(music.musicId!);
       }
-      GlobalLogic.to.musicList
-          .firstWhere((mMusic) => mMusic.musicId == music.musicId)
-          .isLove = music.isLove;
       return music;
     } catch (e) {
       Log4f.i(msg: e.toString());

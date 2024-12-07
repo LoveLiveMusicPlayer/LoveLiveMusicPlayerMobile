@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
@@ -21,6 +20,7 @@ class _CoverState extends State<Cover> {
   @override
   Widget build(BuildContext context) {
     Music? currentMusic = PlayerLogic.to.playingMusic.value;
+    final imagePath = SDUtils.getImgPathFromMusic(currentMusic);
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
@@ -38,11 +38,7 @@ class _CoverState extends State<Cover> {
                 child: Stack(
                   children: [
                     /// 封面
-                    showImg(SDUtils.getImgPathFromMusic(currentMusic), 273, 273,
-                        radius: 24,
-                        shadowColor: GlobalLogic.to.hasSkin.value
-                            ? GlobalLogic.to.iconColor.value
-                            : null),
+                    showImg(imagePath, 273, 273, radius: 24),
                     renderBlackFilter()
                   ],
                 )),

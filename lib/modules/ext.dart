@@ -15,153 +15,64 @@ import 'package:lovelivemusicplayer/utils/color_manager.dart';
 /// [width] 显示的宽度
 /// [height] 显示的高度
 /// [radius] 圆角度数
-/// [hasShadow] 是否有阴影效果
 Widget showImg(
   String? path,
   double? width,
   double? height, {
   double radius = 12,
-  bool hasShadow = true,
-  Color? shadowColor,
+  bool isCircle = false,
   String defPhoto = Assets.logoLogo,
   BoxFit fit = BoxFit.fill,
   GestureTapCallback? onTap,
   GestureTapCallback? onLongPress,
 }) {
-  ImageProvider<Object> noShadowImage;
-  ImageProvider<Object> shadowImage;
-  bool isLogo = false;
-  if (hasShadow) {
-    final shaColor =
-        shadowColor ??= Get.isDarkMode ? ColorMs.color05080C : Colors.white;
-    final boxShadow = [
-      BoxShadow(color: shaColor, blurRadius: 12, offset: Offset(4.h, 8.h)),
-    ];
-    if (path == null || path.isEmpty) {
-      shadowImage = AssetImage(defPhoto);
-      isLogo = true;
-    } else if (path.startsWith("assets")) {
-      shadowImage = AssetImage(path);
-    } else if (path.startsWith("http")) {
-      return CachedNetworkImage(
+  var def = Image.asset(defPhoto, width: width?.h, height: width?.h, fit: fit);
+  ImageProvider<Object> imageProvider = def.image;
+  if (path == null || path.isEmpty) {
+  } else if (path.startsWith("http")) {
+    Widget widget = CachedNetworkImage(
+        width: width?.h,
+        height: width?.h,
         cacheManager: AppUtils.cacheManager,
         imageUrl: path,
-        imageBuilder: (context, imageProvider) => Container(
-          width: width?.h,
-          height: width?.h,
-          decoration: BoxDecoration(
-            color: shadowColor,
-            image: DecorationImage(image: imageProvider),
-            borderRadius: BorderRadius.circular(radius.h),
-            boxShadow: boxShadow,
-          ),
-        ),
-        placeholder: (context, url) {
-          return Image(image: AssetImage(defPhoto));
-        },
-        errorWidget: (context, url, error) =>
-            Image(image: AssetImage(defPhoto)),
-      );
+        imageBuilder: (context, imageProvider) => Image(image: imageProvider),
+        placeholder: (context, url) => def,
+        errorWidget: (context, url, error) => def);
+    Widget clip;
+    if (isCircle) {
+      clip = ClipOval(child: widget);
     } else {
-      final file = File(path);
-      if (file.existsSync()) {
-        shadowImage = FileImage(File(path));
-      } else {
-        shadowImage = AssetImage(defPhoto);
-        isLogo = true;
-      }
-    }
-    if (isLogo) {
-      return Container(
-          width: width?.h,
-          height: width?.h,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(radius.h),
-            boxShadow: boxShadow,
-          ),
-          child: SvgPicture.asset(
-            Assets.logoSvgLogo,
-            width: width?.h,
-            height: width?.h,
-          ));
-    }
-    return Container(
-      width: width?.h,
-      height: width?.h,
-      decoration: BoxDecoration(
-        image: DecorationImage(image: shadowImage),
-        borderRadius: BorderRadius.circular(radius.h),
-        boxShadow: boxShadow,
-      ),
-    );
-  } else {
-    if (path == null || path.isEmpty) {
-      noShadowImage = Image.asset(
-        defPhoto,
-        width: width?.h,
-        height: width?.h,
-        fit: fit,
-      ).image;
-    } else if (path.startsWith("assets")) {
-      noShadowImage = Image.asset(
-        path,
-        width: width?.h,
-        height: width?.h,
-        fit: fit,
-      ).image;
-    } else if (path.startsWith("http")) {
-      return GestureDetector(
-          onTap: () => onTap?.call(),
-          onLongPress: () => onLongPress?.call(),
-          child: ClipRRect(
-              borderRadius: BorderRadius.circular(radius.h),
-              child: CachedNetworkImage(
-                width: width?.h,
-                height: width?.h,
-                cacheManager: AppUtils.cacheManager,
-                imageUrl: path,
-                imageBuilder: (context, imageProvider) =>
-                    Image(image: imageProvider),
-                placeholder: (context, url) {
-                  return Image(
-                      image: AssetImage(defPhoto),
-                      width: width?.h,
-                      height: width?.h);
-                },
-                errorWidget: (context, url, error) => Image(
-                    image: AssetImage(defPhoto),
-                    width: width?.h,
-                    height: width?.h),
-              )));
-    } else {
-      final file = File(path);
-      if (file.existsSync()) {
-        noShadowImage = Image.file(
-          File(path),
-          width: width?.h,
-          height: width?.h,
-          fit: fit,
-        ).image;
-      } else {
-        noShadowImage = Image.asset(
-          defPhoto,
-          width: width?.h,
-          height: width?.h,
-          fit: fit,
-        ).image;
-      }
+      clip = ClipRRect(
+          borderRadius: BorderRadius.circular(radius.h), child: widget);
     }
     return GestureDetector(
         onTap: () => onTap?.call(),
         onLongPress: () => onLongPress?.call(),
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(radius.h),
-            child: Image(
-              image: noShadowImage,
-              width: width?.h,
-              height: width?.h,
-            )));
+        child: clip);
+  } else if (path.startsWith("assets")) {
+    imageProvider =
+        Image.asset(path, width: width?.h, height: width?.h, fit: fit).image;
+  } else {
+    final file = File(path);
+    if (file.existsSync()) {
+      imageProvider =
+          Image.file(File(path), width: width?.h, height: width?.h, fit: fit)
+              .image;
+    }
   }
+  Widget clip;
+  Widget widget =
+      Image(image: imageProvider, width: width?.h, height: height?.h, fit: fit);
+  if (isCircle) {
+    clip = ClipOval(child: widget);
+  } else {
+    clip =
+        ClipRRect(borderRadius: BorderRadius.circular(radius.h), child: widget);
+  }
+  return GestureDetector(
+      onTap: () => onTap?.call(),
+      onLongPress: () => onLongPress?.call(),
+      child: clip);
 }
 
 /// 具有拟态风格的按钮

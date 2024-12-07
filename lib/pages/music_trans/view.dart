@@ -153,8 +153,7 @@ class _MusicTransPageState extends WebSocketState<MusicTransPage> {
           itemBuilder: (BuildContext context, int index) {
             final mCoverPath = state.musicList[index].baseUrl +
                 state.musicList[index].coverPath;
-            return showImg(SDUtils.getImgPath(fileName: mCoverPath), 400, 400,
-                hasShadow: false);
+            return showImg(SDUtils.getImgPath(fileName: mCoverPath), 400, 400);
           },
           itemCount: state.musicList.length,
         ),

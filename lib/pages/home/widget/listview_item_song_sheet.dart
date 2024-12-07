@@ -63,8 +63,8 @@ class ListViewItemSongSheet extends GetView {
       return FutureBuilder<String?>(
         initialData: SDUtils.getImgPath(),
         builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
-          final image = showImg(snapshot.data, 48, 48,
-              hasShadow: false, onTap: () => onItemTap(menu));
+          final image =
+              showImg(snapshot.data, 48, 48, onTap: () => onItemTap(menu));
           if (snapshot.connectionState == ConnectionState.done) {
             menu.coverPath = snapshot.data;
             return Hero(tag: "menu${menu.id}", child: image);
@@ -74,8 +74,7 @@ class ListViewItemSongSheet extends GetView {
         future: AppUtils.getMusicCoverPath(menu.music.first),
       );
     } else {
-      return showImg(null, 48, 48,
-          hasShadow: false, onTap: () => onItemTap(menu));
+      return showImg(null, 48, 48, onTap: () => onItemTap(menu));
     }
   }
 

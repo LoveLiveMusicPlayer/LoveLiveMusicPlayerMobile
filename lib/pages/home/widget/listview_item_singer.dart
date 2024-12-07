@@ -22,7 +22,7 @@ class ListViewItemSinger extends GetView {
         Hero(
             tag: "singer${artist.uid}",
             child: showImg(artist.photo, 48, 48,
-                radius: 24, hasShadow: false, onTap: () => onItemTap(artist))),
+                isCircle: true, onTap: () => onItemTap(artist))),
         SizedBox(width: 10.w),
         Expanded(
           child: GestureDetector(

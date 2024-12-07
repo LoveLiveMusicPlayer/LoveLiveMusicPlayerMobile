@@ -18,8 +18,7 @@ class MenuDetailsPage extends DetailsPage<MenuDetailController> {
         child: FutureBuilder<String?>(
           initialData: SDUtils.getImgPath(),
           builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
-            final image =
-                showImg(snapshot.data, 240, 240, radius: 24, hasShadow: false);
+            final image = showImg(snapshot.data, 240, 240);
             if (snapshot.connectionState == ConnectionState.done) {
               return Hero(tag: "menu${controller.menu.id}", child: image);
             }
@@ -29,7 +28,7 @@ class MenuDetailsPage extends DetailsPage<MenuDetailController> {
         ),
       );
     } else {
-      final image = showImg(coverPath, 240, 240, radius: 24, hasShadow: false);
+      final image = showImg(coverPath, 240, 240);
       return Hero(tag: "menu${controller.menu.id}", child: image);
     }
   }

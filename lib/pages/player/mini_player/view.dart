@@ -60,8 +60,8 @@ class MiniPlayer extends GetView<MiniPlayerController> {
   }
 
   Widget miniCover() {
-    return showImg(controller.getCurrentPlayingMusicPath(), 48, 48,
-        radius: 48, hasShadow: false, onTap: onTap);
+    final imagePath = controller.getCurrentPlayingMusicPath();
+    return showImg(imagePath, 48, 48, isCircle: true, onTap: onTap);
   }
 
   Widget marqueeMusicName() {

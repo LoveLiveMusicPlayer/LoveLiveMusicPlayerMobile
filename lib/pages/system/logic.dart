@@ -148,6 +148,7 @@ class SystemSettingLogic extends GetxController {
 
   showShutdownTimerDialog() {
     SmartDialog.show(
+        maskColor: Colors.transparent,
         clickMaskDismiss: false,
         alignment: Alignment.center,
         builder: (context) {
@@ -162,33 +163,36 @@ class SystemSettingLogic extends GetxController {
   }
 
   showClearDatabaseDialog() {
-    SmartDialog.show(builder: (context) {
-      return ResetDataDialog(deleteMusicData: () async {
-        SpUtil.remove(Const.spDataVersion);
-        await DBLogic.to.clearAllMusic();
-      }, deleteUserData: () async {
-        await DBLogic.to.clearAllUserData();
-        await AppUtils.cacheManager.emptyCache();
-        SDUtils.clearBGPhotos();
-        SmartDialog.dismiss();
-        SpUtil.put(Const.spAllowPermission, true).then((value) async {
-          SmartDialog.dismiss();
-          SmartDialog.showLoading(msg: 'will_shutdown'.tr);
-          Future.delayed(const Duration(seconds: 2), () {
-            if (Platform.isIOS) {
-              exit(0);
-            } else {
-              SystemNavigator.pop();
-            }
+    SmartDialog.show(
+        builder: (context) {
+          return ResetDataDialog(deleteMusicData: () async {
+            SpUtil.remove(Const.spDataVersion);
+            await DBLogic.to.clearAllMusic();
+          }, deleteUserData: () async {
+            await DBLogic.to.clearAllUserData();
+            await AppUtils.cacheManager.emptyCache();
+            SDUtils.clearBGPhotos();
+            SmartDialog.dismiss();
+            SpUtil.put(Const.spAllowPermission, true).then((value) async {
+              SmartDialog.dismiss();
+              SmartDialog.showLoading(msg: 'will_shutdown'.tr);
+              Future.delayed(const Duration(seconds: 2), () {
+                if (Platform.isIOS) {
+                  exit(0);
+                } else {
+                  SystemNavigator.pop();
+                }
+              });
+            });
+          }, afterDelete: () async {
+            SmartDialog.dismiss();
+            SmartDialog.showToast('clean_success'.tr,
+                animationTime: const Duration(seconds: 5));
+            await DBLogic.to
+                .findAllListByGroup(GlobalLogic.to.currentGroup.value);
           });
-        });
-      }, afterDelete: () async {
-        SmartDialog.dismiss();
-        SmartDialog.showToast('clean_success'.tr,
-            animationTime: const Duration(seconds: 5));
-        await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
-      });
-    });
+        },
+        maskColor: Colors.transparent);
   }
 
   Future<Map<String, Color?>> getShowAsset() async {

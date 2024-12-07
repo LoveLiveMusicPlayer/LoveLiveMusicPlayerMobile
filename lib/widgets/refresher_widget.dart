@@ -19,7 +19,6 @@ class RefresherWidget extends StatefulWidget {
   final String emptyImg;
   final bool enablePullDown;
   final bool enablePullUp;
-  final bool isGridView;
   final double mainAxisSpacing;
   final double crossAxisSpacing;
   final Color spacingColor;
@@ -39,7 +38,6 @@ class RefresherWidget extends StatefulWidget {
     this.emptyImg = Assets.mainIcNull,
     this.enablePullUp = true,
     this.enablePullDown = true,
-    this.isGridView = false,
     this.mainAxisSpacing = 10,
     this.crossAxisSpacing = 10,
     this.spacingColor = Colors.transparent,
@@ -55,13 +53,10 @@ class RefresherWidget extends StatefulWidget {
 class _RefresherWidgetState extends State<RefresherWidget> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        /// 空白页
-        Visibility(visible: widget.itemCount <= 0, child: _buildNullWidget()),
-        _buildListViewWidget(),
-      ],
-    );
+    if (widget.itemCount <= 0) {
+      return _buildNullWidget();
+    }
+    return _buildListViewWidget();
   }
 
   /// 空白页
@@ -127,58 +122,43 @@ class _RefresherWidgetState extends State<RefresherWidget> {
   }
 
   Widget renderList() {
-    if (widget.isGridView) {
-      // Grid列表(专辑)
-      return GridView.builder(
-        controller: widget.scrollController,
-        itemCount: widget.itemCount,
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 180,
-          crossAxisSpacing: widget.crossAxisSpacing,
-          mainAxisSpacing: 75,
-        ),
-        itemBuilder: widget.listItem,
-        padding: EdgeInsets.only(bottom: 145.h),
-      );
-    } else {
-      if (widget.canReorder) {
-        // 可排序List列表(我喜欢)
-        return ReorderableListView.builder(
-            buildDefaultDragHandles: widget.canReorder,
-            proxyDecorator: (child, index, animation) {
-              return child;
-            },
-            onReorderStart: (int index) => AppUtils.vibrate(),
-            onReorder: (int oldIndex, int newIndex) {
-              if (oldIndex < newIndex) {
-                newIndex -= 1;
-              }
-              setState(() {
-                final Music child = GlobalLogic.to.loveList.removeAt(oldIndex);
-                GlobalLogic.to.loveList.insert(newIndex, child);
-
-                DBLogic.to.exchangeLoveItem(oldIndex, newIndex);
-              });
-            },
-            scrollController: widget.scrollController,
-            itemBuilder: widget.listItem,
-            itemCount: widget.itemCount,
-            footer: SizedBox(height: 70.h));
-      } else {
-        // 不可排序List列表(其他)
-        return ListView.separated(
-          itemCount: widget.itemCount,
-          itemBuilder: widget.listItem,
-          controller: widget.scrollController,
-          padding: EdgeInsets.only(bottom: 70.h),
-          separatorBuilder: (BuildContext context, int index) {
-            return Container(
-              color: widget.spacingColor,
-              height: widget.mainAxisSpacing,
-            );
+    if (widget.canReorder) {
+      // 可排序List列表(我喜欢)
+      return ReorderableListView.builder(
+          buildDefaultDragHandles: widget.canReorder,
+          proxyDecorator: (child, index, animation) {
+            return child;
           },
-        );
-      }
+          onReorderStart: (int index) => AppUtils.vibrate(),
+          onReorder: (int oldIndex, int newIndex) {
+            if (oldIndex < newIndex) {
+              newIndex -= 1;
+            }
+            setState(() {
+              final Music child = GlobalLogic.to.loveList.removeAt(oldIndex);
+              GlobalLogic.to.loveList.insert(newIndex, child);
+
+              DBLogic.to.exchangeLoveItem(oldIndex, newIndex);
+            });
+          },
+          scrollController: widget.scrollController,
+          itemBuilder: widget.listItem,
+          itemCount: widget.itemCount,
+          footer: SizedBox(height: 70.h));
+    } else {
+      // 不可排序List列表(其他)
+      return ListView.separated(
+        itemCount: widget.itemCount,
+        itemBuilder: widget.listItem,
+        controller: widget.scrollController,
+        padding: EdgeInsets.only(bottom: 70.h),
+        separatorBuilder: (BuildContext context, int index) {
+          return Container(
+            color: widget.spacingColor,
+            height: widget.mainAxisSpacing,
+          );
+        },
+      );
     }
   }
 }
