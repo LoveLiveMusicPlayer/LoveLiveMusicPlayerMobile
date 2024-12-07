@@ -22,7 +22,7 @@ Widget showImg(
   double radius = 12,
   bool isCircle = false,
   String defPhoto = Assets.logoLogo,
-  BoxFit fit = BoxFit.fill,
+  BoxFit fit = BoxFit.fitWidth,
   GestureTapCallback? onTap,
   GestureTapCallback? onLongPress,
 }) {

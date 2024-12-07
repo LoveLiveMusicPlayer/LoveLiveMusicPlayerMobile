@@ -18,7 +18,7 @@ class AlbumDetailsPage extends DetailsPage<AlbumDetailController> {
       children: [
         Hero(
             tag: "album${controller.album.albumId}",
-            child: showImg(imagePath, 240, 240)),
+            child: showImg(imagePath, 240, null)),
         SizedBox(height: 20.h),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
