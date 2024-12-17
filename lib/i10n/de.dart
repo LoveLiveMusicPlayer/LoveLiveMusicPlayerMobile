@@ -215,5 +215,9 @@ Benutzer sollten die Software unter der Prämisse verwenden, Gesetze und Vereinb
   'today_in_previous_years': 'Heute in den vergangenen Jahren',
   'input_song_main_char': 'Die vermisse vermisse ich',
   'playing': 'Spielen',
-  'paused': 'Pausierte'
+  'paused': 'Pausierte',
+  'storage_settings': 'Speichereinstellung',
+  'change_storage_warning': 'Wählen sie das hierfür zu verwendende speichergerät.\nDas umschaltungsgerät wird alle daten löschen',
+  'internal_storage': 'Innere erinnerung.',
+  'storage_not_found': 'Es gab keinen lagerraum'
 };

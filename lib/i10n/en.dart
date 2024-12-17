@@ -209,5 +209,9 @@ Users shall use the Software in compliance with laws and agreements. Users are n
   'today_in_previous_years': 'Today in previous years',
   'input_song_main_char': 'The song name keyword',
   'playing': 'Playing',
-  'paused': 'Paused'
+  'paused': 'Paused',
+  'storage_settings': 'Storage Settings',
+  'change_storage_warning': 'Select the storage device you want to use.\nSwitching devices will clear all data',
+  'internal_storage': 'Internal storage',
+  'storage_not_found': 'Storage not found'
 };

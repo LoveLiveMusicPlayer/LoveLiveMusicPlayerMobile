@@ -101,9 +101,12 @@ class Const {
   static const String spEnableHttp = "SP_ENABLE_HTTP";
   static const String spHttpUrl = "SP_HTTP_URL";
   static const String spPrevPage = "prevPage";
+  static const String spSDPath = "SP_SD_PATH";
+
+  static const String packageId = "com.zhushenwudi.lovelivemusicplayer";
 
   static const String appstoreUrl =
-      "https://itunes.apple.com/lookup?bundleId=com.zhushenwudi.lovelivemusicplayer";
+      "https://itunes.apple.com/lookup?bundleId=$packageId";
 
   // 默认的资源oss，无法在线获取时用于离线加载网络图片
   static String dataOssUrl = "https://picbed-cdn.zhushenwudi.top/llmp-oss/";

@@ -328,6 +328,22 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     }
   }
 
+  // 切换usb设备清空歌曲数据
+  Future<void> clearAllMusicThroughUsb() async {
+    try {
+      SpUtil.remove(Const.spDataVersion);
+      await clearAllMusic();
+      await menuDao.deleteAllMenus();
+      await loveDao.deleteAllLoves();
+      await historyDao.deleteAllHistorys();
+      await playListMusicDao.deleteAllPlayListMusics();
+    } catch (e) {
+      Log4f.i(msg: e.toString());
+    } finally {
+      await DBLogic.to.findAllListByGroup(GlobalLogic.to.currentGroup.value);
+    }
+  }
+
   /// 通过albumId获取专辑下的全部歌曲
   Future<List<Music>> findAllMusicsByAlbumId(String albumId) async {
     if (GlobalLogic.to.remoteHttp.isEnableHttp()) {

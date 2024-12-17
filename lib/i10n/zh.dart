@@ -201,5 +201,9 @@ const Map<String, String> zhCN = {
   'today_in_previous_years': '往年今日',
   'input_song_main_char': '请输入歌曲名关键字',
   'playing': '播放中',
-  'paused': '已暂停'
+  'paused': '已暂停',
+  'storage_settings': '存储设置',
+  'change_storage_warning': '选择要使用的存储设备\n切换设备将会清空全部数据',
+  'internal_storage': '内部存储',
+  'storage_not_found': '存储设备不存在'
 };

@@ -202,5 +202,9 @@ const Map<String, String> jaJP = {
   'today_in_previous_years': '過去の今日',
   'input_song_main_char': '曲名のキーワードを入力してください',
   'playing': '放送中',
-  'paused': '停止しました'
+  'paused': '停止しました',
+  'storage_settings': '記憶場所設定です',
+  'change_storage_warning': '使用するストレージを選択します。\nデバイスを切り替えると、全てのデータが消去されます。',
+  'internal_storage': '内部ストレージです',
+  'storage_not_found': '記憶装置は存在しません'
 };

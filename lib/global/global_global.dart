@@ -132,6 +132,7 @@ class GlobalLogic extends SuperController
     SpUtil.getInstance();
     Network.getInstance();
     await SDUtils.init();
+    await SDUtils.setUsbMountListener();
     remoteHttp = RemoteHttp(await SpUtil.getBoolean(Const.spEnableHttp),
         await SpUtil.getString(Const.spHttpUrl, ""));
     enableBG = await SpUtil.getBoolean(Const.spEnableBackgroundPhoto);

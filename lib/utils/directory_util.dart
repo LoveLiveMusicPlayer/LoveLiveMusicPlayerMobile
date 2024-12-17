@@ -271,4 +271,9 @@ class DirectoryUtil {
     String? path = getStoragePath(category: category);
     return createDir(path);
   }
+
+  static Future<bool> checkDirectoryExist(String dirPath) async {
+    final directory = Directory(dirPath);
+    return await directory.exists();
+  }
 }

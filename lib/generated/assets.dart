@@ -41,6 +41,7 @@ class Assets {
   static const String drawerDrawerQuickTrans =
       'assets/drawer/drawer_quick_trans.svg';
   static const String drawerDrawerReset = 'assets/drawer/drawer_reset.svg';
+  static const String drawerDrawerSd = 'assets/drawer/drawer_sd.svg';
   static const String drawerDrawerSecret = 'assets/drawer/drawer_secret.svg';
   static const String drawerDrawerSetting = 'assets/drawer/drawer_setting.svg';
   static const String drawerDrawerShare = 'assets/drawer/drawer_share.svg';

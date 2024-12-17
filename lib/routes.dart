@@ -12,6 +12,8 @@ import 'package:lovelivemusicplayer/pages/music_trans/view.dart';
 import 'package:lovelivemusicplayer/pages/permission/binding.dart';
 import 'package:lovelivemusicplayer/pages/permission/view.dart';
 import 'package:lovelivemusicplayer/pages/scan/view.dart';
+import 'package:lovelivemusicplayer/pages/sd/binding.dart';
+import 'package:lovelivemusicplayer/pages/sd/view.dart';
 import 'package:lovelivemusicplayer/pages/splash/binding.dart';
 import 'package:lovelivemusicplayer/pages/splash/view.dart';
 import 'package:lovelivemusicplayer/pages/system/view.dart';
@@ -34,6 +36,7 @@ class Routes {
   static const String routeDriveMode = "/drive_mode";
   static const String routeMoeGirl = "/moe_girl";
   static const String routeDaily = "/daily";
+  static const String routeSD = "/sd";
 
   static List<GetPage> getRoutes() {
     return [
@@ -70,6 +73,10 @@ class Routes {
           name: Routes.routeDaily,
           page: () => const DailyPage(),
           binding: DailyBinding()),
+      GetPage(
+          name: Routes.routeSD,
+          page: () => const SDCard(),
+          binding: SDCardBinding()),
     ];
   }
 }

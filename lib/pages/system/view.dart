@@ -6,6 +6,7 @@ import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/pages/system/logic.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
 import 'package:lovelivemusicplayer/widgets/header.dart';
 import 'package:lovelivemusicplayer/widgets/tachie_widget.dart';
@@ -146,6 +147,27 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
       final iconColor = logic.bgPhoto.value == "" ? null : ColorMs.colorCCCCCC;
       return Column(
         children: [
+          FutureBuilder<List<String>>(
+              future: SDUtils.getUsbPathList(),
+              builder:
+                  (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.data != null &&
+                    snapshot.data!.length > 1) {
+                  return Column(
+                    children: [
+                      DrawerFunctionButton(
+                        icon: Assets.drawerDrawerSd,
+                        iconColor: iconColor,
+                        text: 'storage_settings'.tr,
+                        onTap: (_) => Get.toNamed(Routes.routeSD),
+                      ),
+                      SizedBox(height: 8.h)
+                    ],
+                  );
+                }
+                return SizedBox.shrink();
+              }),
           DrawerFunctionButton(
             icon: Assets.drawerDrawerTimer,
             iconColor: iconColor,

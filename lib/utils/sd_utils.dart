@@ -2,7 +2,10 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:lovelivemusicplayer/eventbus/eventbus.dart';
+import 'package:lovelivemusicplayer/eventbus/usb_mount.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
@@ -19,14 +22,48 @@ class SDUtils {
   static bool allowEULA = false;
   static late String bgPhotoPath;
   static late String splashPhotoPath;
+  static const MethodChannel _channel = MethodChannel('usb_broadcast');
+
+  static setUsbMountListener() {
+    _channel.setMethodCallHandler((MethodCall call) async {
+      print("method: ${call.method}");
+      await Future.delayed(const Duration(seconds: 1));
+      if (call.method.startsWith("usb_")) {
+        final pathList = await getUsbPathList();
+        if (pathList.isEmpty) {
+          return;
+        }
+        final defPath = await SpUtil.getString(Const.spSDPath);
+        var isLastDeviceUnmount = true;
+        for (var path in pathList) {
+          print("defPath: $defPath --- path: $path");
+          if (defPath.contains(path)) {
+            isLastDeviceUnmount = false;
+            break;
+          }
+        }
+        if (isLastDeviceUnmount) {
+          print("remove....");
+          await DBLogic.to.clearAllMusicThroughUsb();
+          await SpUtil.remove(Const.spSDPath);
+          await init();
+        }
+        eventBus.fire(UsbMount((DateTime.now().millisecondsSinceEpoch)));
+      }
+    });
+  }
 
   static init() async {
     Directory? appDocDir;
-    if (Platform.isAndroid) {
-      appDocDir = await getExternalStorageDirectory();
+    path = await SpUtil.getString(Const.spSDPath);
+    if (path.isEmpty) {
+      if (Platform.isAndroid) {
+        appDocDir = await getExternalStorageDirectory();
+      }
+      appDocDir ??= await getApplicationDocumentsDirectory();
+      path = appDocDir.path + Platform.pathSeparator;
+      await SpUtil.put(Const.spSDPath, path);
     }
-    appDocDir ??= await getApplicationDocumentsDirectory();
-    path = appDocDir.path + Platform.pathSeparator;
     bgPhotoPath = "${path}bg/";
     if (!checkDirectoryExist(bgPhotoPath)) {
       makeDir(bgPhotoPath);
@@ -37,6 +74,21 @@ class SDUtils {
     }
     allowEULA = Platform.isAndroid || checkDirectoryExist("${path}LLMP");
     Log4f.d(msg: path);
+    getUsbPathList();
+  }
+
+  static Future<List<String>> getUsbPathList() async {
+    final pathList = <String>[];
+    var directories = await getExternalStorageDirectories();
+    if (directories == null) {
+      return pathList;
+    }
+    for (var directory in directories) {
+      if (directory.path.contains(Const.packageId)) {
+        pathList.add(directory.path);
+      }
+    }
+    return pathList;
   }
 
   ///从路径中获取图片文件

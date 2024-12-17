@@ -20,6 +20,7 @@ import com.zhushenwudi.lovelivemusicplayer.plugin.BackPlugin
 import com.zhushenwudi.lovelivemusicplayer.plugin.HomeWidgetPlugin
 import com.zhushenwudi.lovelivemusicplayer.plugin.UPushPlugin
 import com.zhushenwudi.lovelivemusicplayer.plugin.UpdatePlugin
+import com.zhushenwudi.lovelivemusicplayer.plugin.UsbPlugin
 import com.zhushenwudi.lovelivemusicplayer.util.AppUtils
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -62,6 +63,7 @@ class MainActivity : AudioServiceActivity() {
             add(BackPlugin { moveTaskToBack(false) })
             add(UpdatePlugin())
             add(HomeWidgetPlugin(lifecycle))
+            add(UsbPlugin())
         }
     }
 
