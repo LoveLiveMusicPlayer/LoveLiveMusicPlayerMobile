@@ -32,9 +32,7 @@ class SDCard extends GetView<SDCardLogic> {
               child: Center(
                   child: Text(
                 'change_storage_warning'.tr,
-                style: Get.isDarkMode
-                    ? TextStyleMs.white_15_500
-                    : TextStyleMs.black_15_500,
+                style: TextStyleMs.whiteBold_15,
                 textAlign: TextAlign.center,
               )),
             ),
@@ -72,11 +70,11 @@ class SDCard extends GetView<SDCardLogic> {
                 padding: EdgeInsets.all(20.r)),
             Text(sdcard.name,
                 style: sdcard.choose
-                    ? TextStyleMs.white_15_500
+                    ? TextStyleMs.whiteBold_15
                         .merge(TextStyle(color: Colors.amber))
                     : Get.isDarkMode
-                        ? TextStyleMs.white_15_500
-                        : TextStyleMs.black_15_500)
+                        ? TextStyleMs.whiteBold_15
+                        : TextStyleMs.blackBold_15)
           ],
         ),
       ));

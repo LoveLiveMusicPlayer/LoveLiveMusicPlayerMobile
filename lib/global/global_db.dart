@@ -337,6 +337,8 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
       await loveDao.deleteAllLoves();
       await historyDao.deleteAllHistorys();
       await playListMusicDao.deleteAllPlayListMusics();
+      PlayerLogic.to.mPlayList.clear();
+      PlayerLogic.to.removeAllMusics();
     } catch (e) {
       Log4f.i(msg: e.toString());
     } finally {
