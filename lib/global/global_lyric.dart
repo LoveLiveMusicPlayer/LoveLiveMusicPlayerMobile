@@ -1,4 +1,3 @@
-import 'package:flutter_lyric/lyric_parser/parser_smart.dart';
 import 'package:flutter_lyric/lyrics_model_builder.dart';
 import 'package:flutter_lyric/lyrics_reader_model.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -8,22 +7,20 @@ import 'package:lovelivemusicplayer/global/const.dart';
 import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/lyric.dart';
-import 'package:lovelivemusicplayer/models/playing_jp_lyric.dart';
+import 'package:lovelivemusicplayer/models/playing_lyric.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/utils/home_widget_util.dart';
+import 'package:lovelivemusicplayer/utils/pip_utils.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 
 class LyricLogic {
   LyricLogic._();
 
-  // 当前播放歌曲日文解析后的列表
-  static final parsedJPLrc = [];
-
   // 播放位置
   static final playingPosition = const Duration(milliseconds: 0).obs;
 
   // 当前播放的歌词
-  static final playingJPLrc = JpLrc().obs;
+  static final playingJPLrc = PlayingLyric().obs;
 
   // 全量歌词
   static final fullLrc = Lyric().obs;
@@ -31,87 +28,41 @@ class LyricLogic {
   // 切换显示歌词类型 (0:原文; 1:翻译; 2:罗马音)
   static final lrcType = SDUtils.allowEULA ? 0.obs : 1.obs;
 
-  // 检查过的歌词索引，避免重复解析歌词引起cpu性能损耗
-  static int mLrcIndex = -1;
-
   // 滚动歌词
   static final Rx<LyricsReaderModel?> lyricsModel = LyricsReaderModel().obs;
 
-  /// 解析前一句、当前、后一句歌词内容
-  static void parsePlayingLyric(String musicId, int index, bool isLast) {
-    final jpLrc = parsedJPLrc;
-    index = _clamp(index, 0, jpLrc.length - 1);
-
-    final pre = (index > 0) ? (jpLrc[index - 1].mainText ?? "") : "";
-    final current = jpLrc[index].mainText ?? "";
-    String next = "";
-    if (isLast && index < jpLrc.length - 1) {
-      next = jpLrc[index + 1].mainText ?? "";
-    }
-
-    setPlayingJPLrc(musicId, pre, current, next);
-  }
-
-  static int _clamp(int value, int min, int max) {
-    return value < min ? min : (value > max ? max : value);
-  }
-
-  /// 修改前一句、当前、后一句歌词内容
-  static Future<void> changePlayingLyric(Duration duration,
-      {bool isForce = false}) async {
+  /// 修改当前、后一句歌词内容
+  static Future<void> changePlayingLyric() async {
     final musicId = PlayerLogic.to.playingMusic.value.musicId;
     if (musicId == null || playingJPLrc.value.musicId != musicId) {
       return;
     }
-
-    final currentTime = duration.inMilliseconds;
-    int left = 0;
-    final jpLrc = parsedJPLrc;
-    int right = jpLrc.length - 1;
-
-    while (left <= right) {
-      int mid = left + (right - left) ~/ 2;
-      final curLrcStartTime = jpLrc[mid].startTime ?? 0;
-      final nextLrcStartTime = (mid < jpLrc.length - 1)
-          ? jpLrc[mid + 1].startTime ?? 0
-          : double.infinity;
-
-      if (curLrcStartTime <= currentTime && nextLrcStartTime > currentTime) {
-        if (isForce || !checkedLyricIndex(mid)) {
-          parsePlayingLyric(musicId, mid, true);
-        }
-        return;
-      } else if (curLrcStartTime < currentTime) {
-        left = mid + 1;
-      } else {
-        right = mid - 1;
-      }
+    final currentTime = playingPosition.value.inMilliseconds;
+    final lyricModel = lyricsModel.value;
+    if (lyricModel == null) {
+      return;
     }
 
-    if (left < jpLrc.length) {
-      final lastLrcStartTime = jpLrc[left].startTime ?? 0;
-      if (lastLrcStartTime <= currentTime) {
-        if (isForce || !checkedLyricIndex(left)) {
-          parsePlayingLyric(musicId, left, false);
-        }
+    final curIndex = lyricModel.getCurrentLine(currentTime);
+    final curLyricModel = lyricModel.lyrics[curIndex];
+    var current = curLyricModel.mainText ?? "";
+    var next = "";
+    if (curLyricModel.hasExt) {
+      next = curLyricModel.extText ?? "";
+    } else {
+      if (curIndex < lyricModel.lyrics.length - 1) {
+        next = lyricModel.lyrics[curIndex + 1].mainText ?? "";
       }
     }
+    setPlayingJPLrc(musicId, current, next);
   }
 
   /// 设置封面下面的歌词
-  static setPlayingJPLrc([musicId = "", pre = "", current = "", next = ""]) {
+  static setPlayingJPLrc([musicId = "", current = "", next = ""]) {
     playingJPLrc.value =
-        JpLrc(musicId: musicId, pre: pre, current: current, next: next);
-    HomeWidgetUtil.sendSongInfoAndUpdate();
-  }
-
-  /// 检查是否检测过该Lyric索引，如果检测过就跳过节约cpu性能
-  static bool checkedLyricIndex(int index) {
-    if (index == mLrcIndex) {
-      return true;
-    }
-    mLrcIndex = index;
-    return false;
+        PlayingLyric(musicId: musicId, current: current, next: next);
+    PipUtil.updateLyric(current, next);
+    HomeWidgetUtil.sendSongInfoAndUpdate(curLyric: current, nextLyric: next);
   }
 
   /// 获取中/日/罗马歌词
@@ -153,10 +104,8 @@ class LyricLogic {
     }
 
     fullLrc.value = Lyric(jp: jpLrc, zh: zhLrc, roma: romaLrc);
-    parsedJPLrc.clear();
-    parsedJPLrc.addAll(ParserSmart(jpLrc).parseLines());
-    LyricLogic.setPlayingJPLrc(PlayerLogic.to.playingMusic.value.musicId ?? "");
-    LyricLogic.changePlayingLyric(playingPosition.value, isForce: true);
+    LyricLogic.setPlayingJPLrc(PlayerLogic.to.playingMusic.value.musicId);
+    LyricLogic.changePlayingLyric();
     if (forceRefresh) {
       SmartDialog.showToast(fetchResultStr);
     }

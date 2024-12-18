@@ -1,32 +1,29 @@
 import 'dart:convert';
 
-JpLrc jpLrcFromJson(String str) => JpLrc.fromJson(json.decode(str));
+PlayingLyric playingLrcFromJson(String str) =>
+    PlayingLyric.fromJson(json.decode(str));
 
-String jpLrcToJson(JpLrc data) => json.encode(data.toJson());
+String playingLrcToJson(PlayingLyric data) => json.encode(data.toJson());
 
-class JpLrc {
-  JpLrc({
+class PlayingLyric {
+  PlayingLyric({
     this.musicId,
-    this.pre,
     this.current,
     this.next,
   });
 
   String? musicId;
-  String? pre;
   String? current;
   String? next;
 
-  factory JpLrc.fromJson(Map<String, dynamic> json) => JpLrc(
+  factory PlayingLyric.fromJson(Map<String, dynamic> json) => PlayingLyric(
         musicId: json["musicId"],
-        pre: json["pre"],
         current: json["current"],
         next: json["next"],
       );
 
   Map<String, dynamic> toJson() => {
         "musicId": musicId,
-        "pre": pre,
         "current": current,
         "next": next,
       };

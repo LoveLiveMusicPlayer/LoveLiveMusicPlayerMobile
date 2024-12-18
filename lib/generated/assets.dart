@@ -36,6 +36,8 @@ class Assets {
   static const String drawerDrawerDayNight =
       'assets/drawer/drawer_day_night.svg';
   static const String drawerDrawerDebug = 'assets/drawer/drawer_debug.svg';
+  static const String drawerDrawerDesktopLyric =
+      'assets/drawer/drawer_desktop_lyric.svg';
   static const String drawerDrawerHttp = 'assets/drawer/drawer_http.svg';
   static const String drawerDrawerInspect = 'assets/drawer/drawer_inspect.svg';
   static const String drawerDrawerQuickTrans =

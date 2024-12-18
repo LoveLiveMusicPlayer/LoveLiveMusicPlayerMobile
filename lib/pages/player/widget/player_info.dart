@@ -22,8 +22,6 @@ class PlayerInfo extends StatelessWidget {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            recentlyLrc(LyricLogic.playingJPLrc.value.pre, color: otherColor),
-            SizedBox(height: 10.h),
             recentlyLrc(LyricLogic.playingJPLrc.value.current,
                 color: playingColor, fontWeight: FontWeight.bold),
             SizedBox(height: 10.h),

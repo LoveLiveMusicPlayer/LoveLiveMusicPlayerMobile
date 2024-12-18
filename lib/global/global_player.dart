@@ -65,13 +65,13 @@ class PlayerLogic extends GetxController
     });
 
     mPlayer.playingStream.listen((event) {
-      HomeWidgetUtil.sendSongInfoAndUpdate(playingMusic.value);
+      HomeWidgetUtil.sendSongInfoAndUpdate(music: playingMusic.value);
     });
 
     /// 播放位置监听
     mPlayer.positionStream.listen((duration) {
       LyricLogic.playingPosition.value = duration;
-      LyricLogic.changePlayingLyric(duration);
+      LyricLogic.changePlayingLyric();
     });
 
     /// 当前播放监听
@@ -79,8 +79,6 @@ class PlayerLogic extends GetxController
       if (index != null &&
           mPlayList.isNotEmpty &&
           !GlobalLogic.to.isHandlePlay) {
-        // 切歌后重置索引
-        LyricLogic.mLrcIndex = -1;
         final curMusic = mPlayList[index];
         Log4f.v(msg: "当前播放: $index - ${curMusic.musicName}");
         AppUtils.uploadEvent("Playing", params: {"music": curMusic.musicName});
@@ -481,7 +479,7 @@ class PlayerLogic extends GetxController
 
   /// 设置当前播放歌曲
   setCurrentMusic(Music? music) async {
-    HomeWidgetUtil.sendSongInfoAndUpdate(music);
+    HomeWidgetUtil.sendSongInfoAndUpdate(music: music);
     if (Platform.isIOS) {
       Carplay.changePlayingMusic(music);
     }

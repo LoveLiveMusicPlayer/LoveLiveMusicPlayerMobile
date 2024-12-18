@@ -15,6 +15,8 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		C7023BD52CA161B100625DCF /* BackgroundIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78CA5952C9C1B3900721166 /* BackgroundIntent.swift */; };
+		C70635622D12C4DE0011E3D5 /* PipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70635602D12C4DE0011E3D5 /* PipViewController.swift */; };
+		C70635652D12D5730011E3D5 /* black.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = C70635642D12D5730011E3D5 /* black.mp4 */; };
 		C70B090A2C9BCFF50074432D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C70B09092C9BCFF50074432D /* WidgetKit.framework */; };
 		C70B090C2C9BCFF50074432D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C70B090B2C9BCFF50074432D /* SwiftUI.framework */; };
 		C70B091D2C9BCFF60074432D /* HomeWidgetExampleExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C70B09082C9BCFF50074432D /* HomeWidgetExampleExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -76,6 +78,8 @@
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C577F90CED02D105EF74D9D /* Pods-HomeWidgetExampleExtension.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HomeWidgetExampleExtension.profile.xcconfig"; path = "Target Support Files/Pods-HomeWidgetExampleExtension/Pods-HomeWidgetExampleExtension.profile.xcconfig"; sourceTree = "<group>"; };
 		ACF4C43CF41381F15C832CBC /* Pods-RunnerTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.profile.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.profile.xcconfig"; sourceTree = "<group>"; };
+		C70635602D12C4DE0011E3D5 /* PipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipViewController.swift; sourceTree = "<group>"; };
+		C70635642D12D5730011E3D5 /* black.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = black.mp4; sourceTree = "<group>"; };
 		C70B09082C9BCFF50074432D /* HomeWidgetExampleExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HomeWidgetExampleExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C70B09092C9BCFF50074432D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		C70B090B2C9BCFF50074432D /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -167,6 +171,8 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				C70635642D12D5730011E3D5 /* black.mp4 */,
+				C70635602D12C4DE0011E3D5 /* PipViewController.swift */,
 				C78CA5952C9C1B3900721166 /* BackgroundIntent.swift */,
 				C70F13342B98132A006EE8C8 /* RunnerRelease.entitlements */,
 				C7F3802B298642BF00D5E8C2 /* Runner.entitlements */,
@@ -299,6 +305,7 @@
 			files = (
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
+				C70635652D12D5730011E3D5 /* black.mp4 in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
 			);
@@ -450,6 +457,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C78CA5962C9C1B3C00721166 /* BackgroundIntent.swift in Sources */,
+				C70635622D12C4DE0011E3D5 /* PipViewController.swift in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 				C79B48632A5CB39F0086C3F9 /* SceneDelegate.swift in Sources */,

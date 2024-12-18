@@ -56,7 +56,8 @@ void main() {
             Carplay.init();
           });
         }
-        HomeWidgetUtil.sendSongInfoAndUpdate(PlayerLogic.to.playingMusic.value);
+        HomeWidgetUtil.sendSongInfoAndUpdate(
+            music: PlayerLogic.to.playingMusic.value);
       });
 
       // 初始化服务

@@ -202,22 +202,26 @@ Benutzer sollten die Software unter der Prämisse verwenden, Gesetze und Vereinb
   'add_favorite_menu': 'Lieblings-Playlist',
   'music_blind_box': 'Musik-Blindbox',
   'throbbing':
-      'Während Sie aufgeregt sind, sollten Sie auch auf die Verkehrssicherheit achten',
-  'exit': 'Schließung',
-  'finish': 'Weg',
-  'search_in_moe_girl': 'Suche in MoeGirl',
-  'share_error': 'Freigabe fehlgeschlagen, Fehlercode: ',
-  'share_success': 'Freigabe erfolge',
-  'share_cancel': 'Freigabe Absagen',
+      'Ich weiß, Sie werden aufgeregt sein, aber Sie sollten auch auf die Verkehrssicherheit achten',
+  'exit': 'aufhören',
+  'finish': 'Beenden',
+  'search_in_moe_girl': 'Suche auf Moegirlpedia',
+  'share_error': 'Teilen fehlgeschlagen, Fehlercode: ',
+  'share_success': 'Teilen erfolge',
+  'share_cancel': 'Teilen Abbrechen',
   'daily_news': 'Daily news',
   'recent_trends': 'Die jüngsten trends',
   'live_notice': 'Live-Mitteilung',
   'today_in_previous_years': 'Heute in den vergangenen Jahren',
-  'input_song_main_char': 'Die vermisse vermisse ich',
+  'input_song_main_char':
+      'Bitte geben Sie das Schlüsselwort für den Songnamen ein',
   'playing': 'Spielen',
   'paused': 'Pausierte',
-  'storage_settings': 'Speichereinstellung',
-  'change_storage_warning': 'Wählen sie das hierfür zu verwendende speichergerät.\nDas umschaltungsgerät wird alle daten löschen',
-  'internal_storage': 'Innere erinnerung.',
-  'storage_not_found': 'Es gab keinen lagerraum'
+  'storage_settings': 'Speichereinstellungen',
+  'change_storage_warning':
+      'Wählen Sie das zu verwendende Speichergerät aus. \nBeim Wechseln des Geräts werden alle Daten gelöscht.',
+  'internal_storage': 'Interner Speicher',
+  'storage_not_found': 'Das Speichergerät existiert nicht',
+  'need_play_music_first': 'Bitte spielen Sie zuerst das Lied',
+  'desktop_lyric': 'Desktop-Songtext'
 };

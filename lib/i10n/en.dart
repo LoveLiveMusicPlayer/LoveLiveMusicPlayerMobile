@@ -211,7 +211,10 @@ Users shall use the Software in compliance with laws and agreements. Users are n
   'playing': 'Playing',
   'paused': 'Paused',
   'storage_settings': 'Storage Settings',
-  'change_storage_warning': 'Select the storage device you want to use.\nSwitching devices will clear all data',
+  'change_storage_warning':
+      'Select the storage device you want to use.\nSwitching devices will clear all data',
   'internal_storage': 'Internal storage',
-  'storage_not_found': 'Storage not found'
+  'storage_not_found': 'Storage not found',
+  'need_play_music_first': 'Need play music first',
+  'desktop_lyric': 'Desktop lyric'
 };

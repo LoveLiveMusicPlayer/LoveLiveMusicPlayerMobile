@@ -206,5 +206,7 @@ const Map<String, String> jaJP = {
   'storage_settings': '記憶場所設定です',
   'change_storage_warning': '使用するストレージを選択します。\nデバイスを切り替えると、全てのデータが消去されます。',
   'internal_storage': '内部ストレージです',
-  'storage_not_found': '記憶装置は存在しません'
+  'storage_not_found': '記憶装置は存在しません',
+  'need_play_music_first': '曲の再生をお願いします',
+  'desktop_lyric': 'デスクトップの歌詞'
 };

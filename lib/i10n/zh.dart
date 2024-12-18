@@ -205,5 +205,7 @@ const Map<String, String> zhCN = {
   'storage_settings': '存储设置',
   'change_storage_warning': '选择要使用的存储设备\n切换设备将会清空全部数据',
   'internal_storage': '内部存储',
-  'storage_not_found': '存储设备不存在'
+  'storage_not_found': '存储设备不存在',
+  'need_play_music_first': '请先播放歌曲',
+  'desktop_lyric': '桌面歌词'
 };

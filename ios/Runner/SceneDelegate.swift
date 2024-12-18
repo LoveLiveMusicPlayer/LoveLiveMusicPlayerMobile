@@ -11,7 +11,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UNUserNotificationCente
         window = UIWindow(windowScene: windowScene)
         UNUserNotificationCenter.current().delegate = self
 
-        let controller = FlutterViewController.init(engine: flutterEngine, nibName: nil, bundle: nil)
+        let controller = PipViewController.init(engine: flutterEngine, nibName: nil, bundle: nil)
         window?.rootViewController = controller
         window?.makeKeyAndVisible()
         controller.loadDefaultSplashScreenView()

@@ -5,7 +5,6 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
-import 'package:lovelivemusicplayer/global/global_lyric.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
@@ -35,10 +34,10 @@ class HomeWidgetUtil {
     }
   }
 
-  static Future<void> sendSongInfoAndUpdate([Music? music]) async {
+  static Future<void> sendSongInfoAndUpdate(
+      {Music? music, String? curLyric, String? nextLyric}) async {
     await _sendSongData(music);
-    final jpLrc = LyricLogic.playingJPLrc.value;
-    await _sendSongLyric(jpLrc.current ?? "", jpLrc.next ?? "");
+    await _sendSongLyric(curLyric, nextLyric);
     await _updateWidget();
   }
 
@@ -69,7 +68,7 @@ class HomeWidgetUtil {
     }
   }
 
-  static Future _sendSongLyric(String current, String next) async {
+  static Future _sendSongLyric(String? current, String? next) async {
     final List<Future<dynamic>> workArr = [];
     workArr.add(HomeWidget.saveWidgetData<String>('curJpLrc', current));
     workArr.add(HomeWidget.saveWidgetData<String>('nextJpLrc', next));
