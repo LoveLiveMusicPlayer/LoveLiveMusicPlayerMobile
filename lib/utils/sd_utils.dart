@@ -56,15 +56,23 @@ class SDUtils {
 
   static init() async {
     Directory? appDocDir;
-    path = await SpUtil.getString(Const.spSDPath);
-    if (path.isEmpty) {
-      if (Platform.isAndroid) {
-        appDocDir = await getExternalStorageDirectory();
-      }
-      appDocDir ??= await getApplicationDocumentsDirectory();
+    if (Platform.isIOS || Platform.isMacOS) {
+      // 苹果系统 path 中有一段 uuid 每次重装 app 都会变化，所以不能用 sp 保存 path
+      appDocDir = await getApplicationDocumentsDirectory();
       path = appDocDir.path + Platform.pathSeparator;
-      await SpUtil.put(Const.spSDPath, path);
+    } else {
+      path = await SpUtil.getString(Const.spSDPath);
+      if (path.isEmpty) {
+        appDocDir = await getExternalStorageDirectory();
+        if (appDocDir == null) {
+          Log4f.d(msg: "设备不存在外部存储");
+          return;
+        }
+        path = appDocDir.path + Platform.pathSeparator;
+        await SpUtil.put(Const.spSDPath, path);
+      }
     }
+
     bgPhotoPath = "${path}bg/";
     if (!checkDirectoryExist(bgPhotoPath)) {
       makeDir(bgPhotoPath);
