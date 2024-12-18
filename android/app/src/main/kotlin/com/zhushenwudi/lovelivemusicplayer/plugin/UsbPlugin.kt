@@ -32,6 +32,7 @@ class UsbPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 when (it) {
                     Intent.ACTION_MEDIA_MOUNTED -> channel?.invokeMethod(USB_MOUNT, null)
                     Intent.ACTION_MEDIA_EJECT -> channel?.invokeMethod(USB_UNMOUNT, null)
+                    else -> {}
                 }
             }
         }
