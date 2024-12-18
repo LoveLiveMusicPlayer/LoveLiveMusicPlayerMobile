@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -132,7 +133,9 @@ class GlobalLogic extends SuperController
     SpUtil.getInstance();
     Network.getInstance();
     await SDUtils.init();
-    await SDUtils.setUsbMountListener();
+    if (Platform.isAndroid) {
+      await SDUtils.setUsbMountListener();
+    }
     remoteHttp = RemoteHttp(await SpUtil.getBoolean(Const.spEnableHttp),
         await SpUtil.getString(Const.spHttpUrl, ""));
     enableBG = await SpUtil.getBoolean(Const.spEnableBackgroundPhoto);

@@ -22,10 +22,10 @@ class SDUtils {
   static bool allowEULA = false;
   static late String bgPhotoPath;
   static late String splashPhotoPath;
-  static const MethodChannel _channel = MethodChannel('usb_broadcast');
 
   static setUsbMountListener() {
-    _channel.setMethodCallHandler((MethodCall call) async {
+    MethodChannel('usb_broadcast')
+        .setMethodCallHandler((MethodCall call) async {
       print("method: ${call.method}");
       await Future.delayed(const Duration(seconds: 1));
       if (call.method.startsWith("usb_")) {
@@ -34,9 +34,10 @@ class SDUtils {
           return;
         }
         final defPath = await SpUtil.getString(Const.spSDPath);
+        Log4f.d(msg: "defPath: $defPath");
         var isLastDeviceUnmount = true;
         for (var path in pathList) {
-          print("defPath: $defPath --- path: $path");
+          print("path: $path");
           if (defPath.contains(path)) {
             isLastDeviceUnmount = false;
             break;
@@ -79,6 +80,9 @@ class SDUtils {
 
   static Future<List<String>> getUsbPathList() async {
     final pathList = <String>[];
+    if (!Platform.isAndroid) {
+      return pathList;
+    }
     var directories = await getExternalStorageDirectories();
     if (directories == null) {
       return pathList;
