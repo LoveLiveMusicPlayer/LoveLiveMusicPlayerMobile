@@ -36,8 +36,8 @@
             android:hardwareAccelerated="true"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
-            android:supportsPictureInPicture="true"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity">
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />
@@ -77,7 +77,8 @@
             android:name="com.yalantis.ucrop.UCropActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity" />
         <!-- cropper end -->
 
         <!-- just_audio start -->
@@ -91,7 +92,9 @@
             </intent-filter>
         </service>
 
-        <service android:name=".LyricService" />
+        <service android:name=".LyricService"
+            android:foregroundServiceType="mediaPlayback"
+            android:exported="false"/>
 
         <receiver
             android:name="com.ryanheise.audioservice.MediaButtonReceiver"

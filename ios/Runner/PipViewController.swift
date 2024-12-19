@@ -24,7 +24,7 @@ class PipViewController: FlutterViewController, AVPictureInPictureControllerDele
     }
     
     private func initMethodChannel() {
-        let channel = FlutterMethodChannel(name: "pip", binaryMessenger: flutterEngine.binaryMessenger)
+        let channel = FlutterMethodChannel(name: "desktop_lyric", binaryMessenger: flutterEngine.binaryMessenger)
         channel.setMethodCallHandler { [weak self] (call, result) in
             if call.method == "start" {
                 self?.startPip()

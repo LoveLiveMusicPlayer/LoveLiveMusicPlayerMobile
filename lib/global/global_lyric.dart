@@ -10,7 +10,7 @@ import 'package:lovelivemusicplayer/models/lyric.dart';
 import 'package:lovelivemusicplayer/models/playing_lyric.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/utils/home_widget_util.dart';
-import 'package:lovelivemusicplayer/utils/pip_utils.dart';
+import 'package:lovelivemusicplayer/utils/desktop_lyric_util.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 
 class LyricLogic {
@@ -61,7 +61,7 @@ class LyricLogic {
   static setPlayingJPLrc([musicId = "", current = "", next = ""]) {
     playingJPLrc.value =
         PlayingLyric(musicId: musicId, current: current, next: next);
-    PipUtil.updateLyric(current, next);
+    DesktopLyricUtil.updateLyric(current, next);
     HomeWidgetUtil.sendSongInfoAndUpdate(curLyric: current, nextLyric: next);
   }
 

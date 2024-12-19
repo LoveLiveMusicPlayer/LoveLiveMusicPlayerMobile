@@ -5,14 +5,14 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 
-class PipUtil {
-  static const MethodChannel _channel = MethodChannel('pip');
+class DesktopLyricUtil {
+  static const MethodChannel _channel = MethodChannel('desktop_lyric');
 
-  PipUtil._();
+  DesktopLyricUtil._();
 
   static bool isApple() => Platform.isIOS || Platform.isMacOS;
 
-  static Future<bool> startPip() async {
+  static Future<bool> start() async {
     if (isApple() && !PlayerLogic.to.mPlayer.playing) {
       SmartDialog.showToast("need_play_music_first".tr);
       return false;
@@ -20,7 +20,7 @@ class PipUtil {
     return await _channel.invokeMethod("start");
   }
 
-  static Future<bool> stopPip() async {
+  static Future<bool> stop() async {
     return await _channel.invokeMethod("stop");
   }
 

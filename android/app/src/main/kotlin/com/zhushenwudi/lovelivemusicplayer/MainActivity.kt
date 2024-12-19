@@ -18,7 +18,7 @@ import com.zhushenwudi.lovelivemusicplayer.home_widget.small_home_widget.BlackSm
 import com.zhushenwudi.lovelivemusicplayer.home_widget.small_home_widget.WhiteSmallHomeWidgetReceiver
 import com.zhushenwudi.lovelivemusicplayer.plugin.BackPlugin
 import com.zhushenwudi.lovelivemusicplayer.plugin.HomeWidgetPlugin
-import com.zhushenwudi.lovelivemusicplayer.plugin.PipPlugin
+import com.zhushenwudi.lovelivemusicplayer.plugin.DesktopLyricPlugin
 import com.zhushenwudi.lovelivemusicplayer.plugin.UPushPlugin
 import com.zhushenwudi.lovelivemusicplayer.plugin.UpdatePlugin
 import com.zhushenwudi.lovelivemusicplayer.plugin.UsbPlugin
@@ -67,7 +67,7 @@ class MainActivity : AudioServiceActivity() {
             add(UpdatePlugin())
             add(HomeWidgetPlugin(lifecycle))
             add(UsbPlugin())
-            add(PipPlugin(lyricIntent))
+            add(DesktopLyricPlugin(lyricIntent))
         }
     }
 

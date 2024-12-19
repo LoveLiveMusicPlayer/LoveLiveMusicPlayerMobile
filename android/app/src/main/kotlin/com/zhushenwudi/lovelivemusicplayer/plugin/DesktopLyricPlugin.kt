@@ -11,13 +11,13 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
-class PipPlugin(private val intent: Intent?) : FlutterPlugin, MethodChannel.MethodCallHandler {
+class DesktopLyricPlugin(private val intent: Intent?) : FlutterPlugin, MethodChannel.MethodCallHandler {
     private var mChannel: MethodChannel? = null
     private var mContext: Context? = null
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         mContext = flutterPluginBinding.applicationContext
-        mChannel = MethodChannel(flutterPluginBinding.binaryMessenger, PIP_CHANNEL)
+        mChannel = MethodChannel(flutterPluginBinding.binaryMessenger, DESKTOP_LYRIC_CHANNEL)
         mChannel?.setMethodCallHandler(this)
     }
 
@@ -67,7 +67,7 @@ class PipPlugin(private val intent: Intent?) : FlutterPlugin, MethodChannel.Meth
                 clazz.getDeclaredMethod("canDrawOverlays", Context::class.java)
             result = canDrawOverlays.invoke(null, mContext) as Boolean
         } catch (e: Exception) {
-            println("FlPiP checkPermission error : ${Log.getStackTraceString(e)}")
+            println("checkPermission error : ${Log.getStackTraceString(e)}")
         }
         return result
     }
@@ -77,6 +77,6 @@ class PipPlugin(private val intent: Intent?) : FlutterPlugin, MethodChannel.Meth
     }
 
     companion object {
-        private const val PIP_CHANNEL = "pip"
+        private const val DESKTOP_LYRIC_CHANNEL = "desktop_lyric"
     }
 }

@@ -9,7 +9,7 @@ import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
-import 'package:lovelivemusicplayer/utils/pip_utils.dart';
+import 'package:lovelivemusicplayer/utils/desktop_lyric_util.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
 
@@ -183,7 +183,7 @@ class DrawerLayout extends GetView<DrawerLogic> {
         colorWithBG: false,
         onTap: (controller) {
           Get.back();
-          PipUtil.startPip();
+          DesktopLyricUtil.start();
         },
       ),
       SizedBox(height: 8.h),
