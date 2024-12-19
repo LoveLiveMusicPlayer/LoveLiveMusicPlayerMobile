@@ -18,6 +18,7 @@ import com.zhushenwudi.lovelivemusicplayer.home_widget.small_home_widget.BlackSm
 import com.zhushenwudi.lovelivemusicplayer.home_widget.small_home_widget.WhiteSmallHomeWidgetReceiver
 import com.zhushenwudi.lovelivemusicplayer.plugin.BackPlugin
 import com.zhushenwudi.lovelivemusicplayer.plugin.HomeWidgetPlugin
+import com.zhushenwudi.lovelivemusicplayer.plugin.PipPlugin
 import com.zhushenwudi.lovelivemusicplayer.plugin.UPushPlugin
 import com.zhushenwudi.lovelivemusicplayer.plugin.UpdatePlugin
 import com.zhushenwudi.lovelivemusicplayer.plugin.UsbPlugin
@@ -32,6 +33,7 @@ class MainActivity : AudioServiceActivity() {
     private var deepLinkChannel: MethodChannel? = null
     private var homeWidgetChannel: MethodChannel? = null
     private var editor: SharedPreferences.Editor? = null
+    private var lyricIntent: Intent? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +43,7 @@ class MainActivity : AudioServiceActivity() {
         editor?.commit()
         flutterEngine?.apply {
             registerWith(this)
-            dartExecutor.binaryMessenger.run {
+            dartExecutor.binaryMessenger.apply {
                 deepLinkChannel = MethodChannel(this, LLMP_CHANNEL)
                 homeWidgetChannel = MethodChannel(this, HOME_WIDGET_CHANNEL)
             }
@@ -58,12 +60,14 @@ class MainActivity : AudioServiceActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         registerWith(flutterEngine)
+        lyricIntent = Intent(this, LyricService::class.java)
         flutterEngine.plugins.apply {
             add(UPushPlugin())
             add(BackPlugin { moveTaskToBack(false) })
             add(UpdatePlugin())
             add(HomeWidgetPlugin(lifecycle))
             add(UsbPlugin())
+            add(PipPlugin(lyricIntent))
         }
     }
 
@@ -90,7 +94,7 @@ class MainActivity : AudioServiceActivity() {
     private fun sendToHomeWidget(javaClass: Class<*>) {
         val intent = Intent(this, javaClass)
         intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-        val ids: IntArray = AppWidgetManager.getInstance(applicationContext)
+        val ids = AppWidgetManager.getInstance(applicationContext)
             .getAppWidgetIds(ComponentName(this, javaClass))
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
         sendBroadcast(intent)
@@ -98,7 +102,7 @@ class MainActivity : AudioServiceActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        editor?.run {
+        editor?.apply {
             putString("curJpLrc", "")
             putString("nextJpLrc", "")
             putBoolean("isPlaying", false)
@@ -114,6 +118,7 @@ class MainActivity : AudioServiceActivity() {
         }, 100)
         val serviceIntent = Intent(this, AudioService::class.java)
         stopService(serviceIntent)
+        stopService(lyricIntent)
     }
 
     companion object {

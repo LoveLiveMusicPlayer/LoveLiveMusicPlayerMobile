@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
@@ -8,8 +10,10 @@ class PipUtil {
 
   PipUtil._();
 
+  static bool isApple() => Platform.isIOS || Platform.isMacOS;
+
   static Future<bool> startPip() async {
-    if (!PlayerLogic.to.mPlayer.playing) {
+    if (isApple() && !PlayerLogic.to.mPlayer.playing) {
       SmartDialog.showToast("need_play_music_first".tr);
       return false;
     }
@@ -21,7 +25,7 @@ class PipUtil {
   }
 
   static Future<bool> updateLyric(String curLyric, String nextLyric) async {
-    return await _channel
-        .invokeMethod("update", {'current': curLyric, 'next': nextLyric});
+    final json = {'current': curLyric, 'next': nextLyric};
+    return await _channel.invokeMethod("update", json);
   }
 }

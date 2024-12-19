@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/global/global_update.dart';
 import 'package:lovelivemusicplayer/pages/system/logic.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
@@ -168,6 +169,13 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
                 }
                 return SizedBox.shrink();
               }),
+          DrawerFunctionButton(
+            icon: Assets.drawerDrawerUpdate,
+            text: 'update'.tr,
+            colorWithBG: false,
+            onTap: (_) => UpdateLogic.to.checkUpdate(),
+          ),
+          SizedBox(height: 8.h),
           DrawerFunctionButton(
             icon: Assets.drawerDrawerTimer,
             iconColor: iconColor,

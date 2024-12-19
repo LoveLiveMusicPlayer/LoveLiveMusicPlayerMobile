@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
-import 'package:lovelivemusicplayer/global/global_update.dart';
 import 'package:lovelivemusicplayer/models/group.dart';
 import 'package:lovelivemusicplayer/modules/drawer/logic.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
@@ -166,13 +165,6 @@ class DrawerLayout extends GetView<DrawerLogic> {
         text: 'fetch_songs'.tr,
         colorWithBG: false,
         onTap: (_) => controller.handleUpdateData(),
-      ),
-      SizedBox(height: 8.h),
-      DrawerFunctionButton(
-        icon: Assets.drawerDrawerUpdate,
-        text: 'update'.tr,
-        colorWithBG: false,
-        onTap: (_) => UpdateLogic.to.checkUpdate(),
       ),
       SizedBox(height: 8.h),
       DrawerFunctionButton(
