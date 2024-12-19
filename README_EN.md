@@ -47,6 +47,7 @@ Function list:
 - [Drive mode] ✓
 - [Carplay support] ✓
 - [Home Widget] ✓
+- [Desktop Lyric] ✓
 
 **--Project_by [zhushenwudi](https://space.bilibili.com/4367965)**
 

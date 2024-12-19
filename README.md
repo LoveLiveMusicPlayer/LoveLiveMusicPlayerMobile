@@ -47,6 +47,7 @@ Language: 中文 | [English Document](README_EN.md)
 - [驾驶模式] ✓
 - [Carplay支持] ✓
 - [桌面小组件] ✓
+- [桌面歌词] ✓
 
 **--Project_by [朱神无敌](https://space.bilibili.com/4367965)**
 
