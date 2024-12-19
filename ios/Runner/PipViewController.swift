@@ -26,8 +26,6 @@ class PipViewController: FlutterViewController, AVPictureInPictureControllerDele
     private func initMethodChannel() {
         let channel = FlutterMethodChannel(name: "pip", binaryMessenger: flutterEngine.binaryMessenger)
         channel.setMethodCallHandler { [weak self] (call, result) in
-            let pipController = self!.pipController
-            let isActive = pipController?.isPictureInPictureActive ?? false
             if call.method == "start" {
                 self?.startPip()
                 result(true)
