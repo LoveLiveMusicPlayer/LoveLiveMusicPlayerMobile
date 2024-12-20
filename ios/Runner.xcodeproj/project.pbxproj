@@ -27,6 +27,8 @@
 		C70B09322C9BE5C20074432D /* HomeWidgetExampleLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70B09292C9BE5C20074432D /* HomeWidgetExampleLiveActivity.swift */; };
 		C78CA5962C9C1B3C00721166 /* BackgroundIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78CA5952C9C1B3900721166 /* BackgroundIntent.swift */; };
 		C79B48632A5CB39F0086C3F9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79B48622A5CB39F0086C3F9 /* SceneDelegate.swift */; };
+		C7F3368A2D15CF3800D6382A /* PicInPicScreenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F336882D15CF3800D6382A /* PicInPicScreenManager.swift */; };
+		C7F3368B2D15CF3800D6382A /* PicInPicScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F336892D15CF3800D6382A /* PicInPicScreenView.swift */; };
 		E06198C5CF109C7E5D6134CE /* Pods_HomeWidgetExampleExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85B5CF7708AD8F8A7602441D /* Pods_HomeWidgetExampleExtension.framework */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +95,8 @@
 		C70F13342B98132A006EE8C8 /* RunnerRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RunnerRelease.entitlements; sourceTree = "<group>"; };
 		C78CA5952C9C1B3900721166 /* BackgroundIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundIntent.swift; sourceTree = "<group>"; };
 		C79B48622A5CB39F0086C3F9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		C7F336882D15CF3800D6382A /* PicInPicScreenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicInPicScreenManager.swift; sourceTree = "<group>"; };
+		C7F336892D15CF3800D6382A /* PicInPicScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicInPicScreenView.swift; sourceTree = "<group>"; };
 		C7F3802B298642BF00D5E8C2 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		E48278B180FEF65797E15E96 /* Pods-HomeWidgetExampleExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HomeWidgetExampleExtension.debug.xcconfig"; path = "Target Support Files/Pods-HomeWidgetExampleExtension/Pods-HomeWidgetExampleExtension.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -171,6 +175,8 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				C7F336882D15CF3800D6382A /* PicInPicScreenManager.swift */,
+				C7F336892D15CF3800D6382A /* PicInPicScreenView.swift */,
 				C70635642D12D5730011E3D5 /* black.mp4 */,
 				C70635602D12C4DE0011E3D5 /* PipViewController.swift */,
 				C78CA5952C9C1B3900721166 /* BackgroundIntent.swift */,
@@ -457,6 +463,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C78CA5962C9C1B3C00721166 /* BackgroundIntent.swift in Sources */,
+				C7F3368A2D15CF3800D6382A /* PicInPicScreenManager.swift in Sources */,
+				C7F3368B2D15CF3800D6382A /* PicInPicScreenView.swift in Sources */,
 				C70635622D12C4DE0011E3D5 /* PipViewController.swift in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
