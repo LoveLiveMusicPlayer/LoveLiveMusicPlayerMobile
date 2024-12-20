@@ -67,7 +67,7 @@ class MainActivity : AudioServiceActivity() {
             add(UpdatePlugin())
             add(HomeWidgetPlugin(lifecycle))
             add(UsbPlugin())
-            add(DesktopLyricPlugin(lyricIntent))
+            add(DesktopLyricPlugin(lyricIntent, lifecycle))
         }
     }
 

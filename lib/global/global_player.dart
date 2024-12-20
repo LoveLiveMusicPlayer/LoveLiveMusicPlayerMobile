@@ -71,7 +71,7 @@ class PlayerLogic extends GetxController
     /// 播放位置监听
     mPlayer.positionStream.listen((duration) {
       LyricLogic.playingPosition.value = duration;
-      LyricLogic.changePlayingLyric();
+      LyricLogic.changePlayingLyric(false);
     });
 
     /// 当前播放监听
@@ -473,7 +473,7 @@ class PlayerLogic extends GetxController
     await mPlayer.pause();
     await mPlayer.stop();
     setCurrentMusic(null);
-    LyricLogic.setPlayingJPLrc();
+    LyricLogic.postNowPlayingLyric(null);
     LyricLogic.fullLrc.value = Lyric();
   }
 
@@ -498,7 +498,7 @@ class PlayerLogic extends GetxController
   playPrev() {
     if (mPlayer.hasPrevious) {
       mPlayer.seekToPrevious();
-      LyricLogic.setPlayingJPLrc();
+      // LyricLogic.postNowPlayingLyric(null);
     }
   }
 
@@ -506,7 +506,7 @@ class PlayerLogic extends GetxController
   playNext() {
     if (mPlayer.hasNext) {
       mPlayer.seekToNext();
-      LyricLogic.setPlayingJPLrc();
+      // LyricLogic.postNowPlayingLyric(null);
     }
   }
 }

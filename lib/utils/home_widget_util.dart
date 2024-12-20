@@ -35,9 +35,9 @@ class HomeWidgetUtil {
   }
 
   static Future<void> sendSongInfoAndUpdate(
-      {Music? music, String? curLyric, String? nextLyric}) async {
+      {Music? music, String? lyricLine1, String? lyricLine2}) async {
     await _sendSongData(music);
-    await _sendSongLyric(curLyric, nextLyric);
+    await _sendSongLyric(lyricLine1, lyricLine2);
     await _updateWidget();
   }
 

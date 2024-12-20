@@ -6,6 +6,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.IBinder
@@ -19,6 +20,7 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import com.jeremyliao.liveeventbus.LiveEventBus
 import kotlin.math.abs
 
 @SuppressLint("StaticFieldLeak")
@@ -30,13 +32,16 @@ class LyricService : Service() {
         private const val TEXT = "运行中..."
         private const val MSG_HINT = "正在打开应用..."
         private const val SERVICE_ID = 0x01
+        private const val EVENT_LYRIC_TYPE = "lyricType"
 
-        private var tvCurLyric: TextView? = null
-        private var tvNextLyric: TextView? = null
+        private var tvLyricLine1: TextView? = null
+        private var tvLyricLine2: TextView? = null
 
-        fun updateLyric(curLyric: String, nextLyric: String) {
-            tvCurLyric?.text = curLyric
-            tvNextLyric?.text = nextLyric
+        fun updateLyric(lyricLine1: String?, lyricLine2: String?, currentLine: Int) {
+            lyricLine1?.let { tvLyricLine1?.text = it }
+            lyricLine2?.let { tvLyricLine2?.text = it }
+            tvLyricLine1?.setTextColor(if (currentLine == 2) Color.LTGRAY else Color.WHITE)
+            tvLyricLine2?.setTextColor(if (currentLine == 1) Color.LTGRAY else Color.WHITE)
         }
     }
 
@@ -46,6 +51,8 @@ class LyricService : Service() {
     private var llLyric: LinearLayout? = null
     private var ivClose: ImageView? = null
     private var ivPip: ImageView? = null
+    private var ivIcon: ImageView? = null
+    private var ivTranslate: ImageView? = null
 
     private var sx = 0f
     private var sy = 0f
@@ -94,19 +101,25 @@ class LyricService : Service() {
     private fun initView() {
         rlLyric?.apply {
             llLyric = findViewById(R.id.ll_lyric)
-            tvCurLyric = findViewById(R.id.tv_current_lyric)
-            tvNextLyric = findViewById(R.id.tv_next_lyric)
+            tvLyricLine1 = findViewById(R.id.tv_lyric_line1)
+            tvLyricLine2 = findViewById(R.id.tv_lyric_line2)
             ivClose = findViewById(R.id.ic_close)
             ivPip = findViewById(R.id.ic_pip)
+            ivIcon = findViewById(R.id.ic_icon)
+            ivTranslate = findViewById(R.id.ic_translate)
         }
 
         llLyric?.setOnClickListener {
             if (ivClose?.visibility == View.VISIBLE) {
                 ivClose?.visibility = View.GONE
                 ivPip?.visibility = View.GONE
+                ivTranslate?.visibility = View.GONE
+                ivIcon?.visibility = View.VISIBLE
             } else {
                 ivClose?.visibility = View.VISIBLE
                 ivPip?.visibility = View.VISIBLE
+                ivTranslate?.visibility = View.VISIBLE
+                ivIcon?.visibility = View.GONE
             }
         }
         llLyric?.setOnTouchListener { view, event ->
@@ -173,6 +186,9 @@ class LyricService : Service() {
             startActivity(intent)
             Toast.makeText(applicationContext, MSG_HINT, Toast.LENGTH_LONG).show()
             stopSelf()
+        }
+        ivTranslate?.setOnClickListener {
+            LiveEventBus.get<Any>(EVENT_LYRIC_TYPE).post(null)
         }
     }
 

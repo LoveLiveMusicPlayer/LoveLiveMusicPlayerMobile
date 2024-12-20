@@ -15,7 +15,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_current_lyric"
+            android:id="@+id/tv_lyric_line1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -28,7 +28,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/tv_next_lyric"
+            android:id="@+id/tv_lyric_line2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -58,4 +58,25 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="25dp"
         android:background="@drawable/ic_pip" />
+
+    <ImageView
+        android:id="@+id/ic_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:visibility="gone"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@id/ll_lyric"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/logo" />
+
+    <ImageView
+        android:id="@+id/ic_translate"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@id/ll_lyric"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/ic_translate" />
 </RelativeLayout>

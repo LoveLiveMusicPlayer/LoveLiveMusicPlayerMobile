@@ -6,12 +6,16 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.util.Log
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.zhushenwudi.lovelivemusicplayer.LyricService
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
-class DesktopLyricPlugin(private val intent: Intent?) : FlutterPlugin, MethodChannel.MethodCallHandler {
+class DesktopLyricPlugin(private val intent: Intent?, override val lifecycle: Lifecycle) :
+    FlutterPlugin, MethodChannel.MethodCallHandler, LifecycleOwner {
     private var mChannel: MethodChannel? = null
     private var mContext: Context? = null
 
@@ -19,6 +23,11 @@ class DesktopLyricPlugin(private val intent: Intent?) : FlutterPlugin, MethodCha
         mContext = flutterPluginBinding.applicationContext
         mChannel = MethodChannel(flutterPluginBinding.binaryMessenger, DESKTOP_LYRIC_CHANNEL)
         mChannel?.setMethodCallHandler(this)
+        LiveEventBus
+            .get(EVENT_LYRIC_TYPE, String::class.java)
+            .observe(this) {
+                mChannel?.invokeMethod(EVENT_LYRIC_TYPE, null)
+            }
     }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
@@ -51,9 +60,14 @@ class DesktopLyricPlugin(private val intent: Intent?) : FlutterPlugin, MethodCha
 
             "update" -> {
                 val args = call.arguments as Map<*, *>
-                val curLyric = args["current"] as String
-                val nextLyric = args["next"] as String
-                LyricService.updateLyric(curLyric = curLyric, nextLyric = nextLyric)
+                val lyricLine1 = args["lyricLine1"] as String?
+                val lyricLine2 = args["lyricLine2"] as String?
+                val currentLine = args["currentLine"] as Int
+                LyricService.updateLyric(
+                    lyricLine1 = lyricLine1,
+                    lyricLine2 = lyricLine2,
+                    currentLine = currentLine
+                )
             }
         }
         result.success(true)
@@ -78,5 +92,6 @@ class DesktopLyricPlugin(private val intent: Intent?) : FlutterPlugin, MethodCha
 
     companion object {
         private const val DESKTOP_LYRIC_CHANNEL = "desktop_lyric"
+        private const val EVENT_LYRIC_TYPE = "lyricType"
     }
 }

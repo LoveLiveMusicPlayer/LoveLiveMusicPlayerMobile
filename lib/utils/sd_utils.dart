@@ -26,7 +26,6 @@ class SDUtils {
   static setUsbMountListener() {
     MethodChannel('usb_broadcast')
         .setMethodCallHandler((MethodCall call) async {
-      print("method: ${call.method}");
       await Future.delayed(const Duration(seconds: 1));
       if (call.method.startsWith("usb_")) {
         final pathList = await getUsbPathList();
@@ -37,14 +36,12 @@ class SDUtils {
         Log4f.d(msg: "defPath: $defPath");
         var isLastDeviceUnmount = true;
         for (var path in pathList) {
-          print("path: $path");
           if (defPath.contains(path)) {
             isLastDeviceUnmount = false;
             break;
           }
         }
         if (isLastDeviceUnmount) {
-          print("remove....");
           await DBLogic.to.clearAllMusicThroughUsb();
           await SpUtil.remove(Const.spSDPath);
           await init();

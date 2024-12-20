@@ -8,23 +8,23 @@ String playingLrcToJson(PlayingLyric data) => json.encode(data.toJson());
 class PlayingLyric {
   PlayingLyric({
     this.musicId,
-    this.current,
-    this.next,
+    this.lyricLine1,
+    this.lyricLine2,
   });
 
   String? musicId;
-  String? current;
-  String? next;
+  String? lyricLine1;
+  String? lyricLine2;
 
   factory PlayingLyric.fromJson(Map<String, dynamic> json) => PlayingLyric(
         musicId: json["musicId"],
-        current: json["current"],
-        next: json["next"],
+        lyricLine1: json["lyricLine1"],
+        lyricLine2: json["lyricLine2"],
       );
 
   Map<String, dynamic> toJson() => {
         "musicId": musicId,
-        "current": current,
-        "next": next,
+        "lyricLine1": lyricLine1,
+        "lyricLine2": lyricLine2,
       };
 }

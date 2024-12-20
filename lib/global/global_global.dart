@@ -21,6 +21,7 @@ import 'package:lovelivemusicplayer/network/http_request.dart';
 import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
+import 'package:lovelivemusicplayer/utils/desktop_lyric_util.dart';
 import 'package:lovelivemusicplayer/utils/home_widget_util.dart';
 import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
@@ -134,7 +135,9 @@ class GlobalLogic extends SuperController
     Network.getInstance();
     await SDUtils.init();
     if (Platform.isAndroid) {
+      // android 需要额外注册 usb 插拔事件监听、桌面歌词点击监听
       await SDUtils.setUsbMountListener();
+      DesktopLyricUtil.init();
     }
     remoteHttp = RemoteHttp(await SpUtil.getBoolean(Const.spEnableHttp),
         await SpUtil.getString(Const.spHttpUrl, ""));

@@ -64,7 +64,8 @@ class DriveModePage extends GetView<DriveModeLogic> {
                       width: double.infinity,
                       height: 60.h,
                       margin: EdgeInsets.symmetric(horizontal: 24.w),
-                      child: Text(LyricLogic.playingJPLrc.value.current ?? "",
+                      child: Text(
+                          LyricLogic.playingJPLrc.value.lyricLine1 ?? "",
                           style: Get.isDarkMode
                               ? TextStyleMs.white_20
                               : TextStyleMs.black_20,

@@ -9,8 +9,8 @@ import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/models/lyric.dart';
 import 'package:lovelivemusicplayer/models/playing_lyric.dart';
 import 'package:lovelivemusicplayer/network/http_request.dart';
-import 'package:lovelivemusicplayer/utils/home_widget_util.dart';
 import 'package:lovelivemusicplayer/utils/desktop_lyric_util.dart';
+import 'package:lovelivemusicplayer/utils/home_widget_util.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 
 class LyricLogic {
@@ -31,8 +31,15 @@ class LyricLogic {
   // 滚动歌词
   static final Rx<LyricsReaderModel?> lyricsModel = LyricsReaderModel().obs;
 
+  // 指示已经处理过的歌词，播放器一句歌词会回调很多次，避免性能损耗
+  static int latestCurIndex = 0;
+
+  // 记录解析后的歌词信息，便于后续判断新解析的歌词替换哪一个变量
+  static String? originLine1Text;
+  static String? originLine2Text;
+
   /// 修改当前、后一句歌词内容
-  static Future<void> changePlayingLyric() async {
+  static Future<void> changePlayingLyric(bool isFetch) async {
     final musicId = PlayerLogic.to.playingMusic.value.musicId;
     if (musicId == null || playingJPLrc.value.musicId != musicId) {
       return;
@@ -44,25 +51,74 @@ class LyricLogic {
     }
 
     final curIndex = lyricModel.getCurrentLine(currentTime);
-    final curLyricModel = lyricModel.lyrics[curIndex];
-    var current = curLyricModel.mainText ?? "";
-    var next = "";
-    if (curLyricModel.hasExt) {
-      next = curLyricModel.extText ?? "";
-    } else {
-      if (curIndex < lyricModel.lyrics.length - 1) {
-        next = lyricModel.lyrics[curIndex + 1].mainText ?? "";
-      }
+    if (curIndex == latestCurIndex) {
+      // 解析过当句歌词就停止后续解析
+      return;
     }
-    setPlayingJPLrc(musicId, current, next);
+    latestCurIndex = curIndex;
+
+    final curLyricModel = lyricModel.lyrics[curIndex];
+    final mainText = curLyricModel.mainText?.replaceLine();
+    String? extText;
+
+    if (lrcType.value > 0) {
+      // 中译/罗马
+      if (curLyricModel.hasExt) {
+        // 日文对应的 中译/罗马
+        extText = curLyricModel.extText?.replaceLine();
+      }
+      // 如果日文为空字符串，强制将副文本替换为空字符串
+      if (mainText?.isEmpty == true) {
+        extText = "";
+      }
+      postNowPlayingLyric(musicId, mainText, extText, 0);
+      return;
+    }
+
+    // 原文
+    if (curIndex < lyricModel.lyrics.length - 1) {
+      // 下一句播放的歌词
+      extText = lyricModel.lyrics[curIndex + 1].mainText?.replaceLine();
+    }
+    if (isFetch) {
+      // 切歌，需要重新将每一行歌词都替换掉
+      postNowPlayingLyric(musicId, mainText, extText);
+      return;
+    }
+
+    if (mainText == originLine1Text) {
+      // 如果当前播放的歌词被上一次解析过，记录为line1，则需要将下一句歌词用line2替换
+      postNowPlayingLyric(musicId, null, extText);
+      return;
+    }
+
+    if (mainText == originLine2Text) {
+      // 如果当前播放的歌词被上一次解析过，记录为line2，则需要将下一句歌词用line1替换
+      postNowPlayingLyric(musicId, extText, null, 2);
+      return;
+    }
+
+    // mainText与line1和line2均不相等时（比如：跳转播放）
+    // 此时歌词面板应该强制将每一行歌词都替换掉
+    postNowPlayingLyric(musicId, mainText, extText);
   }
 
   /// 设置封面下面的歌词
-  static setPlayingJPLrc([musicId = "", current = "", next = ""]) {
-    playingJPLrc.value =
-        PlayingLyric(musicId: musicId, current: current, next: next);
-    DesktopLyricUtil.updateLyric(current, next);
-    HomeWidgetUtil.sendSongInfoAndUpdate(curLyric: current, nextLyric: next);
+  static postNowPlayingLyric(String? musicId,
+      [String? lyricLine1, String? lyricLine2, int currentLine = 1]) {
+    // 只要变量不为null（空字符串或者多字符字符串），就记录到变量中
+    if (lyricLine1 != null) {
+      originLine1Text = lyricLine1;
+    }
+    if (lyricLine2 != null) {
+      originLine2Text = lyricLine2;
+    }
+
+    playingJPLrc.value = PlayingLyric(
+        musicId: musicId, lyricLine1: lyricLine1, lyricLine2: lyricLine2);
+    DesktopLyricUtil.updateLyric(lyricLine1, lyricLine2, currentLine);
+    HomeWidgetUtil.sendSongInfoAndUpdate(
+        lyricLine1: lyricLine1, lyricLine2: lyricLine2);
   }
 
   /// 获取中/日/罗马歌词
@@ -104,8 +160,8 @@ class LyricLogic {
     }
 
     fullLrc.value = Lyric(jp: jpLrc, zh: zhLrc, roma: romaLrc);
-    LyricLogic.setPlayingJPLrc(PlayerLogic.to.playingMusic.value.musicId);
-    LyricLogic.changePlayingLyric();
+    LyricLogic.postNowPlayingLyric(PlayerLogic.to.playingMusic.value.musicId!);
+    LyricLogic.changePlayingLyric(true);
     if (forceRefresh) {
       SmartDialog.showToast(fetchResultStr);
     }
@@ -220,5 +276,11 @@ class LyricLogic {
             .getModel();
     }
     return null;
+  }
+}
+
+extension StringExt on String {
+  String replaceLine() {
+    return replaceAll("\r", "").replaceAll("\n", "");
   }
 }

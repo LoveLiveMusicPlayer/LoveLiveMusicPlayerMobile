@@ -6,12 +6,13 @@ class PipViewController: FlutterViewController, AVPictureInPictureControllerDele
     // 承载PIP的播放器
     private var playerLayer: AVPlayerLayer!
     // PIP控制器
-    var pipController: AVPictureInPictureController!
+    private var pipController: AVPictureInPictureController!
     // PIP中要渲染的View
-    var customView: UIView!
+    private var customView: UIView!
     // 歌词控件
-    var currentLyric: UITextView!
-    var nextLyric: UITextView!
+    private var lyricLine1: UITextView!
+    private var lyricLine2: UITextView!
+    private var icon: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,12 +34,15 @@ class PipViewController: FlutterViewController, AVPictureInPictureControllerDele
                 self?.stopPip()
                 result(true)
             } else if (call.method == "update") {
-                if let args = call.arguments as? [String: Any],
-                   let currentLyric = args["current"] as? String,
-                   let nextLyric = args["next"] as? String {
+                if let args = call.arguments as? [String: Any] {
+                    let lyricLine1 = args["lyricLine1"] as? String
+                    let lyricLine2 = args["lyricLine2"] as? String
+                    let currentLine = args["currentLine"] as? Int
+
                     self?.updatePip(
-                        currentLyric: currentLyric,
-                        nextLyric: nextLyric
+                        lyricLine1: lyricLine1,
+                        lyricLine2: lyricLine2,
+                        currentLine: currentLine!
                     )
                     result(true)
                 } else {
@@ -96,39 +100,52 @@ class PipViewController: FlutterViewController, AVPictureInPictureControllerDele
         customView.backgroundColor = .black
         customView.translatesAutoresizingMaskIntoConstraints = false
 
-        // 创建 currentLyric
-        currentLyric = UITextView()
-        currentLyric.text = ""
-        currentLyric.backgroundColor = .black
-        currentLyric.textColor = .white
-        currentLyric.font = UIFont.boldSystemFont(ofSize: 20)
-        currentLyric.isUserInteractionEnabled = false
-        currentLyric.translatesAutoresizingMaskIntoConstraints = false
-        customView.addSubview(currentLyric)
+        // 创建 lyricLine1
+        lyricLine1 = UITextView()
+        lyricLine1.text = ""
+        lyricLine1.backgroundColor = .black
+        lyricLine1.textColor = .white
+        lyricLine1.font = UIFont.boldSystemFont(ofSize: 20)
+        lyricLine1.isUserInteractionEnabled = false
+        lyricLine1.translatesAutoresizingMaskIntoConstraints = false
+        customView.addSubview(lyricLine1)
 
-        // 创建 nextLyric
-        nextLyric = UITextView()
-        nextLyric.text = ""
-        nextLyric.backgroundColor = .black
-        nextLyric.textColor = .white
-        nextLyric.font = UIFont.boldSystemFont(ofSize: 20)
-        nextLyric.isUserInteractionEnabled = false
-        nextLyric.translatesAutoresizingMaskIntoConstraints = false
-        customView.addSubview(nextLyric)
+        // 创建 lyricLine2
+        lyricLine2 = UITextView()
+        lyricLine2.text = ""
+        lyricLine2.backgroundColor = .black
+        lyricLine2.textColor = .white
+        lyricLine2.font = UIFont.boldSystemFont(ofSize: 20)
+        lyricLine2.isUserInteractionEnabled = false
+        lyricLine2.translatesAutoresizingMaskIntoConstraints = false
+        customView.addSubview(lyricLine2)
+        
+        // 创建 appIcon
+        icon = UIImageView(image: UIImage(named: "AppIcon"))
+        icon.contentMode = .scaleAspectFit
+        icon.isUserInteractionEnabled = false
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        customView.addSubview(icon)
 
         // 设置 Auto Layout 约束
         NSLayoutConstraint.activate([
-            // currentLyric 约束
-            currentLyric.centerXAnchor.constraint(equalTo: customView.centerXAnchor),
-            currentLyric.topAnchor.constraint(equalTo: customView.topAnchor, constant: 2),
-            currentLyric.heightAnchor.constraint(equalToConstant: 55),
-            currentLyric.widthAnchor.constraint(equalTo: customView.widthAnchor, multiplier: 0.95),
+            // lyricLine1 约束
+            lyricLine1.centerXAnchor.constraint(equalTo: customView.centerXAnchor),
+            lyricLine1.topAnchor.constraint(equalTo: customView.topAnchor, constant: 2),
+            lyricLine1.heightAnchor.constraint(equalToConstant: 55),
+            lyricLine1.widthAnchor.constraint(equalTo: customView.widthAnchor, multiplier: 0.95),
 
-            // nextLyric 约束
-            nextLyric.centerXAnchor.constraint(equalTo: customView.centerXAnchor),
-            nextLyric.topAnchor.constraint(equalTo: currentLyric.bottomAnchor, constant: 2),
-            nextLyric.heightAnchor.constraint(equalToConstant: 55), // 设置高度
-            nextLyric.widthAnchor.constraint(equalTo: customView.widthAnchor, multiplier: 0.95)
+            // lyricLine2 约束
+            lyricLine2.centerXAnchor.constraint(equalTo: customView.centerXAnchor),
+            lyricLine2.topAnchor.constraint(equalTo: lyricLine1.bottomAnchor, constant: 2),
+            lyricLine2.heightAnchor.constraint(equalToConstant: 55), // 设置高度
+            lyricLine2.widthAnchor.constraint(equalTo: customView.widthAnchor, multiplier: 0.95),
+            
+            // appIcon 约束
+            icon.bottomAnchor.constraint(equalTo: customView.bottomAnchor, constant: -10),
+            icon.trailingAnchor.constraint(equalTo: customView.trailingAnchor, constant: -10),
+            icon.widthAnchor.constraint(equalToConstant: 30),
+            icon.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     
@@ -144,8 +161,18 @@ class PipViewController: FlutterViewController, AVPictureInPictureControllerDele
         }
     }
     
-    @objc private func updatePip(currentLyric: String, nextLyric: String) {
-        self.currentLyric.text = currentLyric
-        self.nextLyric.text = nextLyric
+    @objc private func updatePip(
+        lyricLine1: String?,
+        lyricLine2: String?,
+        currentLine: Int
+    ) {
+        if lyricLine1 != nil {
+            self.lyricLine1.text = lyricLine1
+        }
+        if lyricLine2 != nil {
+            self.lyricLine2.text = lyricLine2
+        }
+        self.lyricLine1.textColor = currentLine == 2 ? UIColor.lightGray : UIColor.white
+        self.lyricLine2.textColor = currentLine == 1 ? UIColor.lightGray : UIColor.white
     }
 }
