@@ -188,7 +188,7 @@ class LyricService : Service() {
             stopSelf()
         }
         ivTranslate?.setOnClickListener {
-            LiveEventBus.get<Any>(EVENT_LYRIC_TYPE).post(null)
+            LiveEventBus.get<Long>(EVENT_LYRIC_TYPE).post(System.currentTimeMillis())
         }
     }
 

@@ -17,8 +17,8 @@ import com.zhushenwudi.lovelivemusicplayer.home_widget.large_home_widget.WhiteLa
 import com.zhushenwudi.lovelivemusicplayer.home_widget.small_home_widget.BlackSmallHomeWidgetReceiver
 import com.zhushenwudi.lovelivemusicplayer.home_widget.small_home_widget.WhiteSmallHomeWidgetReceiver
 import com.zhushenwudi.lovelivemusicplayer.plugin.BackPlugin
-import com.zhushenwudi.lovelivemusicplayer.plugin.HomeWidgetPlugin
 import com.zhushenwudi.lovelivemusicplayer.plugin.DesktopLyricPlugin
+import com.zhushenwudi.lovelivemusicplayer.plugin.HomeWidgetPlugin
 import com.zhushenwudi.lovelivemusicplayer.plugin.UPushPlugin
 import com.zhushenwudi.lovelivemusicplayer.plugin.UpdatePlugin
 import com.zhushenwudi.lovelivemusicplayer.plugin.UsbPlugin
@@ -32,6 +32,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AudioServiceActivity() {
     private var deepLinkChannel: MethodChannel? = null
     private var homeWidgetChannel: MethodChannel? = null
+    private var desktopLyricChannel: MethodChannel? = null
     private var editor: SharedPreferences.Editor? = null
     private var lyricIntent: Intent? = null
 
@@ -46,6 +47,7 @@ class MainActivity : AudioServiceActivity() {
             dartExecutor.binaryMessenger.apply {
                 deepLinkChannel = MethodChannel(this, LLMP_CHANNEL)
                 homeWidgetChannel = MethodChannel(this, HOME_WIDGET_CHANNEL)
+                desktopLyricChannel = MethodChannel(this, DESKTOP_LYRIC_CHANNEL)
             }
         }
         initLiveEventBus()
@@ -67,7 +69,7 @@ class MainActivity : AudioServiceActivity() {
             add(UpdatePlugin())
             add(HomeWidgetPlugin(lifecycle))
             add(UsbPlugin())
-            add(DesktopLyricPlugin(lyricIntent, lifecycle))
+            add(DesktopLyricPlugin(lyricIntent))
         }
     }
 
@@ -88,6 +90,12 @@ class MainActivity : AudioServiceActivity() {
                     HANDLE_HOME_WIDGET_REQUEST_METHOD,
                     mapOf("url" to it)
                 )
+            }
+
+        LiveEventBus
+            .get(EVENT_LYRIC_TYPE_REQUEST_METHOD, Long::class.java)
+            .observeForever {
+                desktopLyricChannel?.invokeMethod(EVENT_LYRIC_TYPE_REQUEST_METHOD, it)
             }
     }
 
@@ -124,7 +132,9 @@ class MainActivity : AudioServiceActivity() {
     companion object {
         private const val LLMP_CHANNEL = "llmp"
         private const val HOME_WIDGET_CHANNEL = "home_widget"
+        private const val DESKTOP_LYRIC_CHANNEL = "desktop_lyric"
         private const val HANDLE_SCHEME_REQUEST_METHOD = "handleSchemeRequest"
         private const val HANDLE_HOME_WIDGET_REQUEST_METHOD = "host"
+        private const val EVENT_LYRIC_TYPE_REQUEST_METHOD = "lyricType"
     }
 }

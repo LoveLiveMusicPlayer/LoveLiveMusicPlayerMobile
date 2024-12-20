@@ -5,17 +5,13 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
-import android.util.Log
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import com.jeremyliao.liveeventbus.LiveEventBus
 import com.zhushenwudi.lovelivemusicplayer.LyricService
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
-class DesktopLyricPlugin(private val intent: Intent?, override val lifecycle: Lifecycle) :
-    FlutterPlugin, MethodChannel.MethodCallHandler, LifecycleOwner {
+class DesktopLyricPlugin(private val intent: Intent?) : FlutterPlugin,
+    MethodChannel.MethodCallHandler {
     private var mChannel: MethodChannel? = null
     private var mContext: Context? = null
 
@@ -23,11 +19,6 @@ class DesktopLyricPlugin(private val intent: Intent?, override val lifecycle: Li
         mContext = flutterPluginBinding.applicationContext
         mChannel = MethodChannel(flutterPluginBinding.binaryMessenger, DESKTOP_LYRIC_CHANNEL)
         mChannel?.setMethodCallHandler(this)
-        LiveEventBus
-            .get(EVENT_LYRIC_TYPE, String::class.java)
-            .observe(this) {
-                mChannel?.invokeMethod(EVENT_LYRIC_TYPE, null)
-            }
     }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
@@ -81,7 +72,7 @@ class DesktopLyricPlugin(private val intent: Intent?, override val lifecycle: Li
                 clazz.getDeclaredMethod("canDrawOverlays", Context::class.java)
             result = canDrawOverlays.invoke(null, mContext) as Boolean
         } catch (e: Exception) {
-            println("checkPermission error : ${Log.getStackTraceString(e)}")
+            e.printStackTrace()
         }
         return result
     }
@@ -92,6 +83,5 @@ class DesktopLyricPlugin(private val intent: Intent?, override val lifecycle: Li
 
     companion object {
         private const val DESKTOP_LYRIC_CHANNEL = "desktop_lyric"
-        private const val EVENT_LYRIC_TYPE = "lyricType"
     }
 }
