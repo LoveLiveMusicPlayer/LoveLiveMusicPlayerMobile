@@ -21,7 +21,10 @@ class PipViewController: FlutterViewController {
     }
     
     @objc func appDidBecomeActive() {
+        // 当 app 回到前台时关闭 pip 窗口
         manager.manalChangePicInPic(needStart: false)
+        // 但是要重新将 player 的状态切换为播放，否则下次回到后台不会再自动弹出 pip 窗口
+        manager.picInPicAutoOpen(nil)
     }
     
     private func initMethodChannel() {

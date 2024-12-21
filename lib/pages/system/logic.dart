@@ -13,6 +13,7 @@ import 'package:lovelivemusicplayer/global/global_db.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
 import 'package:lovelivemusicplayer/global/global_player.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/utils/desktop_lyric_util.dart';
 import 'package:lovelivemusicplayer/utils/http_server.dart';
 import 'package:lovelivemusicplayer/utils/image_util.dart';
 import 'package:lovelivemusicplayer/utils/sd_utils.dart';
@@ -68,6 +69,12 @@ class SystemSettingLogic extends GetxController {
   enableSplashPhoto(bool isEnable) {
     SpUtil.put(Const.spAIPicture, isEnable);
     GlobalLogic.to.hasAIPic = isEnable;
+  }
+
+  openDesktopLyric(bool isOpen) {
+    SpUtil.put(Const.spOpenDesktopLyric, isOpen);
+    GlobalLogic.to.openDesktopLyric = isOpen;
+    DesktopLyricUtil.invokeStatus(isOpen);
   }
 
   enableBackgroundPhoto(bool isEnable) {

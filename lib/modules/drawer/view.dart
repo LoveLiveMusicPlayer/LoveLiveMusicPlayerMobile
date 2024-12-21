@@ -3,13 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
 import 'package:lovelivemusicplayer/global/global_global.dart';
+import 'package:lovelivemusicplayer/global/global_update.dart';
 import 'package:lovelivemusicplayer/models/group.dart';
 import 'package:lovelivemusicplayer/modules/drawer/logic.dart';
 import 'package:lovelivemusicplayer/modules/ext.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/color_manager.dart';
-import 'package:lovelivemusicplayer/utils/desktop_lyric_util.dart';
 import 'package:lovelivemusicplayer/utils/text_style_manager.dart';
 import 'package:lovelivemusicplayer/widgets/drawer_function_button.dart';
 
@@ -178,13 +178,10 @@ class DrawerLayout extends GetView<DrawerLogic> {
       ),
       SizedBox(height: 8.h),
       DrawerFunctionButton(
-        icon: Assets.drawerDrawerDesktopLyric,
-        text: "desktop_lyric".tr,
+        icon: Assets.drawerDrawerUpdate,
+        text: 'update'.tr,
         colorWithBG: false,
-        onTap: (controller) {
-          Get.back();
-          DesktopLyricUtil.start();
-        },
+        onTap: (_) => UpdateLogic.to.checkUpdate(),
       ),
       SizedBox(height: 8.h),
       DrawerFunctionButton(

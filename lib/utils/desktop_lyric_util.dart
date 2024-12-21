@@ -1,10 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/services.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/global/global_lyric.dart';
-import 'package:lovelivemusicplayer/global/global_player.dart';
 
 class DesktopLyricUtil {
   static const MethodChannel _channel = MethodChannel('desktop_lyric');
@@ -19,17 +14,19 @@ class DesktopLyricUtil {
     });
   }
 
-  static bool isApple() => Platform.isIOS || Platform.isMacOS;
-
-  static Future<bool> start() async {
-    if (isApple() && !PlayerLogic.to.mPlayer.playing) {
-      SmartDialog.showToast("need_play_music_first".tr);
-      return false;
+  static Future<bool> invokeStatus(bool isOpen) async {
+    if (isOpen) {
+      return await _start();
+    } else {
+      return await _stop();
     }
+  }
+
+  static Future<bool> _start() async {
     return await _channel.invokeMethod("start");
   }
 
-  static Future<bool> stop() async {
+  static Future<bool> _stop() async {
     return await _channel.invokeMethod("stop");
   }
 

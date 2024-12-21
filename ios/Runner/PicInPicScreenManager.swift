@@ -79,9 +79,11 @@ class PicInPicScreenManager: NSObject, @preconcurrency AVPictureInPictureControl
         NotificationCenter.default.addObserver(self, selector: #selector(windowDidBecomeVisible), name: UIWindow.didBecomeVisibleNotification, object: nil)
     }
 
-    func picInPicAutoOpen(_ isOpen: Bool) {
-        isOpenPicInPic = isOpen
-        if isOpen {
+    func picInPicAutoOpen(_ isOpen: Bool?) {
+        if isOpen != nil {
+            isOpenPicInPic = isOpen!
+        }
+        if isOpenPicInPic {
             pipController?.playerLayer.player?.play()
         } else {
             pipController?.playerLayer.player?.pause()

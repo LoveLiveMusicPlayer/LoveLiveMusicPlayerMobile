@@ -31,13 +31,11 @@ class PicInPicScreenView: UIView {
             make.edges.equalTo(self)
         }
         
-        lyricLine1.text = ""
         lyricLine1.backgroundColor = .black
         lyricLine1.textColor = .white
         lyricLine1.font = UIFont(name: "Hiragino Sans", size: 18)
         bgView.addSubview(lyricLine1)
         
-        lyricLine2.text = ""
         lyricLine2.backgroundColor = .black
         lyricLine2.textColor = .white
         lyricLine2.font = UIFont(name: "Hiragino Sans", size: 18)

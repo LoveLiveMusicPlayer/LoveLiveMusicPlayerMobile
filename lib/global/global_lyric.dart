@@ -51,6 +51,9 @@ class LyricLogic {
     }
 
     final curIndex = lyricModel.getCurrentLine(currentTime);
+    if (isFetch) {
+      latestCurIndex = -1;
+    }
     if (curIndex == latestCurIndex) {
       // 解析过当句歌词就停止后续解析
       return;
@@ -160,7 +163,10 @@ class LyricLogic {
     }
 
     fullLrc.value = Lyric(jp: jpLrc, zh: zhLrc, roma: romaLrc);
-    LyricLogic.postNowPlayingLyric(PlayerLogic.to.playingMusic.value.musicId!);
+    playingJPLrc.value = PlayingLyric(
+        musicId: PlayerLogic.to.playingMusic.value.musicId!,
+        lyricLine1: null,
+        lyricLine2: null);
     LyricLogic.changePlayingLyric(true);
     if (forceRefresh) {
       SmartDialog.showToast(fetchResultStr);

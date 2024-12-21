@@ -92,6 +92,7 @@ class Const {
   static const String spColorful = "SP_IS_COLORFUL";
   static const String spWithSystemTheme = "SP_With_System_Theme";
   static const String spAIPicture = "SP_AI_PICTURE";
+  static const String spOpenDesktopLyric = "SP_OPEN_DESKTOP_LYRIC";
   static const String spLoopMode = "SP_LOOP_MODE";
   static const String spDataVersion = "SP_DATA_VERSION";
   static const String spBackgroundPhoto = "SP_BACKGROUND_PHOTO";
