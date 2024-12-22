@@ -479,6 +479,7 @@ class PlayerLogic extends GetxController
     await mPlayer.stop();
     setCurrentMusic(null);
     LyricLogic.postNowPlayingLyric(null);
+    LyricLogic.postDesktopAndWidgetLyric(null);
     LyricLogic.fullLrc.value = Lyric();
   }
 

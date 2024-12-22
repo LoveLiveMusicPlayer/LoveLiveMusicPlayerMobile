@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/services.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:lovelivemusicplayer/global/const.dart';
@@ -26,25 +25,18 @@ class HomeWidgetUtil {
   static init() async {
     Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
     await HomeWidget.setAppGroupId(Const.homeWidgetGroupId);
-    await HomeWidget.initiallyLaunchedFromHomeWidget()
-        .then(_launchedFromWidget);
-    HomeWidget.widgetClicked.listen(_launchedFromWidget);
     if (Platform.isAndroid) {
       _startBackgroundUpdate();
     }
   }
 
-  static Future<void> sendSongInfoAndUpdate(
-      {Music? music, String? lyricLine1, String? lyricLine2}) async {
+  static Future<void> sendSongInfoAndUpdate({Music? music,
+    String? lyricLine1,
+    String? lyricLine2,
+    int currentLine = 1}) async {
     await _sendSongData(music);
-    await _sendSongLyric(lyricLine1, lyricLine2);
+    await _sendSongLyric(lyricLine1, lyricLine2, currentLine);
     await _updateWidget();
-  }
-
-  static _launchedFromWidget(Uri? uri) {
-    if (uri != null) {
-      SmartDialog.showToast("App started from HomeScreenWidget");
-    }
   }
 
   static Future _sendSongData(Music? music) async {
@@ -68,10 +60,12 @@ class HomeWidgetUtil {
     }
   }
 
-  static Future _sendSongLyric(String? current, String? next) async {
+  static Future _sendSongLyric(
+      String? lyricLine1, String? lyricLine2, int currentLine) async {
     final List<Future<dynamic>> workArr = [];
-    workArr.add(HomeWidget.saveWidgetData<String>('curJpLrc', current));
-    workArr.add(HomeWidget.saveWidgetData<String>('nextJpLrc', next));
+    workArr.add(HomeWidget.saveWidgetData<String>('lyricLine1', lyricLine1));
+    workArr.add(HomeWidget.saveWidgetData<String>('lyricLine2', lyricLine2));
+    workArr.add(HomeWidget.saveWidgetData<int>('currentLine', currentLine));
     try {
       return Future.wait(workArr);
     } on PlatformException catch (exception) {
@@ -105,9 +99,5 @@ class HomeWidgetUtil {
       'widgetBackgroundUpdate',
       frequency: const Duration(minutes: 5),
     );
-  }
-
-  static _stopBackgroundUpdate() {
-    Workmanager().cancelByUniqueName('1');
   }
 }

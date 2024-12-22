@@ -35,11 +35,9 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import com.jeremyliao.liveeventbus.LiveEventBus
-import com.zhushenwudi.lovelivemusicplayer.MainActivity
 import com.zhushenwudi.lovelivemusicplayer.R
 import com.zhushenwudi.lovelivemusicplayer.util.AppUtils
 import com.zhushenwudi.lovelivemusicplayer.util.ImageUtil
-import es.antonborri.home_widget.actionStartActivity
 import java.io.File
 
 abstract class HomeWidgetContent : GlanceAppWidget() {
@@ -54,24 +52,26 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
     private lateinit var songName: String
     private lateinit var songArtist: String
     private lateinit var playText: String
-    private lateinit var curJpLrc: String
-    private lateinit var nextJpLrc: String
+    private var lyricLine1: String = ""
+    private var lyricLine2: String = ""
+    private var currentLine: Int = -1
 
     private var musicColor = Color.White
     private var coverPath: String? = null
-    private var fontColor = Color.White
+    private var line1Color = Color.White
+    private var line2Color = Color.White
 
     @Composable
-    fun GlanceContent(context: Context, currentState: HomeWidgetGlanceState) {
-        fontColor = if (isWhite) Color.Black else Color.White
+    fun GlanceContent(currentState: HomeWidgetGlanceState) {
         sp = currentState.preferences
         songName = sp.getString("songName", "")!!
         songArtist = sp.getString("songArtist", "")!!
         isFavorite = sp.getBoolean("songFavorite", false)
         isPlaying = sp.getBoolean("isPlaying", false)
         playText = sp.getString("playText", "")!!
-        curJpLrc = sp.getString("curJpLrc", "")!!
-        nextJpLrc = sp.getString("nextJpLrc", "")!!
+        val tempLine1 = sp.getString("lyricLine1", null)
+        val tempLine2 = sp.getString("lyricLine2", null)
+        currentLine = sp.getInt("currentLine", -1)
         isShutdown = sp.getBoolean("isShutdown", false)
         coverPath = sp.getString("shareImage", null)
         val strBgColor = sp.getString("bgColor", "")!!
@@ -95,16 +95,25 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
             isPlaying = false
         }
 
-        RenderAppWidget(context)
+        tempLine1?.let { lyricLine1 = it }
+        tempLine2?.let { lyricLine2 = it }
+        if (currentLine == 1) {
+            line1Color = if (isWhite) Color.Black else Color.White
+            line2Color = Color.LightGray
+        } else {
+            line2Color = if (isWhite) Color.Black else Color.White
+            line1Color = Color.LightGray
+        }
+
+        RenderAppWidget()
     }
 
     @Composable
-    fun RenderAppWidget(context: Context) {
+    fun RenderAppWidget() {
         Box(
             modifier = GlanceModifier
                 .width(size.width)
                 .height(size.height)
-                .clickable(onClick = actionStartActivity<MainActivity>(context))
         ) {
             if (isWhite) {
                 GradientRectangle(color = musicColor)
@@ -189,7 +198,7 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
             style = TextStyle(
                 fontSize = infoFontSize,
                 fontWeight = FontWeight.Bold,
-                color = ColorProvider(fontColor)
+                color = ColorProvider(if (isWhite) Color.Black else Color.White)
             )
         )
 
@@ -219,11 +228,11 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
         val basicWidth = size.width
         val width = if (isLargePauseWidget) basicWidth - 150.dp else basicWidth - 60.dp
         Text(
-            text = curJpLrc,
+            text = lyricLine1,
             style = TextStyle(
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
-                color = ColorProvider(fontColor),
+                color = ColorProvider(line1Color),
             ),
             maxLines = 1,
             modifier = GlanceModifier
@@ -231,11 +240,11 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
         )
 
         Text(
-            text = nextJpLrc,
+            text = lyricLine2,
             style = TextStyle(
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
-                color = ColorProvider(fontColor)
+                color = ColorProvider(line2Color)
             ),
             maxLines = 1,
             modifier = GlanceModifier
@@ -396,6 +405,6 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
     }
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        provideContent { GlanceContent(context = context, currentState = currentState()) }
+        provideContent { GlanceContent(currentState = currentState()) }
     }
 }

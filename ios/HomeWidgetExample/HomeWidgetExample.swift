@@ -9,6 +9,8 @@ import SwiftUI
 import WidgetKit
 
 private let widgetGroupId = "group.com.zhushenwudi.lovelivemusicplayer"
+private var lastLyricLine1: String = ""
+private var lastLyricLine2: String = ""
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> ExampleEntry {
@@ -20,8 +22,9 @@ struct Provider: TimelineProvider {
             isFavorite: false,
             isPlaying: false,
             playText: "",
-            curJpLrc: "",
-            nextJpLrc: "",
+            lyricLine1: "",
+            lyricLine2: "",
+            currentLine: 1,
             isShutdown: true,
             bgColor: "255,255,255"
         )
@@ -34,10 +37,19 @@ struct Provider: TimelineProvider {
         let isFavorite = data?.bool(forKey: "songFavorite") ?? false
         let isPlaying = data?.bool(forKey: "isPlaying") ?? false
         let playText = data?.string(forKey: "playText") ?? ""
-        let curJpLrc = data?.string(forKey: "curJpLrc") ?? ""
-        let nextJpLrc = data?.string(forKey: "nextJpLrc") ?? ""
+        let lyricLine1 = data?.string(forKey: "lyricLine1")
+        let lyricLine2 = data?.string(forKey: "lyricLine2")
+        let currentLine = data?.integer(forKey: "currentLine") ?? 1
         let isShutdown = data?.bool(forKey: "isShutdown") ?? true
         let bgColor = data?.string(forKey: "bgColor") ?? "255,255,255"
+        
+        // 更新全局变量
+        if let line1 = lyricLine1 {
+            lastLyricLine1 = line1
+        }
+        if let line2 = lyricLine2 {
+            lastLyricLine2 = line2
+        }
         
         completion(ExampleEntry(
             date: Date(),
@@ -47,8 +59,9 @@ struct Provider: TimelineProvider {
             isFavorite: isFavorite,
             isPlaying: isPlaying,
             playText: playText,
-            curJpLrc: curJpLrc,
-            nextJpLrc: nextJpLrc,
+            lyricLine1: lastLyricLine1,
+            lyricLine2: lastLyricLine2,
+            currentLine: currentLine,
             isShutdown: isShutdown,
             bgColor: bgColor
         ))
@@ -70,8 +83,9 @@ struct ExampleEntry: TimelineEntry {
     let isFavorite: Bool
     let isPlaying: Bool
     let playText: String
-    let curJpLrc: String
-    let nextJpLrc: String
+    let lyricLine1: String
+    let lyricLine2: String
+    let currentLine: Int
     let isShutdown: Bool
     let bgColor: String
 }
@@ -169,10 +183,17 @@ struct HomeWidgetExampleEntryView: View {
                         .padding(.bottom, 5)
                     
                     if entry.widgetFamily == .systemMedium {
-                        Text(entry.curJpLrc)
+                        Text(entry.lyricLine1)
                             .font(.system(size: 15))
                             .foregroundColor(
-                                isWhiteBackground ? .black : .white
+                                entry.currentLine == 1 ? (
+                                    isWhiteBackground ? .black : .white
+                                ) : Color(
+                                    red: 0.7,
+                                    green: 0.7,
+                                    blue: 0.7,
+                                    opacity: 0.7
+                                )
                             )
                             .frame(
                                 maxWidth: entry.isPlaying ? .infinity : lyricMaxWidth,
@@ -181,10 +202,17 @@ struct HomeWidgetExampleEntryView: View {
                             .padding(.leading, -5)
                             .padding(.trailing, 20)
 
-                        Text(entry.nextJpLrc)
+                        Text(entry.lyricLine2)
                             .font(.system(size: 15))
                             .foregroundColor(
-                                isWhiteBackground ? .black : .white
+                                entry.currentLine == 2 ? (
+                                    isWhiteBackground ? .black : .white
+                                ) : Color(
+                                    red: 0.7,
+                                    green: 0.7,
+                                    blue: 0.7,
+                                    opacity: 0.7
+                                )
                             )
                             .frame(
                                 maxWidth: entry.isPlaying ? .infinity : lyricMaxWidth, alignment: .leading)
@@ -350,8 +378,9 @@ struct HomeWidgetExampleBlack: Widget {
         isFavorite: true,
         isPlaying: true,
         playText: "playing,paused",
-        curJpLrc: "",
-        nextJpLrc: "",
+        lyricLine1: "",
+        lyricLine2: "",
+        currentLine: 1,
         isShutdown: true,
         bgColor: "255,255,255"
     )

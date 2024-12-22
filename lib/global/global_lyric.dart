@@ -74,7 +74,8 @@ class LyricLogic {
       if (mainText?.isEmpty == true) {
         extText = "";
       }
-      postNowPlayingLyric(musicId, mainText, extText, 0);
+      postNowPlayingLyric(musicId, mainText, extText);
+      postDesktopAndWidgetLyric(musicId, mainText, extText, 0);
       return;
     }
 
@@ -83,31 +84,40 @@ class LyricLogic {
       // 下一句播放的歌词
       extText = lyricModel.lyrics[curIndex + 1].mainText?.replaceLine();
     }
+    postNowPlayingLyric(musicId, mainText, extText);
+
     if (isFetch) {
       // 切歌，需要重新将每一行歌词都替换掉
-      postNowPlayingLyric(musicId, mainText, extText);
+      postDesktopAndWidgetLyric(musicId, mainText, extText);
       return;
     }
 
     if (mainText == originLine1Text) {
       // 如果当前播放的歌词被上一次解析过，记录为line1，则需要将下一句歌词用line2替换
-      postNowPlayingLyric(musicId, null, extText);
+      postDesktopAndWidgetLyric(musicId, null, extText);
       return;
     }
 
     if (mainText == originLine2Text) {
       // 如果当前播放的歌词被上一次解析过，记录为line2，则需要将下一句歌词用line1替换
-      postNowPlayingLyric(musicId, extText, null, 2);
+      postDesktopAndWidgetLyric(musicId, extText, null, 2);
       return;
     }
 
     // mainText与line1和line2均不相等时（比如：跳转播放）
     // 此时歌词面板应该强制将每一行歌词都替换掉
-    postNowPlayingLyric(musicId, mainText, extText);
+    postDesktopAndWidgetLyric(musicId, mainText, extText);
   }
 
   /// 设置封面下面的歌词
   static postNowPlayingLyric(String? musicId,
+      [String? lyricLine1, String? lyricLine2]) {
+    playingJPLrc.value = PlayingLyric(
+        musicId: musicId, lyricLine1: lyricLine1, lyricLine2: lyricLine2);
+  }
+
+  /// 设置桌面歌词和小组件歌词
+  static postDesktopAndWidgetLyric(String? musicId,
       [String? lyricLine1, String? lyricLine2, int currentLine = 1]) {
     // 只要变量不为null（空字符串或者多字符字符串），就记录到变量中
     if (lyricLine1 != null) {
@@ -116,12 +126,11 @@ class LyricLogic {
     if (lyricLine2 != null) {
       originLine2Text = lyricLine2;
     }
-
-    playingJPLrc.value = PlayingLyric(
-        musicId: musicId, lyricLine1: lyricLine1, lyricLine2: lyricLine2);
-    DesktopLyricUtil.updateLyric(lyricLine1, lyricLine2, currentLine);
     HomeWidgetUtil.sendSongInfoAndUpdate(
-        lyricLine1: lyricLine1, lyricLine2: lyricLine2);
+        lyricLine1: lyricLine1,
+        lyricLine2: lyricLine2,
+        currentLine: currentLine);
+    DesktopLyricUtil.updateLyric(lyricLine1, lyricLine2, currentLine);
   }
 
   /// 获取中/日/罗马歌词
