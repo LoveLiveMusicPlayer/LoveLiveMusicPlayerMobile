@@ -74,7 +74,7 @@ class SystemSettingLogic extends GetxController {
   openDesktopLyric(bool isOpen) {
     SpUtil.put(Const.spOpenDesktopLyric, isOpen);
     GlobalLogic.to.openDesktopLyric = isOpen;
-    DesktopLyricUtil.invokeStatus(isOpen);
+    DesktopLyricUtil.pipAutoOpen(isOpen);
   }
 
   enableBackgroundPhoto(bool isEnable) {

@@ -16,6 +16,7 @@ import 'package:lovelivemusicplayer/models/music.dart';
 import 'package:lovelivemusicplayer/models/play_list_music.dart';
 import 'package:lovelivemusicplayer/pages/carplay/carplay.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
+import 'package:lovelivemusicplayer/utils/desktop_lyric_util.dart';
 import 'package:lovelivemusicplayer/utils/home_widget_util.dart';
 import 'package:lovelivemusicplayer/utils/log.dart';
 import 'package:lovelivemusicplayer/utils/player_util.dart';
@@ -62,6 +63,10 @@ class PlayerLogic extends GetxController
       } else {
         Log4f.i(msg: e.toString());
       }
+    });
+
+    mPlayer.playerStateStream.listen((state) {
+      DesktopLyricUtil.sendIsPlaying(state.playing);
     });
 
     mPlayer.playingStream.listen((event) {

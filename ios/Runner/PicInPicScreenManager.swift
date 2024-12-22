@@ -73,7 +73,6 @@ class PicInPicScreenManager: NSObject, @preconcurrency AVPictureInPictureControl
         if #available(iOS 14.2, *) {
             pipController?.canStartPictureInPictureAutomaticallyFromInline = true
         }
-        player.play()
 
         NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd), name: .AVPlayerItemDidPlayToEndTime, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(windowDidBecomeVisible), name: UIWindow.didBecomeVisibleNotification, object: nil)
@@ -83,9 +82,12 @@ class PicInPicScreenManager: NSObject, @preconcurrency AVPictureInPictureControl
         if isOpen != nil {
             isOpenPicInPic = isOpen!
         }
+        let isPlayingNow = pipController?.playerLayer.player?.timeControlStatus == AVPlayer.TimeControlStatus.playing
         if isOpenPicInPic {
-            pipController?.playerLayer.player?.play()
-        } else {
+            if !isPlayingNow {
+                pipController?.playerLayer.player?.play()
+            }
+        } else if isPlayingNow {
             pipController?.playerLayer.player?.pause()
         }
     }
@@ -137,11 +139,17 @@ class PicInPicScreenManager: NSObject, @preconcurrency AVPictureInPictureControl
     }
 
     func manalChangePicInPic(needStart: Bool) {
-        if needStart && pipController?.isPictureInPictureActive == false {
-            pipController?.startPictureInPicture()
+        if needStart {
+            pipController?.playerLayer.player?.play()
+            if pipController?.isPictureInPictureActive == false {
+                pipController?.startPictureInPicture()
+            }
         }
-        if !needStart && pipController?.isPictureInPictureActive == true {
-            pipController?.stopPictureInPicture()
+        if !needStart {
+            if pipController?.isPictureInPictureActive == true {
+                pipController?.stopPictureInPicture()
+            }
+            pipController?.playerLayer.player?.pause()
         }
     }
 

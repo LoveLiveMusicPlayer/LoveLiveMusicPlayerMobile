@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:lovelivemusicplayer/global/global_lyric.dart';
+import 'package:lovelivemusicplayer/global/global_player.dart';
 
 class DesktopLyricUtil {
   static const MethodChannel _channel = MethodChannel('desktop_lyric');
@@ -10,24 +11,15 @@ class DesktopLyricUtil {
     _channel.setMethodCallHandler((MethodCall call) async {
       if (call.method == "lyricType") {
         LyricLogic.toggleTranslate();
+        return true;
+      } else if (call.method == "isPlaying") {
+        return PlayerLogic.to.mPlayer.playerState.playing;
       }
     });
   }
 
-  static Future<bool> invokeStatus(bool isOpen) async {
-    if (isOpen) {
-      return await _start();
-    } else {
-      return await _stop();
-    }
-  }
-
-  static Future<bool> _start() async {
-    return await _channel.invokeMethod("start");
-  }
-
-  static Future<bool> _stop() async {
-    return await _channel.invokeMethod("stop");
+  static Future<bool> pipAutoOpen(bool isOpen) async {
+    return await _channel.invokeMethod("pipAutoOpen", isOpen);
   }
 
   static Future<bool> updateLyric(
@@ -38,5 +30,9 @@ class DesktopLyricUtil {
       'currentLine': currentLine
     };
     return await _channel.invokeMethod("update", json);
+  }
+
+  static Future<void> sendIsPlaying(bool isPlaying) async {
+    return await _channel.invokeMethod("isPlaying", isPlaying);
   }
 }

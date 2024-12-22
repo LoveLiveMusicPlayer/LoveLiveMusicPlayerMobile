@@ -138,10 +138,10 @@ class GlobalLogic extends SuperController
     Network.getInstance();
     await SDUtils.init();
     if (Platform.isAndroid) {
-      // android 需要额外注册 usb 插拔事件监听、桌面歌词点击监听
+      // android 需要额外注册 usb 插拔事件监听
       await SDUtils.setUsbMountListener();
-      DesktopLyricUtil.init();
     }
+    DesktopLyricUtil.init();
     remoteHttp = RemoteHttp(await SpUtil.getBoolean(Const.spEnableHttp),
         await SpUtil.getString(Const.spHttpUrl, ""));
     enableBG = await SpUtil.getBoolean(Const.spEnableBackgroundPhoto);
@@ -154,7 +154,7 @@ class GlobalLogic extends SuperController
     }
     hasAIPic = await SpUtil.getBoolean(Const.spAIPicture, true);
     openDesktopLyric = await SpUtil.getBoolean(Const.spOpenDesktopLyric, false);
-    await DesktopLyricUtil.invokeStatus(openDesktopLyric);
+    await DesktopLyricUtil.pipAutoOpen(openDesktopLyric);
     sortMode.value = await SpUtil.getString(Const.spSortOrder, "ASC");
     hasSkin.value = await SpUtil.getBoolean(Const.spColorful);
     isDarkTheme.value = await SpUtil.getBoolean(Const.spDark);
