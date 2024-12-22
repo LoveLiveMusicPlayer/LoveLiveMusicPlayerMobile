@@ -72,9 +72,14 @@ class SystemSettingLogic extends GetxController {
   }
 
   openDesktopLyric(bool isOpen) {
-    SpUtil.put(Const.spOpenDesktopLyric, isOpen);
-    GlobalLogic.to.openDesktopLyric = isOpen;
-    DesktopLyricUtil.pipAutoOpen(isOpen);
+    DesktopLyricUtil.pipAutoOpen(isOpen).then((res) {
+      if (res) {
+        GlobalLogic.to.lyricController.setSwitchValue = isOpen;
+        SpUtil.put(Const.spOpenDesktopLyric, isOpen);
+      } else {
+        GlobalLogic.to.lyricController.setSwitchValue = false;
+      }
+    });
   }
 
   enableBackgroundPhoto(bool isEnable) {

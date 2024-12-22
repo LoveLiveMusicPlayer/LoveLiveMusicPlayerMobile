@@ -5,9 +5,13 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.ryanheise.audioservice.AudioService
@@ -35,6 +39,7 @@ class MainActivity : AudioServiceActivity() {
     private var desktopLyricChannel: MethodChannel? = null
     private var editor: SharedPreferences.Editor? = null
     private var lyricIntent: Intent? = null
+    private var isAutoPip = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +63,10 @@ class MainActivity : AudioServiceActivity() {
     override fun onResume() {
         super.onResume()
         getSchemeData()
+        val className = "$packageName.${LyricService::class.simpleName}"
+        if (AppUtils.isServiceWorked(this, className)) {
+            stopService(lyricIntent)
+        }
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
@@ -69,7 +78,18 @@ class MainActivity : AudioServiceActivity() {
             add(UpdatePlugin())
             add(HomeWidgetPlugin(lifecycle))
             add(UsbPlugin())
-            add(DesktopLyricPlugin(lyricIntent))
+            add(DesktopLyricPlugin(lyricIntent) { isAuto, isReq ->
+                if (isReq) {
+                    // 权限未被授予，提示用户去设置
+                    val intent = Intent(
+                        Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:${context.applicationContext}")
+                    )
+                    startActivityForResult(intent, REQUEST_CODE_OVERLAY_PERMISSION)
+                    return@DesktopLyricPlugin
+                }
+                isAutoPip = isAuto
+            })
         }
     }
 
@@ -108,6 +128,27 @@ class MainActivity : AudioServiceActivity() {
         sendBroadcast(intent)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_OVERLAY_PERMISSION) {
+            if (!Settings.canDrawOverlays(this)) {
+                Toast.makeText(this, NO_PERMISSION, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    override fun onPause() {
+        val className = "$packageName.${LyricService::class.simpleName}"
+        if (isAutoPip && isPlaying && !AppUtils.isServiceWorked(this, className)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(lyricIntent)
+            } else {
+                startService(lyricIntent)
+            }
+        }
+        super.onPause()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         editor?.apply {
@@ -136,5 +177,10 @@ class MainActivity : AudioServiceActivity() {
         private const val HANDLE_SCHEME_REQUEST_METHOD = "handleSchemeRequest"
         private const val HANDLE_HOME_WIDGET_REQUEST_METHOD = "host"
         private const val EVENT_LYRIC_TYPE_REQUEST_METHOD = "lyricType"
+        private const val NO_PERMISSION = "权限未被授予"
+        private const val REQUEST_CODE_OVERLAY_PERMISSION = 0x10
+
+        // 播放器是否正在播放
+        var isPlaying = false
     }
 }

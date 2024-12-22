@@ -11,6 +11,7 @@ class DesktopLyricUtil {
     _channel.setMethodCallHandler((MethodCall call) async {
       if (call.method == "lyricType") {
         LyricLogic.toggleTranslate();
+        LyricLogic.changePlayingLyric(true);
         return true;
       } else if (call.method == "isPlaying") {
         return PlayerLogic.to.mPlayer.playerState.playing;

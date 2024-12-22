@@ -2,15 +2,17 @@ package com.zhushenwudi.lovelivemusicplayer.plugin
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.os.Build
 import android.provider.Settings
 import com.zhushenwudi.lovelivemusicplayer.LyricService
+import com.zhushenwudi.lovelivemusicplayer.MainActivity
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
-class DesktopLyricPlugin(private val intent: Intent?) : FlutterPlugin,
+class DesktopLyricPlugin(
+    private val intent: Intent?,
+    private val cb: (isAuto: Boolean, requestPermission: Boolean) -> Unit
+) : FlutterPlugin,
     MethodChannel.MethodCallHandler {
     private var mChannel: MethodChannel? = null
     private var mContext: Context? = null
@@ -23,30 +25,21 @@ class DesktopLyricPlugin(private val intent: Intent?) : FlutterPlugin,
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
-            "start" -> {
-                if (intent != null) {
-                    if (!checkPermission()) {
-                        val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION).apply {
-                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                            data = Uri.parse("package:${mContext?.packageName}")
-                        }
-                        mContext?.startActivity(intent)
+            "pipAutoOpen" -> {
+                val context = mContext
+                if (intent == null || context == null) {
+                    result.success(false)
+                    return
+                }
+                val isAuto = call.arguments as Boolean
+                if (isAuto) {
+                    if (!Settings.canDrawOverlays(context)) {
                         result.success(false)
+                        cb.invoke(true, true)
                         return
                     }
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        mContext?.startForegroundService(intent)
-                    } else {
-                        mContext?.startService(intent)
-                    }
                 }
-            }
-
-            "stop" -> {
-                if (intent != null) {
-                    mContext?.stopService(intent)
-                }
+                cb.invoke(isAuto, false)
             }
 
             "update" -> {
@@ -60,21 +53,12 @@ class DesktopLyricPlugin(private val intent: Intent?) : FlutterPlugin,
                     currentLine = currentLine
                 )
             }
+
+            "isPlaying" -> {
+                MainActivity.isPlaying = call.arguments as Boolean
+            }
         }
         result.success(true)
-    }
-
-    private fun checkPermission(): Boolean {
-        var result = true
-        try {
-            val clazz: Class<*> = Settings::class.java
-            val canDrawOverlays =
-                clazz.getDeclaredMethod("canDrawOverlays", Context::class.java)
-            result = canDrawOverlays.invoke(null, mContext) as Boolean
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return result
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {

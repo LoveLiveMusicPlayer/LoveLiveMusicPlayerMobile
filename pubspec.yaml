@@ -70,7 +70,7 @@ dependencies:
   event_bus: ^2.0.1 # 事件总线通信
   floor: ^1.5.0 # 数据库服务
   concurrent_queue: ^1.4.0 # 队列
-  wakelock_plus: ^1.2.9 # 屏幕常亮
+  wakelock_plus: ^1.2.10 # 屏幕常亮
   flutter_image_compress: ^2.3.0 # 图片压缩
   cached_network_image: ^3.4.1 # 网络图片缓存库
   color_thief_flutter: # 取色器

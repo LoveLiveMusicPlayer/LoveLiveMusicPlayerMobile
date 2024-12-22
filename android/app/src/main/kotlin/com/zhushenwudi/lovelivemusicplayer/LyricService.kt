@@ -4,12 +4,10 @@ import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.Service
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.Build
-import android.os.IBinder
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -20,11 +18,18 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.LifecycleService
+import androidx.lifecycle.lifecycleScope
 import com.jeremyliao.liveeventbus.LiveEventBus
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.abs
 
 @SuppressLint("StaticFieldLeak")
-class LyricService : Service() {
+class LyricService : LifecycleService() {
     companion object {
         private const val CHANNEL_ID = "llmp_lyric_channel_id"
         private const val CHANNEL_NAME = "llmp_lyric_channel_name"
@@ -63,13 +68,17 @@ class LyricService : Service() {
     private var deviceWidth = 0
     private var deviceHeight = 0
 
+    private var job: Job? = null
+
     override fun onCreate() {
         super.onCreate()
         createView()
         initView()
+        startTimer()
     }
 
-    override fun onStartCommand(intent: Intent?, flag: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        super.onStartCommand(intent, flags, startId)
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val notificationBuilder: Notification.Builder
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -110,6 +119,7 @@ class LyricService : Service() {
         }
 
         llLyric?.setOnClickListener {
+            job?.cancel()
             if (ivClose?.visibility == View.VISIBLE) {
                 ivClose?.visibility = View.GONE
                 ivPip?.visibility = View.GONE
@@ -120,6 +130,7 @@ class LyricService : Service() {
                 ivPip?.visibility = View.VISIBLE
                 ivTranslate?.visibility = View.VISIBLE
                 ivIcon?.visibility = View.GONE
+                startTimer()
             }
         }
         llLyric?.setOnTouchListener { view, event ->
@@ -212,8 +223,13 @@ class LyricService : Service() {
         }
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
-        return null
+    private fun startTimer() {
+        job = lifecycleScope.launch(Dispatchers.Default) {
+            delay(2000)
+            withContext(Dispatchers.Main) {
+                llLyric?.performClick()
+            }
+        }
     }
 
     override fun onDestroy() {

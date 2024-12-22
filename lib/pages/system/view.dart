@@ -94,9 +94,9 @@ class SystemSettingsPage extends GetView<SystemSettingLogic> {
           DrawerFunctionButton(
             icon: Assets.drawerDrawerDesktopLyric,
             iconColor: iconColor,
-            text: "desktop_lyric".tr,
             hasSwitch: true,
-            initSwitch: GlobalLogic.to.openDesktopLyric,
+            controller: GlobalLogic.to.lyricController,
+            initSwitch: GlobalLogic.to.lyricController.getSwitchValue,
             callBack: (_, check) => controller.openDesktopLyric(check),
           ),
           SizedBox(height: 8.h),

@@ -1,5 +1,6 @@
 package com.zhushenwudi.lovelivemusicplayer.util
 
+import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import androidx.compose.ui.unit.DpSize
@@ -32,5 +33,28 @@ object AppUtils {
                 intent.data = null
             }
         }
+    }
+
+    /**
+     * 判断服务是否开启
+     *
+     * @param mContext 上下文
+     * @param className 服务class名
+     * @return true:开启 false:未开启
+     */
+    fun isServiceWorked(mContext: Context, className: String): Boolean {
+        val runningService = getRunningService(mContext)
+        for (i in runningService.indices) {
+            if (runningService[i].service.className == className) {
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun getRunningService(mContext: Context): ArrayList<ActivityManager.RunningServiceInfo> {
+        val myManager =
+            mContext.applicationContext.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        return myManager.getRunningServices(30) as ArrayList<ActivityManager.RunningServiceInfo>
     }
 }

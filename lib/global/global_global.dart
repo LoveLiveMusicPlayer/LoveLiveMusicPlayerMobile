@@ -85,9 +85,6 @@ class GlobalLogic extends SuperController
   // 是否有AI开屏
   var hasAIPic = false;
 
-  // 是否打开桌面歌词
-  var openDesktopLyric = false;
-
   // APP版本号
   var appVersion = "1.0.0";
 
@@ -103,6 +100,9 @@ class GlobalLogic extends SuperController
   Timer? timer;
   ButtonController? timerController;
   var remainTime = ValueNotifier<int>(0);
+
+  // 是否打开桌面歌词
+  late ButtonController lyricController;
 
   @override
   void onInit() {
@@ -153,8 +153,6 @@ class GlobalLogic extends SuperController
       });
     }
     hasAIPic = await SpUtil.getBoolean(Const.spAIPicture, true);
-    openDesktopLyric = await SpUtil.getBoolean(Const.spOpenDesktopLyric, false);
-    await DesktopLyricUtil.pipAutoOpen(openDesktopLyric);
     sortMode.value = await SpUtil.getString(Const.spSortOrder, "ASC");
     hasSkin.value = await SpUtil.getBoolean(Const.spColorful);
     isDarkTheme.value = await SpUtil.getBoolean(Const.spDark);
@@ -162,6 +160,14 @@ class GlobalLogic extends SuperController
     await SpUtil.put(Const.spPrevPage, "");
     PlayerBinding().dependencies();
     await HomeWidgetUtil.init();
+    lyricController = ButtonController(
+        "", await SpUtil.getBoolean(Const.spOpenDesktopLyric, false));
+    DesktopLyricUtil.pipAutoOpen(lyricController.getSwitchValue).then((res) {
+      if (!res) {
+        lyricController.setSwitchValue = false;
+        SpUtil.put(Const.spOpenDesktopLyric, false);
+      }
+    });
   }
 
   refreshIconColor() async {

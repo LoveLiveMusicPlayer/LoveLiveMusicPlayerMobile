@@ -97,9 +97,8 @@ android {
 
     buildTypes {
         debug {
-            minifyEnabled false
-            shrinkResources false
-            zipAlignEnabled false
+            minifyEnabled true
+            zipAlignEnabled true
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -204,4 +203,5 @@ dependencies {
     implementation "androidx.glance:glance-appwidget-preview:$glance_version"
     implementation 'androidx.palette:palette-ktx:1.0.0'
     implementation 'com.github.angcyo:LiveEventBus:1.8.1'
+    implementation 'androidx.lifecycle:lifecycle-service:2.8.7'
 }

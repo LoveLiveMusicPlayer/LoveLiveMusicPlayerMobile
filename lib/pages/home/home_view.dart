@@ -31,6 +31,7 @@ class _HomeViewState extends State<HomeView>
       final index = (logic.tabController?.index ?? 0) * 3 + position % 3;
       PageViewLogic.to.pageController.jumpToPage(index);
     });
+    GlobalLogic.to.lyricController.setTextValue = "desktop_lyric".tr;
     logic.handlePermission();
   }
 
