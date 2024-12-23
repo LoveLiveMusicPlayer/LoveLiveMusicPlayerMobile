@@ -35,6 +35,19 @@
             android:textSize="18sp" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_no_lyric"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/ll_lyric"
+        android:layout_alignTop="@id/ll_lyric"
+        android:layout_alignEnd="@id/ll_lyric"
+        android:layout_alignBottom="@id/ll_lyric"
+        android:gravity="center"
+        android:fontFamily="@font/noto_sans_jp_regular"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
     <ImageView
         android:id="@+id/ic_close"
         android:layout_width="30dp"

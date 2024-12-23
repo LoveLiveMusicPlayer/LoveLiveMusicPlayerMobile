@@ -97,7 +97,7 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
 
         tempLine1?.let { lyricLine1 = it }
         tempLine2?.let { lyricLine2 = it }
-        if (currentLine == 1) {
+        if (currentLine == -1 || currentLine == 1) {
             line1Color = if (isWhite) Color.Black else Color.White
             line2Color = Color.LightGray
         } else {

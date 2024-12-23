@@ -186,7 +186,7 @@ struct HomeWidgetExampleEntryView: View {
                         Text(entry.lyricLine1)
                             .font(.system(size: 15))
                             .foregroundColor(
-                                entry.currentLine == 1 ? (
+                                (entry.currentLine == -1 || entry.currentLine == 1) ? (
                                     isWhiteBackground ? .black : .white
                                 ) : Color(
                                     red: 0.7,
@@ -205,7 +205,7 @@ struct HomeWidgetExampleEntryView: View {
                         Text(entry.lyricLine2)
                             .font(.system(size: 15))
                             .foregroundColor(
-                                entry.currentLine == 2 ? (
+                                (entry.currentLine == -1 || entry.currentLine == 2) ? (
                                     isWhiteBackground ? .black : .white
                                 ) : Color(
                                     red: 0.7,

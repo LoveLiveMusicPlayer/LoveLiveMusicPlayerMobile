@@ -46,7 +46,10 @@ class LyricLogic {
     }
     final currentTime = playingPosition.value.inMilliseconds;
     final lyricModel = lyricsModel.value;
-    if (lyricModel == null) {
+    if (lyricModel == null || lyricModel.lyrics.isEmpty) {
+      // 暂无歌词
+      postNowPlayingLyric(musicId, 'no_lyrics'.tr, "");
+      postDesktopAndWidgetLyric(musicId, 'no_lyrics'.tr, "", -1);
       return;
     }
 

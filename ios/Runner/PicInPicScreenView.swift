@@ -5,6 +5,7 @@ class PicInPicScreenView: UIView {
     private let bgView = UIView()
     private var lyricLine1 = UITextView()
     private var lyricLine2 = UITextView()
+    private var noLyricLine = UITextView()
     private var icon = UIImageView(image: UIImage(named: "AppIcon"))
 
     override init(frame: CGRect) {
@@ -41,6 +42,13 @@ class PicInPicScreenView: UIView {
         lyricLine2.font = UIFont(name: "Hiragino Sans", size: 18)
         bgView.addSubview(lyricLine2)
         
+        noLyricLine.backgroundColor = .black
+        noLyricLine.textColor = .white
+        noLyricLine.font = UIFont(name: "Hiragino Sans", size: 18)
+        noLyricLine.textAlignment = .center
+        noLyricLine.isHidden = true
+        bgView.addSubview(noLyricLine)
+        
         icon.contentMode = .scaleAspectFit
         bgView.addSubview(icon)
         
@@ -56,6 +64,13 @@ class PicInPicScreenView: UIView {
             make.left.equalTo(bgView).offset(10)
             make.right.equalTo(bgView).offset(-10)
             make.height.equalTo(55)
+        }
+        
+        noLyricLine.snp.makeConstraints { make in
+            make.center.equalTo(bgView)
+            make.left.equalTo(bgView)
+            make.right.equalTo(bgView)
+            make.height.equalTo(38)
         }
         
         icon.snp.makeConstraints { make in
@@ -75,5 +90,17 @@ class PicInPicScreenView: UIView {
         }
         self.lyricLine1.textColor = currentLine == 2 ? UIColor.lightGray : UIColor.white
         self.lyricLine2.textColor = currentLine == 1 ? UIColor.lightGray : UIColor.white
+        
+        if currentLine == -1 {
+            // 暂无歌词
+            self.noLyricLine.text = lyricLine1
+            self.lyricLine1.isHidden = true
+            self.lyricLine2.isHidden = true
+            self.noLyricLine.isHidden = false
+        } else {
+            self.lyricLine1.isHidden = false
+            self.lyricLine2.isHidden = false
+            self.noLyricLine.isHidden = true
+        }
     }
 }

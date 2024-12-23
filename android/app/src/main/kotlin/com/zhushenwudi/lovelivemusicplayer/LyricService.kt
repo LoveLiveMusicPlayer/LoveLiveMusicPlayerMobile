@@ -41,12 +41,25 @@ class LyricService : LifecycleService() {
 
         private var tvLyricLine1: TextView? = null
         private var tvLyricLine2: TextView? = null
+        private var tvNoLyric: TextView? = null
 
         fun updateLyric(lyricLine1: String?, lyricLine2: String?, currentLine: Int) {
             lyricLine1?.let { tvLyricLine1?.text = it }
             lyricLine2?.let { tvLyricLine2?.text = it }
             tvLyricLine1?.setTextColor(if (currentLine == 2) Color.LTGRAY else Color.WHITE)
             tvLyricLine2?.setTextColor(if (currentLine == 1) Color.LTGRAY else Color.WHITE)
+
+            if (currentLine == -1) {
+                // 暂无歌词
+                tvNoLyric?.text = lyricLine1
+                tvLyricLine1?.visibility = View.GONE
+                tvLyricLine2?.visibility = View.GONE
+                tvNoLyric?.visibility = View.VISIBLE
+            } else {
+                tvLyricLine1?.visibility = View.VISIBLE
+                tvLyricLine2?.visibility = View.VISIBLE
+                tvNoLyric?.visibility = View.GONE
+            }
         }
     }
 
@@ -112,6 +125,7 @@ class LyricService : LifecycleService() {
             llLyric = findViewById(R.id.ll_lyric)
             tvLyricLine1 = findViewById(R.id.tv_lyric_line1)
             tvLyricLine2 = findViewById(R.id.tv_lyric_line2)
+            tvNoLyric = findViewById(R.id.tv_no_lyric)
             ivClose = findViewById(R.id.ic_close)
             ivPip = findViewById(R.id.ic_pip)
             ivIcon = findViewById(R.id.ic_icon)
