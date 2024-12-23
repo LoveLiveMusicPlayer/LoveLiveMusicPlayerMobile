@@ -36,9 +36,15 @@ class MoeGirlPage extends GetView<MoeGirlLogic> {
                     onScrollChanged: (_, x, y) => controller.scrollWebView(y),
                     initialUrlRequest: controller.urlRequest,
                     initialSettings: controller.webViewSettings,
-                    onWebViewCreated: (ctl) =>
-                        controller.webViewController = ctl),
-                if (showLayout) renderBottomBar(bgColor)
+                    onLoadStart: (controller, url) =>
+                        this.controller.isWebViewLoading.value = true,
+                    onLoadResource: (controller, resource) =>
+                        this.controller.isWebViewLoading.value = false,
+                    onWebViewCreated: (controller) =>
+                        this.controller.webViewController = controller),
+                if (showLayout) renderBottomBar(bgColor),
+                if (controller.isWebViewLoading.value)
+                  Center(child: CircularProgressIndicator(color: Colors.green)),
               ],
             ),
           ),

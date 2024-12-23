@@ -58,6 +58,8 @@ class MoeGirlLogic extends GetxController {
 
   var showLayout = true.obs;
 
+  var isWebViewLoading = false.obs;
+
   int lastY = -1;
 
   @override
