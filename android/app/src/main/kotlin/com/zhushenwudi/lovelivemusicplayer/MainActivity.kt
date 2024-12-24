@@ -175,7 +175,7 @@ class MainActivity : AudioServiceActivity() {
         private const val HOME_WIDGET_CHANNEL = "home_widget"
         private const val DESKTOP_LYRIC_CHANNEL = "desktop_lyric"
         private const val HANDLE_SCHEME_REQUEST_METHOD = "handleSchemeRequest"
-        private const val HANDLE_HOME_WIDGET_REQUEST_METHOD = "host"
+        private const val HANDLE_HOME_WIDGET_REQUEST_METHOD = "event"
         private const val EVENT_LYRIC_TYPE_REQUEST_METHOD = "lyricType"
         private const val NO_PERMISSION = "权限未被授予"
         private const val REQUEST_CODE_OVERLAY_PERMISSION = 0x10

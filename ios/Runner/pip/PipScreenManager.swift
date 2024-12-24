@@ -3,15 +3,15 @@ import UIKit
 import SnapKit
 
 @MainActor
-class PicInPicScreenManager: NSObject, @preconcurrency AVPictureInPictureControllerDelegate {
+class PipScreenManager: NSObject, @preconcurrency AVPictureInPictureControllerDelegate {
 
     private var firstWindow: UIWindow?
     private var pipController: AVPictureInPictureController?
     
     // 控制器中显示的
-    private var screenView: PicInPicScreenView = PicInPicScreenView()
+    private var screenView: PipScreenView = PipScreenView()
     // 画中画中显示的
-    private var picInPicView: PicInPicScreenView = PicInPicScreenView()
+    private var picInPicView: PipScreenView = PipScreenView()
     private var isOpenPicInPic = true
     // 疑似画中画的window
     private var suspectedWindows: [UIWindow] = []
@@ -138,7 +138,7 @@ class PicInPicScreenManager: NSObject, @preconcurrency AVPictureInPictureControl
         pipController?.playerLayer.player?.play()
     }
 
-    func manalChangePicInPic(needStart: Bool) {
+    func manualChangePicInPic(needStart: Bool) {
         if needStart {
             pipController?.playerLayer.player?.play()
             if pipController?.isPictureInPictureActive == false {

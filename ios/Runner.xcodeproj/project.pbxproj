@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,7 +15,7 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		C7023BD52CA161B100625DCF /* BackgroundIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78CA5952C9C1B3900721166 /* BackgroundIntent.swift */; };
-		C70635622D12C4DE0011E3D5 /* PipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70635602D12C4DE0011E3D5 /* PipViewController.swift */; };
+		C70635622D12C4DE0011E3D5 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70635602D12C4DE0011E3D5 /* MainViewController.swift */; };
 		C70635652D12D5730011E3D5 /* black.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = C70635642D12D5730011E3D5 /* black.mp4 */; };
 		C70B090A2C9BCFF50074432D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C70B09092C9BCFF50074432D /* WidgetKit.framework */; };
 		C70B090C2C9BCFF50074432D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C70B090B2C9BCFF50074432D /* SwiftUI.framework */; };
@@ -25,10 +25,10 @@
 		C70B09302C9BE5C20074432D /* HomeWidgetExampleBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70B09272C9BE5C20074432D /* HomeWidgetExampleBundle.swift */; };
 		C70B09312C9BE5C20074432D /* HomeWidgetExampleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70B09282C9BE5C20074432D /* HomeWidgetExampleControl.swift */; };
 		C70B09322C9BE5C20074432D /* HomeWidgetExampleLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70B09292C9BE5C20074432D /* HomeWidgetExampleLiveActivity.swift */; };
+		C757E8902D1A43D10022E5B5 /* HomeWidgetExampleLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70B09292C9BE5C20074432D /* HomeWidgetExampleLiveActivity.swift */; };
+		C757E8A52D1A61A40022E5B5 /* FlutterChannelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C757E8A42D1A61A20022E5B5 /* FlutterChannelManager.swift */; };
 		C78CA5962C9C1B3C00721166 /* BackgroundIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78CA5952C9C1B3900721166 /* BackgroundIntent.swift */; };
 		C79B48632A5CB39F0086C3F9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79B48622A5CB39F0086C3F9 /* SceneDelegate.swift */; };
-		C7F3368A2D15CF3800D6382A /* PicInPicScreenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F336882D15CF3800D6382A /* PicInPicScreenManager.swift */; };
-		C7F3368B2D15CF3800D6382A /* PicInPicScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F336892D15CF3800D6382A /* PicInPicScreenView.swift */; };
 		E06198C5CF109C7E5D6134CE /* Pods_HomeWidgetExampleExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85B5CF7708AD8F8A7602441D /* Pods_HomeWidgetExampleExtension.framework */; };
 /* End PBXBuildFile section */
 
@@ -80,7 +80,7 @@
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C577F90CED02D105EF74D9D /* Pods-HomeWidgetExampleExtension.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HomeWidgetExampleExtension.profile.xcconfig"; path = "Target Support Files/Pods-HomeWidgetExampleExtension/Pods-HomeWidgetExampleExtension.profile.xcconfig"; sourceTree = "<group>"; };
 		ACF4C43CF41381F15C832CBC /* Pods-RunnerTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.profile.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.profile.xcconfig"; sourceTree = "<group>"; };
-		C70635602D12C4DE0011E3D5 /* PipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipViewController.swift; sourceTree = "<group>"; };
+		C70635602D12C4DE0011E3D5 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C70635642D12D5730011E3D5 /* black.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = black.mp4; sourceTree = "<group>"; };
 		C70B09082C9BCFF50074432D /* HomeWidgetExampleExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HomeWidgetExampleExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C70B09092C9BCFF50074432D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -93,13 +93,18 @@
 		C70B092A2C9BE5C20074432D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C70B09332C9C03AF0074432D /* HomeWidgetExampleExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HomeWidgetExampleExtension.entitlements; sourceTree = "<group>"; };
 		C70F13342B98132A006EE8C8 /* RunnerRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RunnerRelease.entitlements; sourceTree = "<group>"; };
+		C757E8A42D1A61A20022E5B5 /* FlutterChannelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlutterChannelManager.swift; sourceTree = "<group>"; };
 		C78CA5952C9C1B3900721166 /* BackgroundIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundIntent.swift; sourceTree = "<group>"; };
 		C79B48622A5CB39F0086C3F9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		C7F336882D15CF3800D6382A /* PicInPicScreenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicInPicScreenManager.swift; sourceTree = "<group>"; };
-		C7F336892D15CF3800D6382A /* PicInPicScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicInPicScreenView.swift; sourceTree = "<group>"; };
 		C7F3802B298642BF00D5E8C2 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		E48278B180FEF65797E15E96 /* Pods-HomeWidgetExampleExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HomeWidgetExampleExtension.debug.xcconfig"; path = "Target Support Files/Pods-HomeWidgetExampleExtension/Pods-HomeWidgetExampleExtension.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		C757E8932D1A48100022E5B5 /* plugin */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = plugin; sourceTree = "<group>"; };
+		C757E8972D1A551E0022E5B5 /* pip */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = pip; sourceTree = "<group>"; };
+		C757E8982D1A55730022E5B5 /* util */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = util; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		97C146EB1CF9000F007C117D /* Frameworks */ = {
@@ -175,22 +180,24 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
-				C7F336882D15CF3800D6382A /* PicInPicScreenManager.swift */,
-				C7F336892D15CF3800D6382A /* PicInPicScreenView.swift */,
+				C757E8982D1A55730022E5B5 /* util */,
+				C757E8972D1A551E0022E5B5 /* pip */,
+				C757E8932D1A48100022E5B5 /* plugin */,
 				C70635642D12D5730011E3D5 /* black.mp4 */,
-				C70635602D12C4DE0011E3D5 /* PipViewController.swift */,
+				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
+				C79B48622A5CB39F0086C3F9 /* SceneDelegate.swift */,
+				C70635602D12C4DE0011E3D5 /* MainViewController.swift */,
+				C757E8A42D1A61A20022E5B5 /* FlutterChannelManager.swift */,
 				C78CA5952C9C1B3900721166 /* BackgroundIntent.swift */,
-				C70F13342B98132A006EE8C8 /* RunnerRelease.entitlements */,
-				C7F3802B298642BF00D5E8C2 /* Runner.entitlements */,
-				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
+				C7F3802B298642BF00D5E8C2 /* Runner.entitlements */,
+				C70F13342B98132A006EE8C8 /* RunnerRelease.entitlements */,
+				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
-				97C147021CF9000F007C117D /* Info.plist */,
 				1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */,
 				1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */,
-				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
-				C79B48622A5CB39F0086C3F9 /* SceneDelegate.swift */,
+				97C147021CF9000F007C117D /* Info.plist */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -198,11 +205,11 @@
 		C70B092B2C9BE5C20074432D /* HomeWidgetExample */ = {
 			isa = PBXGroup;
 			children = (
-				C70B09252C9BE5C20074432D /* Assets.xcassets */,
-				C70B09262C9BE5C20074432D /* HomeWidgetExample.swift */,
 				C70B09272C9BE5C20074432D /* HomeWidgetExampleBundle.swift */,
+				C70B09262C9BE5C20074432D /* HomeWidgetExample.swift */,
 				C70B09282C9BE5C20074432D /* HomeWidgetExampleControl.swift */,
 				C70B09292C9BE5C20074432D /* HomeWidgetExampleLiveActivity.swift */,
+				C70B09252C9BE5C20074432D /* Assets.xcassets */,
 				C70B092A2C9BE5C20074432D /* Info.plist */,
 			);
 			path = HomeWidgetExample;
@@ -241,6 +248,11 @@
 			);
 			dependencies = (
 				C70B091C2C9BCFF60074432D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C757E8932D1A48100022E5B5 /* plugin */,
+				C757E8972D1A551E0022E5B5 /* pip */,
+				C757E8982D1A55730022E5B5 /* util */,
 			);
 			name = Runner;
 			productName = Runner;
@@ -462,10 +474,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C757E8902D1A43D10022E5B5 /* HomeWidgetExampleLiveActivity.swift in Sources */,
 				C78CA5962C9C1B3C00721166 /* BackgroundIntent.swift in Sources */,
-				C7F3368A2D15CF3800D6382A /* PicInPicScreenManager.swift in Sources */,
-				C7F3368B2D15CF3800D6382A /* PicInPicScreenView.swift in Sources */,
-				C70635622D12C4DE0011E3D5 /* PipViewController.swift in Sources */,
+				C757E8A52D1A61A40022E5B5 /* FlutterChannelManager.swift in Sources */,
+				C70635622D12C4DE0011E3D5 /* MainViewController.swift in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 				C79B48632A5CB39F0086C3F9 /* SceneDelegate.swift in Sources */,

@@ -286,7 +286,7 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
                         bottom = offsetY
                     )
                     .clickable(rippleOverride = R.drawable.click_ripple) {
-                        LiveEventBus.get<String>("host").post("homeWidgetExample://toggle_play")
+                        LiveEventBus.get<String>("event").post("homeWidgetExample://toggle_play")
                     }
             )
         }
@@ -377,7 +377,8 @@ abstract class HomeWidgetContent : GlanceAppWidget() {
                     modifier = GlanceModifier
                         .size(imageSize)
                         .clickable(rippleOverride = R.drawable.click_ripple) {
-                            LiveEventBus.get<String>("host").post("homeWidgetExample://toggle_love")
+                            LiveEventBus.get<String>("event")
+                                .post("homeWidgetExample://toggle_love")
                         }
                 )
             }

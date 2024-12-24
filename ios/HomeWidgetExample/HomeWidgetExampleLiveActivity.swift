@@ -19,6 +19,7 @@ struct HomeWidgetExampleAttributes: ActivityAttributes {
     var name: String
 }
 
+@available(iOS 16.2, *)
 struct HomeWidgetExampleLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: HomeWidgetExampleAttributes.self) { context in
@@ -70,11 +71,4 @@ extension HomeWidgetExampleAttributes.ContentState {
      fileprivate static var starEyes: HomeWidgetExampleAttributes.ContentState {
          HomeWidgetExampleAttributes.ContentState(emoji: "🤩")
      }
-}
-
-#Preview("Notification", as: .content, using: HomeWidgetExampleAttributes.preview) {
-   HomeWidgetExampleLiveActivity()
-} contentStates: {
-    HomeWidgetExampleAttributes.ContentState.smiley
-    HomeWidgetExampleAttributes.ContentState.starEyes
 }

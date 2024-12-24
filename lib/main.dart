@@ -83,7 +83,7 @@ void main() {
 
       const homeWidgetChannel = MethodChannel('home_widget');
       homeWidgetChannel.setMethodCallHandler((call) async {
-        if (call.method == 'host') {
+        if (call.method == 'event') {
           if (call.arguments != null) {
             final data =
                 Uri.parse(Uri.decodeQueryComponent(call.arguments['url']));

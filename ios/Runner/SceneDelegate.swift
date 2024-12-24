@@ -11,7 +11,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UNUserNotificationCente
         window = UIWindow(windowScene: windowScene)
         UNUserNotificationCenter.current().delegate = self
 
-        let controller = PipViewController.init(engine: flutterEngine, nibName: nil, bundle: nil)
+        let controller = MainViewController.init(engine: sharedFlutterEngine, nibName: nil, bundle: nil)
         window?.rootViewController = controller
         window?.makeKeyAndVisible()
         controller.loadDefaultSplashScreenView()
@@ -31,8 +31,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UNUserNotificationCente
     }
     
     func handleSchemeRequest(_ url: URL) {
-        let channel = FlutterMethodChannel(name: "llmp", binaryMessenger: flutterEngine.binaryMessenger)
-        channel.invokeMethod("handleSchemeRequest", arguments: ["url": url.absoluteString])
+        FlutterChannelManager.shared.initLLMPPlugin()
+        FlutterChannelManager.shared.llmpPlugin?.handleSchemeRequest(url: url.absoluteString)
     }
     
     // MARK: - UNUserNotificationCenterDelegate

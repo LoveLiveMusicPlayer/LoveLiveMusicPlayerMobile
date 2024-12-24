@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class PicInPicScreenView: UIView {
+class PipScreenView: UIView {
     private let bgView = UIView()
     private var lyricLine1 = UITextView()
     private var lyricLine2 = UITextView()
