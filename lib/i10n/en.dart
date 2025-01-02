@@ -216,5 +216,7 @@ Users shall use the Software in compliance with laws and agreements. Users are n
   'internal_storage': 'Internal storage',
   'storage_not_found': 'Storage not found',
   'need_play_music_first': 'Need play music first',
-  'desktop_lyric': 'Desktop lyric'
+  'desktop_lyric': 'Desktop lyric',
+  'choose': 'Choose',
+  'choose_album_category': 'Choose album category',
 };

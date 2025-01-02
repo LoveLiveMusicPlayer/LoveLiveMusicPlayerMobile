@@ -276,7 +276,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     return musicArr;
   }
 
-  /****************  Album  ****************/
+  ///****************  Album  ****************/
 
   /// 根据albumUId获取专辑
   Future<Album?> findAlbumById(String uid) async {
@@ -328,7 +328,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     }
   }
 
-  // 切换usb设备清空歌曲数据
+  /// 切换usb设备清空歌曲数据
   Future<void> clearAllMusicThroughUsb() async {
     try {
       SpUtil.remove(Const.spDataVersion);
@@ -359,7 +359,26 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     return await musicDao.findMusicByUId(uid);
   }
 
-  /****************  History  **************/
+  Future<void> findAllAlbumByGroupAndCategory(String group) async {
+    try {
+      final isUseHttp = GlobalLogic.to.remoteHttp.isEnableHttp();
+
+      /// 设置专辑数据
+      if (group == GroupKey.groupAll.getName()) {
+        GlobalLogic.to.albumList.value = isUseHttp
+            ? await albumDao.findAllAlbums()
+            : await albumDao.findAllExistAlbums();
+      } else {
+        GlobalLogic.to.albumList.value = isUseHttp
+            ? await albumDao.findAllAlbumsByGroup(group)
+            : await albumDao.findAllExistAlbumsByGroup(group);
+      }
+    } catch (e) {
+      Log4f.i(msg: e.toString());
+    }
+  }
+
+  ///****************  History  **************/
 
   /// 更新歌曲最后一次的播放时间
   Future<void> refreshMusicTimestamp(String musicId) async {
@@ -399,7 +418,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     GlobalLogic.to.recentList.value = tempList;
   }
 
-  /****************  Menu  ****************/
+  ///****************  Menu  ****************/
 
   /// 新增一个歌单
   Future<bool> addMenu(String name, List<String> musicIds) async {
@@ -533,7 +552,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     await findAllMenuList();
   }
 
-  /****************  PlayList  ****************/
+  ///****************  PlayList  ****************/
 
   /// 获取上一次持久化的播放列表并播放
   Future<void> findAllPlayListMusics(
@@ -572,7 +591,7 @@ class DBLogic extends SuperController with GetSingleTickerProviderStateMixin {
     }
   }
 
-  /****************  Love  ****************/
+  ///****************  Love  ****************/
 
   /// 获取我喜欢列表
   Future<void> findAllLoveListByGroup(String group) async {

@@ -109,4 +109,5 @@ class TextStyleMs {
   static TextStyle f15_400 = TextStyle(fontSize: 15.h);
   static TextStyle f15_500 =
       TextStyle(fontSize: 15.h, fontWeight: FontWeight.w500);
+  static TextStyle f16_400 = TextStyle(fontSize: 16.h);
 }

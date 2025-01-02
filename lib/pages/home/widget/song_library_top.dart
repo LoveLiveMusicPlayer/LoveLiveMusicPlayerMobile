@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:bottom_picker/bottom_picker.dart';
+import 'package:bottom_picker/resources/arrays.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lovelivemusicplayer/generated/assets.dart';
@@ -62,9 +64,10 @@ class SongLibraryTop extends GetView<GlobalLogic> {
           _buildPlayBtn(),
           SizedBox(width: 10.w),
           _buildSongNumText(),
+          _buildAlbumCategoryFilter(),
           _buildSearch(),
           _buildSort(),
-          _buildFilter(),
+          _buildItemFilter(),
         ],
       ),
     );
@@ -122,6 +125,55 @@ class SongLibraryTop extends GetView<GlobalLogic> {
     );
   }
 
+  Widget _buildAlbumCategoryFilter() {
+    if (HomeController.to.state.currentIndex.value != 1) {
+      return Container();
+    }
+    final shadowColor =
+        Get.isDarkMode ? ColorMs.color05080C : ColorMs.colorD3E0EC;
+    return NeumorphicButton(
+        pressed: true,
+        onPressed: () {
+          List<Widget> items = [];
+          controller.albumCategoryMap.forEach((key, value) {
+            items.add(Center(child: Text(value)));
+          });
+          BottomPicker(
+            selectedItemIndex: controller.albumCategoryIndex.value,
+            items: items,
+            pickerTitle: Text('choose_album_category'.tr,
+                style: TextStyleMs.blackBold_17),
+            titleAlignment: Alignment.center,
+            pickerTextStyle: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22),
+            closeIconColor: Colors.black,
+            closeIconSize: 25,
+            bottomPickerTheme: BottomPickerTheme.blue,
+            buttonContent: Center(
+                child:
+                    Text('choose'.tr, style: TextStyle(color: Colors.white))),
+            onSubmit: (index) => controller.selectAlbumCategory(index),
+          ).show(Get.context!);
+        },
+        style: NeumorphicStyle(
+          color: Get.isDarkMode ? Colors.black26 : Colors.black12,
+          shape: NeumorphicShape.flat,
+          lightSource: LightSource.bottomRight,
+          shadowLightColor: shadowColor,
+          shadowDarkColor: shadowColor,
+          depth: 1,
+          boxShape: NeumorphicBoxShape.roundRect(
+              BorderRadius.all(Radius.circular(6.r))),
+        ),
+        padding: EdgeInsets.all(1.r),
+        child: Text(
+            controller.albumCategoryMap[controller.albumCategoryIndex.value]!,
+            style: TextStyleMs.f16_400.copyWith(
+                color: (Get.isDarkMode || GlobalLogic.to.bgPhoto.value != "")
+                    ? ColorMs.colorFFFFFF
+                    : ColorMs.color333333)));
+  }
+
   Widget _buildSearch() {
     if (HomeController.to.state.currentIndex.value == 1) {
       return Container();
@@ -145,9 +197,6 @@ class SongLibraryTop extends GetView<GlobalLogic> {
   }
 
   Widget _buildSort() {
-    if (HomeController.to.state.currentIndex.value == 1) {
-      return Container();
-    }
     return neumorphicButton(
       GlobalLogic.to.sortMode.value == "ASC"
           ? Assets.mainIcSortAsc
@@ -164,9 +213,9 @@ class SongLibraryTop extends GetView<GlobalLogic> {
   }
 
   ///筛选按钮
-  Widget _buildFilter() {
+  Widget _buildItemFilter() {
     if (HomeController.to.state.currentIndex.value == 1) {
-      return Container();
+      return Container(margin: EdgeInsets.only(right: 15.w));
     }
     return neumorphicButton(Assets.mainIcFunction, onScreenTap,
         width: 30,

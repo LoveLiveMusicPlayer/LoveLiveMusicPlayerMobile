@@ -207,5 +207,7 @@ const Map<String, String> zhCN = {
   'internal_storage': '内部存储',
   'storage_not_found': '存储设备不存在',
   'need_play_music_first': '请先播放歌曲',
-  'desktop_lyric': '桌面歌词'
+  'desktop_lyric': '桌面歌词',
+  'choose': '选择',
+  'choose_album_category': '选择专辑分类',
 };

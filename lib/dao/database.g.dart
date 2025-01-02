@@ -218,8 +218,9 @@ class _$AlbumDao extends AlbumDao {
   final UpdateAdapter<Album> _albumUpdateAdapter;
 
   @override
-  Future<List<Album>> findAllAlbums() async {
-    return _queryAdapter.queryList('SELECT * FROM Album ORDER BY `date`',
+  Future<List<Album>> findAllAlbumsASC() async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM Album ORDER BY `date` ASC, `albumId` ASC',
         mapper: (Map<String, Object?> row) => Album(
             albumId: row['albumId'] as String?,
             albumName: row['albumName'] as String?,
@@ -233,9 +234,17 @@ class _$AlbumDao extends AlbumDao {
   }
 
   @override
-  Future<List<Album>> findAllExistAlbums() async {
+  Future<List<Album>> findAllAlbumsByCategoryASC(String category) async {
     return _queryAdapter.queryList(
-        'SELECT * FROM Album WHERE `existFile` = 1 ORDER BY `date`',
+        'SELECT * FROM Album WHERE `category` = ?1 ORDER BY `date` ASC, `albumId` ASC',
+        mapper: (Map<String, Object?> row) => Album(albumId: row['albumId'] as String?, albumName: row['albumName'] as String?, date: row['date'] as String?, coverPath: row['coverPath'] as String?, category: row['category'] as String?, group: row['group'] as String?, existFile: row['existFile'] == null ? null : (row['existFile'] as int) != 0),
+        arguments: [category]);
+  }
+
+  @override
+  Future<List<Album>> findAllAlbumsDESC() async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM Album ORDER BY `date` DESC, `albumId` DESC',
         mapper: (Map<String, Object?> row) => Album(
             albumId: row['albumId'] as String?,
             albumName: row['albumName'] as String?,
@@ -249,9 +258,17 @@ class _$AlbumDao extends AlbumDao {
   }
 
   @override
-  Future<List<Album>> findAllAlbumsByGroup(String group) async {
+  Future<List<Album>> findAllAlbumsByCategoryDESC(String category) async {
     return _queryAdapter.queryList(
-        'SELECT * FROM Album WHERE `group` = ?1 ORDER BY `date`',
+        'SELECT * FROM Album WHERE `category` = ?1 ORDER BY `date` DESC, `albumId` DESC',
+        mapper: (Map<String, Object?> row) => Album(albumId: row['albumId'] as String?, albumName: row['albumName'] as String?, date: row['date'] as String?, coverPath: row['coverPath'] as String?, category: row['category'] as String?, group: row['group'] as String?, existFile: row['existFile'] == null ? null : (row['existFile'] as int) != 0),
+        arguments: [category]);
+  }
+
+  @override
+  Future<List<Album>> findAllExistAlbumsASC() async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM Album WHERE `existFile` = 1 ORDER BY `date` ASC, `albumId` ASC',
         mapper: (Map<String, Object?> row) => Album(
             albumId: row['albumId'] as String?,
             albumName: row['albumName'] as String?,
@@ -261,16 +278,115 @@ class _$AlbumDao extends AlbumDao {
             group: row['group'] as String?,
             existFile: row['existFile'] == null
                 ? null
-                : (row['existFile'] as int) != 0),
-        arguments: [group]);
+                : (row['existFile'] as int) != 0));
   }
 
   @override
-  Future<List<Album>> findAllExistAlbumsByGroup(String group) async {
+  Future<List<Album>> findAllExistAlbumsByCategoryASC(String category) async {
     return _queryAdapter.queryList(
-        'SELECT * FROM Album WHERE `group` = ?1 AND `existFile` = 1 ORDER BY `date`',
+        'SELECT * FROM Album WHERE `existFile` = 1 AND `category` = ?1 ORDER BY `date` ASC, `albumId` ASC',
+        mapper: (Map<String, Object?> row) => Album(albumId: row['albumId'] as String?, albumName: row['albumName'] as String?, date: row['date'] as String?, coverPath: row['coverPath'] as String?, category: row['category'] as String?, group: row['group'] as String?, existFile: row['existFile'] == null ? null : (row['existFile'] as int) != 0),
+        arguments: [category]);
+  }
+
+  @override
+  Future<List<Album>> findAllExistAlbumsDESC() async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM Album WHERE `existFile` = 1 ORDER BY `date` DESC, `albumId` DESC',
+        mapper: (Map<String, Object?> row) => Album(
+            albumId: row['albumId'] as String?,
+            albumName: row['albumName'] as String?,
+            date: row['date'] as String?,
+            coverPath: row['coverPath'] as String?,
+            category: row['category'] as String?,
+            group: row['group'] as String?,
+            existFile: row['existFile'] == null
+                ? null
+                : (row['existFile'] as int) != 0));
+  }
+
+  @override
+  Future<List<Album>> findAllExistAlbumsByCategoryDESC(String category) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM Album WHERE `existFile` = 1 AND `category` = ?1 ORDER BY `date` DESC, `albumId` DESC',
+        mapper: (Map<String, Object?> row) => Album(albumId: row['albumId'] as String?, albumName: row['albumName'] as String?, date: row['date'] as String?, coverPath: row['coverPath'] as String?, category: row['category'] as String?, group: row['group'] as String?, existFile: row['existFile'] == null ? null : (row['existFile'] as int) != 0),
+        arguments: [category]);
+  }
+
+  @override
+  Future<List<Album>> findAllAlbumsByGroupASC(String group) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM Album WHERE `group` = ?1 ORDER BY `date` ASC, `albumId` ASC',
         mapper: (Map<String, Object?> row) => Album(albumId: row['albumId'] as String?, albumName: row['albumName'] as String?, date: row['date'] as String?, coverPath: row['coverPath'] as String?, category: row['category'] as String?, group: row['group'] as String?, existFile: row['existFile'] == null ? null : (row['existFile'] as int) != 0),
         arguments: [group]);
+  }
+
+  @override
+  Future<List<Album>> findAllAlbumsByGroupDESC(String group) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM Album WHERE `group` = ?1 ORDER BY `date` DESC, `albumId` DESC',
+        mapper: (Map<String, Object?> row) => Album(albumId: row['albumId'] as String?, albumName: row['albumName'] as String?, date: row['date'] as String?, coverPath: row['coverPath'] as String?, category: row['category'] as String?, group: row['group'] as String?, existFile: row['existFile'] == null ? null : (row['existFile'] as int) != 0),
+        arguments: [group]);
+  }
+
+  @override
+  Future<List<Album>> findAllExistAlbumsByGroupASC(String group) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM Album WHERE `group` = ?1 AND `existFile` = 1 ORDER BY `date` ASC, `albumId` ASC',
+        mapper: (Map<String, Object?> row) => Album(albumId: row['albumId'] as String?, albumName: row['albumName'] as String?, date: row['date'] as String?, coverPath: row['coverPath'] as String?, category: row['category'] as String?, group: row['group'] as String?, existFile: row['existFile'] == null ? null : (row['existFile'] as int) != 0),
+        arguments: [group]);
+  }
+
+  @override
+  Future<List<Album>> findAllExistAlbumsByGroupDESC(String group) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM Album WHERE `group` = ?1 AND `existFile` = 1 ORDER BY `date` DESC, `albumId` DESC',
+        mapper: (Map<String, Object?> row) => Album(albumId: row['albumId'] as String?, albumName: row['albumName'] as String?, date: row['date'] as String?, coverPath: row['coverPath'] as String?, category: row['category'] as String?, group: row['group'] as String?, existFile: row['existFile'] == null ? null : (row['existFile'] as int) != 0),
+        arguments: [group]);
+  }
+
+  @override
+  Future<List<Album>> findAllAlbumsByGroupAndCategoryASC(
+    String group,
+    String category,
+  ) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM Album WHERE `group` = ?1 AND `existFile` = 1 AND `category` = ?2 ORDER BY `date` ASC, `albumId` ASC',
+        mapper: (Map<String, Object?> row) => Album(albumId: row['albumId'] as String?, albumName: row['albumName'] as String?, date: row['date'] as String?, coverPath: row['coverPath'] as String?, category: row['category'] as String?, group: row['group'] as String?, existFile: row['existFile'] == null ? null : (row['existFile'] as int) != 0),
+        arguments: [group, category]);
+  }
+
+  @override
+  Future<List<Album>> findAllAlbumsByGroupAndCategoryDESC(
+    String group,
+    String category,
+  ) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM Album WHERE `group` = ?1 AND `existFile` = 1 AND `category` = ?2 ORDER BY `date` DESC, `albumId` DESC',
+        mapper: (Map<String, Object?> row) => Album(albumId: row['albumId'] as String?, albumName: row['albumName'] as String?, date: row['date'] as String?, coverPath: row['coverPath'] as String?, category: row['category'] as String?, group: row['group'] as String?, existFile: row['existFile'] == null ? null : (row['existFile'] as int) != 0),
+        arguments: [group, category]);
+  }
+
+  @override
+  Future<List<Album>> findAllExistAlbumsByGroupAndCategoryASC(
+    String group,
+    String category,
+  ) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM Album WHERE `group` = ?1 AND `existFile` = 1 AND `category` = ?2 ORDER BY `date` ASC, `albumId` ASC',
+        mapper: (Map<String, Object?> row) => Album(albumId: row['albumId'] as String?, albumName: row['albumName'] as String?, date: row['date'] as String?, coverPath: row['coverPath'] as String?, category: row['category'] as String?, group: row['group'] as String?, existFile: row['existFile'] == null ? null : (row['existFile'] as int) != 0),
+        arguments: [group, category]);
+  }
+
+  @override
+  Future<List<Album>> findAllExistAlbumsByGroupAndCategoryDESC(
+    String group,
+    String category,
+  ) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM Album WHERE `group` = ?1 AND `existFile` = 1 AND `category` = ?2 ORDER BY `date` DESC, `albumId` DESC',
+        mapper: (Map<String, Object?> row) => Album(albumId: row['albumId'] as String?, albumName: row['albumName'] as String?, date: row['date'] as String?, coverPath: row['coverPath'] as String?, category: row['category'] as String?, group: row['group'] as String?, existFile: row['existFile'] == null ? null : (row['existFile'] as int) != 0),
+        arguments: [group, category]);
   }
 
   @override

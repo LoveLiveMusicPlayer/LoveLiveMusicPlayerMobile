@@ -197,22 +197,11 @@ class HomeController extends GetxController {
     final saveValue = GlobalLogic.to.sortMode.value == "ASC" ? "DESC" : "ASC";
     GlobalLogic.to.sortMode.value = saveValue;
     SpUtil.put(Const.spSortOrder, saveValue);
-    switch (state.currentIndex.value) {
-      case 0:
-        GlobalLogic.to.musicList.value =
-            GlobalLogic.to.musicList.reversed.toList();
-        break;
-      case 3:
-        GlobalLogic.to.loveList.value =
-            GlobalLogic.to.loveList.reversed.toList();
-        break;
-      case 5:
-        GlobalLogic.to.recentList.value =
-            GlobalLogic.to.recentList.reversed.toList();
-        break;
-      default:
-        break;
-    }
+    GlobalLogic.to.musicList.value = GlobalLogic.to.musicList.reversed.toList();
+    GlobalLogic.to.albumList.value = GlobalLogic.to.albumList.reversed.toList();
+    GlobalLogic.to.loveList.value = GlobalLogic.to.loveList.reversed.toList();
+    GlobalLogic.to.recentList.value =
+        GlobalLogic.to.recentList.reversed.toList();
   }
 
   onPlayTap() {

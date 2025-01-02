@@ -79,6 +79,18 @@ class GlobalLogic extends SuperController
   // 排序模式(asc: 按时间顺序, desc: 按时间倒序)
   var sortMode = "".obs;
 
+  // 专辑分类
+  final Map<int, String> albumCategoryMap = {
+    0: "全部",
+    1: "单曲",
+    2: "动画",
+    3: "独唱",
+    4: "小组曲",
+    5: "精选集",
+    6: "其他"
+  };
+  var albumCategoryIndex = 0.obs;
+
   /// 炫彩模式下的按钮皮肤
   var iconColor = Get.theme.primaryColorDark.obs;
 
@@ -313,6 +325,12 @@ class GlobalLogic extends SuperController
       color = isDarkTheme.value ? darkColor : lightColor;
     }
     return color!;
+  }
+
+  void selectAlbumCategory(int index) {
+    albumCategoryIndex.value = index;
+    DBLogic.to
+        .findAllAlbumByGroupAndCategory(GlobalLogic.to.currentGroup.value);
   }
 
   void startTimer(int? number) {

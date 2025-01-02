@@ -208,5 +208,7 @@ const Map<String, String> jaJP = {
   'internal_storage': '内部ストレージです',
   'storage_not_found': '記憶装置は存在しません',
   'need_play_music_first': '曲の再生をお願いします',
-  'desktop_lyric': 'デスクトップの歌詞'
+  'desktop_lyric': 'デスクトップの歌詞',
+  'choose': '選ぶ',
+  'choose_album_category': 'アルバムカテゴリーを選択',
 };

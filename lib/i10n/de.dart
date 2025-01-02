@@ -223,5 +223,7 @@ Benutzer sollten die Software unter der Prämisse verwenden, Gesetze und Vereinb
   'internal_storage': 'Interner Speicher',
   'storage_not_found': 'Das Speichergerät existiert nicht',
   'need_play_music_first': 'Bitte spielen Sie zuerst das Lied',
-  'desktop_lyric': 'Desktop-Songtext'
+  'desktop_lyric': 'Desktop-Songtext',
+  'choose': 'Wählen',
+  'choose_album_category': 'Albumkategorie auswählen',
 };
