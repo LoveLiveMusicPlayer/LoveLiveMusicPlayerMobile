@@ -101,6 +101,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		C71858232D27C784001A7090 /* widget */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = widget; sourceTree = "<group>"; };
 		C757E8932D1A48100022E5B5 /* plugin */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = plugin; sourceTree = "<group>"; };
 		C757E8972D1A551E0022E5B5 /* pip */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = pip; sourceTree = "<group>"; };
 		C757E8982D1A55730022E5B5 /* util */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = util; sourceTree = "<group>"; };
@@ -180,6 +181,7 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				C71858232D27C784001A7090 /* widget */,
 				C757E8982D1A55730022E5B5 /* util */,
 				C757E8972D1A551E0022E5B5 /* pip */,
 				C757E8932D1A48100022E5B5 /* plugin */,
@@ -250,6 +252,7 @@
 				C70B091C2C9BCFF60074432D /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				C71858232D27C784001A7090 /* widget */,
 				C757E8932D1A48100022E5B5 /* plugin */,
 				C757E8972D1A551E0022E5B5 /* pip */,
 				C757E8982D1A55730022E5B5 /* util */,

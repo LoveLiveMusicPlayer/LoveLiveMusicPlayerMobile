@@ -6,6 +6,7 @@ class PipScreenView: UIView {
     private var lyricLine1 = UITextView()
     private var lyricLine2 = UITextView()
     private var noLyricLine = UITextView()
+    private let gradientLayer = GradientLayer()
     private var icon = UIImageView(image: UIImage(named: "AppIcon"))
 
     override init(frame: CGRect) {
@@ -19,30 +20,33 @@ class PipScreenView: UIView {
     }
     
     private func setupView() {
-        backgroundColor = .black
+        backgroundColor = .clear
         layer.cornerRadius = 8
         layer.masksToBounds = true
         translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(bgView)
-        bgView.backgroundColor = .black
+        bgView.backgroundColor = .clear
         bgView.translatesAutoresizingMaskIntoConstraints = false
         
         bgView.snp.makeConstraints { make in
             make.edges.equalTo(self)
         }
         
-        lyricLine1.backgroundColor = .black
+        gradientLayer.createGradientView()
+        layer.insertSublayer(gradientLayer, at: 0)
+        
+        lyricLine1.backgroundColor = .clear
         lyricLine1.textColor = .white
         lyricLine1.font = UIFont(name: "Hiragino Sans", size: 18)
         bgView.addSubview(lyricLine1)
         
-        lyricLine2.backgroundColor = .black
+        lyricLine2.backgroundColor = .clear
         lyricLine2.textColor = .white
         lyricLine2.font = UIFont(name: "Hiragino Sans", size: 18)
         bgView.addSubview(lyricLine2)
         
-        noLyricLine.backgroundColor = .black
+        noLyricLine.backgroundColor = .clear
         noLyricLine.textColor = .white
         noLyricLine.font = UIFont(name: "Hiragino Sans", size: 18)
         noLyricLine.textAlignment = .center
@@ -102,5 +106,25 @@ class PipScreenView: UIView {
             self.lyricLine2.isHidden = false
             self.noLyricLine.isHidden = true
         }
+    }
+    
+    func updateGrandientColor(colors: [CGColor]) {
+        gradientLayer.removeAnimation()
+        gradientLayer.gradientSet.removeAll()
+        gradientLayer.gradientSet.append(colors)
+        gradientLayer.currentGradient = 0
+        gradientLayer.colors = gradientLayer.gradientSet[gradientLayer.currentGradient]
+        gradientLayer.animateGradient()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: bounds.width,
+            height: bounds.height
+        )
+        gradientLayer.animateGradient()
     }
 }

@@ -104,7 +104,7 @@ class AppUtils {
       return defaultColor ?? GlobalLogic.to.iconColor.value;
     }
     final image = await getImageFromProvider(FileImage(file));
-    final rgb = await getColorFromImage(image, 1);
+    final rgb = await getColorFromImage(image, 5);
     return Color.fromARGB(150, rgb?.elementAt(0) ?? 0, rgb?.elementAt(1) ?? 0,
         rgb?.elementAt(2) ?? 0);
   }
@@ -125,7 +125,7 @@ class AppUtils {
     if (image == null) {
       return null;
     }
-    final rgb = await getColorFromImage(image, 1);
+    final rgb = await getColorFromImage(image, 5);
     return Color.fromARGB(150, rgb?.elementAt(0) ?? 0, rgb?.elementAt(1) ?? 0,
         rgb?.elementAt(2) ?? 0);
   }
