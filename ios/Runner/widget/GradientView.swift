@@ -18,6 +18,9 @@ class GradientLayer: CAGradientLayer, CAAnimationDelegate {
     var gradientSet = [[CGColor]]()
 
     func animateGradient() {
+        // 先移除动画
+        removeAnimation()
+
         gradientChangeAnimation.fromValue = gradientSet[currentGradient]
         colors = gradientSet[currentGradient]
         
@@ -32,6 +35,8 @@ class GradientLayer: CAGradientLayer, CAAnimationDelegate {
         gradientChangeAnimation.fillMode = .forwards
         gradientChangeAnimation.isRemovedOnCompletion = false
         gradientChangeAnimation.delegate = self
+        
+        // 启动动画
         add(gradientChangeAnimation, forKey: "moveAnimation")
     }
 
@@ -52,6 +57,7 @@ class GradientLayer: CAGradientLayer, CAAnimationDelegate {
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if flag {
+            // 一轮动画停止，重新启动动画达到永续效果
             animateGradient()
         }
     }

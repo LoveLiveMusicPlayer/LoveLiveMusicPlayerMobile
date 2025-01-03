@@ -164,5 +164,8 @@ class PipScreenManager: NSObject, @preconcurrency AVPictureInPictureControllerDe
                 make.edges.equalTo(firstWindow)
             }
         }
+        
+        // 当 pip 窗口显示的时候调用一下启动动画，防止在 pip 界面没有发生布局大小改变的时候动画停止
+        picInPicView.gradientLayer.animateGradient()
     }
 }

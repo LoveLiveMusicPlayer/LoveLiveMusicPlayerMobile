@@ -6,8 +6,9 @@ class PipScreenView: UIView {
     private var lyricLine1 = UITextView()
     private var lyricLine2 = UITextView()
     private var noLyricLine = UITextView()
-    private let gradientLayer = GradientLayer()
     private var icon = UIImageView(image: UIImage(named: "AppIcon"))
+    
+    let gradientLayer = GradientLayer()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,19 +39,26 @@ class PipScreenView: UIView {
         
         lyricLine1.backgroundColor = .clear
         lyricLine1.textColor = .white
-        lyricLine1.font = UIFont(name: "Hiragino Sans", size: 18)
-        bgView.addSubview(lyricLine1)
         
         lyricLine2.backgroundColor = .clear
         lyricLine2.textColor = .white
-        lyricLine2.font = UIFont(name: "Hiragino Sans", size: 18)
-        bgView.addSubview(lyricLine2)
         
         noLyricLine.backgroundColor = .clear
         noLyricLine.textColor = .white
-        noLyricLine.font = UIFont(name: "Hiragino Sans", size: 18)
         noLyricLine.textAlignment = .center
         noLyricLine.isHidden = true
+        
+        if let font = UIFont(name: "Hiragino Sans", size: 18) {
+            let descriptor = font.fontDescriptor.withSymbolicTraits(.traitBold)
+            let boldFont = UIFont(descriptor: descriptor!, size: 18)
+            
+            lyricLine1.font = boldFont
+            lyricLine2.font = boldFont
+            noLyricLine.font = boldFont
+        }
+        
+        bgView.addSubview(lyricLine1)
+        bgView.addSubview(lyricLine2)
         bgView.addSubview(noLyricLine)
         
         icon.contentMode = .scaleAspectFit
@@ -92,8 +100,8 @@ class PipScreenView: UIView {
         if lyricLine2 != nil {
             self.lyricLine2.text = lyricLine2
         }
-        self.lyricLine1.textColor = currentLine == 2 ? UIColor.lightGray : UIColor.white
-        self.lyricLine2.textColor = currentLine == 1 ? UIColor.lightGray : UIColor.white
+        self.lyricLine1.textColor = currentLine == 2 ? UIColor.white.withAlphaComponent(0.4) : UIColor.white
+        self.lyricLine2.textColor = currentLine == 1 ? UIColor.white.withAlphaComponent(0.4) : UIColor.white
         
         if currentLine == -1 {
             // 暂无歌词
@@ -117,6 +125,7 @@ class PipScreenView: UIView {
         gradientLayer.animateGradient()
     }
     
+    // 发生布局重绘（尺寸改变等）
     override func layoutSubviews() {
         super.layoutSubviews()
         gradientLayer.frame = CGRect(
