@@ -52,12 +52,18 @@ Language: 中文 | [English Document](README_EN.md)
 **--Project_by [朱神无敌](https://space.bilibili.com/4367965)**
 
 # 软件截图
-<img src="assets/simple/simple1.png" width="200">
-<img src="assets/simple/simple2.png" width="200">
-<img src="assets/simple/simple3.png" width="200">
-<img src="assets/simple/simple4.png" width="200">
-<img src="assets/simple/simple5.png" width="200">
-<img src="assets/simple/simple6.png" width="400">
+
+<p float="left">
+    <img src="assets/simple/simple1.png" width="200" alt="启动页">
+    <img src="assets/simple/simple2.png" width="200" alt="主页">
+    <img src="assets/simple/simple3.png" width="200" alt="抽题菜单">
+</p>
+<p float="left">
+    <img src="assets/simple/simple4.png" width="200" alt="播放页">
+    <img src="assets/simple/simple5.png" width="200" alt="驾驶模式">
+    <img src="assets/simple/simple6.png" width="200" alt="小组件">
+</p>
+<img src="assets/simple/simple7.png" width="400" alt="CarPlay">
 
 # 关联PC软件
 Github:<https://github.com/zhushenwudi/LoveLiveMusicPlayer>

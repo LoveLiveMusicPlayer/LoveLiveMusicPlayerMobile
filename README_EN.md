@@ -52,12 +52,18 @@ Function list:
 **--Project_by [zhushenwudi](https://space.bilibili.com/4367965)**
 
 # Screenshot
-<img src="assets/simple/simple1.png" width="200">
-<img src="assets/simple/simple2.png" width="200">
-<img src="assets/simple/simple3.png" width="200">
-<img src="assets/simple/simple4.png" width="200">
-<img src="assets/simple/simple5.png" width="200">
-<img src="assets/simple/simple6.png" width="400">
+
+<p float="left">
+    <img src="assets/simple/simple1.png" width="200" alt="SplashScreen">
+    <img src="assets/simple/simple2.png" width="200" alt="HomeScreen">
+    <img src="assets/simple/simple3.png" width="200" alt="Drawer">
+</p>
+<p float="left">
+    <img src="assets/simple/simple4.png" width="200" alt="PlayerScreen">
+    <img src="assets/simple/simple5.png" width="200" alt="DriveMode">
+    <img src="assets/simple/simple6.png" width="200" alt="Widget">
+</p>
+<img src="assets/simple/simple7.png" width="400" alt="CarPlay">
 
 # Associated PC software
 Github:<https://github.com/zhushenwudi/LoveLiveMusicPlayer>

@@ -165,6 +165,7 @@ class Assets {
   static const String simpleSimple4 = 'assets/simple/simple4.png';
   static const String simpleSimple5 = 'assets/simple/simple5.png';
   static const String simpleSimple6 = 'assets/simple/simple6.png';
+  static const String simpleSimple7 = 'assets/simple/simple7.png';
   static const String syncIconComputer = 'assets/sync/icon_computer.svg';
   static const String syncIconDataSync = 'assets/sync/icon_data_sync.svg';
   static const String syncIconPhone = 'assets/sync/icon_phone.svg';
