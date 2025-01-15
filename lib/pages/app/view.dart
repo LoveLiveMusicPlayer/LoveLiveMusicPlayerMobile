@@ -15,6 +15,7 @@ import 'package:lovelivemusicplayer/pages/home/home_controller.dart';
 import 'package:lovelivemusicplayer/routes.dart';
 import 'package:lovelivemusicplayer/utils/app_utils.dart';
 import 'package:lovelivemusicplayer/utils/http_server.dart';
+import 'package:lovelivemusicplayer/utils/sd_utils.dart';
 import 'package:sharesdk_plugin/sharesdk_interface.dart';
 import 'package:sharesdk_plugin/sharesdk_register.dart';
 
@@ -72,7 +73,10 @@ class _AppPageState extends State<AppPage> with WidgetsBindingObserver {
                   // 设置文字大小不随系统设置改变
                   data: MediaQuery.of(context)
                       .copyWith(textScaler: const TextScaler.linear(1.0)),
-                  child: FPSWidget(show: false, child: widget!));
+                  child: FPSWidget(
+                      show: SDUtils.showFps,
+                      alignment: Alignment.centerLeft,
+                      child: widget!));
             }));
       },
     );

@@ -189,5 +189,9 @@
         <meta-data
             android:name="Mob-AppSecret"
             android:value="9cac7a0532d211eb04fcf6b25b197859" />
+
+        <meta-data
+            android:name="io.flutter.embedding.android.EnableImpeller"
+            android:value="false" />
     </application>
 </manifest>

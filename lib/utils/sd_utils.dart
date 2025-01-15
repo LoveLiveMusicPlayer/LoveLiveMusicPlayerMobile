@@ -20,6 +20,7 @@ import 'package:path_provider/path_provider.dart';
 class SDUtils {
   static String path = "";
   static bool allowEULA = false;
+  static bool showFps = false;
   static late String bgPhotoPath;
   static late String splashPhotoPath;
 
@@ -79,6 +80,7 @@ class SDUtils {
       makeDir(splashPhotoPath);
     }
     allowEULA = Platform.isAndroid || checkDirectoryExist("${path}LLMP");
+    showFps = checkFileExist("${path}LLMP/fps");
     Log4f.d(msg: path);
     getUsbPathList();
   }

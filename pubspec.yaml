@@ -37,14 +37,14 @@ dependencies:
   get: ^4.6.6
   flutter_spinkit: ^5.2.1
   dio: ^5.7.0 # 网络加载
-  talker_dio_logger: ^4.5.5  # 网络请求日志
+  talker_dio_logger: ^4.6.3  # 网络请求日志
   path_provider: ^2.1.5 # 路径提供
   pull_to_refresh:  # 下拉刷新上拉加载
     git:
       url: https://gitee.com/zhushenwudi/flutter_pulltorefresh
       ref: master
   web_socket_channel: ^3.0.1 # webSocket
-  connectivity_plus: ^6.1.1 # 网络监测
+  connectivity_plus: ^6.1.2 # 网络监测
   scan: ^1.6.0 # 扫码
   flutter_smart_dialog: ^4.9.8+5 # 弹窗
   synchronized: ^3.3.0+3 # 锁
@@ -60,7 +60,7 @@ dependencies:
     git:
       url: https://gitee.com/zhushenwudi/flutter-marquee-text
       ref: master
-  flutter_svg: ^2.0.16 # svg图片支持
+  flutter_svg: ^2.0.17 # svg图片支持
   just_audio: # 音频播放
     git:
       url: https://github.com/zhushenwudi/just_audio
@@ -77,8 +77,8 @@ dependencies:
     git:
       url: https://gitee.com/zhushenwudi/color_thief_flutter
       ref: master
-  talker_flutter: ^4.5.5 # 日志
-  device_info_plus: ^11.2.0 # 设备信息
+  talker_flutter: ^4.6.3 # 日志
+  device_info_plus: ^11.2.1 # 设备信息
   flutter_lyric: ^2.0.4+6 # 歌词显示
   flutter_app_update: ^3.2.2 # 版本升级
   flutter_sticky_header: ^0.7.0 # 粘性头
